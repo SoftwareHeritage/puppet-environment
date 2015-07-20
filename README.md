@@ -4,8 +4,10 @@ Software Heritage Puppet environment
 This repository contains the metadata for Software Heritage's
 puppet infrastructure git repositories.
 
-The repositories are managed using myrepos (see the .mrconfig file), and
+The repositories are managed using [myrepos][1] (see the .mrconfig file), and
 the `mr` command.
+
+[1]: http://myrepos.branchable.com/
 
 As our .mrconfig file contains "untrusted" checkout commands (to setup
 the upstream repositories of our mirrors of third-party modules), you
