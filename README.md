@@ -47,11 +47,14 @@ Deployment
 ----------
 
 Deployment happens on the `pergamon.softwareheritage.org` server, using
-the r10k command:
+our custom deployment script:
 
- sudo r10k deploy environment --puppetfile
+ sudo /etc/puppet/environments/production/deploy.sh
  
 This updates the dynamic environments according to the contents of the
 branches of the git repository, and the Puppetfile inside. For each
 third-party module, we pin the module definition in the Puppetfile to a
 specific tag or revision.
+
+Our specific deploy script also fetches private repositories and merges them
+with the public r10k setup.
