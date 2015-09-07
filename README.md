@@ -40,7 +40,7 @@ Profiles are defined in the `swh-profile` module.
 
 Our setup mirrors the git repositories of third-party Puppet modules on the
 Software Heritage git server --- this is to avoid reliance on 3rd party
-*hosting* services in ordet to be able to deploy. We add an upstream remote to
+*hosting* services in order to be able to deploy. We add an upstream remote to
 the repositories through our mr configuration.
 
 Deployment
