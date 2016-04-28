@@ -1,0 +1,49 @@
+#!/bin/bash
+set -e
+
+# trigger a puppet deployment on a given SWH machine
+# see https://intranet.softwareheritage.org/index.php?title=Puppet_setup
+
+info () {
+    echo "*** swh-deploy: $1"
+}
+
+prompt () {
+    echo -n "*** swh-deploy: $1"
+}
+
+DOMAIN="internal.softwareheritage.org"
+MASTER="pergamon.${DOMAIN}"
+ssh="ssh -t"
+
+if [ -z "$1" ] ; then
+    echo "Usage: bin/deploy-on HOST"
+    echo "E.g.:  bin/deploy-on worker01"
+    exit 1
+fi
+host="$1"
+shift
+
+info "deploying recipes on ${MASTER}..."
+$ssh "$MASTER" "sudo /usr/local/sbin/swh-puppet-master-deploy"
+info "master ok."
+
+info "starting test run on ${host}..."
+$ssh "$host" "sudo /usr/local/sbin/swh-puppet-test"
+info "test run ok."
+
+while true ; do
+    prompt "does the above diff look good? [y/n] "
+    read yn
+    case $yn in
+	[yY] ) break ;;
+	[nN] )
+	    info "deployment aborted, as requested."
+	    exit 2 ;;
+	* ) continue ;;
+    esac
+done
+
+info "deploying on ${host}..."
+$ssh "$host" "sudo /usr/local/sbin/swh-puppet-apply"
+info "deployment ok. Bye."
