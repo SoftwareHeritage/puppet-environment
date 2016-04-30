@@ -13,8 +13,8 @@ prompt () {
 }
 
 die_usage () {
-    echo "Usage: bin/deploy-on [OPTION] HOST"
-    echo "E.g.:  bin/deploy-on worker01"
+    echo "Usage: bin/deploy-on [OPTION] HOST..."
+    echo "E.g.:  bin/deploy-on             worker01 worker03"
     echo "       bin/deploy-on --no-master worker02"
     exit 1
 }
@@ -38,8 +38,6 @@ fi
 if [ -z "$1" ] ; then
     die_usage
 fi
-host="$1"
-shift
 
 if [ "$deploy_on_master" = "yes" ] ; then
     info "deploying recipes on ${MASTER}..."
@@ -47,22 +45,26 @@ if [ "$deploy_on_master" = "yes" ] ; then
     info "master ok."
 fi
 
-info "starting test run on ${host}..."
-$SSH "$host" "sudo /usr/local/sbin/swh-puppet-test"
-info "test run ok."
+for host in "$@" ; do
 
-while true ; do
-    prompt "does the above diff look good? [y/n] "
-    read yn
-    case $yn in
-	[yY] ) break ;;
-	[nN] )
-	    info "deployment aborted, as requested."
-	    exit 2 ;;
-	* ) continue ;;
-    esac
+    info "starting test run on ${host}..."
+    $SSH "$host" "sudo /usr/local/sbin/swh-puppet-test"
+    info "test run ok."
+
+    while true ; do
+	prompt "does the above diff for ${host} look good? [y/n] "
+	read yn
+	case $yn in
+	    [yY] ) break ;;
+	    [nN] )
+		info "deployment aborted, as requested."
+		exit 2 ;;
+	    * ) continue ;;
+	esac
+    done
+
+    info "deploying on ${host}..."
+    $SSH "$host" "sudo /usr/local/sbin/swh-puppet-apply"
+    info "deployment ok. Bye."
+
 done
-
-info "deploying on ${host}..."
-$SSH "$host" "sudo /usr/local/sbin/swh-puppet-apply"
-info "deployment ok. Bye."
