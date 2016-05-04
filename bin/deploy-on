@@ -25,6 +25,7 @@ SSH="ssh -t"
 # command line parsing
 
 deploy_on_master="yes"
+test_run="yes"
 
 if [ "$1" = "-h" -o "$1" = "--help" ] ; then
     die_usage
@@ -46,9 +47,11 @@ fi
 
 for host in "$@" ; do
 
-    info "starting test run on ${host}..."
-    $SSH "$host" "sudo /usr/local/sbin/swh-puppet-test"
-    info "test run ok."
+    if [ "$test_run" = "yes" ] ; then
+	info "starting test run on ${host}..."
+    	$SSH "$host" "sudo /usr/local/sbin/swh-puppet-test"
+    	info "test run ok."
+    fi
 
     while true ; do
 	prompt "does the above diff for ${host} look good? [y/n] "
