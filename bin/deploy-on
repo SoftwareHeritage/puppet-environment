@@ -26,6 +26,7 @@ SSH="ssh -t"
 
 deploy_on_master="yes"
 test_run="yes"
+apt_update="yes"
 
 if [ "$1" = "-h" -o "$1" = "--help" ] ; then
     die_usage
@@ -46,6 +47,11 @@ if [ "$deploy_on_master" = "yes" ] ; then
 fi
 
 for host in "$@" ; do
+
+    if [ "$apt_update" = "yes" ] ; then
+	info "apt-get update on ${host}..."
+	$SSH "$host" "sudo apt-get update -qq"
+    fi
 
     if [ "$test_run" = "yes" ] ; then
 	info "starting test run on ${host}..."
