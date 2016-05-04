@@ -15,6 +15,10 @@ die_usage () {
     echo "Usage: bin/deploy-on [OPTION] HOST..."
     echo "E.g.:  bin/deploy-on             worker01 worker03"
     echo "       bin/deploy-on --no-master worker02"
+    echo "Options:"
+    echo "  --(no-)apt:    do (not) run apt-get update on host(s)"
+    echo "  --(no-)master: do (not) update puppet recipes on master"
+    echo "  --(no-)test:   do (not) perform test run on host(s)"
     exit 1
 }
 
@@ -24,21 +28,34 @@ SSH="ssh -t"
 
 # command line parsing
 
+apt_update="no"
 deploy_on_master="yes"
 test_run="yes"
-apt_update="yes"
 
-if [ "$1" = "-h" -o "$1" = "--help" ] ; then
-    die_usage
-fi
-if [ "$1" = "--no-master" ] ; then
-    deploy_on_master="no"
+while [ "${1:0:1}" = '-' ] ; do
+    case "$1" in
+	-h|--help) die_usage ;;
+	--apt)       apt_update="yes" ;;
+	--no-apt)    apt_update="no" ;;
+	--master)    deploy_on_master="yes" ;;
+	--no-master) deploy_on_master="no" ;;
+	--test)      test_run="yes" ;;
+	--no-test)   test_run="no" ;;
+    esac
     shift
-fi
-
+done
 if [ -z "$1" ] ; then
     die_usage
 fi
+
+deploy_on_host () {
+    host="$1"
+    shift
+
+    info "deploying on ${host}..."
+    $SSH "$host" "sudo /usr/local/sbin/swh-puppet-apply"
+    info "deployment ok. Bye."
+}
 
 if [ "$deploy_on_master" = "yes" ] ; then
     info "deploying recipes on ${MASTER}..."
@@ -50,32 +67,33 @@ for host in "$@" ; do
 
     if [ "$apt_update" = "yes" ] ; then
 	info "apt-get update on ${host}..."
-	$SSH "$host" "sudo apt-get update -qq"
+	$SSH "$host" "sudo /usr/bin/apt-get update"
     fi
 
     if [ "$test_run" = "yes" ] ; then
 	info "starting test run on ${host}..."
     	$SSH "$host" "sudo /usr/local/sbin/swh-puppet-test"
     	info "test run ok."
-    fi
 
-    while true ; do
-	prompt "does the above diff for ${host} look good? [y/n/q] "
-	read yn
-	case $yn in
-	    [yY] )
-		info "deploying on ${host}..."
-		$SSH "$host" "sudo /usr/local/sbin/swh-puppet-apply"
-		info "deployment ok. Bye."
-		break ;;
-	    [nN] )
-		info "skipping deployment on ${host}, as requested."
-		break ;;
-	    [qQ] )
-		info "aborting deployment. Bye."
-		exit 2 ;;
-	    * ) continue ;;
-	esac
-    done
+	while true ; do
+	    prompt "does the above diff for ${host} look good? [y/n/q] "
+	    read yn
+	    case $yn in
+		[yY] )
+		    deploy_on_host "$host"
+		    break ;;
+		[nN] )
+		    info "skipping deployment on ${host}, as requested."
+		    break ;;
+		[qQ] )
+		    info "aborting deployment. Bye."
+		    exit 2 ;;
+		* ) continue ;;
+	    esac
+	done
+
+    else  # test run not required, deploy right away
+	deploy_on_host "$host"
+    fi
 
 done
