@@ -54,19 +54,22 @@ for host in "$@" ; do
     fi
 
     while true ; do
-	prompt "does the above diff for ${host} look good? [y/n] "
+	prompt "does the above diff for ${host} look good? [y/n/q] "
 	read yn
 	case $yn in
-	    [yY] ) break ;;
+	    [yY] )
+		info "deploying on ${host}..."
+		$SSH "$host" "sudo /usr/local/sbin/swh-puppet-apply"
+		info "deployment ok. Bye."
+		break ;;
 	    [nN] )
-		info "deployment aborted, as requested."
+		info "skipping deployment on ${host}, as requested."
+		break ;;
+	    [qQ] )
+		info "aborting deployment. Bye."
 		exit 2 ;;
 	    * ) continue ;;
 	esac
     done
-
-    info "deploying on ${host}..."
-    $SSH "$host" "sudo /usr/local/sbin/swh-puppet-apply"
-    info "deployment ok. Bye."
 
 done
