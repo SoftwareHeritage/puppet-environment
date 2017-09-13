@@ -17,6 +17,13 @@ need to add the .mrconfig file to your ~/.mrtrust file:
  
 You can then checkout the repositories using `mr up`.
 
+
+For periodic updates after initial setup, you can use the `bin/update` helper:
+
+    cd puppet-environment
+    bin/update
+
+
 Module Layout
 -------------
 
