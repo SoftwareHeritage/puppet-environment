@@ -3,6 +3,10 @@
 # trigger a puppet deployment on a given SWH machine
 # see https://intranet.softwareheritage.org/index.php?title=Puppet_setup
 
+DOMAIN="internal.softwareheritage.org"
+MASTER="pergamon.${DOMAIN}"
+SSH="ssh -t"
+
 info () {
     echo "*** swh-deploy: $1"
 }
@@ -22,9 +26,16 @@ die_usage () {
     exit 1
 }
 
-DOMAIN="internal.softwareheritage.org"
-MASTER="pergamon.${DOMAIN}"
-SSH="ssh -t"
+ssh_or_die() {
+    host="$1"
+    cmd="$2"
+    $SSH "$host" "$cmd"
+    ret="$?"
+    if [ "$ret" -ne "0" ]; then
+        info "An error occured while deploying on $host. Exiting."
+        exit "$ret"
+    fi
+}
 
 # command line parsing
 
@@ -34,13 +45,13 @@ test_run="yes"
 
 while [ "${1:0:1}" = '-' ] ; do
     case "$1" in
-	-h|--help) die_usage ;;
-	--apt)       apt_update="yes" ;;
-	--no-apt)    apt_update="no" ;;
-	--master)    deploy_on_master="yes" ;;
-	--no-master) deploy_on_master="no" ;;
-	--test)      test_run="yes" ;;
-	--no-test)   test_run="no" ;;
+        -h|--help) die_usage ;;
+        --apt)       apt_update="yes" ;;
+        --no-apt)    apt_update="no" ;;
+        --master)    deploy_on_master="yes" ;;
+        --no-master) deploy_on_master="no" ;;
+        --test)      test_run="yes" ;;
+        --no-test)   test_run="no" ;;
     esac
     shift
 done
@@ -53,47 +64,48 @@ deploy_on_host () {
     shift
 
     info "deploying on ${host}..."
-    $SSH "$host" "sudo /usr/local/sbin/swh-puppet-apply"
+
+    ssh_or_die "$host" "sudo /usr/local/sbin/swh-puppet-apply"
     info "deployment ok. Bye."
 }
 
 if [ "$deploy_on_master" = "yes" ] ; then
     info "deploying recipes on ${MASTER}..."
-    $SSH "$MASTER" "sudo /usr/local/sbin/swh-puppet-master-deploy"
+    ssh_or_die "$MASTER" "sudo /usr/local/sbin/swh-puppet-master-deploy"
     info "master ok."
 fi
 
 for host in "$@" ; do
 
     if [ "$apt_update" = "yes" ] ; then
-	info "apt-get update on ${host}..."
-	$SSH "$host" "sudo /usr/bin/apt-get update"
+        info "apt-get update on ${host}..."
+        ssh_or_die "$host" "sudo /usr/bin/apt-get update"
     fi
 
     if [ "$test_run" = "yes" ] ; then
-	info "starting test run on ${host}..."
-    	$SSH "$host" "sudo /usr/local/sbin/swh-puppet-test"
-    	info "test run ok."
+        info "starting test run on ${host}..."
+        ssh_or_die "$host" "sudo /usr/local/sbin/swh-puppet-test"
+        info "test run ok."
 
-	while true ; do
-	    prompt "does the above diff for ${host} look good? [y/n/q] "
-	    read yn
-	    case $yn in
-		[yY] )
-		    deploy_on_host "$host"
-		    break ;;
-		[nN] )
-		    info "skipping deployment on ${host}, as requested."
-		    break ;;
-		[qQ] )
-		    info "aborting deployment. Bye."
-		    exit 2 ;;
-		* ) continue ;;
-	    esac
-	done
+        while true ; do
+            prompt "does the above diff for ${host} look good? [y/n/q] "
+            read yn
+            case $yn in
+                [yY] )
+                    deploy_on_host "$host"
+                    break ;;
+                [nN] )
+                    info "skipping deployment on ${host}, as requested."
+                    break ;;
+                [qQ] )
+                    info "aborting deployment. Bye."
+                    exit 2 ;;
+                * ) continue ;;
+            esac
+        done
 
     else  # test run not required, deploy right away
-	deploy_on_host "$host"
+        deploy_on_host "$host"
     fi
 
 done
