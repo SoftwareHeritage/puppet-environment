@@ -1,0 +1,20 @@
+#!/bin/bash
+
+set -e
+
+if [ -d .git/refs/remotes/upstream ]; then
+    git fetch upstream
+
+    oldbranch=$(git rev-parse --abbrev-ref HEAD)
+
+    if [ "$oldbranch" != "master" ]; then
+        git checkout master
+    fi
+
+    git merge upstream/master
+    git push origin master:master --tags
+
+    if [ "$oldbranch" != "master" ]; then
+        git checkout $oldbranch
+    fi
+fi
