@@ -1,0 +1,35 @@
+#!/usr/bin/ruby
+
+require 'r10k/puppetfile'
+
+PUPPETFILE = 'swh-site/Puppetfile'
+
+pf = R10K::Puppetfile.new('.', nil, PUPPETFILE)
+pf.load
+
+pf.modules.each do |mod|
+  # horrible hack to be able to access the private attributes here, notably the remote
+  mod = YAML.load(mod.to_yaml.gsub(/!ruby\/object:R10K.*$/, ''))
+  directory = mod['remote'].split('/').last.gsub(/^puppet-/, '').gsub(/.git$/, '')
+  name = mod['name']
+  if [:control_branch, "master"].include? mod['desired_ref']
+    STDERR.puts "#{name} (#{directory}) up to date"
+    next
+  end
+
+  expected_version = mod['desired_ref']
+
+  Dir.chdir(directory) do
+    latest_tag = %x[git rev-list --tags --max-count=1].chomp
+    if latest_tag.empty?
+      STDERR.puts "#{name} (#{directory}) has no tags"
+      next
+    end
+    parsed_tag = %x[git describe --tags #{latest_tag}].chomp
+    if parsed_tag != expected_version
+      puts "#{name} (#{directory}) outdated: latest tag #{parsed_tag}, wanted #{expected_version}"
+    else
+      STDERR.puts "#{name} (#{directory}) up to date at #{parsed_tag}"
+    end
+  end
+end
