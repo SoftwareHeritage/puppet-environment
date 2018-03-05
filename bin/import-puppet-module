@@ -1,0 +1,186 @@
+#!/usr/bin/python3
+
+# Import a Puppet module from the Puppet Forge to the Software Heritage
+# Phabricator instance
+
+import copy
+import os
+import subprocess
+import sys
+import tempfile
+import time
+
+from phabricator import Phabricator
+import requests
+
+PUPPETFORGE_API = 'https://forgeapi.puppetlabs.com/v3/'
+PUPPETFORGE_URL = 'https://forge.puppet.com/'
+
+PHABRICATOR_EDITORS = 'PHID-PROJ-w6dmg2vssgiimpjpduga'  # System administrators
+PHABRICATOR_TAGS = [
+    'PHID-PROJ-ailxer42p4nlkaikyhlo',  # Language-puppet
+    'PHID-PROJ-ximqdentnggqkdbc2ycg',  # Sync to GitHub
+    'PHID-PROJ-w6dmg2vssgiimpjpduga',  # System administrators
+]
+PHABRICATOR_DATA = [
+    {'type': 'space', 'value': 'PHID-SPCE-yrejny25ty3jfio326zt'},
+    {'type': 'vcs', 'value': 'git'},
+    {'type': 'status', 'value': 'active'},
+    {'type': 'view', 'value': 'public'},
+    {'type': 'edit', 'value': PHABRICATOR_EDITORS},
+    {'type': 'policy.push', 'value': PHABRICATOR_EDITORS},
+    {'type': 'projects.set', 'value': PHABRICATOR_TAGS},
+]
+
+PHABRICATOR_REPO_URL = 'https://forge.softwareheritage.org/source/'
+
+MRCONFIG_MARKER = '## END SWH REPOS ##'
+MRCONFIG_TEMPLATE = """\
+[{module_name}]
+checkout = git clone {phabricator_repo} {module_name} \\
+\t && cd {module_name} \\
+\t && git remote add upstream {upstream_repo} \\
+\t && git fetch upstream
+"""
+
+
+def get_puppetforge_module_info(module_name):
+    """Get module information from the Puppet forge"""
+    r = requests.get(PUPPETFORGE_API + 'modules/' + module_name)
+    if not r.ok:
+        raise ValueError('Error when fetching %s from the Puppet forge: %s' %
+                         (module_name, ', '.join(r.json()['errors'])))
+    return r.json()
+
+
+def create_phab_repo(phabricator, module_name, release_metadata):
+    """Create a repository on the Software Hertiage forge with proper
+    metadata"""
+    upstream_repo = release_metadata['source']
+    original_description = release_metadata['summary']
+    puppetforge_url = PUPPETFORGE_URL + module_name.replace('-', '/')
+    description = '''\
+{description}
+{puppetforge_url}
+{upstream_repo}
+    '''.format(
+        description=original_description,
+        puppetforge_url=puppetforge_url,
+        upstream_repo=upstream_repo,
+    )
+
+    phabricator_data = copy.deepcopy(PHABRICATOR_DATA)
+    phabricator_name = 'puppet-%s' % module_name
+    phabricator_data.append({'type': 'name', 'value': phabricator_name})
+    phabricator_data.append({'type': 'shortName', 'value': phabricator_name})
+    phabricator_data.append({'type': 'description',
+                             'value': description.strip()})
+
+    return phabricator.diffusion.repository.edit(transactions=phabricator_data)
+
+
+def wait_phab_repo(phabricator, id):
+    """Wait for the repository with the given id to be ready"""
+    backoff = 0.5
+    while True:
+        ret = phabricator.diffusion.repository.search(
+            constraints={'ids': [id]}
+        )
+        repo = ret.data[0]
+        if not repo['fields']['isImporting']:
+            break
+        print("Repository %s still importing, sleeping for %s seconds..." %
+              (id, backoff))
+        time.sleep(backoff)
+        backoff = min(backoff * 2, 15.0)
+
+
+def clone_and_push_repo(module_name, phabricator_repo, upstream_repo):
+    """Clone the SWH repository, add the upstream remote and push to SWH"""
+    subprocess.check_call(['git', 'clone', phabricator_repo, module_name])
+    os.chdir(module_name)
+    subprocess.check_call(['git', 'remote', 'add', 'upstream', upstream_repo])
+    subprocess.check_call(['git', 'fetch', 'upstream', '--tags'])
+    subprocess.check_call(['git', 'merge', 'upstream/master'])
+    subprocess.check_call(['git', 'push', '--tags', '--set-upstream',
+                           'origin', 'master:master'])
+    os.chdir('..')
+
+
+def read_mrconfig():
+    """Parse the .mrconfig file"""
+    mrconfig = []
+    with open('.mrconfig') as f:
+        for block in f.read().strip().split('\n\n'):
+            mrconfig.append(block.strip())
+    swh_repos_index = mrconfig.index(MRCONFIG_MARKER)
+    swh_repos = {}
+    for i, block in enumerate(mrconfig[:swh_repos_index]):
+        if not block.startswith('[') or ']' not in block:
+            raise ValueError(
+                'Could not parse .mrconfig: missing [] in block %d' %
+                (i + swh_repos_index + 1)
+            )
+        module_name = block[1:block.index(']')]
+        swh_repos[module_name] = block
+
+    extra_repos = {}
+    for i, block in enumerate(mrconfig[swh_repos_index + 1:]):
+        if not block.startswith('[') or ']' not in block:
+            raise ValueError(
+                'Could not parse .mrconfig: missing [] in block %d' %
+                (i + swh_repos_index + 1)
+            )
+        module_name = block[1:block.index(']')]
+        extra_repos[module_name] = block
+
+    return swh_repos, extra_repos
+
+
+def write_mrconfig(swh_repos, extra_repos):
+    """Write the mrconfig from the output of read_mrconfig()"""
+    out = []
+    for repo, block in sorted(swh_repos.items()):
+        out.append(block.strip())
+    out.append(MRCONFIG_MARKER)
+    for repo, block in sorted(extra_repos.items()):
+        out.append(block.strip())
+
+    with tempfile.NamedTemporaryFile(mode='w+', dir='.', delete=False) as f:
+        f.write('\n\n'.join(out))
+        f.write('\n')
+    os.rename(f.name, '.mrconfig')
+
+
+def update_mrconfig(module_name, phabricator_repo, upstream_repo):
+    """Add the new module to .mrconfig"""
+    swh_repos, extra_repos = read_mrconfig()
+
+    extra_repos[module_name] = MRCONFIG_TEMPLATE.format(
+        module_name=module_name,
+        phabricator_repo=phabricator_repo,
+        upstream_repo=upstream_repo,
+    )
+
+    write_mrconfig(swh_repos, extra_repos)
+
+
+if __name__ == '__main__':
+    if len(sys.argv) != 2:
+        print('Usage: %s publisher-module_name' % sys.argv[0], file=sys.stderr)
+        sys.exit(2)
+
+    module_name = sys.argv[1]
+
+    puppetforge_info = get_puppetforge_module_info(module_name)
+    release_meta = puppetforge_info['current_release']['metadata']
+    upstream_repo = release_meta['source']
+    phabricator_repo = PHABRICATOR_REPO_URL + 'puppet-%s.git' % module_name
+    phabricator = Phabricator()
+    phabricator.connect()
+    phabricator.update_interfaces()
+    ret = create_phab_repo(phabricator, module_name, release_meta)
+    repo_id = ret['object']['id']
+    wait_phab_repo(phabricator, repo_id)
+    clone_and_push_repo(module_name, phabricator_repo, upstream_repo)
+    update_mrconfig(module_name, phabricator_repo, upstream_repo)
