@@ -164,6 +164,20 @@ def update_mrconfig(module_name, phabricator_repo, upstream_repo):
 
     write_mrconfig(swh_repos, extra_repos)
 
+    ret = copy.deepcopy(swh_repos)
+    ret.update(extra_repos)
+    return ret
+
+
+def update_gitignore(modules):
+    with tempfile.NamedTemporaryFile(mode='w+', dir='.', delete=False) as f:
+        for module in modules:
+            if module == 'DEFAULT':
+                continue
+            print('/%s/' % module, file=f)
+
+    os.rename(f.name, '.gitignore')
+
 
 if __name__ == '__main__':
     if len(sys.argv) != 2:
@@ -179,8 +193,9 @@ if __name__ == '__main__':
     phabricator = Phabricator()
     phabricator.connect()
     phabricator.update_interfaces()
-    ret = create_phab_repo(phabricator, module_name, release_meta)
-    repo_id = ret['object']['id']
+    repo = create_phab_repo(phabricator, module_name, release_meta)
+    repo_id = repo['object']['id']
     wait_phab_repo(phabricator, repo_id)
     clone_and_push_repo(module_name, phabricator_repo, upstream_repo)
-    update_mrconfig(module_name, phabricator_repo, upstream_repo)
+    repos = update_mrconfig(module_name, phabricator_repo, upstream_repo)
+    update_gitignore(repos)
