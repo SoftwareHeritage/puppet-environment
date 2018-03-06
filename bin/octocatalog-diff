@@ -1,0 +1,143 @@
+#!/bin/bash
+
+set -e
+
+PUPPET_ENV=$(readlink -f $(dirname $0)/..)
+OCD_BASE="${PUPPET_ENV}/octocatalog-diff"
+FACTS_DIR="${OCD_BASE}/facts"
+
+function usage {
+    echo "usage: $0 [-f/--from from_branch] [-t/--to to_branch] [--no-clean-tmp] [--r10k-args r10k-args] [--octocatalog-diff-args octocatalog-diff-args] host1 host2 ..."
+}
+
+CLEAN_TMPDIR=true
+USE_REMOTE_REPOS=false
+FROM=production
+TO=staging
+HOSTS=()
+OCTOCATALOG_DIFF_ARGS=
+R10K_ARGS=
+
+while (( "$#" )); do
+    case "$1" in
+        -f|--from)
+            FROM=$2
+            shift
+            ;;
+        -t|--to)
+            TO=$2
+            shift
+            ;;
+        --no-clean-tmp)
+            CLEAN_TMPDIR=false
+            ;;
+        --octocatalog-diff-args)
+            OCTOCATALOG_DIFF_ARGS=$2
+            shift
+            ;;
+        --r10k-args)
+            R10K_ARGS=$2
+            shift
+            ;;
+        *)
+            HOSTS+=($1)
+            ;;
+    esac
+    shift
+done
+
+if [ ${#HOSTS[@]} -eq 0 ]; then
+    usage
+    exit 2
+fi
+if [ $FROM = $TO ]; then
+    echo "--from branch and --to branch can't be identical"
+    usage
+    exit 2
+fi
+
+PARSED_HOSTS=()
+unknown_host=false
+for host in "${HOSTS[@]}"; do
+    found_host=false
+    for try in "${host}" "${host}.softwareheritage.org" "${host}.internal.softwareheritage.org"; do
+        if [ -f "${FACTS_DIR}/${try}.yaml" ]; then
+            found_host=true
+            echo "Found host $try"
+            PARSED_HOSTS+=($try)
+            break
+        fi
+    done
+    if [ $found_host = "true" ]; then
+        continue
+    fi
+    echo "Unknown host $host"
+    unknown_host=true
+done
+
+if [ "$unknown_host" = "true" ]; then
+    exit 1
+fi
+
+TMPDIR=$(mktemp -d /tmp/swh-ocd.XXXXXXXX)
+function cleanup {
+    if [ "$CLEAN_TMPDIR" = "true" ]; then
+        rm -rf $TMPDIR
+    else
+        echo Would clean $TMPDIR
+    fi
+}
+trap cleanup EXIT
+
+function template {
+    sed -e "s#@PUPPET_ENV@#${PUPPET_ENV}#g" -e "s#@TMPDIR@#${TMPDIR}#g" $1 > $2
+}
+
+# R10k config
+template $OCD_BASE/r10k.yaml $TMPDIR/r10k.yaml
+# override git configuration to clone from local repositories instead of the forge
+template $OCD_BASE/gitconfig $TMPDIR/.gitconfig
+
+HOME=$TMPDIR r10k deploy environment -c $TMPDIR/r10k.yaml --puppetfile $R10K_ARGS $FROM $TO
+
+unknown_branch=false
+if [ ! -d $TMPDIR/environments/$FROM ]; then
+    echo "Unknown --from branch $FROM"
+    unknown_branch=true
+else
+    git clone $PUPPET_ENV/private/swh-private-data $TMPDIR/environments/$FROM/data/private 2>/dev/null
+fi
+if [ ! -d $TMPDIR/environments/$TO ]; then
+    echo "Unknown --to branch $TO"
+    unknown_branch=true
+else
+    git clone $PUPPET_ENV/private/swh-private-data $TMPDIR/environments/$TO/data/private 2>/dev/null
+fi
+
+if [ "${unknown_branch}" = "true" ]; then
+    exit 1
+fi
+
+function run-octocatalog-diff {
+    host=$1
+    PUPPET_FACT_DIR=$FACTS_DIR \
+    OCTOCATALOG_DIFF_CONFIG_FILE=$OCD_BASE/octocatalog-diff.config.rb \
+        octocatalog-diff \
+          --bootstrapped-from-dir $TMPDIR/environments/$FROM \
+          --bootstrapped-to-dir $TMPDIR/environments/$TO \
+          -n $host \
+          --display-detail-add \
+          $OCTOCATALOG_DIFF_ARGS
+}
+
+failed=false
+
+for host in "${PARSED_HOSTS[@]}"; do
+    echo "*** Running octocatalog-diff on host ${host}"
+    run-octocatalog-diff $host || failed=true
+    echo "*** End octocatalog-diff on ${host}"
+done
+
+if [ "$failed" = "true" ]; then
+    exit 1
+fi
