@@ -5,7 +5,7 @@ values:
   apt_has_dist_updates: false
   apt_has_updates: false
   apt_reboot_required: false
-  apt_update_last_success: 1523620502
+  apt_update_last_success: 1523632202
   architecture: amd64
   augeas:
     version: 1.8.0
@@ -62,23 +62,29 @@ values:
     privileged: true
     uid: 0
     user: root
-  interfaces: ens18,lo
+  interfaces: docker0,ens18,lo
   ipaddress: 192.168.100.105
   ipaddress6: fe80::5054:ff:fe1a:85be
   ipaddress6_ens18: fe80::5054:ff:fe1a:85be
   ipaddress6_lo: "::1"
+  ipaddress_docker0: 172.17.0.1
   ipaddress_ens18: 192.168.100.105
   ipaddress_lo: 127.0.0.1
   is_pe: false
   is_virtual: true
+  java_default_home: "/usr/lib/jvm/java-8-openjdk-amd64"
+  java_libjvm_path: "/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/amd64/server"
+  java_major_version: '8'
+  java_patch_level: '162'
+  java_version: 1.8.0_162
   kernel: Linux
   kernelmajversion: '4.9'
   kernelrelease: 4.9.0-6-amd64
   kernelversion: 4.9.0
   load_averages:
-    15m: 0.03
-    1m: 0.45
-    5m: 0.12
+    15m: 0.02
+    1m: 0.22
+    5m: 0.05
   location: sesi_rocquencourt
   lsbdistcodename: stretch
   lsbdistdescription: Debian GNU/Linux 9.4 (stretch)
@@ -87,6 +93,7 @@ values:
   lsbmajdistrelease: '9'
   lsbminordistrelease: '4'
   macaddress: 52:54:00:1a:85:be
+  macaddress_docker0: 02:42:05:e3:9b:0c
   macaddress_ens18: 52:54:00:1a:85:be
   manufacturer: QEMU
   memory:
@@ -99,22 +106,22 @@ values:
       used: 0 bytes
       used_bytes: 0
     system:
-      available: 15.48 GiB
-      available_bytes: 16623923200
-      capacity: 1.23%
+      available: 13.57 GiB
+      available_bytes: 14571487232
+      capacity: 13.43%
       total: 15.68 GiB
       total_bytes: 16831242240
-      used: 197.71 MiB
-      used_bytes: 207319040
-  memoryfree: 15.48 GiB
-  memoryfree_mb: 15853.80859375
+      used: 2.10 GiB
+      used_bytes: 2259755008
+  memoryfree: 13.57 GiB
+  memoryfree_mb: 13896.453125
   memorysize: 15.68 GiB
   memorysize_mb: 16051.5234375
   mountpoints:
     "/":
-      available: 43.90 GiB
-      available_bytes: 47140696064
-      capacity: 2.88%
+      available: 42.89 GiB
+      available_bytes: 46049009664
+      capacity: 5.13%
       device: "/dev/mapper/thyssen--vg-root"
       filesystem: ext4
       options:
@@ -124,8 +131,8 @@ values:
       - data=ordered
       size: 45.20 GiB
       size_bytes: 48537276416
-      used: 1.30 GiB
-      used_bytes: 1396580352
+      used: 2.32 GiB
+      used_bytes: 2488266752
     "/dev/shm":
       available: 7.84 GiB
       available_bytes: 8415621120
@@ -142,7 +149,7 @@ values:
       used_bytes: 0
     "/run":
       available: 1.57 GiB
-      available_bytes: 1682665472
+      available_bytes: 1682595840
       capacity: 0.03%
       device: tmpfs
       filesystem: tmpfs
@@ -155,8 +162,8 @@ values:
       - mode=755
       size: 1.57 GiB
       size_bytes: 1683124224
-      used: 448.00 KiB
-      used_bytes: 458752
+      used: 516.00 KiB
+      used_bytes: 528384
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -193,6 +200,25 @@ values:
       size_bytes: 1683124224
       used: 0 bytes
       used_bytes: 0
+    "/run/user/115":
+      available: 1.57 GiB
+      available_bytes: 1683124224
+      capacity: 0%
+      device: tmpfs
+      filesystem: tmpfs
+      options:
+      - rw
+      - nosuid
+      - nodev
+      - relatime
+      - size=1643676k
+      - mode=700
+      - uid=115
+      - gid=120
+      size: 1.57 GiB
+      size_bytes: 1683124224
+      used: 0 bytes
+      used_bytes: 0
     "/sys/fs/cgroup":
       available: 7.84 GiB
       available_bytes: 8415621120
@@ -211,6 +237,7 @@ values:
       used_bytes: 0
   mounts:
   - "/"
+  mtu_docker0: 1500
   mtu_ens18: 1500
   mtu_lo: 65536
   mysql_server_id: 115198
@@ -218,12 +245,14 @@ values:
   netmask6: 'ffff:ffff:ffff:ffff::'
   netmask6_ens18: 'ffff:ffff:ffff:ffff::'
   netmask6_lo: ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff
+  netmask_docker0: 255.255.0.0
   netmask_ens18: 255.255.255.0
   netmask_lo: 255.0.0.0
   network: 192.168.100.0
   network6: 'fe80::'
   network6_ens18: 'fe80::'
   network6_lo: "::1"
+  network_docker0: 172.17.0.0
   network_ens18: 192.168.100.0
   network_lo: 127.0.0.0
   networking:
@@ -231,6 +260,16 @@ values:
     fqdn: thyssen.internal.softwareheritage.org
     hostname: thyssen
     interfaces:
+      docker0:
+        bindings:
+        - address: 172.17.0.1
+          netmask: 255.255.0.0
+          network: 172.17.0.0
+        ip: 172.17.0.1
+        mac: 02:42:05:e3:9b:0c
+        mtu: 1500
+        netmask: 255.255.0.0
+        network: 172.17.0.0
       ens18:
         bindings:
         - address: 192.168.100.105
@@ -387,9 +426,9 @@ values:
     internal_fqdn: thyssen.internal.softwareheritage.org
   system_uptime:
     days: 0
-    hours: 2
-    seconds: 9879
-    uptime: 2:44 hours
+    hours: 6
+    seconds: 22739
+    uptime: 6:18 hours
   systemd: true
   systemd_internal_services:
     systemd-networkd-wait-online.service: disabled
@@ -398,15 +437,15 @@ values:
     systemd-timesyncd.service: enabled
   systemd_version: '232'
   timezone: UTC
-  uptime: 2:44 hours
+  uptime: 6:18 hours
   uptime_days: 0
-  uptime_hours: 2
-  uptime_seconds: 9879
+  uptime_hours: 6
+  uptime_seconds: 22739
   uuid: F76B10B2-3DEC-4D0A-8A3D-172D18877C1C
   vcsrepo_svn_ver: ''
   virtual: kvm
   clientcert: thyssen.internal.softwareheritage.org
   clientversion: 4.8.2
   clientnoop: false
-timestamp: '2018-04-13T12:30:20.287924670+00:00'
-expiration: '2018-04-13T13:00:20.288518908+00:00'
+timestamp: '2018-04-13T16:04:40.234073762+00:00'
+expiration: '2018-04-13T16:34:40.234654434+00:00'
