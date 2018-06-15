@@ -36,14 +36,12 @@ demonstrated by the following series of articles:
  - http://garylarizza.com/blog/2014/03/07/puppet-workflow-part-3b/
  - http://garylarizza.com/blog/2014/10/24/puppet-workflows-4-using-hiera-in-anger/
 
-Our main manifests are present in the `swh-site` repository. Each branch
-of that repository corresponds to an environment. The default
-environment is `production`. This repository contains the Puppetfile
-referencing all the modules, the main manifest file `manifests/site.pp`,
-and the hiera `data` directory.
+Our main manifests are present in the `swh-site` repository. Each branch of that
+repository corresponds to an environment in the puppet workflow presented.
 
-Roles of Software Heritage servers are defined in the `swh-role` module.
-Profiles are defined in the `swh-profile` module.
+This repository contains the Puppetfile referencing all the modules, the main
+manifest file `manifests/site.pp`, and the hiera `data` directory, as well as
+the two "site-modules" for `profile`s and `role`s.
 
 Our setup mirrors the git repositories of third-party Puppet modules on the
 Software Heritage git server --- this is to avoid reliance on 3rd party
