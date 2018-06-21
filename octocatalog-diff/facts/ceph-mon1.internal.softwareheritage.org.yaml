@@ -2,22 +2,10 @@
 name: ceph-mon1.internal.softwareheritage.org
 values:
   agent_specified_environment: production
-  apt_dist_updates: 2
-  apt_has_dist_updates: true
-  apt_has_updates: true
-  apt_package_dist_updates:
-  - libleatherman-data
-  - libleatherman1.4.0
-  apt_package_security_dist_updates: []
-  apt_package_security_updates: []
-  apt_package_updates:
-  - libleatherman-data
-  - libleatherman1.4.0
-  apt_reboot_required: true
-  apt_security_dist_updates: 0
-  apt_security_updates: 0
-  apt_update_last_success: 1522929002
-  apt_updates: 2
+  apt_has_dist_updates: false
+  apt_has_updates: false
+  apt_reboot_required: false
+  apt_update_last_success: 1529595602
   architecture: amd64
   bios_release_date: 04/14/2017
   bios_vendor: American Megatrends Inc.
@@ -35,6 +23,18 @@ values:
   boardmanufacturer: Supermicro
   boardproductname: X10DRD-LTP
   boardserialnumber: ZM152S007866
+  ceph_mgr_modules:
+    enabled_modules:
+    - balancer
+    - dashboard
+    - prometheus
+    - restful
+    - status
+    disabled_modules:
+    - influx
+    - localpool
+    - selftest
+    - zabbix
   chassisassettag: Default string
   chassistype: Other
   disks:
@@ -72,7 +72,7 @@ values:
       uuid: 00000000-0000-0000-0000-0CC47A4B18C0
   domain: internal.softwareheritage.org
   facterversion: 3.10.0
-  filesystems: btrfs,ext2,ext3,ext4,hfs,hfsplus,jfs,minix,msdos,ntfs,qnx4,ufs,vfat,xfs
+  filesystems: btrfs,ext2,ext3,ext4,vfat
   fips_enabled: false
   fqdn: ceph-mon1.internal.softwareheritage.org
   gid: root
@@ -89,24 +89,26 @@ values:
     privileged: true
     uid: 0
     user: root
-  interfaces: eno1,eno2,lo
+  interfaces: bond0,eno1,eno2,lo,vlan440,vlan442
   ipaddress: 192.168.100.170
   ipaddress6: fe80::ec4:7aff:fe4b:18c0
-  ipaddress6_eno1: fe80::ec4:7aff:fe4b:18c0
-  ipaddress6_eno2: fe80::ec4:7aff:fe4b:18c1
+  ipaddress6_bond0: fe80::ec4:7aff:fe4b:18c0
   ipaddress6_lo: "::1"
-  ipaddress_eno1: 192.168.100.170
+  ipaddress6_vlan440: fe80::ec4:7aff:fe4b:18c0
+  ipaddress6_vlan442: fe80::ec4:7aff:fe4b:18c0
   ipaddress_lo: 127.0.0.1
+  ipaddress_vlan440: 192.168.100.170
+  ipaddress_vlan442: 172.16.42.1
   is_pe: false
   is_virtual: false
   kernel: Linux
   kernelmajversion: '4.9'
-  kernelrelease: 4.9.0-4-amd64
+  kernelrelease: 4.9.0-6-amd64
   kernelversion: 4.9.0
   load_averages:
-    15m: 0.01
-    1m: 0.18
-    5m: 0.08
+    15m: 0.02
+    1m: 0.24
+    5m: 0.07
   location: sesi_rocquencourt
   lsbdistcodename: stretch
   lsbdistdescription: Debian GNU/Linux 9.4 (stretch)
@@ -115,8 +117,11 @@ values:
   lsbmajdistrelease: '9'
   lsbminordistrelease: '4'
   macaddress: 0c:c4:7a:4b:18:c0
+  macaddress_bond0: 0c:c4:7a:4b:18:c0
   macaddress_eno1: 0c:c4:7a:4b:18:c0
   macaddress_eno2: 0c:c4:7a:4b:18:c1
+  macaddress_vlan440: 0c:c4:7a:4b:18:c0
+  macaddress_vlan442: 0c:c4:7a:4b:18:c0
   manufacturer: Supermicro
   memory:
     swap:
@@ -128,22 +133,22 @@ values:
       used: 0 bytes
       used_bytes: 0
     system:
-      available: 61.60 GiB
-      available_bytes: 66142797824
-      capacity: 1.93%
+      available: 62.06 GiB
+      available_bytes: 66637881344
+      capacity: 1.20%
       total: 62.81 GiB
-      total_bytes: 67445313536
-      used: 1.21 GiB
-      used_bytes: 1302515712
-  memoryfree: 61.60 GiB
-  memoryfree_mb: 63078.6875
+      total_bytes: 67445235712
+      used: 769.95 MiB
+      used_bytes: 807354368
+  memoryfree: 62.06 GiB
+  memoryfree_mb: 63550.8359375
   memorysize: 62.81 GiB
-  memorysize_mb: 64320.86328125
+  memorysize_mb: 64320.7890625
   mountpoints:
     "/":
-      available: 15.33 GiB
-      available_bytes: 16456269824
-      capacity: 15.83%
+      available: 14.94 GiB
+      available_bytes: 16039571456
+      capacity: 17.96%
       device: "/dev/mapper/ssd-root"
       filesystem: ext4
       options:
@@ -153,8 +158,8 @@ values:
       - data=ordered
       size: 18.21 GiB
       size_bytes: 19550347264
-      used: 2.88 GiB
-      used_bytes: 3094077440
+      used: 3.27 GiB
+      used_bytes: 3510775808
     "/boot/efi":
       available: 950.97 MiB
       available_bytes: 997163008
@@ -177,7 +182,7 @@ values:
       used_bytes: 163840
     "/dev/shm":
       available: 31.41 GiB
-      available_bytes: 33722654720
+      available_bytes: 33722617856
       capacity: 0%
       device: tmpfs
       filesystem: tmpfs
@@ -186,13 +191,13 @@ values:
       - nosuid
       - nodev
       size: 31.41 GiB
-      size_bytes: 33722654720
+      size_bytes: 33722617856
       used: 0 bytes
       used_bytes: 0
     "/run":
       available: 6.28 GiB
-      available_bytes: 6742409216
-      capacity: 0.03%
+      available_bytes: 6743031808
+      capacity: 0.02%
       device: tmpfs
       filesystem: tmpfs
       options:
@@ -200,12 +205,12 @@ values:
       - nosuid
       - noexec
       - relatime
-      - size=6586460k
+      - size=6586452k
       - mode=755
       size: 6.28 GiB
-      size_bytes: 6744535040
-      used: 2.03 MiB
-      used_bytes: 2125824
+      size_bytes: 6744526848
+      used: 1.43 MiB
+      used_bytes: 1495040
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -223,9 +228,9 @@ values:
       size_bytes: 5242880
       used: 0 bytes
       used_bytes: 0
-    "/run/user/0":
+    "/run/user/1001":
       available: 6.28 GiB
-      available_bytes: 6744530944
+      available_bytes: 6744522752
       capacity: 0%
       device: tmpfs
       filesystem: tmpfs
@@ -234,15 +239,17 @@ values:
       - nosuid
       - nodev
       - relatime
-      - size=6586456k
+      - size=6586448k
       - mode=700
+      - uid=1001
+      - gid=1001
       size: 6.28 GiB
-      size_bytes: 6744530944
+      size_bytes: 6744522752
       used: 0 bytes
       used_bytes: 0
     "/sys/fs/cgroup":
       available: 31.41 GiB
-      available_bytes: 33722654720
+      available_bytes: 33722617856
       capacity: 0%
       device: tmpfs
       filesystem: tmpfs
@@ -253,62 +260,58 @@ values:
       - noexec
       - mode=755
       size: 31.41 GiB
-      size_bytes: 33722654720
+      size_bytes: 33722617856
       used: 0 bytes
       used_bytes: 0
   mounts:
   - "/"
   - "/boot/efi"
-  mtu_eno1: 1500
-  mtu_eno2: 1500
+  mtu_bond0: 9000
+  mtu_eno1: 9000
+  mtu_eno2: 9000
   mtu_lo: 65536
+  mtu_vlan440: 1500
+  mtu_vlan442: 9000
   mysql_server_id: 32290496
   netmask: 255.255.255.0
   netmask6: 'ffff:ffff:ffff:ffff::'
-  netmask6_eno1: 'ffff:ffff:ffff:ffff::'
-  netmask6_eno2: 'ffff:ffff:ffff:ffff::'
+  netmask6_bond0: 'ffff:ffff:ffff:ffff::'
   netmask6_lo: ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff
-  netmask_eno1: 255.255.255.0
+  netmask6_vlan440: 'ffff:ffff:ffff:ffff::'
+  netmask6_vlan442: 'ffff:ffff:ffff:ffff::'
   netmask_lo: 255.0.0.0
+  netmask_vlan440: 255.255.255.0
+  netmask_vlan442: 255.255.255.0
   network: 192.168.100.0
   network6: 'fe80::'
-  network6_eno1: 'fe80::'
-  network6_eno2: 'fe80::'
+  network6_bond0: 'fe80::'
   network6_lo: "::1"
-  network_eno1: 192.168.100.0
+  network6_vlan440: 'fe80::'
+  network6_vlan442: 'fe80::'
   network_lo: 127.0.0.0
+  network_vlan440: 192.168.100.0
+  network_vlan442: 172.16.42.0
   networking:
     domain: internal.softwareheritage.org
     fqdn: ceph-mon1.internal.softwareheritage.org
     hostname: ceph-mon1
     interfaces:
-      eno1:
-        bindings:
-        - address: 192.168.100.170
-          netmask: 255.255.255.0
-          network: 192.168.100.0
+      bond0:
         bindings6:
         - address: fe80::ec4:7aff:fe4b:18c0
           netmask: 'ffff:ffff:ffff:ffff::'
           network: 'fe80::'
-        ip: 192.168.100.170
         ip6: fe80::ec4:7aff:fe4b:18c0
         mac: 0c:c4:7a:4b:18:c0
-        mtu: 1500
-        netmask: 255.255.255.0
+        mtu: 9000
         netmask6: 'ffff:ffff:ffff:ffff::'
-        network: 192.168.100.0
         network6: 'fe80::'
+      eno1:
+        mac: 0c:c4:7a:4b:18:c0
+        mtu: 9000
       eno2:
-        bindings6:
-        - address: fe80::ec4:7aff:fe4b:18c1
-          netmask: 'ffff:ffff:ffff:ffff::'
-          network: 'fe80::'
-        ip6: fe80::ec4:7aff:fe4b:18c1
         mac: 0c:c4:7a:4b:18:c1
-        mtu: 1500
-        netmask6: 'ffff:ffff:ffff:ffff::'
-        network6: 'fe80::'
+        mtu: 9000
       lo:
         bindings:
         - address: 127.0.0.1
@@ -325,6 +328,40 @@ values:
         netmask6: ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff
         network: 127.0.0.0
         network6: "::1"
+      vlan440:
+        bindings:
+        - address: 192.168.100.170
+          netmask: 255.255.255.0
+          network: 192.168.100.0
+        bindings6:
+        - address: fe80::ec4:7aff:fe4b:18c0
+          netmask: 'ffff:ffff:ffff:ffff::'
+          network: 'fe80::'
+        ip: 192.168.100.170
+        ip6: fe80::ec4:7aff:fe4b:18c0
+        mac: 0c:c4:7a:4b:18:c0
+        mtu: 1500
+        netmask: 255.255.255.0
+        netmask6: 'ffff:ffff:ffff:ffff::'
+        network: 192.168.100.0
+        network6: 'fe80::'
+      vlan442:
+        bindings:
+        - address: 172.16.42.1
+          netmask: 255.255.255.0
+          network: 172.16.42.0
+        bindings6:
+        - address: fe80::ec4:7aff:fe4b:18c0
+          netmask: 'ffff:ffff:ffff:ffff::'
+          network: 'fe80::'
+        ip: 172.16.42.1
+        ip6: fe80::ec4:7aff:fe4b:18c0
+        mac: 0c:c4:7a:4b:18:c0
+        mtu: 9000
+        netmask: 255.255.255.0
+        netmask6: 'ffff:ffff:ffff:ffff::'
+        network: 172.16.42.0
+        network6: 'fe80::'
     ip: 192.168.100.170
     ip6: fe80::ec4:7aff:fe4b:18c0
     mac: 0c:c4:7a:4b:18:c0
@@ -333,7 +370,7 @@ values:
     netmask6: 'ffff:ffff:ffff:ffff::'
     network: 192.168.100.0
     network6: 'fe80::'
-    primary: eno1
+    primary: vlan440
   operatingsystem: Debian
   operatingsystemmajrelease: '9'
   operatingsystemrelease: '9.4'
@@ -548,10 +585,10 @@ values:
     short: ceph-mon1
     internal_fqdn: ceph-mon1.internal.softwareheritage.org
   system_uptime:
-    days: 70
-    hours: 1682
-    seconds: 6056194
-    uptime: 70 days
+    days: 3
+    hours: 78
+    seconds: 283835
+    uptime: 3 days
   systemd: true
   systemd_internal_services:
     systemd-networkd-wait-online.service: disabled
@@ -560,15 +597,15 @@ values:
     systemd-timesyncd.service: enabled
   systemd_version: '232'
   timezone: UTC
-  uptime: 70 days
-  uptime_days: 70
-  uptime_hours: 1682
-  uptime_seconds: 6056194
+  uptime: 3 days
+  uptime_days: 3
+  uptime_hours: 78
+  uptime_seconds: 283835
   uuid: 00000000-0000-0000-0000-0CC47A4B18C0
   vcsrepo_svn_ver: ''
   virtual: physical
   clientcert: ceph-mon1.internal.softwareheritage.org
   clientversion: 4.8.2
   clientnoop: false
-timestamp: '2018-04-05T12:23:29.163494272+00:00'
-expiration: '2018-04-05T12:53:29.164372586+00:00'
+timestamp: '2018-06-21T15:45:54.694114097+00:00'
+expiration: '2018-06-21T16:15:54.694938919+00:00'
