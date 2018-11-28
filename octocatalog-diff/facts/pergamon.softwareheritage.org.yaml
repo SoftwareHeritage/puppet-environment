@@ -5,8 +5,8 @@ values:
   apache_version: 2.4.25
   apt_has_dist_updates: false
   apt_has_updates: false
-  apt_reboot_required: false
-  apt_update_last_success: 1529593804
+  apt_reboot_required: true
+  apt_update_last_success: 1542820504
   architecture: amd64
   bios_release_date: 04/01/2014
   bios_vendor: SeaBIOS
@@ -18,7 +18,9 @@ values:
   blockdevice_vda_vendor: '0x1af4'
   blockdevice_vdb_size: 4294967296
   blockdevice_vdb_vendor: '0x1af4'
-  blockdevices: vdb,sr0,vda
+  blockdevice_vdc_size: 64424509440
+  blockdevice_vdc_vendor: '0x1af4'
+  blockdevices: vdb,sr0,vdc,vda
   chassistype: Other
   dhcp_servers:
     eth1: 192.168.100.1
@@ -36,6 +38,10 @@ values:
       size: 4.00 GiB
       size_bytes: 4294967296
       vendor: '0x1af4'
+    vdc:
+      size: 60.00 GiB
+      size_bytes: 64424509440
+      vendor: '0x1af4'
   dmi:
     bios:
       release_date: 04/01/2014
@@ -49,7 +55,7 @@ values:
       uuid: AA664C56-FC2F-45A2-98D5-476F11EEA5BB
   domain: softwareheritage.org
   facterversion: 3.10.0
-  filesystems: ext2,ext3,ext4
+  filesystems: btrfs,ext2,ext3,ext4,hfs,hfsplus,jfs,minix,msdos,ntfs,qnx4,ufs,vfat,xfs
   fips_enabled: false
   fqdn: pergamon.softwareheritage.org
   gid: root
@@ -80,53 +86,53 @@ values:
   java_default_home: "/usr/lib/jvm/java-8-openjdk-amd64"
   java_libjvm_path: "/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/amd64/server"
   java_major_version: '8'
-  java_patch_level: '171'
-  java_version: 1.8.0_171
+  java_patch_level: '181'
+  java_version: 1.8.0_181
   kernel: Linux
   kernelmajversion: '4.9'
-  kernelrelease: 4.9.0-6-amd64
+  kernelrelease: 4.9.0-8-amd64
   kernelversion: 4.9.0
   load_averages:
-    15m: 0.64
-    1m: 0.8
-    5m: 0.6
+    15m: 0.85
+    1m: 1.18
+    5m: 1.17
   location: sesi_rocquencourt
   lsbdistcodename: stretch
-  lsbdistdescription: Debian GNU/Linux 9.4 (stretch)
+  lsbdistdescription: Debian GNU/Linux 9.6 (stretch)
   lsbdistid: Debian
-  lsbdistrelease: '9.4'
+  lsbdistrelease: '9.6'
   lsbmajdistrelease: '9'
-  lsbminordistrelease: '4'
+  lsbminordistrelease: '6'
   macaddress: 96:bf:20:21:56:cf
   macaddress_eth0: 96:bf:20:21:56:cf
   macaddress_eth1: be:83:fd:d7:61:94
   manufacturer: QEMU
   memory:
     swap:
-      available: 3.85 GiB
-      available_bytes: 4133412864
-      capacity: 3.71%
+      available: 3.79 GiB
+      available_bytes: 4071260160
+      capacity: 5.16%
       total: 4.00 GiB
       total_bytes: 4292866048
-      used: 152.07 MiB
-      used_bytes: 159453184
+      used: 211.34 MiB
+      used_bytes: 221605888
     system:
-      available: 6.40 GiB
-      available_bytes: 6870048768
-      capacity: 34.51%
-      total: 9.77 GiB
-      total_bytes: 10489454592
-      used: 3.37 GiB
-      used_bytes: 3619405824
-  memoryfree: 6.40 GiB
-  memoryfree_mb: 6551.7890625
-  memorysize: 9.77 GiB
-  memorysize_mb: 10003.5234375
+      available: 5.99 GiB
+      available_bytes: 6429331456
+      capacity: 23.24%
+      total: 7.80 GiB
+      total_bytes: 8375795712
+      used: 1.81 GiB
+      used_bytes: 1946464256
+  memoryfree: 5.99 GiB
+  memoryfree_mb: 6131.48828125
+  memorysize: 7.80 GiB
+  memorysize_mb: 7987.78125
   mountpoints:
     "/":
-      available: 29.99 GiB
-      available_bytes: 32204484608
-      capacity: 38.90%
+      available: 13.46 GiB
+      available_bytes: 14453137408
+      capacity: 72.58%
       device: "/dev/vda1"
       filesystem: ext4
       options:
@@ -136,11 +142,11 @@ values:
       - data=ordered
       size: 49.09 GiB
       size_bytes: 52709421056
-      used: 19.10 GiB
-      used_bytes: 20504936448
+      used: 35.63 GiB
+      used_bytes: 38256283648
     "/dev/shm":
-      available: 4.88 GiB
-      available_bytes: 5244723200
+      available: 3.90 GiB
+      available_bytes: 4187893760
       capacity: 0.00%
       device: tmpfs
       filesystem: tmpfs
@@ -148,14 +154,14 @@ values:
       - rw
       - nosuid
       - nodev
-      size: 4.88 GiB
-      size_bytes: 5244727296
+      size: 3.90 GiB
+      size_bytes: 4187897856
       used: 4.00 KiB
       used_bytes: 4096
     "/run":
-      available: 999.58 MiB
-      available_bytes: 1048137728
-      capacity: 0.08%
+      available: 798.02 MiB
+      available_bytes: 836780032
+      capacity: 0.10%
       device: tmpfs
       filesystem: tmpfs
       options:
@@ -163,12 +169,12 @@ values:
       - nosuid
       - noexec
       - relatime
-      - size=1024364k
+      - size=817952k
       - mode=755
-      size: 1000.36 MiB
-      size_bytes: 1048948736
-      used: 792.00 KiB
-      used_bytes: 811008
+      size: 798.78 MiB
+      size_bytes: 837582848
+      used: 784.00 KiB
+      used_bytes: 802816
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -187,8 +193,8 @@ values:
       used: 0 bytes
       used_bytes: 0
     "/run/user/1001":
-      available: 1000.35 MiB
-      available_bytes: 1048944640
+      available: 798.78 MiB
+      available_bytes: 837578752
       capacity: 0%
       device: tmpfs
       filesystem: tmpfs
@@ -197,17 +203,17 @@ values:
       - nosuid
       - nodev
       - relatime
-      - size=1024360k
+      - size=817948k
       - mode=700
       - uid=1001
       - gid=1001
-      size: 1000.35 MiB
-      size_bytes: 1048944640
+      size: 798.78 MiB
+      size_bytes: 837578752
       used: 0 bytes
       used_bytes: 0
     "/run/user/1003":
-      available: 1000.35 MiB
-      available_bytes: 1048944640
+      available: 798.78 MiB
+      available_bytes: 837578752
       capacity: 0%
       device: tmpfs
       filesystem: tmpfs
@@ -216,17 +222,17 @@ values:
       - nosuid
       - nodev
       - relatime
-      - size=1024360k
+      - size=817948k
       - mode=700
       - uid=1003
       - gid=1003
-      size: 1000.35 MiB
-      size_bytes: 1048944640
+      size: 798.78 MiB
+      size_bytes: 837578752
       used: 0 bytes
       used_bytes: 0
     "/run/user/1017":
-      available: 1000.35 MiB
-      available_bytes: 1048944640
+      available: 798.78 MiB
+      available_bytes: 837578752
       capacity: 0%
       device: tmpfs
       filesystem: tmpfs
@@ -235,17 +241,17 @@ values:
       - nosuid
       - nodev
       - relatime
-      - size=1024360k
+      - size=817948k
       - mode=700
       - uid=1017
       - gid=1017
-      size: 1000.35 MiB
-      size_bytes: 1048944640
+      size: 798.78 MiB
+      size_bytes: 837578752
       used: 0 bytes
       used_bytes: 0
     "/sys/fs/cgroup":
-      available: 4.88 GiB
-      available_bytes: 5244727296
+      available: 3.90 GiB
+      available_bytes: 4187897856
       capacity: 0%
       device: tmpfs
       filesystem: tmpfs
@@ -255,12 +261,28 @@ values:
       - nodev
       - noexec
       - mode=755
-      size: 4.88 GiB
-      size_bytes: 5244727296
+      size: 3.90 GiB
+      size_bytes: 4187897856
       used: 0 bytes
       used_bytes: 0
+    "/var/lib/prometheus":
+      available: 21.65 GiB
+      available_bytes: 23242670080
+      capacity: 63.19%
+      device: "/dev/vdc1"
+      filesystem: ext4
+      options:
+      - rw
+      - relatime
+      - errors=remount-ro
+      - data=ordered
+      size: 58.81 GiB
+      size_bytes: 63143960576
+      used: 37.16 GiB
+      used_bytes: 39901290496
   mounts:
   - "/"
+  - "/var/lib/prometheus"
   mtu_eth0: 1500
   mtu_eth1: 1500
   mtu_lo: 65536
@@ -348,24 +370,24 @@ values:
     primary: eth0
   operatingsystem: Debian
   operatingsystemmajrelease: '9'
-  operatingsystemrelease: '9.4'
+  operatingsystemrelease: '9.6'
   os:
     architecture: amd64
     distro:
       codename: stretch
-      description: Debian GNU/Linux 9.4 (stretch)
+      description: Debian GNU/Linux 9.6 (stretch)
       id: Debian
       release:
-        full: '9.4'
+        full: '9.6'
         major: '9'
-        minor: '4'
+        minor: '6'
     family: Debian
     hardware: x86_64
     name: Debian
     release:
-      full: '9.4'
+      full: '9.6'
       major: '9'
-      minor: '4'
+      minor: '6'
     selinux:
       enabled: false
   osfamily: Debian
@@ -384,20 +406,23 @@ values:
       size: 4.00 GiB
       size_bytes: 4292870144
       uuid: 93910aea-ce19-458a-8e50-abd3f06589e1
+    "/dev/vdc1":
+      filesystem: ext4
+      mount: "/var/lib/prometheus"
+      partuuid: aeb5dd70-dcdf-40e6-86df-8cfb0f3fe181
+      size: 60.00 GiB
+      size_bytes: 64423443968
+      uuid: 8e3a75cc-6c29-42e1-95cb-ed886366ca81
   path: "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
-  phpversion: 7.0.27-0+deb9u1
+  phpversion: 7.0.30-0+deb9u1
   physicalprocessorcount: 1
   processor0: Common KVM processor
   processor1: Common KVM processor
-  processor2: Common KVM processor
-  processor3: Common KVM processor
-  processorcount: 4
+  processorcount: 2
   processors:
-    count: 4
+    count: 2
     isa: unknown
     models:
-    - Common KVM processor
-    - Common KVM processor
     - Common KVM processor
     - Common KVM processor
     physicalcount: 1
@@ -456,8 +481,8 @@ values:
     SSHFP 1 2 a280ca8bdb71751daf5e9a21b473b79ca38e0a29122029859889711e162dcf98
   sshrsakey: AAAAB3NzaC1yc2EAAAADAQABAAABAQCUVA+gg4Hyy2q7qiZ3Y3kvZmzAbtcG/HGKBb5CMOO65sPLZfw9WGChi829NoAKzHNR9CPX+AyLokZ5W4khLcQ3JbK9vr+iXxBIzIeE/DOuyXkQegOPFNyG7XoFb7v7e2IX1Lmgprm6obUszo403CD6/w1IsN9/I7nozPd8jxtWVdfYRRFqwZrEJfkkSDrR1QJJ6VI9xcDVssybKNzSGDUzaVfPnp9uLiD9rE9UwE5aHvwXoqXfr+hR8QMWWaEtlZVroWd7ZM6smgshWRJEOMIz7cK1zSG+Dj1SX+kZqWEPG9xiNO5ug8G/Zu+vkVQcmzLLgdOJEJuEgeoYzG32bG/v
   sudoversion: 1.8.19p1
-  swapfree: 3.85 GiB
-  swapfree_mb: 3941.9296875
+  swapfree: 3.79 GiB
+  swapfree_mb: 3882.65625
   swapsize: 4.00 GiB
   swapsize_mb: 4093.99609375
   swh_hostname:
@@ -465,10 +490,10 @@ values:
     short: pergamon
     internal_fqdn: pergamon.internal.softwareheritage.org
   system_uptime:
-    days: 32
-    hours: 789
-    seconds: 2843888
-    uptime: 32 days
+    days: 53
+    hours: 1280
+    seconds: 4608399
+    uptime: 53 days
   systemd: true
   systemd_internal_services:
     systemd-networkd-wait-online.service: disabled
@@ -477,15 +502,15 @@ values:
     systemd-timesyncd.service: enabled
   systemd_version: '232'
   timezone: UTC
-  uptime: 32 days
-  uptime_days: 32
-  uptime_hours: 789
-  uptime_seconds: 2843888
+  uptime: 53 days
+  uptime_days: 53
+  uptime_hours: 1280
+  uptime_seconds: 4608399
   uuid: AA664C56-FC2F-45A2-98D5-476F11EEA5BB
   vcsrepo_svn_ver: ''
   virtual: kvm
   clientcert: pergamon.softwareheritage.org
   clientversion: 4.8.2
   clientnoop: false
-timestamp: '2018-06-21T15:46:24.057027952+00:00'
-expiration: '2018-06-21T16:16:24.057596192+00:00'
+timestamp: '2018-11-21T18:08:14.872905082+00:00'
+expiration: '2018-11-21T18:38:14.874095165+00:00'
