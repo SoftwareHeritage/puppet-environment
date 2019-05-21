@@ -2,10 +2,17 @@
 name: icinga0.internal.softwareheritage.org
 values:
   agent_specified_environment: production
-  apt_has_dist_updates: false
+  apt_dist_updates: 3
+  apt_has_dist_updates: true
   apt_has_updates: false
-  apt_reboot_required: false
-  apt_update_last_success: 1535538016
+  apt_package_dist_updates:
+  - icinga2
+  - icinga2-bin
+  - icinga2-common
+  apt_package_security_dist_updates: []
+  apt_reboot_required: true
+  apt_security_dist_updates: 0
+  apt_update_last_success: 1545052023
   architecture: amd64
   bios_release_date: 04/01/2014
   bios_vendor: SeaBIOS
@@ -13,21 +20,13 @@ values:
   blockdevice_sda_model: QEMU HARDDISK
   blockdevice_sda_size: 42949672960
   blockdevice_sda_vendor: QEMU
-  blockdevice_sr0_model: QEMU DVD-ROM
-  blockdevice_sr0_size: 1073741312
-  blockdevice_sr0_vendor: QEMU
-  blockdevices: sr0,sda
+  blockdevices: sda
   chassistype: Other
   disks:
     sda:
       model: QEMU HARDDISK
       size: 40.00 GiB
       size_bytes: 42949672960
-      vendor: QEMU
-    sr0:
-      model: QEMU DVD-ROM
-      size: 1.00 GiB
-      size_bytes: 1073741312
       vendor: QEMU
   dmi:
     bios:
@@ -42,7 +41,7 @@ values:
       uuid: D933D818-DCE5-4A34-99EB-40CB0CDB5C78
   domain: internal.softwareheritage.org
   facterversion: 3.10.0
-  filesystems: ext2,ext3,ext4
+  filesystems: btrfs,ext2,ext3,ext4,hfs,hfsplus,jfs,minix,msdos,ntfs,qnx4,ufs,vfat,xfs
   fips_enabled: false
   fqdn: icinga0.internal.softwareheritage.org
   gid: root
@@ -73,16 +72,16 @@ values:
   kernelrelease: 4.9.0-8-amd64
   kernelversion: 4.9.0
   load_averages:
-    15m: 0.2
-    1m: 1.11
-    5m: 0.45
+    15m: 0.01
+    1m: 0.11
+    5m: 0.03
   location: sesi_rocquencourt
   lsbdistcodename: stretch
-  lsbdistdescription: Debian GNU/Linux 9.5 (stretch)
+  lsbdistdescription: Debian GNU/Linux 9.6 (stretch)
   lsbdistid: Debian
-  lsbdistrelease: '9.5'
+  lsbdistrelease: '9.6'
   lsbmajdistrelease: '9'
-  lsbminordistrelease: '5'
+  lsbminordistrelease: '6'
   macaddress: 8e:7d:da:b5:42:83
   macaddress_ens18: 8e:7d:da:b5:42:83
   manufacturer: QEMU
@@ -96,22 +95,22 @@ values:
       used: 0 bytes
       used_bytes: 0
     system:
-      available: 3.72 GiB
-      available_bytes: 3994165248
-      capacity: 3.71%
+      available: 3.51 GiB
+      available_bytes: 3767939072
+      capacity: 9.16%
       total: 3.86 GiB
-      total_bytes: 4147953664
-      used: 146.66 MiB
-      used_bytes: 153788416
-  memoryfree: 3.72 GiB
-  memoryfree_mb: 3809.1328125
+      total_bytes: 4147965952
+      used: 362.42 MiB
+      used_bytes: 380026880
+  memoryfree: 3.51 GiB
+  memoryfree_mb: 3593.38671875
   memorysize: 3.86 GiB
-  memorysize_mb: 3955.796875
+  memorysize_mb: 3955.80859375
   mountpoints:
     "/":
-      available: 33.92 GiB
-      available_bytes: 36424282112
-      capacity: 4.07%
+      available: 32.61 GiB
+      available_bytes: 35012464640
+      capacity: 7.79%
       device: "/dev/mapper/icinga0--vg-root"
       filesystem: ext4
       options:
@@ -121,11 +120,11 @@ values:
       - data=ordered
       size: 35.36 GiB
       size_bytes: 37968363520
-      used: 1.44 GiB
-      used_bytes: 1544081408
+      used: 2.75 GiB
+      used_bytes: 2955898880
     "/dev/shm":
       available: 1.93 GiB
-      available_bytes: 2073976832
+      available_bytes: 2073980928
       capacity: 0%
       device: tmpfs
       filesystem: tmpfs
@@ -134,13 +133,13 @@ values:
       - nosuid
       - nodev
       size: 1.93 GiB
-      size_bytes: 2073976832
+      size_bytes: 2073980928
       used: 0 bytes
       used_bytes: 0
     "/run":
-      available: 395.18 MiB
-      available_bytes: 414371840
-      capacity: 0.10%
+      available: 395.11 MiB
+      available_bytes: 414306304
+      capacity: 0.12%
       device: tmpfs
       filesystem: tmpfs
       options:
@@ -152,8 +151,8 @@ values:
       - mode=755
       size: 395.58 MiB
       size_bytes: 414797824
-      used: 416.00 KiB
-      used_bytes: 425984
+      used: 480.00 KiB
+      used_bytes: 491520
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -188,9 +187,28 @@ values:
       size_bytes: 414793728
       used: 0 bytes
       used_bytes: 0
+    "/run/user/1017":
+      available: 395.58 MiB
+      available_bytes: 414793728
+      capacity: 0%
+      device: tmpfs
+      filesystem: tmpfs
+      options:
+      - rw
+      - nosuid
+      - nodev
+      - relatime
+      - size=405072k
+      - mode=700
+      - uid=1017
+      - gid=1017
+      size: 395.58 MiB
+      size_bytes: 414793728
+      used: 0 bytes
+      used_bytes: 0
     "/sys/fs/cgroup":
       available: 1.93 GiB
-      available_bytes: 2073976832
+      available_bytes: 2073980928
       capacity: 0%
       device: tmpfs
       filesystem: tmpfs
@@ -201,7 +219,7 @@ values:
       - noexec
       - mode=755
       size: 1.93 GiB
-      size_bytes: 2073976832
+      size_bytes: 2073980928
       used: 0 bytes
       used_bytes: 0
   mounts:
@@ -270,24 +288,24 @@ values:
     primary: ens18
   operatingsystem: Debian
   operatingsystemmajrelease: '9'
-  operatingsystemrelease: '9.5'
+  operatingsystemrelease: '9.6'
   os:
     architecture: amd64
     distro:
       codename: stretch
-      description: Debian GNU/Linux 9.5 (stretch)
+      description: Debian GNU/Linux 9.6 (stretch)
       id: Debian
       release:
-        full: '9.5'
+        full: '9.6'
         major: '9'
-        minor: '5'
+        minor: '6'
     family: Debian
     hardware: x86_64
     name: Debian
     release:
-      full: '9.5'
+      full: '9.6'
       major: '9'
-      minor: '5'
+      minor: '6'
     selinux:
       enabled: false
   osfamily: Debian
@@ -323,6 +341,7 @@ values:
     - Common KVM processor
     physicalcount: 1
   productname: Standard PC (i440FX + PIIX, 1996)
+  public_ipaddresses: []
   puppet_environmentpath: "/etc/puppet/code/environments"
   puppet_server: pergamon.internal.softwareheritage.org
   puppet_vardir: "/var/lib/puppet"
@@ -377,10 +396,10 @@ values:
     short: icinga0
     internal_fqdn: icinga0.internal.softwareheritage.org
   system_uptime:
-    days: 0
-    hours: 0
-    seconds: 755
-    uptime: 0:12 hours
+    days: 91
+    hours: 2185
+    seconds: 7866296
+    uptime: 91 days
   systemd: true
   systemd_internal_services:
     systemd-networkd-wait-online.service: disabled
@@ -389,15 +408,15 @@ values:
     systemd-timesyncd.service: enabled
   systemd_version: '232'
   timezone: UTC
-  uptime: 0:12 hours
-  uptime_days: 0
-  uptime_hours: 0
-  uptime_seconds: 755
+  uptime: 91 days
+  uptime_days: 91
+  uptime_hours: 2185
+  uptime_seconds: 7866296
   uuid: D933D818-DCE5-4A34-99EB-40CB0CDB5C78
   vcsrepo_svn_ver: ''
   virtual: kvm
   clientcert: icinga0.internal.softwareheritage.org
   clientversion: 4.8.2
-  clientnoop: false
-timestamp: '2018-08-29T10:22:17.011924498+00:00'
-expiration: '2018-08-29T10:52:17.012528014+00:00'
+  clientnoop: true
+timestamp: '2018-12-17T13:12:24.649022712+00:00'
+expiration: '2018-12-17T13:42:24.649670090+00:00'
