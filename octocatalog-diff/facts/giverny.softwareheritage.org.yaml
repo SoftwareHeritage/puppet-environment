@@ -2,17 +2,31 @@
 name: giverny.softwareheritage.org
 values:
   agent_specified_environment: production
-  apt_dist_updates: 31
+  apt_dist_updates: 52
   apt_has_dist_updates: true
   apt_has_updates: true
   apt_package_dist_updates:
-  - barman
-  - libllvm6.0
+  - python3-argcomplete
+  - python3-argh
   - libpq-dev
   - libpq5
+  - python3-psycopg2
+  - barman
+  - python3-barman
+  - python3-setuptools
+  - python3-pkg-resources
+  - default-jre
+  - default-jre-headless
+  - docker-ce-cli
+  - docker-ce
+  - evolution-plugins
+  - evolution
+  - libevolution
+  - evolution-common
+  - libdbd-pg-perl
   - pgdg-keyring
-  - postgresql-doc-9.6
   - postgresql-doc-10
+  - postgresql-doc-9.6
   - postgresql-common
   - postgresql-client-common
   - postgresql-client-11
@@ -28,41 +42,74 @@ values:
   - postgresql-contrib
   - postgresql-doc-11
   - postgresql-doc
+  - python-setuptools
+  - python-pkg-resources
+  - python-psycopg2
+  - python3-multidict
+  - python3-yarl
+  - python3-attr
+  - python3-typing-extensions
+  - python3-aiohttp
   - python3-vine
   - python3-amqp
   - python3-billiard
-  - python3-ephem
-  - python3-kombu
-  - python3-celery
+  - python3-hypothesis
   - python3-swh.core
   - python3-swh.model
   - python3-swh.objstorage
-  apt_package_security_dist_updates: []
-  apt_package_security_updates: []
+  - icedtea-netx
+  apt_package_security_dist_updates:
+  - evolution-plugins
+  - evolution
+  - libevolution
+  - evolution-common
+  apt_package_security_updates:
+  - evolution-plugins
+  - evolution
+  - libevolution
+  - evolution-common
   apt_package_updates:
-  - barman
+  - docker-ce-cli
+  - docker-ce
+  - evolution-plugins
+  - evolution
+  - libevolution
+  - evolution-common
   - libpq-dev
   - libpq5
+  - libdbd-pg-perl
   - pgdg-keyring
-  - postgresql-doc-9.6
   - postgresql-doc-10
+  - postgresql-doc-9.6
   - postgresql-common
   - postgresql-client-common
+  - postgresql-client-11
+  - postgresql-11
+  - postgresql
   - postgresql-client-10
   - postgresql-10
   - postgresql-plpython3-9.6
   - postgresql-contrib-9.6
   - postgresql-client-9.6
   - postgresql-9.6
+  - postgresql-client
+  - postgresql-contrib
+  - python-setuptools
+  - python-pkg-resources
+  - python-psycopg2
   - python3-billiard
+  - python3-multidict
+  - python3-setuptools
+  - python3-pkg-resources
+  - python3-psycopg2
   - python3-swh.core
-  - python3-swh.model
   - python3-swh.objstorage
-  apt_reboot_required: true
-  apt_security_dist_updates: 0
-  apt_security_updates: 0
-  apt_update_last_success: 1545047103
-  apt_updates: 18
+  - python3-yarl
+  apt_reboot_required: false
+  apt_security_dist_updates: 4
+  apt_security_updates: 4
+  apt_update_last_success: 1559927402
+  apt_updates: 36
   architecture: amd64
   bios_release_date: 05/08/2017
   bios_vendor: Dell Inc.
@@ -81,17 +128,20 @@ values:
   blockdevice_sdb_model: ST2000DM001-1ER1
   blockdevice_sdb_size: 2000398934016
   blockdevice_sdb_vendor: ATA
+  blockdevice_sdc_model: Elements 25A2
+  blockdevice_sdc_size: 2000365289472
+  blockdevice_sdc_vendor: WD
   blockdevice_sr0_model: DVD+-RW DS-8ABSH
   blockdevice_sr0_size: 1073741312
   blockdevice_sr0_vendor: PLDS
-  blockdevices: sdb,nvme2n1,sr0,nvme1n1,sda,nvme0n1,nvme3n1
+  blockdevices: sdb,nvme2n1,sr0,nvme1n1,sdc,sda,nvme0n1,nvme3n1
   boardmanufacturer: Dell Inc.
   boardproductname: 0KJCC5
   boardserialnumber: "/9XQ3NK2/CN7220073300AZ/"
   chassistype: Tower
   dhcp_servers:
-    enp0s25: 128.93.77.239
-    system: 128.93.77.239
+    enp0s25: 128.93.77.240
+    system: 128.93.77.240
   disks:
     nvme0n1:
       model: Samsung SSD 960 PRO 2TB
@@ -119,6 +169,11 @@ values:
       size: 1.82 TiB
       size_bytes: 2000398934016
       vendor: ATA
+    sdc:
+      model: Elements 25A2
+      size: 1.82 TiB
+      size_bytes: 2000365289472
+      vendor: WD
     sr0:
       model: DVD+-RW DS-8ABSH
       size: 1.00 GiB
@@ -142,7 +197,7 @@ values:
       uuid: 4C4C4544-0058-5110-8033-B9C04F4E4B32
   domain: softwareheritage.org
   facterversion: 3.10.0
-  filesystems: btrfs,ext2,ext3,ext4,hfs,hfsplus,jfs,minix,msdos,ntfs,qnx4,ufs,vfat,xfs
+  filesystems: ext2,ext3,ext4,vfat,xfs
   fips_enabled: false
   fqdn: giverny.softwareheritage.org
   gid: root
@@ -159,12 +214,13 @@ values:
     privileged: true
     uid: 0
     user: root
-  interfaces: enp0s25,lo,tun0
+  interfaces: docker0,enp0s25,lo,tun0
   ipaddress: 128.93.66.101
   ipaddress6: fe80::4a4d:7eff:fefb:87ac
   ipaddress6_enp0s25: fe80::4a4d:7eff:fefb:87ac
   ipaddress6_lo: "::1"
-  ipaddress6_tun0: fe80::36e3:fc17:69f0:83a9
+  ipaddress6_tun0: fe80::c4e0:c8a9:2efa:9444
+  ipaddress_docker0: 172.17.0.1
   ipaddress_enp0s25: 128.93.66.101
   ipaddress_lo: 127.0.0.1
   ipaddress_tun0: 192.168.101.118
@@ -173,52 +229,53 @@ values:
   java_default_home: "/usr/lib/jvm/java-8-openjdk-amd64"
   java_libjvm_path: "/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/amd64/server"
   java_major_version: '8'
-  java_patch_level: '181'
-  java_version: 1.8.0_181
+  java_patch_level: '212'
+  java_version: 1.8.0_212
   kernel: Linux
   kernelmajversion: '4.9'
-  kernelrelease: 4.9.0-8-amd64
+  kernelrelease: 4.9.0-9-amd64
   kernelversion: 4.9.0
   load_averages:
-    15m: 6.58
-    1m: 5.86
-    5m: 6.38
+    15m: 9.88
+    1m: 8.29
+    5m: 8.35
   location: inria_paris
   lsbdistcodename: stretch
-  lsbdistdescription: Debian GNU/Linux 9.6 (stretch)
+  lsbdistdescription: Debian GNU/Linux 9.9 (stretch)
   lsbdistid: Debian
-  lsbdistrelease: '9.6'
+  lsbdistrelease: '9.9'
   lsbmajdistrelease: '9'
-  lsbminordistrelease: '6'
+  lsbminordistrelease: '9'
   macaddress: 48:4d:7e:fb:87:ac
+  macaddress_docker0: 02:42:3e:12:9a:9a
   macaddress_enp0s25: 48:4d:7e:fb:87:ac
   manufacturer: Dell Inc.
   memory:
     swap:
-      available: 31.32 GiB
-      available_bytes: 33626484736
-      capacity: 2.13%
+      available: 24.78 GiB
+      available_bytes: 26609799168
+      capacity: 22.56%
       total: 32.00 GiB
       total_bytes: 34359734272
-      used: 699.28 MiB
-      used_bytes: 733249536
+      used: 7.22 GiB
+      used_bytes: 7749935104
     system:
-      available: 2.99 GiB
-      available_bytes: 3212201984
-      capacity: 90.46%
-      total: 31.34 GiB
-      total_bytes: 33656295424
-      used: 28.35 GiB
-      used_bytes: 30444093440
-  memoryfree: 2.99 GiB
-  memoryfree_mb: 3063.39453125
-  memorysize: 31.34 GiB
-  memorysize_mb: 32097.14453125
+      available: 84.11 GiB
+      available_bytes: 90308431872
+      capacity: 46.55%
+      total: 157.34 GiB
+      total_bytes: 168947699712
+      used: 73.24 GiB
+      used_bytes: 78639267840
+  memoryfree: 84.11 GiB
+  memoryfree_mb: 86124.83203125
+  memorysize: 157.34 GiB
+  memorysize_mb: 161121.08203125
   mountpoints:
     "/":
-      available: 26.30 GiB
-      available_bytes: 28237262848
-      capacity: 27.78%
+      available: 23.28 GiB
+      available_bytes: 24999157760
+      capacity: 36.06%
       device: "/dev/mapper/ssd-root"
       filesystem: ext4
       options:
@@ -228,8 +285,8 @@ values:
       - data=ordered
       size: 36.42 GiB
       size_bytes: 39100760064
-      used: 10.12 GiB
-      used_bytes: 10863497216
+      used: 13.13 GiB
+      used_bytes: 14101602304
     "/boot/efi":
       available: 495.82 MiB
       available_bytes: 519909376
@@ -251,8 +308,8 @@ values:
       used: 180.00 KiB
       used_bytes: 184320
     "/dev/shm":
-      available: 15.67 GiB
-      available_bytes: 16828133376
+      available: 78.67 GiB
+      available_bytes: 84473827328
       capacity: 0.00%
       device: tmpfs
       filesystem: tmpfs
@@ -260,14 +317,14 @@ values:
       - rw
       - nosuid
       - nodev
-      size: 15.67 GiB
-      size_bytes: 16828145664
-      used: 12.00 KiB
-      used_bytes: 12288
+      size: 78.67 GiB
+      size_bytes: 84473847808
+      used: 20.00 KiB
+      used_bytes: 20480
     "/home":
-      available: 58.57 GiB
-      available_bytes: 62883852288
-      capacity: 35.76%
+      available: 52.14 GiB
+      available_bytes: 55981699072
+      capacity: 42.81%
       device: "/dev/mapper/ssd-home"
       filesystem: ext4
       options:
@@ -276,12 +333,28 @@ values:
       - data=ordered
       size: 91.17 GiB
       size_bytes: 97888145408
-      used: 32.60 GiB
-      used_bytes: 35004293120
+      used: 39.03 GiB
+      used_bytes: 41906446336
+    "/media/grouss/ExternalUSBWD2T":
+      available: 1.11 TiB
+      available_bytes: 1215653539840
+      capacity: 38.23%
+      device: "/dev/sdc"
+      filesystem: ext4
+      options:
+      - rw
+      - nosuid
+      - nodev
+      - relatime
+      - data=ordered
+      size: 1.79 TiB
+      size_bytes: 1967895289856
+      used: 700.58 GiB
+      used_bytes: 752241750016
     "/run":
-      available: 3.13 GiB
-      available_bytes: 3362734080
-      capacity: 0.09%
+      available: 15.73 GiB
+      available_bytes: 16891748352
+      capacity: 0.02%
       device: tmpfs
       filesystem: tmpfs
       options:
@@ -289,12 +362,12 @@ values:
       - nosuid
       - noexec
       - relatime
-      - size=3286748k
+      - size=16498800k
       - mode=755
-      size: 3.13 GiB
-      size_bytes: 3365629952
-      used: 2.76 MiB
-      used_bytes: 2895872
+      size: 15.73 GiB
+      size_bytes: 16894771200
+      used: 2.88 MiB
+      used_bytes: 3022848
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -313,8 +386,8 @@ values:
       used: 0 bytes
       used_bytes: 0
     "/run/user/0":
-      available: 3.13 GiB
-      available_bytes: 3365625856
+      available: 15.73 GiB
+      available_bytes: 16894767104
       capacity: 0%
       device: tmpfs
       filesystem: tmpfs
@@ -323,15 +396,15 @@ values:
       - nosuid
       - nodev
       - relatime
-      - size=3286744k
+      - size=16498796k
       - mode=700
-      size: 3.13 GiB
-      size_bytes: 3365625856
+      size: 15.73 GiB
+      size_bytes: 16894767104
       used: 0 bytes
       used_bytes: 0
     "/run/user/1016":
-      available: 3.13 GiB
-      available_bytes: 3365593088
+      available: 15.73 GiB
+      available_bytes: 16894722048
       capacity: 0.00%
       device: tmpfs
       filesystem: tmpfs
@@ -340,17 +413,17 @@ values:
       - nosuid
       - nodev
       - relatime
-      - size=3286744k
+      - size=16498796k
       - mode=700
       - uid=1016
       - gid=1016
-      size: 3.13 GiB
-      size_bytes: 3365625856
-      used: 32.00 KiB
-      used_bytes: 32768
+      size: 15.73 GiB
+      size_bytes: 16894767104
+      used: 44.00 KiB
+      used_bytes: 45056
     "/run/user/122":
-      available: 3.13 GiB
-      available_bytes: 3365605376
+      available: 15.73 GiB
+      available_bytes: 16894746624
       capacity: 0.00%
       device: tmpfs
       filesystem: tmpfs
@@ -359,18 +432,18 @@ values:
       - nosuid
       - nodev
       - relatime
-      - size=3286744k
+      - size=16498796k
       - mode=700
       - uid=122
       - gid=128
-      size: 3.13 GiB
-      size_bytes: 3365625856
+      size: 15.73 GiB
+      size_bytes: 16894767104
       used: 20.00 KiB
       used_bytes: 20480
     "/srv/softwareheritage/scratch":
-      available: 68.81 GiB
-      available_bytes: 73882644480
-      capacity: 91.18%
+      available: 200.24 GiB
+      available_bytes: 215010353152
+      capacity: 74.32%
       device: "/dev/mapper/ssd-scratch"
       filesystem: xfs
       options:
@@ -381,12 +454,12 @@ values:
       - noquota
       size: 779.76 GiB
       size_bytes: 837256478720
-      used: 710.95 GiB
-      used_bytes: 763373834240
+      used: 579.51 GiB
+      used_bytes: 622246125568
     "/srv/softwareheritage/scratch.2":
-      available: 307.25 GiB
-      available_bytes: 329906044928
-      capacity: 91.94%
+      available: 83.92 GiB
+      available_bytes: 90105708544
+      capacity: 97.80%
       device: "/dev/mapper/ssd2-scratch2"
       filesystem: xfs
       options:
@@ -400,12 +473,12 @@ values:
       - noquota
       size: 3.72 TiB
       size_bytes: 4094809079808
-      used: 3.42 TiB
-      used_bytes: 3764903034880
+      used: 3.64 TiB
+      used_bytes: 4004703371264
     "/srv/softwareheritage/scratch.3":
-      available: 238.24 GiB
-      available_bytes: 255806996480
-      capacity: 87.51%
+      available: 179.37 GiB
+      available_bytes: 192593551360
+      capacity: 90.59%
       device: "/dev/nvme0n1p1"
       filesystem: xfs
       options:
@@ -416,12 +489,12 @@ values:
       - noquota
       size: 1.86 TiB
       size_bytes: 2047406649344
-      used: 1.63 TiB
-      used_bytes: 1791599652864
+      used: 1.69 TiB
+      used_bytes: 1854813097984
     "/srv/storage":
-      available: 504.08 GiB
-      available_bytes: 541250080768
-      capacity: 72.49%
+      available: 39.04 GiB
+      available_bytes: 41916358656
+      capacity: 97.87%
       device: "/dev/mapper/hdd-srv--storage"
       filesystem: ext4
       options:
@@ -430,11 +503,11 @@ values:
       - data=ordered
       size: 1.79 TiB
       size_bytes: 1967191736320
-      used: 1.30 TiB
-      used_bytes: 1425941655552
+      used: 1.75 TiB
+      used_bytes: 1925275377664
     "/sys/fs/cgroup":
-      available: 15.67 GiB
-      available_bytes: 16828145664
+      available: 78.67 GiB
+      available_bytes: 84473847808
       capacity: 0%
       device: tmpfs
       filesystem: tmpfs
@@ -444,18 +517,20 @@ values:
       - nodev
       - noexec
       - mode=755
-      size: 15.67 GiB
-      size_bytes: 16828145664
+      size: 78.67 GiB
+      size_bytes: 84473847808
       used: 0 bytes
       used_bytes: 0
   mounts:
   - "/"
-  - "/srv/softwareheritage/scratch"
-  - "/srv/softwareheritage/scratch.3"
-  - "/boot/efi"
-  - "/srv/softwareheritage/scratch.2"
   - "/home"
+  - "/boot/efi"
+  - "/srv/softwareheritage/scratch.3"
+  - "/srv/softwareheritage/scratch"
+  - "/srv/softwareheritage/scratch.2"
   - "/srv/storage"
+  - "/media/grouss/ExternalUSBWD2T"
+  mtu_docker0: 1500
   mtu_enp0s25: 1500
   mtu_lo: 65536
   mysql_server_id: 34067052
@@ -464,6 +539,7 @@ values:
   netmask6_enp0s25: 'ffff:ffff:ffff:ffff::'
   netmask6_lo: ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff
   netmask6_tun0: 'ffff:ffff:ffff:ffff::'
+  netmask_docker0: 255.255.0.0
   netmask_enp0s25: 255.255.252.0
   netmask_lo: 255.0.0.0
   netmask_tun0: 255.255.255.255
@@ -472,15 +548,26 @@ values:
   network6_enp0s25: 'fe80::'
   network6_lo: "::1"
   network6_tun0: 'fe80::'
+  network_docker0: 172.17.0.0
   network_enp0s25: 128.93.64.0
   network_lo: 127.0.0.0
   network_tun0: 192.168.101.118
   networking:
-    dhcp: 128.93.77.239
+    dhcp: 128.93.77.240
     domain: softwareheritage.org
     fqdn: giverny.softwareheritage.org
     hostname: giverny
     interfaces:
+      docker0:
+        bindings:
+        - address: 172.17.0.1
+          netmask: 255.255.0.0
+          network: 172.17.0.0
+        ip: 172.17.0.1
+        mac: 02:42:3e:12:9a:9a
+        mtu: 1500
+        netmask: 255.255.0.0
+        network: 172.17.0.0
       enp0s25:
         bindings:
         - address: 128.93.66.101
@@ -490,7 +577,7 @@ values:
         - address: fe80::4a4d:7eff:fefb:87ac
           netmask: 'ffff:ffff:ffff:ffff::'
           network: 'fe80::'
-        dhcp: 128.93.77.239
+        dhcp: 128.93.77.240
         ip: 128.93.66.101
         ip6: fe80::4a4d:7eff:fefb:87ac
         mac: 48:4d:7e:fb:87:ac
@@ -521,11 +608,11 @@ values:
           netmask: 255.255.255.255
           network: 192.168.101.118
         bindings6:
-        - address: fe80::36e3:fc17:69f0:83a9
+        - address: fe80::c4e0:c8a9:2efa:9444
           netmask: 'ffff:ffff:ffff:ffff::'
           network: 'fe80::'
         ip: 192.168.101.118
-        ip6: fe80::36e3:fc17:69f0:83a9
+        ip6: fe80::c4e0:c8a9:2efa:9444
         netmask: 255.255.255.255
         netmask6: 'ffff:ffff:ffff:ffff::'
         network: 192.168.101.118
@@ -541,24 +628,24 @@ values:
     primary: enp0s25
   operatingsystem: Debian
   operatingsystemmajrelease: '9'
-  operatingsystemrelease: '9.6'
+  operatingsystemrelease: '9.9'
   os:
     architecture: amd64
     distro:
       codename: stretch
-      description: Debian GNU/Linux 9.6 (stretch)
+      description: Debian GNU/Linux 9.9 (stretch)
       id: Debian
       release:
-        full: '9.6'
+        full: '9.9'
         major: '9'
-        minor: '6'
+        minor: '9'
     family: Debian
     hardware: x86_64
     name: Debian
     release:
-      full: '9.6'
+      full: '9.9'
       major: '9'
-      minor: '6'
+      minor: '9'
     selinux:
       enabled: false
   osfamily: Debian
@@ -637,7 +724,7 @@ values:
       size_bytes: 2000397795328
       uuid: c728f3ff-6a91-a9c1-c33e-1ad26e3f56e7
   path: "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
-  phpversion: 7.0.33-0+deb9u1
+  phpversion: 7.0.33-0+deb9u3
   physicalprocessorcount: 2
   printers: MFP,MFP_C
   processor0: Intel(R) Xeon(R) CPU E5-2620 v4 @ 2.10GHz
@@ -760,8 +847,8 @@ values:
     SSHFP 1 2 2296e36fc10cb35c628aa50c14178069e26ca3e766f4127d74817e96a86fbdc9
   sshrsakey: AAAAB3NzaC1yc2EAAAADAQABAAABAQCZFNfWyhIll2PCtLgWjsajsg/DU/KjfnGwDCXSeY+0+a+ZDSSKQnpBxx4P3AOgqcpKkmv2y8/WNfCqXlRF1dj6z2ISGyb7RKrgip1j7AtyJd3z7F/MxcsPNUlEm7IzMs3YyZ0yBHHntfb2I/eVONgK5Ndfxll63wtPUHuTHqeEye5uZwbSaLUVlOltDS6T2+7R23YHPC5AoSU5rcE2ZjxklpVV+9zEgGmayfvND0pdODCY5tphe37ii14etVbksksXUwsq+oJVzbnecb0ITtztRc960b4bbohdxwkPciBYz7Uf75UIGoV0B5j30VJRBV3wA/4DFwVigfPk0kRo6PDx
   sudoversion: 1.8.19p1
-  swapfree: 31.32 GiB
-  swapfree_mb: 32068.71484375
+  swapfree: 24.78 GiB
+  swapfree_mb: 25377.08203125
   swapsize: 32.00 GiB
   swapsize_mb: 32767.99609375
   swh_hostname:
@@ -769,10 +856,10 @@ values:
     short: giverny
     internal_fqdn: giverny.internal.softwareheritage.org
   system_uptime:
-    days: 42
-    hours: 1014
-    seconds: 3650792
-    uptime: 42 days
+    days: 16
+    hours: 393
+    seconds: 1415206
+    uptime: 16 days
   systemd: true
   systemd_internal_services:
     systemd-networkd-wait-online.service: disabled
@@ -780,16 +867,16 @@ values:
     systemd-resolved.service: disabled
     systemd-timesyncd.service: enabled
   systemd_version: '232'
-  timezone: CET
-  uptime: 42 days
-  uptime_days: 42
-  uptime_hours: 1014
-  uptime_seconds: 3650792
+  timezone: CEST
+  uptime: 16 days
+  uptime_days: 16
+  uptime_hours: 393
+  uptime_seconds: 1415206
   uuid: 4C4C4544-0058-5110-8033-B9C04F4E4B32
   vcsrepo_svn_ver: ''
   virtual: physical
   clientcert: giverny.softwareheritage.org
   clientversion: 4.8.2
-  clientnoop: true
-timestamp: '2018-12-17T14:11:46.593138438+01:00'
-expiration: '2018-12-17T14:41:46.594186265+01:00'
+  clientnoop: false
+timestamp: '2019-06-07T19:35:56.144807810+02:00'
+expiration: '2019-06-07T20:05:56.145885040+02:00'

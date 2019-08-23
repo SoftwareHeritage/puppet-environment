@@ -2,7 +2,7 @@
 name: esnode1.internal.softwareheritage.org
 values:
   agent_specified_environment: production
-  apt_dist_updates: 5
+  apt_dist_updates: 7
   apt_has_dist_updates: true
   apt_has_updates: true
   apt_package_dist_updates:
@@ -11,15 +11,19 @@ values:
   - python3-idna
   - python3-requests
   - python3-urllib3
+  - journalbeat
+  - logstash
   apt_package_security_dist_updates: []
   apt_package_security_updates: []
   apt_package_updates:
   - python3-chardet
+  - journalbeat
+  - logstash
   apt_reboot_required: true
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1557852662
-  apt_updates: 1
+  apt_update_last_success: 1562768402
+  apt_updates: 3
   architecture: amd64
   bios_release_date: 01/31/2018
   bios_vendor: Dell Inc.
@@ -116,9 +120,9 @@ values:
   kernelrelease: 4.9.0-6-amd64
   kernelversion: 4.9.0
   load_averages:
-    15m: 0.87
-    1m: 1.22
-    5m: 0.88
+    15m: 1.12
+    1m: 1.62
+    5m: 1.18
   location: sesi_rocquencourt
   lsbdistcodename: stretch
   lsbdistdescription: Debian GNU/Linux 9.9 (stretch)
@@ -135,30 +139,30 @@ values:
   manufacturer: Dell Inc.
   memory:
     swap:
-      available: 29.77 GiB
-      available_bytes: 31968305152
-      capacity: 0.10%
+      available: 29.48 GiB
+      available_bytes: 31655329792
+      capacity: 1.08%
       total: 29.80 GiB
       total_bytes: 32000438272
-      used: 30.64 MiB
-      used_bytes: 32133120
+      used: 329.12 MiB
+      used_bytes: 345108480
     system:
-      available: 13.03 GiB
-      available_bytes: 13991616512
-      capacity: 58.48%
+      available: 13.09 GiB
+      available_bytes: 14052540416
+      capacity: 58.30%
       total: 31.38 GiB
       total_bytes: 33698115584
-      used: 18.35 GiB
-      used_bytes: 19706499072
-  memoryfree: 13.03 GiB
-  memoryfree_mb: 13343.4453125
+      used: 18.30 GiB
+      used_bytes: 19645575168
+  memoryfree: 13.09 GiB
+  memoryfree_mb: 13401.546875
   memorysize: 31.38 GiB
   memorysize_mb: 32137.02734375
   mountpoints:
     "/":
-      available: 27.79 GiB
-      available_bytes: 29838966784
-      capacity: 23.69%
+      available: 26.07 GiB
+      available_bytes: 27988070400
+      capacity: 28.42%
       device: "/dev/sda2"
       filesystem: ext4
       options:
@@ -168,8 +172,8 @@ values:
       - data=ordered
       size: 36.42 GiB
       size_bytes: 39103025152
-      used: 8.63 GiB
-      used_bytes: 9264058368
+      used: 10.35 GiB
+      used_bytes: 11114954752
     "/boot/efi":
       available: 510.84 MiB
       available_bytes: 535658496
@@ -206,7 +210,7 @@ values:
       used_bytes: 0
     "/run":
       available: 3.14 GiB
-      available_bytes: 3369132032
+      available_bytes: 3369111552
       capacity: 0.02%
       device: tmpfs
       filesystem: tmpfs
@@ -219,8 +223,8 @@ values:
       - mode=755
       size: 3.14 GiB
       size_bytes: 3369811968
-      used: 664.00 KiB
-      used_bytes: 679936
+      used: 684.00 KiB
+      used_bytes: 700416
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -236,6 +240,23 @@ values:
       - size=5120k
       size: 5.00 MiB
       size_bytes: 5242880
+      used: 0 bytes
+      used_bytes: 0
+    "/run/user/0":
+      available: 3.14 GiB
+      available_bytes: 3369807872
+      capacity: 0%
+      device: tmpfs
+      filesystem: tmpfs
+      options:
+      - rw
+      - nosuid
+      - nodev
+      - relatime
+      - size=3290828k
+      - mode=700
+      size: 3.14 GiB
+      size_bytes: 3369807872
       used: 0 bytes
       used_bytes: 0
     "/run/user/1001":
@@ -296,9 +317,9 @@ values:
       used: 0 bytes
       used_bytes: 0
     "/srv/elasticsearch":
-      available: 4.08 TiB
-      available_bytes: 4483662196736
-      capacity: 25.26%
+      available: 3.90 TiB
+      available_bytes: 4284276228096
+      capacity: 28.58%
       device: "/dev/md127"
       filesystem: xfs
       options:
@@ -311,12 +332,12 @@ values:
       - noquota
       size: 5.46 TiB
       size_bytes: 5998656880640
-      used: 1.38 TiB
-      used_bytes: 1514994683904
+      used: 1.56 TiB
+      used_bytes: 1714380652544
     "/srv/kafka":
-      available: 1.72 TiB
-      available_bytes: 1896448233472
-      capacity: 0.00%
+      available: 204.83 GiB
+      available_bytes: 219929169920
+      capacity: 88.40%
       device: "/dev/sda4"
       filesystem: ext4
       options:
@@ -326,8 +347,8 @@ values:
       - data=ordered
       size: 1.72 TiB
       size_bytes: 1896527962112
-      used: 76.04 MiB
-      used_bytes: 79728640
+      used: 1.52 TiB
+      used_bytes: 1676598792192
     "/sys/fs/cgroup":
       available: 15.69 GiB
       available_bytes: 16849055744
@@ -552,8 +573,8 @@ values:
     SSHFP 1 2 31972440608c730b0162f68ccc2525f8510dea6495ab7a6b44bdea9c87468f78
   sshrsakey: AAAAB3NzaC1yc2EAAAADAQABAAABAQCxBTX01CFMatM1+iYoEyZXlNYSR9VWOlUJ85HjuZSAGwpW+8Zxq+21ypmsnIyIN+S2RdzW+UlFhfWEBTi6t6M1x5JQc9QUtQZj3VFDUYCrvLM+L9UQRKSVVQCfWhxL8RI88FiwQvT6ASX8FfEWQsLt+zycyPrsTVUCPhm3gAJSSixCwdnEXRySYiwuJeT+/EyQUSPhuIDJFaM4dmV6OZTyltVrapbninLJV7YjQLJ3YbVBn7rOQHxGJJglelu8svoj95rGrTvvUbyjQTGP5XJ4Om72hmBFZPhHCP1xseT01afRx1dNNSUqBvT/Wz+CfpHIQy9dgd8/xnY15t1+3mSD
   sudoversion: 1.8.19p1
-  swapfree: 29.77 GiB
-  swapfree_mb: 30487.3515625
+  swapfree: 29.48 GiB
+  swapfree_mb: 30188.875
   swapsize: 29.80 GiB
   swapsize_mb: 30517.99609375
   swh_hostname:
@@ -561,10 +582,10 @@ values:
     short: esnode1
     internal_fqdn: esnode1.internal.softwareheritage.org
   system_uptime:
-    days: 361
-    hours: 8666
-    seconds: 31198411
-    uptime: 361 days
+    days: 417
+    hours: 10031
+    seconds: 36115101
+    uptime: 417 days
   systemd: true
   systemd_internal_services:
     systemd-networkd-wait-online.service: disabled
@@ -573,15 +594,15 @@ values:
     systemd-timesyncd.service: enabled
   systemd_version: '232'
   timezone: UTC
-  uptime: 361 days
-  uptime_days: 361
-  uptime_hours: 8666
-  uptime_seconds: 31198411
+  uptime: 417 days
+  uptime_days: 417
+  uptime_hours: 10031
+  uptime_seconds: 36115101
   uuid: 4C4C4544-004C-5810-8046-CAC04F514B32
   vcsrepo_svn_ver: ''
   virtual: physical
   clientcert: esnode1.internal.softwareheritage.org
   clientversion: 4.8.2
   clientnoop: false
-timestamp: '2019-05-14T16:54:51.331833786+00:00'
-expiration: '2019-05-14T17:24:51.332126527+00:00'
+timestamp: '2019-07-10T14:39:42.490011062+00:00'
+expiration: '2019-07-10T15:09:42.491269162+00:00'

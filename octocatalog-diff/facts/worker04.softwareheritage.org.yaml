@@ -2,29 +2,51 @@
 name: worker04.softwareheritage.org
 values:
   agent_specified_environment: production
-  apt_dist_updates: 2
+  apt_dist_updates: 17
   apt_has_dist_updates: true
   apt_has_updates: true
   apt_package_dist_updates:
+  - python3-gunicorn
+  - python3-mimeparse
+  - python3-aiohttp-utils
+  - python3-wrapt
+  - python3-deprecated
+  - python3-pyblake2
   - python3-swh.core
-  - python3-swh.loader.npm
+  - python3-swh.model
+  - python3-swh.storage.schemata
+  - python3-swh.objstorage
+  - python3-swh.storage
+  - python3-swh.loader.core
+  - python3-swh.scheduler
+  - python3-swh.deposit.loader
+  - python3-swh.deposit.client
+  - python3-swh.loader.git
+  - python3-swh.loader.mercurial
   apt_package_security_dist_updates: []
   apt_package_security_updates: []
   apt_package_updates:
-  - python3-swh.core
-  - python3-swh.loader.npm
-  apt_reboot_required: false
+  - python3-swh.storage.schemata
+  - python3-swh.objstorage
+  - python3-swh.storage
+  - python3-swh.loader.core
+  - python3-swh.scheduler
+  - python3-swh.deposit.loader
+  - python3-swh.deposit.client
+  - python3-swh.loader.git
+  - python3-swh.loader.mercurial
+  apt_reboot_required: true
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1557150948
-  apt_updates: 2
+  apt_update_last_success: 1564588502
+  apt_updates: 9
   architecture: amd64
   augeas:
     version: 1.8.0
   augeasversion: 1.8.0
   bios_release_date: 04/01/2014
   bios_vendor: SeaBIOS
-  bios_version: rel-1.11.1-0-g0551a4be2c-prebuilt.qemu-project.org
+  bios_version: rel-1.11.2-0-gf9626ccb91-prebuilt.qemu-project.org
   blockdevice_sda_model: QEMU HARDDISK
   blockdevice_sda_size: 42949672960
   blockdevice_sda_vendor: QEMU
@@ -48,7 +70,7 @@ values:
     bios:
       release_date: 04/01/2014
       vendor: SeaBIOS
-      version: rel-1.11.1-0-g0551a4be2c-prebuilt.qemu-project.org
+      version: rel-1.11.2-0-gf9626ccb91-prebuilt.qemu-project.org
     chassis:
       type: Other
     manufacturer: QEMU
@@ -57,7 +79,7 @@ values:
       uuid: 1CFACAAF-2718-4794-9CC5-88DFDE58FB43
   domain: softwareheritage.org
   facterversion: 3.10.0
-  filesystems: ext2,ext3,ext4
+  filesystems: btrfs,ext2,ext3,ext4,hfs,hfsplus,jfs,minix,msdos,ntfs,qnx4,ufs,vfat,xfs
   fips_enabled: false
   fqdn: worker04.softwareheritage.org
   gid: root
@@ -90,9 +112,9 @@ values:
   kernelrelease: 4.9.0-9-amd64
   kernelversion: 4.9.0
   load_averages:
-    15m: 0.31
-    1m: 0.45
-    5m: 0.46
+    15m: 0.85
+    1m: 0.76
+    5m: 0.83
   location: sesi_rocquencourt
   lsbdistcodename: stretch
   lsbdistdescription: Debian GNU/Linux 9.9 (stretch)
@@ -106,30 +128,30 @@ values:
   manufacturer: QEMU
   memory:
     swap:
-      available: 3.82 GiB
-      available_bytes: 4097830912
-      capacity: 0%
+      available: 2.36 GiB
+      available_bytes: 2532425728
+      capacity: 38.20%
       total: 3.82 GiB
       total_bytes: 4097830912
-      used: 0 bytes
-      used_bytes: 0
+      used: 1.46 GiB
+      used_bytes: 1565405184
     system:
-      available: 10.77 GiB
-      available_bytes: 11565178880
-      capacity: 8.24%
+      available: 6.94 GiB
+      available_bytes: 7452123136
+      capacity: 40.87%
       total: 11.74 GiB
-      total_bytes: 12603469824
-      used: 990.19 MiB
-      used_bytes: 1038290944
-  memoryfree: 10.77 GiB
-  memoryfree_mb: 11029.4140625
+      total_bytes: 12603465728
+      used: 4.80 GiB
+      used_bytes: 5151342592
+  memoryfree: 6.94 GiB
+  memoryfree_mb: 7106.8984375
   memorysize: 11.74 GiB
-  memorysize_mb: 12019.60546875
+  memorysize_mb: 12019.6015625
   mountpoints:
     "/":
-      available: 28.56 GiB
-      available_bytes: 30662385664
-      capacity: 19.53%
+      available: 28.33 GiB
+      available_bytes: 30419042304
+      capacity: 20.17%
       device: "/dev/mapper/worker04--vg-root"
       filesystem: ext4
       options:
@@ -139,12 +161,12 @@ values:
       - data=ordered
       size: 35.49 GiB
       size_bytes: 38104956928
-      used: 6.93 GiB
-      used_bytes: 7442571264
+      used: 7.16 GiB
+      used_bytes: 7685914624
     "/dev/shm":
       available: 5.87 GiB
-      available_bytes: 6301384704
-      capacity: 0.01%
+      available_bytes: 6301425664
+      capacity: 0.00%
       device: tmpfs
       filesystem: tmpfs
       options:
@@ -153,11 +175,11 @@ values:
       - nodev
       size: 5.87 GiB
       size_bytes: 6301732864
-      used: 340.00 KiB
-      used_bytes: 348160
+      used: 300.00 KiB
+      used_bytes: 307200
     "/run":
       available: 1.17 GiB
-      available_bytes: 1259798528
+      available_bytes: 1259786240
       capacity: 0.04%
       device: tmpfs
       filesystem: tmpfs
@@ -170,8 +192,8 @@ values:
       - mode=755
       size: 1.17 GiB
       size_bytes: 1260347392
-      used: 536.00 KiB
-      used_bytes: 548864
+      used: 548.00 KiB
+      used_bytes: 561152
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -412,8 +434,8 @@ values:
     SSHFP 1 2 c581a244a1fd9ec5be7496bf17f524cefb24f4c63458ec6f6192234864121245
   sshrsakey: AAAAB3NzaC1yc2EAAAADAQABAAABAQCsJL1z8fm1utr+CGyCDrAbbfTmR8iDh9PSbebXMSeHMATdpA0HJnOURRayxwiNJ3Q/AasEyWGgC3RoOvE+AkQekxk7RdXkMy5O/hpZ2PQ9MuUwTl/S2oOnOLYnysUTr+9rYdLy5hHBtXkSVs4y6CPjjThP04JpCgz2dlSdO9vc471KX9+XHvR7omC4QnEiHpooSFWR8moydu7wRSD/VtVuGCpES8+SNpLWOJC/2u23CKDnt0w7uo5LXY7P/A6tw9WwQKaY8K8vQgNAAVs4Uvwgis/Jx21+vR8XyVTz4LQBST/R77nXUOE9H4nyojFlZTJIZcPeZLhq4rnxNbp97snd
   sudoversion: 1.8.19p1
-  swapfree: 3.82 GiB
-  swapfree_mb: 3907.99609375
+  swapfree: 2.36 GiB
+  swapfree_mb: 2415.109375
   swapsize: 3.82 GiB
   swapsize_mb: 3907.99609375
   swh_hostname:
@@ -421,10 +443,10 @@ values:
     short: worker04
     internal_fqdn: worker04.internal.softwareheritage.org
   system_uptime:
-    days: 0
-    hours: 0
-    seconds: 2101
-    uptime: 0:35 hours
+    days: 47
+    hours: 1150
+    seconds: 4143551
+    uptime: 47 days
   systemd: true
   systemd_internal_services:
     systemd-networkd-wait-online.service: disabled
@@ -433,15 +455,15 @@ values:
     systemd-timesyncd.service: enabled
   systemd_version: '232'
   timezone: UTC
-  uptime: 0:35 hours
-  uptime_days: 0
-  uptime_hours: 0
-  uptime_seconds: 2101
+  uptime: 47 days
+  uptime_days: 47
+  uptime_hours: 1150
+  uptime_seconds: 4143551
   uuid: 1CFACAAF-2718-4794-9CC5-88DFDE58FB43
   vcsrepo_svn_ver: 1.9.5
   virtual: kvm
   clientcert: worker04.softwareheritage.org
   clientversion: 4.8.2
-  clientnoop: true
-timestamp: '2019-05-06T13:55:58.254319131+00:00'
-expiration: '2019-05-06T14:25:58.254735331+00:00'
+  clientnoop: false
+timestamp: '2019-07-31T16:01:10.059593310+00:00'
+expiration: '2019-07-31T16:31:10.060010604+00:00'
