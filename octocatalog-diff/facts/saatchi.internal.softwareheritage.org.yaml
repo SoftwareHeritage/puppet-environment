@@ -2,7 +2,7 @@
 name: saatchi.internal.softwareheritage.org
 values:
   agent_specified_environment: production
-  apt_dist_updates: 19
+  apt_dist_updates: 23
   apt_has_dist_updates: true
   apt_has_updates: true
   apt_package_dist_updates:
@@ -17,13 +17,17 @@ values:
   - python3-swh.objstorage
   - python3-swh.storage
   - python3-swh.loader.core
+  - python3-swh.scheduler.updater
+  - python3-swh.scheduler
   - python3-swh.deposit.loader
   - python3-swh.deposit.client
   - python3-swh.indexer
   - python3-swh.indexer.storage
   - python3-swh.journal
+  - python3-swh.lister
   - python3-swh.loader.git
   - python3-swh.loader.mercurial
+  - python3-swh.loader.npm
   - python3-swh.vault
   apt_package_security_dist_updates: []
   apt_package_security_updates: []
@@ -37,13 +41,15 @@ values:
   - python3-swh.indexer
   - python3-swh.indexer.storage
   - python3-swh.journal
+  - python3-swh.lister
   - python3-swh.loader.git
   - python3-swh.loader.mercurial
-  apt_reboot_required: false
+  - python3-swh.loader.npm
+  apt_reboot_required: true
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1565346724
-  apt_updates: 11
+  apt_update_last_success: 1567696735
+  apt_updates: 13
   architecture: amd64
   bios_release_date: 04/01/2014
   bios_vendor: SeaBIOS
@@ -73,7 +79,7 @@ values:
   domain: internal.softwareheritage.org
   erl_ssl_path: "/usr/lib/erlang/lib/ssl-8.1/ebin"
   facterversion: 3.10.0
-  filesystems: ext2,ext3,ext4
+  filesystems: btrfs,ext2,ext3,ext4,hfs,hfsplus,jfs,minix,msdos,ntfs,qnx4,ufs,vfat,xfs
   fips_enabled: false
   fqdn: saatchi.internal.softwareheritage.org
   gid: root
@@ -104,9 +110,9 @@ values:
   kernelrelease: 4.9.0-9-amd64
   kernelversion: 4.9.0
   load_averages:
-    15m: 2.03
-    1m: 1.68
-    5m: 1.99
+    15m: 3.09
+    1m: 2.48
+    5m: 3.09
   location: sesi_rocquencourt
   lsbdistcodename: stretch
   lsbdistdescription: Debian GNU/Linux 9.9 (stretch)
@@ -127,22 +133,22 @@ values:
       used: 0 bytes
       used_bytes: 0
     system:
-      available: 17.86 GiB
-      available_bytes: 19173974016
-      capacity: 8.95%
+      available: 16.72 GiB
+      available_bytes: 17955119104
+      capacity: 14.74%
       total: 19.61 GiB
       total_bytes: 21058977792
-      used: 1.76 GiB
-      used_bytes: 1885003776
-  memoryfree: 17.86 GiB
-  memoryfree_mb: 18285.7265625
+      used: 2.89 GiB
+      used_bytes: 3103858688
+  memoryfree: 16.72 GiB
+  memoryfree_mb: 17123.3359375
   memorysize: 19.61 GiB
   memorysize_mb: 20083.40625
   mountpoints:
     "/":
-      available: 24.82 GiB
-      available_bytes: 26648596480
-      capacity: 27.70%
+      available: 25.26 GiB
+      available_bytes: 27126923264
+      capacity: 26.40%
       device: "/dev/mapper/saatchi--vg-root"
       filesystem: ext4
       options:
@@ -152,11 +158,11 @@ values:
       - data=ordered
       size: 34.33 GiB
       size_bytes: 36857053184
-      used: 9.51 GiB
-      used_bytes: 10208456704
+      used: 9.06 GiB
+      used_bytes: 9730129920
     "/boot":
       available: 121.75 MiB
-      available_bytes: 127664128
+      available_bytes: 127668224
       capacity: 48.26%
       device: "/dev/sda1"
       filesystem: ext2
@@ -170,7 +176,7 @@ values:
       size: 235.32 MiB
       size_bytes: 246755328
       used: 113.57 MiB
-      used_bytes: 119091200
+      used_bytes: 119087104
     "/dev/shm":
       available: 9.81 GiB
       available_bytes: 10529488896
@@ -187,7 +193,7 @@ values:
       used_bytes: 0
     "/run":
       available: 1.96 GiB
-      available_bytes: 2105368576
+      available_bytes: 2105344000
       capacity: 0.03%
       device: tmpfs
       filesystem: tmpfs
@@ -200,8 +206,8 @@ values:
       - mode=755
       size: 1.96 GiB
       size_bytes: 2105901056
-      used: 520.00 KiB
-      used_bytes: 532480
+      used: 544.00 KiB
+      used_bytes: 557056
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -217,6 +223,23 @@ values:
       - size=5120k
       size: 5.00 MiB
       size_bytes: 5242880
+      used: 0 bytes
+      used_bytes: 0
+    "/run/user/0":
+      available: 1.96 GiB
+      available_bytes: 2105896960
+      capacity: 0%
+      device: tmpfs
+      filesystem: tmpfs
+      options:
+      - rw
+      - nosuid
+      - nodev
+      - relatime
+      - size=2056540k
+      - mode=700
+      size: 1.96 GiB
+      size_bytes: 2105896960
       used: 0 bytes
       used_bytes: 0
     "/run/user/1003":
@@ -455,10 +478,10 @@ values:
     short: saatchi
     internal_fqdn: saatchi.internal.softwareheritage.org
   system_uptime:
-    days: 15
-    hours: 361
-    seconds: 1302445
-    uptime: 15 days
+    days: 42
+    hours: 1014
+    seconds: 3652570
+    uptime: 42 days
   systemd: true
   systemd_internal_services:
     systemd-networkd-wait-online.service: disabled
@@ -467,15 +490,15 @@ values:
     systemd-timesyncd.service: enabled
   systemd_version: '232'
   timezone: UTC
-  uptime: 15 days
-  uptime_days: 15
-  uptime_hours: 361
-  uptime_seconds: 1302445
+  uptime: 42 days
+  uptime_days: 42
+  uptime_hours: 1014
+  uptime_seconds: 3652570
   uuid: 96FA444D-C818-495C-B41D-A63AAA3FA36B
   vcsrepo_svn_ver: 1.9.5
   virtual: kvm
   clientcert: saatchi.internal.softwareheritage.org
   clientversion: 4.8.2
   clientnoop: false
-timestamp: '2019-08-09T10:34:51.037485008+00:00'
-expiration: '2019-08-09T11:04:51.039021183+00:00'
+timestamp: '2019-09-05T15:23:35.892654844+00:00'
+expiration: '2019-09-05T15:53:35.894697047+00:00'

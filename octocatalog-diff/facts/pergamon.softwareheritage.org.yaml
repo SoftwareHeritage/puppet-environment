@@ -3,19 +3,33 @@ name: pergamon.softwareheritage.org
 values:
   agent_specified_environment: production
   apache_version: 2.4.25
-  apt_dist_updates: 1
+  apt_dist_updates: 15
   apt_has_dist_updates: true
   apt_has_updates: true
   apt_package_dist_updates:
+  - icinga2-ido-pgsql
+  - icinga2
+  - icinga2-bin
+  - icinga2-common
+  - libboost-context1.67.0
+  - libboost-system1.67.0
+  - libboost-chrono1.67.0
+  - libboost-atomic1.67.0
+  - libboost-thread1.67.0
+  - libboost-coroutine1.67.0
+  - libboost-date-time1.67.0
+  - libboost-filesystem1.67.0
+  - libboost-program-options1.67.0
+  - libboost-regex1.67.0
   - grafana
   apt_package_security_dist_updates: []
   apt_package_security_updates: []
   apt_package_updates:
   - grafana
-  apt_reboot_required: false
+  apt_reboot_required: true
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1566827942
+  apt_update_last_success: 1570115500
   apt_updates: 1
   architecture: amd64
   bios_release_date: 04/01/2014
@@ -65,7 +79,7 @@ values:
       uuid: AA664C56-FC2F-45A2-98D5-476F11EEA5BB
   domain: softwareheritage.org
   facterversion: 3.10.0
-  filesystems: ext2,ext3,ext4
+  filesystems: btrfs,ext2,ext3,ext4,hfs,hfsplus,jfs,minix,msdos,ntfs,qnx4,ufs,vfat,xfs
   fips_enabled: false
   fqdn: pergamon.softwareheritage.org
   gid: root
@@ -103,46 +117,46 @@ values:
   kernelrelease: 4.9.0-9-amd64
   kernelversion: 4.9.0
   load_averages:
-    15m: 0.4
-    1m: 0.27
-    5m: 0.54
+    15m: 0.32
+    1m: 0.45
+    5m: 0.32
   location: sesi_rocquencourt
   lsbdistcodename: stretch
-  lsbdistdescription: Debian GNU/Linux 9.9 (stretch)
+  lsbdistdescription: Debian GNU/Linux 9.11 (stretch)
   lsbdistid: Debian
-  lsbdistrelease: '9.9'
+  lsbdistrelease: '9.11'
   lsbmajdistrelease: '9'
-  lsbminordistrelease: '9'
+  lsbminordistrelease: '11'
   macaddress: 96:bf:20:21:56:cf
   macaddress_eth0: 96:bf:20:21:56:cf
   macaddress_eth1: be:83:fd:d7:61:94
   manufacturer: QEMU
   memory:
     swap:
-      available: 4.00 GiB
-      available_bytes: 4292866048
-      capacity: 0%
+      available: 3.65 GiB
+      available_bytes: 3919462400
+      capacity: 8.70%
       total: 4.00 GiB
       total_bytes: 4292866048
-      used: 0 bytes
-      used_bytes: 0
+      used: 356.11 MiB
+      used_bytes: 373403648
     system:
-      available: 5.16 GiB
-      available_bytes: 5544460288
-      capacity: 33.80%
+      available: 5.17 GiB
+      available_bytes: 5555707904
+      capacity: 33.67%
       total: 7.80 GiB
       total_bytes: 8375484416
-      used: 2.64 GiB
-      used_bytes: 2831024128
-  memoryfree: 5.16 GiB
-  memoryfree_mb: 5287.609375
+      used: 2.63 GiB
+      used_bytes: 2819776512
+  memoryfree: 5.17 GiB
+  memoryfree_mb: 5298.3359375
   memorysize: 7.80 GiB
   memorysize_mb: 7987.484375
   mountpoints:
     "/":
-      available: 33.65 GiB
-      available_bytes: 36131520512
-      capacity: 31.45%
+      available: 33.54 GiB
+      available_bytes: 36009951232
+      capacity: 31.68%
       device: "/dev/vda1"
       filesystem: ext4
       options:
@@ -152,8 +166,8 @@ values:
       - data=ordered
       size: 49.09 GiB
       size_bytes: 52709421056
-      used: 15.44 GiB
-      used_bytes: 16577900544
+      used: 15.55 GiB
+      used_bytes: 16699469824
     "/dev/shm":
       available: 3.90 GiB
       available_bytes: 4187738112
@@ -169,9 +183,9 @@ values:
       used: 4.00 KiB
       used_bytes: 4096
     "/run":
-      available: 797.89 MiB
-      available_bytes: 836653056
-      capacity: 0.11%
+      available: 797.82 MiB
+      available_bytes: 836579328
+      capacity: 0.12%
       device: tmpfs
       filesystem: tmpfs
       options:
@@ -183,8 +197,8 @@ values:
       - mode=755
       size: 798.75 MiB
       size_bytes: 837550080
-      used: 876.00 KiB
-      used_bytes: 897024
+      used: 948.00 KiB
+      used_bytes: 970752
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -202,7 +216,7 @@ values:
       size_bytes: 5242880
       used: 0 bytes
       used_bytes: 0
-    "/run/user/0":
+    "/run/user/1001":
       available: 798.75 MiB
       available_bytes: 837545984
       capacity: 0%
@@ -215,6 +229,8 @@ values:
       - relatime
       - size=817916k
       - mode=700
+      - uid=1001
+      - gid=1001
       size: 798.75 MiB
       size_bytes: 837545984
       used: 0 bytes
@@ -238,6 +254,25 @@ values:
       size_bytes: 837545984
       used: 0 bytes
       used_bytes: 0
+    "/run/user/1017":
+      available: 798.75 MiB
+      available_bytes: 837545984
+      capacity: 0%
+      device: tmpfs
+      filesystem: tmpfs
+      options:
+      - rw
+      - nosuid
+      - nodev
+      - relatime
+      - size=817916k
+      - mode=700
+      - uid=1017
+      - gid=1017
+      size: 798.75 MiB
+      size_bytes: 837545984
+      used: 0 bytes
+      used_bytes: 0
     "/sys/fs/cgroup":
       available: 3.90 GiB
       available_bytes: 4187742208
@@ -255,9 +290,9 @@ values:
       used: 0 bytes
       used_bytes: 0
     "/var/lib/prometheus":
-      available: 57.94 GiB
-      available_bytes: 62216765440
-      capacity: 62.97%
+      available: 53.17 GiB
+      available_bytes: 57090121728
+      capacity: 66.02%
       device: "/dev/vdc1"
       filesystem: ext4
       options:
@@ -267,8 +302,8 @@ values:
       - data=ordered
       size: 156.49 GiB
       size_bytes: 168026722304
-      used: 98.54 GiB
-      used_bytes: 105809956864
+      used: 103.32 GiB
+      used_bytes: 110936600576
   mounts:
   - "/"
   - "/var/lib/prometheus"
@@ -359,24 +394,24 @@ values:
     primary: eth0
   operatingsystem: Debian
   operatingsystemmajrelease: '9'
-  operatingsystemrelease: '9.9'
+  operatingsystemrelease: '9.11'
   os:
     architecture: amd64
     distro:
       codename: stretch
-      description: Debian GNU/Linux 9.9 (stretch)
+      description: Debian GNU/Linux 9.11 (stretch)
       id: Debian
       release:
-        full: '9.9'
+        full: '9.11'
         major: '9'
-        minor: '9'
+        minor: '11'
     family: Debian
     hardware: x86_64
     name: Debian
     release:
-      full: '9.9'
+      full: '9.11'
       major: '9'
-      minor: '9'
+      minor: '11'
     selinux:
       enabled: false
   osfamily: Debian
@@ -403,7 +438,7 @@ values:
       size_bytes: 171796594688
       uuid: 0aedf89c-811f-4b5f-bd18-526a6e7cf479
   path: "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
-  phpversion: 7.0.33-0+deb9u3
+  phpversion: 7.0.33-0+deb9u5
   physicalprocessorcount: 2
   processor0: Common KVM processor
   processor1: Common KVM processor
@@ -476,8 +511,8 @@ values:
     SSHFP 1 2 a280ca8bdb71751daf5e9a21b473b79ca38e0a29122029859889711e162dcf98
   sshrsakey: AAAAB3NzaC1yc2EAAAADAQABAAABAQCUVA+gg4Hyy2q7qiZ3Y3kvZmzAbtcG/HGKBb5CMOO65sPLZfw9WGChi829NoAKzHNR9CPX+AyLokZ5W4khLcQ3JbK9vr+iXxBIzIeE/DOuyXkQegOPFNyG7XoFb7v7e2IX1Lmgprm6obUszo403CD6/w1IsN9/I7nozPd8jxtWVdfYRRFqwZrEJfkkSDrR1QJJ6VI9xcDVssybKNzSGDUzaVfPnp9uLiD9rE9UwE5aHvwXoqXfr+hR8QMWWaEtlZVroWd7ZM6smgshWRJEOMIz7cK1zSG+Dj1SX+kZqWEPG9xiNO5ug8G/Zu+vkVQcmzLLgdOJEJuEgeoYzG32bG/v
   sudoversion: 1.8.19p1
-  swapfree: 4.00 GiB
-  swapfree_mb: 4093.99609375
+  swapfree: 3.65 GiB
+  swapfree_mb: 3737.890625
   swapsize: 4.00 GiB
   swapsize_mb: 4093.99609375
   swh_hostname:
@@ -485,10 +520,10 @@ values:
     short: pergamon
     internal_fqdn: pergamon.internal.softwareheritage.org
   system_uptime:
-    days: 0
-    hours: 3
-    seconds: 14100
-    uptime: 3:55 hours
+    days: 38
+    hours: 917
+    seconds: 3302972
+    uptime: 38 days
   systemd: true
   systemd_internal_services:
     systemd-networkd-wait-online.service: disabled
@@ -497,15 +532,15 @@ values:
     systemd-timesyncd.service: enabled
   systemd_version: '232'
   timezone: UTC
-  uptime: 3:55 hours
-  uptime_days: 0
-  uptime_hours: 3
-  uptime_seconds: 14100
+  uptime: 38 days
+  uptime_days: 38
+  uptime_hours: 917
+  uptime_seconds: 3302972
   uuid: AA664C56-FC2F-45A2-98D5-476F11EEA5BB
   vcsrepo_svn_ver: ''
   virtual: kvm
   clientcert: pergamon.softwareheritage.org
   clientversion: 4.8.2
   clientnoop: false
-timestamp: '2019-08-26T14:05:13.242428634+00:00'
-expiration: '2019-08-26T14:35:13.242882426+00:00'
+timestamp: '2019-10-03T15:39:45.903060227+00:00'
+expiration: '2019-10-03T16:09:45.903588067+00:00'
