@@ -2,14 +2,26 @@
 name: jenkins-debian1.internal.softwareheritage.org
 values:
   agent_specified_environment: production
-  apt_has_dist_updates: false
-  apt_has_updates: false
-  apt_reboot_required: false
-  apt_update_last_success: 1570200602
+  apt_dist_updates: 2
+  apt_has_dist_updates: true
+  apt_has_updates: true
+  apt_package_dist_updates:
+  - prometheus-statsd-exporter
+  - journalbeat
+  apt_package_security_dist_updates: []
+  apt_package_security_updates: []
+  apt_package_updates:
+  - prometheus-statsd-exporter
+  - journalbeat
+  apt_reboot_required: true
+  apt_security_dist_updates: 0
+  apt_security_updates: 0
+  apt_update_last_success: 1575038462
+  apt_updates: 2
   architecture: amd64
   bios_release_date: 04/01/2014
   bios_vendor: SeaBIOS
-  bios_version: rel-1.11.2-0-gf9626ccb91-prebuilt.qemu-project.org
+  bios_version: rel-1.12.1-0-ga5cab58e9a3f-prebuilt.qemu.org
   blockdevice_vda_size: 53687091200
   blockdevice_vda_vendor: '0x1af4'
   blockdevices: vda
@@ -23,7 +35,7 @@ values:
     bios:
       release_date: 04/01/2014
       vendor: SeaBIOS
-      version: rel-1.11.2-0-gf9626ccb91-prebuilt.qemu-project.org
+      version: rel-1.12.1-0-ga5cab58e9a3f-prebuilt.qemu.org
     chassis:
       type: Other
     manufacturer: QEMU
@@ -32,7 +44,7 @@ values:
       uuid: 29736f86-c439-4043-ae09-642bb08b9383
   domain: internal.softwareheritage.org
   facterversion: 3.11.0
-  filesystems: ext2,ext3,ext4
+  filesystems: btrfs,ext2,ext3,ext4,hfs,hfsplus,jfs,minix,msdos,qnx4,ufs,vfat,xfs
   fips_enabled: false
   fqdn: jenkins-debian1.internal.softwareheritage.org
   gid: root
@@ -64,9 +76,9 @@ values:
   kernelrelease: 4.19.0-6-amd64
   kernelversion: 4.19.0
   load_averages:
-    15m: 0.07
-    1m: 0.01
-    5m: 0.05
+    15m: 0.01
+    1m: 0.11
+    5m: 0.03
   location: sesi_rocquencourt
   lsbdistcodename: buster
   lsbdistdescription: Debian GNU/Linux 10 (buster)
@@ -86,22 +98,22 @@ values:
       used: 0 bytes
       used_bytes: 0
     system:
-      available: 15.35 GiB
-      available_bytes: 16476680192
-      capacity: 2.05%
+      available: 14.27 GiB
+      available_bytes: 15320768512
+      capacity: 8.92%
       total: 15.67 GiB
       total_bytes: 16821506048
-      used: 328.85 MiB
-      used_bytes: 344825856
-  memoryfree: 15.35 GiB
-  memoryfree_mb: 15713.38671875
+      used: 1.40 GiB
+      used_bytes: 1500737536
+  memoryfree: 14.27 GiB
+  memoryfree_mb: 14611.0234375
   memorysize: 15.67 GiB
   memorysize_mb: 16042.23828125
   mountpoints:
     "/":
-      available: 26.98 GiB
-      available_bytes: 28972257280
-      capacity: 40.31%
+      available: 28.70 GiB
+      available_bytes: 30817820672
+      capacity: 36.51%
       device: "/dev/mapper/jenkins--debian1--vg-root"
       filesystem: ext4
       options:
@@ -110,8 +122,8 @@ values:
       - errors=remount-ro
       size: 45.20 GiB
       size_bytes: 48537276416
-      used: 18.22 GiB
-      used_bytes: 19565019136
+      used: 16.50 GiB
+      used_bytes: 17719455744
     "/dev/shm":
       available: 7.83 GiB
       available_bytes: 8410750976
@@ -128,7 +140,7 @@ values:
       used_bytes: 0
     "/run":
       available: 1.57 GiB
-      available_bytes: 1681682432
+      available_bytes: 1681641472
       capacity: 0.03%
       device: tmpfs
       filesystem: tmpfs
@@ -141,8 +153,8 @@ values:
       - mode=755
       size: 1.57 GiB
       size_bytes: 1682153472
-      used: 460.00 KiB
-      used_bytes: 471040
+      used: 500.00 KiB
+      used_bytes: 512000
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -160,7 +172,7 @@ values:
       size_bytes: 5242880
       used: 0 bytes
       used_bytes: 0
-    "/run/user/1001":
+    "/run/user/0":
       available: 1.57 GiB
       available_bytes: 1682149376
       capacity: 0%
@@ -173,8 +185,25 @@ values:
       - relatime
       - size=1642724k
       - mode=700
-      - uid=1001
-      - gid=1001
+      size: 1.57 GiB
+      size_bytes: 1682149376
+      used: 0 bytes
+      used_bytes: 0
+    "/run/user/1003":
+      available: 1.57 GiB
+      available_bytes: 1682149376
+      capacity: 0%
+      device: tmpfs
+      filesystem: tmpfs
+      options:
+      - rw
+      - nosuid
+      - nodev
+      - relatime
+      - size=1642724k
+      - mode=700
+      - uid=1003
+      - gid=1003
       size: 1.57 GiB
       size_bytes: 1682149376
       used: 0 bytes
@@ -261,7 +290,7 @@ values:
     primary: ens18
   operatingsystem: Debian
   operatingsystemmajrelease: '10'
-  operatingsystemrelease: '10.1'
+  operatingsystemrelease: '10.2'
   os:
     architecture: amd64
     distro:
@@ -275,9 +304,9 @@ values:
     hardware: x86_64
     name: Debian
     release:
-      full: '10.1'
+      full: '10.2'
       major: '10'
-      minor: '1'
+      minor: '2'
     selinux:
       enabled: false
   osfamily: Debian
@@ -375,10 +404,10 @@ values:
     short: jenkins-debian1
     internal_fqdn: jenkins-debian1.internal.softwareheritage.org
   system_uptime:
-    days: 0
-    hours: 0
-    seconds: 1680
-    uptime: 0:28 hours
+    days: 44
+    hours: 1078
+    seconds: 3883949
+    uptime: 44 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -390,15 +419,15 @@ values:
     systemd-timesyncd.service: enabled
   systemd_version: '241'
   timezone: UTC
-  uptime: 0:28 hours
-  uptime_days: 0
-  uptime_hours: 0
-  uptime_seconds: 1680
+  uptime: 44 days
+  uptime_days: 44
+  uptime_hours: 1078
+  uptime_seconds: 3883949
   uuid: 29736f86-c439-4043-ae09-642bb08b9383
   vcsrepo_svn_ver: ''
   virtual: kvm
   clientcert: jenkins-debian1.internal.softwareheritage.org
   clientversion: 5.5.10
   clientnoop: false
-timestamp: '2019-10-04T15:11:40.761460762+00:00'
-expiration: '2019-10-04T15:41:40.761933630+00:00'
+timestamp: '2019-11-29T15:19:09.228449192+00:00'
+expiration: '2019-11-29T15:49:09.228783229+00:00'

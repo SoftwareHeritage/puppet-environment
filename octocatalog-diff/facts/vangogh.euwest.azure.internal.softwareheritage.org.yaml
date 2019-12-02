@@ -2,25 +2,25 @@
 name: vangogh.euwest.azure.internal.softwareheritage.org
 values:
   agent_specified_environment: production
-  apt_dist_updates: 12
+  apt_dist_updates: 8
   apt_has_dist_updates: true
   apt_has_updates: true
   apt_package_dist_updates:
-  - python3-mimeparse
-  - python3-aiohttp-utils
-  - python3-wrapt
-  - python3-deprecated
-  - python3-pyblake2
+  - prometheus-statsd-exporter
+  - python3-psycopg2
   - python3-swh.core
   - python3-swh.model
   - python3-swh.objstorage.cloud
   - python3-swh.objstorage
   - python3-swh.storage
   - python3-swh.scheduler
-  - python3-swh.vault
   apt_package_security_dist_updates: []
   apt_package_security_updates: []
   apt_package_updates:
+  - prometheus-statsd-exporter
+  - python3-psycopg2
+  - python3-swh.core
+  - python3-swh.model
   - python3-swh.objstorage.cloud
   - python3-swh.objstorage
   - python3-swh.storage
@@ -28,8 +28,8 @@ values:
   apt_reboot_required: true
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1564393039
-  apt_updates: 4
+  apt_update_last_success: 1575038762
+  apt_updates: 8
   architecture: amd64
   bios_release_date: 06/02/2017
   bios_vendor: American Megatrends Inc.
@@ -50,11 +50,6 @@ values:
   boardserialnumber: 0000-0013-6136-3368-7676-1338-21
   chassisassettag: 7783-7084-3265-9085-8269-3286-77
   chassistype: Desktop
-  cloud:
-    provider: azure
-  dhcp_servers:
-    eth0: 168.63.129.16
-    system: 168.63.129.16
   disks:
     fd0:
       size: 4.00 KiB
@@ -90,9 +85,9 @@ values:
     product:
       name: Virtual Machine
       serial_number: 0000-0007-5012-6590-1773-5386-25
-      uuid: 98D91968-F620-4145-BCED-57B5F83A21BD
+      uuid: 98d91968-f620-4145-bced-57b5f83a21bd
   domain: euwest.azure.internal.softwareheritage.org
-  facterversion: 3.10.0
+  facterversion: 3.11.0
   filesystems: ext2,ext3,ext4
   fips_enabled: false
   fqdn: vangogh.euwest.azure.internal.softwareheritage.org
@@ -120,55 +115,53 @@ values:
   is_pe: false
   is_virtual: true
   kernel: Linux
-  kernelmajversion: '4.9'
-  kernelrelease: 4.9.0-9-amd64
-  kernelversion: 4.9.0
+  kernelmajversion: '4.19'
+  kernelrelease: 4.19.0-6-amd64
+  kernelversion: 4.19.0
   load_averages:
-    15m: 0.02
-    1m: 0.18
-    5m: 0.07
+    15m: 0.01
+    1m: 0.12
+    5m: 0.05
   location: azure_euwest
-  lsbdistcodename: stretch
-  lsbdistdescription: Debian GNU/Linux 9.9 (stretch)
+  lsbdistcodename: buster
+  lsbdistdescription: Debian GNU/Linux 10 (buster)
   lsbdistid: Debian
-  lsbdistrelease: '9.9'
-  lsbmajdistrelease: '9'
-  lsbminordistrelease: '9'
+  lsbdistrelease: '10'
+  lsbmajdistrelease: '10'
   macaddress: 00:0d:3a:49:71:9e
   macaddress_eth0: 00:0d:3a:49:71:9e
   manufacturer: Microsoft Corporation
   memory:
     system:
-      available: 6.73 GiB
-      available_bytes: 7229607936
-      capacity: 13.49%
-      total: 7.78 GiB
-      total_bytes: 8356831232
-      used: 1.05 GiB
-      used_bytes: 1127223296
-  memoryfree: 6.73 GiB
-  memoryfree_mb: 6894.69140625
-  memorysize: 7.78 GiB
-  memorysize_mb: 7969.6953125
+      available: 6.84 GiB
+      available_bytes: 7345389568
+      capacity: 11.95%
+      total: 7.77 GiB
+      total_bytes: 8342081536
+      used: 950.52 MiB
+      used_bytes: 996691968
+  memoryfree: 6.84 GiB
+  memoryfree_mb: 7005.109375
+  memorysize: 7.77 GiB
+  memorysize_mb: 7955.62890625
   mountpoints:
     "/":
-      available: 27.29 GiB
-      available_bytes: 29299507200
-      capacity: 7.20%
+      available: 26.66 GiB
+      available_bytes: 28625309696
+      capacity: 9.33%
       device: "/dev/sda1"
       filesystem: ext4
       options:
       - rw
       - relatime
       - errors=remount-ro
-      - data=ordered
       size: 29.40 GiB
       size_bytes: 31571480576
-      used: 2.12 GiB
-      used_bytes: 2271973376
+      used: 2.74 GiB
+      used_bytes: 2946170880
     "/dev/shm":
-      available: 3.89 GiB
-      available_bytes: 4178415616
+      available: 3.88 GiB
+      available_bytes: 4171038720
       capacity: 0%
       device: tmpfs
       filesystem: tmpfs
@@ -176,8 +169,8 @@ values:
       - rw
       - nosuid
       - nodev
-      size: 3.89 GiB
-      size_bytes: 4178415616
+      size: 3.88 GiB
+      size_bytes: 4171038720
       used: 0 bytes
       used_bytes: 0
     "/mnt/resource":
@@ -189,14 +182,13 @@ values:
       options:
       - rw
       - relatime
-      - data=ordered
       size: 15.69 GiB
       size_bytes: 16842027008
       used: 44.03 MiB
       used_bytes: 46166016
     "/run":
-      available: 796.52 MiB
-      available_bytes: 835211264
+      available: 795.07 MiB
+      available_bytes: 833691648
       capacity: 0.06%
       device: tmpfs
       filesystem: tmpfs
@@ -205,12 +197,12 @@ values:
       - nosuid
       - noexec
       - relatime
-      - size=816100k
+      - size=814660k
       - mode=755
-      size: 796.97 MiB
-      size_bytes: 835686400
-      used: 464.00 KiB
-      used_bytes: 475136
+      size: 795.57 MiB
+      size_bytes: 834211840
+      used: 508.00 KiB
+      used_bytes: 520192
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -229,8 +221,8 @@ values:
       used: 0 bytes
       used_bytes: 0
     "/run/user/0":
-      available: 796.97 MiB
-      available_bytes: 835682304
+      available: 795.56 MiB
+      available_bytes: 834207744
       capacity: 0%
       device: tmpfs
       filesystem: tmpfs
@@ -239,34 +231,15 @@ values:
       - nosuid
       - nodev
       - relatime
-      - size=816096k
+      - size=814656k
       - mode=700
-      size: 796.97 MiB
-      size_bytes: 835682304
-      used: 0 bytes
-      used_bytes: 0
-    "/run/user/1003":
-      available: 796.97 MiB
-      available_bytes: 835682304
-      capacity: 0%
-      device: tmpfs
-      filesystem: tmpfs
-      options:
-      - rw
-      - nosuid
-      - nodev
-      - relatime
-      - size=816096k
-      - mode=700
-      - uid=1003
-      - gid=1003
-      size: 796.97 MiB
-      size_bytes: 835682304
+      size: 795.56 MiB
+      size_bytes: 834207744
       used: 0 bytes
       used_bytes: 0
     "/sys/fs/cgroup":
-      available: 3.89 GiB
-      available_bytes: 4178415616
+      available: 3.88 GiB
+      available_bytes: 4171038720
       capacity: 0%
       device: tmpfs
       filesystem: tmpfs
@@ -276,8 +249,8 @@ values:
       - nodev
       - noexec
       - mode=755
-      size: 3.89 GiB
-      size_bytes: 4178415616
+      size: 3.88 GiB
+      size_bytes: 4171038720
       used: 0 bytes
       used_bytes: 0
   mounts:
@@ -299,7 +272,6 @@ values:
   network_eth0: 192.168.200.0
   network_lo: 127.0.0.0
   networking:
-    dhcp: 168.63.129.16
     domain: euwest.azure.internal.softwareheritage.org
     fqdn: vangogh.euwest.azure.internal.softwareheritage.org
     hostname: vangogh
@@ -313,7 +285,6 @@ values:
         - address: fe80::20d:3aff:fe49:719e
           netmask: 'ffff:ffff:ffff:ffff::'
           network: 'fe80::'
-        dhcp: 168.63.129.16
         ip: 192.168.200.28
         ip6: fe80::20d:3aff:fe49:719e
         mac: 00:0d:3a:49:71:9e
@@ -347,27 +318,26 @@ values:
     network: 192.168.200.0
     network6: 'fe80::'
     primary: eth0
-  nginx_version: 1.10.3
+  nginx_version: 1.14.2
   operatingsystem: Debian
-  operatingsystemmajrelease: '9'
-  operatingsystemrelease: '9.9'
+  operatingsystemmajrelease: '10'
+  operatingsystemrelease: '10.2'
   os:
     architecture: amd64
     distro:
-      codename: stretch
-      description: Debian GNU/Linux 9.9 (stretch)
+      codename: buster
+      description: Debian GNU/Linux 10 (buster)
       id: Debian
       release:
-        full: '9.9'
-        major: '9'
-        minor: '9'
+        full: '10'
+        major: '10'
     family: Debian
     hardware: x86_64
     name: Debian
     release:
-      full: '9.9'
-      major: '9'
-      minor: '9'
+      full: '10.2'
+      major: '10'
+      minor: '2'
     selinux:
       enabled: false
   osfamily: Debian
@@ -404,15 +374,15 @@ values:
   puppet_environmentpath: "/etc/puppet/code/environments"
   puppet_server: pergamon.internal.softwareheritage.org
   puppet_vardir: "/var/lib/puppet"
-  puppetversion: 4.8.2
+  puppetversion: 5.5.10
   root_home: "/root"
   ruby:
     platform: x86_64-linux-gnu
-    sitedir: "/usr/local/lib/site_ruby/2.3.0"
-    version: 2.3.3
+    sitedir: "/usr/local/lib/site_ruby/2.5.0"
+    version: 2.5.5
   rubyplatform: x86_64-linux-gnu
-  rubysitedir: "/usr/local/lib/site_ruby/2.3.0"
-  rubyversion: 2.3.3
+  rubysitedir: "/usr/local/lib/site_ruby/2.5.0"
+  rubyversion: 2.5.5
   selinux: false
   serialnumber: 0000-0007-5012-6590-1773-5386-25
   service_provider: systemd
@@ -422,23 +392,27 @@ values:
         sha1: SSHFP 2 1 a633514fced99934d30e9e11a42f7534558db6c4
         sha256: SSHFP 2 2 974d507ba4579c7688fae372f1325a7d407200ec366e2574ae91cc79ef7ade1f
       key: AAAAB3NzaC1kc3MAAACBANWXIH39CZrey4XYp6vwoZ2oAodHst1DupY/yPTLi7P3LtRyD4MKClxr7L687KDDQ/CPA9wvuXGz4r47dgjzF6O4c7Q/vDO/XrRNyHA0QYwoKU9byuS0mUmumBGM70sqwc/gpwIALW2EsnObZCX7ZYr707+AzKH0CCx4NW9J+fWxAAAAFQDqRultdF2IY2r+YqipctE13wfhpQAAAIAmHDsjqT+NPH8tvcMB2Toe0Yj7Ls5HpE2jU+CryWs4ONzpPkdmV1G12ssxZ9p/9f5ZKEULeJuJ+V+MqSJ9Lm6rvepdhly6wDZGYw19emRPmdJn8nMAg9zk0ItY6IG62oaFMaoHIH7Bc62ZeqaU2wy4q438ScQIpUIl3kHCi2PafgAAAIEAq326Y6+xOBcTy8ttEc7sSM5yzp7s4C1OWhteDX7UvAJutdknJCVYTulua56SHIQV37nxonyimVI4FagTqDhvhlunKd7is08wWYDWMU/vYrWGAzhdlS+AIyn1ID807LIHg1cz5jx68LW3domG41fL3fpa7WsSlCgrn8+Edl9TgXg=
+      type: ssh-dss
     ecdsa:
       fingerprints:
         sha1: SSHFP 3 1 746b9bae273fba0b6001669542ec5c5040241701
         sha256: SSHFP 3 2 ee9fad44c61af02ef98c31aafb02df85d80bd2e1dfa33937817255ec35d106f6
       key: AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBHFsYxm6pmhVfnkgdNI69Azrwyrk0pK7jUR9VNgD4ct4PH/1yIH3TlWetZvMtkhJygUeY6iZ3ZGbRckGaHYPoas=
+      type: ecdsa-sha2-nistp256
     ed25519:
       fingerprints:
         sha1: SSHFP 4 1 553392f60e8d97b0942c5ab428b7e7abb388b5bd
         sha256: SSHFP 4 2 426a72d29fbab152ef1d32b01c2aa01b6d4564be9df566c49e6f01d67265770c
       key: AAAAC3NzaC1lZDI1NTE5AAAAIKT8gIa0Nubs+nrHydjM4QU60ZFv0PIiFXAojdQQB0lN
+      type: ssh-ed25519
     rsa:
       fingerprints:
         sha1: SSHFP 1 1 909a0cc57f3a3c433c89374888ad6cf11cea8e53
         sha256: SSHFP 1 2 75c4f8eecd8c9d92bc5317c046ca3aa1b7e19d1b4a7cbc096e1a273a5d7affb6
       key: AAAAB3NzaC1yc2EAAAADAQABAAABAQC4nhF1wJyp4mzz7MXSitCllDVxjR+Hsg4pFlphaPhtvB/R81ZMH1tvfkupMVSR6S35xfiBwUG8GpU7R9jOWRmfdkXXEiJzydDN1tymG2vGjTZDdhf9J5Q87/l/yMrwuy/MP6ycGzrgNsH1iuqoY3qdlYfrsXRigp4FAc+llaFIFGsCnz20n5HpkwtRJ/ILY34rXcwRRu86EUYNfGeGoqCcjUDeXZNMMWMyYnfSy5buapx0RbU7FIYKvWdUOAEhZ5smxraT09Azc5+ImctVN0BYC0Bt7nwgXcFTwXKvnd9dVI3s0q7xTs59QDwKBaobklT5zETS9dZVsNS83pTMS2rP
-  ssh_client_version_full: 7.4p1
-  ssh_server_version_full: 7.4p1
+      type: ssh-rsa
+  ssh_client_version_full: 7.9p1
+  ssh_server_version_full: 7.9p1
   sshdsakey: AAAAB3NzaC1kc3MAAACBANWXIH39CZrey4XYp6vwoZ2oAodHst1DupY/yPTLi7P3LtRyD4MKClxr7L687KDDQ/CPA9wvuXGz4r47dgjzF6O4c7Q/vDO/XrRNyHA0QYwoKU9byuS0mUmumBGM70sqwc/gpwIALW2EsnObZCX7ZYr707+AzKH0CCx4NW9J+fWxAAAAFQDqRultdF2IY2r+YqipctE13wfhpQAAAIAmHDsjqT+NPH8tvcMB2Toe0Yj7Ls5HpE2jU+CryWs4ONzpPkdmV1G12ssxZ9p/9f5ZKEULeJuJ+V+MqSJ9Lm6rvepdhly6wDZGYw19emRPmdJn8nMAg9zk0ItY6IG62oaFMaoHIH7Bc62ZeqaU2wy4q438ScQIpUIl3kHCi2PafgAAAIEAq326Y6+xOBcTy8ttEc7sSM5yzp7s4C1OWhteDX7UvAJutdknJCVYTulua56SHIQV37nxonyimVI4FagTqDhvhlunKd7is08wWYDWMU/vYrWGAzhdlS+AIyn1ID807LIHg1cz5jx68LW3domG41fL3fpa7WsSlCgrn8+Edl9TgXg=
   sshecdsakey: AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBHFsYxm6pmhVfnkgdNI69Azrwyrk0pK7jUR9VNgD4ct4PH/1yIH3TlWetZvMtkhJygUeY6iZ3ZGbRckGaHYPoas=
   sshed25519key: AAAAC3NzaC1lZDI1NTE5AAAAIKT8gIa0Nubs+nrHydjM4QU60ZFv0PIiFXAojdQQB0lN
@@ -455,33 +429,36 @@ values:
     SSHFP 1 1 909a0cc57f3a3c433c89374888ad6cf11cea8e53
     SSHFP 1 2 75c4f8eecd8c9d92bc5317c046ca3aa1b7e19d1b4a7cbc096e1a273a5d7affb6
   sshrsakey: AAAAB3NzaC1yc2EAAAADAQABAAABAQC4nhF1wJyp4mzz7MXSitCllDVxjR+Hsg4pFlphaPhtvB/R81ZMH1tvfkupMVSR6S35xfiBwUG8GpU7R9jOWRmfdkXXEiJzydDN1tymG2vGjTZDdhf9J5Q87/l/yMrwuy/MP6ycGzrgNsH1iuqoY3qdlYfrsXRigp4FAc+llaFIFGsCnz20n5HpkwtRJ/ILY34rXcwRRu86EUYNfGeGoqCcjUDeXZNMMWMyYnfSy5buapx0RbU7FIYKvWdUOAEhZ5smxraT09Azc5+ImctVN0BYC0Bt7nwgXcFTwXKvnd9dVI3s0q7xTs59QDwKBaobklT5zETS9dZVsNS83pTMS2rP
-  sudoversion: 1.8.19p1
+  sudoversion: 1.8.27
   swh_hostname:
     fqdn: vangogh.euwest.azure.internal.softwareheritage.org
     short: vangogh.euwest.azure
     internal_fqdn: vangogh.euwest.azure.internal.softwareheritage.org
   system_uptime:
-    days: 67
-    hours: 1631
-    seconds: 5872248
-    uptime: 67 days
+    days: 46
+    hours: 1110
+    seconds: 3997367
+    uptime: 46 days
   systemd: true
   systemd_internal_services:
+    systemd-boot-check-no-failures.service: disabled
+    systemd-fsck-root.service: enabled-runtime
     systemd-networkd-wait-online.service: disabled
     systemd-networkd.service: disabled
     systemd-resolved.service: disabled
+    systemd-time-wait-sync.service: disabled
     systemd-timesyncd.service: enabled
-  systemd_version: '232'
+  systemd_version: '241'
   timezone: UTC
-  uptime: 67 days
-  uptime_days: 67
-  uptime_hours: 1631
-  uptime_seconds: 5872248
-  uuid: 98D91968-F620-4145-BCED-57B5F83A21BD
+  uptime: 46 days
+  uptime_days: 46
+  uptime_hours: 1110
+  uptime_seconds: 3997367
+  uuid: 98d91968-f620-4145-bced-57b5f83a21bd
   vcsrepo_svn_ver: ''
   virtual: hyperv
   clientcert: vangogh.euwest.azure.internal.softwareheritage.org
-  clientversion: 4.8.2
-  clientnoop: true
-timestamp: '2019-07-29T09:37:55.840973921+00:00'
-expiration: '2019-07-29T10:07:55.841432623+00:00'
+  clientversion: 5.5.10
+  clientnoop: false
+timestamp: '2019-11-29T15:21:02.826009469+00:00'
+expiration: '2019-11-29T15:51:02.826382970+00:00'

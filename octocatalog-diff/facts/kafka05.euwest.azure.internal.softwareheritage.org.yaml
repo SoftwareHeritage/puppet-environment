@@ -1,10 +1,21 @@
 --- !ruby/object:Puppet::Node::Facts
 name: kafka05.euwest.azure.internal.softwareheritage.org
 values:
-  apt_has_dist_updates: false
-  apt_has_updates: false
-  apt_reboot_required: false
-  apt_update_last_success: -1
+  agent_specified_environment: production
+  apt_dist_updates: 1
+  apt_has_dist_updates: true
+  apt_has_updates: true
+  apt_package_dist_updates:
+  - prometheus-statsd-exporter
+  apt_package_security_dist_updates: []
+  apt_package_security_updates: []
+  apt_package_updates:
+  - prometheus-statsd-exporter
+  apt_reboot_required: true
+  apt_security_dist_updates: 0
+  apt_security_updates: 0
+  apt_update_last_success: 1575039422
+  apt_updates: 1
   architecture: amd64
   bios_release_date: 06/02/2017
   bios_vendor: American Megatrends Inc.
@@ -20,7 +31,7 @@ values:
   blockdevice_sdc_size: 8796093022208
   blockdevice_sdc_vendor: Msft
   blockdevice_sr0_model: Virtual CD/ROM
-  blockdevice_sr0_size: 643072
+  blockdevice_sr0_size: 1073741312
   blockdevice_sr0_vendor: Msft
   blockdevices: sdb,sr0,fd0,sdc,sda
   boardmanufacturer: Microsoft Corporation
@@ -28,11 +39,6 @@ values:
   boardserialnumber: 0000-0013-6311-1127-3682-2019-93
   chassisassettag: 7783-7084-3265-9085-8269-3286-77
   chassistype: Desktop
-  cloud:
-    provider: azure
-  dhcp_servers:
-    eth0: 168.63.129.16
-    system: 168.63.129.16
   disks:
     fd0:
       size: 4.00 KiB
@@ -54,8 +60,8 @@ values:
       vendor: Msft
     sr0:
       model: Virtual CD/ROM
-      size: 628.00 KiB
-      size_bytes: 643072
+      size: 1.00 GiB
+      size_bytes: 1073741312
       vendor: Msft
   dmi:
     bios:
@@ -73,10 +79,10 @@ values:
     product:
       name: Virtual Machine
       serial_number: 0000-0001-2706-4875-4616-8127-06
-      uuid: 4F40A211-3A65-A244-BD2B-6F7B91A66D89
+      uuid: 4f40a211-3a65-a244-bd2b-6f7b91a66d89
   domain: euwest.azure.internal.softwareheritage.org
-  facterversion: 3.10.0
-  filesystems: ext2,ext3,ext4,udf
+  facterversion: 3.11.0
+  filesystems: ext2,ext3,ext4
   fips_enabled: false
   fqdn: kafka05.euwest.azure.internal.softwareheritage.org
   gid: root
@@ -102,56 +108,55 @@ values:
   ipaddress_lo: 127.0.0.1
   is_pe: false
   is_virtual: true
+  java_default_home: "/usr/lib/jvm/java-11-openjdk-amd64"
   kernel: Linux
-  kernelmajversion: '4.9'
-  kernelrelease: 4.9.0-9-amd64
-  kernelversion: 4.9.0
+  kernelmajversion: '4.19'
+  kernelrelease: 4.19.0-6-amd64
+  kernelversion: 4.19.0
   load_averages:
-    15m: 1.76
-    1m: 1.45
-    5m: 1.85
+    15m: 0.43
+    1m: 0.72
+    5m: 0.44
   location: azure_euwest
-  lsbdistcodename: stretch
-  lsbdistdescription: Debian GNU/Linux 9.9 (stretch)
+  lsbdistcodename: buster
+  lsbdistdescription: Debian GNU/Linux 10 (buster)
   lsbdistid: Debian
-  lsbdistrelease: '9.9'
-  lsbmajdistrelease: '9'
-  lsbminordistrelease: '9'
+  lsbdistrelease: '10'
+  lsbmajdistrelease: '10'
   macaddress: 00:0d:3a:26:d5:6c
   macaddress_eth0: 00:0d:3a:26:d5:6c
   manufacturer: Microsoft Corporation
   memory:
     system:
-      available: 3.57 GiB
-      available_bytes: 3830087680
-      capacity: 7.24%
-      total: 3.85 GiB
-      total_bytes: 4128972800
-      used: 285.04 MiB
-      used_bytes: 298885120
-  memoryfree: 3.57 GiB
-  memoryfree_mb: 3652.65625
-  memorysize: 3.85 GiB
-  memorysize_mb: 3937.6953125
+      available: 1.79 GiB
+      available_bytes: 1917689856
+      capacity: 53.39%
+      total: 3.83 GiB
+      total_bytes: 4114223104
+      used: 2.05 GiB
+      used_bytes: 2196533248
+  memoryfree: 1.79 GiB
+  memoryfree_mb: 1828.8515625
+  memorysize: 3.83 GiB
+  memorysize_mb: 3923.62890625
   mountpoints:
     "/":
-      available: 28.38 GiB
-      available_bytes: 30471507968
-      capacity: 3.48%
+      available: 25.55 GiB
+      available_bytes: 27429904384
+      capacity: 13.12%
       device: "/dev/sda1"
       filesystem: ext4
       options:
       - rw
       - relatime
       - errors=remount-ro
-      - data=ordered
       size: 29.40 GiB
       size_bytes: 31571480576
-      used: 1.02 GiB
-      used_bytes: 1099972608
+      used: 3.86 GiB
+      used_bytes: 4141576192
     "/dev/shm":
       available: 1.92 GiB
-      available_bytes: 2064486400
+      available_bytes: 2057109504
       capacity: 0%
       device: tmpfs
       filesystem: tmpfs
@@ -160,7 +165,7 @@ values:
       - nosuid
       - nodev
       size: 1.92 GiB
-      size_bytes: 2064486400
+      size_bytes: 2057109504
       used: 0 bytes
       used_bytes: 0
     "/mnt/resource":
@@ -172,15 +177,14 @@ values:
       options:
       - rw
       - relatime
-      - data=ordered
       size: 7.81 GiB
       size_bytes: 8386895872
       used: 35.99 MiB
       used_bytes: 37740544
     "/run":
-      available: 388.43 MiB
-      available_bytes: 407302144
-      capacity: 1.36%
+      available: 391.86 MiB
+      available_bytes: 410894336
+      capacity: 0.13%
       device: tmpfs
       filesystem: tmpfs
       options:
@@ -188,12 +192,12 @@ values:
       - nosuid
       - noexec
       - relatime
-      - size=403220k
+      - size=401780k
       - mode=755
-      size: 393.77 MiB
-      size_bytes: 412897280
-      used: 5.34 MiB
-      used_bytes: 5595136
+      size: 392.36 MiB
+      size_bytes: 411422720
+      used: 516.00 KiB
+      used_bytes: 528384
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -212,8 +216,8 @@ values:
       used: 0 bytes
       used_bytes: 0
     "/run/user/0":
-      available: 393.77 MiB
-      available_bytes: 412897280
+      available: 392.36 MiB
+      available_bytes: 411418624
       capacity: 0%
       device: tmpfs
       filesystem: tmpfs
@@ -222,48 +226,28 @@ values:
       - nosuid
       - nodev
       - relatime
-      - size=403220k
+      - size=401776k
       - mode=700
-      size: 393.77 MiB
-      size_bytes: 412897280
-      used: 0 bytes
-      used_bytes: 0
-    "/run/user/1000":
-      available: 393.77 MiB
-      available_bytes: 412897280
-      capacity: 0%
-      device: tmpfs
-      filesystem: tmpfs
-      options:
-      - rw
-      - nosuid
-      - nodev
-      - relatime
-      - size=403220k
-      - mode=700
-      - uid=1000
-      - gid=1000
-      size: 393.77 MiB
-      size_bytes: 412897280
+      size: 392.36 MiB
+      size_bytes: 411418624
       used: 0 bytes
       used_bytes: 0
     "/srv/kafka":
-      available: 7.94 TiB
-      available_bytes: 8725568802816
-      capacity: 0.00%
+      available: 6.93 TiB
+      available_bytes: 7614192615424
+      capacity: 12.74%
       device: "/dev/sdc1"
       filesystem: ext4
       options:
       - rw
       - relatime
-      - data=ordered
       size: 7.94 TiB
       size_bytes: 8725665300480
-      used: 92.03 MiB
-      used_bytes: 96497664
+      used: 1.01 TiB
+      used_bytes: 1111472685056
     "/sys/fs/cgroup":
       available: 1.92 GiB
-      available_bytes: 2064486400
+      available_bytes: 2057109504
       capacity: 0%
       device: tmpfs
       filesystem: tmpfs
@@ -274,7 +258,7 @@ values:
       - noexec
       - mode=755
       size: 1.92 GiB
-      size_bytes: 2064486400
+      size_bytes: 2057109504
       used: 0 bytes
       used_bytes: 0
   mounts:
@@ -297,7 +281,6 @@ values:
   network_eth0: 192.168.200.0
   network_lo: 127.0.0.0
   networking:
-    dhcp: 168.63.129.16
     domain: euwest.azure.internal.softwareheritage.org
     fqdn: kafka05.euwest.azure.internal.softwareheritage.org
     hostname: kafka05
@@ -311,7 +294,6 @@ values:
         - address: fe80::20d:3aff:fe26:d56c
           netmask: 'ffff:ffff:ffff:ffff::'
           network: 'fe80::'
-        dhcp: 168.63.129.16
         ip: 192.168.200.34
         ip6: fe80::20d:3aff:fe26:d56c
         mac: 00:0d:3a:26:d5:6c
@@ -346,25 +328,24 @@ values:
     network6: 'fe80::'
     primary: eth0
   operatingsystem: Debian
-  operatingsystemmajrelease: '9'
-  operatingsystemrelease: '9.9'
+  operatingsystemmajrelease: '10'
+  operatingsystemrelease: '10.2'
   os:
     architecture: amd64
     distro:
-      codename: stretch
-      description: Debian GNU/Linux 9.9 (stretch)
+      codename: buster
+      description: Debian GNU/Linux 10 (buster)
       id: Debian
       release:
-        full: '9.9'
-        major: '9'
-        minor: '9'
+        full: '10'
+        major: '10'
     family: Debian
     hardware: x86_64
     name: Debian
     release:
-      full: '9.9'
-      major: '9'
-      minor: '9'
+      full: '10.2'
+      major: '10'
+      minor: '2'
     selinux:
       enabled: false
   osfamily: Debian
@@ -407,16 +388,16 @@ values:
   public_ipaddresses: []
   puppet_environmentpath: "/etc/puppet/code/environments"
   puppet_server: pergamon.internal.softwareheritage.org
-  puppet_vardir: "/var/cache/puppet"
-  puppetversion: 4.8.2
+  puppet_vardir: "/var/lib/puppet"
+  puppetversion: 5.5.10
   root_home: "/root"
   ruby:
     platform: x86_64-linux-gnu
-    sitedir: "/usr/local/lib/site_ruby/2.3.0"
-    version: 2.3.3
+    sitedir: "/usr/local/lib/site_ruby/2.5.0"
+    version: 2.5.5
   rubyplatform: x86_64-linux-gnu
-  rubysitedir: "/usr/local/lib/site_ruby/2.3.0"
-  rubyversion: 2.3.3
+  rubysitedir: "/usr/local/lib/site_ruby/2.5.0"
+  rubyversion: 2.5.5
   selinux: false
   serialnumber: 0000-0001-2706-4875-4616-8127-06
   service_provider: systemd
@@ -426,23 +407,27 @@ values:
         sha1: SSHFP 2 1 4db077e79a9d29aa96df5e591452643b3e55766b
         sha256: SSHFP 2 2 0bc1d462e11ff769f6fc2f4367a81af0ae101ebdafa6a9d03cfcfabad7edbcc7
       key: AAAAB3NzaC1kc3MAAACBALiPEK0+QmjXCwO40LX992+UjKuNbGXtyFyxac/RdSEOm1fuiAvwxAuEFw4OLF8UPu+cLUKIvI+FGuX0Me3GkWh2BN6PrAXprMiR/nqukcQ+7mQOrfjT6c+t9QfgTudJB0dNA3wXbs8jtTl8cTAFtwz32Iy9af0uTk5REC6yAmPbAAAAFQDrqt7zoQGurrEp30V+afLV4s5Y9QAAAIBuEaX//ZOTz+BZQ5YKrpfDc11P2xop+SE/KjlfXXUJfY96swAC0kRBkyExHm4z2RvZiFHPzkSzEfGI+eeoqEVop7A+W1pMbS2FRzVaFdJqM5tJX6NqxcyHyV6UX3HOPaz+GiX4qbs5Z3Z9ghropA2XuuWkGYy0+ij3yVhZjIkanwAAAIA1/QD/xCI1hMlyZZ7LCcwnsjxqmMjFZKjXlQJRs8SgiLcN6Y6UKhGN3GsM/TKpw/yspV6S9Tsdau6BQug5K7Ns9OkTzwm19SKQ7q0WT/Ifi3r0eY0WsLuDgi/L2BfvE5GxrtEFUqRivl1c3TWh5gm+c3gB++ZpsYBHeL9Uj220wg==
+      type: ssh-dss
     ecdsa:
       fingerprints:
         sha1: SSHFP 3 1 0c7370027d67300776e7f9c2353650e73ed44f69
         sha256: SSHFP 3 2 3f98717deb2a4b079e132869c8d391cd3aae5c41ab04795760de8fad11a06291
       key: AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBMzdTaBJpsgP9khF44DCc+Z4QIMsYoJ04vwlnuWO/ZZolIkRYUqdiq2cvVan2cXnyU5rWGGnYS1ZhuoTNSabqLI=
+      type: ecdsa-sha2-nistp256
     ed25519:
       fingerprints:
         sha1: SSHFP 4 1 4d1518a02011e2fd98cff57eb790e4d5bac09ceb
         sha256: SSHFP 4 2 dadcfaf35782e4c6e01dc899eadf7e8d5e319916884ebc16d8fea9ab9bc14bfa
       key: AAAAC3NzaC1lZDI1NTE5AAAAIMKHWxLZqhgsnSUTftLfEnyTwbSLJWKJ8G3RR/+40zj3
+      type: ssh-ed25519
     rsa:
       fingerprints:
         sha1: SSHFP 1 1 73bf5c769cfb50cf642274a95c153c456807dc9a
         sha256: SSHFP 1 2 83e81b74a4927afcafd3d705337f93c1022d7c00769b439f732842998806decb
       key: AAAAB3NzaC1yc2EAAAADAQABAAABAQDVpgkdctdZAqSPTi5ZpBPk+EXB+v/sZa1nBhiCqSic8YyHu+TnhuirxKp3jiz70viLp0/jutFNMxCpogPHouO7/4nMt4sJ8fLY00S/zNONyycK6fzuDVosZvBRxoaOH1F3Btdu2xqFab3UY8daQuDT0KUHFTij17MsX/6s0TKD0ZLGGOlVj6A6Cw55Cse9W5z3k2Ineq4aeiMtBrZbHWnb5MkhAVlTmbHdtfBZ+pBV+DnwCvmXPLQCvoN0voiNLr3bZbP5vMRTuNg0vxLyghZSNJvPDhoyG4xBa6xmOt9NQLUlWyC4JQ1KEwDWSFUPBkp3lXcM0llZM+TtWwSrJM5X
-  ssh_client_version_full: 7.4p1
-  ssh_server_version_full: 7.4p1
+      type: ssh-rsa
+  ssh_client_version_full: 7.9p1
+  ssh_server_version_full: 7.9p1
   sshdsakey: AAAAB3NzaC1kc3MAAACBALiPEK0+QmjXCwO40LX992+UjKuNbGXtyFyxac/RdSEOm1fuiAvwxAuEFw4OLF8UPu+cLUKIvI+FGuX0Me3GkWh2BN6PrAXprMiR/nqukcQ+7mQOrfjT6c+t9QfgTudJB0dNA3wXbs8jtTl8cTAFtwz32Iy9af0uTk5REC6yAmPbAAAAFQDrqt7zoQGurrEp30V+afLV4s5Y9QAAAIBuEaX//ZOTz+BZQ5YKrpfDc11P2xop+SE/KjlfXXUJfY96swAC0kRBkyExHm4z2RvZiFHPzkSzEfGI+eeoqEVop7A+W1pMbS2FRzVaFdJqM5tJX6NqxcyHyV6UX3HOPaz+GiX4qbs5Z3Z9ghropA2XuuWkGYy0+ij3yVhZjIkanwAAAIA1/QD/xCI1hMlyZZ7LCcwnsjxqmMjFZKjXlQJRs8SgiLcN6Y6UKhGN3GsM/TKpw/yspV6S9Tsdau6BQug5K7Ns9OkTzwm19SKQ7q0WT/Ifi3r0eY0WsLuDgi/L2BfvE5GxrtEFUqRivl1c3TWh5gm+c3gB++ZpsYBHeL9Uj220wg==
   sshecdsakey: AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBMzdTaBJpsgP9khF44DCc+Z4QIMsYoJ04vwlnuWO/ZZolIkRYUqdiq2cvVan2cXnyU5rWGGnYS1ZhuoTNSabqLI=
   sshed25519key: AAAAC3NzaC1lZDI1NTE5AAAAIMKHWxLZqhgsnSUTftLfEnyTwbSLJWKJ8G3RR/+40zj3
@@ -459,33 +444,36 @@ values:
     SSHFP 1 1 73bf5c769cfb50cf642274a95c153c456807dc9a
     SSHFP 1 2 83e81b74a4927afcafd3d705337f93c1022d7c00769b439f732842998806decb
   sshrsakey: AAAAB3NzaC1yc2EAAAADAQABAAABAQDVpgkdctdZAqSPTi5ZpBPk+EXB+v/sZa1nBhiCqSic8YyHu+TnhuirxKp3jiz70viLp0/jutFNMxCpogPHouO7/4nMt4sJ8fLY00S/zNONyycK6fzuDVosZvBRxoaOH1F3Btdu2xqFab3UY8daQuDT0KUHFTij17MsX/6s0TKD0ZLGGOlVj6A6Cw55Cse9W5z3k2Ineq4aeiMtBrZbHWnb5MkhAVlTmbHdtfBZ+pBV+DnwCvmXPLQCvoN0voiNLr3bZbP5vMRTuNg0vxLyghZSNJvPDhoyG4xBa6xmOt9NQLUlWyC4JQ1KEwDWSFUPBkp3lXcM0llZM+TtWwSrJM5X
-  sudoversion: 1.8.19p1
+  sudoversion: 1.8.27
   swh_hostname:
     fqdn: kafka05.euwest.azure.internal.softwareheritage.org
     short: kafka05.euwest.azure
     internal_fqdn: kafka05.euwest.azure.internal.softwareheritage.org
   system_uptime:
-    days: 0
-    hours: 0
-    seconds: 2113
-    uptime: 0:35 hours
+    days: 46
+    hours: 1106
+    seconds: 3985053
+    uptime: 46 days
   systemd: true
   systemd_internal_services:
+    systemd-boot-check-no-failures.service: disabled
+    systemd-fsck-root.service: enabled-runtime
     systemd-networkd-wait-online.service: disabled
     systemd-networkd.service: disabled
     systemd-resolved.service: disabled
+    systemd-time-wait-sync.service: disabled
     systemd-timesyncd.service: enabled
-  systemd_version: '232'
+  systemd_version: '241'
   timezone: UTC
-  uptime: 0:35 hours
-  uptime_days: 0
-  uptime_hours: 0
-  uptime_seconds: 2113
-  uuid: 4F40A211-3A65-A244-BD2B-6F7B91A66D89
+  uptime: 46 days
+  uptime_days: 46
+  uptime_hours: 1106
+  uptime_seconds: 3985053
+  uuid: 4f40a211-3a65-a244-bd2b-6f7b91a66d89
   vcsrepo_svn_ver: ''
   virtual: hyperv
   clientcert: kafka05.euwest.azure.internal.softwareheritage.org
-  clientversion: 4.8.2
+  clientversion: 5.5.10
   clientnoop: false
-timestamp: '2019-08-23T15:00:52.373015376+00:00'
-expiration: '2019-08-23T15:30:52.373497878+00:00'
+timestamp: '2019-11-29T15:18:48.115178045+00:00'
+expiration: '2019-11-29T15:48:48.115615547+00:00'

@@ -2,23 +2,19 @@
 name: ceph-osd2.internal.softwareheritage.org
 values:
   agent_specified_environment: production
-  apt_dist_updates: 5
+  apt_dist_updates: 1
   apt_has_dist_updates: true
   apt_has_updates: true
   apt_package_dist_updates:
-  - python3-certifi
-  - python3-chardet
-  - python3-idna
-  - python3-requests
-  - python3-urllib3
+  - prometheus-statsd-exporter
   apt_package_security_dist_updates: []
   apt_package_security_updates: []
   apt_package_updates:
-  - python3-chardet
+  - prometheus-statsd-exporter
   apt_reboot_required: true
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1559925782
+  apt_update_last_success: 1575038582
   apt_updates: 1
   architecture: amd64
   bios_release_date: 05/02/2017
@@ -68,11 +64,12 @@ values:
   blockdevice_sdn_model: INTEL SSDSC2KB24
   blockdevice_sdn_size: 240057409536
   blockdevice_sdn_vendor: ATA
-  blockdevices: sdf,sdd,sdm,sdb,sdk,sdi,sdg,sde,sdn,sdc,sdl,sda,sdj,nvme0n1,sdh
+  blockdevices: sdf,nvme0n1,sdd,sdm,sdb,sdk,sdi,sdg,sde,sdn,sdc,sdl,sda,sdj,sdh
   boardassettag: Default string
   boardmanufacturer: Supermicro
   boardproductname: X10DRH-iT
   boardserialnumber: NM178S019114
+  ceph_mgr_modules: {}
   chassisassettag: Default string
   chassistype: Other
   disks:
@@ -167,10 +164,10 @@ values:
     product:
       name: SSG-6028R-E1CR12L
       serial_number: S17487427B10923
-      uuid: 00000000-0000-0000-0000-AC1F6B407898
+      uuid: 00000000-0000-0000-0000-ac1f6b407898
   domain: internal.softwareheritage.org
-  facterversion: 3.10.0
-  filesystems: btrfs,ext2,ext3,ext4,hfs,hfsplus,jfs,minix,msdos,ntfs,qnx4,ufs,vfat,xfs
+  facterversion: 3.11.0
+  filesystems: btrfs,ext2,ext3,ext4,hfs,hfsplus,jfs,minix,msdos,qnx4,ufs,vfat,xfs
   fips_enabled: false
   fqdn: ceph-osd2.internal.softwareheritage.org
   gid: root
@@ -200,20 +197,19 @@ values:
   is_pe: false
   is_virtual: false
   kernel: Linux
-  kernelmajversion: '4.9'
-  kernelrelease: 4.9.0-9-amd64
-  kernelversion: 4.9.0
+  kernelmajversion: '4.19'
+  kernelrelease: 4.19.0-6-amd64
+  kernelversion: 4.19.0
   load_averages:
-    15m: 6.02
-    1m: 6.29
-    5m: 6.41
+    15m: 3.88
+    1m: 4.06
+    5m: 3.95
   location: sesi_rocquencourt
-  lsbdistcodename: stretch
-  lsbdistdescription: Debian GNU/Linux 9.9 (stretch)
+  lsbdistcodename: buster
+  lsbdistdescription: Debian GNU/Linux 10 (buster)
   lsbdistid: Debian
-  lsbdistrelease: '9.9'
-  lsbmajdistrelease: '9'
-  lsbminordistrelease: '9'
+  lsbdistrelease: '10'
+  lsbmajdistrelease: '10'
   macaddress: ac:1f:6b:2d:61:cc
   macaddress_bond0: ac:1f:6b:2d:61:cc
   macaddress_enp2s0f0: ac:1f:6b:2d:61:cc
@@ -225,45 +221,44 @@ values:
   manufacturer: Supermicro
   memory:
     swap:
-      available: 16.00 GiB
-      available_bytes: 17179865088
-      capacity: 0%
+      available: 11.54 GiB
+      available_bytes: 12392292352
+      capacity: 27.87%
       total: 16.00 GiB
       total_bytes: 17179865088
-      used: 0 bytes
-      used_bytes: 0
+      used: 4.46 GiB
+      used_bytes: 4787572736
     system:
-      available: 6.84 GiB
-      available_bytes: 7341510656
-      capacity: 89.12%
-      total: 62.82 GiB
-      total_bytes: 67449942016
-      used: 55.98 GiB
-      used_bytes: 60108431360
-  memoryfree: 6.84 GiB
-  memoryfree_mb: 7001.41015625
-  memorysize: 62.82 GiB
-  memorysize_mb: 64325.27734375
+      available: 12.25 GiB
+      available_bytes: 13153726464
+      capacity: 80.50%
+      total: 62.81 GiB
+      total_bytes: 67439775744
+      used: 50.56 GiB
+      used_bytes: 54286049280
+  memoryfree: 12.25 GiB
+  memoryfree_mb: 12544.37109375
+  memorysize: 62.81 GiB
+  memorysize_mb: 64315.58203125
   mountpoints:
     "/":
-      available: 13.50 GiB
-      available_bytes: 14497943552
-      capacity: 25.84%
+      available: 15.28 GiB
+      available_bytes: 16408666112
+      capacity: 16.07%
       device: "/dev/mapper/ssd-root"
       filesystem: ext4
       options:
       - rw
       - relatime
       - errors=remount-ro
-      - data=ordered
       size: 18.21 GiB
       size_bytes: 19550347264
-      used: 4.71 GiB
-      used_bytes: 5052403712
+      used: 2.93 GiB
+      used_bytes: 3141681152
     "/boot/efi":
-      available: 485.88 MiB
-      available_bytes: 509476864
-      capacity: 0.03%
+      available: 480.93 MiB
+      available_bytes: 504295424
+      capacity: 1.05%
       device: "/dev/sdm1"
       filesystem: vfat
       options:
@@ -278,11 +273,11 @@ values:
       - errors=remount-ro
       size: 486.03 MiB
       size_bytes: 509640704
-      used: 160.00 KiB
-      used_bytes: 163840
+      used: 5.10 MiB
+      used_bytes: 5345280
     "/dev/shm":
-      available: 31.41 GiB
-      available_bytes: 33724968960
+      available: 31.40 GiB
+      available_bytes: 33719885824
       capacity: 0%
       device: tmpfs
       filesystem: tmpfs
@@ -290,13 +285,13 @@ values:
       - rw
       - nosuid
       - nodev
-      size: 31.41 GiB
-      size_bytes: 33724968960
+      size: 31.40 GiB
+      size_bytes: 33719885824
       used: 0 bytes
       used_bytes: 0
     "/run":
       available: 6.28 GiB
-      available_bytes: 6743744512
+      available_bytes: 6742679552
       capacity: 0.02%
       device: tmpfs
       filesystem: tmpfs
@@ -305,12 +300,12 @@ values:
       - nosuid
       - noexec
       - relatime
-      - size=6586912k
+      - size=6585916k
       - mode=755
       size: 6.28 GiB
-      size_bytes: 6744997888
-      used: 1.20 MiB
-      used_bytes: 1253376
+      size_bytes: 6743977984
+      used: 1.24 MiB
+      used_bytes: 1298432
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -330,7 +325,7 @@ values:
       used_bytes: 0
     "/run/user/0":
       available: 6.28 GiB
-      available_bytes: 6744993792
+      available_bytes: 6743973888
       capacity: 0%
       device: tmpfs
       filesystem: tmpfs
@@ -339,15 +334,15 @@ values:
       - nosuid
       - nodev
       - relatime
-      - size=6586908k
+      - size=6585912k
       - mode=700
       size: 6.28 GiB
-      size_bytes: 6744993792
+      size_bytes: 6743973888
       used: 0 bytes
       used_bytes: 0
     "/sys/fs/cgroup":
-      available: 31.41 GiB
-      available_bytes: 33724968960
+      available: 31.40 GiB
+      available_bytes: 33719885824
       capacity: 0%
       device: tmpfs
       filesystem: tmpfs
@@ -357,164 +352,164 @@ values:
       - nodev
       - noexec
       - mode=755
-      size: 31.41 GiB
-      size_bytes: 33724968960
+      size: 31.40 GiB
+      size_bytes: 33719885824
       used: 0 bytes
       used_bytes: 0
     "/var/lib/ceph/osd/ceph-12":
-      available: 31.41 GiB
-      available_bytes: 33724944384
+      available: 31.40 GiB
+      available_bytes: 33719861248
       capacity: 0.00%
       device: tmpfs
       filesystem: tmpfs
       options:
       - rw
       - relatime
-      size: 31.41 GiB
-      size_bytes: 33724968960
+      size: 31.40 GiB
+      size_bytes: 33719885824
       used: 24.00 KiB
       used_bytes: 24576
     "/var/lib/ceph/osd/ceph-13":
-      available: 31.41 GiB
-      available_bytes: 33724944384
+      available: 31.40 GiB
+      available_bytes: 33719861248
       capacity: 0.00%
       device: tmpfs
       filesystem: tmpfs
       options:
       - rw
       - relatime
-      size: 31.41 GiB
-      size_bytes: 33724968960
+      size: 31.40 GiB
+      size_bytes: 33719885824
       used: 24.00 KiB
       used_bytes: 24576
     "/var/lib/ceph/osd/ceph-14":
-      available: 31.41 GiB
-      available_bytes: 33724944384
+      available: 31.40 GiB
+      available_bytes: 33719861248
       capacity: 0.00%
       device: tmpfs
       filesystem: tmpfs
       options:
       - rw
       - relatime
-      size: 31.41 GiB
-      size_bytes: 33724968960
+      size: 31.40 GiB
+      size_bytes: 33719885824
       used: 24.00 KiB
       used_bytes: 24576
     "/var/lib/ceph/osd/ceph-15":
-      available: 31.41 GiB
-      available_bytes: 33724944384
+      available: 31.40 GiB
+      available_bytes: 33719861248
       capacity: 0.00%
       device: tmpfs
       filesystem: tmpfs
       options:
       - rw
       - relatime
-      size: 31.41 GiB
-      size_bytes: 33724968960
+      size: 31.40 GiB
+      size_bytes: 33719885824
       used: 24.00 KiB
       used_bytes: 24576
     "/var/lib/ceph/osd/ceph-16":
-      available: 31.41 GiB
-      available_bytes: 33724944384
+      available: 31.40 GiB
+      available_bytes: 33719861248
       capacity: 0.00%
       device: tmpfs
       filesystem: tmpfs
       options:
       - rw
       - relatime
-      size: 31.41 GiB
-      size_bytes: 33724968960
+      size: 31.40 GiB
+      size_bytes: 33719885824
       used: 24.00 KiB
       used_bytes: 24576
     "/var/lib/ceph/osd/ceph-17":
-      available: 31.41 GiB
-      available_bytes: 33724944384
+      available: 31.40 GiB
+      available_bytes: 33719861248
       capacity: 0.00%
       device: tmpfs
       filesystem: tmpfs
       options:
       - rw
       - relatime
-      size: 31.41 GiB
-      size_bytes: 33724968960
+      size: 31.40 GiB
+      size_bytes: 33719885824
       used: 24.00 KiB
       used_bytes: 24576
     "/var/lib/ceph/osd/ceph-18":
-      available: 31.41 GiB
-      available_bytes: 33724944384
+      available: 31.40 GiB
+      available_bytes: 33719861248
       capacity: 0.00%
       device: tmpfs
       filesystem: tmpfs
       options:
       - rw
       - relatime
-      size: 31.41 GiB
-      size_bytes: 33724968960
+      size: 31.40 GiB
+      size_bytes: 33719885824
       used: 24.00 KiB
       used_bytes: 24576
     "/var/lib/ceph/osd/ceph-19":
-      available: 31.41 GiB
-      available_bytes: 33724944384
+      available: 31.40 GiB
+      available_bytes: 33719861248
       capacity: 0.00%
       device: tmpfs
       filesystem: tmpfs
       options:
       - rw
       - relatime
-      size: 31.41 GiB
-      size_bytes: 33724968960
+      size: 31.40 GiB
+      size_bytes: 33719885824
       used: 24.00 KiB
       used_bytes: 24576
     "/var/lib/ceph/osd/ceph-20":
-      available: 31.41 GiB
-      available_bytes: 33724944384
+      available: 31.40 GiB
+      available_bytes: 33719861248
       capacity: 0.00%
       device: tmpfs
       filesystem: tmpfs
       options:
       - rw
       - relatime
-      size: 31.41 GiB
-      size_bytes: 33724968960
+      size: 31.40 GiB
+      size_bytes: 33719885824
       used: 24.00 KiB
       used_bytes: 24576
     "/var/lib/ceph/osd/ceph-21":
-      available: 31.41 GiB
-      available_bytes: 33724944384
+      available: 31.40 GiB
+      available_bytes: 33719861248
       capacity: 0.00%
       device: tmpfs
       filesystem: tmpfs
       options:
       - rw
       - relatime
-      size: 31.41 GiB
-      size_bytes: 33724968960
+      size: 31.40 GiB
+      size_bytes: 33719885824
       used: 24.00 KiB
       used_bytes: 24576
     "/var/lib/ceph/osd/ceph-22":
-      available: 31.41 GiB
-      available_bytes: 33724944384
+      available: 31.40 GiB
+      available_bytes: 33719861248
       capacity: 0.00%
       device: tmpfs
       filesystem: tmpfs
       options:
       - rw
       - relatime
-      size: 31.41 GiB
-      size_bytes: 33724968960
+      size: 31.40 GiB
+      size_bytes: 33719885824
       used: 24.00 KiB
       used_bytes: 24576
     "/var/lib/ceph/osd/ceph-23":
-      available: 31.41 GiB
-      available_bytes: 33724944384
+      available: 31.40 GiB
+      available_bytes: 33719861248
       capacity: 0.00%
       device: tmpfs
       filesystem: tmpfs
       options:
       - rw
       - relatime
-      size: 31.41 GiB
-      size_bytes: 33724968960
+      size: 31.40 GiB
+      size_bytes: 33719885824
       used: 24.00 KiB
       used_bytes: 24576
   mounts:
@@ -634,25 +629,24 @@ values:
     network6: 'fe80::'
     primary: vlan440
   operatingsystem: Debian
-  operatingsystemmajrelease: '9'
-  operatingsystemrelease: '9.9'
+  operatingsystemmajrelease: '10'
+  operatingsystemrelease: '10.2'
   os:
     architecture: amd64
     distro:
-      codename: stretch
-      description: Debian GNU/Linux 9.9 (stretch)
+      codename: buster
+      description: Debian GNU/Linux 10 (buster)
       id: Debian
       release:
-        full: '9.9'
-        major: '9'
-        minor: '9'
+        full: '10'
+        major: '10'
     family: Debian
     hardware: x86_64
     name: Debian
     release:
-      full: '9.9'
-      major: '9'
-      minor: '9'
+      full: '10.2'
+      major: '10'
+      minor: '2'
     selinux:
       enabled: false
   osfamily: Debian
@@ -826,15 +820,15 @@ values:
   puppet_environmentpath: "/etc/puppet/code/environments"
   puppet_server: pergamon.internal.softwareheritage.org
   puppet_vardir: "/var/lib/puppet"
-  puppetversion: 4.8.2
+  puppetversion: 5.5.10
   root_home: "/root"
   ruby:
     platform: x86_64-linux-gnu
-    sitedir: "/usr/local/lib/site_ruby/2.3.0"
-    version: 2.3.3
+    sitedir: "/usr/local/lib/site_ruby/2.5.0"
+    version: 2.5.5
   rubyplatform: x86_64-linux-gnu
-  rubysitedir: "/usr/local/lib/site_ruby/2.3.0"
-  rubyversion: 2.3.3
+  rubysitedir: "/usr/local/lib/site_ruby/2.5.0"
+  rubyversion: 2.5.5
   selinux: false
   serialnumber: S17487427B10923
   service_provider: systemd
@@ -844,18 +838,21 @@ values:
         sha1: SSHFP 3 1 3b53af4a960bc17a1d6c6d7be3cf4ad2334c1cd4
         sha256: SSHFP 3 2 cbb50a0c9c1f8947760cde2655072415e165ef0de69356a1f9ebe99579cc2cde
       key: AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBDAtr0wEo+wzagZubF1JmX16o1oSGROer0yPXTDiZPvGiXW5KWpgL73Od8V+UP687K4aVqstV5ZTGJnWjTCyZXA=
+      type: ecdsa-sha2-nistp256
     ed25519:
       fingerprints:
         sha1: SSHFP 4 1 22c8eae865813e6f7c6aa1d457922e0cab290386
         sha256: SSHFP 4 2 5cbb45f6432ca7dae5347abc84a41ea7d9474016f3d866d539e61f6b72cc266b
       key: AAAAC3NzaC1lZDI1NTE5AAAAINVVJSsCZgOwI+RicY1hJhHeOE1BrmyI5O9YEOMZtgzN
+      type: ssh-ed25519
     rsa:
       fingerprints:
         sha1: SSHFP 1 1 1f55fcd1733017def8d81b73d64fc1c0e8b76884
         sha256: SSHFP 1 2 905144497970a343e4bf58a4684e6bdea36d87ce06d2cb1458464b0340ce7fcf
       key: AAAAB3NzaC1yc2EAAAADAQABAAABAQDH5QXM6vMF6TXEaLlr22BnSyu1zvGj7iet6AGXyKfQgnmOxfUISbRRTto0Vd/vths3lo9nyki3UBCikei3oY1E/T511VggkZfjnhVwZb17EY4WQqEv6JvvgisEsyFRq+nZGm6O349ElJYg36SswqafCga/XamlETFa2uHmbO5hK3qEQEN92iCuWt+gwnSMuDxfPeunv5UoU/Q/XLMYXVglZ/y30tqO30MW1pJRJQIw7kSNwmjcOT9oCeacFzII9tlEcYPXNvkR7DSw4rQt+4AvF+ngZDFsOfTNvLtGIFcdLTAOZ8S4NMy2vJc2LGqesfYi7sBMQMJgcv8XBDlYzc0J
-  ssh_client_version_full: 7.4p1
-  ssh_server_version_full: 7.4p1
+      type: ssh-rsa
+  ssh_client_version_full: 7.9p1
+  ssh_server_version_full: 7.9p1
   sshecdsakey: AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBDAtr0wEo+wzagZubF1JmX16o1oSGROer0yPXTDiZPvGiXW5KWpgL73Od8V+UP687K4aVqstV5ZTGJnWjTCyZXA=
   sshed25519key: AAAAC3NzaC1lZDI1NTE5AAAAINVVJSsCZgOwI+RicY1hJhHeOE1BrmyI5O9YEOMZtgzN
   sshfp_ecdsa: |-
@@ -868,9 +865,9 @@ values:
     SSHFP 1 1 1f55fcd1733017def8d81b73d64fc1c0e8b76884
     SSHFP 1 2 905144497970a343e4bf58a4684e6bdea36d87ce06d2cb1458464b0340ce7fcf
   sshrsakey: AAAAB3NzaC1yc2EAAAADAQABAAABAQDH5QXM6vMF6TXEaLlr22BnSyu1zvGj7iet6AGXyKfQgnmOxfUISbRRTto0Vd/vths3lo9nyki3UBCikei3oY1E/T511VggkZfjnhVwZb17EY4WQqEv6JvvgisEsyFRq+nZGm6O349ElJYg36SswqafCga/XamlETFa2uHmbO5hK3qEQEN92iCuWt+gwnSMuDxfPeunv5UoU/Q/XLMYXVglZ/y30tqO30MW1pJRJQIw7kSNwmjcOT9oCeacFzII9tlEcYPXNvkR7DSw4rQt+4AvF+ngZDFsOfTNvLtGIFcdLTAOZ8S4NMy2vJc2LGqesfYi7sBMQMJgcv8XBDlYzc0J
-  sudoversion: 1.8.19p1
-  swapfree: 16.00 GiB
-  swapfree_mb: 16383.99609375
+  sudoversion: 1.8.27
+  swapfree: 11.54 GiB
+  swapfree_mb: 11818.2109375
   swapsize: 16.00 GiB
   swapsize_mb: 16383.99609375
   swh_hostname:
@@ -878,27 +875,30 @@ values:
     short: ceph-osd2
     internal_fqdn: ceph-osd2.internal.softwareheritage.org
   system_uptime:
-    days: 41
-    hours: 984
-    seconds: 3542928
-    uptime: 41 days
+    days: 45
+    hours: 1082
+    seconds: 3896076
+    uptime: 45 days
   systemd: true
   systemd_internal_services:
+    systemd-boot-check-no-failures.service: disabled
+    systemd-fsck-root.service: enabled-runtime
     systemd-networkd-wait-online.service: disabled
     systemd-networkd.service: disabled
     systemd-resolved.service: disabled
+    systemd-time-wait-sync.service: disabled
     systemd-timesyncd.service: enabled
-  systemd_version: '232'
+  systemd_version: '241'
   timezone: UTC
-  uptime: 41 days
-  uptime_days: 41
-  uptime_hours: 984
-  uptime_seconds: 3542928
-  uuid: 00000000-0000-0000-0000-AC1F6B407898
+  uptime: 45 days
+  uptime_days: 45
+  uptime_hours: 1082
+  uptime_seconds: 3896076
+  uuid: 00000000-0000-0000-0000-ac1f6b407898
   vcsrepo_svn_ver: ''
   virtual: physical
   clientcert: ceph-osd2.internal.softwareheritage.org
-  clientversion: 4.8.2
+  clientversion: 5.5.10
   clientnoop: false
-timestamp: '2019-06-07T17:29:34.913242694+00:00'
-expiration: '2019-06-07T17:59:34.914154723+00:00'
+timestamp: '2019-11-29T15:19:20.819111353+00:00'
+expiration: '2019-11-29T15:49:20.819788227+00:00'
