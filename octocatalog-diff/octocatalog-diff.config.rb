@@ -174,7 +174,7 @@ module OctocatalogDiff
       #   specify them here. The return value must be an array.
       ##############################################################################################
 
-      # settings[:pass_env_vars] = %w(AUTH_USERNAME AUTH_TOKEN)
+      settings[:pass_env_vars] = %w(IN_OCTOCATALOG_DIFF)
 
       ##############################################################################################
       # puppet_binary

@@ -120,8 +120,10 @@ fi
 
 function run-octocatalog-diff {
     host=$1
-    PUPPET_FACT_DIR=$FACTS_DIR \
-    OCTOCATALOG_DIFF_CONFIG_FILE=$OCD_BASE/octocatalog-diff.config.rb \
+    env \
+      PUPPET_FACT_DIR=$FACTS_DIR \
+      OCTOCATALOG_DIFF_CONFIG_FILE=$OCD_BASE/octocatalog-diff.config.rb \
+      IN_OCTOCATALOG_DIFF=yes \
         octocatalog-diff \
           --bootstrapped-from-dir $TMPDIR/environments/$FROM \
           --bootstrapped-to-dir $TMPDIR/environments/$TO \
