@@ -198,7 +198,7 @@ module OctocatalogDiff
       # settings[:puppet_binary] = '/usr/bin/puppet'
       # settings[:puppet_binary] = '/opt/puppetlabs/puppet/bin/puppet'
 
-      settings[:command_line] = ['--environment_data_provider=hiera']
+      settings[:command_line] = []
 
       ##############################################################################################
       # from_env
