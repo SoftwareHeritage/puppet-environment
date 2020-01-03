@@ -3,11 +3,18 @@ name: tate.softwareheritage.org
 values:
   agent_specified_environment: production
   apache_version: 2.4.38
-  apt_dist_updates: 24
+  apt_dist_updates: 27
   apt_has_dist_updates: true
   apt_has_updates: true
   apt_package_dist_updates:
   - php-common
+  - php7.4-common
+  - php7.4-json
+  - php7.4-opcache
+  - php7.4-readline
+  - libpcre2-8-0
+  - php7.4-cli
+  - libapache2-mod-php7.4
   - php7.3-zip
   - php7.3-xml
   - php7.3-readline
@@ -17,20 +24,16 @@ values:
   - php7.3-json
   - php7.3-gd
   - php7.3-curl
-  - libssl1.1
-  - php7.3-fpm
   - php7.3-cli
+  - php7.3-fpm
   - php7.3-common
-  - libsodium23
   - php-apcu
-  - php-apcu-bc
   - php-mailparse
-  - libidn2-0
-  - openssl
-  - php7.3
+  - php7.4
   - php
+  - php7.4-zip
   - php-zip
-  - prometheus-statsd-exporter
+  - php7.3
   apt_package_security_dist_updates: []
   apt_package_security_updates: []
   apt_package_updates:
@@ -44,25 +47,18 @@ values:
   - php7.3-json
   - php7.3-gd
   - php7.3-curl
-  - libssl1.1
-  - php7.3-fpm
   - php7.3-cli
+  - php7.3-fpm
   - php7.3-common
-  - libsodium23
+  - libpcre2-8-0
   - php-apcu
-  - php-apcu-bc
   - php-mailparse
-  - libidn2-0
-  - openssl
   - php7.3
-  - php
-  - php-zip
-  - prometheus-statsd-exporter
-  apt_reboot_required: true
+  apt_reboot_required: false
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1575040202
-  apt_updates: 24
+  apt_update_last_success: 1577978882
+  apt_updates: 17
   architecture: amd64
   augeas:
     version: 1.11.0
@@ -78,6 +74,10 @@ values:
   blockdevice_vdb_size: 4294967296
   blockdevice_vdb_vendor: '0x1af4'
   blockdevices: vdb,sr0,vda
+  cassandracmsheapnewsize: 400
+  cassandracmsmaxheapsize: 3003
+  cassandraheapnewsize: 400
+  cassandramaxheapsize: 3003
   chassistype: Other
   dhcp_servers:
     eth1: 192.168.100.1
@@ -106,9 +106,77 @@ values:
     product:
       name: Standard PC (i440FX + PIIX, 1996)
       uuid: 1cfacaaf-2718-4794-9cc5-88dfde58fb43
+  docker_home_dirs:
+    root: "/root"
+    daemon: "/usr/sbin"
+    bin: "/bin"
+    sys: "/dev"
+    sync: "/bin"
+    games: "/usr/games"
+    man: "/var/cache/man"
+    lp: "/var/spool/lpd"
+    mail: "/var/mail"
+    news: "/var/spool/news"
+    uucp: "/var/spool/uucp"
+    proxy: "/bin"
+    www-data: "/var/www"
+    backup: "/var/backups"
+    list: "/var/list"
+    irc: "/var/run/ircd"
+    gnats: "/var/lib/gnats"
+    nobody: "/nonexistent"
+    systemd-timesync: "/run/systemd"
+    systemd-network: "/run/systemd/netif"
+    systemd-resolve: "/run/systemd/resolve"
+    Debian-exim: "/var/spool/exim4"
+    messagebus: "/var/run/dbus"
+    statd: "/var/lib/nfs"
+    sshd: "/var/run/sshd"
+    puppet: "/var/lib/puppet"
+    swhworker: "/home/swhworker"
+    munin: "/var/lib/munin"
+    ntp: "/home/ntp"
+    zack: "/home/zack"
+    ardumont: "/home/ardumont"
+    olasd: "/home/olasd"
+    postfix: "/var/spool/postfix"
+    mysql: "/nonexistent"
+    swhstorage: "/home/swhstorage"
+    phabricator: "/srv/phabricator"
+    git: "/srv/phabricator/vcshome"
+    swhwebapp: "/home/swhwebapp"
+    swhbackup: "/home/swhbackup"
+    gitorious: "/home/gitorious"
+    qcampos: "/home/qcampos"
+    jbertran: "/home/jbertran"
+    rdicosmo: "/home/rdicosmo"
+    swhteamannex: "/home/swhteamannex"
+    swhscheduler: "/home/swhscheduler"
+    morane: "/home/morane"
+    fiendish: "/home/fiendish"
+    seirl: "/home/seirl"
+    unbound: "/var/lib/unbound"
+    systemd-journal-gateway: "/run/systemd"
+    systemd-journal-remote: "/run/systemd"
+    systemd-journal-upload: "/run/systemd"
+    nagios: "/var/lib/nagios"
+    journalbeat: "/var/lib/journalbeat"
+    ssushant: "/home/ssushant"
+    anlambert: "/home/anlambert"
+    grouss: "/home/grouss"
+    swhdeposit: "/home/swhdeposit"
+    ftigeot: "/home/ftigeot"
+    _apt: "/nonexistent"
+    swhvault: "/home/swhvault"
+    ddouard: "/home/ddouard"
+    prometheus: "/var/lib/prometheus"
+    vlorentz: "/home/vlorentz"
+    haltode: "/home/haltode"
+    _rpc: "/run/rpcbind"
+    systemd-coredump: "/"
   domain: softwareheritage.org
   facterversion: 3.11.0
-  filesystems: btrfs,ext2,ext3,ext4,hfs,hfsplus,jfs,minix,msdos,qnx4,ufs,vfat,xfs
+  filesystems: ext2,ext3,ext4
   fips_enabled: false
   fqdn: tate.softwareheritage.org
   gid: root
@@ -140,10 +208,12 @@ values:
   kernelmajversion: '4.19'
   kernelrelease: 4.19.0-6-amd64
   kernelversion: 4.19.0
+  letsencrypt_directory:
+    intranet.softwareheritage.org: "/etc/letsencrypt/live/intranet.softwareheritage.org"
   load_averages:
-    15m: 0.37
-    1m: 0.16
-    5m: 0.27
+    15m: 0.1
+    1m: 0.31
+    5m: 0.15
   location: sesi_rocquencourt
   lsbdistcodename: buster
   lsbdistdescription: Debian GNU/Linux 10 (buster)
@@ -156,30 +226,30 @@ values:
   manufacturer: QEMU
   memory:
     swap:
-      available: 3.28 GiB
-      available_bytes: 3524608000
-      capacity: 17.92%
+      available: 3.29 GiB
+      available_bytes: 3536318464
+      capacity: 17.64%
       total: 4.00 GiB
       total_bytes: 4293914624
-      used: 733.67 MiB
-      used_bytes: 769306624
+      used: 722.50 MiB
+      used_bytes: 757596160
     system:
-      available: 6.06 GiB
-      available_bytes: 6508879872
-      capacity: 48.32%
+      available: 6.34 GiB
+      available_bytes: 6808326144
+      capacity: 45.94%
       total: 11.73 GiB
-      total_bytes: 12593733632
-      used: 5.67 GiB
-      used_bytes: 6084853760
-  memoryfree: 6.06 GiB
-  memoryfree_mb: 6207.3515625
+      total_bytes: 12593844224
+      used: 5.39 GiB
+      used_bytes: 5785518080
+  memoryfree: 6.34 GiB
+  memoryfree_mb: 6492.92578125
   memorysize: 11.73 GiB
-  memorysize_mb: 12010.3203125
+  memorysize_mb: 12010.42578125
   mountpoints:
     "/":
-      available: 29.62 GiB
-      available_bytes: 31807881216
-      capacity: 59.80%
+      available: 34.11 GiB
+      available_bytes: 36628946944
+      capacity: 53.71%
       device: "/dev/vda1"
       filesystem: ext4
       options:
@@ -188,11 +258,11 @@ values:
       - errors=remount-ro
       size: 73.70 GiB
       size_bytes: 79131844608
-      used: 44.07 GiB
-      used_bytes: 47323963392
+      used: 39.58 GiB
+      used_bytes: 42502897664
     "/dev/shm":
       available: 5.86 GiB
-      available_bytes: 6296866816
+      available_bytes: 6296920064
       capacity: 0%
       device: tmpfs
       filesystem: tmpfs
@@ -201,12 +271,12 @@ values:
       - nosuid
       - nodev
       size: 5.86 GiB
-      size_bytes: 6296866816
+      size_bytes: 6296920064
       used: 0 bytes
       used_bytes: 0
     "/run":
       available: 1.17 GiB
-      available_bytes: 1258856448
+      available_bytes: 1258864640
       capacity: 0.04%
       device: tmpfs
       filesystem: tmpfs
@@ -215,10 +285,10 @@ values:
       - nosuid
       - noexec
       - relatime
-      - size=1229860k
+      - size=1229868k
       - mode=755
       size: 1.17 GiB
-      size_bytes: 1259376640
+      size_bytes: 1259384832
       used: 508.00 KiB
       used_bytes: 520192
     "/run/lock":
@@ -240,7 +310,7 @@ values:
       used_bytes: 0
     "/run/user/0":
       available: 1.17 GiB
-      available_bytes: 1259372544
+      available_bytes: 1259380736
       capacity: 0%
       device: tmpfs
       filesystem: tmpfs
@@ -249,15 +319,34 @@ values:
       - nosuid
       - nodev
       - relatime
-      - size=1229856k
+      - size=1229864k
       - mode=700
       size: 1.17 GiB
-      size_bytes: 1259372544
+      size_bytes: 1259380736
+      used: 0 bytes
+      used_bytes: 0
+    "/run/user/1003":
+      available: 1.17 GiB
+      available_bytes: 1259380736
+      capacity: 0%
+      device: tmpfs
+      filesystem: tmpfs
+      options:
+      - rw
+      - nosuid
+      - nodev
+      - relatime
+      - size=1229864k
+      - mode=700
+      - uid=1003
+      - gid=1003
+      size: 1.17 GiB
+      size_bytes: 1259380736
       used: 0 bytes
       used_bytes: 0
     "/sys/fs/cgroup":
       available: 5.86 GiB
-      available_bytes: 6296866816
+      available_bytes: 6296920064
       capacity: 0%
       device: tmpfs
       filesystem: tmpfs
@@ -268,7 +357,7 @@ values:
       - noexec
       - mode=755
       size: 5.86 GiB
-      size_bytes: 6296866816
+      size_bytes: 6296920064
       used: 0 bytes
       used_bytes: 0
   mounts:
@@ -399,7 +488,7 @@ values:
       size_bytes: 4293918720
       uuid: 422de49f-0ae7-490d-83c9-e4f19086f84f
   path: "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
-  phpversion: 7.3.11-1~deb10u1
+  phpversion: 7.3.12-1+0~20191128.49+debian10~1.gbp24559b
   physicalprocessorcount: 1
   processor0: Common KVM processor
   processor1: Common KVM processor
@@ -458,7 +547,10 @@ values:
       key: AAAAB3NzaC1yc2EAAAADAQABAAABAQDIEv052pq1mvCDxaP+IBjYSEiAAjUwX+rLl1Tc4ZJ8ck7+/JuR9uSiBspeF4E8M6YE0JFczGqpJdMeU5uf/rUqeMLp53g7Q9BWdIzHBOGLSW80NZ9SYLoPZdhiLd+W3nHu6tze79txvwSqbVpw91NRiaQT8MmI3f7gcRYKClmtODO9Sz8hIUIwGtty7/SJEpZC8httIbsY6jjGM/IUbh6FWsfN3G7jxoq8OvwErSZ+zkfJ6IpPdkTrPRCbGNaO8DDQOBdhGu1z1DXkXeaa6jD7t2SiTpJ1B6BgjwuefimczGNohUisLdtUFarAByb7iklpeMvbiS9N/TsxV88D8qMD
       type: ssh-rsa
   ssh_client_version_full: 7.9p1
+  ssh_keys_users: {}
   ssh_server_version_full: 7.9p1
+  ssh_server_version_major: '7'
+  ssh_server_version_release: '7.9'
   sshdsakey: AAAAB3NzaC1kc3MAAACBAObUT9lcVntzNDYYTIlSFy59Qzikm7pF0/KpE9uvlfEW8lpUQHo+as+qwx5RZaJaN9/ubZlT7tdyPXcy/6iUagbjYWW+0NS22PJR4yiyck/dG2JNSD83M/KkWT5nJao1AHuVDj6xIe4eTh/pKpp9AT93VhXNkjNHXPUrmSLcTxlHAAAAFQDvOb//Dp/Jt9nQ1VHTaqxwfW0ymQAAAIAgFL/uISyQfIf5ETM+oi8VUbMs9dJWChJz3to7GsOcOveYkV7c2RPQqpYl0ShFbuiN5GTGwA3AiiC4RHqH8zQwzyFvv6/LEMiueoWtf72zCQN900IgZtwonLKDEjoUfCYGFabx1Y4E4iWRBLwbRV6uM9q63aobn3AVWT5mMOYzXAAAAIAxzlvkDN4iotFVqKzb/0It+89IKCcd239jIM3FravBiH+fJZWcMSE3GS4YsZd27W686Pmdq3XxKoMc3Ufh7f1UxjeyseJxmgfujUu3MIQUAAdcC6bpBykpF7iqDhaaPyNOPlSCTxGQEoy9pb2+ENgpZQ2tSpp7MRryojs7tYs5eQ==
   sshecdsakey: AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBKLfgPwdf08OA0ajHnb89l+AvHk1Zg1MQiWCtaEwn6Em3pPQjoQ+mrm5afgoCd5aKrG2dlNnwZsHapP7p0AIcqc=
   sshed25519key: AAAAC3NzaC1lZDI1NTE5AAAAIKsVk4jv4nkFQQGnxvpM503e420waZ4xqeTiEhCaa6pm
@@ -476,8 +568,8 @@ values:
     SSHFP 1 2 b68b3fb00050e5e53bc95ad8ca4498410e32046003cc5c7cc13e12b499eee4db
   sshrsakey: AAAAB3NzaC1yc2EAAAADAQABAAABAQDIEv052pq1mvCDxaP+IBjYSEiAAjUwX+rLl1Tc4ZJ8ck7+/JuR9uSiBspeF4E8M6YE0JFczGqpJdMeU5uf/rUqeMLp53g7Q9BWdIzHBOGLSW80NZ9SYLoPZdhiLd+W3nHu6tze79txvwSqbVpw91NRiaQT8MmI3f7gcRYKClmtODO9Sz8hIUIwGtty7/SJEpZC8httIbsY6jjGM/IUbh6FWsfN3G7jxoq8OvwErSZ+zkfJ6IpPdkTrPRCbGNaO8DDQOBdhGu1z1DXkXeaa6jD7t2SiTpJ1B6BgjwuefimczGNohUisLdtUFarAByb7iklpeMvbiS9N/TsxV88D8qMD
   sudoversion: 1.8.27
-  swapfree: 3.28 GiB
-  swapfree_mb: 3361.328125
+  swapfree: 3.29 GiB
+  swapfree_mb: 3372.49609375
   swapsize: 4.00 GiB
   swapsize_mb: 4094.99609375
   swh_hostname:
@@ -485,10 +577,10 @@ values:
     short: tate
     internal_fqdn: tate.internal.softwareheritage.org
   system_uptime:
-    days: 44
-    hours: 1078
-    seconds: 3884037
-    uptime: 44 days
+    days: 14
+    hours: 345
+    seconds: 1242141
+    uptime: 14 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -500,15 +592,15 @@ values:
     systemd-timesyncd.service: enabled
   systemd_version: '241'
   timezone: UTC
-  uptime: 44 days
-  uptime_days: 44
-  uptime_hours: 1078
-  uptime_seconds: 3884037
+  uptime: 14 days
+  uptime_days: 14
+  uptime_hours: 345
+  uptime_seconds: 1242141
   uuid: 1cfacaaf-2718-4794-9cc5-88dfde58fb43
   vcsrepo_svn_ver: ''
   virtual: kvm
   clientcert: tate.softwareheritage.org
   clientversion: 5.5.10
   clientnoop: false
-timestamp: '2019-11-29T15:20:24.941467422+00:00'
-expiration: '2019-11-29T15:50:24.942160723+00:00'
+timestamp: '2020-01-02T16:06:57.795887461+00:00'
+expiration: '2020-01-02T16:36:57.796942270+00:00'

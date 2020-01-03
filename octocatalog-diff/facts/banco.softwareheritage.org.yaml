@@ -2,7 +2,7 @@
 name: banco.softwareheritage.org
 values:
   agent_specified_environment: production
-  apt_dist_updates: 17
+  apt_dist_updates: 19
   apt_has_dist_updates: true
   apt_has_updates: true
   apt_package_dist_updates:
@@ -16,6 +16,7 @@ values:
   - postgresql-client
   - postgresql-client-11
   - prometheus-statsd-exporter
+  - python3-sentry-sdk
   - python3-swh.core
   - python3-tz
   - python3-swh.model
@@ -23,6 +24,7 @@ values:
   - python3-swh.objstorage.rados
   - python3-swh.objstorage
   - python3-swh.storage
+  - python3-werkzeug
   apt_package_security_dist_updates: []
   apt_package_security_updates: []
   apt_package_updates:
@@ -34,15 +36,15 @@ values:
   - postgresql-client-common
   - postgresql-client-11
   - prometheus-statsd-exporter
-  - python3-swh.core
   - python3-swh.objstorage.cloud
   - python3-swh.objstorage.rados
   - python3-swh.objstorage
   - python3-swh.storage
+  - python3-werkzeug
   apt_reboot_required: true
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1575039003
+  apt_update_last_success: 1578069484
   apt_updates: 13
   architecture: amd64
   bios_release_date: 12/11/2017
@@ -82,6 +84,10 @@ values:
   boardmanufacturer: Dell Inc.
   boardproductname: 0HFG24
   boardserialnumber: ".69P1J82.CN779215A600II."
+  cassandracmsheapnewsize: 1200
+  cassandracmsmaxheapsize: 12051
+  cassandraheapnewsize: 1200
+  cassandramaxheapsize: 8192
   ceph_mgr_modules: {}
   chassistype: Rack Mount Chassis
   disks:
@@ -151,6 +157,75 @@ values:
       name: PowerEdge R430
       serial_number: 69P1J82
       uuid: 4c4c4544-0039-5010-8031-b6c04f4a3832
+  docker_home_dirs:
+    root: "/root"
+    daemon: "/usr/sbin"
+    bin: "/bin"
+    sys: "/dev"
+    sync: "/bin"
+    games: "/usr/games"
+    man: "/var/cache/man"
+    lp: "/var/spool/lpd"
+    mail: "/var/mail"
+    news: "/var/spool/news"
+    uucp: "/var/spool/uucp"
+    proxy: "/bin"
+    www-data: "/var/www"
+    backup: "/var/backups"
+    list: "/var/list"
+    irc: "/var/run/ircd"
+    gnats: "/var/lib/gnats"
+    nobody: "/nonexistent"
+    systemd-timesync: "/run/systemd"
+    systemd-network: "/run/systemd/netif"
+    systemd-resolve: "/run/systemd/resolve"
+    messagebus: "/var/run/dbus"
+    Debian-exim: "/var/spool/exim4"
+    puppet: "/var/lib/puppet"
+    sshd: "/var/run/sshd"
+    swhwebapp: "/home/swhwebapp"
+    swhbackup: "/home/swhbackup"
+    postfix: "/var/spool/postfix"
+    munin: "/var/lib/munin"
+    ntp: "/home/ntp"
+    swhworker: "/home/swhworker"
+    swhstorage: "/home/swhstorage"
+    zack: "/home/zack"
+    ardumont: "/home/ardumont"
+    olasd: "/home/olasd"
+    barman: "/var/lib/barman"
+    postgres: "/var/lib/postgresql"
+    qcampos: "/home/qcampos"
+    jbertran: "/home/jbertran"
+    gitorious: "/home/gitorious"
+    rdicosmo: "/home/rdicosmo"
+    swhteamannex: "/home/swhteamannex"
+    swhscheduler: "/home/swhscheduler"
+    morane: "/home/morane"
+    fiendish: "/home/fiendish"
+    unbound: "/var/lib/unbound"
+    seirl: "/home/seirl"
+    systemd-journal-gateway: "/run/systemd"
+    systemd-journal-remote: "/run/systemd"
+    systemd-journal-upload: "/run/systemd"
+    nagios: "/var/lib/nagios"
+    logstash: "/usr/share/logstash"
+    journalbeat: "/var/lib/journalbeat"
+    ssushant: "/home/ssushant"
+    anlambert: "/home/anlambert"
+    grouss: "/home/grouss"
+    swhdeposit: "/home/swhdeposit"
+    ftigeot: "/home/ftigeot"
+    _apt: "/nonexistent"
+    statd: "/var/lib/nfs"
+    swhvault: "/home/swhvault"
+    ceph: "/var/lib/ceph"
+    ddouard: "/home/ddouard"
+    vlorentz: "/home/vlorentz"
+    prometheus: "/var/lib/prometheus"
+    haltode: "/home/haltode"
+    _rpc: "/run/rpcbind"
+    systemd-coredump: "/"
   domain: softwareheritage.org
   facterversion: 3.11.0
   filesystems: btrfs,ext2,ext3,ext4,hfs,hfsplus,jfs,minix,msdos,qnx4,ufs,vfat,xfs
@@ -194,10 +269,11 @@ values:
   kernelmajversion: '4.19'
   kernelrelease: 4.19.0-6-amd64
   kernelversion: 4.19.0
+  letsencrypt_directory: {}
   load_averages:
-    15m: 0.59
-    1m: 0.28
-    5m: 0.46
+    15m: 1.08
+    1m: 1.51
+    5m: 1.12
   location: sesi_rocquencourt
   lsbdistcodename: buster
   lsbdistdescription: Debian GNU/Linux 10 (buster)
@@ -214,30 +290,30 @@ values:
   manufacturer: Dell Inc.
   memory:
     swap:
-      available: 6.76 GiB
-      available_bytes: 7253299200
-      capacity: 9.32%
+      available: 7.13 GiB
+      available_bytes: 7656554496
+      capacity: 4.28%
       total: 7.45 GiB
       total_bytes: 7998533632
-      used: 710.71 MiB
-      used_bytes: 745234432
+      used: 326.14 MiB
+      used_bytes: 341979136
     system:
-      available: 43.86 GiB
-      available_bytes: 47097737216
-      capacity: 6.82%
+      available: 17.84 GiB
+      available_bytes: 19156725760
+      capacity: 62.10%
       total: 47.07 GiB
       total_bytes: 50545299456
-      used: 3.21 GiB
-      used_bytes: 3447562240
-  memoryfree: 43.86 GiB
-  memoryfree_mb: 44915.90234375
+      used: 29.23 GiB
+      used_bytes: 31388573696
+  memoryfree: 17.84 GiB
+  memoryfree_mb: 18269.27734375
   memorysize: 47.07 GiB
   memorysize_mb: 48203.75390625
   mountpoints:
     "/":
-      available: 27.36 GiB
-      available_bytes: 29376462848
-      capacity: 27.80%
+      available: 28.09 GiB
+      available_bytes: 30166683648
+      capacity: 25.86%
       device: "/dev/mapper/vg--banco-root"
       filesystem: ext4
       options:
@@ -246,12 +322,12 @@ values:
       - errors=remount-ro
       size: 37.89 GiB
       size_bytes: 40688312320
-      used: 10.53 GiB
-      used_bytes: 11311849472
+      used: 9.80 GiB
+      used_bytes: 10521628672
     "/boot":
-      available: 834.53 MiB
-      available_bytes: 875065344
-      capacity: 9.49%
+      available: 834.43 MiB
+      available_bytes: 874962944
+      capacity: 9.50%
       device: "/dev/sdc1"
       filesystem: ext4
       options:
@@ -259,11 +335,11 @@ values:
       - relatime
       size: 921.99 MiB
       size_bytes: 966778880
-      used: 87.46 MiB
-      used_bytes: 91713536
+      used: 87.56 MiB
+      used_bytes: 91815936
     "/dev/shm":
       available: 23.54 GiB
-      available_bytes: 25272643584
+      available_bytes: 25272639488
       capacity: 0.00%
       device: tmpfs
       filesystem: tmpfs
@@ -273,8 +349,8 @@ values:
       - nodev
       size: 23.54 GiB
       size_bytes: 25272647680
-      used: 4.00 KiB
-      used_bytes: 4096
+      used: 8.00 KiB
+      used_bytes: 8192
     "/run":
       available: 4.70 GiB
       available_bytes: 5051199488
@@ -309,7 +385,7 @@ values:
       size_bytes: 5242880
       used: 0 bytes
       used_bytes: 0
-    "/run/user/0":
+    "/run/user/1001":
       available: 4.71 GiB
       available_bytes: 5054529536
       capacity: 0%
@@ -322,6 +398,8 @@ values:
       - relatime
       - size=4936064k
       - mode=700
+      - uid=1001
+      - gid=1001
       size: 4.71 GiB
       size_bytes: 5054529536
       used: 0 bytes
@@ -362,9 +440,9 @@ values:
       used: 3.74 GiB
       used_bytes: 4018536448
     "/srv/barman":
-      available: 22.00 TiB
-      available_bytes: 24185799884800
-      capacity: 52.18%
+      available: 19.38 TiB
+      available_bytes: 21304835809280
+      capacity: 57.88%
       device: "/dev/mapper/vg--swhbackup-barman"
       filesystem: xfs
       options:
@@ -377,11 +455,11 @@ values:
       - noquota
       size: 46.00 TiB
       size_bytes: 50579692847104
-      used: 24.01 TiB
-      used_bytes: 26393892962304
+      used: 26.63 TiB
+      used_bytes: 29274857037824
     "/srv/rsnapshot":
       available: 1.99 TiB
-      available_bytes: 2187084804096
+      available_bytes: 2187080486912
       capacity: 0.49%
       device: "/dev/mapper/vg--swhbackup-rsnapshot"
       filesystem: xfs
@@ -396,7 +474,7 @@ values:
       size: 2.00 TiB
       size_bytes: 2197949513728
       used: 10.12 GiB
-      used_bytes: 10864709632
+      used_bytes: 10869026816
     "/srv/softwareheritage/objects/00":
       available: 1.55 TiB
       available_bytes: 1707207516160
@@ -4751,7 +4829,7 @@ values:
       used_bytes: 8446804127744
     "/srv/storage/space":
       available: 16.26 TiB
-      available_bytes: 17876800532480
+      available_bytes: 17876478836736
       capacity: 76.77%
       device: "/dev/mapper/vg--swhbackup-space"
       filesystem: xfs
@@ -4766,7 +4844,7 @@ values:
       size: 70.00 TiB
       size_bytes: 76963676946432
       used: 53.74 TiB
-      used_bytes: 59086876413952
+      used_bytes: 59087198109696
     "/sys/fs/cgroup":
       available: 23.54 GiB
       available_bytes: 25272647680
@@ -5314,7 +5392,39 @@ values:
       key: AAAAB3NzaC1yc2EAAAADAQABAAABAQC5GCtpYY70M7BuFR2Feu4xwDCSlArqXygFG4rbvs6HB0oRX7ucDq0nCsgAT+dNpIls/LvJlIpWMdZvxMxePCW09GR7VsjyAfKruLRW3QJNQElVMlwG9MeTHcGL8LU6n4jQgQ08oWWIbT0DAhltgJ5OZH35wycsmbySahbx6Z9gTikQn4/HEz6lp2bI+Y39FNnCmmoQq6Fm2V/iIkg1SSJYOhAqjdHIokXNbQF9ZQWMV9eiq/J0yvDWa9S7ifH5mk0mq1IeUhG0stcCnC0GrIHXxMUVxua5emWhlJYkIVWcVJ9DDdTLydqr5/x95U7AS5Jut8TsmA0mirzfk9S2o7sB
       type: ssh-rsa
   ssh_client_version_full: 7.9p1
+  ssh_keys_users:
+    root:
+      id_ed25519.pub:
+        type: ed25519
+        key: AAAAC3NzaC1lZDI1NTE5AAAAIDcljv9eR52wJsu9yYan6/riIQw70lQuyz+Qt0XpGXMs
+        comment: root@banco
+      id_ed25519.borg.pub:
+        type: ed25519
+        key: AAAAC3NzaC1lZDI1NTE5AAAAIFrCgI6Nt2kg8H5a4w6hMIbKQq6x5MdBnYBVMnQu/lNn
+        comment: root@banco
+    swhstorage:
+      id_rsa.pub:
+        type: rsa
+        key: AAAAB3NzaC1yc2EAAAADAQABAAABAQDJaBBarLTwn/++pGegE29gYdKOblK+oTaGp/E4N3W2w0zspc3tbJXC3Ua9yhXzO/o2ZbU5LEG8rLOg1yEViaNvqO3GWM1TWgc1kYjGG5xrLN8QeX+29D9tyVJLOFGLQuPHAloFWdOpqrm7DsIhFmnr2nTXL40GHZ185SonObxzL9aMT61t2C+gNkTV7E9ztHXtO0jVVL16ZdU8relclqfxnww1HHUMcuiPgXWQjwEOibzAWTiXSpq4puoREDxPxB+xh5uJQNd9jFHubk20l04wfz1fJAv/dq/NY6+jOIyV24qEpZaAIfzvUOoatXNaYAUzG5l5h5gR4W7pcqal5ODN
+        comment: swhstorage@banco
+    ardumont:
+      id-rsa-sesi.pub:
+        type: rsa
+        key: AAAAB3NzaC1yc2EAAAADAQABAAACAQC7UKvQiD3xxdYnaGWMeycFsm4Pya2Hg7dVOcpjarpYxxFaIr9gErX+2ynjznKQAISvHqikDvE9ALe3fuzHNIfJcsoPRgB0L9DZ523gnOolytXMY0qFWcA6tbpMpzK0S35UyCaFt0z/VlUdHyui95VgTzr/tSds+AKkvwGbzj+cKx/4Drbs1r0eRJOggMvEivUPgzVj1zXnADyOflIL+UjzOqStXwwFBk/Wp+/hMwwSuyB/nGOfoIL0vKcMui7+QRJmg19bpThxu2ao+qvXxiGKYQPGS4yJlsXysU6wew0kLLOuWvCFJlYb/rI+7zdEx4ugQwojb+JUuDr9q3q+TMkRPN8wnlmJhlUmw7Gnja3CqIp1s+lDxYf/BGE/cWbj6aaPJHcH6ABNY4xl3j1E19KtNkQUn1amKKsIxM0/WuDGf4mVuSNzsxxOD7rAwvb8K8Xg6piWTQLOBjcOsy7O4eBxzccXGzn12Yqy9n5knyeHf6CgUCU2gPJLDx3d4rqk58YeWOGgKyfEiL/2sz3iOVeiD+GqZCG/BQMczEXetEve+iYiscqun7Oo+ouJIhdT/lxADTBbTZMarn8W3JLGv0Qlp1PIaI1PSckVGtNdkq0bQUy2M4SYqZGJlbc4Z8/Hkk+8iydOy2u1n6dK+dOCuEZqpV/iOrDyLpqXNPzCJV5CdQ==
+        comment: ardumont@tytso
+    olasd:
+      id_rsa.storagetest.pub:
+        type: rsa
+        key: AAAAB3NzaC1yc2EAAAADAQABAAABAQC9VE8ET+Iow9GzGnQc8Gup2LI5AvOb5aO29ZF28bVgnPyrOPOYWxVTArt1r5rWNXqboqN5PSJ35XtLQPl5amAbFnLlk3eUxsO71HdeM4ZVPNyotQVqXMQNMnnNzyjH8SVPWjYT8Ehf0tcuuY4PDMapqpw6FAxalon5/LK+nL889Ol5990GcXZFbNljJAWFVLQYkzZhfxe5RL94yn4vZi5g+emd1hfOETWKpSCgtftFEvT0v1sqpMOBrj67uC0mL3S0C6YblZSU5thZaiOvxgAcCHwKcPrXnKKyvhCsMciAbhOPGV/n+7O692aXTLzFtOZqXROEhivGX2Z7ldBuiySx
+        comment: olasd@uffizi
+    swhteamannex:
+      id_rsa.pub:
+        type: rsa
+        key: AAAAB3NzaC1yc2EAAAADAQABAAACAQDL/Ef9kktq/QkJ0lohan8ObQ3o7hMf7EOQPjO+u7UhIMjBNufJnaftQRGIA6N1/wEsDvxxNNz75/oJECJHgZs2OOTJJPsKfYeybmSBocSa/sn6IKK7/b/qlwHJlSGWPGVgbtfP0KexlSAKAmKZuJyqjES5igTLV5w4wTjvUUen9QyefuUehnCX3MJhTpoyixp7icXE80aNMaCPwHZppKb/28sNlPX3MbSONGM45wSFRXNuj0mAAjrgojkhAqFNnI9oKNAt9mDcw1hV0n86VvrDhEbMCJP/z58ecn376BgyXQ8zNUPIr2g0SrSPUNjfxZHfJ0XYpF7624wOMOmZE3fsQzZh+FeMF0IFRPvcG34RaelV9dXiy+/q45oqwbMF464gFSbyt++4jpgqHdsARM4zR//jBhyLvFXR+GaKC3hFENno5W5Raff4XE5rzN/q9jVJBNfvfuEPWrapyM3A/ePeuK3SyNJwyIx+bOEQXsRdxEWKszTeJO2SLPWtCrKrC+G4/HktQSQOj5S9a+N6HoKD8E889eBEYoeZGPIuzMot4cuUlyPt3P99z4oRIaeC6XwUCvZCD2DaTAkQWQMsmOn+soaeZ1zBHbsCBbV0mBMRx7K4Vjs62vhSelryQAXW+cBgd6+f5XBjOnNhHQhsNsDfYP4Kmztn58faQV2TzGG5ow==
+        comment: swhteamannex swhteamannex@louvre
   ssh_server_version_full: 7.9p1
+  ssh_server_version_major: '7'
+  ssh_server_version_release: '7.9'
   sshdsakey: AAAAB3NzaC1kc3MAAACBAJPZSu1JjtwHAsKoGaq1PXAIrjZarNYiHcKSQx7fNeqbP3prLGRb3ydXLhFo+GckEEf5whpC+x58vvdgKkw7hYxcU6Kl+0sY1Be8VNxCB4HWj8/wIWw76LYLzpreWhQRnwZ226aHxCt5GvYtKDOkRGwvk6GfLE/6DUx2NEWZ46w5AAAAFQCtoqyt3wyY/w35TKtCnzkHPV2VlQAAAIAPZt1dKfx8mv486bfq/iR8RfrwN2qvdZ3ULarvzx2TvaM+e/55eG5b41dOd+hg9hOM7KXToUt3k//bsyWdl7sXQfo7tYKXkmN2/fxLzMCFm/K4Uo5s86bHHk7ppvnEYgQZX4cHRg35IpmmLfp1P55l+ME6ZkhnB4TvhOhe27s/dwAAAIBRFg+eJyeoHIy2gQ81YqgIsd/3psitpArjC5yszVGIe8sVufE3sSJ2S/GIR3IUfBMF1hJ9EqB+Dvtdxs3T+f66BvNABzpSvQmnCIgjMj7ZF6IjnYxnmZGCXPX1CYXsANDUC2Fdc267pAkNCT8Mt6VV9+JsAIC+T4aVK1/SkgdoXA==
   sshecdsakey: AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBDJFQ8pFt84ALNFNK8TPmQwtjVFN8sHw24R+iSxgOzH6NCs8zcoHV+jJjLEWZy+s7/O3NqT0tgJ5Z7biYBFo6/Y=
   sshed25519key: AAAAC3NzaC1lZDI1NTE5AAAAIFLRQX0pqmilKIYlglep7FBIBwcNfG2Du0APNw/ag/G9
@@ -5332,8 +5442,8 @@ values:
     SSHFP 1 2 649a16dd06eef801ed38b29ec7a94f09fbf199a8781c8625bcb6ab9b97c079e1
   sshrsakey: AAAAB3NzaC1yc2EAAAADAQABAAABAQC5GCtpYY70M7BuFR2Feu4xwDCSlArqXygFG4rbvs6HB0oRX7ucDq0nCsgAT+dNpIls/LvJlIpWMdZvxMxePCW09GR7VsjyAfKruLRW3QJNQElVMlwG9MeTHcGL8LU6n4jQgQ08oWWIbT0DAhltgJ5OZH35wycsmbySahbx6Z9gTikQn4/HEz6lp2bI+Y39FNnCmmoQq6Fm2V/iIkg1SSJYOhAqjdHIokXNbQF9ZQWMV9eiq/J0yvDWa9S7ifH5mk0mq1IeUhG0stcCnC0GrIHXxMUVxua5emWhlJYkIVWcVJ9DDdTLydqr5/x95U7AS5Jut8TsmA0mirzfk9S2o7sB
   sudoversion: 1.8.27
-  swapfree: 6.76 GiB
-  swapfree_mb: 6917.28515625
+  swapfree: 7.13 GiB
+  swapfree_mb: 7301.859375
   swapsize: 7.45 GiB
   swapsize_mb: 7627.99609375
   swh_hostname:
@@ -5341,10 +5451,10 @@ values:
     short: banco
     internal_fqdn: banco.internal.softwareheritage.org
   system_uptime:
-    days: 45
-    hours: 1101
-    seconds: 3966434
-    uptime: 45 days
+    days: 80
+    hours: 1943
+    seconds: 6995755
+    uptime: 80 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -5356,15 +5466,15 @@ values:
     systemd-timesyncd.service: enabled
   systemd_version: '241'
   timezone: UTC
-  uptime: 45 days
-  uptime_days: 45
-  uptime_hours: 1101
-  uptime_seconds: 3966434
+  uptime: 80 days
+  uptime_days: 80
+  uptime_hours: 1943
+  uptime_seconds: 6995755
   uuid: 4c4c4544-0039-5010-8031-b6c04f4a3832
   vcsrepo_svn_ver: ''
   virtual: physical
   clientcert: banco.softwareheritage.org
   clientversion: 5.5.10
-  clientnoop: false
-timestamp: '2019-11-29T15:19:26.942617222+00:00'
-expiration: '2019-11-29T15:49:26.948364499+00:00'
+  clientnoop: true
+timestamp: '2020-01-03T16:48:14.211249823+00:00'
+expiration: '2020-01-03T17:18:14.216943277+00:00'
