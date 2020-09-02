@@ -2,20 +2,29 @@
 name: kafka04.euwest.azure.internal.softwareheritage.org
 values:
   agent_specified_environment: production
-  apt_dist_updates: 1
+  apt_dist_updates: 8
   apt_has_dist_updates: true
   apt_has_updates: true
   apt_package_dist_updates:
-  - prometheus-statsd-exporter
+  - udev
+  - libpam-systemd
+  - libnss-systemd
+  - systemd
+  - systemd-timesyncd
+  - libudev1
+  - libsystemd0
+  - systemd-sysv
   apt_package_security_dist_updates: []
   apt_package_security_updates: []
   apt_package_updates:
-  - prometheus-statsd-exporter
+  - systemd-sysv
+  - udev
+  - libudev1
   apt_reboot_required: true
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1577979063
-  apt_updates: 1
+  apt_update_last_success: 1599046262
+  apt_updates: 3
   architecture: amd64
   bios_release_date: 06/02/2017
   bios_vendor: American Megatrends Inc.
@@ -148,6 +157,8 @@ values:
     nagios: "/var/lib/nagios"
     _rpc: "/run/rpcbind"
     systemd-coredump: "/"
+    danseraf: "/home/danseraf"
+    aeviso: "/home/aeviso"
   domain: euwest.azure.internal.softwareheritage.org
   facterversion: 3.11.0
   filesystems: ext2,ext3,ext4
@@ -179,17 +190,17 @@ values:
   java_default_home: "/usr/lib/jvm/java-11-openjdk-amd64"
   java_libjvm_path: "/usr/lib/jvm/java-11-openjdk-amd64/lib/server"
   java_major_version: '11'
-  java_patch_level: '5'
-  java_version: 11.0.5
+  java_patch_level: '8'
+  java_version: 11.0.8
   kernel: Linux
   kernelmajversion: '4.19'
   kernelrelease: 4.19.0-6-amd64
   kernelversion: 4.19.0
   letsencrypt_directory: {}
   load_averages:
-    15m: 1.47
-    1m: 1.63
-    5m: 1.48
+    15m: 0.17
+    1m: 0.37
+    5m: 0.17
   location: azure_euwest
   lsbdistcodename: buster
   lsbdistdescription: Debian GNU/Linux 10 (buster)
@@ -201,22 +212,22 @@ values:
   manufacturer: Microsoft Corporation
   memory:
     system:
-      available: 1.59 GiB
-      available_bytes: 1702854656
-      capacity: 58.61%
+      available: 968.32 MiB
+      available_bytes: 1015357440
+      capacity: 75.32%
       total: 3.83 GiB
       total_bytes: 4114223104
-      used: 2.25 GiB
-      used_bytes: 2411368448
-  memoryfree: 1.59 GiB
-  memoryfree_mb: 1623.96875
+      used: 2.89 GiB
+      used_bytes: 3098865664
+  memoryfree: 968.32 MiB
+  memoryfree_mb: 968.3203125
   memorysize: 3.83 GiB
   memorysize_mb: 3923.62890625
   mountpoints:
     "/":
-      available: 23.76 GiB
-      available_bytes: 25513779200
-      capacity: 19.19%
+      available: 24.55 GiB
+      available_bytes: 26355187712
+      capacity: 16.52%
       device: "/dev/sda1"
       filesystem: ext4
       options:
@@ -225,8 +236,8 @@ values:
       - errors=remount-ro
       size: 29.40 GiB
       size_bytes: 31571480576
-      used: 5.64 GiB
-      used_bytes: 6057701376
+      used: 4.86 GiB
+      used_bytes: 5216292864
     "/dev/shm":
       available: 1.92 GiB
       available_bytes: 2057109504
@@ -255,9 +266,9 @@ values:
       used: 35.99 MiB
       used_bytes: 37740544
     "/run":
-      available: 391.86 MiB
-      available_bytes: 410894336
-      capacity: 0.13%
+      available: 391.88 MiB
+      available_bytes: 410910720
+      capacity: 0.12%
       device: tmpfs
       filesystem: tmpfs
       options:
@@ -269,8 +280,8 @@ values:
       - mode=755
       size: 392.36 MiB
       size_bytes: 411422720
-      used: 516.00 KiB
-      used_bytes: 528384
+      used: 500.00 KiB
+      used_bytes: 512000
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -288,36 +299,20 @@ values:
       size_bytes: 5242880
       used: 0 bytes
       used_bytes: 0
-    "/run/user/0":
-      available: 392.36 MiB
-      available_bytes: 411418624
-      capacity: 0%
-      device: tmpfs
-      filesystem: tmpfs
-      options:
-      - rw
-      - nosuid
-      - nodev
-      - relatime
-      - size=401776k
-      - mode=700
-      size: 392.36 MiB
-      size_bytes: 411418624
-      used: 0 bytes
-      used_bytes: 0
     "/srv/kafka":
-      available: 5.08 TiB
-      available_bytes: 5588196945920
-      capacity: 35.96%
+      available: 1.98 TiB
+      available_bytes: 2178037723136
+      capacity: 75.04%
       device: "/dev/sdc1"
       filesystem: ext4
       options:
       - rw
       - relatime
+      - nobarrier
       size: 7.94 TiB
       size_bytes: 8725665300480
-      used: 2.85 TiB
-      used_bytes: 3137468354560
+      used: 5.96 TiB
+      used_bytes: 6547627577344
     "/sys/fs/cgroup":
       available: 1.92 GiB
       available_bytes: 2057109504
@@ -402,7 +397,7 @@ values:
     primary: eth0
   operatingsystem: Debian
   operatingsystemmajrelease: '10'
-  operatingsystemrelease: '10.2'
+  operatingsystemrelease: '10.5'
   os:
     architecture: amd64
     distro:
@@ -416,9 +411,9 @@ values:
     hardware: x86_64
     name: Debian
     release:
-      full: '10.2'
+      full: '10.5'
       major: '10'
-      minor: '2'
+      minor: '5'
     selinux:
       enabled: false
   osfamily: Debian
@@ -445,7 +440,7 @@ values:
       size: 8.00 TiB
       size_bytes: 8796091956736
       uuid: 50c65288-48f9-477b-8a29-76587fd743cb
-  path: "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+  path: "/usr/bin:/bin:/usr/sbin:/sbin"
   physicalprocessorcount: 1
   processor0: Intel(R) Xeon(R) CPU E5-2673 v4 @ 2.30GHz
   processor1: Intel(R) Xeon(R) CPU E5-2673 v4 @ 2.30GHz
@@ -526,10 +521,10 @@ values:
     short: kafka04.euwest.azure
     internal_fqdn: kafka04.euwest.azure.internal.softwareheritage.org
   system_uptime:
-    days: 80
-    hours: 1924
-    seconds: 6927126
-    uptime: 80 days
+    days: 324
+    hours: 7776
+    seconds: 27994223
+    uptime: 324 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -541,15 +536,15 @@ values:
     systemd-timesyncd.service: enabled
   systemd_version: '241'
   timezone: UTC
-  uptime: 80 days
-  uptime_days: 80
-  uptime_hours: 1924
-  uptime_seconds: 6927126
+  uptime: 324 days
+  uptime_days: 324
+  uptime_hours: 7776
+  uptime_seconds: 27994223
   uuid: 4c5822a2-7343-3048-b810-fa77ed39dd36
   vcsrepo_svn_ver: ''
   virtual: hyperv
   clientcert: kafka04.euwest.azure.internal.softwareheritage.org
   clientversion: 5.5.10
   clientnoop: false
-timestamp: '2020-01-02T16:05:50.643192968+00:00'
-expiration: '2020-01-02T16:35:50.643686768+00:00'
+timestamp: '2020-09-02T12:04:06.935302400+00:00'
+expiration: '2020-09-02T12:34:06.935727600+00:00'

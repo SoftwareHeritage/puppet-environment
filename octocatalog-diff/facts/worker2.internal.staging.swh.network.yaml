@@ -2,26 +2,26 @@
 name: worker2.internal.staging.swh.network
 values:
   agent_specified_environment: staging
-  apt_dist_updates: 2
+  apt_dist_updates: 3
   apt_has_dist_updates: true
   apt_has_updates: true
   apt_package_dist_updates:
-  - python3-swh.deposit.loader
-  - python3-swh.deposit.client
+  - python3-mypy-extensions
+  - python3-typing-extensions
+  - python3-swh.storage
   apt_package_security_dist_updates: []
   apt_package_security_updates: []
   apt_package_updates:
-  - python3-swh.deposit.loader
-  - python3-swh.deposit.client
+  - python3-typing-extensions
   apt_reboot_required: true
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1577981102
-  apt_updates: 2
+  apt_update_last_success: 1598447102
+  apt_updates: 1
   architecture: amd64
   bios_release_date: 04/01/2014
   bios_vendor: SeaBIOS
-  bios_version: rel-1.12.1-0-ga5cab58e9a3f-prebuilt.qemu.org
+  bios_version: rel-1.13.0-0-gf21b5a4aeb02-prebuilt.qemu.org
   blockdevice_sr0_model: QEMU DVD-ROM
   blockdevice_sr0_size: 4194304
   blockdevice_sr0_vendor: QEMU
@@ -47,7 +47,7 @@ values:
     bios:
       release_date: 04/01/2014
       vendor: SeaBIOS
-      version: rel-1.12.1-0-ga5cab58e9a3f-prebuilt.qemu.org
+      version: rel-1.13.0-0-gf21b5a4aeb02-prebuilt.qemu.org
     chassis:
       type: Other
     manufacturer: QEMU
@@ -115,6 +115,8 @@ values:
     munin: "/var/lib/munin"
     prometheus: "/var/lib/prometheus"
     nagios: "/var/lib/nagios"
+    danseraf: "/home/danseraf"
+    aeviso: "/home/aeviso"
   domain: internal.staging.swh.network
   facterversion: 3.11.0
   filesystems: ext2,ext3,ext4,iso9660
@@ -145,13 +147,13 @@ values:
   is_virtual: false
   kernel: Linux
   kernelmajversion: '4.19'
-  kernelrelease: 4.19.0-6-cloud-amd64
+  kernelrelease: 4.19.0-9-cloud-amd64
   kernelversion: 4.19.0
   letsencrypt_directory: {}
   load_averages:
-    15m: 0.06
-    1m: 0.19
-    5m: 0.13
+    15m: 0.09
+    1m: 0.13
+    5m: 0.09
   location: sesi_rocquencourt_staging
   lsbdistcodename: buster
   lsbdistdescription: Debian GNU/Linux 10 (buster)
@@ -163,22 +165,22 @@ values:
   manufacturer: QEMU
   memory:
     system:
-      available: 14.81 GiB
-      available_bytes: 15900200960
-      capacity: 5.49%
+      available: 5.48 GiB
+      available_bytes: 5882216448
+      capacity: 65.04%
       total: 15.67 GiB
-      total_bytes: 16824193024
-      used: 881.19 MiB
-      used_bytes: 923992064
-  memoryfree: 14.81 GiB
-  memoryfree_mb: 15163.61328125
+      total_bytes: 16824274944
+      used: 10.19 GiB
+      used_bytes: 10942058496
+  memoryfree: 5.48 GiB
+  memoryfree_mb: 5609.71875
   memorysize: 15.67 GiB
-  memorysize_mb: 16044.80078125
+  memorysize_mb: 16044.87890625
   mountpoints:
     "/":
-      available: 28.76 GiB
-      available_bytes: 30877913088
-      capacity: 8.61%
+      available: 28.34 GiB
+      available_bytes: 30429515776
+      capacity: 9.93%
       device: "/dev/vda1"
       filesystem: ext4
       options:
@@ -187,12 +189,12 @@ values:
       - errors=remount-ro
       size: 31.47 GiB
       size_bytes: 33785901056
-      used: 2.71 GiB
-      used_bytes: 2907987968
+      used: 3.13 GiB
+      used_bytes: 3356385280
     "/dev/shm":
       available: 7.83 GiB
-      available_bytes: 8412012544
-      capacity: 0.00%
+      available_bytes: 8411103232
+      capacity: 0.01%
       device: tmpfs
       filesystem: tmpfs
       options:
@@ -200,13 +202,13 @@ values:
       - nosuid
       - nodev
       size: 7.83 GiB
-      size_bytes: 8412094464
-      used: 80.00 KiB
-      used_bytes: 81920
+      size_bytes: 8412135424
+      used: 1008.00 KiB
+      used_bytes: 1032192
     "/run":
-      available: 1.56 GiB
-      available_bytes: 1679757312
-      capacity: 0.16%
+      available: 1.57 GiB
+      available_bytes: 1681936384
+      capacity: 0.03%
       device: tmpfs
       filesystem: tmpfs
       options:
@@ -214,12 +216,12 @@ values:
       - nosuid
       - noexec
       - relatime
-      - size=1642988k
+      - size=1642996k
       - mode=755
       size: 1.57 GiB
-      size_bytes: 1682419712
-      used: 2.54 MiB
-      used_bytes: 2662400
+      size_bytes: 1682427904
+      used: 480.00 KiB
+      used_bytes: 491520
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -237,26 +239,9 @@ values:
       size_bytes: 5242880
       used: 0 bytes
       used_bytes: 0
-    "/run/user/0":
-      available: 1.57 GiB
-      available_bytes: 1682415616
-      capacity: 0%
-      device: tmpfs
-      filesystem: tmpfs
-      options:
-      - rw
-      - nosuid
-      - nodev
-      - relatime
-      - size=1642984k
-      - mode=700
-      size: 1.57 GiB
-      size_bytes: 1682415616
-      used: 0 bytes
-      used_bytes: 0
     "/run/user/1003":
       available: 1.57 GiB
-      available_bytes: 1682415616
+      available_bytes: 1682423808
       capacity: 0%
       device: tmpfs
       filesystem: tmpfs
@@ -265,17 +250,17 @@ values:
       - nosuid
       - nodev
       - relatime
-      - size=1642984k
+      - size=1642992k
       - mode=700
       - uid=1003
       - gid=1003
       size: 1.57 GiB
-      size_bytes: 1682415616
+      size_bytes: 1682423808
       used: 0 bytes
       used_bytes: 0
     "/sys/fs/cgroup":
       available: 7.83 GiB
-      available_bytes: 8412094464
+      available_bytes: 8412135424
       capacity: 0%
       device: tmpfs
       filesystem: tmpfs
@@ -286,7 +271,7 @@ values:
       - noexec
       - mode=755
       size: 7.83 GiB
-      size_bytes: 8412094464
+      size_bytes: 8412135424
       used: 0 bytes
       used_bytes: 0
   mounts:
@@ -355,7 +340,7 @@ values:
     primary: eth0
   operatingsystem: Debian
   operatingsystemmajrelease: '10'
-  operatingsystemrelease: '10.2'
+  operatingsystemrelease: '10.5'
   os:
     architecture: amd64
     distro:
@@ -369,9 +354,9 @@ values:
     hardware: x86_64
     name: Debian
     release:
-      full: '10.2'
+      full: '10.5'
       major: '10'
-      minor: '2'
+      minor: '5'
     selinux:
       enabled: false
   osfamily: Debian
@@ -383,21 +368,21 @@ values:
       size: 32.00 GiB
       size_bytes: 34358672896
       uuid: 65b4bbd6-39d1-49da-b0af-65261fa0b4a8
-  path: "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+  path: "/usr/bin:/bin:/usr/sbin:/sbin"
   physicalprocessorcount: 1
-  processor0: Common KVM processor
-  processor1: Common KVM processor
-  processor2: Common KVM processor
-  processor3: Common KVM processor
+  processor0: AMD Opteron(tm) Processor 6172
+  processor1: AMD Opteron(tm) Processor 6172
+  processor2: AMD Opteron(tm) Processor 6172
+  processor3: AMD Opteron(tm) Processor 6172
   processorcount: 4
   processors:
     count: 4
     isa: unknown
     models:
-    - Common KVM processor
-    - Common KVM processor
-    - Common KVM processor
-    - Common KVM processor
+    - AMD Opteron(tm) Processor 6172
+    - AMD Opteron(tm) Processor 6172
+    - AMD Opteron(tm) Processor 6172
+    - AMD Opteron(tm) Processor 6172
     physicalcount: 1
   productname: Standard PC (i440FX + PIIX, 1996)
   public_ipaddresses: []
@@ -467,30 +452,33 @@ values:
     short: worker2
     internal_fqdn: worker2.internal.staging.swh.network
   system_uptime:
-    days: 55
-    hours: 1321
-    seconds: 4759088
-    uptime: 55 days
+    days: 58
+    hours: 1393
+    seconds: 5015309
+    uptime: 58 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
     systemd-fsck-root.service: enabled-runtime
+    systemd-network-generator.service: disabled
     systemd-networkd-wait-online.service: disabled
     systemd-networkd.service: disabled
+    systemd-pstore.service: enabled
+    systemd-remount-fs.service: enabled-runtime
     systemd-resolved.service: disabled
     systemd-time-wait-sync.service: disabled
     systemd-timesyncd.service: enabled
-  systemd_version: '241'
+  systemd_version: '245'
   timezone: UTC
-  uptime: 55 days
-  uptime_days: 55
-  uptime_hours: 1321
-  uptime_seconds: 4759088
+  uptime: 58 days
+  uptime_days: 58
+  uptime_hours: 1393
+  uptime_seconds: 5015309
   uuid: dcfc5ff9-210a-46f4-b6a2-4b1345a9b120
-  vcsrepo_svn_ver: ''
+  vcsrepo_svn_ver: 1.10.4
   virtual: physical
   clientcert: worker2.internal.staging.swh.network
   clientversion: 5.5.10
   clientnoop: false
-timestamp: '2020-01-02T16:08:04.466903152+00:00'
-expiration: '2020-01-02T16:38:04.467651150+00:00'
+timestamp: '2020-08-26T13:58:10.131014309+00:00'
+expiration: '2020-08-26T14:28:10.131737708+00:00'

@@ -3,32 +3,20 @@ name: moma.softwareheritage.org
 values:
   agent_specified_environment: production
   apache_version: 2.4.38
-  apt_dist_updates: 7
+  apt_dist_updates: 1
   apt_has_dist_updates: true
   apt_has_updates: true
   apt_package_dist_updates:
-  - python3-swh.model
-  - python3-swh.deposit.client
   - python3-swh.storage
-  - python3-swh.scheduler
-  - python3-swh.indexer
-  - python3-swh.indexer.storage
-  - python3-swh.journal
   apt_package_security_dist_updates: []
   apt_package_security_updates: []
   apt_package_updates:
-  - python3-swh.model
-  - python3-swh.deposit.client
   - python3-swh.storage
-  - python3-swh.scheduler
-  - python3-swh.indexer
-  - python3-swh.indexer.storage
-  - python3-swh.journal
-  apt_reboot_required: true
+  apt_reboot_required: false
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1577980743
-  apt_updates: 7
+  apt_update_last_success: 1599047944
+  apt_updates: 1
   architecture: amd64
   bios_release_date: 04/01/2014
   bios_vendor: SeaBIOS
@@ -140,9 +128,11 @@ values:
     haltode: "/home/haltode"
     _rpc: "/run/rpcbind"
     systemd-coredump: "/"
+    danseraf: "/home/danseraf"
+    aeviso: "/home/aeviso"
   domain: softwareheritage.org
   facterversion: 3.11.0
-  filesystems: btrfs,ext2,ext3,ext4,hfs,hfsplus,jfs,minix,msdos,qnx4,ufs,vfat,xfs
+  filesystems: ext2,ext3,ext4
   fips_enabled: false
   fqdn: moma.softwareheritage.org
   gid: root
@@ -172,13 +162,13 @@ values:
   is_virtual: true
   kernel: Linux
   kernelmajversion: '4.19'
-  kernelrelease: 4.19.0-6-amd64
+  kernelrelease: 4.19.0-10-amd64
   kernelversion: 4.19.0
   letsencrypt_directory: {}
   load_averages:
-    15m: 0.12
-    1m: 0.45
-    5m: 0.21
+    15m: 0.35
+    1m: 0.26
+    5m: 0.26
   location: sesi_rocquencourt
   lsbdistcodename: buster
   lsbdistdescription: Debian GNU/Linux 10 (buster)
@@ -191,30 +181,30 @@ values:
   manufacturer: QEMU
   memory:
     swap:
-      available: 3.99 GiB
-      available_bytes: 4287098880
-      capacity: 0.13%
+      available: 3.07 GiB
+      available_bytes: 3295879168
+      capacity: 23.22%
       total: 4.00 GiB
       total_bytes: 4292866048
-      used: 5.50 MiB
-      used_bytes: 5767168
+      used: 950.80 MiB
+      used_bytes: 996986880
     system:
-      available: 8.32 GiB
-      available_bytes: 8931565568
-      capacity: 46.90%
+      available: 7.16 GiB
+      available_bytes: 7689396224
+      capacity: 54.29%
       total: 15.67 GiB
-      total_bytes: 16821501952
-      used: 7.35 GiB
-      used_bytes: 7889936384
-  memoryfree: 8.32 GiB
-  memoryfree_mb: 8517.8046875
+      total_bytes: 16821551104
+      used: 8.50 GiB
+      used_bytes: 9132154880
+  memoryfree: 7.16 GiB
+  memoryfree_mb: 7333.1796875
   memorysize: 15.67 GiB
-  memorysize_mb: 16042.234375
+  memorysize_mb: 16042.28125
   mountpoints:
     "/":
-      available: 11.31 GiB
-      available_bytes: 12140937216
-      capacity: 42.19%
+      available: 12.41 GiB
+      available_bytes: 13320253440
+      capacity: 36.58%
       device: "/dev/vda1"
       filesystem: ext4
       options:
@@ -224,11 +214,11 @@ values:
       - stripe=32742
       size: 19.56 GiB
       size_bytes: 21002579968
-      used: 8.25 GiB
-      used_bytes: 8861642752
+      used: 7.15 GiB
+      used_bytes: 7682326528
     "/dev/shm":
       available: 7.83 GiB
-      available_bytes: 8410750976
+      available_bytes: 8410775552
       capacity: 0%
       device: tmpfs
       filesystem: tmpfs
@@ -237,12 +227,12 @@ values:
       - nosuid
       - nodev
       size: 7.83 GiB
-      size_bytes: 8410750976
+      size_bytes: 8410775552
       used: 0 bytes
       used_bytes: 0
     "/run":
       available: 1.57 GiB
-      available_bytes: 1681592320
+      available_bytes: 1681580032
       capacity: 0.03%
       device: tmpfs
       filesystem: tmpfs
@@ -251,12 +241,12 @@ values:
       - nosuid
       - noexec
       - relatime
-      - size=1642728k
+      - size=1642732k
       - mode=755
       size: 1.57 GiB
-      size_bytes: 1682153472
-      used: 548.00 KiB
-      used_bytes: 561152
+      size_bytes: 1682157568
+      used: 564.00 KiB
+      used_bytes: 577536
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -274,26 +264,9 @@ values:
       size_bytes: 5242880
       used: 0 bytes
       used_bytes: 0
-    "/run/user/0":
-      available: 1.57 GiB
-      available_bytes: 1682149376
-      capacity: 0%
-      device: tmpfs
-      filesystem: tmpfs
-      options:
-      - rw
-      - nosuid
-      - nodev
-      - relatime
-      - size=1642724k
-      - mode=700
-      size: 1.57 GiB
-      size_bytes: 1682149376
-      used: 0 bytes
-      used_bytes: 0
     "/run/user/1003":
       available: 1.57 GiB
-      available_bytes: 1682149376
+      available_bytes: 1682153472
       capacity: 0%
       device: tmpfs
       filesystem: tmpfs
@@ -302,17 +275,17 @@ values:
       - nosuid
       - nodev
       - relatime
-      - size=1642724k
+      - size=1642728k
       - mode=700
       - uid=1003
       - gid=1003
       size: 1.57 GiB
-      size_bytes: 1682149376
+      size_bytes: 1682153472
       used: 0 bytes
       used_bytes: 0
     "/sys/fs/cgroup":
       available: 7.83 GiB
-      available_bytes: 8410750976
+      available_bytes: 8410775552
       capacity: 0%
       device: tmpfs
       filesystem: tmpfs
@@ -323,7 +296,7 @@ values:
       - noexec
       - mode=755
       size: 7.83 GiB
-      size_bytes: 8410750976
+      size_bytes: 8410775552
       used: 0 bytes
       used_bytes: 0
   mounts:
@@ -418,7 +391,7 @@ values:
   nginx_version: 1.14.2
   operatingsystem: Debian
   operatingsystemmajrelease: '10'
-  operatingsystemrelease: '10.2'
+  operatingsystemrelease: '10.5'
   os:
     architecture: amd64
     distro:
@@ -432,9 +405,9 @@ values:
     hardware: x86_64
     name: Debian
     release:
-      full: '10.2'
+      full: '10.5'
       major: '10'
-      minor: '2'
+      minor: '5'
     selinux:
       enabled: false
   osfamily: Debian
@@ -453,7 +426,7 @@ values:
       size: 4.00 GiB
       size_bytes: 4292870144
       uuid: 6163c540-1dce-4336-bf97-8ef2cb4844ac
-  path: "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+  path: "/usr/bin:/bin:/usr/sbin:/sbin"
   physicalprocessorcount: 2
   processor0: Common KVM processor
   processor1: Common KVM processor
@@ -513,6 +486,11 @@ values:
       type: ssh-rsa
   ssh_client_version_full: 7.9p1
   ssh_keys_users:
+    root:
+      id_ed25519.borg.pub:
+        type: ed25519
+        key: AAAAC3NzaC1lZDI1NTE5AAAAIB7n8IKqLNCPepkV8G0z2MBRlDdEQQg0CtpJkyPPg0sS
+        comment: root@moma
     swhworker:
       id_rsa.rsync.pub:
         type: rsa
@@ -547,8 +525,8 @@ values:
     SSHFP 1 2 9cc5c377d3df5b5aa93ae3b5b787d7b45feff6b29fb2b5d728b4734a45093fad
   sshrsakey: AAAAB3NzaC1yc2EAAAADAQABAAABAQDQKinwK9kcSED+cNf0VvdbmF2R2+bQswFjcTlY0bieRIR1x/wwkNc6p17bZBlTuB2c328gD1+QaYXCrEJ7iVILRtpV/sTkTAVhpHc4NVCJIh1vss1MOx1oKZC72AS6GrSV8VFQHcdXHIulvEtk8O0UJlCJVuvKwGRymZ/uFe/CLpK83qHfjT/o/QIlgTkhBiEvkx1fTZseqYqVwp7M472uI3sHlCk37iwqi55dFbS6FEeb97v0chSrpzyB5xQtDRIFsdpdiXzM5wKfDWysAtp9M80FrOC5w30aSWtTBu1vGmtyLhcKpoYWwB2QE+x7XSaLNE+Lu2+AKACkp3OTRNpt
   sudoversion: 1.8.27
-  swapfree: 3.99 GiB
-  swapfree_mb: 4088.49609375
+  swapfree: 3.07 GiB
+  swapfree_mb: 3143.1953125
   swapsize: 4.00 GiB
   swapsize_mb: 4093.99609375
   swh_hostname:
@@ -556,30 +534,33 @@ values:
     short: moma
     internal_fqdn: moma.internal.softwareheritage.org
   system_uptime:
-    days: 58
-    hours: 1414
-    seconds: 5091074
-    uptime: 58 days
+    days: 14
+    hours: 359
+    seconds: 1295728
+    uptime: 14 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
     systemd-fsck-root.service: enabled-runtime
+    systemd-network-generator.service: disabled
     systemd-networkd-wait-online.service: disabled
     systemd-networkd.service: disabled
+    systemd-pstore.service: enabled
+    systemd-remount-fs.service: enabled-runtime
     systemd-resolved.service: disabled
     systemd-time-wait-sync.service: disabled
     systemd-timesyncd.service: enabled
-  systemd_version: '241'
+  systemd_version: '245'
   timezone: UTC
-  uptime: 58 days
-  uptime_days: 58
-  uptime_hours: 1414
-  uptime_seconds: 5091074
+  uptime: 14 days
+  uptime_days: 14
+  uptime_hours: 359
+  uptime_seconds: 1295728
   uuid: f9773017-6bf5-4aec-8531-f37668cd7203
   vcsrepo_svn_ver: ''
   virtual: kvm
   clientcert: moma.softwareheritage.org
   clientversion: 5.5.10
   clientnoop: false
-timestamp: '2020-01-02T16:05:52.874915894+00:00'
-expiration: '2020-01-02T16:35:52.875618467+00:00'
+timestamp: '2020-09-02T12:05:12.019758305+00:00'
+expiration: '2020-09-02T12:35:12.020734494+00:00'

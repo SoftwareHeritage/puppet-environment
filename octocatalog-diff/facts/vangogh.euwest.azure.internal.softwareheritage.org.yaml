@@ -2,34 +2,20 @@
 name: vangogh.euwest.azure.internal.softwareheritage.org
 values:
   agent_specified_environment: production
-  apt_dist_updates: 9
+  apt_dist_updates: 1
   apt_has_dist_updates: true
   apt_has_updates: true
   apt_package_dist_updates:
-  - prometheus-statsd-exporter
-  - python3-psycopg2
-  - python3-sentry-sdk
-  - python3-swh.core
-  - python3-swh.model
-  - python3-swh.objstorage.cloud
-  - python3-swh.objstorage
   - python3-swh.storage
-  - python3-swh.scheduler
   apt_package_security_dist_updates: []
   apt_package_security_updates: []
   apt_package_updates:
-  - prometheus-statsd-exporter
-  - python3-psycopg2
-  - python3-swh.model
-  - python3-swh.objstorage.cloud
-  - python3-swh.objstorage
   - python3-swh.storage
-  - python3-swh.scheduler
   apt_reboot_required: true
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1577979962
-  apt_updates: 7
+  apt_update_last_success: 1599047162
+  apt_updates: 1
   architecture: amd64
   bios_release_date: 06/02/2017
   bios_vendor: American Megatrends Inc.
@@ -54,6 +40,11 @@ values:
   cassandramaxheapsize: 1989
   chassisassettag: 7783-7084-3265-9085-8269-3286-77
   chassistype: Desktop
+  cloud:
+    provider: azure
+  dhcp_servers:
+    eth0: 168.63.129.16
+    system: 168.63.129.16
   disks:
     fd0:
       size: 4.00 KiB
@@ -152,6 +143,12 @@ values:
     haltode: "/home/haltode"
     _rpc: "/run/rpcbind"
     systemd-coredump: "/"
+    danseraf: "/home/danseraf"
+    telegraf: "/etc/telegraf"
+    omi: "/home/omi"
+    omsagent: "/var/opt/microsoft/omsagent/run"
+    nxautomation: "/home/nxautomation/run"
+    aeviso: "/home/aeviso"
   domain: euwest.azure.internal.softwareheritage.org
   facterversion: 3.11.0
   filesystems: ext2,ext3,ext4
@@ -182,13 +179,13 @@ values:
   is_virtual: true
   kernel: Linux
   kernelmajversion: '4.19'
-  kernelrelease: 4.19.0-6-amd64
+  kernelrelease: 4.19.0-9-amd64
   kernelversion: 4.19.0
   letsencrypt_directory: {}
   load_averages:
-    15m: 0.01
-    1m: 0.1
-    5m: 0.03
+    15m: 0.02
+    1m: 0.22
+    5m: 0.06
   location: azure_euwest
   lsbdistcodename: buster
   lsbdistdescription: Debian GNU/Linux 10 (buster)
@@ -200,22 +197,22 @@ values:
   manufacturer: Microsoft Corporation
   memory:
     system:
-      available: 6.79 GiB
-      available_bytes: 7288619008
-      capacity: 12.63%
+      available: 6.68 GiB
+      available_bytes: 7175110656
+      capacity: 13.99%
       total: 7.77 GiB
-      total_bytes: 8342081536
-      used: 1004.66 MiB
-      used_bytes: 1053462528
-  memoryfree: 6.79 GiB
-  memoryfree_mb: 6950.96875
+      total_bytes: 8342093824
+      used: 1.09 GiB
+      used_bytes: 1166983168
+  memoryfree: 6.68 GiB
+  memoryfree_mb: 6842.71875
   memorysize: 7.77 GiB
-  memorysize_mb: 7955.62890625
+  memorysize_mb: 7955.640625
   mountpoints:
     "/":
-      available: 27.02 GiB
-      available_bytes: 29014867968
-      capacity: 8.10%
+      available: 26.06 GiB
+      available_bytes: 27984297984
+      capacity: 11.36%
       device: "/dev/sda1"
       filesystem: ext4
       options:
@@ -224,11 +221,11 @@ values:
       - errors=remount-ro
       size: 29.40 GiB
       size_bytes: 31571480576
-      used: 2.38 GiB
-      used_bytes: 2556612608
+      used: 3.34 GiB
+      used_bytes: 3587182592
     "/dev/shm":
       available: 3.88 GiB
-      available_bytes: 4171038720
+      available_bytes: 4171046912
       capacity: 0%
       device: tmpfs
       filesystem: tmpfs
@@ -237,7 +234,7 @@ values:
       - nosuid
       - nodev
       size: 3.88 GiB
-      size_bytes: 4171038720
+      size_bytes: 4171046912
       used: 0 bytes
       used_bytes: 0
     "/mnt/resource":
@@ -254,9 +251,9 @@ values:
       used: 44.03 MiB
       used_bytes: 46166016
     "/run":
-      available: 795.07 MiB
-      available_bytes: 833695744
-      capacity: 0.06%
+      available: 795.02 MiB
+      available_bytes: 833634304
+      capacity: 0.07%
       device: tmpfs
       filesystem: tmpfs
       options:
@@ -268,8 +265,8 @@ values:
       - mode=755
       size: 795.57 MiB
       size_bytes: 834211840
-      used: 504.00 KiB
-      used_bytes: 516096
+      used: 564.00 KiB
+      used_bytes: 577536
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -287,7 +284,7 @@ values:
       size_bytes: 5242880
       used: 0 bytes
       used_bytes: 0
-    "/run/user/0":
+    "/run/user/1003":
       available: 795.56 MiB
       available_bytes: 834207744
       capacity: 0%
@@ -300,13 +297,15 @@ values:
       - relatime
       - size=814656k
       - mode=700
+      - uid=1003
+      - gid=1003
       size: 795.56 MiB
       size_bytes: 834207744
       used: 0 bytes
       used_bytes: 0
     "/sys/fs/cgroup":
       available: 3.88 GiB
-      available_bytes: 4171038720
+      available_bytes: 4171046912
       capacity: 0%
       device: tmpfs
       filesystem: tmpfs
@@ -317,7 +316,7 @@ values:
       - noexec
       - mode=755
       size: 3.88 GiB
-      size_bytes: 4171038720
+      size_bytes: 4171046912
       used: 0 bytes
       used_bytes: 0
   mounts:
@@ -339,6 +338,7 @@ values:
   network_eth0: 192.168.200.0
   network_lo: 127.0.0.0
   networking:
+    dhcp: 168.63.129.16
     domain: euwest.azure.internal.softwareheritage.org
     fqdn: vangogh.euwest.azure.internal.softwareheritage.org
     hostname: vangogh
@@ -352,6 +352,7 @@ values:
         - address: fe80::20d:3aff:fe49:719e
           netmask: 'ffff:ffff:ffff:ffff::'
           network: 'fe80::'
+        dhcp: 168.63.129.16
         ip: 192.168.200.28
         ip6: fe80::20d:3aff:fe49:719e
         mac: 00:0d:3a:49:71:9e
@@ -388,7 +389,7 @@ values:
   nginx_version: 1.14.2
   operatingsystem: Debian
   operatingsystemmajrelease: '10'
-  operatingsystemrelease: '10.2'
+  operatingsystemrelease: '10.5'
   os:
     architecture: amd64
     distro:
@@ -402,9 +403,9 @@ values:
     hardware: x86_64
     name: Debian
     release:
-      full: '10.2'
+      full: '10.5'
       major: '10'
-      minor: '2'
+      minor: '5'
     selinux:
       enabled: false
   osfamily: Debian
@@ -424,7 +425,7 @@ values:
       size: 16.00 GiB
       size_bytes: 17178755072
       uuid: 7ca84901-070f-43c4-9de3-24adc902b216
-  path: "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+  path: "/usr/bin:/bin:/usr/sbin:/sbin"
   physicalprocessorcount: 1
   processor0: Intel(R) Xeon(R) CPU E5-2673 v4 @ 2.30GHz
   processor1: Intel(R) Xeon(R) CPU E5-2673 v4 @ 2.30GHz
@@ -479,7 +480,12 @@ values:
       key: AAAAB3NzaC1yc2EAAAADAQABAAABAQC4nhF1wJyp4mzz7MXSitCllDVxjR+Hsg4pFlphaPhtvB/R81ZMH1tvfkupMVSR6S35xfiBwUG8GpU7R9jOWRmfdkXXEiJzydDN1tymG2vGjTZDdhf9J5Q87/l/yMrwuy/MP6ycGzrgNsH1iuqoY3qdlYfrsXRigp4FAc+llaFIFGsCnz20n5HpkwtRJ/ILY34rXcwRRu86EUYNfGeGoqCcjUDeXZNMMWMyYnfSy5buapx0RbU7FIYKvWdUOAEhZ5smxraT09Azc5+ImctVN0BYC0Bt7nwgXcFTwXKvnd9dVI3s0q7xTs59QDwKBaobklT5zETS9dZVsNS83pTMS2rP
       type: ssh-rsa
   ssh_client_version_full: 7.9p1
-  ssh_keys_users: {}
+  ssh_keys_users:
+    root:
+      id_ed25519.borg.pub:
+        type: ed25519
+        key: AAAAC3NzaC1lZDI1NTE5AAAAIADpZgcXh2EVIrbRkfBMEKs8xCSZAeVrUVDGqUWaI6qt
+        comment: root@vangogh
   ssh_server_version_full: 7.9p1
   ssh_server_version_major: '7'
   ssh_server_version_release: '7.9'
@@ -505,30 +511,33 @@ values:
     short: vangogh.euwest.azure
     internal_fqdn: vangogh.euwest.azure.internal.softwareheritage.org
   system_uptime:
-    days: 80
-    hours: 1927
-    seconds: 6937653
-    uptime: 80 days
+    days: 70
+    hours: 1701
+    seconds: 6124984
+    uptime: 70 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
     systemd-fsck-root.service: enabled-runtime
+    systemd-network-generator.service: disabled
     systemd-networkd-wait-online.service: disabled
     systemd-networkd.service: disabled
+    systemd-pstore.service: enabled
+    systemd-remount-fs.service: enabled-runtime
     systemd-resolved.service: disabled
     systemd-time-wait-sync.service: disabled
     systemd-timesyncd.service: enabled
-  systemd_version: '241'
+  systemd_version: '245'
   timezone: UTC
-  uptime: 80 days
-  uptime_days: 80
-  uptime_hours: 1927
-  uptime_seconds: 6937653
+  uptime: 70 days
+  uptime_days: 70
+  uptime_hours: 1701
+  uptime_seconds: 6124984
   uuid: 98d91968-f620-4145-bced-57b5f83a21bd
   vcsrepo_svn_ver: ''
   virtual: hyperv
   clientcert: vangogh.euwest.azure.internal.softwareheritage.org
   clientversion: 5.5.10
   clientnoop: false
-timestamp: '2020-01-02T16:05:48.393861348+00:00'
-expiration: '2020-01-02T16:35:48.394275749+00:00'
+timestamp: '2020-09-02T12:05:06.502602567+00:00'
+expiration: '2020-09-02T12:35:06.503019769+00:00'

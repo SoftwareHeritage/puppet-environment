@@ -6,15 +6,15 @@ values:
   apt_has_dist_updates: true
   apt_has_updates: true
   apt_package_dist_updates:
-  - python3-swh.scheduler
+  - python3-swh.storage
   apt_package_security_dist_updates: []
   apt_package_security_updates: []
   apt_package_updates:
-  - python3-swh.scheduler
+  - python3-swh.storage
   apt_reboot_required: true
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1577979662
+  apt_update_last_success: 1599046862
   apt_updates: 1
   architecture: amd64
   bios_release_date: 06/02/2017
@@ -37,6 +37,11 @@ values:
   cassandramaxheapsize: 1737
   chassisassettag: 7783-7084-3265-9085-8269-3286-77
   chassistype: Desktop
+  cloud:
+    provider: azure
+  dhcp_servers:
+    eth0: 168.63.129.16
+    system: 168.63.129.16
   disks:
     fd0:
       size: 4.00 KiB
@@ -130,6 +135,8 @@ values:
     haltode: "/home/haltode"
     _rpc: "/run/rpcbind"
     systemd-coredump: "/"
+    danseraf: "/home/danseraf"
+    aeviso: "/home/aeviso"
   domain: euwest.azure.internal.softwareheritage.org
   facterversion: 3.11.0
   filesystems: ext2,ext3,ext4
@@ -160,13 +167,13 @@ values:
   is_virtual: true
   kernel: Linux
   kernelmajversion: '4.19'
-  kernelrelease: 4.19.0-6-amd64
+  kernelrelease: 4.19.0-8-amd64
   kernelversion: 4.19.0
   letsencrypt_directory: {}
   load_averages:
-    15m: 0.33
-    1m: 0.52
-    5m: 0.4
+    15m: 1.31
+    1m: 1.0
+    5m: 1.27
   location: azure_euwest
   lsbdistcodename: buster
   lsbdistdescription: Debian GNU/Linux 10 (buster)
@@ -178,22 +185,22 @@ values:
   manufacturer: Microsoft Corporation
   memory:
     system:
-      available: 4.48 GiB
-      available_bytes: 4807327744
-      capacity: 34.01%
+      available: 5.32 GiB
+      available_bytes: 5714792448
+      capacity: 21.56%
       total: 6.78 GiB
-      total_bytes: 7285116928
-      used: 2.31 GiB
-      used_bytes: 2477789184
-  memoryfree: 4.48 GiB
-  memoryfree_mb: 4584.625
+      total_bytes: 7285129216
+      used: 1.46 GiB
+      used_bytes: 1570336768
+  memoryfree: 5.32 GiB
+  memoryfree_mb: 5450.05078125
   memorysize: 6.78 GiB
-  memorysize_mb: 6947.62890625
+  memorysize_mb: 6947.640625
   mountpoints:
     "/":
-      available: 25.52 GiB
-      available_bytes: 27396976640
-      capacity: 13.22%
+      available: 26.61 GiB
+      available_bytes: 28570992640
+      capacity: 9.50%
       device: "/dev/sda1"
       filesystem: ext4
       options:
@@ -202,11 +209,11 @@ values:
       - errors=remount-ro
       size: 29.40 GiB
       size_bytes: 31571480576
-      used: 3.89 GiB
-      used_bytes: 4174503936
+      used: 2.79 GiB
+      used_bytes: 3000487936
     "/dev/shm":
       available: 3.39 GiB
-      available_bytes: 3642474496
+      available_bytes: 3642441728
       capacity: 0.00%
       device: tmpfs
       filesystem: tmpfs
@@ -215,9 +222,9 @@ values:
       - nosuid
       - nodev
       size: 3.39 GiB
-      size_bytes: 3642556416
-      used: 80.00 KiB
-      used_bytes: 81920
+      size_bytes: 3642564608
+      used: 120.00 KiB
+      used_bytes: 122880
     "/mnt/resource":
       available: 13.68 GiB
       available_bytes: 14686269440
@@ -232,8 +239,8 @@ values:
       used: 40.03 MiB
       used_bytes: 41971712
     "/run":
-      available: 694.27 MiB
-      available_bytes: 727994368
+      available: 694.29 MiB
+      available_bytes: 728014848
       capacity: 0.07%
       device: tmpfs
       filesystem: tmpfs
@@ -246,8 +253,8 @@ values:
       - mode=755
       size: 694.77 MiB
       size_bytes: 728514560
-      used: 508.00 KiB
-      used_bytes: 520192
+      used: 488.00 KiB
+      used_bytes: 499712
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -265,26 +272,9 @@ values:
       size_bytes: 5242880
       used: 0 bytes
       used_bytes: 0
-    "/run/user/0":
-      available: 694.76 MiB
-      available_bytes: 728510464
-      capacity: 0%
-      device: tmpfs
-      filesystem: tmpfs
-      options:
-      - rw
-      - nosuid
-      - nodev
-      - relatime
-      - size=711436k
-      - mode=700
-      size: 694.76 MiB
-      size_bytes: 728510464
-      used: 0 bytes
-      used_bytes: 0
     "/sys/fs/cgroup":
       available: 3.39 GiB
-      available_bytes: 3642556416
+      available_bytes: 3642564608
       capacity: 0%
       device: tmpfs
       filesystem: tmpfs
@@ -295,7 +285,7 @@ values:
       - noexec
       - mode=755
       size: 3.39 GiB
-      size_bytes: 3642556416
+      size_bytes: 3642564608
       used: 0 bytes
       used_bytes: 0
   mounts:
@@ -317,6 +307,7 @@ values:
   network_eth0: 192.168.200.0
   network_lo: 127.0.0.0
   networking:
+    dhcp: 168.63.129.16
     domain: euwest.azure.internal.softwareheritage.org
     fqdn: worker08.euwest.azure.internal.softwareheritage.org
     hostname: worker08
@@ -330,6 +321,7 @@ values:
         - address: fe80::20d:3aff:fe25:25f3
           netmask: 'ffff:ffff:ffff:ffff::'
           network: 'fe80::'
+        dhcp: 168.63.129.16
         ip: 192.168.200.11
         ip6: fe80::20d:3aff:fe25:25f3
         mac: 00:0d:3a:25:25:f3
@@ -365,7 +357,7 @@ values:
     primary: eth0
   operatingsystem: Debian
   operatingsystemmajrelease: '10'
-  operatingsystemrelease: '10.2'
+  operatingsystemrelease: '10.5'
   os:
     architecture: amd64
     distro:
@@ -379,9 +371,9 @@ values:
     hardware: x86_64
     name: Debian
     release:
-      full: '10.2'
+      full: '10.5'
       major: '10'
-      minor: '2'
+      minor: '5'
     selinux:
       enabled: false
   osfamily: Debian
@@ -401,7 +393,7 @@ values:
       size: 14.00 GiB
       size_bytes: 15031271424
       uuid: 3442549a-6d26-492f-ba8b-d41d44ae74ff
-  path: "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+  path: "/usr/bin:/bin:/usr/sbin:/sbin"
   physicalprocessorcount: 1
   processor0: Intel(R) Xeon(R) CPU E5-2673 v4 @ 2.30GHz
   processor1: Intel(R) Xeon(R) CPU E5-2673 v4 @ 2.30GHz
@@ -472,30 +464,33 @@ values:
     short: worker08.euwest.azure
     internal_fqdn: worker08.euwest.azure.internal.softwareheritage.org
   system_uptime:
-    days: 87
-    hours: 2088
-    seconds: 7518073
-    uptime: 87 days
+    days: 132
+    hours: 3190
+    seconds: 11486037
+    uptime: 132 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
     systemd-fsck-root.service: enabled-runtime
+    systemd-network-generator.service: disabled
     systemd-networkd-wait-online.service: disabled
     systemd-networkd.service: disabled
+    systemd-pstore.service: enabled
+    systemd-remount-fs.service: enabled-runtime
     systemd-resolved.service: disabled
     systemd-time-wait-sync.service: disabled
     systemd-timesyncd.service: enabled
-  systemd_version: '241'
+  systemd_version: '245'
   timezone: UTC
-  uptime: 87 days
-  uptime_days: 87
-  uptime_hours: 2088
-  uptime_seconds: 7518073
+  uptime: 132 days
+  uptime_days: 132
+  uptime_hours: 3190
+  uptime_seconds: 11486037
   uuid: 87007346-c764-8247-bf82-20671f2b9251
-  vcsrepo_svn_ver: ''
+  vcsrepo_svn_ver: 1.10.4
   virtual: hyperv
   clientcert: worker08.euwest.azure.internal.softwareheritage.org
   clientversion: 5.5.10
   clientnoop: false
-timestamp: '2020-01-02T16:08:01.550397842+00:00'
-expiration: '2020-01-02T16:38:01.550841846+00:00'
+timestamp: '2020-09-02T11:56:05.528520658+00:00'
+expiration: '2020-09-02T12:26:05.528966363+00:00'

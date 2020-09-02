@@ -1,10 +1,32 @@
 --- !ruby/object:Puppet::Node::Facts
 name: louvre.internal.softwareheritage.org
 values:
-  apt_has_dist_updates: false
-  apt_has_updates: false
+  agent_specified_environment: production
+  apt_dist_updates: 9
+  apt_has_dist_updates: true
+  apt_has_updates: true
+  apt_package_dist_updates:
+  - udev
+  - libpam-systemd
+  - libnss-systemd
+  - systemd
+  - systemd-timesyncd
+  - libudev1
+  - libsystemd0
+  - systemd-sysv
+  - borgmatic
+  apt_package_security_dist_updates: []
+  apt_package_security_updates: []
+  apt_package_updates:
+  - systemd-sysv
+  - udev
+  - libudev1
+  - borgmatic
   apt_reboot_required: true
-  apt_update_last_success: 1577978702
+  apt_security_dist_updates: 0
+  apt_security_updates: 0
+  apt_update_last_success: 1599045903
+  apt_updates: 4
   architecture: amd64
   bios_release_date: 04/01/2014
   bios_vendor: SeaBIOS
@@ -105,6 +127,8 @@ values:
     munin: "/var/lib/munin"
     prometheus: "/var/lib/prometheus"
     nagios: "/var/lib/nagios"
+    danseraf: "/home/danseraf"
+    aeviso: "/home/aeviso"
   domain: internal.softwareheritage.org
   facterversion: 3.11.0
   filesystems: btrfs,ext2,ext3,ext4,hfs,hfsplus,jfs,minix,msdos,qnx4,ufs,vfat,xfs
@@ -130,7 +154,7 @@ values:
   ipaddress6_ens18: fe80::2414:8bff:feae:a874
   ipaddress6_ens19: fe80::9004:15ff:fece:1488
   ipaddress6_lo: "::1"
-  ipaddress6_tun0: fe80::e5e4:9f6b:5268:ff12
+  ipaddress6_tun0: fe80::6a89:5003:a362:678d
   ipaddress_ens18: 192.168.100.1
   ipaddress_ens19: 128.93.193.5
   ipaddress_lo: 127.0.0.1
@@ -143,9 +167,9 @@ values:
   kernelversion: 4.19.0
   letsencrypt_directory: {}
   load_averages:
-    15m: 0.22
-    1m: 0.24
-    5m: 0.22
+    15m: 0.64
+    1m: 1.05
+    5m: 0.76
   location: sesi_rocquencourt
   lsbdistcodename: buster
   lsbdistdescription: Debian GNU/Linux 10 (buster)
@@ -166,22 +190,22 @@ values:
       used: 0 bytes
       used_bytes: 0
     system:
-      available: 3.28 GiB
-      available_bytes: 3516805120
-      capacity: 15.01%
+      available: 2.68 GiB
+      available_bytes: 2878042112
+      capacity: 30.45%
       total: 3.85 GiB
       total_bytes: 4138065920
-      used: 592.48 MiB
-      used_bytes: 621260800
-  memoryfree: 3.28 GiB
-  memoryfree_mb: 3353.88671875
+      used: 1.17 GiB
+      used_bytes: 1260023808
+  memoryfree: 2.68 GiB
+  memoryfree_mb: 2744.71484375
   memorysize: 3.85 GiB
   memorysize_mb: 3946.3671875
   mountpoints:
     "/":
-      available: 25.21 GiB
-      available_bytes: 27072331776
-      capacity: 7.29%
+      available: 24.86 GiB
+      available_bytes: 26691252224
+      capacity: 8.60%
       device: "/dev/mapper/louvre--vg-root"
       filesystem: ext4
       options:
@@ -190,12 +214,12 @@ values:
       - errors=remount-ro
       size: 27.20 GiB
       size_bytes: 29202616320
-      used: 1.98 GiB
-      used_bytes: 2130284544
+      used: 2.34 GiB
+      used_bytes: 2511364096
     "/boot":
-      available: 152.08 MiB
-      available_bytes: 159468544
-      capacity: 35.37%
+      available: 116.18 MiB
+      available_bytes: 121822208
+      capacity: 50.63%
       device: "/dev/sda1"
       filesystem: ext2
       options:
@@ -203,8 +227,8 @@ values:
       - relatime
       size: 235.32 MiB
       size_bytes: 246755328
-      used: 83.24 MiB
-      used_bytes: 87286784
+      used: 119.15 MiB
+      used_bytes: 124933120
     "/dev/shm":
       available: 1.93 GiB
       available_bytes: 2069032960
@@ -221,7 +245,7 @@ values:
       used_bytes: 0
     "/run":
       available: 394.12 MiB
-      available_bytes: 413265920
+      available_bytes: 413261824
       capacity: 0.13%
       device: tmpfs
       filesystem: tmpfs
@@ -234,8 +258,8 @@ values:
       - mode=755
       size: 394.64 MiB
       size_bytes: 413806592
-      used: 528.00 KiB
-      used_bytes: 540672
+      used: 532.00 KiB
+      used_bytes: 544768
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -253,23 +277,6 @@ values:
       size_bytes: 5242880
       used: 0 bytes
       used_bytes: 0
-    "/run/user/0":
-      available: 394.64 MiB
-      available_bytes: 413806592
-      capacity: 0%
-      device: tmpfs
-      filesystem: tmpfs
-      options:
-      - rw
-      - nosuid
-      - nodev
-      - relatime
-      - size=404108k
-      - mode=700
-      size: 394.64 MiB
-      size_bytes: 413806592
-      used: 0 bytes
-      used_bytes: 0
     "/run/user/1001":
       available: 394.64 MiB
       available_bytes: 413806592
@@ -285,6 +292,25 @@ values:
       - mode=700
       - uid=1001
       - gid=1001
+      size: 394.64 MiB
+      size_bytes: 413806592
+      used: 0 bytes
+      used_bytes: 0
+    "/run/user/1003":
+      available: 394.64 MiB
+      available_bytes: 413806592
+      capacity: 0%
+      device: tmpfs
+      filesystem: tmpfs
+      options:
+      - rw
+      - nosuid
+      - nodev
+      - relatime
+      - size=404108k
+      - mode=700
+      - uid=1003
+      - gid=1003
       size: 394.64 MiB
       size_bytes: 413806592
       used: 0 bytes
@@ -393,11 +419,11 @@ values:
           netmask: 255.255.255.255
           network: 192.168.101.1
         bindings6:
-        - address: fe80::e5e4:9f6b:5268:ff12
+        - address: fe80::6a89:5003:a362:678d
           netmask: 'ffff:ffff:ffff:ffff::'
           network: 'fe80::'
         ip: 192.168.101.1
-        ip6: fe80::e5e4:9f6b:5268:ff12
+        ip6: fe80::6a89:5003:a362:678d
         netmask: 255.255.255.255
         netmask6: 'ffff:ffff:ffff:ffff::'
         network: 192.168.101.1
@@ -413,7 +439,7 @@ values:
     primary: ens19
   operatingsystem: Debian
   operatingsystemmajrelease: '10'
-  operatingsystemrelease: '10.2'
+  operatingsystemrelease: '10.5'
   os:
     architecture: amd64
     distro:
@@ -427,9 +453,9 @@ values:
     hardware: x86_64
     name: Debian
     release:
-      full: '10.2'
+      full: '10.5'
       major: '10'
-      minor: '2'
+      minor: '5'
     selinux:
       enabled: false
   osfamily: Debian
@@ -462,7 +488,7 @@ values:
       size: 31.76 GiB
       size_bytes: 34101788672
       uuid: 32RYSz-yUyp-LK18-TAdD-5x7X-3Zx3-0qao3z
-  path: "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+  path: "/usr/bin:/bin:/usr/sbin:/sbin"
   physicalprocessorcount: 2
   processor0: Common KVM processor
   processor1: Common KVM processor
@@ -483,7 +509,7 @@ values:
   - 128.93.193.5
   puppet_environmentpath: "/etc/puppet/code/environments"
   puppet_server: pergamon.internal.softwareheritage.org
-  puppet_vardir: "/var/cache/puppet"
+  puppet_vardir: "/var/lib/puppet"
   puppetversion: 5.5.10
   root_home: "/root"
   ruby:
@@ -516,6 +542,11 @@ values:
       type: ssh-rsa
   ssh_client_version_full: 7.9p1
   ssh_keys_users:
+    root:
+      id_ed25519.borg.pub:
+        type: ed25519
+        key: AAAAC3NzaC1lZDI1NTE5AAAAIKXU/touyOFNoonyqG38u/UoAtvQWe0hE5tXxOidBm03
+        comment: root@louvre
     ardumont:
       id_rsa.pub:
         type: rsa
@@ -546,10 +577,10 @@ values:
     short: louvre
     internal_fqdn: louvre.internal.softwareheritage.org
   system_uptime:
-    days: 78
-    hours: 1893
-    seconds: 6815302
-    uptime: 78 days
+    days: 322
+    hours: 7745
+    seconds: 27882522
+    uptime: 322 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -561,15 +592,15 @@ values:
     systemd-timesyncd.service: enabled
   systemd_version: '241'
   timezone: UTC
-  uptime: 78 days
-  uptime_days: 78
-  uptime_hours: 1893
-  uptime_seconds: 6815302
+  uptime: 322 days
+  uptime_days: 322
+  uptime_hours: 7745
+  uptime_seconds: 27882522
   uuid: a5613386-3896-4d78-abe4-23b9c0742d3c
   vcsrepo_svn_ver: ''
   virtual: kvm
   clientcert: louvre.internal.softwareheritage.org
   clientversion: 5.5.10
   clientnoop: false
-timestamp: '2020-01-02T16:05:48.636988305+00:00'
-expiration: '2020-01-02T16:35:48.637656409+00:00'
+timestamp: '2020-09-02T12:06:08.813008235+00:00'
+expiration: '2020-09-02T12:36:08.813540363+00:00'

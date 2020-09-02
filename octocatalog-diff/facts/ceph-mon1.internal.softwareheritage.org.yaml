@@ -2,20 +2,29 @@
 name: ceph-mon1.internal.softwareheritage.org
 values:
   agent_specified_environment: production
-  apt_dist_updates: 1
+  apt_dist_updates: 8
   apt_has_dist_updates: true
   apt_has_updates: true
   apt_package_dist_updates:
-  - prometheus-statsd-exporter
+  - udev
+  - libpam-systemd
+  - libnss-systemd
+  - systemd
+  - systemd-timesyncd
+  - libudev1
+  - libsystemd0
+  - systemd-sysv
   apt_package_security_dist_updates: []
   apt_package_security_updates: []
   apt_package_updates:
-  - prometheus-statsd-exporter
+  - systemd-sysv
+  - udev
+  - libudev1
   apt_reboot_required: true
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1577977622
-  apt_updates: 1
+  apt_update_last_success: 1599044822
+  apt_updates: 3
   architecture: amd64
   bios_release_date: 04/14/2017
   bios_vendor: American Megatrends Inc.
@@ -48,6 +57,7 @@ values:
     - influx
     - localpool
     - selftest
+    - telemetry
     - zabbix
   chassisassettag: Default string
   chassistype: Other
@@ -146,6 +156,8 @@ values:
     haltode: "/home/haltode"
     _rpc: "/run/rpcbind"
     systemd-coredump: "/"
+    danseraf: "/home/danseraf"
+    aeviso: "/home/aeviso"
   domain: internal.softwareheritage.org
   facterversion: 3.11.0
   filesystems: btrfs,ext2,ext3,ext4,hfs,hfsplus,jfs,minix,msdos,qnx4,ufs,vfat,xfs
@@ -183,9 +195,9 @@ values:
   kernelversion: 4.19.0
   letsencrypt_directory: {}
   load_averages:
-    15m: 0.08
-    1m: 0.14
-    5m: 0.08
+    15m: 0.06
+    1m: 0.06
+    5m: 0.04
   location: sesi_rocquencourt
   lsbdistcodename: buster
   lsbdistdescription: Debian GNU/Linux 10 (buster)
@@ -209,22 +221,22 @@ values:
       used: 0 bytes
       used_bytes: 0
     system:
-      available: 60.47 GiB
-      available_bytes: 64924557312
-      capacity: 3.72%
+      available: 59.82 GiB
+      available_bytes: 64229060608
+      capacity: 4.75%
       total: 62.80 GiB
       total_bytes: 67434049536
-      used: 2.34 GiB
-      used_bytes: 2509492224
-  memoryfree: 60.47 GiB
-  memoryfree_mb: 61916.8828125
+      used: 2.98 GiB
+      used_bytes: 3204988928
+  memoryfree: 59.82 GiB
+  memoryfree_mb: 61253.60546875
   memorysize: 62.80 GiB
   memorysize_mb: 64310.12109375
   mountpoints:
     "/":
-      available: 13.37 GiB
-      available_bytes: 14351233024
-      capacity: 26.59%
+      available: 13.12 GiB
+      available_bytes: 14090694656
+      capacity: 27.93%
       device: "/dev/mapper/ssd-root"
       filesystem: ext4
       options:
@@ -233,11 +245,11 @@ values:
       - errors=remount-ro
       size: 18.21 GiB
       size_bytes: 19550347264
-      used: 4.84 GiB
-      used_bytes: 5199114240
+      used: 5.08 GiB
+      used_bytes: 5459652608
     "/boot/efi":
-      available: 946.03 MiB
-      available_bytes: 991981568
+      available: 946.02 MiB
+      available_bytes: 991977472
       capacity: 0.54%
       device: "/dev/sda1"
       filesystem: vfat
@@ -254,7 +266,7 @@ values:
       size: 951.13 MiB
       size_bytes: 997326848
       used: 5.10 MiB
-      used_bytes: 5345280
+      used_bytes: 5349376
     "/dev/shm":
       available: 31.40 GiB
       available_bytes: 33717022720
@@ -271,7 +283,7 @@ values:
       used_bytes: 0
     "/run":
       available: 6.28 GiB
-      available_bytes: 6741917696
+      available_bytes: 6741942272
       capacity: 0.02%
       device: tmpfs
       filesystem: tmpfs
@@ -284,8 +296,8 @@ values:
       - mode=755
       size: 6.28 GiB
       size_bytes: 6743408640
-      used: 1.42 MiB
-      used_bytes: 1490944
+      used: 1.40 MiB
+      used_bytes: 1466368
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -301,23 +313,6 @@ values:
       - size=5120k
       size: 5.00 MiB
       size_bytes: 5242880
-      used: 0 bytes
-      used_bytes: 0
-    "/run/user/0":
-      available: 6.28 GiB
-      available_bytes: 6743404544
-      capacity: 0%
-      device: tmpfs
-      filesystem: tmpfs
-      options:
-      - rw
-      - nosuid
-      - nodev
-      - relatime
-      - size=6585356k
-      - mode=700
-      size: 6.28 GiB
-      size_bytes: 6743404544
       used: 0 bytes
       used_bytes: 0
     "/sys/fs/cgroup":
@@ -446,7 +441,7 @@ values:
     primary: vlan440
   operatingsystem: Debian
   operatingsystemmajrelease: '10'
-  operatingsystemrelease: '10.2'
+  operatingsystemrelease: '10.5'
   os:
     architecture: amd64
     distro:
@@ -460,9 +455,9 @@ values:
     hardware: x86_64
     name: Debian
     release:
-      full: '10.2'
+      full: '10.5'
       major: '10'
-      minor: '2'
+      minor: '5'
     selinux:
       enabled: false
   osfamily: Debian
@@ -512,7 +507,7 @@ values:
       size: 73.60 GiB
       size_bytes: 79025930240
       uuid: 85956329-2007-d5a6-9f0f-37b65e195fba
-  path: "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+  path: "/usr/bin:/bin:/usr/sbin:/sbin"
   physicalprocessorcount: 2
   processor0: Intel(R) Xeon(R) CPU E5-2630 v4 @ 2.20GHz
   processor1: Intel(R) Xeon(R) CPU E5-2630 v4 @ 2.20GHz
@@ -664,10 +659,10 @@ values:
     short: ceph-mon1
     internal_fqdn: ceph-mon1.internal.softwareheritage.org
   system_uptime:
-    days: 79
-    hours: 1899
-    seconds: 6836825
-    uptime: 79 days
+    days: 322
+    hours: 7750
+    seconds: 27903286
+    uptime: 322 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -679,15 +674,15 @@ values:
     systemd-timesyncd.service: enabled
   systemd_version: '241'
   timezone: UTC
-  uptime: 79 days
-  uptime_days: 79
-  uptime_hours: 1899
-  uptime_seconds: 6836825
+  uptime: 322 days
+  uptime_days: 322
+  uptime_hours: 7750
+  uptime_seconds: 27903286
   uuid: 00000000-0000-0000-0000-0cc47a4b18c0
   vcsrepo_svn_ver: ''
   virtual: physical
   clientcert: ceph-mon1.internal.softwareheritage.org
   clientversion: 5.5.10
   clientnoop: false
-timestamp: '2020-01-02T16:05:23.903765667+00:00'
-expiration: '2020-01-02T16:35:23.904409576+00:00'
+timestamp: '2020-09-02T11:53:04.902807630+00:00'
+expiration: '2020-09-02T12:23:04.903389821+00:00'

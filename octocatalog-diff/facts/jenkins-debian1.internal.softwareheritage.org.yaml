@@ -2,22 +2,29 @@
 name: jenkins-debian1.internal.softwareheritage.org
 values:
   agent_specified_environment: production
-  apt_dist_updates: 2
+  apt_dist_updates: 8
   apt_has_dist_updates: true
   apt_has_updates: true
   apt_package_dist_updates:
-  - prometheus-statsd-exporter
-  - journalbeat
+  - udev
+  - libpam-systemd
+  - libnss-systemd
+  - systemd
+  - systemd-timesyncd
+  - libudev1
+  - libsystemd0
+  - systemd-sysv
   apt_package_security_dist_updates: []
   apt_package_security_updates: []
   apt_package_updates:
-  - prometheus-statsd-exporter
-  - journalbeat
+  - systemd-sysv
+  - udev
+  - libudev1
   apt_reboot_required: true
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1577979662
-  apt_updates: 2
+  apt_update_last_success: 1599046864
+  apt_updates: 3
   architecture: amd64
   bios_release_date: 04/01/2014
   bios_vendor: SeaBIOS
@@ -109,6 +116,8 @@ values:
     _rpc: "/run/rpcbind"
     systemd-coredump: "/"
     haltode: "/home/haltode"
+    danseraf: "/home/danseraf"
+    aeviso: "/home/aeviso"
   domain: internal.softwareheritage.org
   facterversion: 3.11.0
   filesystems: btrfs,ext2,ext3,ext4,hfs,hfsplus,jfs,minix,msdos,qnx4,ufs,vfat,xfs
@@ -140,17 +149,17 @@ values:
   java_default_home: "/usr/lib/jvm/java-11-openjdk-amd64"
   java_libjvm_path: "/usr/lib/jvm/java-11-openjdk-amd64/lib/server"
   java_major_version: '11'
-  java_patch_level: '5'
-  java_version: 11.0.5
+  java_patch_level: '8'
+  java_version: 11.0.8
   kernel: Linux
   kernelmajversion: '4.19'
-  kernelrelease: 4.19.0-6-amd64
+  kernelrelease: 4.19.0-9-amd64
   kernelversion: 4.19.0
   letsencrypt_directory: {}
   load_averages:
-    15m: 0.0
-    1m: 0.0
-    5m: 0.0
+    15m: 0.04
+    1m: 0.16
+    5m: 0.06
   location: sesi_rocquencourt
   lsbdistcodename: buster
   lsbdistdescription: Debian GNU/Linux 10 (buster)
@@ -163,29 +172,29 @@ values:
   memory:
     swap:
       available: 3.82 GiB
-      available_bytes: 4097294336
-      capacity: 0.01%
+      available_bytes: 4097830912
+      capacity: 0%
       total: 3.82 GiB
       total_bytes: 4097830912
-      used: 524.00 KiB
-      used_bytes: 536576
+      used: 0 bytes
+      used_bytes: 0
     system:
-      available: 14.06 GiB
-      available_bytes: 15099490304
-      capacity: 10.24%
+      available: 14.39 GiB
+      available_bytes: 15450755072
+      capacity: 8.15%
       total: 15.67 GiB
-      total_bytes: 16821506048
-      used: 1.60 GiB
-      used_bytes: 1722015744
-  memoryfree: 14.06 GiB
-  memoryfree_mb: 14399.99609375
+      total_bytes: 16821551104
+      used: 1.28 GiB
+      used_bytes: 1370796032
+  memoryfree: 14.39 GiB
+  memoryfree_mb: 14734.98828125
   memorysize: 15.67 GiB
-  memorysize_mb: 16042.23828125
+  memorysize_mb: 16042.28125
   mountpoints:
     "/":
-      available: 28.92 GiB
-      available_bytes: 31049895936
-      capacity: 36.03%
+      available: 32.52 GiB
+      available_bytes: 34922811392
+      capacity: 28.05%
       device: "/dev/mapper/jenkins--debian1--vg-root"
       filesystem: ext4
       options:
@@ -194,11 +203,11 @@ values:
       - errors=remount-ro
       size: 45.20 GiB
       size_bytes: 48537276416
-      used: 16.29 GiB
-      used_bytes: 17487380480
+      used: 12.68 GiB
+      used_bytes: 13614465024
     "/dev/shm":
       available: 7.83 GiB
-      available_bytes: 8410750976
+      available_bytes: 8410775552
       capacity: 0%
       device: tmpfs
       filesystem: tmpfs
@@ -207,12 +216,12 @@ values:
       - nosuid
       - nodev
       size: 7.83 GiB
-      size_bytes: 8410750976
+      size_bytes: 8410775552
       used: 0 bytes
       used_bytes: 0
     "/run":
       available: 1.57 GiB
-      available_bytes: 1681661952
+      available_bytes: 1681702912
       capacity: 0.03%
       device: tmpfs
       filesystem: tmpfs
@@ -221,12 +230,12 @@ values:
       - nosuid
       - noexec
       - relatime
-      - size=1642728k
+      - size=1642732k
       - mode=755
       size: 1.57 GiB
-      size_bytes: 1682153472
-      used: 480.00 KiB
-      used_bytes: 491520
+      size_bytes: 1682157568
+      used: 444.00 KiB
+      used_bytes: 454656
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -244,45 +253,9 @@ values:
       size_bytes: 5242880
       used: 0 bytes
       used_bytes: 0
-    "/run/user/0":
-      available: 1.57 GiB
-      available_bytes: 1682149376
-      capacity: 0%
-      device: tmpfs
-      filesystem: tmpfs
-      options:
-      - rw
-      - nosuid
-      - nodev
-      - relatime
-      - size=1642724k
-      - mode=700
-      size: 1.57 GiB
-      size_bytes: 1682149376
-      used: 0 bytes
-      used_bytes: 0
-    "/run/user/1003":
-      available: 1.57 GiB
-      available_bytes: 1682149376
-      capacity: 0%
-      device: tmpfs
-      filesystem: tmpfs
-      options:
-      - rw
-      - nosuid
-      - nodev
-      - relatime
-      - size=1642724k
-      - mode=700
-      - uid=1003
-      - gid=1003
-      size: 1.57 GiB
-      size_bytes: 1682149376
-      used: 0 bytes
-      used_bytes: 0
     "/sys/fs/cgroup":
       available: 7.83 GiB
-      available_bytes: 8410750976
+      available_bytes: 8410775552
       capacity: 0%
       device: tmpfs
       filesystem: tmpfs
@@ -293,7 +266,7 @@ values:
       - noexec
       - mode=755
       size: 7.83 GiB
-      size_bytes: 8410750976
+      size_bytes: 8410775552
       used: 0 bytes
       used_bytes: 0
   mounts:
@@ -362,7 +335,7 @@ values:
     primary: ens18
   operatingsystem: Debian
   operatingsystemmajrelease: '10'
-  operatingsystemrelease: '10.2'
+  operatingsystemrelease: '10.5'
   os:
     architecture: amd64
     distro:
@@ -376,9 +349,9 @@ values:
     hardware: x86_64
     name: Debian
     release:
-      full: '10.2'
+      full: '10.5'
       major: '10'
-      minor: '2'
+      minor: '5'
     selinux:
       enabled: false
   osfamily: Debian
@@ -401,7 +374,7 @@ values:
       size: 50.00 GiB
       size_bytes: 53684994048
       uuid: qlppbq-YbSN-HsHG-SwPm-CEQR-Ptv8-3jdHAv
-  path: "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+  path: "/usr/bin:/bin:/usr/sbin:/sbin"
   physicalprocessorcount: 2
   processor0: Common KVM processor
   processor1: Common KVM processor
@@ -471,7 +444,7 @@ values:
   sshrsakey: AAAAB3NzaC1yc2EAAAADAQABAAABAQDCP51mqMTCHyXwBzxnqcGycFnaabqKH1Hs4qBuypWWpZlnAvKQ2DOEo5nqOQFCs22n19OloU/w+pq71uUjCgiQk/gNdNXaLPM891Tw3inwMdSI0XCBsyaSDooWiurE61RYVc01iTBg0hw3M9pwZgtq9KeDzIajPtI4C5JXf0+MiwuGwVNjtRkOpAJdBP1EeQe5xR/Kwzqat/+jutVsOSViowMkzgP1MZqSZVW2STL/0mSe27m61kggNMB6fQ+B0TFeFInyfliPOLH57LG0ICMnIZS26pKSqdjWiUT8GKk8peGsjr4GMePjIbrfguGqEvlbKenTKb3MrVaGrm5U6HSn
   sudoversion: 1.8.27
   swapfree: 3.82 GiB
-  swapfree_mb: 3907.484375
+  swapfree_mb: 3907.99609375
   swapsize: 3.82 GiB
   swapsize_mb: 3907.99609375
   swh_hostname:
@@ -479,10 +452,10 @@ values:
     short: jenkins-debian1
     internal_fqdn: jenkins-debian1.internal.softwareheritage.org
   system_uptime:
-    days: 78
-    hours: 1895
-    seconds: 6824349
-    uptime: 78 days
+    days: 42
+    hours: 1029
+    seconds: 3707358
+    uptime: 42 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -494,15 +467,15 @@ values:
     systemd-timesyncd.service: enabled
   systemd_version: '241'
   timezone: UTC
-  uptime: 78 days
-  uptime_days: 78
-  uptime_hours: 1895
-  uptime_seconds: 6824349
+  uptime: 42 days
+  uptime_days: 42
+  uptime_hours: 1029
+  uptime_seconds: 3707358
   uuid: 29736f86-c439-4043-ae09-642bb08b9383
   vcsrepo_svn_ver: ''
   virtual: kvm
   clientcert: jenkins-debian1.internal.softwareheritage.org
   clientversion: 5.5.10
   clientnoop: false
-timestamp: '2020-01-02T16:05:48.715801437+00:00'
-expiration: '2020-01-02T16:35:48.716222747+00:00'
+timestamp: '2020-09-02T12:06:11.297284501+00:00'
+expiration: '2020-09-02T12:36:11.297934606+00:00'

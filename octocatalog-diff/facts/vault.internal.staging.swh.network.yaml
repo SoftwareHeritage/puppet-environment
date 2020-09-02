@@ -6,15 +6,15 @@ values:
   apt_has_dist_updates: true
   apt_has_updates: true
   apt_package_dist_updates:
-  - python3-swh.scheduler
+  - python3-swh.storage
   apt_package_security_dist_updates: []
   apt_package_security_updates: []
   apt_package_updates:
-  - python3-swh.scheduler
+  - python3-swh.storage
   apt_reboot_required: true
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1577979722
+  apt_update_last_success: 1599046922
   apt_updates: 1
   architecture: amd64
   bios_release_date: 04/01/2014
@@ -113,6 +113,10 @@ values:
     nagios: "/var/lib/nagios"
     _rpc: "/run/rpcbind"
     systemd-coredump: "/"
+    danseraf: "/home/danseraf"
+    aeviso: "/home/aeviso"
+    tenma: "/home/tenma"
+    vsellier: "/home/vsellier"
   domain: internal.staging.swh.network
   facterversion: 3.11.0
   filesystems: ext2,ext3,ext4,iso9660
@@ -147,9 +151,9 @@ values:
   kernelversion: 4.19.0
   letsencrypt_directory: {}
   load_averages:
-    15m: 0.05
-    1m: 0.36
-    5m: 0.14
+    15m: 0.01
+    1m: 0.15
+    5m: 0.03
   location: sesi_rocquencourt_staging
   lsbdistcodename: buster
   lsbdistdescription: Debian GNU/Linux 10 (buster)
@@ -161,22 +165,22 @@ values:
   manufacturer: QEMU
   memory:
     system:
-      available: 14.67 GiB
-      available_bytes: 15755808768
-      capacity: 6.34%
+      available: 14.39 GiB
+      available_bytes: 15454134272
+      capacity: 8.13%
       total: 15.67 GiB
       total_bytes: 16821555200
-      used: 1016.38 MiB
-      used_bytes: 1065746432
-  memoryfree: 14.67 GiB
-  memoryfree_mb: 15025.91015625
+      used: 1.27 GiB
+      used_bytes: 1367420928
+  memoryfree: 14.39 GiB
+  memoryfree_mb: 14738.2109375
   memorysize: 15.67 GiB
   memorysize_mb: 16042.28515625
   mountpoints:
     "/":
-      available: 28.75 GiB
-      available_bytes: 30872317952
-      capacity: 8.62%
+      available: 28.44 GiB
+      available_bytes: 30537404416
+      capacity: 9.61%
       device: "/dev/vda1"
       filesystem: ext4
       options:
@@ -185,8 +189,8 @@ values:
       - errors=remount-ro
       size: 31.47 GiB
       size_bytes: 33785901056
-      used: 2.71 GiB
-      used_bytes: 2913583104
+      used: 3.03 GiB
+      used_bytes: 3248496640
     "/dev/shm":
       available: 7.83 GiB
       available_bytes: 8410775552
@@ -203,7 +207,7 @@ values:
       used_bytes: 0
     "/run":
       available: 1.56 GiB
-      available_bytes: 1679007744
+      available_bytes: 1679024128
       capacity: 0.19%
       device: tmpfs
       filesystem: tmpfs
@@ -216,8 +220,8 @@ values:
       - mode=755
       size: 1.57 GiB
       size_bytes: 1682157568
-      used: 3.00 MiB
-      used_bytes: 3149824
+      used: 2.99 MiB
+      used_bytes: 3133440
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -233,23 +237,6 @@ values:
       - size=5120k
       size: 5.00 MiB
       size_bytes: 5242880
-      used: 0 bytes
-      used_bytes: 0
-    "/run/user/0":
-      available: 1.57 GiB
-      available_bytes: 1682153472
-      capacity: 0%
-      device: tmpfs
-      filesystem: tmpfs
-      options:
-      - rw
-      - nosuid
-      - nodev
-      - relatime
-      - size=1642728k
-      - mode=700
-      size: 1.57 GiB
-      size_bytes: 1682153472
       used: 0 bytes
       used_bytes: 0
     "/sys/fs/cgroup":
@@ -335,7 +322,7 @@ values:
   nginx_version: 1.14.2
   operatingsystem: Debian
   operatingsystemmajrelease: '10'
-  operatingsystemrelease: '10.2'
+  operatingsystemrelease: '10.5'
   os:
     architecture: amd64
     distro:
@@ -349,9 +336,9 @@ values:
     hardware: x86_64
     name: Debian
     release:
-      full: '10.2'
+      full: '10.5'
       major: '10'
-      minor: '2'
+      minor: '5'
     selinux:
       enabled: false
   osfamily: Debian
@@ -363,7 +350,7 @@ values:
       size: 32.00 GiB
       size_bytes: 34358672896
       uuid: d958fd0e-647f-4373-ae1c-f77f565cb93f
-  path: "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+  path: "/usr/bin:/bin:/usr/sbin:/sbin"
   physicalprocessorcount: 1
   processor0: Common KVM processor
   processor1: Common KVM processor
@@ -421,7 +408,12 @@ values:
       key: AAAAB3NzaC1yc2EAAAADAQABAAABAQDHJUeKY5Ly20GpLRNUqaRzEnPx84PDcfCN8lg6uMZtnOQgooWe+SzNojXPldbCXxP2vKh7t2qn1SX2dDlKuU9sy7q27W65ia4tEN9krPEBs+zVD11J/3suCnSJMUABFeaDnNHz4VklWdzEnae/xSrkdGa9DjBUZ3I83ZsZyeyagVd010q0FiuPTjWn6s0rYPA/pbFAsaflT8l01y7OeuA1Wd7y98xBkcokSeIVa36xbVlr/7DAZzEU/B9GZ8Mq4MZaMOSfQkide4bw/ATYEa/hZvELvu1MocV/Iv91N/a2Xxt8fY3v6cePOkEvKxsqFsU7PMoBOC6O0Hub0lHy4qll
       type: ssh-rsa
   ssh_client_version_full: 7.9p1
-  ssh_keys_users: {}
+  ssh_keys_users:
+    root:
+      id_ed25519.borg.pub:
+        type: ed25519
+        key: AAAAC3NzaC1lZDI1NTE5AAAAIBpXG35p0E68xHQaxf2Rhi+JVacjGdQRXOPNrUWG0VWi
+        comment: root@vault
   ssh_server_version_full: 7.9p1
   ssh_server_version_major: '7'
   ssh_server_version_release: '7.9'
@@ -447,30 +439,33 @@ values:
     short: vault
     internal_fqdn: vault.internal.staging.swh.network
   system_uptime:
-    days: 73
-    hours: 1753
-    seconds: 6314289
-    uptime: 73 days
+    days: 316
+    hours: 7605
+    seconds: 27380610
+    uptime: 316 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
     systemd-fsck-root.service: enabled-runtime
+    systemd-network-generator.service: disabled
     systemd-networkd-wait-online.service: disabled
     systemd-networkd.service: disabled
+    systemd-pstore.service: enabled
+    systemd-remount-fs.service: enabled-runtime
     systemd-resolved.service: disabled
     systemd-time-wait-sync.service: disabled
     systemd-timesyncd.service: enabled
-  systemd_version: '241'
+  systemd_version: '245'
   timezone: UTC
-  uptime: 73 days
-  uptime_days: 73
-  uptime_hours: 1753
-  uptime_seconds: 6314289
+  uptime: 316 days
+  uptime_days: 316
+  uptime_hours: 7605
+  uptime_seconds: 27380610
   uuid: 4670aebe-9c62-4e11-8336-d738a2f7a73f
   vcsrepo_svn_ver: ''
   virtual: physical
   clientcert: vault.internal.staging.swh.network
   clientversion: 5.5.10
   clientnoop: false
-timestamp: '2020-01-02T16:05:48.285121761+00:00'
-expiration: '2020-01-02T16:35:48.285802760+00:00'
+timestamp: '2020-09-02T11:51:09.498505812+00:00'
+expiration: '2020-09-02T12:21:09.499184738+00:00'

@@ -2,36 +2,27 @@
 name: storage0.euwest.azure.internal.softwareheritage.org
 values:
   agent_specified_environment: production
-  apt_dist_updates: 10
+  apt_dist_updates: 6
   apt_has_dist_updates: true
   apt_has_updates: true
   apt_package_dist_updates:
-  - python3-sentry-sdk
+  - libev4
+  - python3-cassandra
   - python3-swh.core
   - python3-swh.model
-  - python3-swh.objstorage.cloud
-  - python3-swh.objstorage
   - python3-swh.storage
-  - python3-swh.scheduler
-  - python3-swh.indexer
-  - python3-swh.indexer.storage
   - python3-swh.journal
   apt_package_security_dist_updates: []
   apt_package_security_updates: []
   apt_package_updates:
+  - python3-swh.core
   - python3-swh.model
-  - python3-swh.objstorage.cloud
-  - python3-swh.objstorage
-  - python3-swh.storage
-  - python3-swh.scheduler
-  - python3-swh.indexer
-  - python3-swh.indexer.storage
   - python3-swh.journal
-  apt_reboot_required: true
+  apt_reboot_required: false
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1577979483
-  apt_updates: 8
+  apt_update_last_success: 1580906283
+  apt_updates: 3
   architecture: amd64
   bios_release_date: 06/02/2017
   bios_vendor: American Megatrends Inc.
@@ -43,10 +34,7 @@ values:
   blockdevice_sdb_model: Virtual Disk
   blockdevice_sdb_size: 68719476736
   blockdevice_sdb_vendor: Msft
-  blockdevice_sr0_model: Virtual CD/ROM
-  blockdevice_sr0_size: 1073741312
-  blockdevice_sr0_vendor: Msft
-  blockdevices: sdb,sr0,fd0,sda
+  blockdevices: sdb,fd0,sda
   boardmanufacturer: Microsoft Corporation
   boardproductname: Virtual Machine
   boardserialnumber: 0000-0012-0253-3370-7708-7300-38
@@ -74,11 +62,6 @@ values:
       model: Virtual Disk
       size: 64.00 GiB
       size_bytes: 68719476736
-      vendor: Msft
-    sr0:
-      model: Virtual CD/ROM
-      size: 1.00 GiB
-      size_bytes: 1073741312
       vendor: Msft
   dmi:
     bios:
@@ -160,6 +143,7 @@ values:
     haltode: "/home/haltode"
     _rpc: "/run/rpcbind"
     systemd-coredump: "/"
+    danseraf: "/home/danseraf"
   domain: euwest.azure.internal.softwareheritage.org
   facterversion: 3.11.0
   filesystems: ext2,ext3,ext4
@@ -194,9 +178,9 @@ values:
   kernelversion: 4.19.0
   letsencrypt_directory: {}
   load_averages:
-    15m: 4.76
-    1m: 2.85
-    5m: 4.54
+    15m: 0.15
+    1m: 0.33
+    5m: 0.11
   location: azure_euwest
   lsbdistcodename: buster
   lsbdistdescription: Debian GNU/Linux 10 (buster)
@@ -208,22 +192,22 @@ values:
   manufacturer: Microsoft Corporation
   memory:
     system:
-      available: 28.64 GiB
-      available_bytes: 30754668544
-      capacity: 8.76%
+      available: 30.34 GiB
+      available_bytes: 32573579264
+      capacity: 3.37%
       total: 31.39 GiB
       total_bytes: 33709207552
-      used: 2.75 GiB
-      used_bytes: 2954539008
-  memoryfree: 28.64 GiB
-  memoryfree_mb: 29329.9375
+      used: 1.06 GiB
+      used_bytes: 1135628288
+  memoryfree: 30.34 GiB
+  memoryfree_mb: 31064.5859375
   memorysize: 31.39 GiB
   memorysize_mb: 32147.60546875
   mountpoints:
     "/":
-      available: 25.44 GiB
-      available_bytes: 27311796224
-      capacity: 13.49%
+      available: 26.93 GiB
+      available_bytes: 28916211712
+      capacity: 8.41%
       device: "/dev/sda1"
       filesystem: ext4
       options:
@@ -232,8 +216,8 @@ values:
       - errors=remount-ro
       size: 29.40 GiB
       size_bytes: 31571480576
-      used: 3.97 GiB
-      used_bytes: 4259684352
+      used: 2.47 GiB
+      used_bytes: 2655268864
     "/dev/shm":
       available: 15.70 GiB
       available_bytes: 16854601728
@@ -263,7 +247,7 @@ values:
       used_bytes: 54554624
     "/run":
       available: 3.14 GiB
-      available_bytes: 3370364928
+      available_bytes: 3370373120
       capacity: 0.02%
       device: tmpfs
       filesystem: tmpfs
@@ -276,8 +260,8 @@ values:
       - mode=755
       size: 3.14 GiB
       size_bytes: 3370921984
-      used: 544.00 KiB
-      used_bytes: 557056
+      used: 536.00 KiB
+      used_bytes: 548864
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -295,7 +279,7 @@ values:
       size_bytes: 5242880
       used: 0 bytes
       used_bytes: 0
-    "/run/user/0":
+    "/run/user/1003":
       available: 3.14 GiB
       available_bytes: 3370917888
       capacity: 0%
@@ -308,6 +292,8 @@ values:
       - relatime
       - size=3291912k
       - mode=700
+      - uid=1003
+      - gid=1003
       size: 3.14 GiB
       size_bytes: 3370917888
       used: 0 bytes
@@ -433,30 +419,30 @@ values:
       partuuid: 99c21e08-01
       size: 64.00 GiB
       size_bytes: 68718362624
-      uuid: 79b3aab6-d918-40ad-ac32-1298b8a338ca
-  path: "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+      uuid: 938579d7-dafd-43f5-8d58-7cac0deaf473
+  path: "/usr/bin:/bin:/usr/sbin:/sbin"
   physicalprocessorcount: 1
-  processor0: Intel(R) Xeon(R) CPU E5-2673 v3 @ 2.40GHz
-  processor1: Intel(R) Xeon(R) CPU E5-2673 v3 @ 2.40GHz
-  processor2: Intel(R) Xeon(R) CPU E5-2673 v3 @ 2.40GHz
-  processor3: Intel(R) Xeon(R) CPU E5-2673 v3 @ 2.40GHz
-  processor4: Intel(R) Xeon(R) CPU E5-2673 v3 @ 2.40GHz
-  processor5: Intel(R) Xeon(R) CPU E5-2673 v3 @ 2.40GHz
-  processor6: Intel(R) Xeon(R) CPU E5-2673 v3 @ 2.40GHz
-  processor7: Intel(R) Xeon(R) CPU E5-2673 v3 @ 2.40GHz
+  processor0: Intel(R) Xeon(R) Platinum 8171M CPU @ 2.60GHz
+  processor1: Intel(R) Xeon(R) Platinum 8171M CPU @ 2.60GHz
+  processor2: Intel(R) Xeon(R) Platinum 8171M CPU @ 2.60GHz
+  processor3: Intel(R) Xeon(R) Platinum 8171M CPU @ 2.60GHz
+  processor4: Intel(R) Xeon(R) Platinum 8171M CPU @ 2.60GHz
+  processor5: Intel(R) Xeon(R) Platinum 8171M CPU @ 2.60GHz
+  processor6: Intel(R) Xeon(R) Platinum 8171M CPU @ 2.60GHz
+  processor7: Intel(R) Xeon(R) Platinum 8171M CPU @ 2.60GHz
   processorcount: 8
   processors:
     count: 8
     isa: unknown
     models:
-    - Intel(R) Xeon(R) CPU E5-2673 v3 @ 2.40GHz
-    - Intel(R) Xeon(R) CPU E5-2673 v3 @ 2.40GHz
-    - Intel(R) Xeon(R) CPU E5-2673 v3 @ 2.40GHz
-    - Intel(R) Xeon(R) CPU E5-2673 v3 @ 2.40GHz
-    - Intel(R) Xeon(R) CPU E5-2673 v3 @ 2.40GHz
-    - Intel(R) Xeon(R) CPU E5-2673 v3 @ 2.40GHz
-    - Intel(R) Xeon(R) CPU E5-2673 v3 @ 2.40GHz
-    - Intel(R) Xeon(R) CPU E5-2673 v3 @ 2.40GHz
+    - Intel(R) Xeon(R) Platinum 8171M CPU @ 2.60GHz
+    - Intel(R) Xeon(R) Platinum 8171M CPU @ 2.60GHz
+    - Intel(R) Xeon(R) Platinum 8171M CPU @ 2.60GHz
+    - Intel(R) Xeon(R) Platinum 8171M CPU @ 2.60GHz
+    - Intel(R) Xeon(R) Platinum 8171M CPU @ 2.60GHz
+    - Intel(R) Xeon(R) Platinum 8171M CPU @ 2.60GHz
+    - Intel(R) Xeon(R) Platinum 8171M CPU @ 2.60GHz
+    - Intel(R) Xeon(R) Platinum 8171M CPU @ 2.60GHz
     physicalcount: 1
   productname: Virtual Machine
   public_ipaddresses: []
@@ -495,7 +481,12 @@ values:
       key: AAAAB3NzaC1yc2EAAAADAQABAAABAQDE+ifVRYz3vLCrHJt96jBN/WLZVm2DrfLCOmXFsFUSRK/JdvZ2P/vQ7/uPvJNt4s1YLBxVc2WHCUXlngK0Gos++uR+z5jVD2lKYBPSImZGRIQea1Cfd1OXWUb5YP+/MtJ22sEPyShdRl8ktLtA0BeFEb5Qk57QInM5lKL9+ORR7xbMjmwZhylfOYKAr8pfsKAd/y0dqiqKn0Vg7OpeGGe0UudYCeTcABPscOf7B7nzXFpGh4xojckZLg87DRA3DA2bA4XG5zbMfITmgkFHNWPHZ4l4kPdncF+d470VzdDtKkzq2BCWLK1b0bK/ZNKidr7FNfQeGfBMBNgwlDJ2PYX7
       type: ssh-rsa
   ssh_client_version_full: 7.9p1
-  ssh_keys_users: {}
+  ssh_keys_users:
+    root:
+      id_ed25519.borg.pub:
+        type: ed25519
+        key: AAAAC3NzaC1lZDI1NTE5AAAAIPaUHgdHidAy4ENUA9xFgUyduFEPZpspRah18a6UvPmk
+        comment: root@storage0
   ssh_server_version_full: 7.9p1
   ssh_server_version_major: '7'
   ssh_server_version_release: '7.9'
@@ -517,10 +508,10 @@ values:
     short: storage0.euwest.azure
     internal_fqdn: storage0.euwest.azure.internal.softwareheritage.org
   system_uptime:
-    days: 58
-    hours: 1414
-    seconds: 5090822
-    uptime: 58 days
+    days: 0
+    hours: 0
+    seconds: 1295
+    uptime: 0:21 hours
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -532,15 +523,15 @@ values:
     systemd-timesyncd.service: enabled
   systemd_version: '241'
   timezone: UTC
-  uptime: 58 days
-  uptime_days: 58
-  uptime_hours: 1414
-  uptime_seconds: 5090822
+  uptime: 0:21 hours
+  uptime_days: 0
+  uptime_hours: 0
+  uptime_seconds: 1295
   uuid: '081ec299-4154-8549-a6e2-914b51828ab6'
   vcsrepo_svn_ver: ''
   virtual: hyperv
   clientcert: storage0.euwest.azure.internal.softwareheritage.org
   clientversion: 5.5.10
   clientnoop: false
-timestamp: '2020-01-02T16:05:47.523532360+00:00'
-expiration: '2020-01-02T16:35:47.524043667+00:00'
+timestamp: '2020-02-05T12:40:29.620770759+00:00'
+expiration: '2020-02-05T13:10:29.621202649+00:00'

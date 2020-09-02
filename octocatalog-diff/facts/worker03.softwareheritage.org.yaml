@@ -2,24 +2,31 @@
 name: worker03.softwareheritage.org
 values:
   agent_specified_environment: production
-  apt_dist_updates: 3
+  apt_dist_updates: 12
   apt_has_dist_updates: true
   apt_has_updates: true
   apt_package_dist_updates:
-  - python3-swh.scheduler
-  - python3-swh.deposit.loader
-  - python3-swh.deposit.client
+  - python3-distro
+  - python3-entrypoints
+  - python3-jwt
+  - python3-secretstorage
+  - python3-keyring
+  - python3-lazr.uri
+  - python3-wadllib
+  - python3-oauthlib
+  - python3-lazr.restfulclient
+  - python3-launchpadlib
+  - python3-swh.storage
+  - python3-swh.lister
   apt_package_security_dist_updates: []
   apt_package_security_updates: []
   apt_package_updates:
-  - python3-swh.scheduler
-  - python3-swh.deposit.loader
-  - python3-swh.deposit.client
+  - python3-swh.storage
   apt_reboot_required: true
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1577979902
-  apt_updates: 3
+  apt_update_last_success: 1599047102
+  apt_updates: 1
   architecture: amd64
   augeas:
     version: 1.11.0
@@ -122,6 +129,8 @@ values:
     haltode: "/home/haltode"
     _rpc: "/run/rpcbind"
     systemd-coredump: "/"
+    danseraf: "/home/danseraf"
+    aeviso: "/home/aeviso"
   domain: softwareheritage.org
   facterversion: 3.11.0
   filesystems: btrfs,ext2,ext3,ext4,hfs,hfsplus,jfs,minix,msdos,qnx4,ufs,vfat,xfs
@@ -154,13 +163,13 @@ values:
   is_virtual: true
   kernel: Linux
   kernelmajversion: '4.19'
-  kernelrelease: 4.19.0-6-amd64
+  kernelrelease: 4.19.0-9-amd64
   kernelversion: 4.19.0
   letsencrypt_directory: {}
   load_averages:
-    15m: 0.86
-    1m: 1.47
-    5m: 1.16
+    15m: 2.87
+    1m: 3.95
+    5m: 3.44
   location: sesi_rocquencourt
   lsbdistcodename: buster
   lsbdistdescription: Debian GNU/Linux 10 (buster)
@@ -173,30 +182,30 @@ values:
   manufacturer: QEMU
   memory:
     swap:
-      available: 1.98 GiB
-      available_bytes: 2126987264
-      capacity: 48.09%
+      available: 2.62 GiB
+      available_bytes: 2810773504
+      capacity: 31.41%
       total: 3.82 GiB
       total_bytes: 4097830912
-      used: 1.84 GiB
-      used_bytes: 1970843648
+      used: 1.20 GiB
+      used_bytes: 1287057408
     system:
-      available: 5.86 GiB
-      available_bytes: 6296297472
-      capacity: 50.00%
+      available: 5.46 GiB
+      available_bytes: 5863665664
+      capacity: 53.44%
       total: 11.73 GiB
-      total_bytes: 12593831936
-      used: 5.87 GiB
-      used_bytes: 6297534464
-  memoryfree: 5.86 GiB
-  memoryfree_mb: 6004.6171875
+      total_bytes: 12593844224
+      used: 6.27 GiB
+      used_bytes: 6730178560
+  memoryfree: 5.46 GiB
+  memoryfree_mb: 5592.02734375
   memorysize: 11.73 GiB
-  memorysize_mb: 12010.4140625
+  memorysize_mb: 12010.42578125
   mountpoints:
     "/":
-      available: 24.52 GiB
-      available_bytes: 26331394048
-      capacity: 30.90%
+      available: 28.31 GiB
+      available_bytes: 30401839104
+      capacity: 20.22%
       device: "/dev/mapper/worker03--vg-root"
       filesystem: ext4
       options:
@@ -205,12 +214,12 @@ values:
       - errors=remount-ro
       size: 35.49 GiB
       size_bytes: 38104956928
-      used: 10.96 GiB
-      used_bytes: 11773562880
+      used: 7.17 GiB
+      used_bytes: 7703117824
     "/dev/shm":
       available: 5.86 GiB
-      available_bytes: 6296526848
-      capacity: 0.01%
+      available_bytes: 6295887872
+      capacity: 0.02%
       device: tmpfs
       filesystem: tmpfs
       options:
@@ -218,13 +227,13 @@ values:
       - nosuid
       - nodev
       size: 5.86 GiB
-      size_bytes: 6296915968
-      used: 380.00 KiB
-      used_bytes: 389120
+      size_bytes: 6296920064
+      used: 1008.00 KiB
+      used_bytes: 1032192
     "/run":
       available: 1.17 GiB
-      available_bytes: 1258819584
-      capacity: 0.04%
+      available_bytes: 1258795008
+      capacity: 0.05%
       device: tmpfs
       filesystem: tmpfs
       options:
@@ -236,8 +245,8 @@ values:
       - mode=755
       size: 1.17 GiB
       size_bytes: 1259384832
-      used: 552.00 KiB
-      used_bytes: 565248
+      used: 576.00 KiB
+      used_bytes: 589824
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -253,23 +262,6 @@ values:
       - size=5120k
       size: 5.00 MiB
       size_bytes: 5242880
-      used: 0 bytes
-      used_bytes: 0
-    "/run/user/0":
-      available: 1.17 GiB
-      available_bytes: 1259380736
-      capacity: 0%
-      device: tmpfs
-      filesystem: tmpfs
-      options:
-      - rw
-      - nosuid
-      - nodev
-      - relatime
-      - size=1229864k
-      - mode=700
-      size: 1.17 GiB
-      size_bytes: 1259380736
       used: 0 bytes
       used_bytes: 0
     "/run/user/1003":
@@ -293,7 +285,7 @@ values:
       used_bytes: 0
     "/sys/fs/cgroup":
       available: 5.86 GiB
-      available_bytes: 6296915968
+      available_bytes: 6296920064
       capacity: 0%
       device: tmpfs
       filesystem: tmpfs
@@ -304,7 +296,7 @@ values:
       - noexec
       - mode=755
       size: 5.86 GiB
-      size_bytes: 6296915968
+      size_bytes: 6296920064
       used: 0 bytes
       used_bytes: 0
   mounts:
@@ -395,7 +387,7 @@ values:
     primary: ens18
   operatingsystem: Debian
   operatingsystemmajrelease: '10'
-  operatingsystemrelease: '10.2'
+  operatingsystemrelease: '10.5'
   os:
     architecture: amd64
     distro:
@@ -409,9 +401,9 @@ values:
     hardware: x86_64
     name: Debian
     release:
-      full: '10.2'
+      full: '10.5'
       major: '10'
-      minor: '2'
+      minor: '5'
     selinux:
       enabled: false
   osfamily: Debian
@@ -434,7 +426,7 @@ values:
       size: 40.00 GiB
       size_bytes: 42948624384
       uuid: x49Nk9-laGn-wmy2-VTDK-H2Y1-osSW-9rqyIx
-  path: "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+  path: "/usr/bin:/bin:/usr/sbin:/sbin"
   physicalprocessorcount: 3
   processor0: Common KVM processor
   processor1: Common KVM processor
@@ -502,8 +494,8 @@ values:
     SSHFP 1 2 03f7098a3cf293c2d0b7a60ec95a68c318ceb463cc4f10ee3f2c7972d6019bfd
   sshrsakey: AAAAB3NzaC1yc2EAAAADAQABAAABAQCwpp0B7uPX4Fla+HsciA2FIH6UYkH4gZxF4t2NczVtX9LuWdegvYbL+j91ipf/ezfLGqDiEVBx7saoOEMABuBgrREBl673SdQFovoDZ5As7ECU2klwZK5yMxUrhFqR63cdJeER1CcZAUy4wQIxNDfgxjghaZOCPKCF9738BZpQuLhtDlMRqKvqohexMcdFNSJEFG5GS/QWqdQnNCj2E9PKDVamvK8LCKMYCNJICj2lr2xIcRtBfNDcy7gWR9kioUCXM4vZFlSgkAwp+c2YNnLz1rCVewkE7bQ/r7BsBCW3VLs7e8uTraHFrhQ5nLlxm5VzOkAFJ26XYRBDGD7Mdtxr
   sudoversion: 1.8.27
-  swapfree: 1.98 GiB
-  swapfree_mb: 2028.453125
+  swapfree: 2.62 GiB
+  swapfree_mb: 2680.5625
   swapsize: 3.82 GiB
   swapsize_mb: 3907.99609375
   swh_hostname:
@@ -511,30 +503,33 @@ values:
     short: worker03
     internal_fqdn: worker03.internal.softwareheritage.org
   system_uptime:
-    days: 78
-    hours: 1895
-    seconds: 6824035
-    uptime: 78 days
+    days: 111
+    hours: 2667
+    seconds: 9604300
+    uptime: 111 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
     systemd-fsck-root.service: enabled-runtime
+    systemd-network-generator.service: disabled
     systemd-networkd-wait-online.service: disabled
     systemd-networkd.service: disabled
+    systemd-pstore.service: enabled
+    systemd-remount-fs.service: enabled-runtime
     systemd-resolved.service: disabled
     systemd-time-wait-sync.service: disabled
     systemd-timesyncd.service: enabled
-  systemd_version: '241'
+  systemd_version: '245'
   timezone: UTC
-  uptime: 78 days
-  uptime_days: 78
-  uptime_hours: 1895
-  uptime_seconds: 6824035
+  uptime: 111 days
+  uptime_days: 111
+  uptime_hours: 2667
+  uptime_seconds: 9604300
   uuid: 1cfacaaf-2718-4794-9cc5-88dfde58fb43
   vcsrepo_svn_ver: 1.10.4
   virtual: kvm
   clientcert: worker03.softwareheritage.org
   clientversion: 5.5.10
   clientnoop: false
-timestamp: '2020-01-02T16:05:25.848249107+00:00'
-expiration: '2020-01-02T16:35:25.848748144+00:00'
+timestamp: '2020-09-02T11:56:15.458851452+00:00'
+expiration: '2020-09-02T12:26:15.459704743+00:00'

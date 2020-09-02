@@ -2,10 +2,35 @@
 name: riverside.internal.softwareheritage.org
 values:
   agent_specified_environment: production
-  apt_has_dist_updates: false
-  apt_has_updates: false
-  apt_reboot_required: false
-  apt_update_last_success: 1577979842
+  apt_dist_updates: 11
+  apt_has_dist_updates: true
+  apt_has_updates: true
+  apt_package_dist_updates:
+  - udev
+  - libpam-systemd
+  - libnss-systemd
+  - systemd
+  - systemd-timesyncd
+  - libudev1
+  - libsystemd0
+  - systemd-sysv
+  - containerd.io
+  - docker-ce-cli
+  - docker-ce
+  apt_package_security_dist_updates: []
+  apt_package_security_updates: []
+  apt_package_updates:
+  - systemd-sysv
+  - udev
+  - libudev1
+  - containerd.io
+  - docker-ce-cli
+  - docker-ce
+  apt_reboot_required: true
+  apt_security_dist_updates: 0
+  apt_security_updates: 0
+  apt_update_last_success: 1599047043
+  apt_updates: 6
   architecture: amd64
   bios_release_date: 04/01/2014
   bios_vendor: SeaBIOS
@@ -46,15 +71,15 @@ values:
       uuid: d14c544e-e40e-44c7-b9a8-6ffc434c64f8
   docker:
     ID: L34W:HBCJ:VGKU:X5MC:IN3S:FOYK:AHYO:PGI4:A7YC:SMFW:T5BX:FGMV
-    Containers: 13
+    Containers: 14
     ContainersRunning: 13
     ContainersPaused: 0
-    ContainersStopped: 0
-    Images: 37
+    ContainersStopped: 1
+    Images: 58
     Driver: overlay2
     DriverStatus:
     - - Backing Filesystem
-      - extfs
+      - "<unknown>"
     - - Supports d_type
       - 'true'
     - - Native Overlay Diff
@@ -95,14 +120,14 @@ values:
     BridgeNfIptables: true
     BridgeNfIp6tables: true
     Debug: false
-    NFd: 126
+    NFd: 113
     OomKillDisable: true
-    NGoroutines: 117
-    SystemTime: '2020-01-02T16:05:47.562097589Z'
-    LoggingDriver: json-file
+    NGoroutines: 120
+    SystemTime: '2020-09-02T11:56:07.837678731Z'
+    LoggingDriver: journald
     CgroupDriver: cgroupfs
     NEventsListener: 0
-    KernelVersion: 4.19.0-6-amd64
+    KernelVersion: 4.19.0-8-amd64
     OperatingSystem: Debian GNU/Linux 10 (buster)
     OSType: linux
     Architecture: x86_64
@@ -120,7 +145,7 @@ values:
           Official: true
       Mirrors: []
     NCPU: 4
-    MemTotal: 16821587968
+    MemTotal: 16821665792
     GenericResources: ''
     DockerRootDir: "/var/lib/docker"
     HttpProxy: ''
@@ -129,7 +154,7 @@ values:
     Name: riverside
     Labels: []
     ExperimentalBuild: false
-    ServerVersion: 19.03.5
+    ServerVersion: 19.03.8
     ClusterStore: ''
     ClusterAdvertise: ''
     Runtimes:
@@ -147,11 +172,11 @@ values:
     Isolation: ''
     InitBinary: docker-init
     ContainerdCommit:
-      ID: b34a5c8af56e510852c35414db4c1f4fa6172339
-      Expected: b34a5c8af56e510852c35414db4c1f4fa6172339
+      ID: 7ad184331fa3e55e52b890ea95e65ba581ae3429
+      Expected: 7ad184331fa3e55e52b890ea95e65ba581ae3429
     RuncCommit:
-      ID: 3e425f80a8c931f88e6d94a8c831b9d5aa481657
-      Expected: 3e425f80a8c931f88e6d94a8c831b9d5aa481657
+      ID: dc9208a3303feef5b3839f4323d9beb36df0a9dd
+      Expected: dc9208a3303feef5b3839f4323d9beb36df0a9dd
     InitCommit:
       ID: fec3683
       Expected: fec3683
@@ -166,11 +191,11 @@ values:
       Warnings: ''
     network:
       managed_interfaces:
-        br-61c22ce55038: sentry-onpremise_default
+        br-9bca9c0a7709: sentry_onpremise_default
       bridge:
         Name: bridge
-        Id: 5f417e50a47fa60b4347a3a363307ebb28aeab94cc39a2e70594774604b2cb86
-        Created: '2019-12-03T17:48:40.725728415Z'
+        Id: 42fff9462a18f8bf53dbaa0e26157823fa8f71a26d32e77cbadef15b6672b1e5
+        Created: '2020-04-21T16:17:52.418927169Z'
         Scope: local
         Driver: bridge
         EnableIPv6: false
@@ -235,10 +260,10 @@ values:
         Containers: {}
         Options: {}
         Labels: {}
-      sentry-onpremise_default:
-        Name: sentry-onpremise_default
-        Id: 61c22ce550387249f7e0a84bf4948139481ef9c96442c58c22d0e1e48d64d47f
-        Created: '2020-01-02T15:14:44.526001104Z'
+      sentry_onpremise_default:
+        Name: sentry_onpremise_default
+        Id: 9bca9c0a770963e38a5254908f6ed23e5c0ea69631f344d0ca720f506db9d7db
+        Created: '2020-03-05T13:08:08.242289739Z'
         Scope: local
         Driver: bridge
         EnableIPv6: false
@@ -246,8 +271,8 @@ values:
           Driver: default
           Options: ''
           Config:
-          - Subnet: 192.168.176.0/20
-            Gateway: 192.168.176.1
+          - Subnet: 172.18.0.0/16
+            Gateway: 172.18.0.1
         Internal: false
         Attachable: true
         Ingress: false
@@ -255,89 +280,90 @@ values:
           Network: ''
         ConfigOnly: false
         Containers:
-          309448f373093b4136075929bbfd43f81a5b310bbd13f1b4c43547f3704b7767:
-            Name: sentry-onpremise_redis_1
-            EndpointID: 32efe2b8488c9298382057540d9c3a960af49c9cf0cf1ca8a4b3b16932ed7bd3
-            MacAddress: 02:42:c0:a8:b0:02
-            IPv4Address: 192.168.176.2/20
+          137292be4b23e609f91891703e9afa91431461a5931d0eb7146d9c5533b18831:
+            Name: sentry_onpremise_snuba-cleanup_1
+            EndpointID: 16f4699ee15139912b15b4d787c02130184152c9d27cf2bf70b8897692ab41bf
+            MacAddress: 02:42:ac:12:00:02
+            IPv4Address: 172.18.0.2/16
             IPv6Address: ''
-          3bac150589b47e0dad8e623210b13cab72b8cb73ee8cf326f2d67ded53a14fe0:
-            Name: sentry-onpremise_sentry-cleanup_1
-            EndpointID: '09a6b8f8c690e6c8f7a9b05c8d49de625b207569dce22305b2b6e5188297b00e'
-            MacAddress: 02:42:c0:a8:b0:0e
-            IPv4Address: 192.168.176.14/20
+          3346410fa161ab15848783660c008cedfc5b792781d2c661c8cae33a78902ac9:
+            Name: sentry_onpremise_web_1
+            EndpointID: 7325cc1661afeff6298306b1d038238a9aaaeca18a46b47f06642059d6ef5116
+            MacAddress: 02:42:ac:12:00:08
+            IPv4Address: 172.18.0.8/16
             IPv6Address: ''
-          505cf9f8635158399d2eb3866457bc1612e9e5571a09e188153be4ed75e9f6b3:
-            Name: sentry-onpremise_snuba-consumer_1
-            EndpointID: 623947486f7706796f5fdbcb6db8b5bff8048bceb886fecc24295bfe1deba98d
-            MacAddress: 02:42:c0:a8:b0:08
-            IPv4Address: 192.168.176.8/20
+          42f4adf8536e256340b997fc8f8d9b844d9d12a7dc8d9de5e305c518aa749d76:
+            Name: sentry_onpremise_worker_1
+            EndpointID: b3283ef840e16c1dcc102dd0d91cc09c689079203c34fc2fcd7f2efa79f4eb5e
+            MacAddress: 02:42:ac:12:00:0a
+            IPv4Address: 172.18.0.10/16
             IPv6Address: ''
-          758e122b861432ffbe33ddd3f193c3bd59359c63e238635d284e882d4c5fc840:
-            Name: sentry-onpremise_clickhouse_1
-            EndpointID: a2847114c3ee12fffb0aac4f8243c3be64d7b57ae67bcc61f5aec78535e8f500
-            MacAddress: 02:42:c0:a8:b0:06
-            IPv4Address: 192.168.176.6/20
+          6b6b3f31bab5b2ce4ff5dfbb1426ca9d8071b3dbd0731c475076f6c88003f450:
+            Name: sentry_onpremise_post-process-forwarder_1
+            EndpointID: abe7e80a0fa6796cb7653844ee2de7b3e5662906cca22be1cd581ceaad8f3540
+            MacAddress: 02:42:ac:12:00:0e
+            IPv4Address: 172.18.0.14/16
             IPv6Address: ''
-          765e419f67b0e8d2650393b455841e084b3a9adff7c3672410c329555d23d422:
-            Name: sentry-onpremise_worker_1
-            EndpointID: e3720aaaff1af048e8e9f36b06ce97ea2f9492f2624f05714947ce0c06d639b3
-            MacAddress: 02:42:c0:a8:b0:0b
-            IPv4Address: 192.168.176.11/20
+          6e137b96632749223e94e476f39e6e4a0fa31368abbeaaddff0b9d620493136a:
+            Name: sentry_onpremise_snuba-replacer_1
+            EndpointID: ef88775a4ccd37676c4015279cbee97e62ffdb4cc89f72000339edb82e3a83e7
+            MacAddress: 02:42:ac:12:00:03
+            IPv4Address: 172.18.0.3/16
             IPv6Address: ''
-          7ad2ea580d8c9f1f74ede4594b3fa0dcc09635a7f05791b0a0aa05ed591cd6bb:
-            Name: sentry-onpremise_snuba-api_1
-            EndpointID: 221e5b9fd3fd8ae5e9bfdc469f1ba9fd116e34f517aa02cd161dac4866d4beea
-            MacAddress: 02:42:c0:a8:b0:0a
-            IPv4Address: 192.168.176.10/20
+          72221c748d54b588874fe60ae72f46af499e025eb4a2667a10026a9d140c1ba2:
+            Name: sentry_onpremise_cron_1
+            EndpointID: 6711ed700a13e65da801cfe17fd7b552d9d3a1fb6af78903ab63d05b1a71b36a
+            MacAddress: 02:42:ac:12:00:09
+            IPv4Address: 172.18.0.9/16
             IPv6Address: ''
-          811007a10a4c859fab0c851ff5813f6e1df18bbb16cf505759b5618947c40c19:
-            Name: sentry-onpremise_symbolicator-cleanup_1
-            EndpointID: de6f2609111a5b1b07ebee19b5b4828b55372257de4df32c5001ea27d2afa391
-            MacAddress: 02:42:c0:a8:b0:05
-            IPv4Address: 192.168.176.5/20
+          8af0eb075d312e1138ffd113f5d0b5294395ab31653ef0e76cebe675761e52f7:
+            Name: sentry_onpremise_snuba-consumer_1
+            EndpointID: aaf8c15f20547e705aa9bbb87f845986f1b3a151f62668e06de95085135b1b66
+            MacAddress: 02:42:ac:12:00:07
+            IPv4Address: 172.18.0.7/16
             IPv6Address: ''
-          82612f8d453c8e302a071f05a345dc98d8718bc2f522d9a5b9d1600f6f89ec98:
-            Name: sentry-onpremise_web_1
-            EndpointID: 036b6caca76d12fb8ae5b42dc76ffdfaaad353aebe9593c1ef90d6d7e801ad6d
-            MacAddress: 02:42:c0:a8:b0:0c
-            IPv4Address: 192.168.176.12/20
+          8b15672d3cf9f3204cc05b728af5c6663eb06e1f3c2a5a5ef7cfd1b4d2f27e75:
+            Name: sentry_onpremise_clickhouse_1
+            EndpointID: d324435705a97ef737d42115e3815e25163098a7342cc298fc3b5e59c5cbc2a5
+            MacAddress: 02:42:ac:12:00:0d
+            IPv4Address: 172.18.0.13/16
             IPv6Address: ''
-          8b8e0a1d53b8bfda5e774be1979e45d60af2199481c10510778e10e7b7c2f47c:
-            Name: sentry-onpremise_snuba-replacer_1
-            EndpointID: 322b7b979a0e0ef853883ce83d86433637595af3f637c7d306ee0978d62c6c3f
-            MacAddress: 02:42:c0:a8:b0:09
-            IPv4Address: 192.168.176.9/20
+          9ae2a6b06c83b619882268e6a91b105dd8373685065f4305fb72a7f1f707fe2a:
+            Name: sentry_onpremise_snuba-api_1
+            EndpointID: 3acc172507ab0be716ac5032a3c1ec38aa1d1778ccec3f541d8db8f308aed65f
+            MacAddress: 02:42:ac:12:00:0c
+            IPv4Address: 172.18.0.12/16
             IPv6Address: ''
-          a8291d923bbac8008ed9318a767138fd82fe9ae29a1dc91045eafb1c8e022e17:
-            Name: sentry-onpremise_snuba-cleanup_1
-            EndpointID: c902c48b7dbecbf22766564b45ca3774f65b3fe3458e2854a368cd6e664d97d8
-            MacAddress: 02:42:c0:a8:b0:07
-            IPv4Address: 192.168.176.7/20
+          b24d07fe7d159ea9b6d4d5502de8f6f51943a851ded3e0cfb16b329d40b5c81b:
+            Name: sentry_onpremise_symbolicator_1
+            EndpointID: b997498b43428efd61b94ee8fd03aa33f20840d35d92c0548a345b37d2bd42cd
+            MacAddress: 02:42:ac:12:00:04
+            IPv4Address: 172.18.0.4/16
             IPv6Address: ''
-          ca89dc61fe3367ce9337be6c10c5fb7df607b357a3d92ee4d086ad0974b2331b:
-            Name: sentry-onpremise_memcached_1
-            EndpointID: d40155d411f6849c963d0a3eef8d38d38cf7c1506479731cf0a331539e07ac2e
-            MacAddress: 02:42:c0:a8:b0:04
-            IPv4Address: 192.168.176.4/20
+          b55a9c5e19cd65d450755d8f631b27b63f4fb50ab1324fd836d6a33d01d59992:
+            Name: sentry_onpremise_sentry-cleanup_1
+            EndpointID: 9436f7271f810807903290687be5b705813cc05846087e298794bc733f5b1e2b
+            MacAddress: 02:42:ac:12:00:0b
+            IPv4Address: 172.18.0.11/16
             IPv6Address: ''
-          fd33831b698da8a32b5afc310931829dd00bfe9fc36c700a63da9160c1188dfc:
-            Name: sentry-onpremise_cron_1
-            EndpointID: 9f927a67223917ecf1ffec767c71da150fe4a5cc9db3944a60ce3aa5ff831c27
-            MacAddress: 02:42:c0:a8:b0:0d
-            IPv4Address: 192.168.176.13/20
+          bbbbf9c0a59688661216da522ed3edcd033745dc404c23925cedac204cf58150:
+            Name: sentry_onpremise_memcached_1
+            EndpointID: 437e3a479d745290a2b284188f37394b47824b3fbe4852945f807d4b04cc145e
+            MacAddress: 02:42:ac:12:00:05
+            IPv4Address: 172.18.0.5/16
             IPv6Address: ''
-          fe21b8c6fa0d73d6776ce7d2c66a92de577f684d51e39d83a6e41480386fd7a6:
-            Name: sentry-onpremise_symbolicator_1
-            EndpointID: 3aa48503660ab8ae5007ed09effa51acbe04f2c052c5007b0b852da4b63afc11
-            MacAddress: 02:42:c0:a8:b0:03
-            IPv4Address: 192.168.176.3/20
+          dbb54966d1108a54c895f6c3b7cb8082116273f9fc47eff9e2e994fa1c5f9856:
+            Name: sentry_onpremise_redis_1
+            EndpointID: 25031218f372930224756e2f619bb76e1d3529927420ce3ce5fef50e8e16d5e6
+            MacAddress: 02:42:ac:12:00:06
+            IPv4Address: 172.18.0.6/16
             IPv6Address: ''
         Options: {}
         Labels:
           com.docker.compose.network: default
-          com.docker.compose.project: sentry-onpremise
-  docker_client_version: 19.03.5
+          com.docker.compose.project: sentry_onpremise
+          com.docker.compose.version: 1.25.0
+  docker_client_version: 19.03.8
   docker_home_dirs:
     root: "/root"
     daemon: "/usr/sbin"
@@ -399,60 +425,62 @@ values:
     munin: "/var/lib/munin"
     prometheus: "/var/lib/prometheus"
     nagios: "/var/lib/nagios"
-  docker_server_version: 19.03.5
+    danseraf: "/home/danseraf"
+    aeviso: "/home/aeviso"
+  docker_server_version: 19.03.8
   docker_version:
     Client:
       Platform:
         Name: Docker Engine - Community
-      Version: 19.03.5
+      Version: 19.03.8
       ApiVersion: '1.40'
       DefaultAPIVersion: '1.40'
-      GitCommit: 633a0ea838
-      GoVersion: go1.12.12
+      GitCommit: afacb8b7f0
+      GoVersion: go1.12.17
       Os: linux
       Arch: amd64
-      BuildTime: Wed Nov 13 07:25:38 2019
+      BuildTime: Wed Mar 11 01:25:56 2020
       Experimental: false
     Server:
       Platform:
         Name: Docker Engine - Community
       Components:
       - Name: Engine
-        Version: 19.03.5
+        Version: 19.03.8
         Details:
           ApiVersion: '1.40'
           Arch: amd64
-          BuildTime: Wed Nov 13 07:24:09 2019
+          BuildTime: Wed Mar 11 01:24:28 2020
           Experimental: 'false'
-          GitCommit: 633a0ea838
-          GoVersion: go1.12.12
-          KernelVersion: 4.19.0-6-amd64
+          GitCommit: afacb8b7f0
+          GoVersion: go1.12.17
+          KernelVersion: 4.19.0-8-amd64
           MinAPIVersion: '1.12'
           Os: linux
       - Name: containerd
-        Version: 1.2.10
+        Version: 1.2.13
         Details:
-          GitCommit: b34a5c8af56e510852c35414db4c1f4fa6172339
+          GitCommit: 7ad184331fa3e55e52b890ea95e65ba581ae3429
       - Name: runc
-        Version: 1.0.0-rc8+dev
+        Version: 1.0.0-rc10
         Details:
-          GitCommit: 3e425f80a8c931f88e6d94a8c831b9d5aa481657
+          GitCommit: dc9208a3303feef5b3839f4323d9beb36df0a9dd
       - Name: docker-init
         Version: 0.18.0
         Details:
           GitCommit: fec3683
-      Version: 19.03.5
+      Version: 19.03.8
       ApiVersion: '1.40'
       MinAPIVersion: '1.12'
-      GitCommit: 633a0ea838
-      GoVersion: go1.12.12
+      GitCommit: afacb8b7f0
+      GoVersion: go1.12.17
       Os: linux
       Arch: amd64
-      KernelVersion: 4.19.0-6-amd64
-      BuildTime: '2019-11-13T07:24:09.000000000+00:00'
+      KernelVersion: 4.19.0-8-amd64
+      BuildTime: '2020-03-11T01:24:28.000000000+00:00'
   domain: internal.softwareheritage.org
   facterversion: 3.11.0
-  filesystems: ext2,ext3,ext4
+  filesystems: btrfs,ext2,ext3,ext4,hfs,hfsplus,jfs,minix,msdos,qnx4,ufs,vfat,xfs
   fips_enabled: false
   fqdn: riverside.internal.softwareheritage.org
   gid: root
@@ -469,27 +497,26 @@ values:
     privileged: true
     uid: 0
     user: root
-  interfaces: br-61c22ce55038,docker0,ens18,lo,veth0aaf0ee,veth1833abd,veth283d83f,veth373baef,veth49ceb30,veth5d77f42,veth84294cd,veth98906a2,veth98c1b51,vetha92d1d0,vethafdbc60,vethb522e40,vethc8fb3df
+  interfaces: br-9bca9c0a7709,docker0,ens18,lo,veth31591b9,veth31727b3,veth5a44d11,veth64aee2e,veth6bf203f,veth74bd0ec,veth849bad2,veth8f3c79f,veth93c5c67,vethd66187c,vethda5a1a2,vethe48b9b9,vethfcc3f65
   ipaddress: 192.168.100.52
   ipaddress6: fe80::a01b:32ff:fe59:dba4
-  ipaddress6_br-61c22ce55038: fe80::42:aaff:fe4c:dfae
-  ipaddress6_docker0: fe80::42:41ff:fed3:b216
+  ipaddress6_br-9bca9c0a7709: fe80::42:d0ff:fec0:8f48
   ipaddress6_ens18: fe80::a01b:32ff:fe59:dba4
   ipaddress6_lo: "::1"
-  ipaddress6_veth0aaf0ee: fe80::5cc3:2dff:fe19:f098
-  ipaddress6_veth1833abd: fe80::88c5:e3ff:fe82:a751
-  ipaddress6_veth283d83f: fe80::7024:dfff:fee3:b63f
-  ipaddress6_veth373baef: fe80::90d3:b0ff:fef8:3383
-  ipaddress6_veth49ceb30: fe80::1486:d8ff:fe38:5ba
-  ipaddress6_veth5d77f42: fe80::1c25:ecff:fe81:d4a2
-  ipaddress6_veth84294cd: fe80::9cf5:3ff:fe71:da8f
-  ipaddress6_veth98906a2: fe80::68a4:6ff:febd:2337
-  ipaddress6_veth98c1b51: fe80::9813:69ff:fefc:ca6
-  ipaddress6_vetha92d1d0: fe80::8842:d2ff:feea:80e7
-  ipaddress6_vethafdbc60: fe80::bc06:6ff:fe61:6a1c
-  ipaddress6_vethb522e40: fe80::6c92:e2ff:fe8f:17e9
-  ipaddress6_vethc8fb3df: fe80::508e:cdff:fe54:56c9
-  ipaddress_br-61c22ce55038: 192.168.176.1
+  ipaddress6_veth31591b9: fe80::10fa:82ff:fec1:69b3
+  ipaddress6_veth31727b3: fe80::e0f1:4ff:fefb:8a8c
+  ipaddress6_veth5a44d11: fe80::3841:52ff:fe81:161b
+  ipaddress6_veth64aee2e: fe80::2464:ffff:fe95:eee3
+  ipaddress6_veth6bf203f: fe80::5855:c9ff:fe3c:846
+  ipaddress6_veth74bd0ec: fe80::2ccb:e6ff:fe36:cb3e
+  ipaddress6_veth849bad2: fe80::8c18:1dff:fe7b:184e
+  ipaddress6_veth8f3c79f: fe80::2824:d9ff:febc:467a
+  ipaddress6_veth93c5c67: fe80::8831:4ff:fec8:1727
+  ipaddress6_vethd66187c: fe80::24c5:1ff:fe67:ec49
+  ipaddress6_vethda5a1a2: fe80::e6:91ff:fed8:71c0
+  ipaddress6_vethe48b9b9: fe80::4422:93ff:fef8:76d7
+  ipaddress6_vethfcc3f65: fe80::fc45:bfff:fed7:3639
+  ipaddress_br-9bca9c0a7709: 172.18.0.1
   ipaddress_docker0: 172.17.0.1
   ipaddress_ens18: 192.168.100.52
   ipaddress_lo: 127.0.0.1
@@ -497,13 +524,13 @@ values:
   is_virtual: true
   kernel: Linux
   kernelmajversion: '4.19'
-  kernelrelease: 4.19.0-6-amd64
+  kernelrelease: 4.19.0-8-amd64
   kernelversion: 4.19.0
   letsencrypt_directory: {}
   load_averages:
-    15m: 0.09
-    1m: 0.09
-    5m: 0.1
+    15m: 0.18
+    1m: 0.35
+    5m: 0.15
   location: sesi_rocquencourt
   lsbdistcodename: buster
   lsbdistdescription: Debian GNU/Linux 10 (buster)
@@ -511,49 +538,49 @@ values:
   lsbdistrelease: '10'
   lsbmajdistrelease: '10'
   macaddress: a2:1b:32:59:db:a4
-  macaddress_br-61c22ce55038: 02:42:aa:4c:df:ae
-  macaddress_docker0: 02:42:41:d3:b2:16
+  macaddress_br-9bca9c0a7709: 02:42:d0:c0:8f:48
+  macaddress_docker0: 02:42:e7:9f:09:bc
   macaddress_ens18: a2:1b:32:59:db:a4
-  macaddress_veth0aaf0ee: 5e:c3:2d:19:f0:98
-  macaddress_veth1833abd: 8a:c5:e3:82:a7:51
-  macaddress_veth283d83f: 72:24:df:e3:b6:3f
-  macaddress_veth373baef: 92:d3:b0:f8:33:83
-  macaddress_veth49ceb30: 16:86:d8:38:05:ba
-  macaddress_veth5d77f42: 1e:25:ec:81:d4:a2
-  macaddress_veth84294cd: 9e:f5:03:71:da:8f
-  macaddress_veth98906a2: 6a:a4:06:bd:23:37
-  macaddress_veth98c1b51: 9a:13:69:fc:0c:a6
-  macaddress_vetha92d1d0: 8a:42:d2:ea:80:e7
-  macaddress_vethafdbc60: be:06:06:61:6a:1c
-  macaddress_vethb522e40: 6e:92:e2:8f:17:e9
-  macaddress_vethc8fb3df: 52:8e:cd:54:56:c9
+  macaddress_veth31591b9: 12:fa:82:c1:69:b3
+  macaddress_veth31727b3: e2:f1:04:fb:8a:8c
+  macaddress_veth5a44d11: 3a:41:52:81:16:1b
+  macaddress_veth64aee2e: 26:64:ff:95:ee:e3
+  macaddress_veth6bf203f: 5a:55:c9:3c:08:46
+  macaddress_veth74bd0ec: 2e:cb:e6:36:cb:3e
+  macaddress_veth849bad2: 8e:18:1d:7b:18:4e
+  macaddress_veth8f3c79f: 2a:24:d9:bc:46:7a
+  macaddress_veth93c5c67: 8a:31:04:c8:17:27
+  macaddress_vethd66187c: 26:c5:01:67:ec:49
+  macaddress_vethda5a1a2: 02:e6:91:d8:71:c0
+  macaddress_vethe48b9b9: 46:22:93:f8:76:d7
+  macaddress_vethfcc3f65: fe:45:bf:d7:36:39
   manufacturer: QEMU
   memory:
     swap:
-      available: 3.81 GiB
-      available_bytes: 4089167872
-      capacity: 0.11%
+      available: 3.66 GiB
+      available_bytes: 3934777344
+      capacity: 3.88%
       total: 3.81 GiB
       total_bytes: 4093636608
-      used: 4.26 MiB
-      used_bytes: 4468736
+      used: 151.50 MiB
+      used_bytes: 158859264
     system:
-      available: 11.59 GiB
-      available_bytes: 12443467776
-      capacity: 26.03%
+      available: 11.86 GiB
+      available_bytes: 12737748992
+      capacity: 24.28%
       total: 15.67 GiB
-      total_bytes: 16821587968
-      used: 4.08 GiB
-      used_bytes: 4378120192
-  memoryfree: 11.59 GiB
-  memoryfree_mb: 11867.015625
+      total_bytes: 16821665792
+      used: 3.80 GiB
+      used_bytes: 4083916800
+  memoryfree: 11.86 GiB
+  memoryfree_mb: 12147.6640625
   memorysize: 15.67 GiB
-  memorysize_mb: 16042.31640625
+  memorysize_mb: 16042.390625
   mountpoints:
     "/":
-      available: 21.78 GiB
-      available_bytes: 23390826496
-      capacity: 21.11%
+      available: 15.04 GiB
+      available_bytes: 16148480000
+      capacity: 45.53%
       device: "/dev/mapper/riverside--vg-root"
       filesystem: ext4
       options:
@@ -562,11 +589,11 @@ values:
       - errors=remount-ro
       size: 27.61 GiB
       size_bytes: 29648384000
-      used: 5.83 GiB
-      used_bytes: 6257557504
+      used: 12.57 GiB
+      used_bytes: 13499904000
     "/dev/shm":
       available: 7.83 GiB
-      available_bytes: 8410791936
+      available_bytes: 8410832896
       capacity: 0%
       device: tmpfs
       filesystem: tmpfs
@@ -575,12 +602,12 @@ values:
       - nosuid
       - nodev
       size: 7.83 GiB
-      size_bytes: 8410791936
+      size_bytes: 8410832896
       used: 0 bytes
       used_bytes: 0
     "/run":
       available: 1.57 GiB
-      available_bytes: 1680883712
+      available_bytes: 1680904192
       capacity: 0.08%
       device: tmpfs
       filesystem: tmpfs
@@ -589,12 +616,12 @@ values:
       - nosuid
       - noexec
       - relatime
-      - size=1642736k
+      - size=1642744k
       - mode=755
       size: 1.57 GiB
-      size_bytes: 1682161664
-      used: 1.22 MiB
-      used_bytes: 1277952
+      size_bytes: 1682169856
+      used: 1.21 MiB
+      used_bytes: 1265664
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -612,26 +639,9 @@ values:
       size_bytes: 5242880
       used: 0 bytes
       used_bytes: 0
-    "/run/user/0":
-      available: 1.57 GiB
-      available_bytes: 1682157568
-      capacity: 0%
-      device: tmpfs
-      filesystem: tmpfs
-      options:
-      - rw
-      - nosuid
-      - nodev
-      - relatime
-      - size=1642732k
-      - mode=700
-      size: 1.57 GiB
-      size_bytes: 1682157568
-      used: 0 bytes
-      used_bytes: 0
     "/sys/fs/cgroup":
       available: 7.83 GiB
-      available_bytes: 8410791936
+      available_bytes: 8410832896
       capacity: 0%
       device: tmpfs
       filesystem: tmpfs
@@ -642,10 +652,10 @@ values:
       - noexec
       - mode=755
       size: 7.83 GiB
-      size_bytes: 8410791936
+      size_bytes: 8410832896
       used: 0 bytes
       used_bytes: 0
-    "/var/lib/docker/containers/309448f373093b4136075929bbfd43f81a5b310bbd13f1b4c43547f3704b7767/mounts/shm":
+    "/var/lib/docker/containers/137292be4b23e609f91891703e9afa91431461a5931d0eb7146d9c5533b18831/mounts/shm":
       available: 64.00 MiB
       available_bytes: 67108864
       capacity: 0%
@@ -662,7 +672,7 @@ values:
       size_bytes: 67108864
       used: 0 bytes
       used_bytes: 0
-    "/var/lib/docker/containers/3bac150589b47e0dad8e623210b13cab72b8cb73ee8cf326f2d67ded53a14fe0/mounts/shm":
+    "/var/lib/docker/containers/3346410fa161ab15848783660c008cedfc5b792781d2c661c8cae33a78902ac9/mounts/shm":
       available: 64.00 MiB
       available_bytes: 67108864
       capacity: 0%
@@ -679,7 +689,7 @@ values:
       size_bytes: 67108864
       used: 0 bytes
       used_bytes: 0
-    "/var/lib/docker/containers/505cf9f8635158399d2eb3866457bc1612e9e5571a09e188153be4ed75e9f6b3/mounts/shm":
+    "/var/lib/docker/containers/42f4adf8536e256340b997fc8f8d9b844d9d12a7dc8d9de5e305c518aa749d76/mounts/shm":
       available: 64.00 MiB
       available_bytes: 67108864
       capacity: 0%
@@ -696,7 +706,7 @@ values:
       size_bytes: 67108864
       used: 0 bytes
       used_bytes: 0
-    "/var/lib/docker/containers/758e122b861432ffbe33ddd3f193c3bd59359c63e238635d284e882d4c5fc840/mounts/shm":
+    "/var/lib/docker/containers/6b6b3f31bab5b2ce4ff5dfbb1426ca9d8071b3dbd0731c475076f6c88003f450/mounts/shm":
       available: 64.00 MiB
       available_bytes: 67108864
       capacity: 0%
@@ -713,7 +723,7 @@ values:
       size_bytes: 67108864
       used: 0 bytes
       used_bytes: 0
-    "/var/lib/docker/containers/765e419f67b0e8d2650393b455841e084b3a9adff7c3672410c329555d23d422/mounts/shm":
+    "/var/lib/docker/containers/6e137b96632749223e94e476f39e6e4a0fa31368abbeaaddff0b9d620493136a/mounts/shm":
       available: 64.00 MiB
       available_bytes: 67108864
       capacity: 0%
@@ -730,7 +740,7 @@ values:
       size_bytes: 67108864
       used: 0 bytes
       used_bytes: 0
-    "/var/lib/docker/containers/7ad2ea580d8c9f1f74ede4594b3fa0dcc09635a7f05791b0a0aa05ed591cd6bb/mounts/shm":
+    "/var/lib/docker/containers/72221c748d54b588874fe60ae72f46af499e025eb4a2667a10026a9d140c1ba2/mounts/shm":
       available: 64.00 MiB
       available_bytes: 67108864
       capacity: 0%
@@ -747,7 +757,7 @@ values:
       size_bytes: 67108864
       used: 0 bytes
       used_bytes: 0
-    "/var/lib/docker/containers/811007a10a4c859fab0c851ff5813f6e1df18bbb16cf505759b5618947c40c19/mounts/shm":
+    "/var/lib/docker/containers/8af0eb075d312e1138ffd113f5d0b5294395ab31653ef0e76cebe675761e52f7/mounts/shm":
       available: 64.00 MiB
       available_bytes: 67108864
       capacity: 0%
@@ -764,7 +774,7 @@ values:
       size_bytes: 67108864
       used: 0 bytes
       used_bytes: 0
-    "/var/lib/docker/containers/82612f8d453c8e302a071f05a345dc98d8718bc2f522d9a5b9d1600f6f89ec98/mounts/shm":
+    "/var/lib/docker/containers/8b15672d3cf9f3204cc05b728af5c6663eb06e1f3c2a5a5ef7cfd1b4d2f27e75/mounts/shm":
       available: 64.00 MiB
       available_bytes: 67108864
       capacity: 0%
@@ -781,7 +791,7 @@ values:
       size_bytes: 67108864
       used: 0 bytes
       used_bytes: 0
-    "/var/lib/docker/containers/8b8e0a1d53b8bfda5e774be1979e45d60af2199481c10510778e10e7b7c2f47c/mounts/shm":
+    "/var/lib/docker/containers/9ae2a6b06c83b619882268e6a91b105dd8373685065f4305fb72a7f1f707fe2a/mounts/shm":
       available: 64.00 MiB
       available_bytes: 67108864
       capacity: 0%
@@ -798,7 +808,7 @@ values:
       size_bytes: 67108864
       used: 0 bytes
       used_bytes: 0
-    "/var/lib/docker/containers/a8291d923bbac8008ed9318a767138fd82fe9ae29a1dc91045eafb1c8e022e17/mounts/shm":
+    "/var/lib/docker/containers/b24d07fe7d159ea9b6d4d5502de8f6f51943a851ded3e0cfb16b329d40b5c81b/mounts/shm":
       available: 64.00 MiB
       available_bytes: 67108864
       capacity: 0%
@@ -815,7 +825,7 @@ values:
       size_bytes: 67108864
       used: 0 bytes
       used_bytes: 0
-    "/var/lib/docker/containers/ca89dc61fe3367ce9337be6c10c5fb7df607b357a3d92ee4d086ad0974b2331b/mounts/shm":
+    "/var/lib/docker/containers/b55a9c5e19cd65d450755d8f631b27b63f4fb50ab1324fd836d6a33d01d59992/mounts/shm":
       available: 64.00 MiB
       available_bytes: 67108864
       capacity: 0%
@@ -832,7 +842,7 @@ values:
       size_bytes: 67108864
       used: 0 bytes
       used_bytes: 0
-    "/var/lib/docker/containers/fd33831b698da8a32b5afc310931829dd00bfe9fc36c700a63da9160c1188dfc/mounts/shm":
+    "/var/lib/docker/containers/bbbbf9c0a59688661216da522ed3edcd033745dc404c23925cedac204cf58150/mounts/shm":
       available: 64.00 MiB
       available_bytes: 67108864
       capacity: 0%
@@ -849,7 +859,7 @@ values:
       size_bytes: 67108864
       used: 0 bytes
       used_bytes: 0
-    "/var/lib/docker/containers/fe21b8c6fa0d73d6776ce7d2c66a92de577f684d51e39d83a6e41480386fd7a6/mounts/shm":
+    "/var/lib/docker/containers/dbb54966d1108a54c895f6c3b7cb8082116273f9fc47eff9e2e994fa1c5f9856/mounts/shm":
       available: 64.00 MiB
       available_bytes: 67108864
       capacity: 0%
@@ -868,80 +878,78 @@ values:
       used_bytes: 0
   mounts:
   - "/"
-  - "/var/lib/docker/overlay2/5dbecf9dc29489002cc7b5b6f6e7462df2ed93d7247af20e55515b993cbfb9c1/merged"
-  - "/var/lib/docker/overlay2/fb0953d2a72335ebc8f0b8feb7a5ab9980eeee2c927c1cd37de87268a7441a99/merged"
-  - "/var/lib/docker/overlay2/d2831dc700f5af1e4512a66904479b9c2ffe3252e14c151e31d7ce1827ca3e79/merged"
-  - "/var/lib/docker/overlay2/42f52a62258052d654249d15a97ac00b4a126bfe256b647e50958de6163e143e/merged"
-  - "/var/lib/docker/overlay2/25ab83860cae7d9dbf93b8e6b646eba946f5d5aec0de1f7c1c3b58c30a52c5ab/merged"
-  - "/var/lib/docker/overlay2/b43caab0902de0284a7c6ef59d5f3d6ba6286c9bf616cfbc9c9a53e47ab9077a/merged"
-  - "/var/lib/docker/overlay2/39b43f641ad7b1c755f731e31941429562f63ea9d3f0d4cfa5965d8c42f8e165/merged"
-  - "/var/lib/docker/overlay2/f9b290944ad495ca53eea23a144894bb844c54a8b76c4891235729f1f92fa12f/merged"
-  - "/var/lib/docker/overlay2/db0407c30558a9f88224bb47d675ae5edd718e89058177dcf71a17b825424f48/merged"
-  - "/var/lib/docker/overlay2/1801f94b63173aa524dc9e8afd1d2e7b8ad0a13cd58e22ee24c6e1ee82ea8202/merged"
-  - "/var/lib/docker/overlay2/7cd0c18ac54aecb3fe2e6882bca28988003773ae5634d2379ca539f8ed14c892/merged"
-  - "/var/lib/docker/overlay2/cf2beece9ec6c9fc1ebca74297aba057d676f68bd99cfb5b6023cbb1d86a338b/merged"
-  - "/var/lib/docker/overlay2/7177d98ce6b46d76f2e28b8c5820292271276c69c67bc4be67b59f3181beb2c0/merged"
-  mtu_br-61c22ce55038: 1500
+  - "/var/lib/docker/overlay2/6dc6ef249638e9a8a61290ffd1cf9dc08ad26fc3c593a3ae8be70e4bf86e3471/merged"
+  - "/var/lib/docker/overlay2/47025a6c08175d50b00ffcd284f81d7fc89b794015b6fbfbdfbae07c57c74bfc/merged"
+  - "/var/lib/docker/overlay2/7da5de211053203a2737de3ef4ffa505985b47449ce214bb624f24636e53edee/merged"
+  - "/var/lib/docker/overlay2/435a9f2fe4f651ba92c06a4eaa6c7d369c80c74ed83933209f15e75cbc4f3b9d/merged"
+  - "/var/lib/docker/overlay2/af8eda4b86f4f14aee7cdfd7e0a81cc404124e87558ae1d036d30ae7dbcea529/merged"
+  - "/var/lib/docker/overlay2/829dc9bd8f629b3771971d232cd5a3678204ef00edae38165a96324a220f63c6/merged"
+  - "/var/lib/docker/overlay2/5ef1d11359d9be3015ace627146157726c044bcd92affd404c3ea3c427912ee3/merged"
+  - "/var/lib/docker/overlay2/f61ff49a89d145a9cad434a65de4ce55f7c032cba617501708c19fae08eefc9c/merged"
+  - "/var/lib/docker/overlay2/e25ee42a1577ccca4fa784df6798fdc7ae65149a7afaeb54de0800f7e9f0cbaf/merged"
+  - "/var/lib/docker/overlay2/4a94ea523dc3379f2ca1e1d2a71491c273557c0c901e2cf9ce10002251165d5a/merged"
+  - "/var/lib/docker/overlay2/89cb4b749dd635b7050cdd303eba8950bb029e95647d722526449fff87b9e33c/merged"
+  - "/var/lib/docker/overlay2/c80682969164bb819d478b6138087f90efb54619359aac7a0486b2166234ab4d/merged"
+  - "/var/lib/docker/overlay2/33fe1b3e6e192f42adb7f7cf4308d05464f90dd6febf153e2e593d0d066338af/merged"
+  mtu_br-9bca9c0a7709: 1500
   mtu_docker0: 1500
   mtu_ens18: 1500
   mtu_lo: 65536
-  mtu_veth0aaf0ee: 1500
-  mtu_veth1833abd: 1500
-  mtu_veth283d83f: 1500
-  mtu_veth373baef: 1500
-  mtu_veth49ceb30: 1500
-  mtu_veth5d77f42: 1500
-  mtu_veth84294cd: 1500
-  mtu_veth98906a2: 1500
-  mtu_veth98c1b51: 1500
-  mtu_vetha92d1d0: 1500
-  mtu_vethafdbc60: 1500
-  mtu_vethb522e40: 1500
-  mtu_vethc8fb3df: 1500
+  mtu_veth31591b9: 1500
+  mtu_veth31727b3: 1500
+  mtu_veth5a44d11: 1500
+  mtu_veth64aee2e: 1500
+  mtu_veth6bf203f: 1500
+  mtu_veth74bd0ec: 1500
+  mtu_veth849bad2: 1500
+  mtu_veth8f3c79f: 1500
+  mtu_veth93c5c67: 1500
+  mtu_vethd66187c: 1500
+  mtu_vethda5a1a2: 1500
+  mtu_vethe48b9b9: 1500
+  mtu_vethfcc3f65: 1500
   mysql_server_id: 13485924
   netmask: 255.255.255.0
   netmask6: 'ffff:ffff:ffff:ffff::'
-  netmask6_br-61c22ce55038: 'ffff:ffff:ffff:ffff::'
-  netmask6_docker0: 'ffff:ffff:ffff:ffff::'
+  netmask6_br-9bca9c0a7709: 'ffff:ffff:ffff:ffff::'
   netmask6_ens18: 'ffff:ffff:ffff:ffff::'
   netmask6_lo: ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff
-  netmask6_veth0aaf0ee: 'ffff:ffff:ffff:ffff::'
-  netmask6_veth1833abd: 'ffff:ffff:ffff:ffff::'
-  netmask6_veth283d83f: 'ffff:ffff:ffff:ffff::'
-  netmask6_veth373baef: 'ffff:ffff:ffff:ffff::'
-  netmask6_veth49ceb30: 'ffff:ffff:ffff:ffff::'
-  netmask6_veth5d77f42: 'ffff:ffff:ffff:ffff::'
-  netmask6_veth84294cd: 'ffff:ffff:ffff:ffff::'
-  netmask6_veth98906a2: 'ffff:ffff:ffff:ffff::'
-  netmask6_veth98c1b51: 'ffff:ffff:ffff:ffff::'
-  netmask6_vetha92d1d0: 'ffff:ffff:ffff:ffff::'
-  netmask6_vethafdbc60: 'ffff:ffff:ffff:ffff::'
-  netmask6_vethb522e40: 'ffff:ffff:ffff:ffff::'
-  netmask6_vethc8fb3df: 'ffff:ffff:ffff:ffff::'
-  netmask_br-61c22ce55038: 255.255.240.0
+  netmask6_veth31591b9: 'ffff:ffff:ffff:ffff::'
+  netmask6_veth31727b3: 'ffff:ffff:ffff:ffff::'
+  netmask6_veth5a44d11: 'ffff:ffff:ffff:ffff::'
+  netmask6_veth64aee2e: 'ffff:ffff:ffff:ffff::'
+  netmask6_veth6bf203f: 'ffff:ffff:ffff:ffff::'
+  netmask6_veth74bd0ec: 'ffff:ffff:ffff:ffff::'
+  netmask6_veth849bad2: 'ffff:ffff:ffff:ffff::'
+  netmask6_veth8f3c79f: 'ffff:ffff:ffff:ffff::'
+  netmask6_veth93c5c67: 'ffff:ffff:ffff:ffff::'
+  netmask6_vethd66187c: 'ffff:ffff:ffff:ffff::'
+  netmask6_vethda5a1a2: 'ffff:ffff:ffff:ffff::'
+  netmask6_vethe48b9b9: 'ffff:ffff:ffff:ffff::'
+  netmask6_vethfcc3f65: 'ffff:ffff:ffff:ffff::'
+  netmask_br-9bca9c0a7709: 255.255.0.0
   netmask_docker0: 255.255.0.0
   netmask_ens18: 255.255.255.0
   netmask_lo: 255.0.0.0
   network: 192.168.100.0
   network6: 'fe80::'
-  network6_br-61c22ce55038: 'fe80::'
-  network6_docker0: 'fe80::'
+  network6_br-9bca9c0a7709: 'fe80::'
   network6_ens18: 'fe80::'
   network6_lo: "::1"
-  network6_veth0aaf0ee: 'fe80::'
-  network6_veth1833abd: 'fe80::'
-  network6_veth283d83f: 'fe80::'
-  network6_veth373baef: 'fe80::'
-  network6_veth49ceb30: 'fe80::'
-  network6_veth5d77f42: 'fe80::'
-  network6_veth84294cd: 'fe80::'
-  network6_veth98906a2: 'fe80::'
-  network6_veth98c1b51: 'fe80::'
-  network6_vetha92d1d0: 'fe80::'
-  network6_vethafdbc60: 'fe80::'
-  network6_vethb522e40: 'fe80::'
-  network6_vethc8fb3df: 'fe80::'
-  network_br-61c22ce55038: 192.168.176.0
+  network6_veth31591b9: 'fe80::'
+  network6_veth31727b3: 'fe80::'
+  network6_veth5a44d11: 'fe80::'
+  network6_veth64aee2e: 'fe80::'
+  network6_veth6bf203f: 'fe80::'
+  network6_veth74bd0ec: 'fe80::'
+  network6_veth849bad2: 'fe80::'
+  network6_veth8f3c79f: 'fe80::'
+  network6_veth93c5c67: 'fe80::'
+  network6_vethd66187c: 'fe80::'
+  network6_vethda5a1a2: 'fe80::'
+  network6_vethe48b9b9: 'fe80::'
+  network6_vethfcc3f65: 'fe80::'
+  network_br-9bca9c0a7709: 172.18.0.0
   network_docker0: 172.17.0.0
   network_ens18: 192.168.100.0
   network_lo: 127.0.0.0
@@ -950,40 +958,33 @@ values:
     fqdn: riverside.internal.softwareheritage.org
     hostname: riverside
     interfaces:
-      br-61c22ce55038:
+      br-9bca9c0a7709:
         bindings:
-        - address: 192.168.176.1
-          netmask: 255.255.240.0
-          network: 192.168.176.0
+        - address: 172.18.0.1
+          netmask: 255.255.0.0
+          network: 172.18.0.0
         bindings6:
-        - address: fe80::42:aaff:fe4c:dfae
+        - address: fe80::42:d0ff:fec0:8f48
           netmask: 'ffff:ffff:ffff:ffff::'
           network: 'fe80::'
-        ip: 192.168.176.1
-        ip6: fe80::42:aaff:fe4c:dfae
-        mac: 02:42:aa:4c:df:ae
+        ip: 172.18.0.1
+        ip6: fe80::42:d0ff:fec0:8f48
+        mac: 02:42:d0:c0:8f:48
         mtu: 1500
-        netmask: 255.255.240.0
+        netmask: 255.255.0.0
         netmask6: 'ffff:ffff:ffff:ffff::'
-        network: 192.168.176.0
+        network: 172.18.0.0
         network6: 'fe80::'
       docker0:
         bindings:
         - address: 172.17.0.1
           netmask: 255.255.0.0
           network: 172.17.0.0
-        bindings6:
-        - address: fe80::42:41ff:fed3:b216
-          netmask: 'ffff:ffff:ffff:ffff::'
-          network: 'fe80::'
         ip: 172.17.0.1
-        ip6: fe80::42:41ff:fed3:b216
-        mac: 02:42:41:d3:b2:16
+        mac: 02:42:e7:9f:09:bc
         mtu: 1500
         netmask: 255.255.0.0
-        netmask6: 'ffff:ffff:ffff:ffff::'
         network: 172.17.0.0
-        network6: 'fe80::'
       ens18:
         bindings:
         - address: 192.168.100.52
@@ -1017,133 +1018,133 @@ values:
         netmask6: ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff
         network: 127.0.0.0
         network6: "::1"
-      veth0aaf0ee:
+      veth31591b9:
         bindings6:
-        - address: fe80::5cc3:2dff:fe19:f098
+        - address: fe80::10fa:82ff:fec1:69b3
           netmask: 'ffff:ffff:ffff:ffff::'
           network: 'fe80::'
-        ip6: fe80::5cc3:2dff:fe19:f098
-        mac: 5e:c3:2d:19:f0:98
+        ip6: fe80::10fa:82ff:fec1:69b3
+        mac: 12:fa:82:c1:69:b3
         mtu: 1500
         netmask6: 'ffff:ffff:ffff:ffff::'
         network6: 'fe80::'
-      veth1833abd:
+      veth31727b3:
         bindings6:
-        - address: fe80::88c5:e3ff:fe82:a751
+        - address: fe80::e0f1:4ff:fefb:8a8c
           netmask: 'ffff:ffff:ffff:ffff::'
           network: 'fe80::'
-        ip6: fe80::88c5:e3ff:fe82:a751
-        mac: 8a:c5:e3:82:a7:51
+        ip6: fe80::e0f1:4ff:fefb:8a8c
+        mac: e2:f1:04:fb:8a:8c
         mtu: 1500
         netmask6: 'ffff:ffff:ffff:ffff::'
         network6: 'fe80::'
-      veth283d83f:
+      veth5a44d11:
         bindings6:
-        - address: fe80::7024:dfff:fee3:b63f
+        - address: fe80::3841:52ff:fe81:161b
           netmask: 'ffff:ffff:ffff:ffff::'
           network: 'fe80::'
-        ip6: fe80::7024:dfff:fee3:b63f
-        mac: 72:24:df:e3:b6:3f
+        ip6: fe80::3841:52ff:fe81:161b
+        mac: 3a:41:52:81:16:1b
         mtu: 1500
         netmask6: 'ffff:ffff:ffff:ffff::'
         network6: 'fe80::'
-      veth373baef:
+      veth64aee2e:
         bindings6:
-        - address: fe80::90d3:b0ff:fef8:3383
+        - address: fe80::2464:ffff:fe95:eee3
           netmask: 'ffff:ffff:ffff:ffff::'
           network: 'fe80::'
-        ip6: fe80::90d3:b0ff:fef8:3383
-        mac: 92:d3:b0:f8:33:83
+        ip6: fe80::2464:ffff:fe95:eee3
+        mac: 26:64:ff:95:ee:e3
         mtu: 1500
         netmask6: 'ffff:ffff:ffff:ffff::'
         network6: 'fe80::'
-      veth49ceb30:
+      veth6bf203f:
         bindings6:
-        - address: fe80::1486:d8ff:fe38:5ba
+        - address: fe80::5855:c9ff:fe3c:846
           netmask: 'ffff:ffff:ffff:ffff::'
           network: 'fe80::'
-        ip6: fe80::1486:d8ff:fe38:5ba
-        mac: 16:86:d8:38:05:ba
+        ip6: fe80::5855:c9ff:fe3c:846
+        mac: 5a:55:c9:3c:08:46
         mtu: 1500
         netmask6: 'ffff:ffff:ffff:ffff::'
         network6: 'fe80::'
-      veth5d77f42:
+      veth74bd0ec:
         bindings6:
-        - address: fe80::1c25:ecff:fe81:d4a2
+        - address: fe80::2ccb:e6ff:fe36:cb3e
           netmask: 'ffff:ffff:ffff:ffff::'
           network: 'fe80::'
-        ip6: fe80::1c25:ecff:fe81:d4a2
-        mac: 1e:25:ec:81:d4:a2
+        ip6: fe80::2ccb:e6ff:fe36:cb3e
+        mac: 2e:cb:e6:36:cb:3e
         mtu: 1500
         netmask6: 'ffff:ffff:ffff:ffff::'
         network6: 'fe80::'
-      veth84294cd:
+      veth849bad2:
         bindings6:
-        - address: fe80::9cf5:3ff:fe71:da8f
+        - address: fe80::8c18:1dff:fe7b:184e
           netmask: 'ffff:ffff:ffff:ffff::'
           network: 'fe80::'
-        ip6: fe80::9cf5:3ff:fe71:da8f
-        mac: 9e:f5:03:71:da:8f
+        ip6: fe80::8c18:1dff:fe7b:184e
+        mac: 8e:18:1d:7b:18:4e
         mtu: 1500
         netmask6: 'ffff:ffff:ffff:ffff::'
         network6: 'fe80::'
-      veth98906a2:
+      veth8f3c79f:
         bindings6:
-        - address: fe80::68a4:6ff:febd:2337
+        - address: fe80::2824:d9ff:febc:467a
           netmask: 'ffff:ffff:ffff:ffff::'
           network: 'fe80::'
-        ip6: fe80::68a4:6ff:febd:2337
-        mac: 6a:a4:06:bd:23:37
+        ip6: fe80::2824:d9ff:febc:467a
+        mac: 2a:24:d9:bc:46:7a
         mtu: 1500
         netmask6: 'ffff:ffff:ffff:ffff::'
         network6: 'fe80::'
-      veth98c1b51:
+      veth93c5c67:
         bindings6:
-        - address: fe80::9813:69ff:fefc:ca6
+        - address: fe80::8831:4ff:fec8:1727
           netmask: 'ffff:ffff:ffff:ffff::'
           network: 'fe80::'
-        ip6: fe80::9813:69ff:fefc:ca6
-        mac: 9a:13:69:fc:0c:a6
+        ip6: fe80::8831:4ff:fec8:1727
+        mac: 8a:31:04:c8:17:27
         mtu: 1500
         netmask6: 'ffff:ffff:ffff:ffff::'
         network6: 'fe80::'
-      vetha92d1d0:
+      vethd66187c:
         bindings6:
-        - address: fe80::8842:d2ff:feea:80e7
+        - address: fe80::24c5:1ff:fe67:ec49
           netmask: 'ffff:ffff:ffff:ffff::'
           network: 'fe80::'
-        ip6: fe80::8842:d2ff:feea:80e7
-        mac: 8a:42:d2:ea:80:e7
+        ip6: fe80::24c5:1ff:fe67:ec49
+        mac: 26:c5:01:67:ec:49
         mtu: 1500
         netmask6: 'ffff:ffff:ffff:ffff::'
         network6: 'fe80::'
-      vethafdbc60:
+      vethda5a1a2:
         bindings6:
-        - address: fe80::bc06:6ff:fe61:6a1c
+        - address: fe80::e6:91ff:fed8:71c0
           netmask: 'ffff:ffff:ffff:ffff::'
           network: 'fe80::'
-        ip6: fe80::bc06:6ff:fe61:6a1c
-        mac: be:06:06:61:6a:1c
+        ip6: fe80::e6:91ff:fed8:71c0
+        mac: 02:e6:91:d8:71:c0
         mtu: 1500
         netmask6: 'ffff:ffff:ffff:ffff::'
         network6: 'fe80::'
-      vethb522e40:
+      vethe48b9b9:
         bindings6:
-        - address: fe80::6c92:e2ff:fe8f:17e9
+        - address: fe80::4422:93ff:fef8:76d7
           netmask: 'ffff:ffff:ffff:ffff::'
           network: 'fe80::'
-        ip6: fe80::6c92:e2ff:fe8f:17e9
-        mac: 6e:92:e2:8f:17:e9
+        ip6: fe80::4422:93ff:fef8:76d7
+        mac: 46:22:93:f8:76:d7
         mtu: 1500
         netmask6: 'ffff:ffff:ffff:ffff::'
         network6: 'fe80::'
-      vethc8fb3df:
+      vethfcc3f65:
         bindings6:
-        - address: fe80::508e:cdff:fe54:56c9
+        - address: fe80::fc45:bfff:fed7:3639
           netmask: 'ffff:ffff:ffff:ffff::'
           network: 'fe80::'
-        ip6: fe80::508e:cdff:fe54:56c9
-        mac: 52:8e:cd:54:56:c9
+        ip6: fe80::fc45:bfff:fed7:3639
+        mac: fe:45:bf:d7:36:39
         mtu: 1500
         netmask6: 'ffff:ffff:ffff:ffff::'
         network6: 'fe80::'
@@ -1158,7 +1159,7 @@ values:
     primary: ens18
   operatingsystem: Debian
   operatingsystemmajrelease: '10'
-  operatingsystemrelease: '10.2'
+  operatingsystemrelease: '10.5'
   os:
     architecture: amd64
     distro:
@@ -1172,9 +1173,9 @@ values:
     hardware: x86_64
     name: Debian
     release:
-      full: '10.2'
+      full: '10.5'
       major: '10'
-      minor: '2'
+      minor: '5'
     selinux:
       enabled: false
   osfamily: Debian
@@ -1197,21 +1198,21 @@ values:
       size: 32.00 GiB
       size_bytes: 34357641216
       uuid: pSVsxk-k5CU-kUy3-42Cc-35ex-84OO-U8Zkc8
-  path: "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+  path: "/usr/bin:/bin:/usr/sbin:/sbin"
   physicalprocessorcount: 2
-  processor0: Common KVM processor
-  processor1: Common KVM processor
-  processor2: Common KVM processor
-  processor3: Common KVM processor
+  processor0: AMD EPYC 7301 16-Core Processor
+  processor1: AMD EPYC 7301 16-Core Processor
+  processor2: AMD EPYC 7301 16-Core Processor
+  processor3: AMD EPYC 7301 16-Core Processor
   processorcount: 4
   processors:
     count: 4
     isa: unknown
     models:
-    - Common KVM processor
-    - Common KVM processor
-    - Common KVM processor
-    - Common KVM processor
+    - AMD EPYC 7301 16-Core Processor
+    - AMD EPYC 7301 16-Core Processor
+    - AMD EPYC 7301 16-Core Processor
+    - AMD EPYC 7301 16-Core Processor
     physicalcount: 2
   productname: Standard PC (i440FX + PIIX, 1996)
   public_ipaddresses: []
@@ -1266,8 +1267,8 @@ values:
     SSHFP 1 2 72fdb7d336cf76610c475ee4baffbb2731d4bb959f604e53123913b53b5449a9
   sshrsakey: AAAAB3NzaC1yc2EAAAADAQABAAABAQC9zgPRT15LVxq0C989JRU4f5YfIJKPRY+axzSVghRywrjvb3RNUmN05+/nzv6K3vRiTy250EsIZq3O/Gkbm3JY5ltdQ+wHhMdbeb0JpxyASy1kgaqUhyhway7NNfrQMLnbZighBNOb7W/5QL9ZQSVmmo28cZKBW54PdlOvErFq42v3xx2BNTqo6Bqm1Lhb64SHF9bVfO3ZKFXRPWTQV968q05VkV79OqMXlG2HPT36LyxX5bog+7v/GvJoQysCY3n1KiItSc5iZVooihLxjU/k0GosXwZbnuhVak5kywBbHqiUTPhh4hvg7rfAcrT+PBDXj+iWqxRfmNe+1JLcWK4r
   sudoversion: 1.8.27
-  swapfree: 3.81 GiB
-  swapfree_mb: 3899.734375
+  swapfree: 3.66 GiB
+  swapfree_mb: 3752.49609375
   swapsize: 3.81 GiB
   swapsize_mb: 3903.99609375
   swh_hostname:
@@ -1275,10 +1276,10 @@ values:
     short: riverside
     internal_fqdn: riverside.internal.softwareheritage.org
   system_uptime:
-    days: 29
-    hours: 719
-    seconds: 2590044
-    uptime: 29 days
+    days: 144
+    hours: 3476
+    seconds: 12514840
+    uptime: 144 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -1290,15 +1291,15 @@ values:
     systemd-timesyncd.service: enabled
   systemd_version: '241'
   timezone: UTC
-  uptime: 29 days
-  uptime_days: 29
-  uptime_hours: 719
-  uptime_seconds: 2590044
+  uptime: 144 days
+  uptime_days: 144
+  uptime_hours: 3476
+  uptime_seconds: 12514840
   uuid: d14c544e-e40e-44c7-b9a8-6ffc434c64f8
   vcsrepo_svn_ver: ''
   virtual: kvm
   clientcert: riverside.internal.softwareheritage.org
   clientversion: 5.5.10
   clientnoop: false
-timestamp: '2020-01-02T16:05:48.216636250+00:00'
-expiration: '2020-01-02T16:35:48.217773552+00:00'
+timestamp: '2020-09-02T11:56:08.657700149+00:00'
+expiration: '2020-09-02T12:26:08.658883057+00:00'

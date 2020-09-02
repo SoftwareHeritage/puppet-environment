@@ -3,28 +3,24 @@ name: webapp0.softwareheritage.org
 values:
   agent_specified_environment: production
   apache_version: 2.4.38
-  apt_dist_updates: 5
+  apt_dist_updates: 4
   apt_has_dist_updates: true
   apt_has_updates: true
   apt_package_dist_updates:
-  - python3-swh.core
-  - python3-swh.model
+  - python3-mypy-extensions
   - python3-swh.storage
-  - python3-swh.journal
-  - python3-swh.scheduler
+  - python3-swh.indexer
+  - python3-swh.indexer.storage
   apt_package_security_dist_updates: []
   apt_package_security_updates: []
   apt_package_updates:
-  - python3-swh.core
-  - python3-swh.model
-  - python3-swh.storage
-  - python3-swh.journal
-  - python3-swh.scheduler
+  - python3-swh.indexer
+  - python3-swh.indexer.storage
   apt_reboot_required: false
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1577977862
-  apt_updates: 5
+  apt_update_last_success: 1599045062
+  apt_updates: 2
   architecture: amd64
   bios_release_date: 06/02/2017
   bios_vendor: American Megatrends Inc.
@@ -149,6 +145,8 @@ values:
     haltode: "/home/haltode"
     _rpc: "/run/rpcbind"
     systemd-coredump: "/"
+    danseraf: "/home/danseraf"
+    aeviso: "/home/aeviso"
   domain: softwareheritage.org
   facterversion: 3.11.0
   filesystems: ext2,ext3,ext4
@@ -179,13 +177,13 @@ values:
   is_virtual: true
   kernel: Linux
   kernelmajversion: '4.19'
-  kernelrelease: 4.19.0-6-amd64
+  kernelrelease: 4.19.0-10-amd64
   kernelversion: 4.19.0
   letsencrypt_directory: {}
   load_averages:
     15m: 0.01
-    1m: 0.07
-    5m: 0.03
+    1m: 0.11
+    5m: 0.05
   location: azure_euwest
   lsbdistcodename: buster
   lsbdistdescription: Debian GNU/Linux 10 (buster)
@@ -197,22 +195,22 @@ values:
   manufacturer: Microsoft Corporation
   memory:
     system:
-      available: 3.90 GiB
-      available_bytes: 4189794304
-      capacity: 49.78%
+      available: 3.62 GiB
+      available_bytes: 3886915584
+      capacity: 53.41%
       total: 7.77 GiB
-      total_bytes: 8342081536
-      used: 3.87 GiB
-      used_bytes: 4152287232
-  memoryfree: 3.90 GiB
-  memoryfree_mb: 3995.69921875
+      total_bytes: 8342097920
+      used: 4.15 GiB
+      used_bytes: 4455182336
+  memoryfree: 3.62 GiB
+  memoryfree_mb: 3706.8515625
   memorysize: 7.77 GiB
-  memorysize_mb: 7955.62890625
+  memorysize_mb: 7955.64453125
   mountpoints:
     "/":
-      available: 26.26 GiB
-      available_bytes: 28198854656
-      capacity: 10.68%
+      available: 25.76 GiB
+      available_bytes: 27658248192
+      capacity: 12.39%
       device: "/dev/sda1"
       filesystem: ext4
       options:
@@ -221,11 +219,11 @@ values:
       - errors=remount-ro
       size: 29.40 GiB
       size_bytes: 31571480576
-      used: 3.14 GiB
-      used_bytes: 3372625920
+      used: 3.64 GiB
+      used_bytes: 3913232384
     "/dev/shm":
       available: 3.88 GiB
-      available_bytes: 4171038720
+      available_bytes: 4171046912
       capacity: 0%
       device: tmpfs
       filesystem: tmpfs
@@ -234,7 +232,7 @@ values:
       - nosuid
       - nodev
       size: 3.88 GiB
-      size_bytes: 4171038720
+      size_bytes: 4171046912
       used: 0 bytes
       used_bytes: 0
     "/mnt/resource":
@@ -251,8 +249,8 @@ values:
       used: 44.03 MiB
       used_bytes: 46166016
     "/run":
-      available: 795.05 MiB
-      available_bytes: 833667072
+      available: 795.02 MiB
+      available_bytes: 833634304
       capacity: 0.07%
       device: tmpfs
       filesystem: tmpfs
@@ -265,8 +263,8 @@ values:
       - mode=755
       size: 795.57 MiB
       size_bytes: 834211840
-      used: 532.00 KiB
-      used_bytes: 544768
+      used: 564.00 KiB
+      used_bytes: 577536
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -282,23 +280,6 @@ values:
       - size=5120k
       size: 5.00 MiB
       size_bytes: 5242880
-      used: 0 bytes
-      used_bytes: 0
-    "/run/user/0":
-      available: 795.56 MiB
-      available_bytes: 834207744
-      capacity: 0%
-      device: tmpfs
-      filesystem: tmpfs
-      options:
-      - rw
-      - nosuid
-      - nodev
-      - relatime
-      - size=814656k
-      - mode=700
-      size: 795.56 MiB
-      size_bytes: 834207744
       used: 0 bytes
       used_bytes: 0
     "/run/user/1003":
@@ -322,7 +303,7 @@ values:
       used_bytes: 0
     "/sys/fs/cgroup":
       available: 3.88 GiB
-      available_bytes: 4171038720
+      available_bytes: 4171046912
       capacity: 0%
       device: tmpfs
       filesystem: tmpfs
@@ -333,7 +314,7 @@ values:
       - noexec
       - mode=755
       size: 3.88 GiB
-      size_bytes: 4171038720
+      size_bytes: 4171046912
       used: 0 bytes
       used_bytes: 0
   mounts:
@@ -406,7 +387,7 @@ values:
   nginx_version: 1.14.2
   operatingsystem: Debian
   operatingsystemmajrelease: '10'
-  operatingsystemrelease: '10.2'
+  operatingsystemrelease: '10.5'
   os:
     architecture: amd64
     distro:
@@ -420,9 +401,9 @@ values:
     hardware: x86_64
     name: Debian
     release:
-      full: '10.2'
+      full: '10.5'
       major: '10'
-      minor: '2'
+      minor: '5'
     selinux:
       enabled: false
   osfamily: Debian
@@ -442,7 +423,7 @@ values:
       size: 16.00 GiB
       size_bytes: 17178755072
       uuid: 6c2763e2-3b55-49b3-bc17-b1317aae2652
-  path: "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+  path: "/usr/bin:/bin:/usr/sbin:/sbin"
   physicalprocessorcount: 1
   processor0: Intel(R) Xeon(R) CPU E5-2673 v4 @ 2.30GHz
   processor1: Intel(R) Xeon(R) CPU E5-2673 v4 @ 2.30GHz
@@ -491,7 +472,12 @@ values:
       key: AAAAB3NzaC1yc2EAAAADAQABAAABAQDTPwsqnWJGf2/zZKKdpdtA5itOjK+y71yk9wakwkzAV2rwxiNRstSAKmiKOkOCzi3+u1M91yRfnMv7bXv87jObP6rfCGyCDVhw21++gsZALYXaNxcQcW8fZqjMogDX14fJCmoijSYEFRiJVpuiElgwABNntAUhQ3mkweGM6O2VnyrPXLGIi1fu7Cwp7DjlvhtZX2uF5RYurUKm+qN08YpFWYhIoRso87/ryv5b6SIKhUwb5F5HNZHAOsKxjaSxweaPuA5cEmgw/m/Ur/bRE0S1ZmkxckP8YjeP106k6BOLglwrOewIE/hSSqtBthWgTOVszJnq3nW6Bdes5HkVQYlf
       type: ssh-rsa
   ssh_client_version_full: 7.9p1
-  ssh_keys_users: {}
+  ssh_keys_users:
+    root:
+      id_ed25519.borg.pub:
+        type: ed25519
+        key: AAAAC3NzaC1lZDI1NTE5AAAAIMpodwT1t9L2vRGoXjrAdT8DgdSL2DqVhcmhFU457qbh
+        comment: root@webapp0
   ssh_server_version_full: 7.9p1
   ssh_server_version_major: '7'
   ssh_server_version_release: '7.9'
@@ -513,30 +499,33 @@ values:
     short: webapp0
     internal_fqdn: webapp0.internal.softwareheritage.org
   system_uptime:
-    days: 24
-    hours: 587
-    seconds: 2114981
-    uptime: 24 days
+    days: 14
+    hours: 359
+    seconds: 1293776
+    uptime: 14 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
     systemd-fsck-root.service: enabled-runtime
+    systemd-network-generator.service: disabled
     systemd-networkd-wait-online.service: disabled
     systemd-networkd.service: disabled
+    systemd-pstore.service: enabled
+    systemd-remount-fs.service: enabled-runtime
     systemd-resolved.service: disabled
     systemd-time-wait-sync.service: disabled
     systemd-timesyncd.service: enabled
-  systemd_version: '241'
+  systemd_version: '245'
   timezone: UTC
-  uptime: 24 days
-  uptime_days: 24
-  uptime_hours: 587
-  uptime_seconds: 2114981
+  uptime: 14 days
+  uptime_days: 14
+  uptime_hours: 359
+  uptime_seconds: 1293776
   uuid: 55c20d2f-cf6e-ba49-95d7-23b6b1cc89d0
   vcsrepo_svn_ver: ''
   virtual: hyperv
   clientcert: webapp0.softwareheritage.org
   clientversion: 5.5.10
   clientnoop: false
-timestamp: '2020-01-02T16:05:48.256339555+00:00'
-expiration: '2020-01-02T16:35:48.256872853+00:00'
+timestamp: '2020-09-02T11:55:05.687199489+00:00'
+expiration: '2020-09-02T12:25:05.687605989+00:00'
