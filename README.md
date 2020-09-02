@@ -63,3 +63,108 @@ specific tag or revision.
 
 Our specific deploy script also fetches private repositories and merges them
 with the public r10k setup.
+
+Local puppet manifest diffing with octocatalog-diff
+---------------------------------------------------
+
+puppet-environment contains the whole scaffolding to be able to use [octocatalog-diff][2] on our manifests. This allows for quick(er) local iterations while developing complex puppet manifests.
+Dependencies
+
+[2]: https://github.com/github/octocatalog-diff
+
+You need the following packages installed on your machine:
+
+    r10k octocatalog-diff puppet
+
+### Running
+
+The `bin/octocatalog-diff` script allows diffing the manifests between two environments (that is, between two branches of the *swh-site* repository. By default it diffs between production and staging.
+
+Default usage:
+
+    bin/octocatalog-diff pergamon
+
+Limitations
+
+Our setup for octocatalog-diff doesn't support exported resources, so you won't see your fancy icinga checks there.
+
+Integration of third party puppet modules
+-----------------------------------------
+
+We mirror external repositories to our own forge, to avoid having external dependencies in our deployment.
+
+In the `swh-site/Puppetfile`, we pin the installation of those modules to the highest version (that works with our current puppet/facter version), by using the `:ref` specifier.
+
+### Adding a new external puppet module
+
+
+In the *puppet-environment* repository, the `bin/import-puppet-module` takes care of the following tasks:
+
+* Getting metadata from the Puppet forge for the module (description, upstream git URL)
+* Cloning the repository
+* Creating a mirror repository on the Software Heritage forge, with the proper permissions and metadata (notably the Sync to GitHub flag)
+* Pushing the clone to the forge
+* Updating the `.mrconfig` and `.gitignore` files to know the new repository
+
+To be able to use the script, you need to :
+
+* Be a member of the System Administrators Phabricator group
+* Have the Arcanist API key setup
+* A pair of python dependencies : `python3-phabricator` and `python3-requests` (pull them from testing if needed).
+
+Example usage to pull the `elastic/elasticsearch` module
+
+    bin/import-module elastic-elasticsearch
+    git diff # review changes
+    git add .mrconfig .gitignore
+    git commit -m "Add the elastic/elasticsearch module"
+    git push
+
+Once the module is added, you need to register it in `swh-site/Puppetfile`.
+
+You should also check in the module metadata whether any dependencies need importing as well, which you should do using the same procedure.
+
+### Updating external puppet modules
+ 
+There's two sides of this coin:
+
+#### Updating our git clone of external puppet modules
+
+The *puppet-environment* `.mrconfig` file has a pullup command which does the right thing.
+
+To update all clones:
+
+    mr -j4 pullup
+
+#### Upgrading external puppet modules
+
+Upgrading external puppet modules happens manually.
+
+In the *puppet-environment* repository, the `bin/check-module-updates` script compares the Puppetfile and the local clones and lists the available updates. (depends on `ruby r10k`).
+
+On a staging branch of the *swh-site* repository, update the `:ref` value for the module in the `Puppetfile` to the latest tag. You can then run `octocatalog-diff` on a few relevant servers and look for changes. 
+
+Deploy workflow
+----------------
+
+### Semi-automated
+
+    you@localhost$ # hack on puppet Git repo
+    you@localhost$ rake validate
+    you@localhost$ git commit
+    you@localhost$ git push
+    you@localhost$ cd puppet-environment
+    you@localhost$ bin/deploy-on machine1 machine2...
+
+Remember to pass `--apt` to `bin/deploy-on` if freshly uploaded Software Heritage packages are to be deployed. Also, `bin/deploy-on --help` is your friend.
+
+### Manual
+
+    you@localhost$ # hack on puppet Git repo
+    you@localhost$ rake validate
+    you@localhost$ git commit
+    you@localhost$ git push
+    you@pergamon$ sudo swh-puppet-master-deploy
+    you@machine$ sudo apt-get update # if a new or updated version of a Debian package needs deploying
+    you@machine$ sudo swh-puppet-test # to test/review changes
+    you@machine$ sudo swh-puppet-apply # to apply
