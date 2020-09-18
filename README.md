@@ -168,3 +168,137 @@ Remember to pass `--apt` to `bin/deploy-on` if freshly uploaded Software Heritag
     you@machine$ sudo apt-get update # if a new or updated version of a Debian package needs deploying
     you@machine$ sudo swh-puppet-test # to test/review changes
     you@machine$ sudo swh-puppet-apply # to apply
+
+Local tests with vagrant
+------------------------
+
+> **_NOTE_**: The vagrant configuration uses a public image generated with packer.
+See the dedicated readme[1] in the packer directory for more information to manage this image.
+
+### Setup
+
+Vagrant and Virtualbox tools must be installed. On a debian based environment:
+
+```
+# 2020-09-17 vagrant is not working with virtualbox 6.1
+apt install vagrant virtualbox-6.0  
+# An additional plugin must be installed to manage the virtualbox addons in the vms
+vagrant plugin install vagrant-vbguest
+```
+
+### Usage
+
+#### Prepare the puppet environment
+
+The puppet directory struture needs to be prepared before starting a vm. 
+It can be done with the ``bin/prepare-vagrant-conf`` script. The script must be run each time a new commit is done to refresh the code applied on the vms.
+
+The working directory is ``/tmp/puppet``.
+
+```
+bin/prepare-vagrant-conf [-b branch]
+```
+
+The ``-b`` parameter allows to create a specific puppet environment based on the branch with the same name.
+
+It allows to test changes on feature branches (The ``environment`` variable in the Vagrantfile has to be updated accordingly).
+
+**_NOTE_**: This command only uses the **committed files**. The pending changes will not be included on the configuration.
+
+(**to be confirmed**) By convention, the vagrant names are prefixed by the environment for the core archive servers:
+* staging-webapp0
+* staging-worker0
+* staging-db0
+* production-worker0
+* production-db0
+* ...
+
+#### Status
+The status of all the vms present on the vagranfile can be checked with:
+
+```
+vagrant status
+```
+
+Example:
+```
+$ vagrant status
+Current machine states:
+
+staging-webapp            running (virtualbox)
+staging-worker0           running (virtualbox)
+prod-worker01             not created (virtualbox)
+test                      poweroff (virtualbox)
+
+This environment represents multiple VMs. The VMs are all listed
+above with their current state. For more information about a specific
+VM, run `vagrant status NAME`.
+```
+
+#### Start a vm
+
+```
+vagrant up <server name>
+```
+
+For example to start the worker0 of the staging:
+
+```
+$ # update the configuration
+$ bin/prepare-vagrant-conf
+$ # start the vm
+$ vagrant up <vm name>
+```
+
+If it's the first time this vm is launched, vagrant will apply the puppet configuration to init the server.
+
+#### Apply the puppet configuration
+
+To speedup the tests, a scripts can be used to synchronize the changes made on the working directories and the puppet configuration directories used by vagrant. This script avoid to have to commit each change before being able to test it.
+
+In one terminal:
+```
+bin/prepare-vagrant-conf
+bin/watch-vagrant-conf
+```
+
+In another terminal:
+```
+vagrant provision <vm-name>
+```
+
+In this case, the configuration will always be uptodate with the local directories.
+
+> **_NOTE_**: It works for basic changes on the swh-site and data configurations. For other changes like declaring a new puppet module, the ``prepare-vagrant-conf`` must be called to completely rebuild the configuration.
+
+#### connect to a vm
+
+A shell can be opened to a running vm with this command:
+
+```
+vagrant ssh <vm name>
+```
+
+#### Stop a vm
+
+```
+vagrant stop <vm name>
+```
+
+#### Update the configuration
+
+If the vagrantfile is updated to change a property of a server, like the memory, cpu configuration or network, the configuration has to be reloaded:
+
+```
+vagrant reload <vm name>
+```
+
+#### Cleanup
+
+To recover space, the vms can be destroyed with:
+
+```
+vagrant destroy <vm name>
+```
+
+[1]: [packer/README.md][packer/README.md]

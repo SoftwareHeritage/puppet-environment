@@ -1,0 +1,30 @@
+#!/bin/bash
+
+set -e
+
+PUPPET_ENV=$(readlink -f $(dirname $0)/..)
+
+RSYNC_PARAMS="-aP"
+
+EXCLUDES=".git .vagrant"
+EXCLUDES_PARAMS=""
+
+for ex in ${EXCLUDES}; do
+    EXCLUDES_PARAMS="${EXCLUDES_PARAMS} --exclude $ex"
+done
+
+function sync_puppet_conf {
+    rsync $RSYNC_PARAMS $EXCLUDES_PARAMS swh-site/data/ /tmp/puppet/environments/vagrant/data
+    rsync $RSYNC_PARAMS $EXCLUDES_PARAMS swh-site/site-modules/ /tmp/puppet/environments/vagrant/site-modules/
+    rsync $RSYNC_PARAMS $EXCLUDES_PARAMS private/swh-private-data-censored/ /tmp/puppet/environments/vagrant/data/private
+}
+
+# Initial sync
+sync_puppet_conf
+
+while true; do
+    inotifywait -q -r -e modify -e moved_to -e moved_from -e move -e create $EXCLUDES_PARAMS ${PUPPET_ENV}
+    echo Update detecting, synchronizing....
+    sleep .5
+    sync_puppet_conf
+done

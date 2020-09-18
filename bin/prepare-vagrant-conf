@@ -1,0 +1,60 @@
+#!/bin/bash
+
+set -eu
+
+PUPPET_ENV=$(readlink -f $(dirname $0)/..)
+OCD_BASE="${PUPPET_ENV}/octocatalog-diff"
+FACTS_DIR="${OCD_BASE}/facts"
+
+function usage {
+    echo "usage: $0 [-b/--branch branch]"
+}
+
+CLEAN_TMPDIR=true
+USE_REMOTE_REPOS=false
+FROM=production
+TO=staging
+HOSTS=()
+OCTOCATALOG_DIFF_ARGS=
+R10K_ARGS=
+CLEAN_TMPDIR=false
+UNCOMMITTED=false
+
+while (( "$#" )); do
+    case "$1" in
+        -b|--branch)
+            BRANCH=$2
+            shift
+            ;;
+        -u|-uncommited)
+            UNCOMMITTED=true
+            ;;
+        *)
+            echo u
+            ;;
+    esac
+    shift
+done
+
+TMPDIR=/tmp/puppet
+mkdir -p /tmp/puppet
+rm -rf /tmp/puppet/environments/
+
+function template {
+    sed -e "s#@PUPPET_ENV@#${PUPPET_ENV}#g" -e "s#@TMPDIR@#${TMPDIR}#g" $1 > $2
+}
+
+# R10k config
+template $OCD_BASE/r10k.yaml $TMPDIR/r10k.yaml
+# override git configuration to clone from local repositories instead of the forge
+template $OCD_BASE/gitconfig $TMPDIR/.gitconfig
+
+HOME=$TMPDIR r10k deploy environment -c $TMPDIR/r10k.yaml --puppetfile $R10K_ARGS production staging ${BRANCH}
+
+unknown_branch=false
+git clone $PUPPET_ENV/private/swh-private-data-censored $TMPDIR/environments/production/data/private
+git clone $PUPPET_ENV/private/swh-private-data-censored $TMPDIR/environments/staging/data/private
+
+if [ ! -z "${BRANCH}" ]; then
+    git clone $PUPPET_ENV/private/swh-private-data-censored $TMPDIR/environments/$BRANCH/data/private
+fi

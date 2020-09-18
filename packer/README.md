@@ -7,11 +7,10 @@ Setup
 -----
 
 Packer and virtualbox tools are needed to create the base image.
-An additional plugin must be installed to manage the virtualbox addons in the vms.
 
 On debian(10) :
 ```
-apt install vagrant virtualbox-6.0  # 2020-09-17 vagrant is not working with virtualbox 6.1
+apt install packer virtualbox-6.0  # 2020-09-17 vagrant is not working with virtualbox 6.1
 vagrant plugin install vagrant-vbguest
 ```
 
