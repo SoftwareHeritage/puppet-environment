@@ -34,7 +34,6 @@ Vagrant.configure("2") do |config|
       vb.linked_clone = true
       vb.memory = 512
       vb.cpus = 2
-      vb.customize ["modifyvm", :id, "--vram", "256"]
     end
     config.vm.provision "puppet" do |puppet|
       puppet.environment_path = "/tmp/puppet/environments"
@@ -71,7 +70,6 @@ Vagrant.configure("2") do |config|
       vb.linked_clone = true
       vb.memory = 4096
       vb.cpus = 2
-      vb.customize ["modifyvm", :id, "--vram", "256"]
     end
 
     config.vm.provision "puppet" do |puppet|
@@ -115,7 +113,6 @@ Vagrant.configure("2") do |config|
       vb.linked_clone = true
       vb.memory = 512
       vb.cpus = 2
-      vb.customize ["modifyvm", :id, "--vram", "256"]
     end
     config.vm.provision "puppet" do |puppet|
       puppet.environment_path = "/tmp/puppet/environments"
@@ -155,7 +152,6 @@ Vagrant.configure("2") do |config|
       vb.linked_clone = true
       vb.memory = 4096
       vb.cpus = 2
-      vb.customize ["modifyvm", :id, "--vram", "256"]
     end
 
     config.vm.provision "puppet" do |puppet|
@@ -201,7 +197,6 @@ Vagrant.configure("2") do |config|
       vb.linked_clone = true
       vb.memory = 512
       vb.cpus = 2
-      vb.customize ["modifyvm", :id, "--vram", "256"]
     end
     config.vm.provision "puppet" do |puppet|
       puppet.environment_path = "/tmp/puppet/environments"
