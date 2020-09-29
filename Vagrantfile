@@ -11,11 +11,11 @@ environment="staging"
 $global_debian10_box = "debian10-20200922-0913"
 $global_debian10_box_url = "https://annex.softwareheritage.org/public/isos/virtualbox/debian/swh-debian-10.5-amd64-20200922-0913.box"
 
-################
-## STAGING
-################
-Vagrant.configure("2") do |config|
-  config.vm.define :"staging-webapp" do |config|
+Vagrant.configure("2") do |global_config|
+  ################
+  ## STAGING
+  ################
+  global_config.vm.define :"staging-webapp" do |config|
 
     # config.ssh.insert_key = false
 
@@ -51,10 +51,8 @@ Vagrant.configure("2") do |config|
       }
     end
   end
-end
 
-Vagrant.configure("2") do |config|
-  config.vm.define :"staging-worker0" do |config|
+  global_config.vm.define :"staging-worker0" do |config|
 
     config.vm.box                     = $global_debian10_box
     config.vm.box_url                 = $global_debian10_box_url
@@ -88,13 +86,11 @@ Vagrant.configure("2") do |config|
       }
     end
   end
-end
 
-################
-## ADMIN
-################
-Vagrant.configure("2") do |config|
-  config.vm.define :"admin-inventory" do |config|
+  ################
+  # ADMIN
+  ################
+  global_config.vm.define :"admin-inventory" do |config|
 
     # config.ssh.insert_key = false
 
@@ -130,13 +126,11 @@ Vagrant.configure("2") do |config|
       }
     end
   end
-end
 
-################
-## PRODUCTION
-################
-Vagrant.configure("2") do |config|
-  config.vm.define :"prod-worker01" do |config|
+  ################
+  ## PRODUCTION
+  ################
+  global_config.vm.define :"prod-worker01" do |config|
 
     config.vm.box                     = $global_debian10_box
     config.vm.box_url                 = $global_debian10_box_url
@@ -170,13 +164,11 @@ Vagrant.configure("2") do |config|
       }
     end
   end
-end
 
-################
-## MISC
-################
-Vagrant.configure("2") do |config|
-  config.vm.define :test do |config|
+  ################
+  ## MISC
+  ################
+  global_config.vm.define :test do |config|
 
     config.ssh.insert_key = false
 
