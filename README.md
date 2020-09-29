@@ -278,6 +278,8 @@ In this case, the configuration will always be up-to-date with the local directo
 
 > **_NOTE_**: It works for basic changes on the swh-site and data configurations. For other changes like declaring a new puppet module, the ``prepare-vagrant-conf`` must be called to completely rebuild the configuration.
 
+> **_NOTE_**: The ``watch-vagrant-conf`` script uses inotify and especially the ``inotifywait`` command to detect the changes. The package ``inotify-tools`` needs to be installed on the local environment.
+
 #### connect to a vm
 
 A shell can be opened to a running vm with this command:
