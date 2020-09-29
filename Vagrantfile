@@ -28,10 +28,13 @@ Vagrant.configure("2") do |config|
     config.vm.synced_folder "/tmp/puppet/", "/tmp/puppet", type: 'nfs'
 
     config.vm.provider  "virtualbox" do |vb|
+      vb.name = "staging-webapp"
       vb.gui = false
       vb.check_guest_additions = false
       vb.linked_clone = true
-      vb.customize ["modifyvm", :id, "--memory", "512", "--name", "staging-webapp", "--cpus", "2", "--vram", "256"]
+      vb.memory = 512
+      vb.cpus = 2
+      vb.customize ["modifyvm", :id, "--vram", "256"]
     end
     config.vm.provision "puppet" do |puppet|
       puppet.environment_path = "/tmp/puppet/environments"
@@ -62,10 +65,13 @@ Vagrant.configure("2") do |config|
     config.vm.synced_folder "/tmp/puppet/", "/tmp/puppet", type: 'nfs'
 
     config.vm.provider  "virtualbox" do |vb|
+      vb.name = "staging-worker0"
       vb.gui = false
       vb.check_guest_additions = false
       vb.linked_clone = true
-      vb.customize ["modifyvm", :id, "--memory", "4096", "--name", "staging-worker0", "--cpus", "2", "--vram", "256"]
+      vb.memory = 4096
+      vb.cpus = 2
+      vb.customize ["modifyvm", :id, "--vram", "256"]
     end
 
     config.vm.provision "puppet" do |puppet|
@@ -103,10 +109,13 @@ Vagrant.configure("2") do |config|
     config.vm.synced_folder "/tmp/puppet/", "/tmp/puppet", type: 'nfs'
 
     config.vm.provider  "virtualbox" do |vb|
+      vb.name = "admin-inventory"
       vb.gui = false
       vb.check_guest_additions = false
       vb.linked_clone = true
-      vb.customize ["modifyvm", :id, "--memory", "512", "--name", "admin-inventory", "--cpus", "2", "--vram", "256"]
+      vb.memory = 512
+      vb.cpus = 2
+      vb.customize ["modifyvm", :id, "--vram", "256"]
     end
     config.vm.provision "puppet" do |puppet|
       puppet.environment_path = "/tmp/puppet/environments"
@@ -140,10 +149,13 @@ Vagrant.configure("2") do |config|
     config.vm.synced_folder "/tmp/puppet/", "/tmp/puppet", type: 'nfs'
 
     config.vm.provider  "virtualbox" do |vb|
+      vb.name = "worker01"
       vb.gui = false
       vb.check_guest_additions = false
       vb.linked_clone = true
-      vb.customize ["modifyvm", :id, "--memory", "4096", "--name", "worker01", "--cpus", "2", "--vram", "256"]
+      vb.memory = 4096
+      vb.cpus = 2
+      vb.customize ["modifyvm", :id, "--vram", "256"]
     end
 
     config.vm.provision "puppet" do |puppet|
@@ -183,10 +195,13 @@ Vagrant.configure("2") do |config|
     config.vm.synced_folder "/tmp/puppet/", "/tmp/puppet", type: 'nfs'
 
     config.vm.provider  "virtualbox" do |vb|
+      vb.name = "test"
       vb.gui = false
       vb.check_guest_additions = false
       vb.linked_clone = true
-      vb.customize ["modifyvm", :id, "--memory", "512", "--name", "test", "--cpus", "2", "--vram", "256"]
+      vb.memory = 512
+      vb.cpus = 2
+      vb.customize ["modifyvm", :id, "--vram", "256"]
     end
     config.vm.provision "puppet" do |puppet|
       puppet.environment_path = "/tmp/puppet/environments"
