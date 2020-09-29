@@ -190,7 +190,7 @@ Vagrant.configure("2") do |config|
     end
     config.vm.provision "puppet" do |puppet|
       puppet.environment_path = "/tmp/puppet/environments"
-      puppet.environment = "vagrant"
+      puppet.environment = "#{environment}"
       puppet.hiera_config_path = "#{puppet.environment_path}/#{puppet.environment}/hiera-vagrant.yaml"
       puppet.manifest_file = "site.pp"
       puppet.manifests_path = "swh-site/manifests"
