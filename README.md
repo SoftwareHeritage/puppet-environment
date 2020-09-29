@@ -177,20 +177,27 @@ See the dedicated readme[1] in the packer directory for more information to mana
 
 ### Setup
 
-Vagrant and Virtualbox tools must be installed. On a debian based environment:
+Vagrant and Virtualbox tools must be installed. On a debian based environment,
+[a specific debian repository must be configured](https://www.virtualbox.org/wiki/Linux_Downloads):
 
 ```
-# 2020-09-17 vagrant is not working with virtualbox 6.1
-apt install vagrant virtualbox-6.0  
+apt install vagrant virtualbox-6.0 nfs-kernel-server linux-headers-$(uname --kernel-release)
 # An additional plugin must be installed to manage the virtualbox addons in the vms
 vagrant plugin install vagrant-vbguest
 ```
+
+Note:
+- 2020-09-17 vagrant (buster) is not working with virtualbox 6.1, so we use
+  `virtualbox-6.0`
+- `nfs-kernel-server` is needed to export and share the local /tmp/puppet to the
+  vm
+- `linux-headers` package is required for the vbox guest additions
 
 ### Usage
 
 #### Prepare the puppet environment
 
-The puppet directory struture needs to be prepared before starting a vm. 
+The puppet directory structure needs to be prepared before starting a vm.
 It can be done with the ``bin/prepare-vagrant-conf`` script. The script must be run each time a new commit is done to refresh the code applied on the vms.
 
 The working directory is ``/tmp/puppet``.
@@ -267,7 +274,7 @@ In another terminal:
 vagrant provision <vm-name>
 ```
 
-In this case, the configuration will always be uptodate with the local directories.
+In this case, the configuration will always be up-to-date with the local directories.
 
 > **_NOTE_**: It works for basic changes on the swh-site and data configurations. For other changes like declaring a new puppet module, the ``prepare-vagrant-conf`` must be called to completely rebuild the configuration.
 
