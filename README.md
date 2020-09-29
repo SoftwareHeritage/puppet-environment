@@ -183,7 +183,7 @@ Vagrant and Virtualbox tools must be installed. On a debian based environment,
 ```
 apt install vagrant virtualbox-6.0 nfs-kernel-server linux-headers-$(uname --kernel-release)
 # An additional plugin must be installed to manage the virtualbox addons in the vms
-vagrant plugin install vagrant-vbguest
+vagrant plugin install vagrant-vbguest --plugin-version "< 0.25.0"
 ```
 
 Note:
@@ -192,6 +192,7 @@ Note:
 - `nfs-kernel-server` is needed to export and share the local /tmp/puppet to the
   vm
 - `linux-headers` package is required for the vbox guest additions
+- vagrant-vbguest 0.25.0 makes the first "vagrant up <vm>" fail
 
 ### Usage
 
