@@ -39,7 +39,7 @@ packer build debian_buster.json
 :WARNING: virtualbox open the vm's console during the build. Don't interact with it to avoid to interfer with the packer execution.
 
 This command executes this process :
-* Create a new VM in virtualbox and boot it with the iso image defines in the ``iso_image`` parameter. 
+* Create a new VM in virtualbox and boot it with the iso image defines in the ``iso_image`` parameter.
 * Simulate keyboard interactions to enter the ``boot_command`` which basically tells debian to start the installation based on the ``buster_preseed.cfg`` file
 * Call one or several provisioners after the installation to fine tune the installation. For our needs, only the ``scripts/post-install.sh`` script is executed
 * package the image into a vbox file directly usable by virtualbox and place it in the ``builds`` directory.
@@ -127,7 +127,7 @@ d-i partman/confirm boolean true
 d-i partman/confirm_nooverwrite boolean true
 
 d-i apt-setup/cdrom/set-first boolean false
-d-i apt-setup/cdrom/set-next boolean false   
+d-i apt-setup/cdrom/set-next boolean false
 d-i apt-setup/cdrom/set-failed boolean false
 
 d-i mirror/country string manual
