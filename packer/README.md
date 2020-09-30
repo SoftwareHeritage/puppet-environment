@@ -20,26 +20,26 @@ Generate a new virtualbox image
 
 ### Configuration description
 
-For the debian buster image, this files are used :
+For the debian buster image, this files are used:
 * `debian_buster.json`: the configuration entrypoint describing the tasks packer will execute to generate the image
 * `http/buster-preseed.cfg`: The debian preseed file used by debian to manage the installation. Debian loads it through an http server started by packer during the build.
-* `scripts/post-install.sh`: Post install script containing the post installation tasks needed to prepare the vms to ready to apply the puppet configuration (install puppet, manage vagrant's user key, ...)
+* `scripts/post-install.sh`: Post installation steps script so vms are ready for the puppet configuration step (install puppet, manage vagrant's user key, ...)
 
 ### Build the image
 
-To build an image, use this command in the current directory :
+To build an image, use this command in the current directory:
 
 ```
 packer build <json file>
 ```
 
-For example, to build or rebuild the debian buster image :
+For example, to build or rebuild the debian buster image:
 ```
 packer build debian_buster.json
 ```
-:WARNING: virtualbox open the vm's console during the build. Don't interact with it to avoid to interfer with the packer execution.
+:WARNING: virtualbox open the vm's console during the build. Don't interact with it to avoid to interfere with the packer execution.
 
-This command executes this process :
+This command executes this process:
 * Create a new VM in virtualbox and boot it with the iso image defines in the ``iso_image`` parameter.
 * Simulate keyboard interactions to enter the ``boot_command`` which basically tells debian to start the installation based on the ``buster_preseed.cfg`` file
 * Call one or several provisioners after the installation to fine tune the installation. For our needs, only the ``scripts/post-install.sh`` script is executed
@@ -47,7 +47,7 @@ This command executes this process :
 
 ### Publish the image
 
-The image must be publish on the public annex site[3] to be usable by other persons than the person who build it.
+The image must be published on the public annex site[3] to be usable.
 The images are published in the ``/isos/virtualbox/debian``[4] directory.
 
 The ``git-annex`` usage is documented on the intranet[5].
@@ -67,7 +67,7 @@ Annex
 
 ### Generate a preseed file
 
-It can be useful to prepare the installation for a new debian version :
+It can be useful to prepare the installation for a new debian version:
 * install the new version on a vm
 * execute the following commands:
 ```
@@ -79,7 +79,7 @@ debconf-get-selections >>/tmp/preseed.cfg
 
 The preseed file must be adapted to specify the user passwords or the partitionning apparently not included in the preseed file.
 
-For buster, the following lines were added :
+For buster, the following lines were added:
 ```
 d-i pkgsel/include string puppet openssh-server apt-transport-https
 # Whether to upgrade packages after debootstrap.
