@@ -8,8 +8,8 @@ environment="staging"
 #$global_debian10_box_url = "file:///path/to/packer/builds/swh-debian-10.5-amd64-20200922-0913.box"
 
 # http configuration
-$global_debian10_box = "debian10-20200922-0913"
-$global_debian10_box_url = "https://annex.softwareheritage.org/public/isos/virtualbox/debian/swh-debian-10.5-amd64-20200922-0913.box"
+$global_debian10_box = "debian10-20200930-0816"
+$global_debian10_box_url = "https://annex.softwareheritage.org/public/isos/virtualbox/debian/swh-debian-10.6-amd64-20200930-0816.box"
 
 Vagrant.configure("2") do |global_config|
   ################
