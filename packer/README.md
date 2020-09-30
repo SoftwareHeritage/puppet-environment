@@ -7,6 +7,7 @@ Setup
 -----
 
 Packer and virtualbox tools are needed to create the base image.
+For the packer package, [hashicorp debian repository must be installed](https://learn.hashicorp.com/tutorials/packer/getting-started-install)
 
 On debian(10) :
 ```
