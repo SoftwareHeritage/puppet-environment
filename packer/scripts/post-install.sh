@@ -14,6 +14,8 @@ deb http://deb.debian.org/debian buster-updates main
 deb-src http://deb.debian.org/debian buster-updates main
 EOF
 
+export DEBIAN_FRONTEND=noninteractive
+
 apt-get update
 apt-get install -y man wget curl telnet net-tools dnsutils traceroute unbound
 
@@ -59,8 +61,3 @@ iface lo inet loopback
 allow-hotplug eth0
 iface eth0 inet dhcp
 EOF
-
-####
-# Cleanup
-####
-#rm -v /home/vagrant/VBoxGuestAdditions*.iso
