@@ -1,7 +1,17 @@
 Vagrant.require_version ">= 2.2.0"
 ENV["LC_ALL"] = "en_US.UTF-8"
 
-environment="staging"
+# Default configuration for all defines node below
+environment = "staging"
+environment_path = "/tmp/puppet/environments"
+manifest_file = "site.pp"
+manifests_path = "swh-site/manifests"
+puppet_options = "--verbose"  # --debug --trace for more
+puppet_default_facts = {
+  "vagrant_testing" => "1",
+  "testing" => "vagrant",
+  "location" => "vagrant"
+}
 
 # local configuration
 #$global_debian10_box = "debian10-20201001-0747"
@@ -36,19 +46,13 @@ Vagrant.configure("2") do |global_config|
       vb.cpus = 2
     end
     config.vm.provision "puppet" do |puppet|
-      puppet.environment_path = "/tmp/puppet/environments"
+      puppet.environment_path = "#{environment_path}"
       puppet.environment = "#{environment}"
       puppet.hiera_config_path = "#{puppet.environment_path}/#{puppet.environment}/hiera-vagrant.yaml"
-      puppet.manifest_file = "site.pp"
-      puppet.manifests_path = "swh-site/manifests"
-      puppet.options = "--verbose"
-      # puppet.options = "--verbose --debug"
-      # puppet.options = "--verbose --debug --trace"
-      puppet.facter = {
-        "vagrant_testing" => "1",
-        "testing" => "vagrant",
-        "location" => "vagrant"
-      }
+      puppet.manifest_file = "#{manifest_file}"
+      puppet.manifests_path = "#{manifests_path}"
+      puppet.options = "#{puppet_options}"
+      puppet.facter = puppet_default_facts
     end
   end
 
@@ -71,19 +75,13 @@ Vagrant.configure("2") do |global_config|
     end
 
     config.vm.provision "puppet" do |puppet|
-      puppet.environment_path = "/tmp/puppet/environments"
+      puppet.environment_path = "#{environment_path}"
       puppet.environment = "#{environment}"
       puppet.hiera_config_path = "#{puppet.environment_path}/#{puppet.environment}/hiera-vagrant.yaml"
-      puppet.manifest_file = "site.pp"
-      puppet.manifests_path = "swh-site/manifests"
-      puppet.options = "--verbose"
-      # puppet.options = "--verbose --debug"
-      # puppet.options = "--verbose --debug --trace"
-      puppet.facter = {
-        "vagrant_testing" => "1",
-        "testing" => "vagrant",
-        "location" => "vagrant"
-      }
+      puppet.manifest_file = "#{manifest_file}"
+      puppet.manifests_path = "#{manifests_path}"
+      puppet.options = "#{puppet_options}"
+      puppet.facter = puppet_default_facts
     end
   end
 
@@ -111,19 +109,13 @@ Vagrant.configure("2") do |global_config|
       vb.cpus = 2
     end
     config.vm.provision "puppet" do |puppet|
-      puppet.environment_path = "/tmp/puppet/environments"
+      puppet.environment_path = "#{environment_path}"
       puppet.environment = "#{environment}"
       puppet.hiera_config_path = "#{puppet.environment_path}/#{puppet.environment}/hiera-vagrant.yaml"
-      puppet.manifest_file = "site.pp"
-      puppet.manifests_path = "swh-site/manifests"
-      puppet.options = "--verbose"
-      # puppet.options = "--verbose --debug"
-      # puppet.options = "--verbose --debug --trace"
-      puppet.facter = {
-        "vagrant_testing" => "1",
-        "testing" => "vagrant",
-        "location" => "vagrant"
-      }
+      puppet.manifest_file = "#{manifest_file}"
+      puppet.manifests_path = "#{manifests_path}"
+      puppet.options = "#{puppet_options}"
+      puppet.facter = puppet_default_facts
     end
   end
 
@@ -149,19 +141,13 @@ Vagrant.configure("2") do |global_config|
     end
 
     config.vm.provision "puppet" do |puppet|
-      puppet.environment_path = "/tmp/puppet/environments"
+      puppet.environment_path = "#{environment_path}"
       puppet.environment = "#{environment}"
       puppet.hiera_config_path = "#{puppet.environment_path}/#{puppet.environment}/hiera-vagrant.yaml"
-      puppet.manifest_file = "site.pp"
-      puppet.manifests_path = "swh-site/manifests"
-      puppet.options = "--verbose"
-      # puppet.options = "--verbose --debug"
-      # puppet.options = "--verbose --debug --trace"
-      puppet.facter = {
-        "vagrant_testing" => "1",
-        "testing" => "vagrant",
-        "location" => "vagrant"
-      }
+      puppet.manifest_file = "#{manifest_file}"
+      puppet.manifests_path = "#{manifests_path}"
+      puppet.options = "#{puppet_options}"
+      puppet.facter = puppet_default_facts
     end
   end
 
@@ -191,19 +177,13 @@ Vagrant.configure("2") do |global_config|
       vb.cpus = 2
     end
     config.vm.provision "puppet" do |puppet|
-      puppet.environment_path = "/tmp/puppet/environments"
+      puppet.environment_path = "#{environment_path}"
       puppet.environment = "#{environment}"
       puppet.hiera_config_path = "#{puppet.environment_path}/#{puppet.environment}/hiera-vagrant.yaml"
-      puppet.manifest_file = "site.pp"
-      puppet.manifests_path = "swh-site/manifests"
-      puppet.options = "--verbose"
-      # puppet.options = "--verbose --debug"
-      # puppet.options = "--verbose --debug --trace"
-      puppet.facter = {
-        "vagrant_testing" => "1",
-        "testing" => "vagrant",
-        "location" => "vagrant"
-      }
+      puppet.manifest_file = "#{manifest_file}"
+      puppet.manifests_path = "#{manifests_path}"
+      puppet.options = "#{puppet_options}"
+      puppet.facter = puppet_default_facts
     end
   end
 end
