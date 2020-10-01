@@ -56,6 +56,34 @@ Vagrant.configure("2") do |global_config|
     end
   end
 
+  global_config.vm.define :"staging-deposit" do |config|
+    config.vm.box                     = $global_debian10_box
+    config.vm.box_url                 = $global_debian10_box_url
+    config.vm.box_check_update        = false
+    config.vm.hostname                = "deposit.internal.staging.swh.network"
+    config.vm.network   :private_network, ip: "10.168.128.9", netmask: "255.255.255.0"
+
+    config.vm.synced_folder "/tmp/puppet/", "/tmp/puppet", type: 'nfs'
+
+    config.vm.provider  "virtualbox" do |vb|
+      vb.name = "staging-deposit"
+      vb.gui = false
+      vb.check_guest_additions = false
+      vb.linked_clone = true
+      vb.memory = 512
+      vb.cpus = 2
+    end
+    config.vm.provision "puppet" do |puppet|
+      puppet.environment_path = "#{environment_path}"
+      puppet.environment = "#{environment}"
+      puppet.hiera_config_path = "#{puppet.environment_path}/#{puppet.environment}/hiera-vagrant.yaml"
+      puppet.manifest_file = "#{manifest_file}"
+      puppet.manifests_path = "#{manifests_path}"
+      puppet.options = "#{puppet_options}"
+      puppet.facter = puppet_default_facts
+    end
+  end
+
   global_config.vm.define :"staging-worker0" do |config|
 
     config.vm.box                     = $global_debian10_box
