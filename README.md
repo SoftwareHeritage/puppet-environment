@@ -14,7 +14,7 @@ the upstream repositories of our mirrors of third-party modules), you
 need to add the .mrconfig file to your ~/.mrtrust file:
 
  readlink -f .mrconfig >> ~/.mrtrust
- 
+
 You can then checkout the repositories using `mr up`.
 
 
@@ -55,7 +55,7 @@ Deployment happens on the `pergamon.softwareheritage.org` server, using
 our custom deployment script:
 
  sudo /etc/puppet/environments/production/deploy.sh
- 
+
 This updates the dynamic environments according to the contents of the
 branches of the git repository, and the Puppetfile inside. For each
 third-party module, we pin the module definition in the Puppetfile to a
@@ -125,7 +125,7 @@ Once the module is added, you need to register it in `swh-site/Puppetfile`.
 You should also check in the module metadata whether any dependencies need importing as well, which you should do using the same procedure.
 
 ### Updating external puppet modules
- 
+
 There's two sides of this coin:
 
 #### Updating our git clone of external puppet modules
@@ -142,7 +142,7 @@ Upgrading external puppet modules happens manually.
 
 In the *puppet-environment* repository, the `bin/check-module-updates` script compares the Puppetfile and the local clones and lists the available updates. (depends on `ruby r10k`).
 
-On a staging branch of the *swh-site* repository, update the `:ref` value for the module in the `Puppetfile` to the latest tag. You can then run `octocatalog-diff` on a few relevant servers and look for changes. 
+On a staging branch of the *swh-site* repository, update the `:ref` value for the module in the `Puppetfile` to the latest tag. You can then run `octocatalog-diff` on a few relevant servers and look for changes.
 
 Deploy workflow
 ----------------
