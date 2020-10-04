@@ -17,7 +17,7 @@ EOF
 export DEBIAN_FRONTEND=noninteractive
 
 apt-get update
-apt-get install -y man wget curl telnet net-tools dnsutils traceroute unbound
+apt-get install -y man wget curl telnet net-tools dnsutils traceroute unbound gpg
 
 ####
 # allow vagrant user to sudo to root without password

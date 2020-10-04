@@ -177,19 +177,52 @@ See the dedicated readme[1] in the packer directory for more information to mana
 
 ### Setup
 
-Vagrant and Virtualbox tools must be installed. On a debian based environment,
+
+Vagrant tools must be installed.
+
+```
+apt install vagrant nfs-kernel-server
+```
+
+Note: `nfs-kernel-server` is needed to export and share the local /tmp/puppet
+  to the vm
+
+Multiple provisioners exist. We will focus on 2 for now, virtualbox the default
+and libvirt for now (we had an history of using this one in the past).
+
+#### virtualbox
+
+On a debian based environment,
 [a specific debian repository must be configured](https://www.virtualbox.org/wiki/Linux_Downloads):
 
 ```
-apt install vagrant virtualbox-6.0 nfs-kernel-server linux-headers-$(uname --kernel-release)
+apt install virtualbox-6.0 linux-headers-$(uname --kernel-release)
 ```
 
 Note:
 - 2020-09-17 vagrant (buster) is not working with virtualbox 6.1, so we use
   `virtualbox-6.0`
-- `nfs-kernel-server` is needed to export and share the local /tmp/puppet to the
-  vm
 - `linux-headers` package is required for the vbox guest additions
+
+#### libvirt
+
+Already part of debian so:
+
+```
+apt install libvirt-daemon-system qemu-kvm vagrant=2.2.3+dfsg-1 vagrant-libvirt
+```
+
+Note:
+- Use the vagrant packaged packaged in debian stable (not hashicorp's)
+- Add your user to the libvirt group.
+
+```
+sudo usermod --append --groups libvirt `whoami`
+```
+
+```
+usermod -a -G libvirt $USER
+```
 
 ### Usage
 
@@ -232,6 +265,7 @@ Current machine states:
 
 staging-webapp            running (virtualbox)
 staging-worker0           running (virtualbox)
+staging-deposit           not created (libvirt)
 prod-worker01             not created (virtualbox)
 test                      poweroff (virtualbox)
 
