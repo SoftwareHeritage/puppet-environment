@@ -16,14 +16,21 @@ puppet_default_facts = {
 # used to define the local vm template path
 puppet_env_path=ENV["SWH_PUPPET_ENVIRONMENT_HOME"]
 
-# Images configuration
+# Images/local configuration
+# vbox
+$local_debian10_box = "debian10-20201006-0832"
+$local_debian10_box_url = "file://#{puppet_env_path}/packer/builds/swh-debian-10.6-amd64-20201006-0832.box"
+# libvirt
+$local_debian10_qcow2 = "debian10-20201010-1039"
+$local_debian10_qcow2_url = "file://#{puppet_env_path}/packer/builds/swh-debian-10.6-amd64-20201010-1039.qcow2"
+
+# Images/remote configuration
+# vbox
 $global_debian10_box = "debian10-20201006-0832"
 $global_debian10_box_url = "https://annex.softwareheritage.org/public/isos/virtualbox/debian/swh-debian-10.6-amd64-20201006-0832.box"
-# For local tests
-#$global_debian10_box_url = "file:///path/to/packer/builds/swh-debian-10.6-amd64-20201006-0832.box"
-# local configuration
-$local_debian10_qcow2 = "debian10-20201004-1105"
-$local_debian10_qcow2_url = "file://#{puppet_env_path}/packer/builds/swh-debian-10.6-amd64-20201004-1105.qcow2"
+# libvirt
+$global_debian10_qcow2 = "debian10-20201010-1039"
+$global_debian10_qcow2_url = "https://annex.softwareheritage.org/public/isos/libvirt/debian/swh-debian-10.6-amd64-20201010-1039.qcow2"
 
 Vagrant.configure("2") do |global_config|
   ################
