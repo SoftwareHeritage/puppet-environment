@@ -2,33 +2,40 @@
 name: jenkins-debian1.internal.softwareheritage.org
 values:
   agent_specified_environment: production
-  apt_dist_updates: 8
+  apt_dist_updates: 9
   apt_has_dist_updates: true
   apt_has_updates: true
   apt_package_dist_updates:
-  - udev
-  - libpam-systemd
+  - libzstd1
   - libnss-systemd
-  - systemd
-  - systemd-timesyncd
+  - udev
   - libudev1
-  - libsystemd0
   - systemd-sysv
+  - systemd-timesyncd
+  - libpam-systemd
+  - systemd
+  - libsystemd0
   apt_package_security_dist_updates: []
   apt_package_security_updates: []
   apt_package_updates:
-  - systemd-sysv
+  - libzstd1
+  - libnss-systemd
   - udev
   - libudev1
+  - systemd-sysv
+  - systemd-timesyncd
+  - libpam-systemd
+  - systemd
+  - libsystemd0
   apt_reboot_required: true
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1599046864
-  apt_updates: 3
+  apt_update_last_success: 1601991661
+  apt_updates: 9
   architecture: amd64
   bios_release_date: 04/01/2014
   bios_vendor: SeaBIOS
-  bios_version: rel-1.12.1-0-ga5cab58e9a3f-prebuilt.qemu.org
+  bios_version: rel-1.13.0-48-gd9c812dda519-prebuilt.qemu.org
   blockdevice_vda_size: 53687091200
   blockdevice_vda_vendor: '0x1af4'
   blockdevices: vda
@@ -46,7 +53,7 @@ values:
     bios:
       release_date: 04/01/2014
       vendor: SeaBIOS
-      version: rel-1.12.1-0-ga5cab58e9a3f-prebuilt.qemu.org
+      version: rel-1.13.0-48-gd9c812dda519-prebuilt.qemu.org
     chassis:
       type: Other
     manufacturer: QEMU
@@ -118,6 +125,8 @@ values:
     haltode: "/home/haltode"
     danseraf: "/home/danseraf"
     aeviso: "/home/aeviso"
+    tenma: "/home/tenma"
+    vsellier: "/home/vsellier"
   domain: internal.softwareheritage.org
   facterversion: 3.11.0
   filesystems: btrfs,ext2,ext3,ext4,hfs,hfsplus,jfs,minix,msdos,qnx4,ufs,vfat,xfs
@@ -153,13 +162,13 @@ values:
   java_version: 11.0.8
   kernel: Linux
   kernelmajversion: '4.19'
-  kernelrelease: 4.19.0-9-amd64
+  kernelrelease: 4.19.0-10-amd64
   kernelversion: 4.19.0
   letsencrypt_directory: {}
   load_averages:
-    15m: 0.04
-    1m: 0.16
-    5m: 0.06
+    15m: 0.0
+    1m: 0.0
+    5m: 0.02
   location: sesi_rocquencourt
   lsbdistcodename: buster
   lsbdistdescription: Debian GNU/Linux 10 (buster)
@@ -179,22 +188,22 @@ values:
       used: 0 bytes
       used_bytes: 0
     system:
-      available: 14.39 GiB
-      available_bytes: 15450755072
-      capacity: 8.15%
+      available: 14.70 GiB
+      available_bytes: 15786516480
+      capacity: 6.15%
       total: 15.67 GiB
-      total_bytes: 16821551104
-      used: 1.28 GiB
-      used_bytes: 1370796032
-  memoryfree: 14.39 GiB
-  memoryfree_mb: 14734.98828125
+      total_bytes: 16821518336
+      used: 987.05 MiB
+      used_bytes: 1035001856
+  memoryfree: 14.70 GiB
+  memoryfree_mb: 15055.1953125
   memorysize: 15.67 GiB
-  memorysize_mb: 16042.28125
+  memorysize_mb: 16042.25
   mountpoints:
     "/":
-      available: 32.52 GiB
-      available_bytes: 34922811392
-      capacity: 28.05%
+      available: 32.11 GiB
+      available_bytes: 34473709568
+      capacity: 28.97%
       device: "/dev/mapper/jenkins--debian1--vg-root"
       filesystem: ext4
       options:
@@ -203,11 +212,11 @@ values:
       - errors=remount-ro
       size: 45.20 GiB
       size_bytes: 48537276416
-      used: 12.68 GiB
-      used_bytes: 13614465024
+      used: 13.10 GiB
+      used_bytes: 14063566848
     "/dev/shm":
       available: 7.83 GiB
-      available_bytes: 8410775552
+      available_bytes: 8410759168
       capacity: 0%
       device: tmpfs
       filesystem: tmpfs
@@ -216,12 +225,12 @@ values:
       - nosuid
       - nodev
       size: 7.83 GiB
-      size_bytes: 8410775552
+      size_bytes: 8410759168
       used: 0 bytes
       used_bytes: 0
     "/run":
       available: 1.57 GiB
-      available_bytes: 1681702912
+      available_bytes: 1681641472
       capacity: 0.03%
       device: tmpfs
       filesystem: tmpfs
@@ -230,12 +239,12 @@ values:
       - nosuid
       - noexec
       - relatime
-      - size=1642732k
+      - size=1642728k
       - mode=755
       size: 1.57 GiB
-      size_bytes: 1682157568
-      used: 444.00 KiB
-      used_bytes: 454656
+      size_bytes: 1682153472
+      used: 500.00 KiB
+      used_bytes: 512000
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -253,9 +262,28 @@ values:
       size_bytes: 5242880
       used: 0 bytes
       used_bytes: 0
+    "/run/user/1001":
+      available: 1.54 GiB
+      available_bytes: 1655308288
+      capacity: 0%
+      device: tmpfs
+      filesystem: tmpfs
+      options:
+      - rw
+      - nosuid
+      - nodev
+      - relatime
+      - size=1616512k
+      - mode=700
+      - uid=1001
+      - gid=1001
+      size: 1.54 GiB
+      size_bytes: 1655308288
+      used: 0 bytes
+      used_bytes: 0
     "/sys/fs/cgroup":
       available: 7.83 GiB
-      available_bytes: 8410775552
+      available_bytes: 8410759168
       capacity: 0%
       device: tmpfs
       filesystem: tmpfs
@@ -266,7 +294,7 @@ values:
       - noexec
       - mode=755
       size: 7.83 GiB
-      size_bytes: 8410775552
+      size_bytes: 8410759168
       used: 0 bytes
       used_bytes: 0
   mounts:
@@ -335,7 +363,7 @@ values:
     primary: ens18
   operatingsystem: Debian
   operatingsystemmajrelease: '10'
-  operatingsystemrelease: '10.5'
+  operatingsystemrelease: '10.6'
   os:
     architecture: amd64
     distro:
@@ -349,9 +377,9 @@ values:
     hardware: x86_64
     name: Debian
     release:
-      full: '10.5'
+      full: '10.6'
       major: '10'
-      minor: '5'
+      minor: '6'
     selinux:
       enabled: false
   osfamily: Debian
@@ -452,30 +480,33 @@ values:
     short: jenkins-debian1
     internal_fqdn: jenkins-debian1.internal.softwareheritage.org
   system_uptime:
-    days: 42
-    hours: 1029
-    seconds: 3707358
-    uptime: 42 days
+    days: 13
+    hours: 334
+    seconds: 1205939
+    uptime: 13 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
     systemd-fsck-root.service: enabled-runtime
+    systemd-network-generator.service: disabled
     systemd-networkd-wait-online.service: disabled
     systemd-networkd.service: disabled
+    systemd-pstore.service: enabled
+    systemd-remount-fs.service: enabled-runtime
     systemd-resolved.service: disabled
     systemd-time-wait-sync.service: disabled
     systemd-timesyncd.service: enabled
-  systemd_version: '241'
+  systemd_version: '245'
   timezone: UTC
-  uptime: 42 days
-  uptime_days: 42
-  uptime_hours: 1029
-  uptime_seconds: 3707358
+  uptime: 13 days
+  uptime_days: 13
+  uptime_hours: 334
+  uptime_seconds: 1205939
   uuid: 29736f86-c439-4043-ae09-642bb08b9383
   vcsrepo_svn_ver: ''
   virtual: kvm
   clientcert: jenkins-debian1.internal.softwareheritage.org
   clientversion: 5.5.10
   clientnoop: false
-timestamp: '2020-09-02T12:06:11.297284501+00:00'
-expiration: '2020-09-02T12:36:11.297934606+00:00'
+timestamp: '2020-10-06T14:36:04.391360826+00:00'
+expiration: '2020-10-06T15:06:04.391664846+00:00'

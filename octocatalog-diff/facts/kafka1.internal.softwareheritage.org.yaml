@@ -1,11 +1,12 @@
 --- !ruby/object:Puppet::Node::Facts
 name: kafka1.internal.softwareheritage.org
 values:
-  agent_specified_environment: staging
-  apt_dist_updates: 8
+  agent_specified_environment: production
+  apt_dist_updates: 11
   apt_has_dist_updates: true
   apt_has_updates: true
   apt_package_dist_updates:
+  - libzstd1
   - udev
   - libpam-systemd
   - libnss-systemd
@@ -14,17 +15,22 @@ values:
   - libudev1
   - libsystemd0
   - systemd-sysv
+  - linux-compiler-gcc-8-x86
+  - linux-libc-dev
   apt_package_security_dist_updates: []
   apt_package_security_updates: []
   apt_package_updates:
   - systemd-sysv
   - udev
   - libudev1
+  - libzstd1
+  - linux-compiler-gcc-8-x86
+  - linux-libc-dev
   apt_reboot_required: false
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1599046262
-  apt_updates: 3
+  apt_update_last_success: 1601994692
+  apt_updates: 6
   architecture: amd64
   bios_release_date: 06/30/2020
   bios_vendor: Dell Inc.
@@ -237,13 +243,15 @@ values:
     privileged: true
     uid: 0
     user: root
-  interfaces: bond0,eno1,eno2,ens1f0np0,ens1f1np1,lo,vlan440
-  ipaddress: 192.168.100.201
+  interfaces: bond0,eno1,eno2,ens1f0np0,ens1f1np1,lo,vlan1300,vlan440
+  ipaddress: 128.93.166.48
   ipaddress6: fe80::4ed9:8fff:fec3:3f72
   ipaddress6_bond0: fe80::4ed9:8fff:fec3:3f72
   ipaddress6_lo: "::1"
+  ipaddress6_vlan1300: fe80::4ed9:8fff:fec3:3f72
   ipaddress6_vlan440: fe80::4ed9:8fff:fec3:3f72
   ipaddress_lo: 127.0.0.1
+  ipaddress_vlan1300: 128.93.166.48
   ipaddress_vlan440: 192.168.100.201
   is_pe: false
   is_virtual: false
@@ -258,9 +266,9 @@ values:
   kernelversion: 5.7.0
   letsencrypt_directory: {}
   load_averages:
-    15m: 0.09
-    1m: 0.09
-    5m: 0.05
+    15m: 0.07
+    1m: 0.15
+    5m: 0.07
   location: sesi_rocquencourt
   lsbdistcodename: buster
   lsbdistdescription: Debian GNU/Linux 10 (buster)
@@ -273,26 +281,27 @@ values:
   macaddress_eno2: 4c:d9:8f:c0:ef:59
   macaddress_ens1f0np0: 4c:d9:8f:c3:3f:72
   macaddress_ens1f1np1: 4c:d9:8f:c3:3f:73
+  macaddress_vlan1300: 4c:d9:8f:c3:3f:72
   macaddress_vlan440: 4c:d9:8f:c3:3f:72
   manufacturer: Dell Inc.
   memory:
     system:
-      available: 117.99 GiB
-      available_bytes: 126691004416
-      capacity: 6.06%
+      available: 50.30 GiB
+      available_bytes: 54012211200
+      capacity: 59.95%
       total: 125.60 GiB
       total_bytes: 134866636800
-      used: 7.61 GiB
-      used_bytes: 8175632384
-  memoryfree: 117.99 GiB
-  memoryfree_mb: 120821.95703125
+      used: 75.30 GiB
+      used_bytes: 80854425600
+  memoryfree: 50.30 GiB
+  memoryfree_mb: 51510.05859375
   memorysize: 125.60 GiB
   memorysize_mb: 128618.84765625
   mountpoints:
     "/":
-      available: 46.06 GiB
-      available_bytes: 49452904448
-      capacity: 5.94%
+      available: 45.81 GiB
+      available_bytes: 49192464384
+      capacity: 6.44%
       device: "/dev/mapper/kafka1--vg-root"
       filesystem: ext4
       options:
@@ -301,8 +310,8 @@ values:
       - errors=remount-ro
       size: 48.97 GiB
       size_bytes: 52576092160
-      used: 2.91 GiB
-      used_bytes: 3123187712
+      used: 3.15 GiB
+      used_bytes: 3383627776
     "/boot/efi":
       available: 1016.87 MiB
       available_bytes: 1066266624
@@ -339,7 +348,7 @@ values:
       used_bytes: 0
     "/run":
       available: 12.56 GiB
-      available_bytes: 13484949504
+      available_bytes: 13484933120
       capacity: 0.01%
       device: tmpfs
       filesystem: tmpfs
@@ -352,8 +361,8 @@ values:
       - mode=755
       size: 12.56 GiB
       size_bytes: 13486665728
-      used: 1.64 MiB
-      used_bytes: 1716224
+      used: 1.65 MiB
+      used_bytes: 1732608
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -369,6 +378,25 @@ values:
       - size=5120k
       size: 5.00 MiB
       size_bytes: 5242880
+      used: 0 bytes
+      used_bytes: 0
+    "/run/user/1001":
+      available: 12.56 GiB
+      available_bytes: 13486661632
+      capacity: 0%
+      device: tmpfs
+      filesystem: tmpfs
+      options:
+      - rw
+      - nosuid
+      - nodev
+      - relatime
+      - size=13170568k
+      - mode=700
+      - uid=1001
+      - gid=1001
+      size: 12.56 GiB
+      size_bytes: 13486661632
       used: 0 bytes
       used_bytes: 0
     "/sys/fs/cgroup":
@@ -397,21 +425,26 @@ values:
   mtu_ens1f0np0: 9000
   mtu_ens1f1np1: 9000
   mtu_lo: 65536
+  mtu_vlan1300: 9000
   mtu_vlan440: 9000
   mysql_server_id: 38289458
-  netmask: 255.255.255.0
+  netmask: 255.255.255.192
   netmask6: 'ffff:ffff:ffff:ffff::'
   netmask6_bond0: 'ffff:ffff:ffff:ffff::'
   netmask6_lo: ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff
+  netmask6_vlan1300: 'ffff:ffff:ffff:ffff::'
   netmask6_vlan440: 'ffff:ffff:ffff:ffff::'
   netmask_lo: 255.0.0.0
+  netmask_vlan1300: 255.255.255.192
   netmask_vlan440: 255.255.255.0
-  network: 192.168.100.0
+  network: 128.93.166.0
   network6: 'fe80::'
   network6_bond0: 'fe80::'
   network6_lo: "::1"
+  network6_vlan1300: 'fe80::'
   network6_vlan440: 'fe80::'
   network_lo: 127.0.0.0
+  network_vlan1300: 128.93.166.0
   network_vlan440: 192.168.100.0
   networking:
     domain: internal.softwareheritage.org
@@ -456,6 +489,23 @@ values:
         netmask6: ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff
         network: 127.0.0.0
         network6: "::1"
+      vlan1300:
+        bindings:
+        - address: 128.93.166.48
+          netmask: 255.255.255.192
+          network: 128.93.166.0
+        bindings6:
+        - address: fe80::4ed9:8fff:fec3:3f72
+          netmask: 'ffff:ffff:ffff:ffff::'
+          network: 'fe80::'
+        ip: 128.93.166.48
+        ip6: fe80::4ed9:8fff:fec3:3f72
+        mac: 4c:d9:8f:c3:3f:72
+        mtu: 9000
+        netmask: 255.255.255.192
+        netmask6: 'ffff:ffff:ffff:ffff::'
+        network: 128.93.166.0
+        network6: 'fe80::'
       vlan440:
         bindings:
         - address: 192.168.100.201
@@ -473,18 +523,18 @@ values:
         netmask6: 'ffff:ffff:ffff:ffff::'
         network: 192.168.100.0
         network6: 'fe80::'
-    ip: 192.168.100.201
+    ip: 128.93.166.48
     ip6: fe80::4ed9:8fff:fec3:3f72
     mac: 4c:d9:8f:c3:3f:72
     mtu: 9000
-    netmask: 255.255.255.0
+    netmask: 255.255.255.192
     netmask6: 'ffff:ffff:ffff:ffff::'
-    network: 192.168.100.0
+    network: 128.93.166.0
     network6: 'fe80::'
-    primary: vlan440
+    primary: vlan1300
   operatingsystem: Debian
   operatingsystemmajrelease: '10'
-  operatingsystemrelease: '10.5'
+  operatingsystemrelease: '10.6'
   os:
     architecture: amd64
     distro:
@@ -498,9 +548,9 @@ values:
     hardware: x86_64
     name: Debian
     release:
-      full: '10.5'
+      full: '10.6'
       major: '10'
-      minor: '5'
+      minor: '6'
     selinux:
       enabled: false
   osfamily: Debian
@@ -733,7 +783,8 @@ values:
     physicalcount: 2
     speed: 3.50 GHz
   productname: PowerEdge R540
-  public_ipaddresses: []
+  public_ipaddresses:
+  - 128.93.166.48
   puppet_environmentpath: "/etc/puppet/code/environments"
   puppet_server: pergamon.internal.softwareheritage.org
   puppet_vardir: "/var/lib/puppet"
@@ -791,10 +842,10 @@ values:
     short: kafka1
     internal_fqdn: kafka1.internal.softwareheritage.org
   system_uptime:
-    days: 15
-    hours: 360
-    seconds: 1297414
-    uptime: 15 days
+    days: 20
+    hours: 501
+    seconds: 1806379
+    uptime: 20 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -806,15 +857,15 @@ values:
     systemd-timesyncd.service: enabled
   systemd_version: '241'
   timezone: UTC
-  uptime: 15 days
-  uptime_days: 15
-  uptime_hours: 360
-  uptime_seconds: 1297414
+  uptime: 20 days
+  uptime_days: 20
+  uptime_hours: 501
+  uptime_seconds: 1806379
   uuid: 4c4c4544-0038-5910-8053-c6c04f563333
   vcsrepo_svn_ver: ''
   virtual: physical
   clientcert: kafka1.internal.softwareheritage.org
   clientversion: 5.5.10
   clientnoop: false
-timestamp: '2020-09-02T12:03:06.489645570+00:00'
-expiration: '2020-09-02T12:33:06.490173461+00:00'
+timestamp: '2020-10-06T14:33:07.000906867+00:00'
+expiration: '2020-10-06T15:03:07.001560499+00:00'

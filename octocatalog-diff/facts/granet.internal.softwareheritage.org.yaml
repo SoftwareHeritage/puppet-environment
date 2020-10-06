@@ -2,10 +2,11 @@
 name: granet.internal.softwareheritage.org
 values:
   agent_specified_environment: production
-  apt_dist_updates: 17
+  apt_dist_updates: 21
   apt_has_dist_updates: true
   apt_has_updates: true
   apt_package_dist_updates:
+  - libzstd1
   - libsystemd-dev
   - libnss-systemd
   - udev
@@ -15,6 +16,9 @@ values:
   - libpam-systemd
   - systemd
   - libsystemd0
+  - containerd.io
+  - docker-ce-cli
+  - docker-ce
   - zfs-dkms
   - zfsutils-linux
   - libuutil1linux
@@ -26,6 +30,7 @@ values:
   apt_package_security_dist_updates: []
   apt_package_security_updates: []
   apt_package_updates:
+  - libzstd1
   - libsystemd-dev
   - libnss-systemd
   - udev
@@ -35,6 +40,9 @@ values:
   - libpam-systemd
   - systemd
   - libsystemd0
+  - containerd.io
+  - docker-ce-cli
+  - docker-ce
   - zfs-dkms
   - zfsutils-linux
   - libuutil1linux
@@ -46,8 +54,8 @@ values:
   apt_reboot_required: true
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1599045243
-  apt_updates: 17
+  apt_update_last_success: 1601993643
+  apt_updates: 21
   architecture: amd64
   bios_release_date: '08/15/2019'
   bios_vendor: Dell Inc.
@@ -212,7 +220,7 @@ values:
     NFd: 22
     OomKillDisable: true
     NGoroutines: 34
-    SystemTime: '2020-09-02T12:09:05.387313991Z'
+    SystemTime: '2020-10-06T14:39:06.864470123Z'
     LoggingDriver: journald
     CgroupDriver: cgroupfs
     NEventsListener: 0
@@ -413,6 +421,8 @@ values:
     danseraf: "/home/danseraf"
     aeviso: "/home/aeviso"
     vigna: "/home/vigna"
+    tenma: "/home/tenma"
+    vsellier: "/home/vsellier"
   docker_server_version: 19.03.12
   docker_version:
     Client:
@@ -505,9 +515,9 @@ values:
   kernelversion: 4.19.0
   letsencrypt_directory: {}
   load_averages:
-    15m: 0.02
-    1m: 0.15
-    5m: 0.09
+    15m: 33.57
+    1m: 34.32
+    5m: 33.72
   location: sesi_rocquencourt
   lsbdistcodename: buster
   lsbdistdescription: Debian GNU/Linux 10 (buster)
@@ -524,22 +534,22 @@ values:
   manufacturer: Dell Inc.
   memory:
     system:
-      available: 639.84 GiB
-      available_bytes: 687020003328
-      capacity: 15.18%
+      available: 233.32 GiB
+      available_bytes: 250523197440
+      capacity: 69.07%
       total: 754.39 GiB
       total_bytes: 810021470208
-      used: 114.55 GiB
-      used_bytes: 123001466880
-  memoryfree: 639.84 GiB
-  memoryfree_mb: 655193.33203125
+      used: 521.07 GiB
+      used_bytes: 559498272768
+  memoryfree: 233.32 GiB
+  memoryfree_mb: 238917.5390625
   memorysize: 754.39 GiB
   memorysize_mb: 772496.671875
   mountpoints:
     "/":
-      available: 23.42 GiB
-      available_bytes: 25150193664
-      capacity: 35.87%
+      available: 25.00 GiB
+      available_bytes: 26846265344
+      capacity: 31.55%
       device: "/dev/mapper/ssd_mirror-root"
       filesystem: ext4
       options:
@@ -549,8 +559,8 @@ values:
       - stripe=128
       size: 36.53 GiB
       size_bytes: 39219421184
-      used: 13.10 GiB
-      used_bytes: 14069227520
+      used: 11.52 GiB
+      used_bytes: 12373155840
     "/boot/efi":
       available: 114.04 MiB
       available_bytes: 119580160
@@ -572,9 +582,9 @@ values:
       used: 5.08 MiB
       used_bytes: 5329408
     "/dev/shm":
-      available: 104.51 GiB
-      available_bytes: 112216678400
-      capacity: 72.29%
+      available: 166.80 GiB
+      available_bytes: 179098906624
+      capacity: 55.78%
       device: tmpfs
       filesystem: tmpfs
       options:
@@ -583,11 +593,11 @@ values:
       - nodev
       size: 377.20 GiB
       size_bytes: 405010735104
-      used: 272.69 GiB
-      used_bytes: 292794056704
+      used: 210.40 GiB
+      used_bytes: 225911828480
     "/run":
       available: 75.44 GiB
-      available_bytes: 81000202240
+      available_bytes: 81000185856
       capacity: 0.00%
       device: tmpfs
       filesystem: tmpfs
@@ -600,8 +610,8 @@ values:
       - mode=755
       size: 75.44 GiB
       size_bytes: 81002147840
-      used: 1.86 MiB
-      used_bytes: 1945600
+      used: 1.87 MiB
+      used_bytes: 1961984
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -653,6 +663,25 @@ values:
       - mode=700
       - uid=1013
       - gid=1013
+      size: 75.44 GiB
+      size_bytes: 81002143744
+      used: 0 bytes
+      used_bytes: 0
+    "/run/user/1022":
+      available: 75.44 GiB
+      available_bytes: 81002143744
+      capacity: 0%
+      device: tmpfs
+      filesystem: tmpfs
+      options:
+      - rw
+      - nosuid
+      - nodev
+      - relatime
+      - size=79103656k
+      - mode=700
+      - uid=1022
+      - gid=1022
       size: 75.44 GiB
       size_bytes: 81002143744
       used: 0 bytes
@@ -780,7 +809,7 @@ values:
     primary: vlan440
   operatingsystem: Debian
   operatingsystemmajrelease: '10'
-  operatingsystemrelease: '10.5'
+  operatingsystemrelease: '10.6'
   os:
     architecture: amd64
     distro:
@@ -794,9 +823,9 @@ values:
     hardware: x86_64
     name: Debian
     release:
-      full: '10.5'
+      full: '10.6'
       major: '10'
-      minor: '5'
+      minor: '6'
     selinux:
       enabled: false
   osfamily: Debian
@@ -1113,10 +1142,10 @@ values:
     short: granet
     internal_fqdn: granet.internal.softwareheritage.org
   system_uptime:
-    days: 56
-    hours: 1347
-    seconds: 4849688
-    uptime: 56 days
+    days: 90
+    hours: 2165
+    seconds: 7796290
+    uptime: 90 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -1131,15 +1160,15 @@ values:
     systemd-timesyncd.service: enabled
   systemd_version: '245'
   timezone: UTC
-  uptime: 56 days
-  uptime_days: 56
-  uptime_hours: 1347
-  uptime_seconds: 4849688
+  uptime: 90 days
+  uptime_days: 90
+  uptime_hours: 2165
+  uptime_seconds: 7796290
   uuid: 4c4c4544-0039-3710-8031-b2c04f545a32
   vcsrepo_svn_ver: 1.10.4
   virtual: physical
   clientcert: granet.internal.softwareheritage.org
   clientversion: 5.5.10
   clientnoop: false
-timestamp: '2020-09-02T12:09:06.331220644+00:00'
-expiration: '2020-09-02T12:39:06.332720526+00:00'
+timestamp: '2020-10-06T14:39:07.826789164+00:00'
+expiration: '2020-10-06T15:09:07.827849523+00:00'

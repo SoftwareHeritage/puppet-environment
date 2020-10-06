@@ -2,10 +2,11 @@
 name: ceph-osd1.internal.softwareheritage.org
 values:
   agent_specified_environment: production
-  apt_dist_updates: 8
+  apt_dist_updates: 9
   apt_has_dist_updates: true
   apt_has_updates: true
   apt_package_dist_updates:
+  - libzstd1
   - udev
   - libpam-systemd
   - libnss-systemd
@@ -20,15 +21,16 @@ values:
   - systemd-sysv
   - udev
   - libudev1
-  apt_reboot_required: true
+  - libzstd1
+  apt_reboot_required: false
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1599045422
-  apt_updates: 3
+  apt_update_last_success: 1601993823
+  apt_updates: 4
   architecture: amd64
-  bios_release_date: 05/02/2017
+  bios_release_date: 11/21/2019
   bios_vendor: American Megatrends Inc.
-  bios_version: 2.0b
+  bios_version: '3.2'
   blockdevice_nvme0n1_model: INTEL SSDPEDMD800G4
   blockdevice_nvme0n1_size: 800166076416
   blockdevice_sda_model: ST6000NM0115-1YZ
@@ -73,7 +75,10 @@ values:
   blockdevice_sdn_model: INTEL SSDSC2BB15
   blockdevice_sdn_size: 150039945216
   blockdevice_sdn_vendor: ATA
-  blockdevices: sdf,nvme0n1,sdd,sdm,sdb,sdk,sdi,sdg,sde,sdn,sdc,sdl,sda,sdj,sdh
+  blockdevice_sdo_model: Virtual Floppy
+  blockdevice_sdo_size: 1474560
+  blockdevice_sdo_vendor: ATEN
+  blockdevices: sdf,nvme0n1,sdo,sdd,sdm,sdb,sdk,sdi,sdg,sde,sdn,sdc,sdl,sda,sdj,sdh
   boardassettag: Default string
   boardmanufacturer: Supermicro
   boardproductname: X10DRH-iT
@@ -160,11 +165,16 @@ values:
       size: 139.74 GiB
       size_bytes: 150039945216
       vendor: ATA
+    sdo:
+      model: Virtual Floppy
+      size: 1.41 MiB
+      size_bytes: 1474560
+      vendor: ATEN
   dmi:
     bios:
-      release_date: 05/02/2017
+      release_date: 11/21/2019
       vendor: American Megatrends Inc.
-      version: 2.0b
+      version: '3.2'
     board:
       asset_tag: Default string
       manufacturer: Supermicro
@@ -242,9 +252,11 @@ values:
     systemd-coredump: "/"
     danseraf: "/home/danseraf"
     aeviso: "/home/aeviso"
+    tenma: "/home/tenma"
+    vsellier: "/home/vsellier"
   domain: internal.softwareheritage.org
   facterversion: 3.11.0
-  filesystems: btrfs,ext2,ext3,ext4,hfs,hfsplus,jfs,minix,msdos,qnx4,ufs,vfat,xfs
+  filesystems: btrfs,ext2,ext3,ext4,vfat
   fips_enabled: false
   fqdn: ceph-osd1.internal.softwareheritage.org
   gid: root
@@ -261,7 +273,7 @@ values:
     privileged: true
     uid: 0
     user: root
-  interfaces: bond0,enp2s0f0,enp2s0f1,enp5s0f0,enp5s0f1,lo,vlan440,vlan442
+  interfaces: bond0,eno1,enp2s0f0,enp2s0f1,enp5s0f1,lo,vlan440,vlan442
   ipaddress: 192.168.100.180
   ipaddress6: fe80::ae1f:6bff:fe2d:6e9c
   ipaddress6_bond0: fe80::ae1f:6bff:fe2d:6e9c
@@ -275,13 +287,13 @@ values:
   is_virtual: false
   kernel: Linux
   kernelmajversion: '4.19'
-  kernelrelease: 4.19.0-6-amd64
+  kernelrelease: 4.19.0-11-amd64
   kernelversion: 4.19.0
   letsencrypt_directory: {}
   load_averages:
-    15m: 6.13
-    1m: 6.16
-    5m: 5.85
+    15m: 4.15
+    1m: 2.87
+    5m: 3.0
   location: sesi_rocquencourt
   lsbdistcodename: buster
   lsbdistdescription: Debian GNU/Linux 10 (buster)
@@ -290,39 +302,39 @@ values:
   lsbmajdistrelease: '10'
   macaddress: ac:1f:6b:2d:6e:9c
   macaddress_bond0: ac:1f:6b:2d:6e:9c
+  macaddress_eno1: ac:1f:6b:05:e5:96
   macaddress_enp2s0f0: ac:1f:6b:2d:6e:9c
   macaddress_enp2s0f1: ac:1f:6b:2d:6e:9d
-  macaddress_enp5s0f0: ac:1f:6b:05:e5:96
   macaddress_enp5s0f1: ac:1f:6b:05:e5:97
   macaddress_vlan440: ac:1f:6b:2d:6e:9c
   macaddress_vlan442: ac:1f:6b:2d:6e:9c
   manufacturer: Supermicro
   memory:
     swap:
-      available: 11.64 GiB
-      available_bytes: 12497776640
-      capacity: 27.25%
+      available: 15.45 GiB
+      available_bytes: 16593711104
+      capacity: 3.41%
       total: 16.00 GiB
       total_bytes: 17179865088
-      used: 4.36 GiB
-      used_bytes: 4682088448
+      used: 559.00 MiB
+      used_bytes: 586153984
     system:
-      available: 3.26 GiB
-      available_bytes: 3498586112
-      capacity: 94.81%
+      available: 8.44 GiB
+      available_bytes: 9065922560
+      capacity: 86.56%
       total: 62.81 GiB
-      total_bytes: 67439808512
-      used: 59.55 GiB
-      used_bytes: 63941222400
-  memoryfree: 3.26 GiB
-  memoryfree_mb: 3336.51171875
+      total_bytes: 67439816704
+      used: 54.36 GiB
+      used_bytes: 58373894144
+  memoryfree: 8.44 GiB
+  memoryfree_mb: 8645.9375
   memorysize: 62.81 GiB
-  memorysize_mb: 64315.61328125
+  memorysize_mb: 64315.62109375
   mountpoints:
     "/":
-      available: 15.25 GiB
-      available_bytes: 16378765312
-      capacity: 16.22%
+      available: 15.28 GiB
+      available_bytes: 16407429120
+      capacity: 16.08%
       device: "/dev/mapper/ssd-root"
       filesystem: ext4
       options:
@@ -331,8 +343,8 @@ values:
       - errors=remount-ro
       size: 18.21 GiB
       size_bytes: 19550347264
-      used: 2.95 GiB
-      used_bytes: 3171581952
+      used: 2.93 GiB
+      used_bytes: 3142918144
     "/boot/efi":
       available: 480.93 MiB
       available_bytes: 504291328
@@ -355,7 +367,7 @@ values:
       used_bytes: 5349376
     "/dev/shm":
       available: 31.40 GiB
-      available_bytes: 33719902208
+      available_bytes: 33719906304
       capacity: 0%
       device: tmpfs
       filesystem: tmpfs
@@ -364,12 +376,12 @@ values:
       - nosuid
       - nodev
       size: 31.40 GiB
-      size_bytes: 33719902208
+      size_bytes: 33719906304
       used: 0 bytes
       used_bytes: 0
     "/run":
       available: 6.28 GiB
-      available_bytes: 6742708224
+      available_bytes: 6742712320
       capacity: 0.02%
       device: tmpfs
       filesystem: tmpfs
@@ -383,7 +395,7 @@ values:
       size: 6.28 GiB
       size_bytes: 6743982080
       used: 1.21 MiB
-      used_bytes: 1273856
+      used_bytes: 1269760
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -403,7 +415,7 @@ values:
       used_bytes: 0
     "/sys/fs/cgroup":
       available: 31.40 GiB
-      available_bytes: 33719902208
+      available_bytes: 33719906304
       capacity: 0%
       device: tmpfs
       filesystem: tmpfs
@@ -414,7 +426,7 @@ values:
       - noexec
       - mode=755
       size: 31.40 GiB
-      size_bytes: 33719902208
+      size_bytes: 33719906304
       used: 0 bytes
       used_bytes: 0
     "/var/lib/ceph/osd/ceph-0":
@@ -427,9 +439,9 @@ values:
       - rw
       - relatime
       size: 31.40 GiB
-      size_bytes: 33719902208
-      used: 24.00 KiB
-      used_bytes: 24576
+      size_bytes: 33719906304
+      used: 28.00 KiB
+      used_bytes: 28672
     "/var/lib/ceph/osd/ceph-1":
       available: 31.40 GiB
       available_bytes: 33719877632
@@ -440,9 +452,9 @@ values:
       - rw
       - relatime
       size: 31.40 GiB
-      size_bytes: 33719902208
-      used: 24.00 KiB
-      used_bytes: 24576
+      size_bytes: 33719906304
+      used: 28.00 KiB
+      used_bytes: 28672
     "/var/lib/ceph/osd/ceph-10":
       available: 31.40 GiB
       available_bytes: 33719877632
@@ -453,9 +465,9 @@ values:
       - rw
       - relatime
       size: 31.40 GiB
-      size_bytes: 33719902208
-      used: 24.00 KiB
-      used_bytes: 24576
+      size_bytes: 33719906304
+      used: 28.00 KiB
+      used_bytes: 28672
     "/var/lib/ceph/osd/ceph-11":
       available: 31.40 GiB
       available_bytes: 33719877632
@@ -466,9 +478,9 @@ values:
       - rw
       - relatime
       size: 31.40 GiB
-      size_bytes: 33719902208
-      used: 24.00 KiB
-      used_bytes: 24576
+      size_bytes: 33719906304
+      used: 28.00 KiB
+      used_bytes: 28672
     "/var/lib/ceph/osd/ceph-2":
       available: 31.40 GiB
       available_bytes: 33719877632
@@ -479,9 +491,9 @@ values:
       - rw
       - relatime
       size: 31.40 GiB
-      size_bytes: 33719902208
-      used: 24.00 KiB
-      used_bytes: 24576
+      size_bytes: 33719906304
+      used: 28.00 KiB
+      used_bytes: 28672
     "/var/lib/ceph/osd/ceph-3":
       available: 31.40 GiB
       available_bytes: 33719877632
@@ -492,9 +504,9 @@ values:
       - rw
       - relatime
       size: 31.40 GiB
-      size_bytes: 33719902208
-      used: 24.00 KiB
-      used_bytes: 24576
+      size_bytes: 33719906304
+      used: 28.00 KiB
+      used_bytes: 28672
     "/var/lib/ceph/osd/ceph-4":
       available: 31.40 GiB
       available_bytes: 33719877632
@@ -505,9 +517,9 @@ values:
       - rw
       - relatime
       size: 31.40 GiB
-      size_bytes: 33719902208
-      used: 24.00 KiB
-      used_bytes: 24576
+      size_bytes: 33719906304
+      used: 28.00 KiB
+      used_bytes: 28672
     "/var/lib/ceph/osd/ceph-5":
       available: 31.40 GiB
       available_bytes: 33719877632
@@ -518,9 +530,9 @@ values:
       - rw
       - relatime
       size: 31.40 GiB
-      size_bytes: 33719902208
-      used: 24.00 KiB
-      used_bytes: 24576
+      size_bytes: 33719906304
+      used: 28.00 KiB
+      used_bytes: 28672
     "/var/lib/ceph/osd/ceph-6":
       available: 31.40 GiB
       available_bytes: 33719877632
@@ -531,9 +543,9 @@ values:
       - rw
       - relatime
       size: 31.40 GiB
-      size_bytes: 33719902208
-      used: 24.00 KiB
-      used_bytes: 24576
+      size_bytes: 33719906304
+      used: 28.00 KiB
+      used_bytes: 28672
     "/var/lib/ceph/osd/ceph-7":
       available: 31.40 GiB
       available_bytes: 33719877632
@@ -544,9 +556,9 @@ values:
       - rw
       - relatime
       size: 31.40 GiB
-      size_bytes: 33719902208
-      used: 24.00 KiB
-      used_bytes: 24576
+      size_bytes: 33719906304
+      used: 28.00 KiB
+      used_bytes: 28672
     "/var/lib/ceph/osd/ceph-8":
       available: 31.40 GiB
       available_bytes: 33719877632
@@ -557,9 +569,9 @@ values:
       - rw
       - relatime
       size: 31.40 GiB
-      size_bytes: 33719902208
-      used: 24.00 KiB
-      used_bytes: 24576
+      size_bytes: 33719906304
+      used: 28.00 KiB
+      used_bytes: 28672
     "/var/lib/ceph/osd/ceph-9":
       available: 31.40 GiB
       available_bytes: 33719877632
@@ -570,16 +582,16 @@ values:
       - rw
       - relatime
       size: 31.40 GiB
-      size_bytes: 33719902208
-      used: 24.00 KiB
-      used_bytes: 24576
+      size_bytes: 33719906304
+      used: 28.00 KiB
+      used_bytes: 28672
   mounts:
   - "/"
   - "/boot/efi"
   mtu_bond0: 9000
+  mtu_eno1: 1500
   mtu_enp2s0f0: 9000
   mtu_enp2s0f1: 9000
-  mtu_enp5s0f0: 1500
   mtu_enp5s0f1: 1500
   mtu_lo: 65536
   mtu_vlan440: 1500
@@ -618,15 +630,15 @@ values:
         mtu: 9000
         netmask6: 'ffff:ffff:ffff:ffff::'
         network6: 'fe80::'
+      eno1:
+        mac: ac:1f:6b:05:e5:96
+        mtu: 1500
       enp2s0f0:
         mac: ac:1f:6b:2d:6e:9c
         mtu: 9000
       enp2s0f1:
         mac: ac:1f:6b:2d:6e:9d
         mtu: 9000
-      enp5s0f0:
-        mac: ac:1f:6b:05:e5:96
-        mtu: 1500
       enp5s0f1:
         mac: ac:1f:6b:05:e5:97
         mtu: 1500
@@ -691,7 +703,7 @@ values:
     primary: vlan440
   operatingsystem: Debian
   operatingsystemmajrelease: '10'
-  operatingsystemrelease: '10.5'
+  operatingsystemrelease: '10.6'
   os:
     architecture: amd64
     distro:
@@ -705,9 +717,9 @@ values:
     hardware: x86_64
     name: Debian
     release:
-      full: '10.5'
+      full: '10.6'
       major: '10'
-      minor: '5'
+      minor: '6'
     selinux:
       enabled: false
   osfamily: Debian
@@ -835,6 +847,11 @@ values:
       size: 139.26 GiB
       size_bytes: 149527986176
       uuid: 6c401ba5-08ab-d620-8f89-47a6a4ec64e8
+    "/dev/sdo1":
+      filesystem: vfat
+      size: 1.41 MiB
+      size_bytes: 1474560
+      uuid: 514B-FCBA
   path: "/usr/bin:/bin:/usr/sbin:/sbin"
   physicalprocessorcount: 1
   processor0: Intel(R) Xeon(R) CPU E5-2620 v4 @ 2.10GHz
@@ -930,8 +947,8 @@ values:
     SSHFP 1 2 77afa6228b0ba37c925d32ff24ba93fe802bbec385c16566d056fbc50ec20b34
   sshrsakey: AAAAB3NzaC1yc2EAAAADAQABAAABAQDlfy11m+nx9DX/PEA8+KBsppp2wKT3QeV9oT4/dLFdKbEBDtU8zOKi2BqRJzc96i4OMf+8yEusyTFqDrhBLYwKYXl+tiDiiDetXgJyKNBZabPMClu45GyOxBZBsffB0CxDkiG6N2vwqUq1Fj0CYaAIiqwrZT6XFghK8zBGcKU7mPPgIykR/najqqCQmW1/1qyjN/QSnfoEW0i02dOjStgqGklUKvFPx0J2a0cKWLG9PCvl+SaIigIdGN4U5Z8sDiLXAEsmfwrPR8lzdlNNTrQzwhsZNuRAVQubomjO7MRr+pE30ur+g/6+mDb5Sxtg1oZY/sES3dbL5v+MO5YLvpGV
   sudoversion: 1.8.27
-  swapfree: 11.64 GiB
-  swapfree_mb: 11918.80859375
+  swapfree: 15.45 GiB
+  swapfree_mb: 15824.99609375
   swapsize: 16.00 GiB
   swapsize_mb: 16383.99609375
   swh_hostname:
@@ -939,10 +956,10 @@ values:
     short: ceph-osd1
     internal_fqdn: ceph-osd1.internal.softwareheritage.org
   system_uptime:
-    days: 322
-    hours: 7751
-    seconds: 27903673
-    uptime: 322 days
+    days: 0
+    hours: 21
+    seconds: 77222
+    uptime: 21:27 hours
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -954,15 +971,15 @@ values:
     systemd-timesyncd.service: enabled
   systemd_version: '241'
   timezone: UTC
-  uptime: 322 days
-  uptime_days: 322
-  uptime_hours: 7751
-  uptime_seconds: 27903673
+  uptime: 21:27 hours
+  uptime_days: 0
+  uptime_hours: 21
+  uptime_seconds: 77222
   uuid: 00000000-0000-0000-0000-ac1f6b05e596
   vcsrepo_svn_ver: ''
   virtual: physical
   clientcert: ceph-osd1.internal.softwareheritage.org
   clientversion: 5.5.10
   clientnoop: false
-timestamp: '2020-09-02T12:03:05.386300484+00:00'
-expiration: '2020-09-02T12:33:05.386905820+00:00'
+timestamp: '2020-10-06T14:33:04.816690144+00:00'
+expiration: '2020-10-06T15:03:04.817541665+00:00'

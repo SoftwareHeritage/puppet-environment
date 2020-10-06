@@ -1,11 +1,37 @@
 --- !ruby/object:Puppet::Node::Facts
 name: kafka4.internal.softwareheritage.org
 values:
-  agent_specified_environment: staging
-  apt_has_dist_updates: false
-  apt_has_updates: false
+  agent_specified_environment: production
+  apt_dist_updates: 9
+  apt_has_dist_updates: true
+  apt_has_updates: true
+  apt_package_dist_updates:
+  - libzstd1
+  - libnss-systemd
+  - udev
+  - libudev1
+  - systemd-sysv
+  - systemd-timesyncd
+  - libpam-systemd
+  - systemd
+  - libsystemd0
+  apt_package_security_dist_updates: []
+  apt_package_security_updates: []
+  apt_package_updates:
+  - libzstd1
+  - libnss-systemd
+  - udev
+  - libudev1
+  - systemd-sysv
+  - systemd-timesyncd
+  - libpam-systemd
+  - systemd
+  - libsystemd0
   apt_reboot_required: false
-  apt_update_last_success: 1599045062
+  apt_security_dist_updates: 0
+  apt_security_updates: 0
+  apt_update_last_success: 1601993492
+  apt_updates: 9
   architecture: amd64
   bios_release_date: 06/30/2020
   bios_vendor: Dell Inc.
@@ -218,13 +244,15 @@ values:
     privileged: true
     uid: 0
     user: root
-  interfaces: bond0,eno1,eno2,ens1f0np0,ens1f1np1,lo,vlan440
-  ipaddress: 192.168.100.204
+  interfaces: bond0,eno1,eno2,ens1f0np0,ens1f1np1,lo,vlan1300,vlan440
+  ipaddress: 128.93.166.51
   ipaddress6: fe80::6857:31ff:fed4:a9f7
   ipaddress6_bond0: fe80::6857:31ff:fed4:a9f7
   ipaddress6_lo: "::1"
+  ipaddress6_vlan1300: fe80::6857:31ff:fed4:a9f7
   ipaddress6_vlan440: fe80::6857:31ff:fed4:a9f7
   ipaddress_lo: 127.0.0.1
+  ipaddress_vlan1300: 128.93.166.51
   ipaddress_vlan440: 192.168.100.204
   is_pe: false
   is_virtual: false
@@ -239,9 +267,9 @@ values:
   kernelversion: 5.7.0
   letsencrypt_directory: {}
   load_averages:
-    15m: 0.18
-    1m: 0.18
-    5m: 0.18
+    15m: 0.35
+    1m: 0.19
+    5m: 0.32
   location: sesi_rocquencourt
   lsbdistcodename: buster
   lsbdistdescription: Debian GNU/Linux 10 (buster)
@@ -254,26 +282,27 @@ values:
   macaddress_eno2: 4c:d9:8f:c0:e9:f7
   macaddress_ens1f0np0: 4c:d9:8f:c3:3d:92
   macaddress_ens1f1np1: 4c:d9:8f:c3:3d:93
+  macaddress_vlan1300: 6a:57:31:d4:a9:f7
   macaddress_vlan440: 6a:57:31:d4:a9:f7
   manufacturer: Dell Inc.
   memory:
     system:
-      available: 118.53 GiB
-      available_bytes: 127266476032
-      capacity: 5.64%
+      available: 106.71 GiB
+      available_bytes: 114579169280
+      capacity: 15.04%
       total: 125.60 GiB
       total_bytes: 134866636800
-      used: 7.08 GiB
-      used_bytes: 7600160768
-  memoryfree: 118.53 GiB
-  memoryfree_mb: 121370.76953125
+      used: 18.89 GiB
+      used_bytes: 20287467520
+  memoryfree: 106.71 GiB
+  memoryfree_mb: 109271.2109375
   memorysize: 125.60 GiB
   memorysize_mb: 128618.84765625
   mountpoints:
     "/":
-      available: 45.97 GiB
-      available_bytes: 49356816384
-      capacity: 6.12%
+      available: 45.53 GiB
+      available_bytes: 48882835456
+      capacity: 7.02%
       device: "/dev/mapper/kafka4--vg-root"
       filesystem: ext4
       options:
@@ -282,8 +311,8 @@ values:
       - errors=remount-ro
       size: 48.97 GiB
       size_bytes: 52576092160
-      used: 3.00 GiB
-      used_bytes: 3219275776
+      used: 3.44 GiB
+      used_bytes: 3693256704
     "/boot/efi":
       available: 1016.87 MiB
       available_bytes: 1066266624
@@ -378,21 +407,26 @@ values:
   mtu_ens1f0np0: 9000
   mtu_ens1f1np1: 9000
   mtu_lo: 65536
+  mtu_vlan1300: 9000
   mtu_vlan440: 9000
   mysql_server_id: 13724471
-  netmask: 255.255.255.0
+  netmask: 255.255.255.192
   netmask6: 'ffff:ffff:ffff:ffff::'
   netmask6_bond0: 'ffff:ffff:ffff:ffff::'
   netmask6_lo: ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff
+  netmask6_vlan1300: 'ffff:ffff:ffff:ffff::'
   netmask6_vlan440: 'ffff:ffff:ffff:ffff::'
   netmask_lo: 255.0.0.0
+  netmask_vlan1300: 255.255.255.192
   netmask_vlan440: 255.255.255.0
-  network: 192.168.100.0
+  network: 128.93.166.0
   network6: 'fe80::'
   network6_bond0: 'fe80::'
   network6_lo: "::1"
+  network6_vlan1300: 'fe80::'
   network6_vlan440: 'fe80::'
   network_lo: 127.0.0.0
+  network_vlan1300: 128.93.166.0
   network_vlan440: 192.168.100.0
   networking:
     domain: internal.softwareheritage.org
@@ -437,6 +471,23 @@ values:
         netmask6: ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff
         network: 127.0.0.0
         network6: "::1"
+      vlan1300:
+        bindings:
+        - address: 128.93.166.51
+          netmask: 255.255.255.192
+          network: 128.93.166.0
+        bindings6:
+        - address: fe80::6857:31ff:fed4:a9f7
+          netmask: 'ffff:ffff:ffff:ffff::'
+          network: 'fe80::'
+        ip: 128.93.166.51
+        ip6: fe80::6857:31ff:fed4:a9f7
+        mac: 6a:57:31:d4:a9:f7
+        mtu: 9000
+        netmask: 255.255.255.192
+        netmask6: 'ffff:ffff:ffff:ffff::'
+        network: 128.93.166.0
+        network6: 'fe80::'
       vlan440:
         bindings:
         - address: 192.168.100.204
@@ -454,18 +505,18 @@ values:
         netmask6: 'ffff:ffff:ffff:ffff::'
         network: 192.168.100.0
         network6: 'fe80::'
-    ip: 192.168.100.204
+    ip: 128.93.166.51
     ip6: fe80::6857:31ff:fed4:a9f7
     mac: 6a:57:31:d4:a9:f7
     mtu: 9000
-    netmask: 255.255.255.0
+    netmask: 255.255.255.192
     netmask6: 'ffff:ffff:ffff:ffff::'
-    network: 192.168.100.0
+    network: 128.93.166.0
     network6: 'fe80::'
-    primary: vlan440
+    primary: vlan1300
   operatingsystem: Debian
   operatingsystemmajrelease: '10'
-  operatingsystemrelease: '10.5'
+  operatingsystemrelease: '10.6'
   os:
     architecture: amd64
     distro:
@@ -479,9 +530,9 @@ values:
     hardware: x86_64
     name: Debian
     release:
-      full: '10.5'
+      full: '10.6'
       major: '10'
-      minor: '5'
+      minor: '6'
     selinux:
       enabled: false
   osfamily: Debian
@@ -708,7 +759,8 @@ values:
     physicalcount: 2
     speed: 3.50 GHz
   productname: PowerEdge R540
-  public_ipaddresses: []
+  public_ipaddresses:
+  - 128.93.166.51
   puppet_environmentpath: "/etc/puppet/code/environments"
   puppet_server: pergamon.internal.softwareheritage.org
   puppet_vardir: "/var/lib/puppet"
@@ -766,10 +818,10 @@ values:
     short: kafka4
     internal_fqdn: kafka4.internal.softwareheritage.org
   system_uptime:
-    days: 13
-    hours: 314
-    seconds: 1133487
-    uptime: 13 days
+    days: 4
+    hours: 117
+    seconds: 423451
+    uptime: 4 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -784,15 +836,15 @@ values:
     systemd-timesyncd.service: enabled
   systemd_version: '245'
   timezone: UTC
-  uptime: 13 days
-  uptime_days: 13
-  uptime_hours: 314
-  uptime_seconds: 1133487
+  uptime: 4 days
+  uptime_days: 4
+  uptime_hours: 117
+  uptime_seconds: 423451
   uuid: 4c4c4544-0038-5910-8053-c3c04f563333
   vcsrepo_svn_ver: ''
   virtual: physical
   clientcert: kafka4.internal.softwareheritage.org
   clientversion: 5.5.10
   clientnoop: false
-timestamp: '2020-09-02T11:52:06.369447621+00:00'
-expiration: '2020-09-02T12:22:06.370044030+00:00'
+timestamp: '2020-10-06T14:52:06.684545733+00:00'
+expiration: '2020-10-06T15:22:06.685290814+00:00'

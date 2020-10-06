@@ -2,10 +2,11 @@
 name: dbreplica1.euwest.azure.internal.softwareheritage.org
 values:
   agent_specified_environment: production
-  apt_dist_updates: 17
+  apt_dist_updates: 18
   apt_has_dist_updates: true
   apt_has_updates: true
   apt_package_dist_updates:
+  - libzstd1
   - postgresql-common
   - udev
   - libpam-systemd
@@ -29,6 +30,7 @@ values:
   - systemd-sysv
   - udev
   - libudev1
+  - libzstd1
   - borgmatic
   - libpq5
   - libdbd-pg-perl
@@ -41,8 +43,8 @@ values:
   apt_reboot_required: true
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1599045664
-  apt_updates: 12
+  apt_update_last_success: 1601994063
+  apt_updates: 13
   architecture: amd64
   bios_release_date: 06/02/2017
   bios_vendor: American Megatrends Inc.
@@ -229,6 +231,8 @@ values:
     systemd-coredump: "/"
     danseraf: "/home/danseraf"
     aeviso: "/home/aeviso"
+    tenma: "/home/tenma"
+    vsellier: "/home/vsellier"
   domain: euwest.azure.internal.softwareheritage.org
   facterversion: 3.11.0
   filesystems: ext2,ext3,ext4
@@ -263,9 +267,9 @@ values:
   kernelversion: 4.19.0
   letsencrypt_directory: {}
   load_averages:
-    15m: 0.05
-    1m: 0.16
-    5m: 0.06
+    15m: 0.01
+    1m: 0.08
+    5m: 0.02
   location: azure_euwest
   lsbdistcodename: buster
   lsbdistdescription: Debian GNU/Linux 10 (buster)
@@ -277,22 +281,22 @@ values:
   manufacturer: Microsoft Corporation
   memory:
     system:
-      available: 56.41 GiB
-      available_bytes: 60564447232
-      capacity: 10.32%
+      available: 56.69 GiB
+      available_bytes: 60873428992
+      capacity: 9.86%
       total: 62.89 GiB
       total_bytes: 67532042240
-      used: 6.49 GiB
-      used_bytes: 6967595008
-  memoryfree: 56.41 GiB
-  memoryfree_mb: 57758.7578125
+      used: 6.20 GiB
+      used_bytes: 6658613248
+  memoryfree: 56.69 GiB
+  memoryfree_mb: 58053.42578125
   memorysize: 62.89 GiB
   memorysize_mb: 64403.57421875
   mountpoints:
     "/":
-      available: 26.61 GiB
-      available_bytes: 28573548544
-      capacity: 9.50%
+      available: 26.62 GiB
+      available_bytes: 28586332160
+      capacity: 9.46%
       device: "/dev/sda1"
       filesystem: ext4
       options:
@@ -301,8 +305,8 @@ values:
       - errors=remount-ro
       size: 29.40 GiB
       size_bytes: 31571480576
-      used: 2.79 GiB
-      used_bytes: 2997932032
+      used: 2.78 GiB
+      used_bytes: 2985148416
     "/dev/shm":
       available: 31.45 GiB
       available_bytes: 33766006784
@@ -332,7 +336,7 @@ values:
       used_bytes: 62943232
     "/run":
       available: 6.29 GiB
-      available_bytes: 6752538624
+      available_bytes: 6752555008
       capacity: 0.01%
       device: tmpfs
       filesystem: tmpfs
@@ -345,8 +349,8 @@ values:
       - mode=755
       size: 6.29 GiB
       size_bytes: 6753206272
-      used: 652.00 KiB
-      used_bytes: 667648
+      used: 636.00 KiB
+      used_bytes: 651264
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -364,29 +368,10 @@ values:
       size_bytes: 5242880
       used: 0 bytes
       used_bytes: 0
-    "/run/user/116":
-      available: 6.29 GiB
-      available_bytes: 6753202176
-      capacity: 0%
-      device: tmpfs
-      filesystem: tmpfs
-      options:
-      - rw
-      - nosuid
-      - nodev
-      - relatime
-      - size=6594924k
-      - mode=700
-      - uid=116
-      - gid=121
-      size: 6.29 GiB
-      size_bytes: 6753202176
-      used: 0 bytes
-      used_bytes: 0
     "/srv":
-      available: 5.58 TiB
-      available_bytes: 6131408072704
-      capacity: 29.16%
+      available: 5.56 TiB
+      available_bytes: 6117376843776
+      capacity: 29.33%
       device: "/dev/mapper/data--vg01-data--lv01"
       filesystem: ext4
       options:
@@ -395,8 +380,8 @@ values:
       - errors=remount-ro
       size: 7.87 TiB
       size_bytes: 8655877410816
-      used: 2.30 TiB
-      used_bytes: 2524469338112
+      used: 2.31 TiB
+      used_bytes: 2538500567040
     "/sys/fs/cgroup":
       available: 31.45 GiB
       available_bytes: 33766019072
@@ -483,7 +468,7 @@ values:
     primary: eth0
   operatingsystem: Debian
   operatingsystemmajrelease: '10'
-  operatingsystemrelease: '10.5'
+  operatingsystemrelease: '10.6'
   os:
     architecture: amd64
     distro:
@@ -497,9 +482,9 @@ values:
     hardware: x86_64
     name: Debian
     release:
-      full: '10.5'
+      full: '10.6'
       major: '10'
-      minor: '5'
+      minor: '6'
     selinux:
       enabled: false
   osfamily: Debian
@@ -669,10 +654,10 @@ values:
     short: dbreplica1.euwest.azure
     internal_fqdn: dbreplica1.euwest.azure.internal.softwareheritage.org
   system_uptime:
-    days: 127
-    hours: 3053
-    seconds: 10993005
-    uptime: 127 days
+    days: 161
+    hours: 3872
+    seconds: 13939605
+    uptime: 161 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -684,15 +669,15 @@ values:
     systemd-timesyncd.service: enabled
   systemd_version: '241'
   timezone: UTC
-  uptime: 127 days
-  uptime_days: 127
-  uptime_hours: 3053
-  uptime_seconds: 10993005
+  uptime: 161 days
+  uptime_days: 161
+  uptime_hours: 3872
+  uptime_seconds: 13939605
   uuid: 0cb014e5-6e90-514a-ad9b-0e3b243245b1
   vcsrepo_svn_ver: ''
   virtual: hyperv
   clientcert: dbreplica1.euwest.azure.internal.softwareheritage.org
   clientversion: 5.5.10
   clientnoop: false
-timestamp: '2020-09-02T12:02:05.850174539+00:00'
-expiration: '2020-09-02T12:32:05.850636942+00:00'
+timestamp: '2020-10-06T14:32:06.202163218+00:00'
+expiration: '2020-10-06T15:02:06.202887322+00:00'

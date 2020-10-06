@@ -2,10 +2,11 @@
 name: orsay.softwareheritage.org
 values:
   agent_specified_environment: production
-  apt_dist_updates: 10
+  apt_dist_updates: 11
   apt_has_dist_updates: true
   apt_has_updates: true
   apt_package_dist_updates:
+  - libzstd1
   - libnss-systemd
   - udev
   - libudev1
@@ -19,6 +20,7 @@ values:
   apt_package_security_dist_updates: []
   apt_package_security_updates: []
   apt_package_updates:
+  - libzstd1
   - libnss-systemd
   - udev
   - libudev1
@@ -32,8 +34,8 @@ values:
   apt_reboot_required: true
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1599045965
-  apt_updates: 10
+  apt_update_last_success: 1601990764
+  apt_updates: 11
   architecture: amd64
   bios_release_date: 10/05/2010
   bios_vendor: Dell Inc.
@@ -91,7 +93,7 @@ values:
       module_options:
         interval:
           name: interval
-          type: str
+          type: secs
           level: advanced
           flags: 1
           default_value: '60'
@@ -574,10 +576,10 @@ values:
           see_also: []
         rbd_stats_pools_refresh_interval:
           name: rbd_stats_pools_refresh_interval
-          type: str
+          type: int
           level: advanced
           flags: 0
-          default_value: ''
+          default_value: '300'
           min: ''
           max: ''
           enum_allowed: []
@@ -613,6 +615,19 @@ values:
           see_also: []
         server_port:
           name: server_port
+          type: str
+          level: advanced
+          flags: 0
+          default_value: ''
+          min: ''
+          max: ''
+          enum_allowed: []
+          desc: ''
+          long_desc: ''
+          tags: []
+          see_also: []
+        stale_cache_strategy:
+          name: stale_cache_strategy
           type: str
           level: advanced
           flags: 0
@@ -1183,6 +1198,8 @@ values:
     systemd-coredump: "/"
     danseraf: "/home/danseraf"
     aeviso: "/home/aeviso"
+    tenma: "/home/tenma"
+    vsellier: "/home/vsellier"
   domain: softwareheritage.org
   facterversion: 3.11.0
   filesystems: ext2,ext3,ext4,squashfs,vfat
@@ -1202,12 +1219,14 @@ values:
     privileged: true
     uid: 0
     user: root
-  interfaces: bond0,eth0,eth1,eth2,eth3,lo,tap109i0,tap109i1,tap112i0,tap114i0,tap115i0,tap116i0,tap117i0,tap118i0,tap119i0,tap120i0,tap121i0,tap122i0,vlan440,vmbr0,vmbr1
+  interfaces: bond0,eth0,eth1,eth2,eth3,lo,tap114i0,tap115i0,vlan440,vlan442,vlan443,vmbr0,vmbr1,vmbr442,vmbr443
   ipaddress: 128.93.193.9
   ipaddress6: fe80::f24d:a2ff:fe3f:1343
   ipaddress6_lo: "::1"
   ipaddress6_vmbr0: fe80::f24d:a2ff:fe3f:1343
   ipaddress6_vmbr1: fe80::f24d:a2ff:fe3f:1343
+  ipaddress6_vmbr442: fe80::2c25:60ff:fece:1000
+  ipaddress6_vmbr443: fe80::e872:32ff:feac:ef39
   ipaddress_lo: 127.0.0.1
   ipaddress_vmbr0: 192.168.100.9
   ipaddress_vmbr1: 128.93.193.9
@@ -1219,9 +1238,9 @@ values:
   kernelversion: 5.0.21
   letsencrypt_directory: {}
   load_averages:
-    15m: 2.01
-    1m: 1.76
-    5m: 1.96
+    15m: 0.62
+    1m: 0.83
+    5m: 0.69
   location: sesi_rocquencourt
   lsbdistcodename: buster
   lsbdistdescription: Debian GNU/Linux 10 (buster)
@@ -1234,40 +1253,34 @@ values:
   macaddress_eth1: f0:4d:a2:3f:13:45
   macaddress_eth2: f0:4d:a2:3f:13:47
   macaddress_eth3: f0:4d:a2:3f:13:49
-  macaddress_tap109i0: 72:14:b1:02:21:75
-  macaddress_tap109i1: ae:57:b6:fa:fe:c7
-  macaddress_tap112i0: a2:fb:e4:bc:0e:4f
   macaddress_tap114i0: 6e:15:30:9d:3d:93
-  macaddress_tap115i0: 8a:b8:c1:48:67:cd
-  macaddress_tap116i0: c6:56:fa:53:d6:ec
-  macaddress_tap117i0: d2:cb:ee:93:8e:f1
-  macaddress_tap118i0: 8e:ab:95:08:d5:97
-  macaddress_tap119i0: f2:26:da:20:55:af
-  macaddress_tap120i0: 72:be:c0:c0:d5:ab
-  macaddress_tap121i0: 8a:3a:bf:9e:50:ef
-  macaddress_tap122i0: da:20:93:ad:91:bb
+  macaddress_tap115i0: be:8b:44:5e:c0:60
   macaddress_vlan440: f0:4d:a2:3f:13:43
+  macaddress_vlan442: f0:4d:a2:3f:13:43
+  macaddress_vlan443: f0:4d:a2:3f:13:43
   macaddress_vmbr0: f0:4d:a2:3f:13:43
   macaddress_vmbr1: f0:4d:a2:3f:13:43
+  macaddress_vmbr442: 2e:25:60:ce:10:00
+  macaddress_vmbr443: ea:72:32:ac:ef:39
   manufacturer: Dell Inc.
   memory:
     system:
-      available: 12.26 GiB
-      available_bytes: 13161590784
-      capacity: 90.26%
+      available: 95.73 GiB
+      available_bytes: 102792749056
+      capacity: 23.96%
       total: 125.89 GiB
       total_bytes: 135176105984
-      used: 113.63 GiB
-      used_bytes: 122014515200
-  memoryfree: 12.26 GiB
-  memoryfree_mb: 12551.87109375
+      used: 30.16 GiB
+      used_bytes: 32383356928
+  memoryfree: 95.73 GiB
+  memoryfree_mb: 98030.8046875
   memorysize: 125.89 GiB
   memorysize_mb: 128913.98046875
   mountpoints:
     "/":
-      available: 23.42 GiB
-      available_bytes: 25143050240
-      capacity: 40.34%
+      available: 23.39 GiB
+      available_bytes: 25112985600
+      capacity: 40.41%
       device: "/dev/mapper/tytso-newroot"
       filesystem: ext4
       options:
@@ -1276,12 +1289,12 @@ values:
       - errors=remount-ro
       size: 39.25 GiB
       size_bytes: 42141548544
-      used: 15.83 GiB
-      used_bytes: 16998498304
+      used: 15.86 GiB
+      used_bytes: 17028562944
     "/dev/shm":
-      available: 62.91 GiB
-      available_bytes: 67544498176
-      capacity: 0.06%
+      available: 62.89 GiB
+      available_bytes: 67528523776
+      capacity: 0.09%
       device: tmpfs
       filesystem: tmpfs
       options:
@@ -1290,12 +1303,12 @@ values:
       - nodev
       size: 62.95 GiB
       size_bytes: 67588050944
-      used: 41.54 MiB
-      used_bytes: 43552768
+      used: 56.77 MiB
+      used_bytes: 59527168
     "/etc/pve":
-      available: 29.84 MiB
-      available_bytes: 31285248
-      capacity: 0.55%
+      available: 29.81 MiB
+      available_bytes: 31256576
+      capacity: 0.64%
       device: "/dev/fuse"
       filesystem: fuse
       options:
@@ -1309,11 +1322,11 @@ values:
       - allow_other
       size: 30.00 MiB
       size_bytes: 31457280
-      used: 168.00 KiB
-      used_bytes: 172032
+      used: 196.00 KiB
+      used_bytes: 200704
     "/run":
       available: 12.59 GiB
-      available_bytes: 13515739136
+      available_bytes: 13515845632
       capacity: 0.01%
       device: tmpfs
       filesystem: tmpfs
@@ -1326,8 +1339,8 @@ values:
       - mode=755
       size: 12.59 GiB
       size_bytes: 13517611008
-      used: 1.79 MiB
-      used_bytes: 1871872
+      used: 1.68 MiB
+      used_bytes: 1765376
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -1389,27 +1402,23 @@ values:
   mtu_eth2: 1500
   mtu_eth3: 1500
   mtu_lo: 65536
-  mtu_tap109i0: 1500
-  mtu_tap109i1: 1500
-  mtu_tap112i0: 1500
   mtu_tap114i0: 1500
   mtu_tap115i0: 1500
-  mtu_tap116i0: 1500
-  mtu_tap117i0: 1500
-  mtu_tap118i0: 1500
-  mtu_tap119i0: 1500
-  mtu_tap120i0: 1500
-  mtu_tap121i0: 1500
-  mtu_tap122i0: 1500
   mtu_vlan440: 1500
+  mtu_vlan442: 9000
+  mtu_vlan443: 9000
   mtu_vmbr0: 1500
   mtu_vmbr1: 9000
+  mtu_vmbr442: 9000
+  mtu_vmbr443: 1500
   mysql_server_id: 42726659
   netmask: 255.255.255.0
   netmask6: 'ffff:ffff:ffff:ffff::'
   netmask6_lo: ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff
   netmask6_vmbr0: 'ffff:ffff:ffff:ffff::'
   netmask6_vmbr1: 'ffff:ffff:ffff:ffff::'
+  netmask6_vmbr442: 'ffff:ffff:ffff:ffff::'
+  netmask6_vmbr443: 'ffff:ffff:ffff:ffff::'
   netmask_lo: 255.0.0.0
   netmask_vmbr0: 255.255.255.0
   netmask_vmbr1: 255.255.255.0
@@ -1418,6 +1427,8 @@ values:
   network6_lo: "::1"
   network6_vmbr0: 'fe80::'
   network6_vmbr1: 'fe80::'
+  network6_vmbr442: 'fe80::'
+  network6_vmbr443: 'fe80::'
   network_lo: 127.0.0.0
   network_vmbr0: 192.168.100.0
   network_vmbr1: 128.93.193.0
@@ -1457,45 +1468,21 @@ values:
         netmask6: ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff
         network: 127.0.0.0
         network6: "::1"
-      tap109i0:
-        mac: 72:14:b1:02:21:75
-        mtu: 1500
-      tap109i1:
-        mac: ae:57:b6:fa:fe:c7
-        mtu: 1500
-      tap112i0:
-        mac: a2:fb:e4:bc:0e:4f
-        mtu: 1500
       tap114i0:
         mac: 6e:15:30:9d:3d:93
         mtu: 1500
       tap115i0:
-        mac: 8a:b8:c1:48:67:cd
-        mtu: 1500
-      tap116i0:
-        mac: c6:56:fa:53:d6:ec
-        mtu: 1500
-      tap117i0:
-        mac: d2:cb:ee:93:8e:f1
-        mtu: 1500
-      tap118i0:
-        mac: 8e:ab:95:08:d5:97
-        mtu: 1500
-      tap119i0:
-        mac: f2:26:da:20:55:af
-        mtu: 1500
-      tap120i0:
-        mac: 72:be:c0:c0:d5:ab
-        mtu: 1500
-      tap121i0:
-        mac: 8a:3a:bf:9e:50:ef
-        mtu: 1500
-      tap122i0:
-        mac: da:20:93:ad:91:bb
+        mac: be:8b:44:5e:c0:60
         mtu: 1500
       vlan440:
         mac: f0:4d:a2:3f:13:43
         mtu: 1500
+      vlan442:
+        mac: f0:4d:a2:3f:13:43
+        mtu: 9000
+      vlan443:
+        mac: f0:4d:a2:3f:13:43
+        mtu: 9000
       vmbr0:
         bindings:
         - address: 192.168.100.9
@@ -1530,6 +1517,26 @@ values:
         netmask6: 'ffff:ffff:ffff:ffff::'
         network: 128.93.193.0
         network6: 'fe80::'
+      vmbr442:
+        bindings6:
+        - address: fe80::2c25:60ff:fece:1000
+          netmask: 'ffff:ffff:ffff:ffff::'
+          network: 'fe80::'
+        ip6: fe80::2c25:60ff:fece:1000
+        mac: 2e:25:60:ce:10:00
+        mtu: 9000
+        netmask6: 'ffff:ffff:ffff:ffff::'
+        network6: 'fe80::'
+      vmbr443:
+        bindings6:
+        - address: fe80::e872:32ff:feac:ef39
+          netmask: 'ffff:ffff:ffff:ffff::'
+          network: 'fe80::'
+        ip6: fe80::e872:32ff:feac:ef39
+        mac: ea:72:32:ac:ef:39
+        mtu: 1500
+        netmask6: 'ffff:ffff:ffff:ffff::'
+        network6: 'fe80::'
     ip: 128.93.193.9
     ip6: fe80::f24d:a2ff:fe3f:1343
     mac: f0:4d:a2:3f:13:43
@@ -1541,7 +1548,7 @@ values:
     primary: vmbr1
   operatingsystem: Debian
   operatingsystemmajrelease: '10'
-  operatingsystemrelease: '10.5'
+  operatingsystemrelease: '10.6'
   os:
     architecture: amd64
     distro:
@@ -1555,9 +1562,9 @@ values:
     hardware: x86_64
     name: Debian
     release:
-      full: '10.5'
+      full: '10.6'
       major: '10'
-      minor: '5'
+      minor: '6'
     selinux:
       enabled: false
   osfamily: Debian
@@ -1569,12 +1576,6 @@ values:
       size: 10.91 TiB
       size_bytes: 11995675885568
       uuid: 1b71650a-09b6-4e60-a856-393272454532
-    "/dev/mapper/ssd--2018-vm--109--disk--0":
-      size: 20.00 GiB
-      size_bytes: 21474836480
-    "/dev/mapper/ssd--2018-vm--112--disk--0":
-      size: 32.00 GiB
-      size_bytes: 34359738368
     "/dev/mapper/ssd--2018-vm--114--disk--0":
       size: 32.00 GiB
       size_bytes: 34359738368
@@ -1584,27 +1585,6 @@ values:
     "/dev/mapper/ssd--2018-vm--115--disk--0":
       size: 400.00 GiB
       size_bytes: 429496729600
-    "/dev/mapper/ssd--2018-vm--116--disk--0":
-      size: 32.00 GiB
-      size_bytes: 34359738368
-    "/dev/mapper/ssd--2018-vm--117--disk--0":
-      size: 32.00 GiB
-      size_bytes: 34359738368
-    "/dev/mapper/ssd--2018-vm--118--disk--0":
-      size: 32.00 GiB
-      size_bytes: 34359738368
-    "/dev/mapper/ssd--2018-vm--119--disk--0":
-      size: 32.00 GiB
-      size_bytes: 34359738368
-    "/dev/mapper/ssd--2018-vm--120--disk--0":
-      size: 32.00 GiB
-      size_bytes: 34359738368
-    "/dev/mapper/ssd--2018-vm--121--disk--0":
-      size: 32.00 GiB
-      size_bytes: 34359738368
-    "/dev/mapper/ssd--2018-vm--122--disk--0":
-      size: 32.00 GiB
-      size_bytes: 34359738368
     "/dev/mapper/ssd--2018-vm--9000--disk--0":
       size: 2.00 GiB
       size_bytes: 2147483648
@@ -1824,10 +1804,10 @@ values:
     short: orsay
     internal_fqdn: orsay.internal.softwareheritage.org
   system_uptime:
-    days: 323
-    hours: 7772
-    seconds: 27979575
-    uptime: 323 days
+    days: 357
+    hours: 8590
+    seconds: 30926174
+    uptime: 357 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -1842,15 +1822,15 @@ values:
     systemd-timesyncd.service: enabled
   systemd_version: '245'
   timezone: UTC
-  uptime: 323 days
-  uptime_days: 323
-  uptime_hours: 7772
-  uptime_seconds: 27979575
+  uptime: 357 days
+  uptime_days: 357
+  uptime_hours: 8590
+  uptime_seconds: 30926174
   uuid: 4c4c4544-0043-3410-8034-c6c04f30354a
   vcsrepo_svn_ver: ''
   virtual: physical
   clientcert: orsay.softwareheritage.org
   clientversion: 5.5.10
   clientnoop: false
-timestamp: '2020-09-02T11:55:12.722714245+00:00'
-expiration: '2020-09-02T12:25:12.729288913+00:00'
+timestamp: '2020-10-06T14:25:11.345447783+00:00'
+expiration: '2020-10-06T14:55:11.348488692+00:00'

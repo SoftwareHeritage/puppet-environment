@@ -2,10 +2,11 @@
 name: belvedere.internal.softwareheritage.org
 values:
   agent_specified_environment: production
-  apt_dist_updates: 27
+  apt_dist_updates: 28
   apt_has_dist_updates: true
   apt_has_updates: true
   apt_package_dist_updates:
+  - libzstd1
   - libnss-systemd
   - udev
   - libudev1
@@ -36,6 +37,7 @@ values:
   apt_package_security_dist_updates: []
   apt_package_security_updates: []
   apt_package_updates:
+  - libzstd1
   - libnss-systemd
   - udev
   - libudev1
@@ -63,8 +65,8 @@ values:
   apt_reboot_required: true
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1599046143
-  apt_updates: 24
+  apt_update_last_success: 1601990943
+  apt_updates: 25
   architecture: amd64
   bios_release_date: 04/09/2020
   bios_vendor: Dell Inc.
@@ -312,6 +314,8 @@ values:
     danseraf: "/home/danseraf"
     tss: "/var/lib/tpm"
     aeviso: "/home/aeviso"
+    tenma: "/home/tenma"
+    vsellier: "/home/vsellier"
   domain: internal.softwareheritage.org
   facterversion: 3.11.0
   filesystems: btrfs,ext2,ext3,ext4,hfs,hfsplus,jfs,minix,msdos,qnx4,ufs,vfat,xfs
@@ -347,9 +351,9 @@ values:
   kernelversion: 4.19.0
   letsencrypt_directory: {}
   load_averages:
-    15m: 34.59
-    1m: 33.42
-    5m: 31.68
+    15m: 19.85
+    1m: 20.44
+    5m: 19.52
   location: sesi_rocquencourt
   lsbdistcodename: buster
   lsbdistdescription: Debian GNU/Linux 10 (buster)
@@ -366,30 +370,30 @@ values:
   manufacturer: Dell Inc.
   memory:
     swap:
-      available: 29.69 GiB
-      available_bytes: 31881162752
-      capacity: 0.37%
+      available: 29.56 GiB
+      available_bytes: 31742242816
+      capacity: 0.80%
       total: 29.80 GiB
       total_bytes: 31999389696
-      used: 112.75 MiB
-      used_bytes: 118226944
+      used: 245.23 MiB
+      used_bytes: 257146880
     system:
-      available: 86.12 GiB
-      available_bytes: 92466253824
-      capacity: 88.59%
+      available: 257.28 GiB
+      available_bytes: 276247388160
+      capacity: 65.90%
       total: 754.56 GiB
       total_bytes: 810202841088
-      used: 668.44 GiB
-      used_bytes: 717736587264
-  memoryfree: 86.12 GiB
-  memoryfree_mb: 88182.69140625
+      used: 497.28 GiB
+      used_bytes: 533955452928
+  memoryfree: 257.28 GiB
+  memoryfree_mb: 263450.0390625
   memorysize: 754.56 GiB
   memorysize_mb: 772669.640625
   mountpoints:
     "/":
-      available: 164.49 GiB
-      available_bytes: 176624836608
-      capacity: 12.62%
+      available: 163.96 GiB
+      available_bytes: 176047276032
+      capacity: 12.90%
       device: "/dev/sds3"
       filesystem: ext4
       options:
@@ -398,8 +402,8 @@ values:
       - errors=remount-ro
       size: 188.25 GiB
       size_bytes: 202127130624
-      used: 23.75 GiB
-      used_bytes: 25502294016
+      used: 24.29 GiB
+      used_bytes: 26079854592
     "/boot/efi":
       available: 947.00 MiB
       available_bytes: 993005568
@@ -422,7 +426,7 @@ values:
       used_bytes: 5361664
     "/dev/shm":
       available: 377.28 GiB
-      available_bytes: 405099663360
+      available_bytes: 405099249664
       capacity: 0.00%
       device: tmpfs
       filesystem: tmpfs
@@ -432,11 +436,11 @@ values:
       - nodev
       size: 377.28 GiB
       size_bytes: 405101420544
-      used: 1.68 MiB
-      used_bytes: 1757184
+      used: 2.07 MiB
+      used_bytes: 2170880
     "/run":
       available: 75.45 GiB
-      available_bytes: 81017356288
+      available_bytes: 81017917440
       capacity: 0.00%
       device: tmpfs
       filesystem: tmpfs
@@ -449,8 +453,8 @@ values:
       - mode=755
       size: 75.46 GiB
       size_bytes: 81020284928
-      used: 2.79 MiB
-      used_bytes: 2928640
+      used: 2.26 MiB
+      used_bytes: 2367488
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -526,8 +530,9 @@ values:
   - "/"
   - "/boot/efi"
   - "/srv/softwareheritage/postgres"
-  - "/srv/softwareheritage/postgres/11/main"
-  - "/srv/softwareheritage/postgres/11/secondary"
+  - "/srv/softwareheritage/postgres/11/indexer"
+  - "/srv/softwareheritage/postgres/12/main"
+  - "/srv/softwareheritage/postgres/12/secondary"
   mtu_bond0: 9000
   mtu_eno1: 9000
   mtu_eno2: 9000
@@ -621,7 +626,7 @@ values:
     primary: vlan440
   operatingsystem: Debian
   operatingsystemmajrelease: '10'
-  operatingsystemrelease: '10.5'
+  operatingsystemrelease: '10.6'
   os:
     architecture: amd64
     distro:
@@ -635,108 +640,108 @@ values:
     hardware: x86_64
     name: Debian
     release:
-      full: '10.5'
+      full: '10.6'
       major: '10'
-      minor: '5'
+      minor: '6'
     selinux:
       enabled: false
   osfamily: Debian
   package_provider: apt
   partitions:
     "/dev/sda1":
-      filesystem: linux_raid_member
-      label: '0'
-      partlabel: zfs-33f0b0cebe823695
-      partuuid: 5374b5c1-4acd-f34d-8049-523341b23f57
+      filesystem: zfs_member
+      label: data
+      partlabel: zfs-0a205370cd17304c
+      partuuid: 24a37acd-c6d0-d546-bb3e-b96540af27b1
       size: 1.75 TiB
       size_bytes: 1920373620736
-      uuid: 31f2c082-82d6-2522-f0dc-fad9c59ee528
+      uuid: '11871562107936524821'
     "/dev/sda9":
-      partuuid: fa3ff803-53bd-8349-b11d-ed2464287a74
+      partuuid: 39765d4c-b324-e947-a4f4-d7aadd6b24e2
       size: 8.00 MiB
       size_bytes: 8388608
     "/dev/sdb1":
-      filesystem: linux_raid_member
-      label: '0'
-      partlabel: zfs-c6c7111e89ae959f
-      partuuid: 00f97c7b-0785-5443-b6f3-fd6d65a76dd9
+      filesystem: zfs_member
+      label: data
+      partlabel: zfs-779bd76227dd2417
+      partuuid: 6e2bfbee-b016-cd4c-9525-e808470d0ae7
       size: 1.75 TiB
       size_bytes: 1920373620736
-      uuid: 31f2c082-82d6-2522-f0dc-fad9c59ee528
+      uuid: '11871562107936524821'
     "/dev/sdb9":
-      partuuid: 2a81b518-3bcf-9246-80e2-c073daef2251
+      partuuid: 50b52d70-2bd8-bd4a-aeca-0fe00aba4163
       size: 8.00 MiB
       size_bytes: 8388608
     "/dev/sdc1":
-      filesystem: linux_raid_member
-      label: '0'
-      partlabel: zfs-b78dce6cb60c04e1
-      partuuid: 8178a8ed-43d7-604a-afc8-828744e9f1bf
+      filesystem: zfs_member
+      label: data
+      partlabel: zfs-c309f49acedb7608
+      partuuid: bcc8775d-b170-8049-9d3e-ddded6a9e366
       size: 1.75 TiB
       size_bytes: 1920373620736
-      uuid: 31f2c082-82d6-2522-f0dc-fad9c59ee528
+      uuid: '11871562107936524821'
     "/dev/sdc9":
-      partuuid: b7c5e4d3-3438-d643-84ad-f09dfd43fd18
+      partuuid: 9295e8b2-068b-2b4f-9d36-21280c78a760
       size: 8.00 MiB
       size_bytes: 8388608
     "/dev/sdd1":
-      filesystem: linux_raid_member
-      label: '0'
-      partlabel: zfs-e72a98ba86354919
-      partuuid: 57b53004-64ad-7b49-a2d7-6871b652d3c8
+      filesystem: zfs_member
+      label: data
+      partlabel: zfs-a10c9632ce4016d7
+      partuuid: 2b19eba9-6cdd-6a4e-a167-beed33d3de3f
       size: 1.75 TiB
       size_bytes: 1920373620736
-      uuid: 31f2c082-82d6-2522-f0dc-fad9c59ee528
+      uuid: '11871562107936524821'
     "/dev/sdd9":
-      partuuid: 3310ece9-3bcd-874d-a9cd-bde5dcca1454
+      partuuid: 8e00221b-5deb-fa44-b92d-ed91892b48b5
       size: 8.00 MiB
       size_bytes: 8388608
     "/dev/sde1":
-      filesystem: linux_raid_member
-      label: '0'
-      partlabel: zfs-710cff1733b75b7e
-      partuuid: d7e89876-3377-3548-a178-ea44d9c4341f
+      filesystem: zfs_member
+      label: data
+      partlabel: zfs-9c61336483502e51
+      partuuid: 70b2f551-304a-6944-be5b-61b6ec011e62
       size: 1.75 TiB
       size_bytes: 1920373620736
-      uuid: 31f2c082-82d6-2522-f0dc-fad9c59ee528
+      uuid: '11871562107936524821'
     "/dev/sde9":
-      partuuid: 5536b387-745e-9648-ba17-b3fb84749394
+      partuuid: 7285077d-8f5a-2c45-a791-f6a0bbf22824
       size: 8.00 MiB
       size_bytes: 8388608
     "/dev/sdf1":
-      filesystem: linux_raid_member
-      label: '0'
-      partlabel: zfs-2c5ff701c4b4f1b2
-      partuuid: ded29c1a-1d3e-0444-9a9f-6942bfce8613
+      filesystem: zfs_member
+      label: data
+      partlabel: zfs-7972fe23ac41435c
+      partuuid: c03bbd18-5298-fd4e-9674-c959d9153248
       size: 1.75 TiB
       size_bytes: 1920373620736
-      uuid: 31f2c082-82d6-2522-f0dc-fad9c59ee528
+      uuid: '11871562107936524821'
     "/dev/sdf9":
-      partuuid: 0065cea2-909e-3044-b379-5fe4b54381b0
+      partuuid: bd9af5bf-cba6-6248-873a-8757484e35ce
       size: 8.00 MiB
       size_bytes: 8388608
     "/dev/sdg1":
-      filesystem: linux_raid_member
-      label: '0'
-      partlabel: zfs-30bb345bab204275
-      partuuid: 12625798-a12b-2140-8abe-8f9de997400e
+      filesystem: zfs_member
+      label: data
+      partlabel: zfs-ce4527ff95b84307
+      partuuid: 70d9217d-0a52-744e-b52f-78e7aa3152de
       size: 1.75 TiB
       size_bytes: 1920373620736
-      uuid: 31f2c082-82d6-2522-f0dc-fad9c59ee528
+      uuid: '11871562107936524821'
     "/dev/sdg9":
-      partuuid: 6c17ef90-5d67-2c4d-82b8-541a0f5b894b
+      partuuid: 9927a0e9-b91f-8941-8b9f-29205cec9af9
       size: 8.00 MiB
       size_bytes: 8388608
     "/dev/sdh1":
-      filesystem: linux_raid_member
-      label: '0'
-      partlabel: zfs-206c02e75d84f3b4
-      partuuid: 603446e9-8584-d945-ac2a-ea8320666b96
+      filesystem: zfs_member
+      label: data
+      partlabel: zfs-bec1b2275e3497be
+      partuuid: c8fc611a-2289-1345-afec-66c04563a70b
       size: 1.75 TiB
       size_bytes: 1920373620736
-      uuid: 31f2c082-82d6-2522-f0dc-fad9c59ee528
+      uuid: '11871562107936524821'
     "/dev/sdh9":
-      partuuid: 19b1d9b8-3030-c749-af47-0a5e88d776dc
+      partuuid: 1818c1fe-84ed-fc4b-8bf0-c21f8856de8f
       size: 8.00 MiB
       size_bytes: 8388608
     "/dev/sdi1":
@@ -972,6 +977,10 @@ values:
         key: AAAAC3NzaC1lZDI1NTE5AAAAIKXyzgqz25OektDdvVAvGwPWFxOA7Op8K9goWsUsCIqX
         comment: root@belvedere.internal.softwareheritage.org
     postgres:
+      id_ed25519.dbreplica1.pub:
+        type: ed25519
+        key: AAAAC3NzaC1lZDI1NTE5AAAAIMxBSDGFs9V3ECf+gG64+rqv4XuxwTmkoIM+Vv83H1VJ
+        comment: postgres@belvedere.internal.softwareheritage.org
       id_rsa.pub:
         type: rsa
         key: AAAAB3NzaC1yc2EAAAADAQABAAABAQDpKVypehTETbbaKigwvNFzf1sGvnUtVnaMvGGScxTkeSvs/L3kWyUsx2kqLf/pT0CZp+wn8umAWtHwgqX6ksUj3OZ53CowYvGdPNqoY/XtbCtnwEy997hWB9wCAxjUz8injnPIiviwh9ooH2VdQSBiLar2lncVbWlcmcokMA58LiVUUPjCYMX+0Vi6/URwcVDNGyvdcwgNaA4V+D1RyI/tfbUqbIugyT5KjTZSDpgchL/SCXM8kzfOHwFPnhMeNy+mM/EJmMtkVuxoJhLey8nuD2jOizKbg05HiC5NyZwb6gyRPWaqvdYE0pxwwUXazSlmZYTiXidY3VrqzZpRzLJb
@@ -992,8 +1001,8 @@ values:
     SSHFP 1 2 a146b76aed81a95e9d8537237651fc5b9a0d8883e3f21834c6d2d5e57b1f0997
   sshrsakey: AAAAB3NzaC1yc2EAAAADAQABAAABAQDM+wnEpFidX6Afkrkngq83k1/4JW9yBDVRqgAKIZ9LMbjYdAdwVvtYNXNwKo89+jsU51+VQu9KTMcTvA6EdDhif92Tf33uipZwaAedSGW7Mqqo4ZV2FfiAtLlXM+X6XOWM0Mq8tRuldWQ0vJECBNYfm55xpyd4h1rBMDIdbuXobd4DV8g7WDcA6NYhEjtugVjuNT7y5nD+xHGfKd1UhUhUYRpWkGSFBzQcmcAlD7fWBER9AsSFnuc0fTYlY11yhAEuWHXXf7JlVzVzPSmcy64+tg9ohDzajVs7hOR43tY+umDf/uHE6I3tgJ6Ukz5DPJTpfaNUyVf+W0+khGIWQYA3
   sudoversion: 1.8.27
-  swapfree: 29.69 GiB
-  swapfree_mb: 30404.24609375
+  swapfree: 29.56 GiB
+  swapfree_mb: 30271.76171875
   swapsize: 29.80 GiB
   swapsize_mb: 30516.99609375
   swh_hostname:
@@ -1001,10 +1010,10 @@ values:
     short: belvedere
     internal_fqdn: belvedere.internal.softwareheritage.org
   system_uptime:
-    days: 112
-    hours: 2711
-    seconds: 9760822
-    uptime: 112 days
+    days: 147
+    hours: 3529
+    seconds: 12707422
+    uptime: 147 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -1019,15 +1028,15 @@ values:
     systemd-timesyncd.service: enabled
   systemd_version: '245'
   timezone: UTC
-  uptime: 112 days
-  uptime_days: 112
-  uptime_hours: 2711
-  uptime_seconds: 9760822
+  uptime: 147 days
+  uptime_days: 147
+  uptime_hours: 3529
+  uptime_seconds: 12707422
   uuid: 4c4c4544-0053-4c10-8043-b8c04f575732
   vcsrepo_svn_ver: ''
   virtual: physical
   clientcert: belvedere.internal.softwareheritage.org
   clientversion: 5.5.10
   clientnoop: false
-timestamp: '2020-09-02T11:58:06.636171189+00:00'
-expiration: '2020-09-02T12:28:06.636956112+00:00'
+timestamp: '2020-10-06T14:28:06.217425355+00:00'
+expiration: '2020-10-06T14:58:06.218289123+00:00'
