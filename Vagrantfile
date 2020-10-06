@@ -96,7 +96,7 @@ Vagrant.configure("2") do |global_config|
     config.vm.box_url                 = $global_debian10_box_url
     config.vm.box_check_update        = false
     config.vm.hostname                = "bojimans.internal.softwareheritage.org"
-    config.vm.network   :private_network, ip: "10.168.100.99", netmask: "255.255.255.0"
+    config.vm.network   :private_network, ip: "10.168.100.199", netmask: "255.255.255.0"
 
     config.vm.synced_folder "/tmp/puppet/", "/tmp/puppet", type: 'nfs'
 
