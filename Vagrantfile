@@ -6,20 +6,18 @@ environment = "staging"
 environment_path = "/tmp/puppet/environments"
 manifest_file = "site.pp"
 manifests_path = "swh-site/manifests"
-puppet_options = "--verbose"  # --debug --trace for more
+puppet_options = "--fileserverconfig=/etc/puppet/fileserver.conf --verbose"  # --debug --trace for more
 puppet_default_facts = {
   "vagrant_testing" => "1",
   "testing" => "vagrant",
   "location" => "vagrant"
 }
 
-# local configuration
-#$global_debian10_box = "debian10-20201001-0747"
-#$global_debian10_box_url = "file:///path/to/packer/builds/swh-debian-10.6-amd64-20201001-0747.box"
-
-# http configuration
-$global_debian10_box = "debian10-20201001-0747"
-$global_debian10_box_url = "https://annex.softwareheritage.org/public/isos/virtualbox/debian/swh-debian-10.6-amd64-20201001-0747.box"
+# Images configuration
+$global_debian10_box = "debian10-20201006-0832"
+$global_debian10_box_url = "https://annex.softwareheritage.org/public/isos/virtualbox/debian/swh-debian-10.6-amd64-20201006-0832.box"
+# For local tests
+#$global_debian10_box_url = "file:///path/to/packer/builds/swh-debian-10.6-amd64-20201006-0832.box"
 
 Vagrant.configure("2") do |global_config|
   ################
@@ -36,6 +34,8 @@ Vagrant.configure("2") do |global_config|
     config.vm.network   :private_network, ip: "10.168.128.8", netmask: "255.255.255.0"
 
     config.vm.synced_folder "/tmp/puppet/", "/tmp/puppet", type: 'nfs'
+    # ssl certificates share
+    config.vm.synced_folder "vagrant/le_certs", "/etc/puppet/le_certs", type: 'nfs'
 
     config.vm.provider  "virtualbox" do |vb|
       vb.name = "staging-webapp"
@@ -64,6 +64,8 @@ Vagrant.configure("2") do |global_config|
     config.vm.network   :private_network, ip: "10.168.128.5", netmask: "255.255.255.0"
 
     config.vm.synced_folder "/tmp/puppet/", "/tmp/puppet", type: 'nfs'
+    # ssl certificates share
+    config.vm.synced_folder "vagrant/le_certs", "/etc/puppet/le_certs", type: 'nfs'
 
     config.vm.provider  "virtualbox" do |vb|
       vb.name = "staging-worker0"
@@ -99,6 +101,8 @@ Vagrant.configure("2") do |global_config|
     config.vm.network   :private_network, ip: "10.168.100.199", netmask: "255.255.255.0"
 
     config.vm.synced_folder "/tmp/puppet/", "/tmp/puppet", type: 'nfs'
+    # ssl certificates share
+    config.vm.synced_folder "vagrant/le_certs", "/etc/puppet/le_certs", type: 'nfs'
 
     config.vm.provider  "virtualbox" do |vb|
       vb.name = "bojimans"
@@ -130,6 +134,8 @@ Vagrant.configure("2") do |global_config|
     config.vm.network   :private_network, ip: "10.168.100.21", netmask: "255.255.255.0"
 
     config.vm.synced_folder "/tmp/puppet/", "/tmp/puppet", type: 'nfs'
+    # ssl certificates share
+    config.vm.synced_folder "vagrant/le_certs", "/etc/puppet/le_certs", type: 'nfs'
 
     config.vm.provider  "virtualbox" do |vb|
       vb.name = "worker01"
@@ -167,6 +173,8 @@ Vagrant.configure("2") do |global_config|
     config.vm.network "forwarded_port", guest: 10030, host: 22
 
     config.vm.synced_folder "/tmp/puppet/", "/tmp/puppet", type: 'nfs'
+    # ssl certificates share
+    config.vm.synced_folder "vagrant/le_certs", "/etc/puppet/le_certs", type: 'nfs'
 
     config.vm.provider  "virtualbox" do |vb|
       vb.name = "test"

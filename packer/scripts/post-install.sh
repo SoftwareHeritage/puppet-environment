@@ -40,6 +40,14 @@ chown -R vagrant:vagrant /home/vagrant/.ssh
 ####
 apt-get install -y puppet
 
+# Configure the fileserver for the "le_certs" share
+# In the vm, this directory is a mount of the vagrant/le_certs directory configured on the vagrantfile
+cat > /etc/puppet/fileserver.conf <<EOF
+[le_certs]
+  path /etc/puppet/le_certs
+  allow *
+EOF
+
 ####
 # Boot config
 ####
