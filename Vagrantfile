@@ -21,16 +21,16 @@ puppet_env_path=ENV["SWH_PUPPET_ENVIRONMENT_HOME"]
 $local_debian10_box = "debian10-20201006-0832"
 $local_debian10_box_url = "file://#{puppet_env_path}/packer/builds/swh-debian-10.6-amd64-20201006-0832.box"
 # libvirt
-$local_debian10_qcow2 = "debian10-20201010-1039"
-$local_debian10_qcow2_url = "file://#{puppet_env_path}/packer/builds/swh-debian-10.6-amd64-20201010-1039.qcow2"
+$local_debian10_qcow2 = "debian10-20201012-1352"
+$local_debian10_qcow2_url = "file://#{puppet_env_path}/packer/builds/swh-debian-10.6-amd64-20201012-1352.qcow2"
 
 # Images/remote configuration
 # vbox
 $global_debian10_box = "debian10-20201006-0832"
 $global_debian10_box_url = "https://annex.softwareheritage.org/public/isos/virtualbox/debian/swh-debian-10.6-amd64-20201006-0832.box"
 # libvirt
-$global_debian10_qcow2 = "debian10-20201010-1039"
-$global_debian10_qcow2_url = "https://annex.softwareheritage.org/public/isos/libvirt/debian/swh-debian-10.6-amd64-20201010-1039.qcow2"
+$global_debian10_qcow2 = "debian10-20201012-1352"
+$global_debian10_qcow2_url = "https://annex.softwareheritage.org/public/isos/libvirt/debian/swh-debian-10.6-amd64-20201012-1352.qcow2"
 
 Vagrant.configure("2") do |global_config|
   ################
@@ -70,21 +70,19 @@ Vagrant.configure("2") do |global_config|
   end
 
   global_config.vm.define :"staging-deposit" do |config|
-    config.vm.box                     = $global_debian10_box
-    config.vm.box_url                 = $global_debian10_box_url
+    config.vm.box                     = $global_debian10_qcow2
+    config.vm.box_url                 = $global_debian10_qcow2_url
     config.vm.box_check_update        = false
     config.vm.hostname                = "deposit.internal.staging.swh.network"
     config.vm.network   :private_network, ip: "10.168.128.9", netmask: "255.255.255.0"
 
     config.vm.synced_folder "/tmp/puppet/", "/tmp/puppet", type: 'nfs'
 
-    config.vm.provider  "virtualbox" do |vb|
-      vb.name = "staging-deposit"
-      vb.gui = false
-      vb.check_guest_additions = false
-      vb.linked_clone = true
-      vb.memory = 512
-      vb.cpus = 2
+    config.vm.provider :libvirt do |provider|
+      provider.memory = 512
+      provider.cpus = 2
+      # local test run: https://github.com/vagrant-libvirt/vagrant-libvirt/issues/45
+      provider.driver = 'kvm'
     end
     config.vm.provision "puppet" do |puppet|
       puppet.environment_path = "#{environment_path}"
@@ -247,8 +245,8 @@ MSG
   global_config.vm.define :qemutest do |config|
     config.ssh.insert_key = false
 
-    config.vm.box                     = $local_debian10_qcow2
-    config.vm.box_url                 = $local_debian10_qcow2_url
+    config.vm.box                     = $global_debian10_qcow2
+    config.vm.box_url                 = $global_debian10_qcow2_url
     config.vm.hostname                = "test.softwareheritage.org"
     config.vm.box_check_update        = false
     config.vm.network   :private_network, ip: "10.168.98.30", netmask: "255.255.255.0"
