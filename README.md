@@ -190,6 +190,17 @@ Note: `nfs-kernel-server` is needed to export and share the local /tmp/puppet
 Multiple provisioners exist. We will focus on the one packaged within debian,
 libvirt for now (we had an history of using this one in the past).
 
+You may have to pin the vagrant version to the stable one (given that we use
+the hashicorp repositories for packer and terraform, and tests on more recent
+vagrant version failed to work):
+
+```
+$ cat /etc/apt/preferences.d/vagrant
+Package: vagrant
+Pin: release a=stable
+Pin-Priority: 999
+```
+
 Note that you need to add your user to the `libvirt` group:
 
 ```
