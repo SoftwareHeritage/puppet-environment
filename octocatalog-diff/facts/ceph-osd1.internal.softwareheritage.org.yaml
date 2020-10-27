@@ -22,10 +22,10 @@ values:
   - udev
   - libudev1
   - libzstd1
-  apt_reboot_required: false
+  apt_reboot_required: true
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1601993823
+  apt_update_last_success: 1603297023
   apt_updates: 4
   architecture: amd64
   bios_release_date: 11/21/2019
@@ -75,10 +75,7 @@ values:
   blockdevice_sdn_model: INTEL SSDSC2BB15
   blockdevice_sdn_size: 150039945216
   blockdevice_sdn_vendor: ATA
-  blockdevice_sdo_model: Virtual Floppy
-  blockdevice_sdo_size: 1474560
-  blockdevice_sdo_vendor: ATEN
-  blockdevices: sdf,nvme0n1,sdo,sdd,sdm,sdb,sdk,sdi,sdg,sde,sdn,sdc,sdl,sda,sdj,sdh
+  blockdevices: sdf,nvme0n1,sdd,sdm,sdb,sdk,sdi,sdg,sde,sdn,sdc,sdl,sda,sdj,sdh
   boardassettag: Default string
   boardmanufacturer: Supermicro
   boardproductname: X10DRH-iT
@@ -90,6 +87,7 @@ values:
   ceph_mgr_modules: {}
   chassisassettag: Default string
   chassistype: Other
+  deployment: production
   disks:
     nvme0n1:
       model: INTEL SSDPEDMD800G4
@@ -165,11 +163,6 @@ values:
       size: 139.74 GiB
       size_bytes: 150039945216
       vendor: ATA
-    sdo:
-      model: Virtual Floppy
-      size: 1.41 MiB
-      size_bytes: 1474560
-      vendor: ATEN
   dmi:
     bios:
       release_date: 11/21/2019
@@ -256,7 +249,7 @@ values:
     vsellier: "/home/vsellier"
   domain: internal.softwareheritage.org
   facterversion: 3.11.0
-  filesystems: btrfs,ext2,ext3,ext4,vfat
+  filesystems: btrfs,ext2,ext3,ext4,hfs,hfsplus,jfs,minix,msdos,qnx4,ufs,vfat,xfs
   fips_enabled: false
   fqdn: ceph-osd1.internal.softwareheritage.org
   gid: root
@@ -273,13 +266,14 @@ values:
     privileged: true
     uid: 0
     user: root
-  interfaces: bond0,eno1,enp2s0f0,enp2s0f1,enp5s0f1,lo,vlan440,vlan442
+  interfaces: bond0,eno1,enp2s0f0,enp2s0f1,enp5s0f1,lo,vlan440,vlan442,vlan443
   ipaddress: 192.168.100.180
   ipaddress6: fe80::ae1f:6bff:fe2d:6e9c
   ipaddress6_bond0: fe80::ae1f:6bff:fe2d:6e9c
   ipaddress6_lo: "::1"
   ipaddress6_vlan440: fe80::ae1f:6bff:fe2d:6e9c
   ipaddress6_vlan442: fe80::ae1f:6bff:fe2d:6e9c
+  ipaddress6_vlan443: fe80::ae1f:6bff:fe2d:6e9c
   ipaddress_lo: 127.0.0.1
   ipaddress_vlan440: 192.168.100.180
   ipaddress_vlan442: 172.16.42.10
@@ -291,12 +285,10 @@ values:
   kernelversion: 4.19.0
   letsencrypt_directory: {}
   load_averages:
-    15m: 4.15
-    1m: 2.87
-    5m: 3.0
+    15m: 0.01
+    1m: 0.08
+    5m: 0.03
   location: sesi_rocquencourt
-  subnet: sesi_rocquencourt
-  deployment: production
   lsbdistcodename: buster
   lsbdistdescription: Debian GNU/Linux 10 (buster)
   lsbdistid: Debian
@@ -310,33 +302,34 @@ values:
   macaddress_enp5s0f1: ac:1f:6b:05:e5:97
   macaddress_vlan440: ac:1f:6b:2d:6e:9c
   macaddress_vlan442: ac:1f:6b:2d:6e:9c
+  macaddress_vlan443: ac:1f:6b:2d:6e:9c
   manufacturer: Supermicro
   memory:
     swap:
-      available: 15.45 GiB
-      available_bytes: 16593711104
-      capacity: 3.41%
+      available: 15.95 GiB
+      available_bytes: 17122103296
+      capacity: 0.34%
       total: 16.00 GiB
       total_bytes: 17179865088
-      used: 559.00 MiB
-      used_bytes: 586153984
+      used: 55.09 MiB
+      used_bytes: 57761792
     system:
-      available: 8.44 GiB
-      available_bytes: 9065922560
-      capacity: 86.56%
+      available: 61.62 GiB
+      available_bytes: 66165444608
+      capacity: 1.89%
       total: 62.81 GiB
       total_bytes: 67439816704
-      used: 54.36 GiB
-      used_bytes: 58373894144
-  memoryfree: 8.44 GiB
-  memoryfree_mb: 8645.9375
+      used: 1.19 GiB
+      used_bytes: 1274372096
+  memoryfree: 61.62 GiB
+  memoryfree_mb: 63100.28515625
   memorysize: 62.81 GiB
   memorysize_mb: 64315.62109375
   mountpoints:
     "/":
-      available: 15.28 GiB
-      available_bytes: 16407429120
-      capacity: 16.08%
+      available: 15.56 GiB
+      available_bytes: 16702066688
+      capacity: 14.57%
       device: "/dev/mapper/ssd-root"
       filesystem: ext4
       options:
@@ -345,8 +338,8 @@ values:
       - errors=remount-ro
       size: 18.21 GiB
       size_bytes: 19550347264
-      used: 2.93 GiB
-      used_bytes: 3142918144
+      used: 2.65 GiB
+      used_bytes: 2848280576
     "/boot/efi":
       available: 480.93 MiB
       available_bytes: 504291328
@@ -381,9 +374,42 @@ values:
       size_bytes: 33719906304
       used: 0 bytes
       used_bytes: 0
-    "/run":
+    "/mnt":
+      available: 17.99 GiB
+      available_bytes: 19320840192
+      capacity: 8.60%
+      device: "/dev/mapper/ssd-root"
+      filesystem: ext2
+      options:
+      - rw
+      - relatime
+      size: 19.69 GiB
+      size_bytes: 21137846272
+      used: 1.69 GiB
+      used_bytes: 1817006080
+    "/mnt/boot/efi":
+      available: 480.93 MiB
+      available_bytes: 504291328
+      capacity: 1.05%
+      device: "/dev/sdm1"
+      filesystem: vfat
+      options:
+      - rw
+      - relatime
+      - fmask=0077
+      - dmask=0077
+      - codepage=437
+      - iocharset=ascii
+      - shortname=mixed
+      - utf8
+      - errors=remount-ro
+      size: 486.03 MiB
+      size_bytes: 509640704
+      used: 5.10 MiB
+      used_bytes: 5349376
+    "/mnt/run":
       available: 6.28 GiB
-      available_bytes: 6742712320
+      available_bytes: 6742728704
       capacity: 0.02%
       device: tmpfs
       filesystem: tmpfs
@@ -396,8 +422,44 @@ values:
       - mode=755
       size: 6.28 GiB
       size_bytes: 6743982080
-      used: 1.21 MiB
-      used_bytes: 1269760
+      used: 1.20 MiB
+      used_bytes: 1253376
+    "/mnt/run/user/1001":
+      available: 6.28 GiB
+      available_bytes: 6743977984
+      capacity: 0%
+      device: tmpfs
+      filesystem: tmpfs
+      options:
+      - rw
+      - nosuid
+      - nodev
+      - relatime
+      - size=6585916k
+      - mode=700
+      - uid=1001
+      - gid=1001
+      size: 6.28 GiB
+      size_bytes: 6743977984
+      used: 0 bytes
+      used_bytes: 0
+    "/run":
+      available: 6.28 GiB
+      available_bytes: 6742728704
+      capacity: 0.02%
+      device: tmpfs
+      filesystem: tmpfs
+      options:
+      - rw
+      - nosuid
+      - noexec
+      - relatime
+      - size=6585920k
+      - mode=755
+      size: 6.28 GiB
+      size_bytes: 6743982080
+      used: 1.20 MiB
+      used_bytes: 1253376
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -413,6 +475,25 @@ values:
       - size=5120k
       size: 5.00 MiB
       size_bytes: 5242880
+      used: 0 bytes
+      used_bytes: 0
+    "/run/user/1001":
+      available: 6.28 GiB
+      available_bytes: 6743977984
+      capacity: 0%
+      device: tmpfs
+      filesystem: tmpfs
+      options:
+      - rw
+      - nosuid
+      - nodev
+      - relatime
+      - size=6585916k
+      - mode=700
+      - uid=1001
+      - gid=1001
+      size: 6.28 GiB
+      size_bytes: 6743977984
       used: 0 bytes
       used_bytes: 0
     "/sys/fs/cgroup":
@@ -590,6 +671,8 @@ values:
   mounts:
   - "/"
   - "/boot/efi"
+  - "/mnt"
+  - "/mnt/boot/efi"
   mtu_bond0: 9000
   mtu_eno1: 1500
   mtu_enp2s0f0: 9000
@@ -598,6 +681,7 @@ values:
   mtu_lo: 65536
   mtu_vlan440: 1500
   mtu_vlan442: 9000
+  mtu_vlan443: 9000
   mysql_server_id: 28240924
   netmask: 255.255.255.0
   netmask6: 'ffff:ffff:ffff:ffff::'
@@ -605,6 +689,7 @@ values:
   netmask6_lo: ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff
   netmask6_vlan440: 'ffff:ffff:ffff:ffff::'
   netmask6_vlan442: 'ffff:ffff:ffff:ffff::'
+  netmask6_vlan443: 'ffff:ffff:ffff:ffff::'
   netmask_lo: 255.0.0.0
   netmask_vlan440: 255.255.255.0
   netmask_vlan442: 255.255.255.0
@@ -614,6 +699,7 @@ values:
   network6_lo: "::1"
   network6_vlan440: 'fe80::'
   network6_vlan442: 'fe80::'
+  network6_vlan443: 'fe80::'
   network_lo: 127.0.0.0
   network_vlan440: 192.168.100.0
   network_vlan442: 172.16.42.0
@@ -694,6 +780,16 @@ values:
         netmask6: 'ffff:ffff:ffff:ffff::'
         network: 172.16.42.0
         network6: 'fe80::'
+      vlan443:
+        bindings6:
+        - address: fe80::ae1f:6bff:fe2d:6e9c
+          netmask: 'ffff:ffff:ffff:ffff::'
+          network: 'fe80::'
+        ip6: fe80::ae1f:6bff:fe2d:6e9c
+        mac: ac:1f:6b:2d:6e:9c
+        mtu: 9000
+        netmask6: 'ffff:ffff:ffff:ffff::'
+        network6: 'fe80::'
     ip: 192.168.100.180
     ip6: fe80::ae1f:6bff:fe2d:6e9c
     mac: ac:1f:6b:2d:6e:9c
@@ -763,12 +859,17 @@ values:
     "/dev/mapper/ceph--e76e1af0--92e0--48c4--af06--58cf3ea31cf2-osd--block--e830f769--a5d7--4496--9a1a--ae03a8d7e240":
       size: 5.46 TiB
       size_bytes: 6001172414464
-    "/dev/mapper/ssd-root":
+    "/dev/mapper/ssd-old--root":
       filesystem: ext4
-      mount: "/"
       size: 18.63 GiB
       size_bytes: 19998441472
       uuid: 22b6aaa2-3d88-4681-8768-d006ddb94642
+    "/dev/mapper/ssd-root":
+      filesystem: ext2
+      mount: "/"
+      size: 20.00 GiB
+      size_bytes: 21474836480
+      uuid: 208afaea-9c2d-46a5-a8cd-8f886b95930f
     "/dev/mapper/ssd-swap":
       filesystem: swap
       size: 16.00 GiB
@@ -849,11 +950,6 @@ values:
       size: 139.26 GiB
       size_bytes: 149527986176
       uuid: 6c401ba5-08ab-d620-8f89-47a6a4ec64e8
-    "/dev/sdo1":
-      filesystem: vfat
-      size: 1.41 MiB
-      size_bytes: 1474560
-      uuid: 514B-FCBA
   path: "/usr/bin:/bin:/usr/sbin:/sbin"
   physicalprocessorcount: 1
   processor0: Intel(R) Xeon(R) CPU E5-2620 v4 @ 2.10GHz
@@ -948,9 +1044,10 @@ values:
     SSHFP 1 1 27fc74c323bf714dfaf0b738f60cc9ec667e79a9
     SSHFP 1 2 77afa6228b0ba37c925d32ff24ba93fe802bbec385c16566d056fbc50ec20b34
   sshrsakey: AAAAB3NzaC1yc2EAAAADAQABAAABAQDlfy11m+nx9DX/PEA8+KBsppp2wKT3QeV9oT4/dLFdKbEBDtU8zOKi2BqRJzc96i4OMf+8yEusyTFqDrhBLYwKYXl+tiDiiDetXgJyKNBZabPMClu45GyOxBZBsffB0CxDkiG6N2vwqUq1Fj0CYaAIiqwrZT6XFghK8zBGcKU7mPPgIykR/najqqCQmW1/1qyjN/QSnfoEW0i02dOjStgqGklUKvFPx0J2a0cKWLG9PCvl+SaIigIdGN4U5Z8sDiLXAEsmfwrPR8lzdlNNTrQzwhsZNuRAVQubomjO7MRr+pE30ur+g/6+mDb5Sxtg1oZY/sES3dbL5v+MO5YLvpGV
+  subnet: sesi_rocquencourt
   sudoversion: 1.8.27
-  swapfree: 15.45 GiB
-  swapfree_mb: 15824.99609375
+  swapfree: 15.95 GiB
+  swapfree_mb: 16328.91015625
   swapsize: 16.00 GiB
   swapsize_mb: 16383.99609375
   swh_hostname:
@@ -958,10 +1055,10 @@ values:
     short: ceph-osd1
     internal_fqdn: ceph-osd1.internal.softwareheritage.org
   system_uptime:
-    days: 0
-    hours: 21
-    seconds: 77222
-    uptime: 21:27 hours
+    days: 15
+    hours: 383
+    seconds: 1380423
+    uptime: 15 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -973,15 +1070,15 @@ values:
     systemd-timesyncd.service: enabled
   systemd_version: '241'
   timezone: UTC
-  uptime: 21:27 hours
-  uptime_days: 0
-  uptime_hours: 21
-  uptime_seconds: 77222
+  uptime: 15 days
+  uptime_days: 15
+  uptime_hours: 383
+  uptime_seconds: 1380423
   uuid: 00000000-0000-0000-0000-ac1f6b05e596
   vcsrepo_svn_ver: ''
   virtual: physical
   clientcert: ceph-osd1.internal.softwareheritage.org
   clientversion: 5.5.10
   clientnoop: false
-timestamp: '2020-10-06T14:33:04.816690144+00:00'
-expiration: '2020-10-06T15:03:04.817541665+00:00'
+timestamp: '2020-10-21T16:33:05.959438205+00:00'
+expiration: '2020-10-21T17:03:05.960131540+00:00'

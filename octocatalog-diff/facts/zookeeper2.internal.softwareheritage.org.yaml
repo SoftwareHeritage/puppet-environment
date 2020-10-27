@@ -6,26 +6,30 @@ values:
   apt_has_dist_updates: true
   apt_has_updates: true
   apt_package_dist_updates:
-  - libzstd1
-  - udev
-  - libpam-systemd
-  - systemd
+  - libnss-systemd
   - systemd-timesyncd
-  - libudev1
-  - libsystemd0
   - systemd-sysv
+  - libpam-systemd
+  - udev
+  - libudev1
+  - systemd
+  - libsystemd0
   apt_package_security_dist_updates: []
   apt_package_security_updates: []
   apt_package_updates:
+  - libnss-systemd
+  - systemd-timesyncd
   - systemd-sysv
+  - libpam-systemd
   - udev
   - libudev1
-  - libzstd1
+  - systemd
+  - libsystemd0
   apt_reboot_required: true
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1601992561
-  apt_updates: 4
+  apt_update_last_success: 1603785362
+  apt_updates: 8
   architecture: amd64
   bios_release_date: 04/01/2014
   bios_vendor: SeaBIOS
@@ -41,6 +45,7 @@ values:
   cassandraheapnewsize: 200
   cassandramaxheapsize: 1024
   chassistype: Other
+  deployment: production
   disks:
     sr0:
       model: QEMU DVD-ROM
@@ -155,24 +160,22 @@ values:
   ipaddress_eth0: 192.168.100.132
   ipaddress_lo: 127.0.0.1
   is_pe: false
-  is_virtual: false
+  is_virtual: true
   java_default_home: "/usr/lib/jvm/java-11-openjdk-amd64"
   java_libjvm_path: "/usr/lib/jvm/java-11-openjdk-amd64/lib/server"
   java_major_version: '11'
-  java_patch_level: '8'
-  java_version: 11.0.8
+  java_patch_level: '9'
+  java_version: 11.0.9
   kernel: Linux
   kernelmajversion: '4.19'
   kernelrelease: 4.19.0-8-cloud-amd64
   kernelversion: 4.19.0
   letsencrypt_directory: {}
   load_averages:
-    15m: 0.01
-    1m: 0.09
-    5m: 0.02
+    15m: 0.0
+    1m: 0.0
+    5m: 0.0
   location: sesi_rocquencourt
-  subnet: sesi_rocquencourt
-  deployment: production
   lsbdistcodename: buster
   lsbdistdescription: Debian GNU/Linux 10 (buster)
   lsbdistid: Debian
@@ -183,22 +186,22 @@ values:
   manufacturer: QEMU
   memory:
     system:
-      available: 3.21 GiB
-      available_bytes: 3448016896
-      capacity: 16.74%
+      available: 3.19 GiB
+      available_bytes: 3429855232
+      capacity: 17.17%
       total: 3.86 GiB
       total_bytes: 4141068288
-      used: 660.95 MiB
-      used_bytes: 693051392
-  memoryfree: 3.21 GiB
-  memoryfree_mb: 3288.28515625
+      used: 678.27 MiB
+      used_bytes: 711213056
+  memoryfree: 3.19 GiB
+  memoryfree_mb: 3270.96484375
   memorysize: 3.86 GiB
   memorysize_mb: 3949.23046875
   mountpoints:
     "/":
-      available: 29.18 GiB
-      available_bytes: 31326814208
-      capacity: 7.28%
+      available: 29.10 GiB
+      available_bytes: 31246172160
+      capacity: 7.52%
       device: "/dev/vda1"
       filesystem: ext4
       options:
@@ -207,8 +210,8 @@ values:
       - errors=remount-ro
       size: 31.47 GiB
       size_bytes: 33785901056
-      used: 2.29 GiB
-      used_bytes: 2459086848
+      used: 2.37 GiB
+      used_bytes: 2539728896
     "/dev/shm":
       available: 1.93 GiB
       available_bytes: 2070532096
@@ -441,36 +444,40 @@ values:
     SSHFP 1 1 5b0a2485be1f4af1121ac60801235c7262fd4acb
     SSHFP 1 2 afb3f2b0bd4889ea7c373ceae1fe939469dcfc8db62691d0def4eb20399f6886
   sshrsakey: AAAAB3NzaC1yc2EAAAADAQABAAABAQC7gs6vE0Dv7ercM1SObG/AzGFAYQIcZpz4rFfDIP7Zctvr1ZbyXzKAQheyQXp7VpjsgDcj/GJYu65PceO69YXt+J3/5wDm26c81NLzZxH9QNEAgX/wA9bSUABlVlqV0cydcl8g7+gASI0O6J+FjyyWuiLGqUKt/AdjMiUvJwtOixszNaLlfLxo6YZUd8SlS4GEAr6dbrolDLQ5tLhs9FUztCwZF0WaAPdLRQQXDQyvBcYnLzLbPRLdT1JU64mylKTOmgMbMkDoGsg9ETri5SZmd95UNNxjUo3RfxjARq/XiiNaSOEBc3H0y7222CNv44CQs+esQ0CwIcvrbKWM+qhV
+  subnet: sesi_rocquencourt
   sudoversion: 1.8.27
   swh_hostname:
     fqdn: zookeeper2.internal.softwareheritage.org
     short: zookeeper2
     internal_fqdn: zookeeper2.internal.softwareheritage.org
   system_uptime:
-    days: 167
-    hours: 4029
-    seconds: 14505197
-    uptime: 167 days
+    days: 188
+    hours: 4526
+    seconds: 16296198
+    uptime: 188 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
     systemd-fsck-root.service: enabled-runtime
+    systemd-network-generator.service: disabled
     systemd-networkd-wait-online.service: disabled
     systemd-networkd.service: disabled
+    systemd-pstore.service: enabled
+    systemd-remount-fs.service: enabled-runtime
     systemd-resolved.service: disabled
     systemd-time-wait-sync.service: disabled
     systemd-timesyncd.service: enabled
-  systemd_version: '241'
+  systemd_version: '246'
   timezone: UTC
-  uptime: 167 days
-  uptime_days: 167
-  uptime_hours: 4029
-  uptime_seconds: 14505197
+  uptime: 188 days
+  uptime_days: 188
+  uptime_hours: 4526
+  uptime_seconds: 16296198
   uuid: 60dfc292-876b-432f-93e7-7139cfc442bf
   vcsrepo_svn_ver: ''
-  virtual: physical
+  virtual: kvm
   clientcert: zookeeper2.internal.softwareheritage.org
   clientversion: 5.5.10
   clientnoop: false
-timestamp: '2020-10-06T14:37:04.402093770+00:00'
-expiration: '2020-10-06T15:07:04.402381049+00:00'
+timestamp: '2020-10-27T08:07:05.601847575+00:00'
+expiration: '2020-10-27T08:37:05.602147047+00:00'

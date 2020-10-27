@@ -2,7 +2,7 @@
 name: belvedere.internal.softwareheritage.org
 values:
   agent_specified_environment: production
-  apt_dist_updates: 28
+  apt_dist_updates: 29
   apt_has_dist_updates: true
   apt_has_updates: true
   apt_package_dist_updates:
@@ -33,6 +33,7 @@ values:
   - pgbouncer
   - postgresql-client-11
   - postgresql-11
+  - postgresql-12-repack
   - zfs-zed
   apt_package_security_dist_updates: []
   apt_package_security_updates: []
@@ -60,13 +61,14 @@ values:
   - pgbouncer
   - postgresql-client-11
   - postgresql-11
+  - postgresql-12-repack
   - python3-boto3
   - zfs-zed
   apt_reboot_required: true
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1601990943
-  apt_updates: 25
+  apt_update_last_success: 1603783743
+  apt_updates: 26
   architecture: amd64
   bios_release_date: 04/09/2020
   bios_vendor: Dell Inc.
@@ -137,6 +139,7 @@ values:
   cassandraheapnewsize: 2000
   cassandramaxheapsize: 8192
   chassistype: Rack Mount Chassis
+  deployment: production
   disks:
     sda:
       model: MZ7KM1T9HMJP0D3
@@ -351,12 +354,10 @@ values:
   kernelversion: 4.19.0
   letsencrypt_directory: {}
   load_averages:
-    15m: 19.85
-    1m: 20.44
-    5m: 19.52
+    15m: 3.73
+    1m: 10.53
+    5m: 5.32
   location: sesi_rocquencourt
-  subnet: sesi_rocquencourt
-  deployment: production
   lsbdistcodename: buster
   lsbdistdescription: Debian GNU/Linux 10 (buster)
   lsbdistid: Debian
@@ -372,30 +373,30 @@ values:
   manufacturer: Dell Inc.
   memory:
     swap:
-      available: 29.56 GiB
-      available_bytes: 31742242816
-      capacity: 0.80%
+      available: 29.23 GiB
+      available_bytes: 31381778432
+      capacity: 1.93%
       total: 29.80 GiB
       total_bytes: 31999389696
-      used: 245.23 MiB
-      used_bytes: 257146880
+      used: 589.00 MiB
+      used_bytes: 617611264
     system:
-      available: 257.28 GiB
-      available_bytes: 276247388160
-      capacity: 65.90%
+      available: 237.05 GiB
+      available_bytes: 254529323008
+      capacity: 68.58%
       total: 754.56 GiB
       total_bytes: 810202841088
-      used: 497.28 GiB
-      used_bytes: 533955452928
-  memoryfree: 257.28 GiB
-  memoryfree_mb: 263450.0390625
+      used: 517.51 GiB
+      used_bytes: 555673518080
+  memoryfree: 237.05 GiB
+  memoryfree_mb: 242738.078125
   memorysize: 754.56 GiB
   memorysize_mb: 772669.640625
   mountpoints:
     "/":
-      available: 163.96 GiB
-      available_bytes: 176047276032
-      capacity: 12.90%
+      available: 163.84 GiB
+      available_bytes: 175925075968
+      capacity: 12.96%
       device: "/dev/sds3"
       filesystem: ext4
       options:
@@ -404,8 +405,8 @@ values:
       - errors=remount-ro
       size: 188.25 GiB
       size_bytes: 202127130624
-      used: 24.29 GiB
-      used_bytes: 26079854592
+      used: 24.40 GiB
+      used_bytes: 26202054656
     "/boot/efi":
       available: 947.00 MiB
       available_bytes: 993005568
@@ -428,7 +429,7 @@ values:
       used_bytes: 5361664
     "/dev/shm":
       available: 377.28 GiB
-      available_bytes: 405099249664
+      available_bytes: 405098196992
       capacity: 0.00%
       device: tmpfs
       filesystem: tmpfs
@@ -438,11 +439,11 @@ values:
       - nodev
       size: 377.28 GiB
       size_bytes: 405101420544
-      used: 2.07 MiB
-      used_bytes: 2170880
+      used: 3.07 MiB
+      used_bytes: 3223552
     "/run":
       available: 75.45 GiB
-      available_bytes: 81017917440
+      available_bytes: 81017999360
       capacity: 0.00%
       device: tmpfs
       filesystem: tmpfs
@@ -455,8 +456,8 @@ values:
       - mode=755
       size: 75.46 GiB
       size_bytes: 81020284928
-      used: 2.26 MiB
-      used_bytes: 2367488
+      used: 2.18 MiB
+      used_bytes: 2285568
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -1002,9 +1003,10 @@ values:
     SSHFP 1 1 2d40ee1f4a2b77a37e69ccc5a42e4abc2c439057
     SSHFP 1 2 a146b76aed81a95e9d8537237651fc5b9a0d8883e3f21834c6d2d5e57b1f0997
   sshrsakey: AAAAB3NzaC1yc2EAAAADAQABAAABAQDM+wnEpFidX6Afkrkngq83k1/4JW9yBDVRqgAKIZ9LMbjYdAdwVvtYNXNwKo89+jsU51+VQu9KTMcTvA6EdDhif92Tf33uipZwaAedSGW7Mqqo4ZV2FfiAtLlXM+X6XOWM0Mq8tRuldWQ0vJECBNYfm55xpyd4h1rBMDIdbuXobd4DV8g7WDcA6NYhEjtugVjuNT7y5nD+xHGfKd1UhUhUYRpWkGSFBzQcmcAlD7fWBER9AsSFnuc0fTYlY11yhAEuWHXXf7JlVzVzPSmcy64+tg9ohDzajVs7hOR43tY+umDf/uHE6I3tgJ6Ukz5DPJTpfaNUyVf+W0+khGIWQYA3
+  subnet: sesi_rocquencourt
   sudoversion: 1.8.27
-  swapfree: 29.56 GiB
-  swapfree_mb: 30271.76171875
+  swapfree: 29.23 GiB
+  swapfree_mb: 29927.99609375
   swapsize: 29.80 GiB
   swapsize_mb: 30516.99609375
   swh_hostname:
@@ -1012,10 +1014,10 @@ values:
     short: belvedere
     internal_fqdn: belvedere.internal.softwareheritage.org
   system_uptime:
-    days: 147
-    hours: 3529
-    seconds: 12707422
-    uptime: 147 days
+    days: 167
+    hours: 4027
+    seconds: 14500222
+    uptime: 167 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -1030,15 +1032,15 @@ values:
     systemd-timesyncd.service: enabled
   systemd_version: '245'
   timezone: UTC
-  uptime: 147 days
-  uptime_days: 147
-  uptime_hours: 3529
-  uptime_seconds: 12707422
+  uptime: 167 days
+  uptime_days: 167
+  uptime_hours: 4027
+  uptime_seconds: 14500222
   uuid: 4c4c4544-0053-4c10-8043-b8c04f575732
   vcsrepo_svn_ver: ''
   virtual: physical
   clientcert: belvedere.internal.softwareheritage.org
   clientversion: 5.5.10
   clientnoop: false
-timestamp: '2020-10-06T14:28:06.217425355+00:00'
-expiration: '2020-10-06T14:58:06.218289123+00:00'
+timestamp: '2020-10-27T08:28:05.963378430+00:00'
+expiration: '2020-10-27T08:58:05.965396446+00:00'

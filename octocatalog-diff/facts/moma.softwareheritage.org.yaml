@@ -3,7 +3,7 @@ name: moma.softwareheritage.org
 values:
   agent_specified_environment: production
   apache_version: 2.4.38
-  apt_dist_updates: 19
+  apt_dist_updates: 32
   apt_has_dist_updates: true
   apt_has_updates: true
   apt_package_dist_updates:
@@ -15,17 +15,30 @@ values:
   - libpam-systemd
   - systemd
   - libsystemd0
+  - libllvm7
+  - libsensors-config
+  - libsensors5
+  - linux-image-5.8.0-0.bpo.2-amd64
+  - linux-image-amd64
+  - postgresql-common
+  - postgresql-11
+  - postgresql
+  - python3-atomicwrites
+  - python3-psutil
+  - python3-mirakuru
+  - python3-pluggy
+  - python3-port-for
+  - python3-py
+  - python3-pytest
+  - python3-pytest-postgresql
   - python3-swh.core
   - python3-swh.model
   - python3-swh.objstorage.cloud
   - python3-swh.objstorage
   - python3-swh.storage
-  - python3-swh.scheduler
-  - python3-swh.indexer
-  - python3-swh.indexer.storage
   - python3-swh.journal
-  - python3-swh.search
   - python3-swh.vault
+  - sysstat
   apt_package_security_dist_updates: []
   apt_package_security_updates: []
   apt_package_updates:
@@ -37,22 +50,17 @@ values:
   - libpam-systemd
   - systemd
   - libsystemd0
-  - python3-swh.core
   - python3-swh.model
   - python3-swh.objstorage.cloud
   - python3-swh.objstorage
   - python3-swh.storage
-  - python3-swh.scheduler
-  - python3-swh.indexer
-  - python3-swh.indexer.storage
   - python3-swh.journal
-  - python3-swh.search
   - python3-swh.vault
   apt_reboot_required: false
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1601992741
-  apt_updates: 19
+  apt_update_last_success: 1603479542
+  apt_updates: 14
   architecture: amd64
   bios_release_date: 04/01/2014
   bios_vendor: SeaBIOS
@@ -67,6 +75,7 @@ values:
   cassandraheapnewsize: 400
   cassandramaxheapsize: 4010
   chassistype: Other
+  deployment: production
   dhcp_servers:
     eth0: 192.168.100.1
     eth1: 192.168.100.1
@@ -204,12 +213,10 @@ values:
   kernelversion: 5.7.0
   letsencrypt_directory: {}
   load_averages:
-    15m: 0.09
-    1m: 0.12
-    5m: 0.12
+    15m: 0.25
+    1m: 2.06
+    5m: 0.59
   location: sesi_rocquencourt
-  subnet: sesi_rocquencourt
-  deployment: production
   lsbdistcodename: buster
   lsbdistdescription: Debian GNU/Linux 10 (buster)
   lsbdistid: Debian
@@ -221,30 +228,30 @@ values:
   manufacturer: QEMU
   memory:
     swap:
-      available: 2.97 GiB
-      available_bytes: 3190947840
-      capacity: 25.67%
+      available: 2.77 GiB
+      available_bytes: 2972446720
+      capacity: 30.76%
       total: 4.00 GiB
       total_bytes: 4292866048
-      used: 1.03 GiB
-      used_bytes: 1101918208
+      used: 1.23 GiB
+      used_bytes: 1320419328
     system:
-      available: 7.22 GiB
-      available_bytes: 7750045696
-      capacity: 53.93%
+      available: 9.95 GiB
+      available_bytes: 10686509056
+      capacity: 36.47%
       total: 15.67 GiB
       total_bytes: 16820871168
-      used: 8.45 GiB
-      used_bytes: 9070825472
-  memoryfree: 7.22 GiB
-  memoryfree_mb: 7391.01953125
+      used: 5.71 GiB
+      used_bytes: 6134362112
+  memoryfree: 9.95 GiB
+  memoryfree_mb: 10191.44921875
   memorysize: 15.67 GiB
   memorysize_mb: 16041.6328125
   mountpoints:
     "/":
-      available: 11.96 GiB
-      available_bytes: 12837924864
-      capacity: 38.87%
+      available: 11.50 GiB
+      available_bytes: 12352045056
+      capacity: 41.19%
       device: "/dev/vda1"
       filesystem: ext4
       options:
@@ -254,8 +261,8 @@ values:
       - stripe=32742
       size: 19.56 GiB
       size_bytes: 21002579968
-      used: 7.60 GiB
-      used_bytes: 8164655104
+      used: 8.06 GiB
+      used_bytes: 8650534912
     "/dev/shm":
       available: 7.83 GiB
       available_bytes: 8410435584
@@ -272,8 +279,8 @@ values:
       used_bytes: 0
     "/run":
       available: 1.57 GiB
-      available_bytes: 1681510400
-      capacity: 0.03%
+      available_bytes: 1681457152
+      capacity: 0.04%
       device: tmpfs
       filesystem: tmpfs
       options:
@@ -285,8 +292,8 @@ values:
       - mode=755
       size: 1.57 GiB
       size_bytes: 1682087936
-      used: 564.00 KiB
-      used_bytes: 577536
+      used: 616.00 KiB
+      used_bytes: 630784
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -320,6 +327,46 @@ values:
       - mode=700
       - uid=1003
       - gid=1003
+      size: 1.57 GiB
+      size_bytes: 1682083840
+      used: 0 bytes
+      used_bytes: 0
+    "/run/user/1020":
+      available: 1.57 GiB
+      available_bytes: 1682083840
+      capacity: 0%
+      device: tmpfs
+      filesystem: tmpfs
+      options:
+      - rw
+      - nosuid
+      - nodev
+      - relatime
+      - size=1642660k
+      - nr_inodes=410665
+      - mode=700
+      - uid=1020
+      - gid=1020
+      size: 1.57 GiB
+      size_bytes: 1682083840
+      used: 0 bytes
+      used_bytes: 0
+    "/run/user/1025":
+      available: 1.57 GiB
+      available_bytes: 1682083840
+      capacity: 0%
+      device: tmpfs
+      filesystem: tmpfs
+      options:
+      - rw
+      - nosuid
+      - nodev
+      - relatime
+      - size=1642660k
+      - nr_inodes=410665
+      - mode=700
+      - uid=1025
+      - gid=1025
       size: 1.57 GiB
       size_bytes: 1682083840
       used: 0 bytes
@@ -567,9 +614,10 @@ values:
     SSHFP 1 1 6d09c16114a17caa473fbc35ea3487bfe426bbed
     SSHFP 1 2 9cc5c377d3df5b5aa93ae3b5b787d7b45feff6b29fb2b5d728b4734a45093fad
   sshrsakey: AAAAB3NzaC1yc2EAAAADAQABAAABAQDQKinwK9kcSED+cNf0VvdbmF2R2+bQswFjcTlY0bieRIR1x/wwkNc6p17bZBlTuB2c328gD1+QaYXCrEJ7iVILRtpV/sTkTAVhpHc4NVCJIh1vss1MOx1oKZC72AS6GrSV8VFQHcdXHIulvEtk8O0UJlCJVuvKwGRymZ/uFe/CLpK83qHfjT/o/QIlgTkhBiEvkx1fTZseqYqVwp7M472uI3sHlCk37iwqi55dFbS6FEeb97v0chSrpzyB5xQtDRIFsdpdiXzM5wKfDWysAtp9M80FrOC5w30aSWtTBu1vGmtyLhcKpoYWwB2QE+x7XSaLNE+Lu2+AKACkp3OTRNpt
+  subnet: sesi_rocquencourt
   sudoversion: 1.8.27
-  swapfree: 2.97 GiB
-  swapfree_mb: 3043.125
+  swapfree: 2.77 GiB
+  swapfree_mb: 2834.74609375
   swapsize: 4.00 GiB
   swapsize_mb: 4093.99609375
   swh_hostname:
@@ -577,10 +625,10 @@ values:
     short: moma
     internal_fqdn: moma.internal.softwareheritage.org
   system_uptime:
-    days: 13
-    hours: 334
-    seconds: 1205174
-    uptime: 13 days
+    days: 31
+    hours: 747
+    seconds: 2690174
+    uptime: 31 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -595,15 +643,15 @@ values:
     systemd-timesyncd.service: enabled
   systemd_version: '246'
   timezone: UTC
-  uptime: 13 days
-  uptime_days: 13
-  uptime_hours: 334
-  uptime_seconds: 1205174
+  uptime: 31 days
+  uptime_days: 31
+  uptime_hours: 747
+  uptime_seconds: 2690174
   uuid: f9773017-6bf5-4aec-8531-f37668cd7203
   vcsrepo_svn_ver: ''
   virtual: kvm
   clientcert: moma.softwareheritage.org
   clientversion: 5.5.10
   clientnoop: false
-timestamp: '2020-10-06T14:35:04.991812740+00:00'
-expiration: '2020-10-06T15:05:04.992187793+00:00'
+timestamp: '2020-10-23T19:05:05.097945906+00:00'
+expiration: '2020-10-23T19:35:05.098328384+00:00'

@@ -30,7 +30,7 @@ values:
   apt_reboot_required: true
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1601994421
+  apt_update_last_success: 1603783622
   apt_updates: 9
   architecture: amd64
   bios_release_date: 01/31/2018
@@ -57,6 +57,7 @@ values:
   cassandraheapnewsize: 800
   cassandramaxheapsize: 8032
   chassistype: Rack Mount Chassis
+  deployment: production
   disks:
     sda:
       model: HGST HUS726020AL
@@ -182,32 +183,32 @@ values:
     privileged: true
     uid: 0
     user: root
-  interfaces: bond0,eno1,eno2,enp2s0f0,enp2s0f1,lo
+  interfaces: bond0,eno1,eno2,enp2s0f0,enp2s0f1,lo,vlan440,vlan442
   ipaddress: 192.168.100.62
   ipaddress6: fe80::b824:daff:fe0a:4b5a
   ipaddress6_bond0: fe80::b824:daff:fe0a:4b5a
   ipaddress6_lo: "::1"
-  ipaddress_bond0: 192.168.100.62
+  ipaddress6_vlan440: fe80::b824:daff:fe0a:4b5a
+  ipaddress6_vlan442: fe80::b824:daff:fe0a:4b5a
   ipaddress_lo: 127.0.0.1
+  ipaddress_vlan440: 192.168.100.62
   is_pe: false
   is_virtual: false
   java_default_home: "/usr/lib/jvm/java-11-openjdk-amd64"
   java_libjvm_path: "/usr/lib/jvm/java-11-openjdk-amd64/lib/server"
   java_major_version: '11'
-  java_patch_level: '8'
-  java_version: 11.0.8
+  java_patch_level: '9'
+  java_version: 11.0.9
   kernel: Linux
   kernelmajversion: '4.19'
   kernelrelease: 4.19.0-9-amd64
   kernelversion: 4.19.0
   letsencrypt_directory: {}
   load_averages:
-    15m: 0.22
+    15m: 0.14
     1m: 0.12
-    5m: 0.15
+    5m: 0.12
   location: sesi_rocquencourt
-  subnet: sesi_rocquencourt
-  deployment: production
   lsbdistcodename: buster
   lsbdistdescription: Debian GNU/Linux 10 (buster)
   lsbdistid: Debian
@@ -219,33 +220,35 @@ values:
   macaddress_eno2: 50:9a:4c:75:d4:40
   macaddress_enp2s0f0: b4:96:91:1c:6f:da
   macaddress_enp2s0f1: b4:96:91:1c:6f:db
+  macaddress_vlan440: ba:24:da:0a:4b:5a
+  macaddress_vlan442: ba:24:da:0a:4b:5a
   manufacturer: Dell Inc.
   memory:
     swap:
-      available: 27.24 GiB
-      available_bytes: 29250711552
-      capacity: 8.59%
+      available: 26.34 GiB
+      available_bytes: 28285497344
+      capacity: 11.61%
       total: 29.80 GiB
       total_bytes: 32000438272
-      used: 2.56 GiB
-      used_bytes: 2749726720
+      used: 3.46 GiB
+      used_bytes: 3714940928
     system:
-      available: 7.62 GiB
-      available_bytes: 8178446336
-      capacity: 75.72%
+      available: 8.54 GiB
+      available_bytes: 9169489920
+      capacity: 72.78%
       total: 31.37 GiB
       total_bytes: 33688309760
-      used: 23.76 GiB
-      used_bytes: 25509863424
-  memoryfree: 7.62 GiB
-  memoryfree_mb: 7799.57421875
+      used: 22.83 GiB
+      used_bytes: 24518819840
+  memoryfree: 8.54 GiB
+  memoryfree_mb: 8744.70703125
   memorysize: 31.37 GiB
   memorysize_mb: 32127.67578125
   mountpoints:
     "/":
-      available: 27.21 GiB
-      available_bytes: 29214449664
-      capacity: 25.29%
+      available: 24.07 GiB
+      available_bytes: 25849335808
+      capacity: 33.89%
       device: "/dev/sda2"
       filesystem: ext4
       options:
@@ -254,8 +257,8 @@ values:
       - errors=remount-ro
       size: 36.42 GiB
       size_bytes: 39103025152
-      used: 9.21 GiB
-      used_bytes: 9888575488
+      used: 12.34 GiB
+      used_bytes: 13253689344
     "/boot/efi":
       available: 505.87 MiB
       available_bytes: 530444288
@@ -292,7 +295,7 @@ values:
       used_bytes: 0
     "/run":
       available: 3.14 GiB
-      available_bytes: 3368165376
+      available_bytes: 3368157184
       capacity: 0.02%
       device: tmpfs
       filesystem: tmpfs
@@ -305,8 +308,8 @@ values:
       - mode=755
       size: 3.14 GiB
       size_bytes: 3368833024
-      used: 652.00 KiB
-      used_bytes: 667648
+      used: 660.00 KiB
+      used_bytes: 675840
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -325,9 +328,9 @@ values:
       used: 0 bytes
       used_bytes: 0
     "/srv/elasticsearch":
-      available: 1.39 TiB
-      available_bytes: 1531131949056
-      capacity: 74.48%
+      available: 1.33 TiB
+      available_bytes: 1462538231808
+      capacity: 75.62%
       device: "/dev/md0"
       filesystem: xfs
       options:
@@ -340,12 +343,12 @@ values:
       - noquota
       size: 5.46 TiB
       size_bytes: 5998656880640
-      used: 4.06 TiB
-      used_bytes: 4467524931584
+      used: 4.13 TiB
+      used_bytes: 4536118648832
     "/srv/kafka":
-      available: 1.58 TiB
-      available_bytes: 1738880954368
-      capacity: 8.31%
+      available: 1.70 TiB
+      available_bytes: 1873059581952
+      capacity: 1.24%
       device: "/dev/sda4"
       filesystem: ext4
       options:
@@ -353,8 +356,8 @@ values:
       - relatime
       size: 1.72 TiB
       size_bytes: 1896527962112
-      used: 146.82 GiB
-      used_bytes: 157647007744
+      used: 21.86 GiB
+      used_bytes: 23468380160
     "/sys/fs/cgroup":
       available: 15.69 GiB
       available_bytes: 16844152832
@@ -382,40 +385,39 @@ values:
   mtu_enp2s0f0: 1500
   mtu_enp2s0f1: 1500
   mtu_lo: 65536
+  mtu_vlan440: 1500
+  mtu_vlan442: 1500
   mysql_server_id: 57193242
   netmask: 255.255.255.0
   netmask6: 'ffff:ffff:ffff:ffff::'
   netmask6_bond0: 'ffff:ffff:ffff:ffff::'
   netmask6_lo: ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff
-  netmask_bond0: 255.255.255.0
+  netmask6_vlan440: 'ffff:ffff:ffff:ffff::'
+  netmask6_vlan442: 'ffff:ffff:ffff:ffff::'
   netmask_lo: 255.0.0.0
+  netmask_vlan440: 255.255.255.0
   network: 192.168.100.0
   network6: 'fe80::'
   network6_bond0: 'fe80::'
   network6_lo: "::1"
-  network_bond0: 192.168.100.0
+  network6_vlan440: 'fe80::'
+  network6_vlan442: 'fe80::'
   network_lo: 127.0.0.0
+  network_vlan440: 192.168.100.0
   networking:
     domain: internal.softwareheritage.org
     fqdn: esnode2.internal.softwareheritage.org
     hostname: esnode2
     interfaces:
       bond0:
-        bindings:
-        - address: 192.168.100.62
-          netmask: 255.255.255.0
-          network: 192.168.100.0
         bindings6:
         - address: fe80::b824:daff:fe0a:4b5a
           netmask: 'ffff:ffff:ffff:ffff::'
           network: 'fe80::'
-        ip: 192.168.100.62
         ip6: fe80::b824:daff:fe0a:4b5a
         mac: ba:24:da:0a:4b:5a
         mtu: 1500
-        netmask: 255.255.255.0
         netmask6: 'ffff:ffff:ffff:ffff::'
-        network: 192.168.100.0
         network6: 'fe80::'
       eno1:
         mac: 50:9a:4c:75:d4:3f
@@ -445,6 +447,33 @@ values:
         netmask6: ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff
         network: 127.0.0.0
         network6: "::1"
+      vlan440:
+        bindings:
+        - address: 192.168.100.62
+          netmask: 255.255.255.0
+          network: 192.168.100.0
+        bindings6:
+        - address: fe80::b824:daff:fe0a:4b5a
+          netmask: 'ffff:ffff:ffff:ffff::'
+          network: 'fe80::'
+        ip: 192.168.100.62
+        ip6: fe80::b824:daff:fe0a:4b5a
+        mac: ba:24:da:0a:4b:5a
+        mtu: 1500
+        netmask: 255.255.255.0
+        netmask6: 'ffff:ffff:ffff:ffff::'
+        network: 192.168.100.0
+        network6: 'fe80::'
+      vlan442:
+        bindings6:
+        - address: fe80::b824:daff:fe0a:4b5a
+          netmask: 'ffff:ffff:ffff:ffff::'
+          network: 'fe80::'
+        ip6: fe80::b824:daff:fe0a:4b5a
+        mac: ba:24:da:0a:4b:5a
+        mtu: 1500
+        netmask6: 'ffff:ffff:ffff:ffff::'
+        network6: 'fe80::'
     ip: 192.168.100.62
     ip6: fe80::b824:daff:fe0a:4b5a
     mac: ba:24:da:0a:4b:5a
@@ -453,7 +482,7 @@ values:
     netmask6: 'ffff:ffff:ffff:ffff::'
     network: 192.168.100.0
     network6: 'fe80::'
-    primary: bond0
+    primary: vlan440
   operatingsystem: Debian
   operatingsystemmajrelease: '10'
   operatingsystemrelease: '10.6'
@@ -583,9 +612,10 @@ values:
     SSHFP 1 1 565b722787a79d34e1ed1920c91fbbc5fed3494d
     SSHFP 1 2 264fd702792b5644ad04c340b12470f9575782a08e7eccf8c4890b6b69558a28
   sshrsakey: AAAAB3NzaC1yc2EAAAADAQABAAABAQDcaMpGNvBMOVfFlUXNpt6XoL+g63v+wXVyThnrs70OxX5yqVzcbgA/mZ1lwz+cW02KhJukLMVNKqa8Ah438G5rLtD81XsdPNsWuPEOOcOfrttDm0A2wdRk5JQl4/2W16TVt5xaqXsFw9uUQPUA97cxgq5eKDX1SXO93BJqrRT8utKTV6WXcdsge+8byN0XywWRqIyqGPV1Le6MZXUWg+SqLtqcy+ZI1M6F5ip+1VAmRsSw4HA1R9COJQ6n23o0UnxALCY8WebaBEeFjw7QXBXKmgbzRu/kB/6jFC+02cLJAjow4P6H8q7jfaWGD2qQfEIM+rbf4eCT6veegpm0QoCx
+  subnet: sesi_rocquencourt
   sudoversion: 1.8.27
-  swapfree: 27.24 GiB
-  swapfree_mb: 27895.65234375
+  swapfree: 26.34 GiB
+  swapfree_mb: 26975.15234375
   swapsize: 29.80 GiB
   swapsize_mb: 30517.99609375
   swh_hostname:
@@ -593,10 +623,10 @@ values:
     short: esnode2
     internal_fqdn: esnode2.internal.softwareheritage.org
   system_uptime:
-    days: 99
-    hours: 2376
-    seconds: 8556715
-    uptime: 99 days
+    days: 119
+    hours: 2874
+    seconds: 10347714
+    uptime: 119 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -611,15 +641,15 @@ values:
     systemd-timesyncd.service: enabled
   systemd_version: '245'
   timezone: UTC
-  uptime: 99 days
-  uptime_days: 99
-  uptime_hours: 2376
-  uptime_seconds: 8556715
+  uptime: 119 days
+  uptime_days: 119
+  uptime_hours: 2874
+  uptime_seconds: 10347714
   uuid: 4c4c4544-004c-5810-8046-cac04f584a32
   vcsrepo_svn_ver: ''
   virtual: physical
   clientcert: esnode2.internal.softwareheritage.org
   clientversion: 5.5.10
   clientnoop: false
-timestamp: '2020-10-06T14:51:04.264886808+00:00'
-expiration: '2020-10-06T15:21:04.265257478+00:00'
+timestamp: '2020-10-27T08:21:04.011328870+00:00'
+expiration: '2020-10-27T08:51:04.011645695+00:00'

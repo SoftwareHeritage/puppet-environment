@@ -2,7 +2,7 @@
 name: saatchi.internal.softwareheritage.org
 values:
   agent_specified_environment: production
-  apt_dist_updates: 27
+  apt_dist_updates: 36
   apt_has_dist_updates: true
   apt_has_updates: true
   apt_package_dist_updates:
@@ -15,13 +15,22 @@ values:
   - libpam-systemd
   - systemd
   - libsystemd0
+  - libllvm7
+  - postgresql-client-11
+  - postgresql-11
+  - postgresql
+  - python3-atomicwrites
+  - python3-mirakuru
   - python3-mypy-extensions
-  - python3-typing-extensions
+  - python3-pluggy
+  - python3-port-for
+  - python3-py
+  - python3-pytest
+  - python3-pytest-postgresql
   - python3-swh.core
   - python3-swh.model
   - python3-swh.objstorage
   - python3-swh.storage
-  - python3-swh.scheduler
   - python3-swh.loader.core
   - python3-swh.deposit.loader
   - python3-swh.deposit.client
@@ -45,10 +54,7 @@ values:
   - libpam-systemd
   - systemd
   - libsystemd0
-  - python3-typing-extensions
-  - python3-swh.core
   - python3-swh.model
-  - python3-swh.scheduler
   - python3-swh.loader.core
   - python3-swh.deposit.loader
   - python3-swh.deposit.client
@@ -64,8 +70,8 @@ values:
   apt_reboot_required: true
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1601991121
-  apt_updates: 25
+  apt_update_last_success: 1603783922
+  apt_updates: 22
   architecture: amd64
   bios_release_date: 04/01/2014
   bios_vendor: SeaBIOS
@@ -79,6 +85,7 @@ values:
   cassandraheapnewsize: 400
   cassandramaxheapsize: 5019
   chassistype: Other
+  deployment: production
   disks:
     sda:
       model: QEMU HARDDISK
@@ -204,12 +211,10 @@ values:
   kernelversion: 4.19.0
   letsencrypt_directory: {}
   load_averages:
-    15m: 0.39
-    1m: 0.52
-    5m: 0.44
+    15m: 0.37
+    1m: 0.42
+    5m: 0.34
   location: sesi_rocquencourt
-  subnet: sesi_rocquencourt
-  deployment: production
   lsbdistcodename: buster
   lsbdistdescription: Debian GNU/Linux 10 (buster)
   lsbdistid: Debian
@@ -228,22 +233,22 @@ values:
       used: 0 bytes
       used_bytes: 0
     system:
-      available: 17.90 GiB
-      available_bytes: 19218710528
-      capacity: 8.70%
+      available: 17.73 GiB
+      available_bytes: 19038961664
+      capacity: 9.55%
       total: 19.60 GiB
       total_bytes: 21049282560
-      used: 1.70 GiB
-      used_bytes: 1830572032
-  memoryfree: 17.90 GiB
-  memoryfree_mb: 18328.390625
+      used: 1.87 GiB
+      used_bytes: 2010320896
+  memoryfree: 17.73 GiB
+  memoryfree_mb: 18156.96875
   memorysize: 19.60 GiB
   memorysize_mb: 20074.16015625
   mountpoints:
     "/":
-      available: 28.35 GiB
-      available_bytes: 30438461440
-      capacity: 17.41%
+      available: 29.63 GiB
+      available_bytes: 31815454720
+      capacity: 13.68%
       device: "/dev/mapper/saatchi--vg-root"
       filesystem: ext4
       options:
@@ -252,12 +257,12 @@ values:
       - errors=remount-ro
       size: 34.33 GiB
       size_bytes: 36857053184
-      used: 5.98 GiB
-      used_bytes: 6418591744
+      used: 4.70 GiB
+      used_bytes: 5041598464
     "/boot":
-      available: 148.96 MiB
-      available_bytes: 156196864
-      capacity: 36.70%
+      available: 112.15 MiB
+      available_bytes: 117593088
+      capacity: 52.34%
       device: "/dev/sda1"
       filesystem: ext2
       options:
@@ -265,8 +270,8 @@ values:
       - relatime
       size: 235.32 MiB
       size_bytes: 246755328
-      used: 86.36 MiB
-      used_bytes: 90558464
+      used: 123.18 MiB
+      used_bytes: 129162240
     "/dev/shm":
       available: 9.80 GiB
       available_bytes: 10524639232
@@ -283,7 +288,7 @@ values:
       used_bytes: 0
     "/run":
       available: 1.96 GiB
-      available_bytes: 2104381440
+      available_bytes: 2104356864
       capacity: 0.03%
       device: tmpfs
       filesystem: tmpfs
@@ -296,8 +301,8 @@ values:
       - mode=755
       size: 1.96 GiB
       size_bytes: 2104930304
-      used: 536.00 KiB
-      used_bytes: 548864
+      used: 560.00 KiB
+      used_bytes: 573440
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -313,6 +318,25 @@ values:
       - size=5120k
       size: 5.00 MiB
       size_bytes: 5242880
+      used: 0 bytes
+      used_bytes: 0
+    "/run/user/1003":
+      available: 1.96 GiB
+      available_bytes: 2104926208
+      capacity: 0%
+      device: tmpfs
+      filesystem: tmpfs
+      options:
+      - rw
+      - nosuid
+      - nodev
+      - relatime
+      - size=2055592k
+      - mode=700
+      - uid=1003
+      - gid=1003
+      size: 1.96 GiB
+      size_bytes: 2104926208
       used: 0 bytes
       used_bytes: 0
     "/run/user/113":
@@ -554,6 +578,7 @@ values:
     SSHFP 1 1 2664ab6a0c1022517fbb5b3fbf79aaa5172908bc
     SSHFP 1 2 2e6d8eaeb4757f0bae9c60a84c446ed6df098f638f3aa86453977c598ae733ae
   sshrsakey: AAAAB3NzaC1yc2EAAAADAQABAAABAQDFE0d1oYleqN260VndJAiHcGN2+UhOoNiXdKBlhxYNRWoOiUqvsxatgM238nWSbVnL9TrrfMTZUGXfElA22kzM11yGJ13OLfl2zvA4VsTcJcCckuhQJkFT+XWdmclXDrPAWr0DxPxNTXrf9uoJseEk0tYJHqB2sl3qIiq4UJY7aRka95qtrwtMYwRyOU5iB2HaemRxazZVRV6dRGT5aT+6m3++xq5oeadTfgdmOOMjmj7dn7W8yjELtQEJ16BUI/2OcumO6eJUM/r/NCN7HBmjZjJKIPPUyLUa4t6WxjtV5rNc6o7nEohdyQK2/5K0NxMiz1+8GPsyyZXFR3bsTVd/
+  subnet: sesi_rocquencourt
   sudoversion: 1.8.27
   swapfree: 4.00 GiB
   swapfree_mb: 4095.99609375
@@ -564,10 +589,10 @@ values:
     short: saatchi
     internal_fqdn: saatchi.internal.softwareheritage.org
   system_uptime:
-    days: 13
-    hours: 333
-    seconds: 1201465
-    uptime: 13 days
+    days: 34
+    hours: 831
+    seconds: 2994266
+    uptime: 34 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -582,15 +607,15 @@ values:
     systemd-timesyncd.service: enabled
   systemd_version: '245'
   timezone: UTC
-  uptime: 13 days
-  uptime_days: 13
-  uptime_hours: 333
-  uptime_seconds: 1201465
+  uptime: 34 days
+  uptime_days: 34
+  uptime_hours: 831
+  uptime_seconds: 2994266
   uuid: 96fa444d-c818-495c-b41d-a63aaa3fa36b
   vcsrepo_svn_ver: 1.10.4
   virtual: kvm
   clientcert: saatchi.internal.softwareheritage.org
   clientversion: 5.5.10
   clientnoop: false
-timestamp: '2020-10-06T14:25:05.628203035+00:00'
-expiration: '2020-10-06T14:55:05.628548152+00:00'
+timestamp: '2020-10-27T08:25:06.205159332+00:00'
+expiration: '2020-10-27T08:55:06.205493378+00:00'

@@ -7,7 +7,6 @@ values:
   apt_has_dist_updates: true
   apt_has_updates: true
   apt_package_dist_updates:
-  - libzstd1
   - libnss-systemd
   - udev
   - libudev1
@@ -16,8 +15,7 @@ values:
   - libpam-systemd
   - systemd
   - libsystemd0
-  - libpcre3
-  - borgmatic
+  - php-common
   - php7.4-zip
   - php7.4-readline
   - php7.4-opcache
@@ -25,6 +23,9 @@ values:
   - libapache2-mod-php7.4
   - php7.4-cli
   - php7.4-common
+  - php7.4
+  - php
+  - php-zip
   - php7.3-zip
   - php7.3-xml
   - php7.3-readline
@@ -37,11 +38,9 @@ values:
   - php7.3-curl
   - php7.3-cli
   - php7.3-common
-  - php7.4
   apt_package_security_dist_updates: []
   apt_package_security_updates: []
   apt_package_updates:
-  - libzstd1
   - libnss-systemd
   - udev
   - libudev1
@@ -50,8 +49,7 @@ values:
   - libpam-systemd
   - systemd
   - libsystemd0
-  - libpcre3
-  - borgmatic
+  - php-common
   - php7.4-zip
   - php7.4-readline
   - php7.4-opcache
@@ -59,6 +57,9 @@ values:
   - libapache2-mod-php7.4
   - php7.4-cli
   - php7.4-common
+  - php7.4
+  - php
+  - php-zip
   - php7.3-zip
   - php7.3-xml
   - php7.3-readline
@@ -71,11 +72,10 @@ values:
   - php7.3-curl
   - php7.3-cli
   - php7.3-common
-  - php7.4
   apt_reboot_required: true
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1601990883
+  apt_update_last_success: 1603783682
   apt_updates: 31
   architecture: amd64
   augeas:
@@ -97,6 +97,7 @@ values:
   cassandraheapnewsize: 400
   cassandramaxheapsize: 3003
   chassistype: Other
+  deployment: production
   dhcp_servers:
     eth1: 192.168.100.1
   disks:
@@ -196,6 +197,7 @@ values:
     aeviso: "/home/aeviso"
     tenma: "/home/tenma"
     vsellier: "/home/vsellier"
+    frankduncan: "/home/frankduncan"
   domain: softwareheritage.org
   facterversion: 3.11.0
   filesystems: btrfs,ext2,ext3,ext4,hfs,hfsplus,jfs,minix,msdos,qnx4,ufs,vfat,xfs
@@ -228,16 +230,14 @@ values:
   is_virtual: true
   kernel: Linux
   kernelmajversion: '4.19'
-  kernelrelease: 4.19.0-9-amd64
+  kernelrelease: 4.19.0-11-amd64
   kernelversion: 4.19.0
   letsencrypt_directory: {}
   load_averages:
-    15m: 0.46
-    1m: 0.86
-    5m: 0.51
+    15m: 0.37
+    1m: 0.62
+    5m: 0.43
   location: sesi_rocquencourt
-  subnet: sesi_rocquencourt
-  deployment: production
   lsbdistcodename: buster
   lsbdistdescription: Debian GNU/Linux 10 (buster)
   lsbdistid: Debian
@@ -249,30 +249,30 @@ values:
   manufacturer: QEMU
   memory:
     swap:
-      available: 3.90 GiB
-      available_bytes: 4184600576
-      capacity: 2.55%
+      available: 3.94 GiB
+      available_bytes: 4231524352
+      capacity: 1.45%
       total: 4.00 GiB
       total_bytes: 4293914624
-      used: 104.25 MiB
-      used_bytes: 109314048
+      used: 59.50 MiB
+      used_bytes: 62390272
     system:
-      available: 4.14 GiB
-      available_bytes: 4448804864
-      capacity: 64.67%
+      available: 4.56 GiB
+      available_bytes: 4892266496
+      capacity: 61.15%
       total: 11.73 GiB
       total_bytes: 12593745920
-      used: 7.59 GiB
-      used_bytes: 8144941056
-  memoryfree: 4.14 GiB
-  memoryfree_mb: 4242.7109375
+      used: 7.17 GiB
+      used_bytes: 7701479424
+  memoryfree: 4.56 GiB
+  memoryfree_mb: 4665.62890625
   memorysize: 11.73 GiB
   memorysize_mb: 12010.33203125
   mountpoints:
     "/":
-      available: 16.97 GiB
-      available_bytes: 18222858240
-      capacity: 76.97%
+      available: 16.29 GiB
+      available_bytes: 17489588224
+      capacity: 77.90%
       device: "/dev/vda1"
       filesystem: ext4
       options:
@@ -281,8 +281,8 @@ values:
       - errors=remount-ro
       size: 73.70 GiB
       size_bytes: 79131844608
-      used: 56.73 GiB
-      used_bytes: 60908986368
+      used: 57.41 GiB
+      used_bytes: 61642256384
     "/dev/shm":
       available: 5.86 GiB
       available_bytes: 6296870912
@@ -299,7 +299,7 @@ values:
       used_bytes: 0
     "/run":
       available: 1.17 GiB
-      available_bytes: 1258819584
+      available_bytes: 1258827776
       capacity: 0.04%
       device: tmpfs
       filesystem: tmpfs
@@ -312,8 +312,8 @@ values:
       - mode=755
       size: 1.17 GiB
       size_bytes: 1259376640
-      used: 544.00 KiB
-      used_bytes: 557056
+      used: 536.00 KiB
+      used_bytes: 548864
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -343,6 +343,7 @@ values:
       - nodev
       - relatime
       - size=1229856k
+      - nr_inodes=307464
       - mode=700
       - uid=1003
       - gid=1003
@@ -351,8 +352,8 @@ values:
       used: 0 bytes
       used_bytes: 0
     "/sys/fs/cgroup":
-      available: 5.86 GiB
-      available_bytes: 6296870912
+      available: 4.00 MiB
+      available_bytes: 4194304
       capacity: 0%
       device: tmpfs
       filesystem: tmpfs
@@ -361,9 +362,11 @@ values:
       - nosuid
       - nodev
       - noexec
+      - size=4096k
+      - nr_inodes=1024
       - mode=755
-      size: 5.86 GiB
-      size_bytes: 6296870912
+      size: 4.00 MiB
+      size_bytes: 4194304
       used: 0 bytes
       used_bytes: 0
   mounts:
@@ -372,8 +375,8 @@ values:
   mtu_eth1: 1500
   mtu_lo: 65536
   mysql_server_id: 31810995
-  mysql_version: 10.3.23
-  mysqld_version: "/usr/sbin/mysqld  Ver 10.3.23-MariaDB-0+deb10u1 for debian-linux-gnu
+  mysql_version: 10.3.25
+  mysqld_version: "/usr/sbin/mysqld  Ver 10.3.25-MariaDB-0+deb10u1 for debian-linux-gnu
     on x86_64 (Debian 10)"
   netmask: 255.255.255.0
   netmask6: 'ffff:ffff:ffff:ffff::'
@@ -494,7 +497,7 @@ values:
       size_bytes: 4293918720
       uuid: 422de49f-0ae7-490d-83c9-e4f19086f84f
   path: "/usr/bin:/bin:/usr/sbin:/sbin"
-  phpversion: 7.3.19-1~deb10u1
+  phpversion: 7.3.23-1+0~20201008.68+debian10~1.gbp30f6c3
   physicalprocessorcount: 1
   processor0: Common KVM processor
   processor1: Common KVM processor
@@ -578,9 +581,10 @@ values:
     SSHFP 1 1 84ba7023e9a9ec8b445592c72cbe80da9d5b40a7
     SSHFP 1 2 b68b3fb00050e5e53bc95ad8ca4498410e32046003cc5c7cc13e12b499eee4db
   sshrsakey: AAAAB3NzaC1yc2EAAAADAQABAAABAQDIEv052pq1mvCDxaP+IBjYSEiAAjUwX+rLl1Tc4ZJ8ck7+/JuR9uSiBspeF4E8M6YE0JFczGqpJdMeU5uf/rUqeMLp53g7Q9BWdIzHBOGLSW80NZ9SYLoPZdhiLd+W3nHu6tze79txvwSqbVpw91NRiaQT8MmI3f7gcRYKClmtODO9Sz8hIUIwGtty7/SJEpZC8httIbsY6jjGM/IUbh6FWsfN3G7jxoq8OvwErSZ+zkfJ6IpPdkTrPRCbGNaO8DDQOBdhGu1z1DXkXeaa6jD7t2SiTpJ1B6BgjwuefimczGNohUisLdtUFarAByb7iklpeMvbiS9N/TsxV88D8qMD
+  subnet: sesi_rocquencourt
   sudoversion: 1.8.27
-  swapfree: 3.90 GiB
-  swapfree_mb: 3990.74609375
+  swapfree: 3.94 GiB
+  swapfree_mb: 4035.49609375
   swapsize: 4.00 GiB
   swapsize_mb: 4094.99609375
   swh_hostname:
@@ -588,10 +592,10 @@ values:
     short: tate
     internal_fqdn: tate.internal.softwareheritage.org
   system_uptime:
-    days: 118
-    hours: 2836
-    seconds: 10212266
-    uptime: 118 days
+    days: 13
+    hours: 325
+    seconds: 1172525
+    uptime: 13 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -604,17 +608,17 @@ values:
     systemd-resolved.service: disabled
     systemd-time-wait-sync.service: disabled
     systemd-timesyncd.service: enabled
-  systemd_version: '245'
+  systemd_version: '246'
   timezone: UTC
-  uptime: 118 days
-  uptime_days: 118
-  uptime_hours: 2836
-  uptime_seconds: 10212266
+  uptime: 13 days
+  uptime_days: 13
+  uptime_hours: 325
+  uptime_seconds: 1172525
   uuid: 1cfacaaf-2718-4794-9cc5-88dfde58fb43
   vcsrepo_svn_ver: ''
   virtual: kvm
   clientcert: tate.softwareheritage.org
   clientversion: 5.5.10
   clientnoop: false
-timestamp: '2020-10-06T14:24:08.005405493+00:00'
-expiration: '2020-10-06T14:54:08.005993365+00:00'
+timestamp: '2020-10-27T08:24:06.829192013+00:00'
+expiration: '2020-10-27T08:54:06.829783201+00:00'

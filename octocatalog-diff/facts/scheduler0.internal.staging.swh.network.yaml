@@ -2,22 +2,22 @@
 name: scheduler0.internal.staging.swh.network
 values:
   agent_specified_environment: staging
-  apt_dist_updates: 2
+  apt_dist_updates: 8
   apt_has_dist_updates: true
-  apt_has_updates: true
+  apt_has_updates: false
   apt_package_dist_updates:
-  - python3-swh.lister
-  - python3-swh.loader.core
+  - python3-atomicwrites
+  - python3-mirakuru
+  - python3-pluggy
+  - python3-port-for
+  - python3-py
+  - python3-pytest
+  - python3-pytest-postgresql
+  - python3-swh.core
   apt_package_security_dist_updates: []
-  apt_package_security_updates: []
-  apt_package_updates:
-  - python3-swh.lister
-  - python3-swh.loader.core
   apt_reboot_required: false
   apt_security_dist_updates: 0
-  apt_security_updates: 0
-  apt_update_last_success: 1601991183
-  apt_updates: 2
+  apt_update_last_success: 1603372665
   architecture: amd64
   bios_release_date: 04/01/2014
   bios_vendor: SeaBIOS
@@ -28,11 +28,12 @@ values:
   blockdevice_vda_size: 34359738368
   blockdevice_vda_vendor: '0x1af4'
   blockdevices: sr0,vda
-  cassandracmsheapnewsize: 400
-  cassandracmsmaxheapsize: 1995
-  cassandraheapnewsize: 400
-  cassandramaxheapsize: 1995
+  cassandracmsheapnewsize: 256
+  cassandracmsmaxheapsize: 1024
+  cassandraheapnewsize: 256
+  cassandramaxheapsize: 1024
   chassistype: Other
+  deployment: staging
   disks:
     sr0:
       model: QEMU DVD-ROM
@@ -123,7 +124,6 @@ values:
     aeviso: "/home/aeviso"
     tenma: "/home/tenma"
     vsellier: "/home/vsellier"
-    prometheus-rabbitmq-exporter: "/"
   domain: internal.staging.swh.network
   erl_ssl_path: "/usr/lib/erlang/lib/ssl-9.1.2/ebin"
   facterversion: 3.11.0
@@ -145,14 +145,14 @@ values:
     uid: 0
     user: root
   interfaces: eth0,lo
-  ipaddress: 192.168.128.4
+  ipaddress: 192.168.130.50
   ipaddress6: fe80::9002:7eff:fed0:b936
   ipaddress6_eth0: fe80::9002:7eff:fed0:b936
   ipaddress6_lo: "::1"
-  ipaddress_eth0: 192.168.128.4
+  ipaddress_eth0: 192.168.130.50
   ipaddress_lo: 127.0.0.1
   is_pe: false
-  is_virtual: false
+  is_virtual: true
   java_default_home: "/usr/lib/jvm/java-11-openjdk-amd64"
   java_libjvm_path: "/usr/lib/jvm/java-11-openjdk-amd64/lib/server"
   java_major_version: '11'
@@ -160,16 +160,14 @@ values:
   java_version: 11.0.8
   kernel: Linux
   kernelmajversion: '4.19'
-  kernelrelease: 4.19.0-11-amd64
+  kernelrelease: 4.19.0-12-amd64
   kernelversion: 4.19.0
   letsencrypt_directory: {}
   load_averages:
-    15m: 0.08
-    1m: 0.16
-    5m: 0.08
+    15m: 0.11
+    1m: 0.77
+    5m: 0.31
   location: sesi_rocquencourt_staging
-  subnet: sesi_rocquencourt_staging
-  deployment: staging
   lsbdistcodename: buster
   lsbdistdescription: Debian GNU/Linux 10 (buster)
   lsbdistid: Debian
@@ -180,22 +178,22 @@ values:
   manufacturer: QEMU
   memory:
     system:
-      available: 7.04 GiB
-      available_bytes: 7558238208
-      capacity: 9.65%
-      total: 7.79 GiB
-      total_bytes: 8365953024
-      used: 770.30 MiB
-      used_bytes: 807714816
-  memoryfree: 7.04 GiB
-  memoryfree_mb: 7208.09765625
-  memorysize: 7.79 GiB
-  memorysize_mb: 7978.39453125
+      available: 2.45 GiB
+      available_bytes: 2632773632
+      capacity: 22.30%
+      total: 3.16 GiB
+      total_bytes: 3388375040
+      used: 720.60 MiB
+      used_bytes: 755601408
+  memoryfree: 2.45 GiB
+  memoryfree_mb: 2510.80859375
+  memorysize: 3.16 GiB
+  memorysize_mb: 3231.40625
   mountpoints:
     "/":
-      available: 26.30 GiB
-      available_bytes: 28242894848
-      capacity: 16.41%
+      available: 26.17 GiB
+      available_bytes: 28104470528
+      capacity: 16.82%
       device: "/dev/vda1"
       filesystem: ext4
       options:
@@ -204,11 +202,11 @@ values:
       - errors=remount-ro
       size: 31.47 GiB
       size_bytes: 33785901056
-      used: 5.16 GiB
-      used_bytes: 5543006208
+      used: 5.29 GiB
+      used_bytes: 5681430528
     "/dev/shm":
       available: 3.90 GiB
-      available_bytes: 4182962176
+      available_bytes: 4182970368
       capacity: 0.00%
       device: tmpfs
       filesystem: tmpfs
@@ -216,13 +214,15 @@ values:
       - rw
       - nosuid
       - nodev
+      - size=4084944k
+      - nr_inodes=1021236
       size: 3.90 GiB
-      size_bytes: 4182974464
+      size_bytes: 4182982656
       used: 12.00 KiB
       used_bytes: 12288
     "/run":
-      available: 797.29 MiB
-      available_bytes: 836014080
+      available: 797.30 MiB
+      available_bytes: 836026368
       capacity: 0.07%
       device: tmpfs
       filesystem: tmpfs
@@ -231,12 +231,13 @@ values:
       - nosuid
       - noexec
       - relatime
-      - size=816988k
+      - size=816992k
+      - nr_inodes=1021236
       - mode=755
       size: 797.84 MiB
-      size_bytes: 836595712
-      used: 568.00 KiB
-      used_bytes: 581632
+      size_bytes: 836599808
+      used: 560.00 KiB
+      used_bytes: 573440
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -250,13 +251,14 @@ values:
       - noexec
       - relatime
       - size=5120k
+      - nr_inodes=1021236
       size: 5.00 MiB
       size_bytes: 5242880
       used: 0 bytes
       used_bytes: 0
-    "/run/user/118":
-      available: 81.04 MiB
-      available_bytes: 84975616
+    "/run/user/1025":
+      available: 273.14 MiB
+      available_bytes: 286408704
       capacity: 0%
       device: tmpfs
       filesystem: tmpfs
@@ -265,13 +267,13 @@ values:
       - nosuid
       - nodev
       - relatime
-      - size=82984k
-      - nr_inodes=20746
+      - size=279696k
+      - nr_inodes=69924
       - mode=700
-      - uid=118
-      - gid=123
-      size: 81.04 MiB
-      size_bytes: 84975616
+      - uid=1025
+      - gid=1025
+      size: 273.14 MiB
+      size_bytes: 286408704
       used: 0 bytes
       used_bytes: 0
     "/sys/fs/cgroup":
@@ -303,11 +305,11 @@ values:
   netmask6_lo: ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff
   netmask_eth0: 255.255.255.0
   netmask_lo: 255.0.0.0
-  network: 192.168.128.0
+  network: 192.168.130.0
   network6: 'fe80::'
   network6_eth0: 'fe80::'
   network6_lo: "::1"
-  network_eth0: 192.168.128.0
+  network_eth0: 192.168.130.0
   network_lo: 127.0.0.0
   networking:
     domain: internal.staging.swh.network
@@ -316,20 +318,20 @@ values:
     interfaces:
       eth0:
         bindings:
-        - address: 192.168.128.4
+        - address: 192.168.130.50
           netmask: 255.255.255.0
-          network: 192.168.128.0
+          network: 192.168.130.0
         bindings6:
         - address: fe80::9002:7eff:fed0:b936
           netmask: 'ffff:ffff:ffff:ffff::'
           network: 'fe80::'
-        ip: 192.168.128.4
+        ip: 192.168.130.50
         ip6: fe80::9002:7eff:fed0:b936
         mac: 92:02:7e:d0:b9:36
         mtu: 1500
         netmask: 255.255.255.0
         netmask6: 'ffff:ffff:ffff:ffff::'
-        network: 192.168.128.0
+        network: 192.168.130.0
         network6: 'fe80::'
       lo:
         bindings:
@@ -347,13 +349,13 @@ values:
         netmask6: ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff
         network: 127.0.0.0
         network6: "::1"
-    ip: 192.168.128.4
+    ip: 192.168.130.50
     ip6: fe80::9002:7eff:fed0:b936
     mac: 92:02:7e:d0:b9:36
     mtu: 1500
     netmask: 255.255.255.0
     netmask6: 'ffff:ffff:ffff:ffff::'
-    network: 192.168.128.0
+    network: 192.168.130.0
     network6: 'fe80::'
     primary: eth0
   nginx_version: 1.14.2
@@ -387,7 +389,7 @@ values:
       size: 32.00 GiB
       size_bytes: 34358672896
       uuid: d958fd0e-647f-4373-ae1c-f77f565cb93f
-  path: "/usr/bin:/bin:/usr/sbin:/sbin"
+  path: "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
   physicalprocessorcount: 1
   processor0: Intel(R) Xeon(R) CPU E7-4809 v3 @ 2.00GHz
   processor1: Intel(R) Xeon(R) CPU E7-4809 v3 @ 2.00GHz
@@ -413,6 +415,7 @@ values:
   rabbitmq_plugins_dirs:
   - "/usr/lib/rabbitmq/plugins"
   - "/usr/lib/rabbitmq/lib/rabbitmq_server-3.7.8/plugins"
+  rabbitmq_version: 3.6.6
   root_home: "/root"
   ruby:
     platform: x86_64-linux-gnu
@@ -426,27 +429,27 @@ values:
   ssh:
     dsa:
       fingerprints:
-        sha1: SSHFP 2 1 9904d6f625781d66ee513e49be9e347c307b663d
-        sha256: SSHFP 2 2 f8ae1cc659198a22d82f26600581cab58b7df61069a72cc5df4f60f6b8fedeb0
-      key: AAAAB3NzaC1kc3MAAACBAJ294EhFv9Ed9ABNYj0hGYv7uxyjREKEnyFStSc05cPECo+eWVunmHT3R9UkmpJOqyx9NHx8oeJTkhtv8pE1YiGIXez/gpVlc0Xy+7kPhLBA3bPQf3oeMZ4tTPdj7Jj2//pK6Jajd8AujN2bOmm44asVE1B1TEgtMwUofN0K+xxxAAAAFQCrvRlpQLI1VTSau2pp8FbLLwlFjQAAAIB1xbvuLNZOC8Hky7b9Q+u6CY7Dg/woEpflP73YEqx0iCqjrThQHXz85DO9FWuCKgQcmCYsVifZH9fQjN3hPZ2hRVzF+pG+aNHUaZ7N2++ml5LMEuks5EOEOwm6uh6Vf35axXXgj3fW39n0NKVnOHvqRcEGmU55vthj4IDCK2gI5wAAAIA3jbC+zOrQYB2HayaJ4HZR5X/EO4JnPmRREAfoUTQ24WpRm79jbTFcmKsteawcStqXjAJBoG8Yif8eX5x2OEw8njH27M7ni/MZ5wKJQ35SuNllh2QQZzV57IxBXKNDpdCJyfqniefwry1qRtUHNjf/ZFMgqrTOP5xEWw5t/S9LOA==
+        sha1: SSHFP 2 1 a87b9840bfe00eb9b745fdac06f67f0004f8f6fe
+        sha256: SSHFP 2 2 62393267c4704416e5349c7a724607b01f6072af4667b461eb0f200526d9b15d
+      key: AAAAB3NzaC1kc3MAAACBAOCvwmr8UZ30BbvxnRn6EvwFktoAEZ5bcUkW5s0l1Mftqe0JfnLKXkFyoCcKFjD6Owup1UUR5gCG3bBQptTB5CQQ9v4GuoxYR3DHjZr+XHWu2u5vtqgmUW66jN1i5tDfBnqHbyt3ZVfaw32rBkDMOxb3aBzffweYZ56ou6Id+nntAAAAFQDEPiu3DqVOEeYEd10VWQ/LgG3J8wAAAIEAqRguJxPY3ucClUaJ2GECeB3lRucBX+XiegPio12N7FKTqGjBsY7FLRoeJNxGQAqK+qCxKol2YsuGql3Pi/V6GOc2lME/xoEcny4Qz4I2Hu/ZbdQm01C9soR+QUEE7uRI8u6wdlrLPaqnD70VFUuLrGk3iOohE8u/yboPk+ZMo3oAAACAGkQLY5Xq1hAT4QJmfCmzbtzSMX6tpD4wmJ5qy6ynsmegjewc3adTDTELaPQMsGfrCbD2U1ofkulTCLr/N5Yey7iA3VZULjxto2z9w1GkM5wFeb9nHxJv9MjUj98ZjmoqzqBG8bjzXj/r3FWlQ9WNQkgITVJdk9SN6OeJM/EdFUI=
       type: ssh-dss
     ecdsa:
       fingerprints:
-        sha1: SSHFP 3 1 c154ba54b493cb74f8c4f0d19cc1a221b24132cb
-        sha256: SSHFP 3 2 bedb2e7a19c7b46cbfadbefd88a2ee0a58500cda87c7b1eb0b90304b3779a990
-      key: AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBDbfiXJX0GZaUJFYcTwAMevjQ9YiY5vUIS7VDsMHKLN6hjlIPF+KXrtIpyJBnGVwqvnKmsyzs6C700uQhIfbn/c=
+        sha1: SSHFP 3 1 439b65216c8c23ef78e79642742f83bc55c283d1
+        sha256: SSHFP 3 2 e9a5ca49a7ebe8069e50f97e89e05f0435fb014a71fb9eae0c582c2090ae5e2d
+      key: AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBJfOYCl/ZOuLSop4OTlGfGIQqEI7ncyTBSGNGtMLKcOVbgbDu2SYXvP8K0j8nfJbmWlXx0wm7irN4AoaruDOigs=
       type: ecdsa-sha2-nistp256
     ed25519:
       fingerprints:
-        sha1: SSHFP 4 1 16f45b3b4a7955c0bb705ff4da0d8cbb83a6ca31
-        sha256: SSHFP 4 2 d07d313f3e69224a91b7db22244deacd7f00a1174b22cad65a5eb52eeb92187a
-      key: AAAAC3NzaC1lZDI1NTE5AAAAIGSV5fM6eDS4/iPJDRiaBgEUAkBXgLF2HNgJ/06x8wqm
+        sha1: SSHFP 4 1 ea63be23af6cb86c708b0a1dbc25ab2990790d90
+        sha256: SSHFP 4 2 0a2ae5a48809067c18e4e36059b9bb2e6a68ed8361765c1017206072accffdf8
+      key: AAAAC3NzaC1lZDI1NTE5AAAAIL03A9uhf2RDXt56cLuBh+3o+ZHiYAobU1ec3BGNuax5
       type: ssh-ed25519
     rsa:
       fingerprints:
-        sha1: SSHFP 1 1 5d084a594e326de57f093f2e75a8a7a568ac08ff
-        sha256: SSHFP 1 2 8b5abe79d1a6f005d5db7762e80cfb6146336b2908003f6bdcf771e0ce8f6599
-      key: AAAAB3NzaC1yc2EAAAADAQABAAABAQCtCtxwBf23QWomQ8t2ck7jrn3fzzSJFVELp/02vGyeF6BrqDcJ/3v78IVin26e2sY11T5sd5Upr/kdjPDtY6FVx66hjeV1gwGrF6GORmbr62Mfa1mgZfsIzUY3zjeiXi5g5OVQzbtRXgnqqnONWZ3bsA7iGzkS3HJghX5O4KgzLkXDYcmJGOyivPR42X5q5bFDFh7GbUg4g/9Jxa2RBonC9xdULIeNy5UB6SII/CK6lAE9PkCyCFmSm0GVC/r0SmiOuL0gQMnPAYd6ZdQAkcZ7bMB2b8Lsyw1vL5L6hTNNhvtt+rlbA1F516ZuV6cR4igzMNa7ZFRtmQVOgTW0DFFn
+        sha1: SSHFP 1 1 373918b32c78ca4199cce795ffb7801d67514255
+        sha256: SSHFP 1 2 28556a9bb6b7344a727cc43cddae7097dfc0c061709d34bd66f94a121c223006
+      key: AAAAB3NzaC1yc2EAAAADAQABAAABAQDDfPFDe1BvZbHiLxEEpr7X4mnIA5ErRK84TQYFjyXI3ETemkrSDKxZnmt0CwI7QdOhvlqDvH4zSCeIcLFi4hpZg3MO0hQYwwIrqE2p+ub74A64hvdZJVF5PNsqZsH0KGaYWUKstnekvUISuAeDB4u/7cNuEbAtofCW/gOrIwOGdgzj1DM52HVtwTJp7KvMUkGmmLogXm5kYzG50jLVBRXFJrIBk+XK6HtawLR1PD762M6KoMSafYMltZqpG+Ujj5h7UqbqmBSnc7un4hSqd9EPuAKYid4L5QumqC+N5GKTxTTwWZYRhfliSOelR7bulVcIxQA04eAZuI9p868Kn31L
       type: ssh-rsa
   ssh_client_version_full: 7.9p1
   ssh_keys_users:
@@ -458,32 +461,33 @@ values:
   ssh_server_version_full: 7.9p1
   ssh_server_version_major: '7'
   ssh_server_version_release: '7.9'
-  sshdsakey: AAAAB3NzaC1kc3MAAACBAJ294EhFv9Ed9ABNYj0hGYv7uxyjREKEnyFStSc05cPECo+eWVunmHT3R9UkmpJOqyx9NHx8oeJTkhtv8pE1YiGIXez/gpVlc0Xy+7kPhLBA3bPQf3oeMZ4tTPdj7Jj2//pK6Jajd8AujN2bOmm44asVE1B1TEgtMwUofN0K+xxxAAAAFQCrvRlpQLI1VTSau2pp8FbLLwlFjQAAAIB1xbvuLNZOC8Hky7b9Q+u6CY7Dg/woEpflP73YEqx0iCqjrThQHXz85DO9FWuCKgQcmCYsVifZH9fQjN3hPZ2hRVzF+pG+aNHUaZ7N2++ml5LMEuks5EOEOwm6uh6Vf35axXXgj3fW39n0NKVnOHvqRcEGmU55vthj4IDCK2gI5wAAAIA3jbC+zOrQYB2HayaJ4HZR5X/EO4JnPmRREAfoUTQ24WpRm79jbTFcmKsteawcStqXjAJBoG8Yif8eX5x2OEw8njH27M7ni/MZ5wKJQ35SuNllh2QQZzV57IxBXKNDpdCJyfqniefwry1qRtUHNjf/ZFMgqrTOP5xEWw5t/S9LOA==
-  sshecdsakey: AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBDbfiXJX0GZaUJFYcTwAMevjQ9YiY5vUIS7VDsMHKLN6hjlIPF+KXrtIpyJBnGVwqvnKmsyzs6C700uQhIfbn/c=
-  sshed25519key: AAAAC3NzaC1lZDI1NTE5AAAAIGSV5fM6eDS4/iPJDRiaBgEUAkBXgLF2HNgJ/06x8wqm
+  sshdsakey: AAAAB3NzaC1kc3MAAACBAOCvwmr8UZ30BbvxnRn6EvwFktoAEZ5bcUkW5s0l1Mftqe0JfnLKXkFyoCcKFjD6Owup1UUR5gCG3bBQptTB5CQQ9v4GuoxYR3DHjZr+XHWu2u5vtqgmUW66jN1i5tDfBnqHbyt3ZVfaw32rBkDMOxb3aBzffweYZ56ou6Id+nntAAAAFQDEPiu3DqVOEeYEd10VWQ/LgG3J8wAAAIEAqRguJxPY3ucClUaJ2GECeB3lRucBX+XiegPio12N7FKTqGjBsY7FLRoeJNxGQAqK+qCxKol2YsuGql3Pi/V6GOc2lME/xoEcny4Qz4I2Hu/ZbdQm01C9soR+QUEE7uRI8u6wdlrLPaqnD70VFUuLrGk3iOohE8u/yboPk+ZMo3oAAACAGkQLY5Xq1hAT4QJmfCmzbtzSMX6tpD4wmJ5qy6ynsmegjewc3adTDTELaPQMsGfrCbD2U1ofkulTCLr/N5Yey7iA3VZULjxto2z9w1GkM5wFeb9nHxJv9MjUj98ZjmoqzqBG8bjzXj/r3FWlQ9WNQkgITVJdk9SN6OeJM/EdFUI=
+  sshecdsakey: AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBJfOYCl/ZOuLSop4OTlGfGIQqEI7ncyTBSGNGtMLKcOVbgbDu2SYXvP8K0j8nfJbmWlXx0wm7irN4AoaruDOigs=
+  sshed25519key: AAAAC3NzaC1lZDI1NTE5AAAAIL03A9uhf2RDXt56cLuBh+3o+ZHiYAobU1ec3BGNuax5
   sshfp_dsa: |-
-    SSHFP 2 1 9904d6f625781d66ee513e49be9e347c307b663d
-    SSHFP 2 2 f8ae1cc659198a22d82f26600581cab58b7df61069a72cc5df4f60f6b8fedeb0
+    SSHFP 2 1 a87b9840bfe00eb9b745fdac06f67f0004f8f6fe
+    SSHFP 2 2 62393267c4704416e5349c7a724607b01f6072af4667b461eb0f200526d9b15d
   sshfp_ecdsa: |-
-    SSHFP 3 1 c154ba54b493cb74f8c4f0d19cc1a221b24132cb
-    SSHFP 3 2 bedb2e7a19c7b46cbfadbefd88a2ee0a58500cda87c7b1eb0b90304b3779a990
+    SSHFP 3 1 439b65216c8c23ef78e79642742f83bc55c283d1
+    SSHFP 3 2 e9a5ca49a7ebe8069e50f97e89e05f0435fb014a71fb9eae0c582c2090ae5e2d
   sshfp_ed25519: |-
-    SSHFP 4 1 16f45b3b4a7955c0bb705ff4da0d8cbb83a6ca31
-    SSHFP 4 2 d07d313f3e69224a91b7db22244deacd7f00a1174b22cad65a5eb52eeb92187a
+    SSHFP 4 1 ea63be23af6cb86c708b0a1dbc25ab2990790d90
+    SSHFP 4 2 0a2ae5a48809067c18e4e36059b9bb2e6a68ed8361765c1017206072accffdf8
   sshfp_rsa: |-
-    SSHFP 1 1 5d084a594e326de57f093f2e75a8a7a568ac08ff
-    SSHFP 1 2 8b5abe79d1a6f005d5db7762e80cfb6146336b2908003f6bdcf771e0ce8f6599
-  sshrsakey: AAAAB3NzaC1yc2EAAAADAQABAAABAQCtCtxwBf23QWomQ8t2ck7jrn3fzzSJFVELp/02vGyeF6BrqDcJ/3v78IVin26e2sY11T5sd5Upr/kdjPDtY6FVx66hjeV1gwGrF6GORmbr62Mfa1mgZfsIzUY3zjeiXi5g5OVQzbtRXgnqqnONWZ3bsA7iGzkS3HJghX5O4KgzLkXDYcmJGOyivPR42X5q5bFDFh7GbUg4g/9Jxa2RBonC9xdULIeNy5UB6SII/CK6lAE9PkCyCFmSm0GVC/r0SmiOuL0gQMnPAYd6ZdQAkcZ7bMB2b8Lsyw1vL5L6hTNNhvtt+rlbA1F516ZuV6cR4igzMNa7ZFRtmQVOgTW0DFFn
+    SSHFP 1 1 373918b32c78ca4199cce795ffb7801d67514255
+    SSHFP 1 2 28556a9bb6b7344a727cc43cddae7097dfc0c061709d34bd66f94a121c223006
+  sshrsakey: AAAAB3NzaC1yc2EAAAADAQABAAABAQDDfPFDe1BvZbHiLxEEpr7X4mnIA5ErRK84TQYFjyXI3ETemkrSDKxZnmt0CwI7QdOhvlqDvH4zSCeIcLFi4hpZg3MO0hQYwwIrqE2p+ub74A64hvdZJVF5PNsqZsH0KGaYWUKstnekvUISuAeDB4u/7cNuEbAtofCW/gOrIwOGdgzj1DM52HVtwTJp7KvMUkGmmLogXm5kYzG50jLVBRXFJrIBk+XK6HtawLR1PD762M6KoMSafYMltZqpG+Ujj5h7UqbqmBSnc7un4hSqd9EPuAKYid4L5QumqC+N5GKTxTTwWZYRhfliSOelR7bulVcIxQA04eAZuI9p868Kn31L
+  subnet: sesi_rocquencourt_staging
   sudoversion: 1.8.27
   swh_hostname:
     fqdn: scheduler0.internal.staging.swh.network
     short: scheduler0
     internal_fqdn: scheduler0.internal.staging.swh.network
   system_uptime:
-    days: 1
-    hours: 26
-    seconds: 95175
-    uptime: 1 day
+    days: 0
+    hours: 0
+    seconds: 72
+    uptime: 0:01 hours
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -498,15 +502,15 @@ values:
     systemd-timesyncd.service: enabled
   systemd_version: '246'
   timezone: UTC
-  uptime: 1 day
-  uptime_days: 1
-  uptime_hours: 26
-  uptime_seconds: 95175
+  uptime: 0:01 hours
+  uptime_days: 0
+  uptime_hours: 0
+  uptime_seconds: 72
   uuid: a918f8c6-beec-4772-a81f-421117193927
   vcsrepo_svn_ver: ''
-  virtual: physical
+  virtual: kvm
   clientcert: scheduler0.internal.staging.swh.network
   clientversion: 5.5.10
   clientnoop: false
-timestamp: '2020-10-06T14:27:12.155184268+00:00'
-expiration: '2020-10-06T14:57:12.155983930+00:00'
+timestamp: '2020-10-22T13:18:05.823831639+00:00'
+expiration: '2020-10-22T13:48:05.824553951+00:00'
