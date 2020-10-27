@@ -42,7 +42,8 @@ Vagrant.configure("2") do |global_config|
     config.vm.box_url                 = $global_debian10_box_url
     config.vm.box_check_update        = false
     config.vm.hostname                = "webapp.internal.staging.swh.network"
-    config.vm.network   :private_network, ip: "10.168.128.8", netmask: "255.255.255.0"
+    config.vm.network   :private_network, ip: "10.168.130.30", netmask: "255.255.255.0"
+
 
     config.vm.synced_folder "/tmp/puppet/", "/tmp/puppet", type: 'nfs'
     # ssl certificates share
@@ -70,7 +71,7 @@ Vagrant.configure("2") do |global_config|
     config.vm.box_url                 = $global_debian10_box_url
     config.vm.box_check_update        = false
     config.vm.hostname                = "deposit.internal.staging.swh.network"
-    config.vm.network   :private_network, ip: "10.168.128.9", netmask: "255.255.255.0"
+    config.vm.network   :private_network, ip: "10.168.130.31", netmask: "255.255.255.0"
 
     config.vm.synced_folder "/tmp/puppet/", "/tmp/puppet", type: 'nfs'
 
@@ -95,7 +96,7 @@ Vagrant.configure("2") do |global_config|
     config.vm.box                     = $global_debian10_box
     config.vm.box_url                 = $global_debian10_box_url
     config.vm.hostname                = "worker0.staging.swh.network"
-    config.vm.network   :private_network, ip: "10.168.128.5", netmask: "255.255.255.0"
+    config.vm.network   :private_network, ip: "10.168.130.100", netmask: "255.255.255.0"
 
     config.vm.synced_folder "/tmp/puppet/", "/tmp/puppet", type: 'nfs'
     # ssl certificates share
