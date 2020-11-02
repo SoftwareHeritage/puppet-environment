@@ -2,22 +2,22 @@
 name: worker1.internal.staging.swh.network
 values:
   agent_specified_environment: staging
-  apt_dist_updates: 1
+  apt_dist_updates: 2
   apt_has_dist_updates: true
   apt_has_updates: true
   apt_package_dist_updates:
-  - libfreetype6
-  apt_package_security_dist_updates:
-  - libfreetype6
-  apt_package_security_updates:
-  - libfreetype6
+  - python3-swh.indexer
+  - python3-swh.indexer.storage
+  apt_package_security_dist_updates: []
+  apt_package_security_updates: []
   apt_package_updates:
-  - libfreetype6
+  - python3-swh.indexer
+  - python3-swh.indexer.storage
   apt_reboot_required: false
-  apt_security_dist_updates: 1
-  apt_security_updates: 1
-  apt_update_last_success: 1603350651
-  apt_updates: 1
+  apt_security_dist_updates: 0
+  apt_security_updates: 0
+  apt_update_last_success: 1604286836
+  apt_updates: 2
   architecture: amd64
   bios_release_date: 04/01/2014
   bios_vendor: SeaBIOS
@@ -120,6 +120,7 @@ values:
     aeviso: "/home/aeviso"
     tenma: "/home/tenma"
     vsellier: "/home/vsellier"
+    postgres: "/var/lib/postgresql"
   domain: internal.staging.swh.network
   facterversion: 3.11.0
   filesystems: ext2,ext3,ext4,iso9660
@@ -154,9 +155,9 @@ values:
   kernelversion: 4.19.0
   letsencrypt_directory: {}
   load_averages:
-    15m: 0.05
-    1m: 0.33
-    5m: 0.14
+    15m: 1.02
+    1m: 1.16
+    5m: 1.08
   location: sesi_rocquencourt_staging
   lsbdistcodename: buster
   lsbdistdescription: Debian GNU/Linux 10 (buster)
@@ -168,30 +169,30 @@ values:
   manufacturer: QEMU
   memory:
     swap:
-      available: 4.00 GiB
-      available_bytes: 4294963200
-      capacity: 0%
+      available: 3.18 GiB
+      available_bytes: 3416518656
+      capacity: 20.45%
       total: 4.00 GiB
       total_bytes: 4294963200
-      used: 0 bytes
-      used_bytes: 0
+      used: 837.75 MiB
+      used_bytes: 878444544
     system:
-      available: 11.51 GiB
-      available_bytes: 12354502656
-      capacity: 1.90%
+      available: 2.20 GiB
+      available_bytes: 2364911616
+      capacity: 81.22%
       total: 11.73 GiB
       total_bytes: 12593823744
-      used: 228.23 MiB
-      used_bytes: 239321088
-  memoryfree: 11.51 GiB
-  memoryfree_mb: 11782.171875
+      used: 9.53 GiB
+      used_bytes: 10228912128
+  memoryfree: 2.20 GiB
+  memoryfree_mb: 2255.35546875
   memorysize: 11.73 GiB
   memorysize_mb: 12010.40625
   mountpoints:
     "/":
-      available: 20.22 GiB
-      available_bytes: 21714288640
-      capacity: 35.73%
+      available: 20.16 GiB
+      available_bytes: 21645279232
+      capacity: 35.93%
       device: "/dev/vda1"
       filesystem: ext4
       options:
@@ -200,12 +201,12 @@ values:
       - errors=remount-ro
       size: 31.47 GiB
       size_bytes: 33785901056
-      used: 11.24 GiB
-      used_bytes: 12071612416
+      used: 11.31 GiB
+      used_bytes: 12140621824
     "/dev/shm":
       available: 5.86 GiB
-      available_bytes: 6296911872
-      capacity: 0%
+      available_bytes: 6296510464
+      capacity: 0.01%
       device: tmpfs
       filesystem: tmpfs
       options:
@@ -214,12 +215,12 @@ values:
       - nodev
       size: 5.86 GiB
       size_bytes: 6296911872
-      used: 0 bytes
-      used_bytes: 0
+      used: 392.00 KiB
+      used_bytes: 401408
     "/run":
       available: 1.17 GiB
-      available_bytes: 1258864640
-      capacity: 0.04%
+      available_bytes: 1258737664
+      capacity: 0.05%
       device: tmpfs
       filesystem: tmpfs
       options:
@@ -231,8 +232,8 @@ values:
       - mode=755
       size: 1.17 GiB
       size_bytes: 1259384832
-      used: 508.00 KiB
-      used_bytes: 520192
+      used: 632.00 KiB
+      used_bytes: 647168
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -250,9 +251,9 @@ values:
       size_bytes: 5242880
       used: 0 bytes
       used_bytes: 0
-    "/run/user/1025":
-      available: 1.17 GiB
-      available_bytes: 1259380736
+    "/run/user/1003":
+      available: 869.24 MiB
+      available_bytes: 911462400
       capacity: 0%
       device: tmpfs
       filesystem: tmpfs
@@ -261,12 +262,33 @@ values:
       - nosuid
       - nodev
       - relatime
-      - size=1229864k
+      - size=890100k
+      - nr_inodes=222525
+      - mode=700
+      - uid=1003
+      - gid=1003
+      size: 869.24 MiB
+      size_bytes: 911462400
+      used: 0 bytes
+      used_bytes: 0
+    "/run/user/1025":
+      available: 869.24 MiB
+      available_bytes: 911462400
+      capacity: 0%
+      device: tmpfs
+      filesystem: tmpfs
+      options:
+      - rw
+      - nosuid
+      - nodev
+      - relatime
+      - size=890100k
+      - nr_inodes=222525
       - mode=700
       - uid=1025
       - gid=1025
-      size: 1.17 GiB
-      size_bytes: 1259380736
+      size: 869.24 MiB
+      size_bytes: 911462400
       used: 0 bytes
       used_bytes: 0
     "/sys/fs/cgroup":
@@ -414,53 +436,53 @@ values:
   ssh:
     dsa:
       fingerprints:
-        sha1: SSHFP 2 1 1acf9c35d35cba8c5cc4d43b8ba47e01de7b2d1a
-        sha256: SSHFP 2 2 be7a7a31808b743417187673625a34cf00e6bee84423df6656a828efc2de5a34
-      key: AAAAB3NzaC1kc3MAAACBAKF6/ABBxOmUxJE+E+zWcCEgyhnqRoV7yw1rtsQF0kjMEYqngWRzkpAyaPdUqbTlWlsEmLQbvJSxr6EdW7TqI1dg6LRWEgzmUyXohC+NDDU/iqtyKAZpc/qFE5swZx02UGgizHH54OrrLLb/Mic/VAdwyDrQgDfkBWAkGlpL5gMtAAAAFQDf+pHmZMGOaOKTc3RTtBM+B2onIwAAAIB54wlWPJcBA2RykQ2nqlsMoTf83hMme0529QWTm89cHXB95R5UgTO3ipkwvvtYa5yRbhL8iHiJIdvzxFbq29T40t9Q2ccAewOCfgYJJK+a7nvfbdWbo9gtlPIp59lA++BbcB+XFwNlaBnfGM78CUj9CDZQAqgN92WOCEaXED1eJgAAAIBkLl1ez6XvlCtnTqh8ZwQvUJf9sdDtYc/xkmxMSw0pYo0wHhotSXCQM1txpNRTTfSETkZcRDPBF63St2lMVuZD0mqXofYe7275Vk08iugjobtbtkl+jSg/SQM4q1b0xO43QeJvMrqovDD2tv2chC3L9K18xTRvChZx+ZRHA87Zug==
+        sha1: SSHFP 2 1 bfb9c7c661382495f2a733d007d2c67d076451a5
+        sha256: SSHFP 2 2 07571fcb7763c7e1b032f473075f5dff84ab292801b00ba822c710163cdeedd9
+      key: AAAAB3NzaC1kc3MAAACBAPfMqa2i/b5ApZ/KKzu7brqk4YMGU/AQwXZlS3NvEPQbMIL+nSUQHpUu6FUW5XfDAZ61cKKpG3uFp/pXZ7iivt1+EwJqElGnZYmWyFEchw/8MpjvGckUVYQuqy61I5athRkSteBtzvwsrH57bbt7gvOXUINFYOOSBn/8pHGexZxzAAAAFQC3s+ghI//YQS7tM4NeVG189Mo3JwAAAIEA0Br9+WN7mWzTiZs7aBP0QpRCRNDueTUAm0DkoLyjJmVhnIOearBjEXEI1VP6iKtGOVsJlYA10NtOm672+GBxaxQANNfoFbEzQ3mt/9RD2BnW0F2zLJuJtU8PmHlzG00SVag+UIySXcU7ZTOs2Rt0bSZL+oUFGPO4e1zrkO4C+YEAAACBALWak0XWMluizb4NRBbqHP1L2JD/EAHd8CZrWrVIKfX8Ruf5rR3CB5eQuJATh0BkopseT7RvPELWsAvrobLy14oCYmkhBsFALvCpVzpHXtz0gkrDAkt4Sjwbimo7DdUKgINg9yRm7bQRugloRoniwjD9J2mJJsfL285LmHJBDRRg
       type: ssh-dss
     ecdsa:
       fingerprints:
-        sha1: SSHFP 3 1 57a7c0c92d70bde51c9770dab43ef7f870b49108
-        sha256: SSHFP 3 2 0c93594d3ebf6068b796fc0da6a69a62107d170d31afa213c6a3f73fda0fc850
-      key: AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBGVEz8o3a6p1p7KsNoYbVH+Mjg6WczKNp4TDqEF4GkkMtClnJBke0k+Q091BgPVjSXxJY3ayptfXsbK4TJv34pA=
+        sha1: SSHFP 3 1 125f6a0ceadbe14375bd7add39cc9119c44779b8
+        sha256: SSHFP 3 2 168fb40af164b46fe9e3ffc9970d6a0bb6309349ded49f73f42ad475d1a30ee8
+      key: AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBKCLk+KdZFXYEjIWR4H8wYYLfXo1UBXpF5b205/mU3S1r+1v2SKT3BGVXz53sdm2juoVNTDN2y4vR4H+yPbPbwY=
       type: ecdsa-sha2-nistp256
     ed25519:
       fingerprints:
-        sha1: SSHFP 4 1 1314b4357abb9c1f66e7da4a1586eda313f906e6
-        sha256: SSHFP 4 2 2fd403cc12e6e10047001a65d57fade8559264d99c5e9f2b5b1504ed638db9ad
-      key: AAAAC3NzaC1lZDI1NTE5AAAAIGD+PDVukC8f+j8WtPhHQ5F8wsd6zzHycM2alwgknqOj
+        sha1: SSHFP 4 1 68cd7021ef3494de393061c76fb900a4ede54ff9
+        sha256: SSHFP 4 2 cf3c3297ceb798216af89385fcd6705b6bf8708dc6e1dbe7eaff40fd1aa09983
+      key: AAAAC3NzaC1lZDI1NTE5AAAAIF3BMhk02KrMEgeBz0LsqYrDHCbnwPpBJmzyJy/mXfHK
       type: ssh-ed25519
     rsa:
       fingerprints:
-        sha1: SSHFP 1 1 50b4bc00ed3e92b0745cadb71f7692193629708b
-        sha256: SSHFP 1 2 7c18403a0df03578925abab78e6835bd11e4d6dac4693c9453d90f9f5d4c1ca7
-      key: AAAAB3NzaC1yc2EAAAADAQABAAABAQDsbL479zegu3uXA22ItXJU6U7mOASlpiD2HwPPHAH7fx25bVES8sJCEFVQxWVLAOkVTibPDRVoT52lsr4QEWOG2xrnCuubuf0vhD5SwBAzErF3gCeJ6xSGL4f5TlDm0OtrZM7PrlnwQ8i+bopKot7lowgFx+sJElayH6e9YhIGZRkB+VO7wu6rO3oEdsSULibtYxi2V/4ZLxbf3G+mx57dKWIS7Ji3uIAseCWaqF1BmcnWM3mA7wnWLRKdHzZz692T5NTv/yzNTke86iPn0eqC2XeQsql8Hd5tWiT7ax/kEovIPEoQHZrfrZiz/chV1At15bKEtc67SCaX3u9UHdDP
+        sha1: SSHFP 1 1 adead7875adefee442a438be7936de7ded307bf9
+        sha256: SSHFP 1 2 3ea185c22ec12edb1fcd582fd85f1c78007400b0a056e6d1628943dec05eeadd
+      key: AAAAB3NzaC1yc2EAAAADAQABAAABAQC+oRX3JPUA2xY793BATiKSYMlDIP1kqSxk/6bMXza4p7Bpji2q3mql1bvzfTeeZtzllAxfh01TV/lkuxjQBfEGNW9p6Y1+UYZdnunpNtiLOXeCS0QibXHIsZhcif4peDlcgpywo7RegV9bOCV405BmPtBVAw2GLW0asLp4cTJZ05wOgTX4r23/o8p8xr0EeILrCvlMY26fkh5WOugKEmaxrkAfFl8rA9uPUtgTq78oAc9lNf2IbUUFhCXj3V8YRoF8Dbo0iJClA/cdyVpBuLYVReaQ0pPZYHyPAwkrLQ5y3N7sU45DQXZl4JaOrztRBr5jMK7SdT1M43CZ8I6kr7nZ
       type: ssh-rsa
   ssh_client_version_full: 7.9p1
   ssh_keys_users: {}
   ssh_server_version_full: 7.9p1
   ssh_server_version_major: '7'
   ssh_server_version_release: '7.9'
-  sshdsakey: AAAAB3NzaC1kc3MAAACBAKF6/ABBxOmUxJE+E+zWcCEgyhnqRoV7yw1rtsQF0kjMEYqngWRzkpAyaPdUqbTlWlsEmLQbvJSxr6EdW7TqI1dg6LRWEgzmUyXohC+NDDU/iqtyKAZpc/qFE5swZx02UGgizHH54OrrLLb/Mic/VAdwyDrQgDfkBWAkGlpL5gMtAAAAFQDf+pHmZMGOaOKTc3RTtBM+B2onIwAAAIB54wlWPJcBA2RykQ2nqlsMoTf83hMme0529QWTm89cHXB95R5UgTO3ipkwvvtYa5yRbhL8iHiJIdvzxFbq29T40t9Q2ccAewOCfgYJJK+a7nvfbdWbo9gtlPIp59lA++BbcB+XFwNlaBnfGM78CUj9CDZQAqgN92WOCEaXED1eJgAAAIBkLl1ez6XvlCtnTqh8ZwQvUJf9sdDtYc/xkmxMSw0pYo0wHhotSXCQM1txpNRTTfSETkZcRDPBF63St2lMVuZD0mqXofYe7275Vk08iugjobtbtkl+jSg/SQM4q1b0xO43QeJvMrqovDD2tv2chC3L9K18xTRvChZx+ZRHA87Zug==
-  sshecdsakey: AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBGVEz8o3a6p1p7KsNoYbVH+Mjg6WczKNp4TDqEF4GkkMtClnJBke0k+Q091BgPVjSXxJY3ayptfXsbK4TJv34pA=
-  sshed25519key: AAAAC3NzaC1lZDI1NTE5AAAAIGD+PDVukC8f+j8WtPhHQ5F8wsd6zzHycM2alwgknqOj
+  sshdsakey: AAAAB3NzaC1kc3MAAACBAPfMqa2i/b5ApZ/KKzu7brqk4YMGU/AQwXZlS3NvEPQbMIL+nSUQHpUu6FUW5XfDAZ61cKKpG3uFp/pXZ7iivt1+EwJqElGnZYmWyFEchw/8MpjvGckUVYQuqy61I5athRkSteBtzvwsrH57bbt7gvOXUINFYOOSBn/8pHGexZxzAAAAFQC3s+ghI//YQS7tM4NeVG189Mo3JwAAAIEA0Br9+WN7mWzTiZs7aBP0QpRCRNDueTUAm0DkoLyjJmVhnIOearBjEXEI1VP6iKtGOVsJlYA10NtOm672+GBxaxQANNfoFbEzQ3mt/9RD2BnW0F2zLJuJtU8PmHlzG00SVag+UIySXcU7ZTOs2Rt0bSZL+oUFGPO4e1zrkO4C+YEAAACBALWak0XWMluizb4NRBbqHP1L2JD/EAHd8CZrWrVIKfX8Ruf5rR3CB5eQuJATh0BkopseT7RvPELWsAvrobLy14oCYmkhBsFALvCpVzpHXtz0gkrDAkt4Sjwbimo7DdUKgINg9yRm7bQRugloRoniwjD9J2mJJsfL285LmHJBDRRg
+  sshecdsakey: AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBKCLk+KdZFXYEjIWR4H8wYYLfXo1UBXpF5b205/mU3S1r+1v2SKT3BGVXz53sdm2juoVNTDN2y4vR4H+yPbPbwY=
+  sshed25519key: AAAAC3NzaC1lZDI1NTE5AAAAIF3BMhk02KrMEgeBz0LsqYrDHCbnwPpBJmzyJy/mXfHK
   sshfp_dsa: |-
-    SSHFP 2 1 1acf9c35d35cba8c5cc4d43b8ba47e01de7b2d1a
-    SSHFP 2 2 be7a7a31808b743417187673625a34cf00e6bee84423df6656a828efc2de5a34
+    SSHFP 2 1 bfb9c7c661382495f2a733d007d2c67d076451a5
+    SSHFP 2 2 07571fcb7763c7e1b032f473075f5dff84ab292801b00ba822c710163cdeedd9
   sshfp_ecdsa: |-
-    SSHFP 3 1 57a7c0c92d70bde51c9770dab43ef7f870b49108
-    SSHFP 3 2 0c93594d3ebf6068b796fc0da6a69a62107d170d31afa213c6a3f73fda0fc850
+    SSHFP 3 1 125f6a0ceadbe14375bd7add39cc9119c44779b8
+    SSHFP 3 2 168fb40af164b46fe9e3ffc9970d6a0bb6309349ded49f73f42ad475d1a30ee8
   sshfp_ed25519: |-
-    SSHFP 4 1 1314b4357abb9c1f66e7da4a1586eda313f906e6
-    SSHFP 4 2 2fd403cc12e6e10047001a65d57fade8559264d99c5e9f2b5b1504ed638db9ad
+    SSHFP 4 1 68cd7021ef3494de393061c76fb900a4ede54ff9
+    SSHFP 4 2 cf3c3297ceb798216af89385fcd6705b6bf8708dc6e1dbe7eaff40fd1aa09983
   sshfp_rsa: |-
-    SSHFP 1 1 50b4bc00ed3e92b0745cadb71f7692193629708b
-    SSHFP 1 2 7c18403a0df03578925abab78e6835bd11e4d6dac4693c9453d90f9f5d4c1ca7
-  sshrsakey: AAAAB3NzaC1yc2EAAAADAQABAAABAQDsbL479zegu3uXA22ItXJU6U7mOASlpiD2HwPPHAH7fx25bVES8sJCEFVQxWVLAOkVTibPDRVoT52lsr4QEWOG2xrnCuubuf0vhD5SwBAzErF3gCeJ6xSGL4f5TlDm0OtrZM7PrlnwQ8i+bopKot7lowgFx+sJElayH6e9YhIGZRkB+VO7wu6rO3oEdsSULibtYxi2V/4ZLxbf3G+mx57dKWIS7Ji3uIAseCWaqF1BmcnWM3mA7wnWLRKdHzZz692T5NTv/yzNTke86iPn0eqC2XeQsql8Hd5tWiT7ax/kEovIPEoQHZrfrZiz/chV1At15bKEtc67SCaX3u9UHdDP
+    SSHFP 1 1 adead7875adefee442a438be7936de7ded307bf9
+    SSHFP 1 2 3ea185c22ec12edb1fcd582fd85f1c78007400b0a056e6d1628943dec05eeadd
+  sshrsakey: AAAAB3NzaC1yc2EAAAADAQABAAABAQC+oRX3JPUA2xY793BATiKSYMlDIP1kqSxk/6bMXza4p7Bpji2q3mql1bvzfTeeZtzllAxfh01TV/lkuxjQBfEGNW9p6Y1+UYZdnunpNtiLOXeCS0QibXHIsZhcif4peDlcgpywo7RegV9bOCV405BmPtBVAw2GLW0asLp4cTJZ05wOgTX4r23/o8p8xr0EeILrCvlMY26fkh5WOugKEmaxrkAfFl8rA9uPUtgTq78oAc9lNf2IbUUFhCXj3V8YRoF8Dbo0iJClA/cdyVpBuLYVReaQ0pPZYHyPAwkrLQ5y3N7sU45DQXZl4JaOrztRBr5jMK7SdT1M43CZ8I6kr7nZ
   subnet: sesi_rocquencourt_staging
   sudoversion: 1.8.27
-  swapfree: 4.00 GiB
-  swapfree_mb: 4095.99609375
+  swapfree: 3.18 GiB
+  swapfree_mb: 3258.24609375
   swapsize: 4.00 GiB
   swapsize_mb: 4095.99609375
   swh_hostname:
@@ -468,10 +490,10 @@ values:
     short: worker1
     internal_fqdn: worker1.internal.staging.swh.network
   system_uptime:
-    days: 0
-    hours: 0
-    seconds: 119
-    uptime: 0:01 hours
+    days: 10
+    hours: 262
+    seconds: 943880
+    uptime: 10 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -484,17 +506,17 @@ values:
     systemd-resolved.service: disabled
     systemd-time-wait-sync.service: disabled
     systemd-timesyncd.service: enabled
-  systemd_version: '245'
+  systemd_version: '246'
   timezone: UTC
-  uptime: 0:01 hours
-  uptime_days: 0
-  uptime_hours: 0
-  uptime_seconds: 119
+  uptime: 10 days
+  uptime_days: 10
+  uptime_hours: 262
+  uptime_seconds: 943880
   uuid: ae3a8cce-925e-4968-bc0d-32283a635cd4
   vcsrepo_svn_ver: 1.10.4
   virtual: kvm
   clientcert: worker1.internal.staging.swh.network
   clientversion: 5.5.10
   clientnoop: false
-timestamp: '2020-10-22T12:20:27.176315980+00:00'
-expiration: '2020-10-22T12:50:27.177444701+00:00'
+timestamp: '2020-11-02T10:37:35.728480389+00:00'
+expiration: '2020-11-02T11:07:35.729024990+00:00'

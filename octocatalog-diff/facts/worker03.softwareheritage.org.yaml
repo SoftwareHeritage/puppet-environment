@@ -2,9 +2,9 @@
 name: worker03.softwareheritage.org
 values:
   agent_specified_environment: production
-  apt_dist_updates: 14
+  apt_dist_updates: 16
   apt_has_dist_updates: true
-  apt_has_updates: false
+  apt_has_updates: true
   apt_package_dist_updates:
   - postgresql-client-common
   - postgresql-client-11
@@ -19,11 +19,19 @@ values:
   - python3-pytest
   - python3-pytest-postgresql
   - python3-swh.core
+  - python3-swh.model
+  - python3-swh.journal
   - sysstat
   apt_package_security_dist_updates: []
+  apt_package_security_updates: []
+  apt_package_updates:
+  - python3-swh.model
+  - python3-swh.journal
   apt_reboot_required: true
   apt_security_dist_updates: 0
-  apt_update_last_success: 1603784702
+  apt_security_updates: 0
+  apt_update_last_success: 1603899902
+  apt_updates: 2
   architecture: amd64
   augeas:
     version: 1.11.0
@@ -167,9 +175,9 @@ values:
   kernelversion: 4.19.0
   letsencrypt_directory: {}
   load_averages:
-    15m: 0.06
-    1m: 0.1
-    5m: 0.09
+    15m: 0.02
+    1m: 0.08
+    5m: 0.02
   location: sesi_rocquencourt
   lsbdistcodename: buster
   lsbdistdescription: Debian GNU/Linux 10 (buster)
@@ -182,30 +190,30 @@ values:
   manufacturer: QEMU
   memory:
     swap:
-      available: 3.16 GiB
-      available_bytes: 3395264512
-      capacity: 17.14%
+      available: 3.22 GiB
+      available_bytes: 3453198336
+      capacity: 15.73%
       total: 3.82 GiB
       total_bytes: 4097830912
-      used: 670.02 MiB
-      used_bytes: 702566400
+      used: 614.77 MiB
+      used_bytes: 644632576
     system:
-      available: 7.24 GiB
-      available_bytes: 7777415168
-      capacity: 38.24%
+      available: 9.98 GiB
+      available_bytes: 10718453760
+      capacity: 14.89%
       total: 11.73 GiB
       total_bytes: 12593844224
-      used: 4.49 GiB
-      used_bytes: 4816429056
-  memoryfree: 7.24 GiB
-  memoryfree_mb: 7417.12109375
+      used: 1.75 GiB
+      used_bytes: 1875390464
+  memoryfree: 9.98 GiB
+  memoryfree_mb: 10221.9140625
   memorysize: 11.73 GiB
   memorysize_mb: 12010.42578125
   mountpoints:
     "/":
-      available: 31.40 GiB
-      available_bytes: 33710727168
-      capacity: 11.53%
+      available: 31.37 GiB
+      available_bytes: 33685405696
+      capacity: 11.60%
       device: "/dev/mapper/worker03--vg-root"
       filesystem: ext4
       options:
@@ -214,8 +222,8 @@ values:
       - errors=remount-ro
       size: 35.49 GiB
       size_bytes: 38104956928
-      used: 4.09 GiB
-      used_bytes: 4394229760
+      used: 4.12 GiB
+      used_bytes: 4419551232
     "/dev/shm":
       available: 5.86 GiB
       available_bytes: 6296109056
@@ -232,7 +240,7 @@ values:
       used_bytes: 811008
     "/run":
       available: 1.17 GiB
-      available_bytes: 1258786816
+      available_bytes: 1258770432
       capacity: 0.05%
       device: tmpfs
       filesystem: tmpfs
@@ -245,8 +253,8 @@ values:
       - mode=755
       size: 1.17 GiB
       size_bytes: 1259384832
-      used: 584.00 KiB
-      used_bytes: 598016
+      used: 600.00 KiB
+      used_bytes: 614400
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -262,6 +270,26 @@ values:
       - size=5120k
       size: 5.00 MiB
       size_bytes: 5242880
+      used: 0 bytes
+      used_bytes: 0
+    "/run/user/1001":
+      available: 1.17 GiB
+      available_bytes: 1259380736
+      capacity: 0%
+      device: tmpfs
+      filesystem: tmpfs
+      options:
+      - rw
+      - nosuid
+      - nodev
+      - relatime
+      - size=1229864k
+      - nr_inodes=307466
+      - mode=700
+      - uid=1001
+      - gid=1001
+      size: 1.17 GiB
+      size_bytes: 1259380736
       used: 0 bytes
       used_bytes: 0
     "/run/user/1003":
@@ -426,7 +454,7 @@ values:
       size: 40.00 GiB
       size_bytes: 42948624384
       uuid: x49Nk9-laGn-wmy2-VTDK-H2Y1-osSW-9rqyIx
-  path: "/usr/bin:/bin:/usr/sbin:/sbin"
+  path: "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
   physicalprocessorcount: 3
   processor0: Common KVM processor
   processor1: Common KVM processor
@@ -495,8 +523,8 @@ values:
   sshrsakey: AAAAB3NzaC1yc2EAAAADAQABAAABAQCwpp0B7uPX4Fla+HsciA2FIH6UYkH4gZxF4t2NczVtX9LuWdegvYbL+j91ipf/ezfLGqDiEVBx7saoOEMABuBgrREBl673SdQFovoDZ5As7ECU2klwZK5yMxUrhFqR63cdJeER1CcZAUy4wQIxNDfgxjghaZOCPKCF9738BZpQuLhtDlMRqKvqohexMcdFNSJEFG5GS/QWqdQnNCj2E9PKDVamvK8LCKMYCNJICj2lr2xIcRtBfNDcy7gWR9kioUCXM4vZFlSgkAwp+c2YNnLz1rCVewkE7bQ/r7BsBCW3VLs7e8uTraHFrhQ5nLlxm5VzOkAFJ26XYRBDGD7Mdtxr
   subnet: sesi_rocquencourt
   sudoversion: 1.8.27
-  swapfree: 3.16 GiB
-  swapfree_mb: 3237.9765625
+  swapfree: 3.22 GiB
+  swapfree_mb: 3293.2265625
   swapsize: 3.82 GiB
   swapsize_mb: 3907.99609375
   swh_hostname:
@@ -504,10 +532,10 @@ values:
     short: worker03
     internal_fqdn: worker03.internal.softwareheritage.org
   system_uptime:
-    days: 166
-    hours: 3984
-    seconds: 14343691
-    uptime: 166 days
+    days: 167
+    hours: 4016
+    seconds: 14458251
+    uptime: 167 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -522,15 +550,15 @@ values:
     systemd-timesyncd.service: enabled
   systemd_version: '246'
   timezone: UTC
-  uptime: 166 days
-  uptime_days: 166
-  uptime_hours: 3984
-  uptime_seconds: 14343691
+  uptime: 167 days
+  uptime_days: 167
+  uptime_hours: 4016
+  uptime_seconds: 14458251
   uuid: 1cfacaaf-2718-4794-9cc5-88dfde58fb43
   vcsrepo_svn_ver: 1.10.4
   virtual: kvm
   clientcert: worker03.softwareheritage.org
   clientversion: 5.5.10
-  clientnoop: false
-timestamp: '2020-10-27T08:26:06.930689073+00:00'
-expiration: '2020-10-27T08:56:06.931112166+00:00'
+  clientnoop: true
+timestamp: '2020-10-28T16:15:26.350931700+00:00'
+expiration: '2020-10-28T16:45:26.351412941+00:00'

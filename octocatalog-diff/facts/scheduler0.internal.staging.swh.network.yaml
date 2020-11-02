@@ -2,22 +2,66 @@
 name: scheduler0.internal.staging.swh.network
 values:
   agent_specified_environment: staging
-  apt_dist_updates: 8
+  apt_dist_updates: 31
   apt_has_dist_updates: true
-  apt_has_updates: false
+  apt_has_updates: true
   apt_package_dist_updates:
-  - python3-atomicwrites
-  - python3-mirakuru
-  - python3-pluggy
-  - python3-port-for
-  - python3-py
-  - python3-pytest
-  - python3-pytest-postgresql
-  - python3-swh.core
+  - apgdiff
+  - python3-argh
+  - libpq-dev
+  - libpq5
+  - python3-psycopg2
+  - barman
+  - python3-barman
+  - postgresql-doc-9.6
+  - postgresql-doc-11
+  - postgresql-common
+  - pgdg-keyring
+  - postgresql-client-common
+  - postgresql-client-13
+  - postgresql-client
+  - postgresql-client-9.6
+  - postgresql-client-11
+  - check-postgres
+  - libdbd-pg-perl
+  - postgresql-13
+  - postgresql
+  - postgresql-plpython3-11
+  - postgresql-11
+  - postgresql-contrib-9.6
+  - postgresql-plpython3-9.6
+  - postgresql-9.6
+  - postgresql-contrib
+  - postgresql-doc-13
+  - postgresql-doc
+  - python-psycopg2
+  - python3-argcomplete
+  - python3-werkzeug
   apt_package_security_dist_updates: []
+  apt_package_security_updates: []
+  apt_package_updates:
+  - apgdiff
+  - libpq-dev
+  - libpq5
+  - postgresql-client-9.6
+  - postgresql-client-11
+  - check-postgres
+  - libdbd-pg-perl
+  - postgresql-plpython3-11
+  - postgresql-11
+  - postgresql-contrib-9.6
+  - postgresql-plpython3-9.6
+  - postgresql-9.6
+  - postgresql-doc-11
+  - postgresql-doc-9.6
+  - python-psycopg2
+  - python3-psycopg2
+  - python3-werkzeug
   apt_reboot_required: false
   apt_security_dist_updates: 0
-  apt_update_last_success: 1603372665
+  apt_security_updates: 0
+  apt_update_last_success: 1604313183
+  apt_updates: 17
   architecture: amd64
   bios_release_date: 04/01/2014
   bios_vendor: SeaBIOS
@@ -28,10 +72,10 @@ values:
   blockdevice_vda_size: 34359738368
   blockdevice_vda_vendor: '0x1af4'
   blockdevices: sr0,vda
-  cassandracmsheapnewsize: 256
-  cassandracmsmaxheapsize: 1024
-  cassandraheapnewsize: 256
-  cassandramaxheapsize: 1024
+  cassandracmsheapnewsize: 400
+  cassandracmsmaxheapsize: 1995
+  cassandraheapnewsize: 400
+  cassandramaxheapsize: 1995
   chassistype: Other
   deployment: staging
   disks:
@@ -124,6 +168,7 @@ values:
     aeviso: "/home/aeviso"
     tenma: "/home/tenma"
     vsellier: "/home/vsellier"
+    prometheus-rabbitmq-exporter: "/"
   domain: internal.staging.swh.network
   erl_ssl_path: "/usr/lib/erlang/lib/ssl-9.1.2/ebin"
   facterversion: 3.11.0
@@ -156,17 +201,17 @@ values:
   java_default_home: "/usr/lib/jvm/java-11-openjdk-amd64"
   java_libjvm_path: "/usr/lib/jvm/java-11-openjdk-amd64/lib/server"
   java_major_version: '11'
-  java_patch_level: '8'
-  java_version: 11.0.8
+  java_patch_level: '9'
+  java_version: 11.0.9
   kernel: Linux
   kernelmajversion: '4.19'
   kernelrelease: 4.19.0-12-amd64
   kernelversion: 4.19.0
   letsencrypt_directory: {}
   load_averages:
-    15m: 0.11
-    1m: 0.77
-    5m: 0.31
+    15m: 0.18
+    1m: 0.45
+    5m: 0.19
   location: sesi_rocquencourt_staging
   lsbdistcodename: buster
   lsbdistdescription: Debian GNU/Linux 10 (buster)
@@ -178,22 +223,22 @@ values:
   manufacturer: QEMU
   memory:
     system:
-      available: 2.45 GiB
-      available_bytes: 2632773632
-      capacity: 22.30%
-      total: 3.16 GiB
-      total_bytes: 3388375040
-      used: 720.60 MiB
-      used_bytes: 755601408
-  memoryfree: 2.45 GiB
-  memoryfree_mb: 2510.80859375
-  memorysize: 3.16 GiB
-  memorysize_mb: 3231.40625
+      available: 6.71 GiB
+      available_bytes: 7202742272
+      capacity: 13.90%
+      total: 7.79 GiB
+      total_bytes: 8365965312
+      used: 1.08 GiB
+      used_bytes: 1163223040
+  memoryfree: 6.71 GiB
+  memoryfree_mb: 6869.0703125
+  memorysize: 7.79 GiB
+  memorysize_mb: 7978.40625
   mountpoints:
     "/":
-      available: 26.17 GiB
-      available_bytes: 28104470528
-      capacity: 16.82%
+      available: 26.23 GiB
+      available_bytes: 28168650752
+      capacity: 16.63%
       device: "/dev/vda1"
       filesystem: ext4
       options:
@@ -202,8 +247,8 @@ values:
       - errors=remount-ro
       size: 31.47 GiB
       size_bytes: 33785901056
-      used: 5.29 GiB
-      used_bytes: 5681430528
+      used: 5.23 GiB
+      used_bytes: 5617250304
     "/dev/shm":
       available: 3.90 GiB
       available_bytes: 4182970368
@@ -214,15 +259,13 @@ values:
       - rw
       - nosuid
       - nodev
-      - size=4084944k
-      - nr_inodes=1021236
       size: 3.90 GiB
       size_bytes: 4182982656
       used: 12.00 KiB
       used_bytes: 12288
     "/run":
-      available: 797.30 MiB
-      available_bytes: 836026368
+      available: 797.27 MiB
+      available_bytes: 835993600
       capacity: 0.07%
       device: tmpfs
       filesystem: tmpfs
@@ -232,12 +275,11 @@ values:
       - noexec
       - relatime
       - size=816992k
-      - nr_inodes=1021236
       - mode=755
       size: 797.84 MiB
       size_bytes: 836599808
-      used: 560.00 KiB
-      used_bytes: 573440
+      used: 592.00 KiB
+      used_bytes: 606208
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -251,12 +293,11 @@ values:
       - noexec
       - relatime
       - size=5120k
-      - nr_inodes=1021236
       size: 5.00 MiB
       size_bytes: 5242880
       used: 0 bytes
       used_bytes: 0
-    "/run/user/1025":
+    "/run/user/118":
       available: 273.14 MiB
       available_bytes: 286408704
       capacity: 0%
@@ -270,8 +311,8 @@ values:
       - size=279696k
       - nr_inodes=69924
       - mode=700
-      - uid=1025
-      - gid=1025
+      - uid=118
+      - gid=123
       size: 273.14 MiB
       size_bytes: 286408704
       used: 0 bytes
@@ -389,7 +430,7 @@ values:
       size: 32.00 GiB
       size_bytes: 34358672896
       uuid: d958fd0e-647f-4373-ae1c-f77f565cb93f
-  path: "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+  path: "/usr/bin:/bin:/usr/sbin:/sbin"
   physicalprocessorcount: 1
   processor0: Intel(R) Xeon(R) CPU E7-4809 v3 @ 2.00GHz
   processor1: Intel(R) Xeon(R) CPU E7-4809 v3 @ 2.00GHz
@@ -415,7 +456,6 @@ values:
   rabbitmq_plugins_dirs:
   - "/usr/lib/rabbitmq/plugins"
   - "/usr/lib/rabbitmq/lib/rabbitmq_server-3.7.8/plugins"
-  rabbitmq_version: 3.6.6
   root_home: "/root"
   ruby:
     platform: x86_64-linux-gnu
@@ -484,10 +524,10 @@ values:
     short: scheduler0
     internal_fqdn: scheduler0.internal.staging.swh.network
   system_uptime:
-    days: 0
-    hours: 0
-    seconds: 72
-    uptime: 0:01 hours
+    days: 10
+    hours: 261
+    seconds: 942018
+    uptime: 10 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -502,15 +542,15 @@ values:
     systemd-timesyncd.service: enabled
   systemd_version: '246'
   timezone: UTC
-  uptime: 0:01 hours
-  uptime_days: 0
-  uptime_hours: 0
-  uptime_seconds: 72
+  uptime: 10 days
+  uptime_days: 10
+  uptime_hours: 261
+  uptime_seconds: 942018
   uuid: a918f8c6-beec-4772-a81f-421117193927
   vcsrepo_svn_ver: ''
   virtual: kvm
   clientcert: scheduler0.internal.staging.swh.network
   clientversion: 5.5.10
   clientnoop: false
-timestamp: '2020-10-22T13:18:05.823831639+00:00'
-expiration: '2020-10-22T13:48:05.824553951+00:00'
+timestamp: '2020-11-02T10:57:11.443379330+00:00'
+expiration: '2020-11-02T11:27:11.444076231+00:00'

@@ -5,7 +5,7 @@ values:
   apt_has_dist_updates: false
   apt_has_updates: false
   apt_reboot_required: false
-  apt_update_last_success: 1603785543
+  apt_update_last_success: 1604311778
   architecture: amd64
   bios_release_date: 11/21/2019
   bios_vendor: American Megatrends Inc.
@@ -222,6 +222,7 @@ values:
     vsellier: "/home/vsellier"
     prometheus: "/var/lib/prometheus"
     nagios: "/var/lib/nagios"
+    postgres: "/var/lib/postgresql"
   domain: internal.staging.swh.network
   facterversion: 3.11.0
   filesystems: ext2,ext3,ext4,vfat
@@ -257,9 +258,9 @@ values:
   kernelversion: 5.8.0
   letsencrypt_directory: {}
   load_averages:
-    15m: 0.0
-    1m: 0.07
-    5m: 0.04
+    15m: 0.04
+    1m: 0.08
+    5m: 0.06
   lsbdistcodename: buster
   lsbdistdescription: Debian GNU/Linux 10 (buster)
   lsbdistid: Debian
@@ -283,22 +284,22 @@ values:
       used: 0 bytes
       used_bytes: 0
     system:
-      available: 61.74 GiB
-      available_bytes: 66293878784
-      capacity: 1.55%
+      available: 13.48 GiB
+      available_bytes: 14479089664
+      capacity: 78.50%
       total: 62.71 GiB
       total_bytes: 67335831552
-      used: 993.68 MiB
-      used_bytes: 1041952768
-  memoryfree: 61.74 GiB
-  memoryfree_mb: 63222.76953125
+      used: 49.23 GiB
+      used_bytes: 52856741888
+  memoryfree: 13.48 GiB
+  memoryfree_mb: 13808.3359375
   memorysize: 62.71 GiB
   memorysize_mb: 64216.453125
   mountpoints:
     "/":
-      available: 15.33 GiB
-      available_bytes: 16459821056
-      capacity: 15.81%
+      available: 14.97 GiB
+      available_bytes: 16071176192
+      capacity: 17.80%
       device: "/dev/mapper/storage1-root"
       filesystem: ext4
       options:
@@ -307,8 +308,8 @@ values:
       - errors=remount-ro
       size: 18.21 GiB
       size_bytes: 19550347264
-      used: 2.88 GiB
-      used_bytes: 3090526208
+      used: 3.24 GiB
+      used_bytes: 3479171072
     "/boot/efi":
       available: 480.93 MiB
       available_bytes: 504291328
@@ -331,8 +332,8 @@ values:
       used_bytes: 5349376
     "/dev/shm":
       available: 31.36 GiB
-      available_bytes: 33667915776
-      capacity: 0%
+      available_bytes: 33667899392
+      capacity: 0.00%
       device: tmpfs
       filesystem: tmpfs
       options:
@@ -341,11 +342,11 @@ values:
       - nodev
       size: 31.36 GiB
       size_bytes: 33667915776
-      used: 0 bytes
-      used_bytes: 0
+      used: 16.00 KiB
+      used_bytes: 16384
     "/run":
       available: 6.27 GiB
-      available_bytes: 6732308480
+      available_bytes: 6732242944
       capacity: 0.02%
       device: tmpfs
       filesystem: tmpfs
@@ -358,8 +359,8 @@ values:
       - mode=755
       size: 6.27 GiB
       size_bytes: 6733586432
-      used: 1.22 MiB
-      used_bytes: 1277952
+      used: 1.28 MiB
+      used_bytes: 1343488
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -490,6 +491,7 @@ values:
     network: 192.168.130.0
     network6: 'fe80::'
     primary: vlan443
+  nginx_version: 1.14.2
   operatingsystem: Debian
   operatingsystemmajrelease: '10'
   operatingsystemrelease: '10.6'
@@ -777,7 +779,12 @@ values:
       key: AAAAB3NzaC1yc2EAAAADAQABAAABAQC/QR26wVGV/GW74eCTrieJ5ZUqWgwoP8Arw0lQ9y5ydWPar2lyXxuJrrMNkA4vnW7gXTAdyVspXnt01YTmWOqQ3D+5UTGnUcv8fqE6UBKyTv7pgbVRhncsox0ZbDhrpsvC1GtrJilxY14ld95NIxrtvoxkeIdjx3jzLLksAAjPKHUxAP6CoY4J4ufG30vyY5IcXo9Mhofourg4jhWZHVQSuHoa9uAwsvSN2jrqHRPqGFlj0m6qY8dDzRXBdyvK7NfrYjHd5qBbhe2A88Qhb2223n6Rhsam0aQlB8HEL8dK37N3tFsUlcexcq2jKNgxbIlWy9ZgmmDU46s4zGxiQ8PF
       type: ssh-rsa
   ssh_client_version_full: 7.9p1
-  ssh_keys_users: {}
+  ssh_keys_users:
+    root:
+      id_ed25519.borg.pub:
+        type: ed25519
+        key: AAAAC3NzaC1lZDI1NTE5AAAAIDcwdh5WzEjWnCUFLj1PVlZakufczcdP4jWAfvQUzEqG
+        comment: root@storage1
   ssh_server_version_full: 7.9p1
   ssh_server_version_major: '7'
   ssh_server_version_release: '7.9'
@@ -804,10 +811,10 @@ values:
     short: storage1
     internal_fqdn: storage1.internal.staging.swh.network
   system_uptime:
-    days: 0
-    hours: 18
-    seconds: 67965
-    uptime: 18:52 hours
+    days: 6
+    hours: 165
+    seconds: 595365
+    uptime: 6 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -822,15 +829,15 @@ values:
     systemd-timesyncd.service: enabled
   systemd_version: '246'
   timezone: UTC
-  uptime: 18:52 hours
-  uptime_days: 0
-  uptime_hours: 18
-  uptime_seconds: 67965
+  uptime: 6 days
+  uptime_days: 6
+  uptime_hours: 165
+  uptime_seconds: 595365
   uuid: 00000000-0000-0000-0000-ac1f6b407898
   vcsrepo_svn_ver: ''
   virtual: physical
   clientcert: storage1.internal.staging.swh.network
   clientversion: 5.5.10
   clientnoop: false
-timestamp: '2020-10-27T08:27:05.174846144+00:00'
-expiration: '2020-10-27T08:57:05.175378309+00:00'
+timestamp: '2020-11-02T10:57:04.877373828+00:00'
+expiration: '2020-11-02T11:27:04.877957649+00:00'
