@@ -162,6 +162,8 @@ Vagrant.configure("2") do |global_config|
     config.vm.network   :private_network, ip: "10.168.130.31", netmask: "255.255.255.0"
 
     config.vm.synced_folder "/tmp/puppet/", "/tmp/puppet", type: 'nfs'
+    # ssl certificates share
+    config.vm.synced_folder "vagrant/le_certs", "/etc/puppet/le_certs", type: 'nfs'
 
     config.vm.provider :libvirt do |provider|
       provider.memory = 512
