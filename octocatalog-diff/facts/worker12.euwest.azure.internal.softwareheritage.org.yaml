@@ -2,37 +2,19 @@
 name: worker12.euwest.azure.internal.softwareheritage.org
 values:
   agent_specified_environment: production
-  apt_dist_updates: 19
+  apt_dist_updates: 1
   apt_has_dist_updates: true
   apt_has_updates: true
   apt_package_dist_updates:
-  - libllvm7
-  - libsensors-config
-  - libsensors5
-  - libxslt1.1
-  - postgresql-client-common
-  - postgresql-client-11
-  - postgresql-common
-  - postgresql-11
-  - postgresql
-  - python3-atomicwrites
-  - python3-mirakuru
-  - python3-pluggy
-  - python3-port-for
-  - python3-py
-  - python3-pytest
-  - python3-pytest-postgresql
-  - python3-swh.core
-  - python3-swh.model
-  - sysstat
+  - python3-swh.storage
   apt_package_security_dist_updates: []
   apt_package_security_updates: []
   apt_package_updates:
-  - python3-swh.model
-  apt_reboot_required: true
+  - python3-swh.storage
+  apt_reboot_required: false
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1604313182
+  apt_update_last_success: 1604939582
   apt_updates: 1
   architecture: amd64
   bios_release_date: 06/02/2017
@@ -158,6 +140,7 @@ values:
     aeviso: "/home/aeviso"
     tenma: "/home/tenma"
     vsellier: "/home/vsellier"
+    postgres: "/var/lib/postgresql"
   domain: euwest.azure.internal.softwareheritage.org
   facterversion: 3.11.0
   filesystems: ext2,ext3,ext4
@@ -188,13 +171,13 @@ values:
   is_virtual: true
   kernel: Linux
   kernelmajversion: '4.19'
-  kernelrelease: 4.19.0-10-amd64
+  kernelrelease: 4.19.0-12-amd64
   kernelversion: 4.19.0
   letsencrypt_directory: {}
   load_averages:
-    15m: 0.0
-    1m: 0.04
-    5m: 0.02
+    15m: 0.01
+    1m: 0.1
+    5m: 0.05
   location: azure_euwest
   lsbdistcodename: buster
   lsbdistdescription: Debian GNU/Linux 10 (buster)
@@ -206,22 +189,22 @@ values:
   manufacturer: Microsoft Corporation
   memory:
     system:
-      available: 5.50 GiB
-      available_bytes: 5903515648
-      capacity: 18.96%
+      available: 5.79 GiB
+      available_bytes: 6215970816
+      capacity: 14.68%
       total: 6.78 GiB
-      total_bytes: 7285133312
-      used: 1.29 GiB
-      used_bytes: 1381617664
-  memoryfree: 5.50 GiB
-  memoryfree_mb: 5630.03125
+      total_bytes: 7285141504
+      used: 1019.64 MiB
+      used_bytes: 1069170688
+  memoryfree: 5.79 GiB
+  memoryfree_mb: 5928.01171875
   memorysize: 6.78 GiB
-  memorysize_mb: 6947.64453125
+  memorysize_mb: 6947.65234375
   mountpoints:
     "/":
-      available: 26.52 GiB
-      available_bytes: 28474445824
-      capacity: 9.81%
+      available: 26.40 GiB
+      available_bytes: 28343738368
+      capacity: 10.22%
       device: "/dev/sda1"
       filesystem: ext4
       options:
@@ -230,12 +213,12 @@ values:
       - errors=remount-ro
       size: 29.40 GiB
       size_bytes: 31571480576
-      used: 2.88 GiB
-      used_bytes: 3097034752
+      used: 3.01 GiB
+      used_bytes: 3227742208
     "/dev/shm":
       available: 3.39 GiB
-      available_bytes: 3641778176
-      capacity: 0.02%
+      available_bytes: 3642052608
+      capacity: 0.01%
       device: tmpfs
       filesystem: tmpfs
       options:
@@ -243,9 +226,9 @@ values:
       - nosuid
       - nodev
       size: 3.39 GiB
-      size_bytes: 3642564608
-      used: 768.00 KiB
-      used_bytes: 786432
+      size_bytes: 3642568704
+      used: 504.00 KiB
+      used_bytes: 516096
     "/mnt/resource":
       available: 13.68 GiB
       available_bytes: 14686269440
@@ -260,9 +243,9 @@ values:
       used: 40.03 MiB
       used_bytes: 41971712
     "/run":
-      available: 694.23 MiB
-      available_bytes: 727949312
-      capacity: 0.08%
+      available: 694.25 MiB
+      available_bytes: 727977984
+      capacity: 0.07%
       device: tmpfs
       filesystem: tmpfs
       options:
@@ -274,8 +257,8 @@ values:
       - mode=755
       size: 694.77 MiB
       size_bytes: 728514560
-      used: 552.00 KiB
-      used_bytes: 565248
+      used: 524.00 KiB
+      used_bytes: 536576
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -293,29 +276,9 @@ values:
       size_bytes: 5242880
       used: 0 bytes
       used_bytes: 0
-    "/run/user/1003":
-      available: 694.76 MiB
-      available_bytes: 728510464
-      capacity: 0%
-      device: tmpfs
-      filesystem: tmpfs
-      options:
-      - rw
-      - nosuid
-      - nodev
-      - relatime
-      - size=711436k
-      - nr_inodes=177859
-      - mode=700
-      - uid=1003
-      - gid=1003
-      size: 694.76 MiB
-      size_bytes: 728510464
-      used: 0 bytes
-      used_bytes: 0
     "/sys/fs/cgroup":
-      available: 3.39 GiB
-      available_bytes: 3642564608
+      available: 4.00 MiB
+      available_bytes: 4194304
       capacity: 0%
       device: tmpfs
       filesystem: tmpfs
@@ -324,9 +287,11 @@ values:
       - nosuid
       - nodev
       - noexec
+      - size=4096k
+      - nr_inodes=1024
       - mode=755
-      size: 3.39 GiB
-      size_bytes: 3642564608
+      size: 4.00 MiB
+      size_bytes: 4194304
       used: 0 bytes
       used_bytes: 0
   mounts:
@@ -506,10 +471,10 @@ values:
     short: worker12.euwest.azure
     internal_fqdn: worker12.euwest.azure.internal.softwareheritage.org
   system_uptime:
-    days: 54
-    hours: 1318
-    seconds: 4747566
-    uptime: 54 days
+    days: 5
+    hours: 121
+    seconds: 439190
+    uptime: 5 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -524,15 +489,15 @@ values:
     systemd-timesyncd.service: enabled
   systemd_version: '246'
   timezone: UTC
-  uptime: 54 days
-  uptime_days: 54
-  uptime_hours: 1318
-  uptime_seconds: 4747566
+  uptime: 5 days
+  uptime_days: 5
+  uptime_hours: 121
+  uptime_seconds: 439190
   uuid: 77dd66fb-a7bc-5442-a6dc-65342ca7679a
   vcsrepo_svn_ver: 1.10.4
   virtual: hyperv
   clientcert: worker12.euwest.azure.internal.softwareheritage.org
   clientversion: 5.5.10
   clientnoop: false
-timestamp: '2020-11-02T10:47:05.951880493+00:00'
-expiration: '2020-11-02T11:17:05.952266397+00:00'
+timestamp: '2020-11-09T16:47:05.806495891+00:00'
+expiration: '2020-11-09T17:17:05.806896795+00:00'

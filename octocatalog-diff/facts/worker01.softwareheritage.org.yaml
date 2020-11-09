@@ -2,35 +2,21 @@
 name: worker01.softwareheritage.org
 values:
   agent_specified_environment: production
-  apt_dist_updates: 16
+  apt_dist_updates: 2
   apt_has_dist_updates: true
   apt_has_updates: true
   apt_package_dist_updates:
-  - postgresql-client-common
-  - postgresql-client-11
-  - postgresql-common
-  - postgresql-11
-  - postgresql
-  - python3-atomicwrites
-  - python3-mirakuru
-  - python3-pluggy
-  - python3-port-for
-  - python3-py
-  - python3-pytest
-  - python3-pytest-postgresql
-  - python3-swh.core
-  - python3-swh.model
+  - python3-swh.storage
   - python3-swh.journal
-  - sysstat
   apt_package_security_dist_updates: []
   apt_package_security_updates: []
   apt_package_updates:
-  - python3-swh.model
+  - python3-swh.storage
   - python3-swh.journal
-  apt_reboot_required: true
+  apt_reboot_required: false
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1603900982
+  apt_update_last_success: 1604937782
   apt_updates: 2
   architecture: amd64
   augeas:
@@ -139,10 +125,11 @@ values:
     aeviso: "/home/aeviso"
     tenma: "/home/tenma"
     vsellier: "/home/vsellier"
+    postgres: "/var/lib/postgresql"
   domain: softwareheritage.org
   environment: production
   facterversion: 3.11.0
-  filesystems: btrfs,ext2,ext3,ext4,hfs,hfsplus,jfs,minix,msdos,qnx4,ufs,vfat,xfs
+  filesystems: ext2,ext3,ext4
   fips_enabled: false
   fqdn: worker01.softwareheritage.org
   gid: root
@@ -172,13 +159,13 @@ values:
   is_virtual: true
   kernel: Linux
   kernelmajversion: '4.19'
-  kernelrelease: 4.19.0-9-amd64
+  kernelrelease: 4.19.0-12-amd64
   kernelversion: 4.19.0
   letsencrypt_directory: {}
   load_averages:
-    15m: 0.03
-    1m: 0.16
-    5m: 0.08
+    15m: 0.09
+    1m: 0.19
+    5m: 0.16
   location: sesi_rocquencourt
   lsbdistcodename: buster
   lsbdistdescription: Debian GNU/Linux 10 (buster)
@@ -191,30 +178,30 @@ values:
   manufacturer: QEMU
   memory:
     swap:
-      available: 3.47 GiB
-      available_bytes: 3720683520
-      capacity: 9.20%
+      available: 2.83 GiB
+      available_bytes: 3038244864
+      capacity: 25.86%
       total: 3.82 GiB
       total_bytes: 4097830912
-      used: 359.68 MiB
-      used_bytes: 377147392
+      used: 1010.50 MiB
+      used_bytes: 1059586048
     system:
-      available: 8.98 GiB
-      available_bytes: 9637564416
-      capacity: 23.47%
+      available: 4.99 GiB
+      available_bytes: 5358702592
+      capacity: 57.45%
       total: 11.73 GiB
-      total_bytes: 12593876992
-      used: 2.75 GiB
-      used_bytes: 2956312576
-  memoryfree: 8.98 GiB
-  memoryfree_mb: 9191.09765625
+      total_bytes: 12593889280
+      used: 6.74 GiB
+      used_bytes: 7235186688
+  memoryfree: 4.99 GiB
+  memoryfree_mb: 5110.45703125
   memorysize: 11.73 GiB
-  memorysize_mb: 12010.45703125
+  memorysize_mb: 12010.46875
   mountpoints:
     "/":
-      available: 31.38 GiB
-      available_bytes: 33690468352
-      capacity: 11.59%
+      available: 31.33 GiB
+      available_bytes: 33636868096
+      capacity: 11.73%
       device: "/dev/mapper/worker01--vg-root"
       filesystem: ext4
       options:
@@ -223,11 +210,11 @@ values:
       - errors=remount-ro
       size: 35.49 GiB
       size_bytes: 38104956928
-      used: 4.11 GiB
-      used_bytes: 4414488576
+      used: 4.16 GiB
+      used_bytes: 4468088832
     "/dev/shm":
       available: 5.86 GiB
-      available_bytes: 6296395776
+      available_bytes: 6296477696
       capacity: 0.01%
       device: tmpfs
       filesystem: tmpfs
@@ -236,13 +223,13 @@ values:
       - nosuid
       - nodev
       size: 5.86 GiB
-      size_bytes: 6296936448
-      used: 528.00 KiB
-      used_bytes: 540672
+      size_bytes: 6296944640
+      used: 456.00 KiB
+      used_bytes: 466944
     "/run":
       available: 1.17 GiB
-      available_bytes: 1258745856
-      capacity: 0.05%
+      available_bytes: 1258835968
+      capacity: 0.04%
       device: tmpfs
       filesystem: tmpfs
       options:
@@ -254,8 +241,8 @@ values:
       - mode=755
       size: 1.17 GiB
       size_bytes: 1259388928
-      used: 628.00 KiB
-      used_bytes: 643072
+      used: 540.00 KiB
+      used_bytes: 552960
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -273,47 +260,9 @@ values:
       size_bytes: 5242880
       used: 0 bytes
       used_bytes: 0
-    "/run/user/1001":
-      available: 1.17 GiB
-      available_bytes: 1259384832
-      capacity: 0%
-      device: tmpfs
-      filesystem: tmpfs
-      options:
-      - rw
-      - nosuid
-      - nodev
-      - relatime
-      - size=1229868k
-      - mode=700
-      - uid=1001
-      - gid=1001
-      size: 1.17 GiB
-      size_bytes: 1259384832
-      used: 0 bytes
-      used_bytes: 0
-    "/run/user/1003":
-      available: 1.17 GiB
-      available_bytes: 1259384832
-      capacity: 0%
-      device: tmpfs
-      filesystem: tmpfs
-      options:
-      - rw
-      - nosuid
-      - nodev
-      - relatime
-      - size=1229868k
-      - mode=700
-      - uid=1003
-      - gid=1003
-      size: 1.17 GiB
-      size_bytes: 1259384832
-      used: 0 bytes
-      used_bytes: 0
     "/sys/fs/cgroup":
-      available: 5.86 GiB
-      available_bytes: 6296936448
+      available: 4.00 MiB
+      available_bytes: 4194304
       capacity: 0%
       device: tmpfs
       filesystem: tmpfs
@@ -322,9 +271,11 @@ values:
       - nosuid
       - nodev
       - noexec
+      - size=4096k
+      - nr_inodes=1024
       - mode=755
-      size: 5.86 GiB
-      size_bytes: 6296936448
+      size: 4.00 MiB
+      size_bytes: 4194304
       used: 0 bytes
       used_bytes: 0
   mounts:
@@ -454,7 +405,7 @@ values:
       size: 40.00 GiB
       size_bytes: 42948624384
       uuid: fkgm93-N8Lq-xFha-FdSj-AqJ6-KTFa-YBI28I
-  path: "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+  path: "/usr/bin:/bin:/usr/sbin:/sbin"
   physicalprocessorcount: 3
   processor0: Common KVM processor
   processor1: Common KVM processor
@@ -523,8 +474,8 @@ values:
   sshrsakey: AAAAB3NzaC1yc2EAAAADAQABAAABAQDc11JGV6kQ3G+KfRPfyJuOGSTBfsIfHfzpTwHaV1Tf0x89gXlTyiSX7md6Z5FnK0GdFks6TTSEO7q7f/EgqBKLTvohQUyb6IjEH64EybfwNJrVJMaI4PRjMDiFINAl6PQwaGAPoFL+Md2gv1OowXWYFJgdCxyMPBokGNznCSZyi4C8R1lNgK8ZZ4dIkKI/lcY5tbujSEfAqP8xbf3W4QjBIqFWpkq6MmVpwXhD/A9VsDDTwbfy1aEy6I6ea9fM0+CW3i6XuWAlyqVHyd+g4K0Xter3/mM7fk8ynfLJ/s2JzoUDcUQQHHM4xdZGWtsE5D3nwMXq2NmXDGFh7z16KF8D
   subnet: sesi_rocquencourt
   sudoversion: 1.8.27
-  swapfree: 3.47 GiB
-  swapfree_mb: 3548.3203125
+  swapfree: 2.83 GiB
+  swapfree_mb: 2897.49609375
   swapsize: 3.82 GiB
   swapsize_mb: 3907.99609375
   swh_hostname:
@@ -532,10 +483,10 @@ values:
     short: worker01
     internal_fqdn: worker01.internal.softwareheritage.org
   system_uptime:
-    days: 166
-    hours: 3989
-    seconds: 14361315
-    uptime: 166 days
+    days: 5
+    hours: 122
+    seconds: 441038
+    uptime: 5 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -550,15 +501,15 @@ values:
     systemd-timesyncd.service: enabled
   systemd_version: '246'
   timezone: UTC
-  uptime: 166 days
-  uptime_days: 166
-  uptime_hours: 3989
-  uptime_seconds: 14361315
+  uptime: 5 days
+  uptime_days: 5
+  uptime_hours: 122
+  uptime_seconds: 441038
   uuid: 1cfacaaf-2718-4794-9cc5-88dfde58fb43
   vcsrepo_svn_ver: 1.10.4
   virtual: kvm
   clientcert: worker01.softwareheritage.org
   clientversion: 5.5.10
-  clientnoop: true
-timestamp: '2020-10-28T16:15:26.682137894+00:00'
-expiration: '2020-10-28T16:45:26.682633694+00:00'
+  clientnoop: false
+timestamp: '2020-11-09T16:56:07.159123512+00:00'
+expiration: '2020-11-09T17:26:07.159642375+00:00'

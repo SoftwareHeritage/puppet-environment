@@ -2,7 +2,7 @@
 name: orsay.softwareheritage.org
 values:
   agent_specified_environment: production
-  apt_dist_updates: 15
+  apt_dist_updates: 12
   apt_has_dist_updates: true
   apt_has_updates: true
   apt_package_dist_updates:
@@ -16,11 +16,8 @@ values:
   - systemd
   - libsystemd0
   - borgmatic
-  - libproxmox-backup-qemu0
   - librdkafka1
-  - pve-qemu-kvm
-  - qemu-server
-  - pve-manager
+  - proxmox-backup-client
   apt_package_security_dist_updates: []
   apt_package_security_updates: []
   apt_package_updates:
@@ -34,16 +31,13 @@ values:
   - systemd
   - libsystemd0
   - borgmatic
-  - libproxmox-backup-qemu0
   - librdkafka1
-  - pve-qemu-kvm
-  - qemu-server
-  - pve-manager
+  - proxmox-backup-client
   apt_reboot_required: true
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1604312764
-  apt_updates: 15
+  apt_update_last_success: 1604939164
+  apt_updates: 12
   architecture: amd64
   bios_release_date: 10/05/2010
   bios_vendor: Dell Inc.
@@ -1228,7 +1222,7 @@ values:
     privileged: true
     uid: 0
     user: root
-  interfaces: bond0,eth0,eth1,eth2,eth3,lo,tap114i0,tap115i0,vlan440,vlan442,vlan443,vmbr0,vmbr1,vmbr442,vmbr443
+  interfaces: bond0,eth0,eth1,eth2,eth3,lo,vlan440,vlan442,vlan443,vmbr0,vmbr1,vmbr442,vmbr443
   ipaddress: 128.93.193.9
   ipaddress6: fe80::f24d:a2ff:fe3f:1343
   ipaddress6_lo: "::1"
@@ -1247,9 +1241,9 @@ values:
   kernelversion: 5.0.21
   letsencrypt_directory: {}
   load_averages:
-    15m: 0.61
-    1m: 0.62
-    5m: 0.58
+    15m: 0.4
+    1m: 0.84
+    5m: 0.55
   location: sesi_rocquencourt
   lsbdistcodename: buster
   lsbdistdescription: Debian GNU/Linux 10 (buster)
@@ -1262,8 +1256,6 @@ values:
   macaddress_eth1: f0:4d:a2:3f:13:45
   macaddress_eth2: f0:4d:a2:3f:13:47
   macaddress_eth3: f0:4d:a2:3f:13:49
-  macaddress_tap114i0: 42:64:0d:fe:34:43
-  macaddress_tap115i0: be:8b:44:5e:c0:60
   macaddress_vlan440: f0:4d:a2:3f:13:43
   macaddress_vlan442: f0:4d:a2:3f:13:43
   macaddress_vlan443: f0:4d:a2:3f:13:43
@@ -1274,22 +1266,22 @@ values:
   manufacturer: Dell Inc.
   memory:
     system:
-      available: 85.61 GiB
-      available_bytes: 91926843392
-      capacity: 31.99%
+      available: 102.66 GiB
+      available_bytes: 110233718784
+      capacity: 18.45%
       total: 125.89 GiB
       total_bytes: 135176105984
-      used: 40.28 GiB
-      used_bytes: 43249262592
-  memoryfree: 85.61 GiB
-  memoryfree_mb: 87668.26953125
+      used: 23.23 GiB
+      used_bytes: 24942387200
+  memoryfree: 102.66 GiB
+  memoryfree_mb: 105127.06640625
   memorysize: 125.89 GiB
   memorysize_mb: 128913.98046875
   mountpoints:
     "/":
-      available: 23.48 GiB
-      available_bytes: 25206292480
-      capacity: 40.19%
+      available: 23.37 GiB
+      available_bytes: 25098559488
+      capacity: 40.44%
       device: "/dev/mapper/tytso-newroot"
       filesystem: ext4
       options:
@@ -1298,8 +1290,8 @@ values:
       - errors=remount-ro
       size: 39.25 GiB
       size_bytes: 42141548544
-      used: 15.77 GiB
-      used_bytes: 16935256064
+      used: 15.87 GiB
+      used_bytes: 17042989056
     "/dev/shm":
       available: 62.90 GiB
       available_bytes: 67538108416
@@ -1316,8 +1308,8 @@ values:
       used_bytes: 49942528
     "/etc/pve":
       available: 29.82 MiB
-      available_bytes: 31268864
-      capacity: 0.60%
+      available_bytes: 31264768
+      capacity: 0.61%
       device: "/dev/fuse"
       filesystem: fuse
       options:
@@ -1331,11 +1323,11 @@ values:
       - allow_other
       size: 30.00 MiB
       size_bytes: 31457280
-      used: 184.00 KiB
-      used_bytes: 188416
+      used: 188.00 KiB
+      used_bytes: 192512
     "/run":
       available: 12.59 GiB
-      available_bytes: 13515829248
+      available_bytes: 13515874304
       capacity: 0.01%
       device: tmpfs
       filesystem: tmpfs
@@ -1348,8 +1340,8 @@ values:
       - mode=755
       size: 12.59 GiB
       size_bytes: 13517611008
-      used: 1.70 MiB
-      used_bytes: 1781760
+      used: 1.66 MiB
+      used_bytes: 1736704
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -1411,15 +1403,13 @@ values:
   mtu_eth2: 1500
   mtu_eth3: 1500
   mtu_lo: 65536
-  mtu_tap114i0: 1500
-  mtu_tap115i0: 1500
   mtu_vlan440: 1500
   mtu_vlan442: 9000
   mtu_vlan443: 9000
   mtu_vmbr0: 1500
   mtu_vmbr1: 9000
   mtu_vmbr442: 9000
-  mtu_vmbr443: 1500
+  mtu_vmbr443: 9000
   mysql_server_id: 42726659
   netmask: 255.255.255.0
   netmask6: 'ffff:ffff:ffff:ffff::'
@@ -1477,12 +1467,6 @@ values:
         netmask6: ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff
         network: 127.0.0.0
         network6: "::1"
-      tap114i0:
-        mac: 42:64:0d:fe:34:43
-        mtu: 1500
-      tap115i0:
-        mac: be:8b:44:5e:c0:60
-        mtu: 1500
       vlan440:
         mac: f0:4d:a2:3f:13:43
         mtu: 1500
@@ -1543,7 +1527,7 @@ values:
           network: 'fe80::'
         ip6: fe80::e872:32ff:feac:ef39
         mac: ea:72:32:ac:ef:39
-        mtu: 1500
+        mtu: 9000
         netmask6: 'ffff:ffff:ffff:ffff::'
         network6: 'fe80::'
     ip: 128.93.193.9
@@ -1585,18 +1569,9 @@ values:
       size: 10.91 TiB
       size_bytes: 11995675885568
       uuid: 1b71650a-09b6-4e60-a856-393272454532
-    "/dev/mapper/ssd--2018-vm--114--disk--0":
-      size: 32.00 GiB
-      size_bytes: 34359738368
     "/dev/mapper/ssd--2018-vm--114--disk--0.raw":
       size: 32.00 GiB
       size_bytes: 34359738368
-    "/dev/mapper/ssd--2018-vm--114--disk--1":
-      size: 812.00 GiB
-      size_bytes: 871878361088
-    "/dev/mapper/ssd--2018-vm--115--disk--0":
-      size: 400.00 GiB
-      size_bytes: 429496729600
     "/dev/mapper/ssd--2018-vm--115--disk--0.raw":
       size: 400.00 GiB
       size_bytes: 429496729600
@@ -1820,10 +1795,10 @@ values:
     short: orsay
     internal_fqdn: orsay.internal.softwareheritage.org
   system_uptime:
-    days: 384
-    hours: 9235
-    seconds: 33246375
-    uptime: 384 days
+    days: 392
+    hours: 9409
+    seconds: 33872775
+    uptime: 392 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -1838,15 +1813,15 @@ values:
     systemd-timesyncd.service: enabled
   systemd_version: '245'
   timezone: UTC
-  uptime: 384 days
-  uptime_days: 384
-  uptime_hours: 9235
-  uptime_seconds: 33246375
+  uptime: 392 days
+  uptime_days: 392
+  uptime_hours: 9409
+  uptime_seconds: 33872775
   uuid: 4c4c4544-0043-3410-8034-c6c04f30354a
   vcsrepo_svn_ver: ''
   virtual: physical
   clientcert: orsay.softwareheritage.org
   clientversion: 5.5.10
   clientnoop: false
-timestamp: '2020-11-02T10:55:11.942280906+00:00'
-expiration: '2020-11-02T11:25:11.945274563+00:00'
+timestamp: '2020-11-09T16:55:11.929144458+00:00'
+expiration: '2020-11-09T17:25:11.932157726+00:00'
