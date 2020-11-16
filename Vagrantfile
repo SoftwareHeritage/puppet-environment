@@ -62,6 +62,7 @@ Vagrant.configure("2") do |global_config|
       puppet.manifests_path = "#{manifests_path}"
       puppet.options = "#{puppet_options}"
       puppet.facter = puppet_default_facts
+      puppet.synced_folder_type = 'nfs'
     end
   end
 
@@ -91,6 +92,7 @@ Vagrant.configure("2") do |global_config|
       puppet.manifests_path = "#{manifests_path}"
       puppet.options = "#{puppet_options}"
       puppet.facter = puppet_default_facts
+      puppet.synced_folder_type = 'nfs'
     end
   end
 
@@ -179,6 +181,7 @@ Vagrant.configure("2") do |global_config|
       puppet.manifests_path = "#{manifests_path}"
       puppet.options = "#{puppet_options}"
       puppet.facter = puppet_default_facts
+      puppet.synced_folder_type = 'nfs'
     end
   end
 
@@ -207,6 +210,7 @@ Vagrant.configure("2") do |global_config|
       puppet.manifests_path = "#{manifests_path}"
       puppet.options = "#{puppet_options}"
       puppet.facter = puppet_default_facts
+      puppet.synced_folder_type = 'nfs'
     end
   end
 
@@ -241,6 +245,7 @@ Vagrant.configure("2") do |global_config|
       puppet.manifests_path = "#{manifests_path}"
       puppet.options = "#{puppet_options}"
       puppet.facter = puppet_default_facts
+      puppet.synced_folder_type = 'nfs'
     end
   end
 
@@ -272,6 +277,7 @@ Vagrant.configure("2") do |global_config|
       puppet.manifests_path = "#{manifests_path}"
       puppet.options = "#{puppet_options}"
       puppet.facter = puppet_default_facts
+      puppet.synced_folder_type = 'nfs'
     end
   end
 
@@ -307,6 +313,7 @@ Vagrant.configure("2") do |global_config|
       puppet.manifests_path = "#{manifests_path}"
       puppet.options = "#{puppet_options}"
       puppet.facter = puppet_default_facts
+      puppet.synced_folder_type = 'nfs'
     end
   end
 end
