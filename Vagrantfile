@@ -188,7 +188,7 @@ Vagrant.configure("2") do |global_config|
   global_config.vm.define :"staging-worker0" do |config|
     config.vm.box                     = $global_debian10_box
     config.vm.box_url                 = $global_debian10_box_url
-    config.vm.hostname                = "worker0.staging.swh.network"
+    config.vm.hostname                = "worker0.internal.staging.swh.network"
     config.vm.network   :private_network, ip: "10.168.130.100", netmask: "255.255.255.0"
 
     config.vm.synced_folder "/tmp/puppet/", "/tmp/puppet", type: 'nfs'
