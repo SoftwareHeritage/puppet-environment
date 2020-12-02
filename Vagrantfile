@@ -272,6 +272,36 @@ Vagrant.configure("2") do |global_config|
     end
   end
 
+  global_config.vm.define :"staging-esnode0" do |config|
+    # config.ssh.insert_key = false
+    config.vm.box                     = $global_debian10_box
+    config.vm.box_url                 = $global_debian10_box_url
+    config.vm.box_check_update        = false
+    config.vm.hostname                = "search-esnode0.internal.staging.swh.network"
+    config.vm.network   :private_network, ip: "10.168.130.80", netmask: "255.255.255.0"
+
+    config.vm.synced_folder "/tmp/puppet/", "/tmp/puppet", type: 'nfs'
+    # ssl certificates share
+    config.vm.synced_folder "vagrant/le_certs", "/etc/puppet/le_certs", type: 'nfs'
+
+    config.vm.provider :libvirt do |provider|
+      provider.memory = 1024
+      provider.cpus = 2
+      # local test run: https://github.com/vagrant-libvirt/vagrant-libvirt/issues/45
+      provider.driver = 'kvm'
+    end
+    config.vm.provision "puppet" do |puppet|
+      puppet.environment_path = "#{environment_path}"
+      puppet.environment = "#{environment}"
+      puppet.hiera_config_path = "#{puppet.environment_path}/#{puppet.environment}/hiera.yaml"
+      puppet.manifest_file = "#{manifest_file}"
+      puppet.manifests_path = "#{manifests_path}"
+      puppet.options = "#{puppet_options}"
+      puppet.facter = puppet_default_facts
+      puppet.synced_folder_type = 'nfs'
+    end
+  end
+
   ################
   # ADMIN
   ################
