@@ -7,7 +7,7 @@ environment_path = "/tmp/puppet/environments"
 manifest_file = "site.pp"
 manifests_path = "swh-site/manifests"
 puppet_options = "--fileserverconfig=/etc/puppet/fileserver.conf --verbose"  # --debug --trace for more
-puppet_default_facts = {
+puppet_staging_facts = {
   "vagrant_testing" => "1",
   "testing" => "vagrant",
   "deployment" => "staging",
@@ -61,7 +61,7 @@ Vagrant.configure("2") do |global_config|
       puppet.manifest_file = "#{manifest_file}"
       puppet.manifests_path = "#{manifests_path}"
       puppet.options = "#{puppet_options}"
-      puppet.facter = puppet_default_facts
+      puppet.facter = puppet_staging_facts
       puppet.synced_folder_type = 'nfs'
     end
   end
@@ -91,7 +91,7 @@ Vagrant.configure("2") do |global_config|
       puppet.manifest_file = "#{manifest_file}"
       puppet.manifests_path = "#{manifests_path}"
       puppet.options = "#{puppet_options}"
-      puppet.facter = puppet_default_facts
+      puppet.facter = puppet_staging_facts
       puppet.synced_folder_type = 'nfs'
     end
   end
@@ -121,7 +121,7 @@ Vagrant.configure("2") do |global_config|
       puppet.manifest_file = "#{manifest_file}"
       puppet.manifests_path = "#{manifests_path}"
       puppet.options = "#{puppet_options}"
-      puppet.facter = puppet_default_facts
+      puppet.facter = puppet_staging_facts
       puppet.synced_folder_type = 'nfs'
     end
   end
@@ -151,7 +151,7 @@ Vagrant.configure("2") do |global_config|
       puppet.manifest_file = "#{manifest_file}"
       puppet.manifests_path = "#{manifests_path}"
       puppet.options = "#{puppet_options}"
-      puppet.facter = puppet_default_facts
+      puppet.facter = puppet_staging_facts
       puppet.synced_folder_type = 'nfs'
     end
   end
@@ -180,7 +180,7 @@ Vagrant.configure("2") do |global_config|
       puppet.manifest_file = "#{manifest_file}"
       puppet.manifests_path = "#{manifests_path}"
       puppet.options = "#{puppet_options}"
-      puppet.facter = puppet_default_facts
+      puppet.facter = puppet_staging_facts
       puppet.synced_folder_type = 'nfs'
     end
   end
@@ -209,7 +209,7 @@ Vagrant.configure("2") do |global_config|
       puppet.manifest_file = "#{manifest_file}"
       puppet.manifests_path = "#{manifests_path}"
       puppet.options = "#{puppet_options}"
-      puppet.facter = puppet_default_facts
+      puppet.facter = puppet_staging_facts
       puppet.synced_folder_type = 'nfs'
     end
   end
@@ -238,7 +238,7 @@ Vagrant.configure("2") do |global_config|
       puppet.manifest_file = "#{manifest_file}"
       puppet.manifests_path = "#{manifests_path}"
       puppet.options = "#{puppet_options}"
-      puppet.facter = puppet_default_facts
+      puppet.facter = puppet_staging_facts
       puppet.synced_folder_type = 'nfs'
     end
   end
@@ -267,7 +267,7 @@ Vagrant.configure("2") do |global_config|
       puppet.manifest_file = "#{manifest_file}"
       puppet.manifests_path = "#{manifests_path}"
       puppet.options = "#{puppet_options}"
-      puppet.facter = puppet_default_facts
+      puppet.facter = puppet_staging_facts
       puppet.synced_folder_type = 'nfs'
     end
   end
@@ -297,7 +297,7 @@ Vagrant.configure("2") do |global_config|
       puppet.manifest_file = "#{manifest_file}"
       puppet.manifests_path = "#{manifests_path}"
       puppet.options = "#{puppet_options}"
-      puppet.facter = puppet_default_facts
+      puppet.facter = puppet_staging_facts
       puppet.synced_folder_type = 'nfs'
     end
   end
@@ -332,7 +332,7 @@ Vagrant.configure("2") do |global_config|
       puppet.manifest_file = "#{manifest_file}"
       puppet.manifests_path = "#{manifests_path}"
       puppet.options = "#{puppet_options}"
-      puppet.facter = puppet_default_facts
+      puppet.facter = puppet_staging_facts
       puppet.synced_folder_type = 'nfs'
     end
   end
@@ -364,7 +364,7 @@ Vagrant.configure("2") do |global_config|
       puppet.manifest_file = "#{manifest_file}"
       puppet.manifests_path = "#{manifests_path}"
       puppet.options = "#{puppet_options}"
-      puppet.facter = puppet_default_facts
+      puppet.facter = puppet_staging_facts
       puppet.synced_folder_type = 'nfs'
     end
   end
