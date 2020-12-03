@@ -9,18 +9,18 @@ manifests_path = "swh-site/manifests"
 puppet_options = "--fileserverconfig=/etc/puppet/fileserver.conf --verbose"  # --debug --trace for more
 puppet_staging_facts = {
   "vagrant_testing" => "1",
-  "testing" => "vagrant",
-  "deployment" => "staging",
-  "subnet" => "vagrant"
+  "testing"         => "vagrant",
+  "deployment"      => "staging",
+  "subnet"          => "vagrant"
 }
 puppet_production_facts = {
   "vagrant_testing" => "1",
-  "testing" => "vagrant",
-  "deployment" => "production",
-  "subnet" => "vagrant"
+  "testing"         => "vagrant",
+  "deployment"      => "production",
+  "subnet"          => "vagrant"
 }
 # used to define the local vm template path
-puppet_env_path=ENV["SWH_PUPPET_ENVIRONMENT_HOME"]
+puppet_env_path = ENV["SWH_PUPPET_ENVIRONMENT_HOME"]
 
 # Images/local configuration (libvirt)
 $local_debian10_box = "debian10-20201012-1352"
