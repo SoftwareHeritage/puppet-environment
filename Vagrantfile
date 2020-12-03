@@ -13,6 +13,12 @@ puppet_staging_facts = {
   "deployment" => "staging",
   "subnet" => "vagrant"
 }
+puppet_production_facts = {
+  "vagrant_testing" => "1",
+  "testing" => "vagrant",
+  "deployment" => "production",
+  "subnet" => "vagrant"
+}
 # used to define the local vm template path
 puppet_env_path=ENV["SWH_PUPPET_ENVIRONMENT_HOME"]
 
@@ -396,7 +402,94 @@ Vagrant.configure("2") do |global_config|
       puppet.manifest_file = "#{manifest_file}"
       puppet.manifests_path = "#{manifests_path}"
       puppet.options = "#{puppet_options}"
-      puppet.facter = puppet_default_facts
+      puppet.facter = puppet_production_facts
+      puppet.synced_folder_type = 'nfs'
+    end
+  end
+
+  global_config.vm.define :"esnode1" do |config|
+    config.vm.box                     = $global_debian10_box
+    config.vm.box_url                 = $global_debian10_box_url
+    config.vm.box_check_update        = false
+    config.vm.hostname                = "esnode1.internal.softwareheritage.org"
+    config.vm.network   :private_network, ip: "10.168.100.61", netmask: "255.255.255.0"
+
+    config.vm.synced_folder "/tmp/puppet/", "/tmp/puppet", type: 'nfs'
+    # ssl certificates share
+    config.vm.synced_folder "vagrant/le_certs", "/etc/puppet/le_certs", type: 'nfs'
+
+    config.vm.provider :libvirt do |provider|
+      provider.memory = 1024
+      provider.cpus = 2
+      # local test run: https://github.com/vagrant-libvirt/vagrant-libvirt/issues/45
+      provider.driver = 'kvm'
+    end
+    config.vm.provision "puppet" do |puppet|
+      puppet.environment_path = "#{environment_path}"
+      puppet.environment = "#{environment}"
+      puppet.hiera_config_path = "#{puppet.environment_path}/#{puppet.environment}/hiera.yaml"
+      puppet.manifest_file = "#{manifest_file}"
+      puppet.manifests_path = "#{manifests_path}"
+      puppet.options = "#{puppet_options}"
+      puppet.facter = puppet_production_facts
+      puppet.synced_folder_type = 'nfs'
+    end
+  end
+
+  global_config.vm.define :"esnode2" do |config|
+    config.vm.box                     = $global_debian10_box
+    config.vm.box_url                 = $global_debian10_box_url
+    config.vm.box_check_update        = false
+    config.vm.hostname                = "esnode2.internal.softwareheritage.org"
+    config.vm.network   :private_network, ip: "10.168.100.62", netmask: "255.255.255.0"
+
+    config.vm.synced_folder "/tmp/puppet/", "/tmp/puppet", type: 'nfs'
+    # ssl certificates share
+    config.vm.synced_folder "vagrant/le_certs", "/etc/puppet/le_certs", type: 'nfs'
+
+    config.vm.provider :libvirt do |provider|
+      provider.memory = 1024
+      provider.cpus = 2
+      # local test run: https://github.com/vagrant-libvirt/vagrant-libvirt/issues/45
+      provider.driver = 'kvm'
+    end
+    config.vm.provision "puppet" do |puppet|
+      puppet.environment_path = "#{environment_path}"
+      puppet.environment = "#{environment}"
+      puppet.hiera_config_path = "#{puppet.environment_path}/#{puppet.environment}/hiera.yaml"
+      puppet.manifest_file = "#{manifest_file}"
+      puppet.manifests_path = "#{manifests_path}"
+      puppet.options = "#{puppet_options}"
+      puppet.facter = puppet_production_facts
+      puppet.synced_folder_type = 'nfs'
+    end
+  end
+
+  global_config.vm.define :"esnode3" do |config|
+    config.vm.box                     = $global_debian10_box
+    config.vm.box_url                 = $global_debian10_box_url
+    config.vm.box_check_update        = false
+    config.vm.hostname                = "esnode3.internal.softwareheritage.org"
+    config.vm.network   :private_network, ip: "10.168.100.63", netmask: "255.255.255.0"
+
+    config.vm.synced_folder "/tmp/puppet/", "/tmp/puppet", type: 'nfs'
+    # ssl certificates share
+    config.vm.synced_folder "vagrant/le_certs", "/etc/puppet/le_certs", type: 'nfs'
+
+    config.vm.provider :libvirt do |provider|
+      provider.memory = 1024
+      provider.cpus = 2
+      # local test run: https://github.com/vagrant-libvirt/vagrant-libvirt/issues/45
+      provider.driver = 'kvm'
+    end
+    config.vm.provision "puppet" do |puppet|
+      puppet.environment_path = "#{environment_path}"
+      puppet.environment = "#{environment}"
+      puppet.hiera_config_path = "#{puppet.environment_path}/#{puppet.environment}/hiera.yaml"
+      puppet.manifest_file = "#{manifest_file}"
+      puppet.manifests_path = "#{manifests_path}"
+      puppet.options = "#{puppet_options}"
+      puppet.facter = puppet_production_facts
       puppet.synced_folder_type = 'nfs'
     end
   end
@@ -432,7 +525,7 @@ Vagrant.configure("2") do |global_config|
       puppet.manifest_file = "#{manifest_file}"
       puppet.manifests_path = "#{manifests_path}"
       puppet.options = "#{puppet_options}"
-      puppet.facter = puppet_default_facts
+      puppet.facter = puppet_staging_facts
       puppet.synced_folder_type = 'nfs'
     end
   end
