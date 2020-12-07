@@ -2,26 +2,32 @@
 name: worker16.softwareheritage.org
 values:
   agent_specified_environment: production
-  apt_dist_updates: 4
+  apt_dist_updates: 8
   apt_has_dist_updates: true
   apt_has_updates: true
   apt_package_dist_updates:
-  - python3-swh.model
+  - librdkafka1
+  - linux-image-5.9.0-0.bpo.2-amd64
+  - linux-image-amd64
+  - python3-confluent-kafka
+  - python3-swh.core
   - python3-swh.storage
-  - python3-swh.journal
-  - python3-swh.loader.git
+  - python3-swh.scheduler
+  - python3-swh.lister
   apt_package_security_dist_updates: []
   apt_package_security_updates: []
   apt_package_updates:
-  - python3-swh.model
+  - librdkafka1
+  - python3-confluent-kafka
+  - python3-swh.core
   - python3-swh.storage
-  - python3-swh.journal
-  - python3-swh.loader.git
+  - python3-swh.scheduler
+  - python3-swh.lister
   apt_reboot_required: false
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1605684122
-  apt_updates: 4
+  apt_update_last_success: 1607336530
+  apt_updates: 6
   architecture: amd64
   augeas:
     version: 1.11.0
@@ -37,9 +43,9 @@ values:
   blockdevice_sr0_vendor: QEMU
   blockdevices: sr0,sda
   cassandracmsheapnewsize: 400
-  cassandracmsmaxheapsize: 3985
+  cassandracmsmaxheapsize: 3737
   cassandraheapnewsize: 400
-  cassandramaxheapsize: 3985
+  cassandramaxheapsize: 3737
   chassistype: Other
   deployment: production
   disks:
@@ -166,9 +172,9 @@ values:
   kernelversion: 5.8.0
   letsencrypt_directory: {}
   load_averages:
-    15m: 0.11
-    1m: 0.33
-    5m: 0.18
+    15m: 4.81
+    1m: 5.3
+    5m: 5.15
   location: sesi_rocquencourt
   lsbdistcodename: buster
   lsbdistdescription: Debian GNU/Linux 10 (buster)
@@ -181,30 +187,30 @@ values:
   manufacturer: QEMU
   memory:
     swap:
-      available: 3.80 GiB
-      available_bytes: 4078247936
-      capacity: 0.48%
+      available: 2.97 GiB
+      available_bytes: 3184459776
+      capacity: 22.29%
       total: 3.82 GiB
       total_bytes: 4097830912
-      used: 18.68 MiB
-      used_bytes: 19582976
+      used: 871.06 MiB
+      used_bytes: 913371136
     system:
-      available: 13.68 GiB
-      available_bytes: 14690816000
-      capacity: 12.10%
-      total: 15.57 GiB
-      total_bytes: 16713879552
-      used: 1.88 GiB
-      used_bytes: 2023063552
-  memoryfree: 13.68 GiB
-  memoryfree_mb: 14010.25390625
-  memorysize: 15.57 GiB
-  memorysize_mb: 15939.59765625
+      available: 5.58 GiB
+      available_bytes: 5986574336
+      capacity: 61.81%
+      total: 14.60 GiB
+      total_bytes: 15674003456
+      used: 9.02 GiB
+      used_bytes: 9687429120
+  memoryfree: 5.58 GiB
+  memoryfree_mb: 5709.2421875
+  memorysize: 14.60 GiB
+  memorysize_mb: 14947.89453125
   mountpoints:
     "/":
-      available: 31.48 GiB
-      available_bytes: 33798758400
-      capacity: 11.30%
+      available: 29.04 GiB
+      available_bytes: 31185637376
+      capacity: 18.16%
       device: "/dev/mapper/worker16--vg-root"
       filesystem: ext4
       options:
@@ -213,11 +219,11 @@ values:
       - errors=remount-ro
       size: 35.49 GiB
       size_bytes: 38104956928
-      used: 4.01 GiB
-      used_bytes: 4306198528
+      used: 6.44 GiB
+      used_bytes: 6919319552
     "/dev/shm":
       available: 7.83 GiB
-      available_bytes: 8408776704
+      available_bytes: 8408481792
       capacity: 0.01%
       device: tmpfs
       filesystem: tmpfs
@@ -229,8 +235,8 @@ values:
       - nr_inodes=2053068
       size: 7.83 GiB
       size_bytes: 8409366528
-      used: 576.00 KiB
-      used_bytes: 589824
+      used: 864.00 KiB
+      used_bytes: 884736
     "/run":
       available: 1.57 GiB
       available_bytes: 1681321984
@@ -373,7 +379,7 @@ values:
     primary: ens18
   operatingsystem: Debian
   operatingsystemmajrelease: '10'
-  operatingsystemrelease: '10.6'
+  operatingsystemrelease: '10.7'
   os:
     architecture: amd64
     distro:
@@ -387,9 +393,9 @@ values:
     hardware: x86_64
     name: Debian
     release:
-      full: '10.6'
+      full: '10.7'
       major: '10'
-      minor: '6'
+      minor: '7'
     selinux:
       enabled: false
   osfamily: Debian
@@ -483,8 +489,8 @@ values:
   sshrsakey: AAAAB3NzaC1yc2EAAAADAQABAAABAQDenuiCuDngkWl5j/8LInXY8VWPRE+uPNmzfM0Ny2ZwqS1WAdpmbUlrq6cwARGUdR/8nbn4UtcmYHx28unrqv51+DHL78BK6Poi3yper+38YdlN7I0Sjav+uSe1W/p6XfiMCEVkCcaBRoH45JCSGQBLF886JTWjETLWssMR6rJx/z5yBWHOHzzAa3oJxtYl6NyCt5Al6wD6W5r6zA+UKLUbjcWwUEu8TvE9O9ip77AO024E4TcqaoDhj0ORXMaUq09qNx/MUCxJSGr8LvG5n9Y8t7EKTv6U6j8AbZqSSxzFA1BlWyEgHwKWivrmbkq0rh+KEb7Sl6SPeVKYJoPWFjSv
   subnet: sesi_rocquencourt
   sudoversion: 1.8.27
-  swapfree: 3.80 GiB
-  swapfree_mb: 3889.3203125
+  swapfree: 2.97 GiB
+  swapfree_mb: 3036.9375
   swapsize: 3.82 GiB
   swapsize_mb: 3907.99609375
   swh_hostname:
@@ -492,10 +498,10 @@ values:
     short: worker16
     internal_fqdn: worker16.internal.softwareheritage.org
   system_uptime:
-    days: 13
-    hours: 327
-    seconds: 1178713
-    uptime: 13 days
+    days: 32
+    hours: 785
+    seconds: 2829344
+    uptime: 32 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -510,15 +516,15 @@ values:
     systemd-timesyncd.service: enabled
   systemd_version: '246'
   timezone: UTC
-  uptime: 13 days
-  uptime_days: 13
-  uptime_hours: 327
-  uptime_seconds: 1178713
+  uptime: 32 days
+  uptime_days: 32
+  uptime_hours: 785
+  uptime_seconds: 2829344
   uuid: ac002ef6-9b96-4290-8985-9e5433484465
   vcsrepo_svn_ver: 1.10.4
   virtual: kvm
   clientcert: worker16.softwareheritage.org
   clientversion: 5.5.10
   clientnoop: false
-timestamp: '2020-11-18T08:19:09.309228021+00:00'
-expiration: '2020-11-18T08:49:09.309826047+00:00'
+timestamp: '2020-12-07T10:49:39.942687938+00:00'
+expiration: '2020-12-07T11:19:39.943805198+00:00'

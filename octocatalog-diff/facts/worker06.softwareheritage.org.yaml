@@ -2,33 +2,37 @@
 name: worker06.softwareheritage.org
 values:
   agent_specified_environment: production
-  apt_dist_updates: 4
+  apt_dist_updates: 6
   apt_has_dist_updates: true
   apt_has_updates: true
   apt_package_dist_updates:
-  - python3-swh.model
+  - librdkafka1
+  - python3-confluent-kafka
+  - python3-swh.core
   - python3-swh.storage
-  - python3-swh.journal
-  - python3-swh.loader.git
+  - python3-swh.scheduler
+  - python3-swh.lister
   apt_package_security_dist_updates: []
   apt_package_security_updates: []
   apt_package_updates:
-  - python3-swh.model
+  - librdkafka1
+  - python3-confluent-kafka
+  - python3-swh.core
   - python3-swh.storage
-  - python3-swh.journal
-  - python3-swh.loader.git
-  apt_reboot_required: false
+  - python3-swh.scheduler
+  - python3-swh.lister
+  apt_reboot_required: true
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1605684722
-  apt_updates: 4
+  apt_update_last_success: 1607337123
+  apt_updates: 6
   architecture: amd64
   augeas:
     version: 1.11.0
   augeasversion: 1.11.0
   bios_release_date: 04/01/2014
   bios_vendor: SeaBIOS
-  bios_version: rel-1.12.1-0-ga5cab58e9a3f-prebuilt.qemu.org
+  bios_version: rel-1.13.0-48-gd9c812dda519-prebuilt.qemu.org
   blockdevice_sda_model: QEMU HARDDISK
   blockdevice_sda_size: 42949672960
   blockdevice_sda_vendor: QEMU
@@ -57,7 +61,7 @@ values:
     bios:
       release_date: 04/01/2014
       vendor: SeaBIOS
-      version: rel-1.12.1-0-ga5cab58e9a3f-prebuilt.qemu.org
+      version: rel-1.13.0-48-gd9c812dda519-prebuilt.qemu.org
     chassis:
       type: Other
     manufacturer: QEMU
@@ -132,7 +136,7 @@ values:
     postgres: "/var/lib/postgresql"
   domain: softwareheritage.org
   facterversion: 3.11.0
-  filesystems: ext2,ext3,ext4
+  filesystems: btrfs,ext2,ext3,ext4,hfs,hfsplus,jfs,minix,msdos,qnx4,ufs,vfat,xfs
   fips_enabled: false
   fqdn: worker06.softwareheritage.org
   gid: root
@@ -166,9 +170,9 @@ values:
   kernelversion: 4.19.0
   letsencrypt_directory: {}
   load_averages:
-    15m: 0.02
-    1m: 0.12
-    5m: 0.08
+    15m: 1.11
+    1m: 1.63
+    5m: 1.23
   location: sesi_rocquencourt
   lsbdistcodename: buster
   lsbdistdescription: Debian GNU/Linux 10 (buster)
@@ -181,30 +185,30 @@ values:
   manufacturer: QEMU
   memory:
     swap:
-      available: 2.87 GiB
-      available_bytes: 3079430144
-      capacity: 24.85%
+      available: 2.48 GiB
+      available_bytes: 2658213888
+      capacity: 35.13%
       total: 3.82 GiB
       total_bytes: 4097830912
-      used: 971.22 MiB
-      used_bytes: 1018400768
+      used: 1.34 GiB
+      used_bytes: 1439617024
     system:
-      available: 9.90 GiB
-      available_bytes: 10628108288
-      capacity: 15.61%
+      available: 1.55 GiB
+      available_bytes: 1662058496
+      capacity: 86.80%
       total: 11.73 GiB
-      total_bytes: 12593889280
-      used: 1.83 GiB
-      used_bytes: 1965780992
-  memoryfree: 9.90 GiB
-  memoryfree_mb: 10135.75390625
+      total_bytes: 12593852416
+      used: 10.18 GiB
+      used_bytes: 10931793920
+  memoryfree: 1.55 GiB
+  memoryfree_mb: 1585.0625
   memorysize: 11.73 GiB
-  memorysize_mb: 12010.46875
+  memorysize_mb: 12010.43359375
   mountpoints:
     "/":
-      available: 31.35 GiB
-      available_bytes: 33657917440
-      capacity: 11.67%
+      available: 28.09 GiB
+      available_bytes: 30157807616
+      capacity: 20.86%
       device: "/dev/mapper/worker06--vg-root"
       filesystem: ext4
       options:
@@ -213,12 +217,12 @@ values:
       - errors=remount-ro
       size: 35.49 GiB
       size_bytes: 38104956928
-      used: 4.14 GiB
-      used_bytes: 4447039488
+      used: 7.40 GiB
+      used_bytes: 7947149312
     "/dev/shm":
       available: 5.86 GiB
-      available_bytes: 6296305664
-      capacity: 0.01%
+      available_bytes: 6295916544
+      capacity: 0.02%
       device: tmpfs
       filesystem: tmpfs
       options:
@@ -226,12 +230,12 @@ values:
       - nosuid
       - nodev
       size: 5.86 GiB
-      size_bytes: 6296944640
-      used: 624.00 KiB
-      used_bytes: 638976
+      size_bytes: 6296924160
+      used: 984.00 KiB
+      used_bytes: 1007616
     "/run":
       available: 1.17 GiB
-      available_bytes: 1258831872
+      available_bytes: 1258827776
       capacity: 0.04%
       device: tmpfs
       filesystem: tmpfs
@@ -244,8 +248,8 @@ values:
       - mode=755
       size: 1.17 GiB
       size_bytes: 1259388928
-      used: 544.00 KiB
-      used_bytes: 557056
+      used: 548.00 KiB
+      used_bytes: 561152
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -369,7 +373,7 @@ values:
     primary: ens18
   operatingsystem: Debian
   operatingsystemmajrelease: '10'
-  operatingsystemrelease: '10.6'
+  operatingsystemrelease: '10.7'
   os:
     architecture: amd64
     distro:
@@ -383,9 +387,9 @@ values:
     hardware: x86_64
     name: Debian
     release:
-      full: '10.6'
+      full: '10.7'
       major: '10'
-      minor: '6'
+      minor: '7'
     selinux:
       enabled: false
   osfamily: Debian
@@ -477,8 +481,8 @@ values:
   sshrsakey: AAAAB3NzaC1yc2EAAAADAQABAAABAQDYjZ96pOWt6t2QA8yov+O5FF5gBI2rVCQ6cdLBOgjzCrWKhMI53JdoUqfZuxWhwWEYw1pv9WPq97E6BeLwHLCYWgn9LA3aJEIglxjYxx4SJbkAQpZPlcM5AhI5g1BTlJSLhy4Omkp4pZyULU1VsgMFrhs2YKAsUqlGmd+K5y24/7LUuUD0R/mM+2OvXuS3fjg2Nj4IGTVEiGXTcWukucvl5vWkR7zF9CnFRCJAcr2aiPiyqC2Wfep9kEXleBqRa6sJpbSj7eDU0IjYKkHlO0Ud7qGr4MbdVj3ZIORhd6iQEhfUoc7zNP2g7zs/g7L/4WGB4wdKrk8IAqkVobFiyZAn
   subnet: sesi_rocquencourt
   sudoversion: 1.8.27
-  swapfree: 2.87 GiB
-  swapfree_mb: 2936.7734375
+  swapfree: 2.48 GiB
+  swapfree_mb: 2535.0703125
   swapsize: 3.82 GiB
   swapsize_mb: 3907.99609375
   swh_hostname:
@@ -486,10 +490,10 @@ values:
     short: worker06
     internal_fqdn: worker06.internal.softwareheritage.org
   system_uptime:
-    days: 13
-    hours: 329
-    seconds: 1186957
-    uptime: 13 days
+    days: 10
+    hours: 241
+    seconds: 867920
+    uptime: 10 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -504,15 +508,15 @@ values:
     systemd-timesyncd.service: enabled
   systemd_version: '246'
   timezone: UTC
-  uptime: 13 days
-  uptime_days: 13
-  uptime_hours: 329
-  uptime_seconds: 1186957
+  uptime: 10 days
+  uptime_days: 10
+  uptime_hours: 241
+  uptime_seconds: 867920
   uuid: 1cfacaaf-2718-4794-9cc5-88dfde58fb43
   vcsrepo_svn_ver: 1.10.4
   virtual: kvm
   clientcert: worker06.softwareheritage.org
   clientversion: 5.5.10
   clientnoop: false
-timestamp: '2020-11-18T08:19:07.782103202+00:00'
-expiration: '2020-11-18T08:49:07.782594452+00:00'
+timestamp: '2020-12-07T10:49:07.314851406+00:00'
+expiration: '2020-12-07T11:19:07.315551911+00:00'

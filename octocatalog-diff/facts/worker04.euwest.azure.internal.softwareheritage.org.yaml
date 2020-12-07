@@ -6,23 +6,23 @@ values:
   apt_has_dist_updates: true
   apt_has_updates: true
   apt_package_dist_updates:
-  - python3-swh.model
+  - librdkafka1
+  - python3-confluent-kafka
+  - python3-swh.core
   - python3-swh.storage
-  - python3-swh.indexer
-  - python3-swh.indexer.storage
-  - python3-swh.journal
+  - python3-swh.scheduler
   apt_package_security_dist_updates: []
   apt_package_security_updates: []
   apt_package_updates:
-  - python3-swh.model
+  - librdkafka1
+  - python3-confluent-kafka
+  - python3-swh.core
   - python3-swh.storage
-  - python3-swh.indexer
-  - python3-swh.indexer.storage
-  - python3-swh.journal
-  apt_reboot_required: false
+  - python3-swh.scheduler
+  apt_reboot_required: true
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1605686342
+  apt_update_last_success: 1607335143
   apt_updates: 5
   architecture: amd64
   augeas:
@@ -186,9 +186,9 @@ values:
   kernelversion: 4.19.0
   letsencrypt_directory: {}
   load_averages:
-    15m: 1.11
-    1m: 1.01
-    5m: 1.21
+    15m: 3.85
+    1m: 3.49
+    5m: 4.74
   location: azure_euwest
   lsbdistcodename: buster
   lsbdistdescription: Debian GNU/Linux 10 (buster)
@@ -200,22 +200,22 @@ values:
   manufacturer: Microsoft Corporation
   memory:
     system:
-      available: 5.68 GiB
-      available_bytes: 6103564288
-      capacity: 16.50%
+      available: 5.16 GiB
+      available_bytes: 5541646336
+      capacity: 24.19%
       total: 6.81 GiB
       total_bytes: 7309463552
-      used: 1.12 GiB
-      used_bytes: 1205899264
-  memoryfree: 5.68 GiB
-  memoryfree_mb: 5820.8125
+      used: 1.65 GiB
+      used_bytes: 1767817216
+  memoryfree: 5.16 GiB
+  memoryfree_mb: 5284.92578125
   memorysize: 6.81 GiB
   memorysize_mb: 6970.84765625
   mountpoints:
     "/":
-      available: 26.35 GiB
-      available_bytes: 28295180288
-      capacity: 10.38%
+      available: 26.56 GiB
+      available_bytes: 28515835904
+      capacity: 9.68%
       device: "/dev/sda1"
       filesystem: ext4
       options:
@@ -224,11 +224,11 @@ values:
       - errors=remount-ro
       size: 29.40 GiB
       size_bytes: 31571480576
-      used: 3.05 GiB
-      used_bytes: 3276300288
+      used: 2.85 GiB
+      used_bytes: 3055644672
     "/dev/shm":
       available: 3.40 GiB
-      available_bytes: 3654606848
+      available_bytes: 3654582272
       capacity: 0.00%
       device: tmpfs
       filesystem: tmpfs
@@ -238,8 +238,8 @@ values:
       - nodev
       size: 3.40 GiB
       size_bytes: 3654729728
-      used: 120.00 KiB
-      used_bytes: 122880
+      used: 144.00 KiB
+      used_bytes: 147456
     "/mnt/resource":
       available: 13.68 GiB
       available_bytes: 14686269440
@@ -255,7 +255,7 @@ values:
       used_bytes: 41971712
     "/run":
       available: 696.55 MiB
-      available_bytes: 730390528
+      available_bytes: 730386432
       capacity: 0.08%
       device: tmpfs
       filesystem: tmpfs
@@ -268,8 +268,8 @@ values:
       - mode=755
       size: 697.09 MiB
       size_bytes: 730947584
-      used: 544.00 KiB
-      used_bytes: 557056
+      used: 548.00 KiB
+      used_bytes: 561152
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -307,7 +307,7 @@ values:
       used_bytes: 0
     "/tmp":
       available: 3.40 GiB
-      available_bytes: 3654717440
+      available_bytes: 3654684672
       capacity: 0.00%
       device: tmpfs
       filesystem: tmpfs
@@ -316,8 +316,8 @@ values:
       - relatime
       size: 3.40 GiB
       size_bytes: 3654729728
-      used: 12.00 KiB
-      used_bytes: 12288
+      used: 44.00 KiB
+      used_bytes: 45056
   mounts:
   - "/"
   - "/mnt/resource"
@@ -387,7 +387,7 @@ values:
     primary: eth0
   operatingsystem: Debian
   operatingsystemmajrelease: '10'
-  operatingsystemrelease: '10.6'
+  operatingsystemrelease: '10.7'
   os:
     architecture: amd64
     distro:
@@ -401,9 +401,9 @@ values:
     hardware: x86_64
     name: Debian
     release:
-      full: '10.6'
+      full: '10.7'
       major: '10'
-      minor: '6'
+      minor: '7'
     selinux:
       enabled: false
   osfamily: Debian
@@ -495,10 +495,10 @@ values:
     short: worker04.euwest.azure
     internal_fqdn: worker04.euwest.azure.internal.softwareheritage.org
   system_uptime:
-    days: 13
-    hours: 329
-    seconds: 1187479
-    uptime: 13 days
+    days: 32
+    hours: 787
+    seconds: 2836281
+    uptime: 32 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -513,15 +513,15 @@ values:
     systemd-timesyncd.service: enabled
   systemd_version: '246'
   timezone: UTC
-  uptime: 13 days
-  uptime_days: 13
-  uptime_hours: 329
-  uptime_seconds: 1187479
+  uptime: 32 days
+  uptime_days: 32
+  uptime_hours: 787
+  uptime_seconds: 2836281
   uuid: c5daa48e-213a-5c4c-b532-4e4881909284
   vcsrepo_svn_ver: 1.10.4
   virtual: hyperv
   clientcert: worker04.euwest.azure.internal.softwareheritage.org
   clientversion: 5.5.10
   clientnoop: false
-timestamp: '2020-11-18T08:38:05.581609425+00:00'
-expiration: '2020-11-18T09:08:05.582143425+00:00'
+timestamp: '2020-12-07T10:38:07.040745079+00:00'
+expiration: '2020-12-07T11:08:07.041206079+00:00'
