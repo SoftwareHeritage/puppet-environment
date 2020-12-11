@@ -7,3 +7,9 @@ Get the certificate name as declared on the ``defaults.yaml`` file and run the s
 ```bash
 ./generate_certificate <certificate name>
 ```
+
+To force the CN of the certificate, a second parameter can be added, ex :
+
+```bash
+./generate_certificate journal0.internal.staging.swh.network broker0.journal.staging.swh.network
+```

@@ -5,12 +5,13 @@ set -eu
 SCRIPT_PATH=$(dirname $0)
 CERTS_DIR=$SCRIPT_PATH
 
-if [ $# -ne 1 ]; then
+if [ $# -lt 1 ]; then
     echo "Usage: $0 <certificate name>"
     exit 1
 fi
 
 CERT_NAME=$1
+CN=${2:-$1}
 
 echo "Creating the certificate directory ${CERTS_DIR}/${CERT_NAME}..."
 mkdir -p ${CERTS_DIR}/${CERT_NAME}
@@ -18,7 +19,7 @@ mkdir -p ${CERTS_DIR}/${CERT_NAME}
 pushd ${CERTS_DIR}/${CERT_NAME}
 
 echo "Creating the key and the certificate..."
-openssl req -x509 -nodes -days 999 -newkey rsa:2048 -keyout privkey.pem -out cert.pem --subj "/C=FR/ST=Paris/CN=vagrant.local."
+openssl req -x509 -nodes -days 999 -newkey rsa:2048 -keyout privkey.pem -out cert.pem --subj "/C=FR/ST=Paris/CN=${CN}"
 
 echo "Creating the chain certificates..."
 cp -v cert.pem chain.pem
