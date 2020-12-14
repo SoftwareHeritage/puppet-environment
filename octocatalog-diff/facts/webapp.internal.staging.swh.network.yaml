@@ -3,35 +3,29 @@ name: webapp.internal.staging.swh.network
 values:
   agent_specified_environment: staging
   apache_version: 2.4.38
-  apt_dist_updates: 10
+  apt_dist_updates: 7
   apt_has_dist_updates: true
   apt_has_updates: true
   apt_package_dist_updates:
+  - libxxhash0
+  - borgbackup
   - librdkafka1
   - python3-confluent-kafka
-  - python3-pyld
-  - python3-swh.core
-  - python3-swh.model
-  - python3-swh.storage
-  - python3-swh.scheduler
-  - python3-xmltodict
-  - python3-swh.indexer.storage
-  - python3-swh.vault
+  - python3-msgpack
+  - python3-swh.journal
+  - python3-swh.search
   apt_package_security_dist_updates: []
   apt_package_security_updates: []
   apt_package_updates:
   - librdkafka1
   - python3-confluent-kafka
-  - python3-swh.core
-  - python3-swh.model
-  - python3-swh.storage
-  - python3-swh.scheduler
-  - python3-swh.vault
-  apt_reboot_required: true
+  - python3-swh.journal
+  - python3-swh.search
+  apt_reboot_required: false
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1607337302
-  apt_updates: 7
+  apt_update_last_success: 1607956502
+  apt_updates: 4
   architecture: amd64
   bios_release_date: 04/01/2014
   bios_vendor: SeaBIOS
@@ -170,13 +164,13 @@ values:
   is_virtual: true
   kernel: Linux
   kernelmajversion: '4.19'
-  kernelrelease: 4.19.0-12-amd64
+  kernelrelease: 4.19.0-13-amd64
   kernelversion: 4.19.0
   letsencrypt_directory: {}
   load_averages:
-    15m: 0.0
-    1m: 0.0
-    5m: 0.0
+    15m: 0.01
+    1m: 0.1
+    5m: 0.05
   location: sesi_rocquencourt_staging
   lsbdistcodename: buster
   lsbdistdescription: Debian GNU/Linux 10 (buster)
@@ -188,22 +182,22 @@ values:
   manufacturer: QEMU
   memory:
     system:
-      available: 13.32 GiB
-      available_bytes: 14300319744
-      capacity: 14.99%
+      available: 13.42 GiB
+      available_bytes: 14404370432
+      capacity: 14.37%
       total: 15.67 GiB
-      total_bytes: 16821673984
-      used: 2.35 GiB
-      used_bytes: 2521354240
-  memoryfree: 13.32 GiB
-  memoryfree_mb: 13637.84765625
+      total_bytes: 16821665792
+      used: 2.25 GiB
+      used_bytes: 2417295360
+  memoryfree: 13.42 GiB
+  memoryfree_mb: 13737.078125
   memorysize: 15.67 GiB
-  memorysize_mb: 16042.3984375
+  memorysize_mb: 16042.390625
   mountpoints:
     "/":
-      available: 26.97 GiB
-      available_bytes: 28955115520
-      capacity: 14.30%
+      available: 27.21 GiB
+      available_bytes: 29212958720
+      capacity: 13.54%
       device: "/dev/vda1"
       filesystem: ext4
       options:
@@ -212,12 +206,12 @@ values:
       - errors=remount-ro
       size: 31.47 GiB
       size_bytes: 33785901056
-      used: 4.50 GiB
-      used_bytes: 4830785536
+      used: 4.26 GiB
+      used_bytes: 4572942336
     "/dev/shm":
       available: 7.83 GiB
-      available_bytes: 8410828800
-      capacity: 0.00%
+      available_bytes: 8410832896
+      capacity: 0%
       device: tmpfs
       filesystem: tmpfs
       options:
@@ -225,12 +219,12 @@ values:
       - nosuid
       - nodev
       size: 7.83 GiB
-      size_bytes: 8410836992
-      used: 8.00 KiB
-      used_bytes: 8192
+      size_bytes: 8410832896
+      used: 0 bytes
+      used_bytes: 0
     "/run":
       available: 1.57 GiB
-      available_bytes: 1681588224
+      available_bytes: 1681620992
       capacity: 0.03%
       device: tmpfs
       filesystem: tmpfs
@@ -243,8 +237,8 @@ values:
       - mode=755
       size: 1.57 GiB
       size_bytes: 1682169856
-      used: 568.00 KiB
-      used_bytes: 581632
+      used: 536.00 KiB
+      used_bytes: 548864
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -263,8 +257,8 @@ values:
       used: 0 bytes
       used_bytes: 0
     "/run/user/1003":
-      available: 923.74 MiB
-      available_bytes: 968609792
+      available: 1.57 GiB
+      available_bytes: 1682165760
       capacity: 0%
       device: tmpfs
       filesystem: tmpfs
@@ -273,13 +267,13 @@ values:
       - nosuid
       - nodev
       - relatime
-      - size=945908k
-      - nr_inodes=236477
+      - size=1642740k
+      - nr_inodes=410685
       - mode=700
       - uid=1003
       - gid=1003
-      size: 923.74 MiB
-      size_bytes: 968609792
+      size: 1.57 GiB
+      size_bytes: 1682165760
       used: 0 bytes
       used_bytes: 0
     "/sys/fs/cgroup":
@@ -484,10 +478,10 @@ values:
     short: webapp
     internal_fqdn: webapp.internal.staging.swh.network
   system_uptime:
-    days: 45
-    hours: 1099
-    seconds: 3959021
-    uptime: 45 days
+    days: 5
+    hours: 124
+    seconds: 448905
+    uptime: 5 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -502,15 +496,15 @@ values:
     systemd-timesyncd.service: enabled
   systemd_version: '246'
   timezone: UTC
-  uptime: 45 days
-  uptime_days: 45
-  uptime_hours: 1099
-  uptime_seconds: 3959021
+  uptime: 5 days
+  uptime_days: 5
+  uptime_hours: 124
+  uptime_seconds: 448905
   uuid: a43344ae-3925-4a0f-afe6-9982634a66f7
   vcsrepo_svn_ver: ''
   virtual: kvm
   clientcert: webapp.internal.staging.swh.network
   clientversion: 5.5.10
   clientnoop: false
-timestamp: '2020-12-07T10:44:04.893645326+00:00'
-expiration: '2020-12-07T11:14:04.894000782+00:00'
+timestamp: '2020-12-14T15:14:04.973574101+00:00'
+expiration: '2020-12-14T15:44:04.973899571+00:00'

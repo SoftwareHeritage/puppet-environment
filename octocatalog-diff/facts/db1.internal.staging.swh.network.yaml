@@ -2,12 +2,14 @@
 name: db1.internal.staging.swh.network
 values:
   agent_specified_environment: staging
-  apt_dist_updates: 22
+  apt_dist_updates: 25
   apt_has_dist_updates: true
   apt_has_updates: true
   apt_package_dist_updates:
   - bind9-dnsutils
   - bind9-libs
+  - libxxhash0
+  - borgbackup
   - zfs-dkms
   - zfsutils-linux
   - libuutil1linux
@@ -27,6 +29,7 @@ values:
   - postgresql-12
   - postgresql-client-13
   - postgresql-client
+  - python3-msgpack
   - zfs-zed
   apt_package_security_dist_updates: []
   apt_package_security_updates: []
@@ -50,7 +53,7 @@ values:
   apt_reboot_required: false
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1607336043
+  apt_update_last_success: 1607955242
   apt_updates: 16
   architecture: amd64
   bios_release_date: 11/21/2019
@@ -304,9 +307,9 @@ values:
   kernelversion: 5.8.0
   letsencrypt_directory: {}
   load_averages:
-    15m: 1.31
-    1m: 0.61
-    5m: 0.81
+    15m: 1.85
+    1m: 1.87
+    5m: 1.75
   lsbdistcodename: buster
   lsbdistdescription: Debian GNU/Linux 10 (buster)
   lsbdistid: Debian
@@ -322,30 +325,30 @@ values:
   manufacturer: Supermicro
   memory:
     swap:
-      available: 16.00 GiB
-      available_bytes: 17179865088
-      capacity: 0%
+      available: 15.99 GiB
+      available_bytes: 17173573632
+      capacity: 0.04%
       total: 16.00 GiB
       total_bytes: 17179865088
-      used: 0 bytes
-      used_bytes: 0
+      used: 6.00 MiB
+      used_bytes: 6291456
     system:
-      available: 40.58 GiB
-      available_bytes: 43574419456
-      capacity: 56.92%
+      available: 37.46 GiB
+      available_bytes: 40222633984
+      capacity: 60.24%
       total: 94.21 GiB
       total_bytes: 101158682624
-      used: 53.63 GiB
-      used_bytes: 57584263168
-  memoryfree: 40.58 GiB
-  memoryfree_mb: 41555.8046875
+      used: 56.75 GiB
+      used_bytes: 60936048640
+  memoryfree: 37.46 GiB
+  memoryfree_mb: 38359.29296875
   memorysize: 94.21 GiB
   memorysize_mb: 96472.4375
   mountpoints:
     "/":
-      available: 16.46 GiB
-      available_bytes: 17668796416
-      capacity: 16.41%
+      available: 16.40 GiB
+      available_bytes: 17607761920
+      capacity: 16.70%
       device: "/dev/mapper/ssd-root"
       filesystem: ext2
       options:
@@ -354,8 +357,8 @@ values:
       - errors=remount-ro
       size: 19.69 GiB
       size_bytes: 21137846272
-      used: 3.23 GiB
-      used_bytes: 3469049856
+      used: 3.29 GiB
+      used_bytes: 3530084352
     "/boot/efi":
       available: 480.93 MiB
       available_bytes: 504291328
@@ -378,7 +381,7 @@ values:
       used_bytes: 5349376
     "/dev/shm":
       available: 47.11 GiB
-      available_bytes: 50579333120
+      available_bytes: 50578931712
       capacity: 0.00%
       device: tmpfs
       filesystem: tmpfs
@@ -388,11 +391,11 @@ values:
       - nodev
       size: 47.11 GiB
       size_bytes: 50579341312
-      used: 8.00 KiB
-      used_bytes: 8192
+      used: 400.00 KiB
+      used_bytes: 409600
     "/run":
       available: 9.42 GiB
-      available_bytes: 10114334720
+      available_bytes: 10114318336
       capacity: 0.02%
       device: tmpfs
       filesystem: tmpfs
@@ -405,8 +408,8 @@ values:
       - mode=755
       size: 9.42 GiB
       size_bytes: 10115870720
-      used: 1.46 MiB
-      used_bytes: 1536000
+      used: 1.48 MiB
+      used_bytes: 1552384
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -875,8 +878,8 @@ values:
   sshrsakey: AAAAB3NzaC1yc2EAAAADAQABAAABAQDBQxOD7pghY6fZFgDhgFB+8yRvUjhLHyN2KXvv5z6TJeICvKRVhCZr+U/96u9uY5pd5uv7Nf2MWtl0yTSUNQiAdAMbNP7RIx120lhoPxsMrz5izqAg1GRI5Vm6sWtTGPgazfau+jpmbNDV9lOHOl9aVdeAyCEu8eVGF5wqwsG1Kh6/DLMRJgJ2WpkrV7j2x5bXW41kC6Zj3io0qn5i/nW6REDwtHZUZNnU17OKtd7OlsImlj//78AGje2WadXODilY6wPCb3HTOYGMUKiMECHnUUB7Tfgo1KOAu2KO5GqtlCa4F0jMsOTHVcCf/CbWvLoaMT+A68X1K5cY7n/RUQQR
   subnet: sesi_rocquencourt_staging
   sudoversion: 1.8.27
-  swapfree: 16.00 GiB
-  swapfree_mb: 16383.99609375
+  swapfree: 15.99 GiB
+  swapfree_mb: 16377.99609375
   swapsize: 16.00 GiB
   swapsize_mb: 16383.99609375
   swh_hostname:
@@ -884,10 +887,10 @@ values:
     short: db1
     internal_fqdn: db1.internal.staging.swh.network
   system_uptime:
-    days: 18
-    hours: 450
-    seconds: 1620952
-    uptime: 18 days
+    days: 25
+    hours: 622
+    seconds: 2241954
+    uptime: 25 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -902,15 +905,15 @@ values:
     systemd-timesyncd.service: enabled
   systemd_version: '246'
   timezone: UTC
-  uptime: 18 days
-  uptime_days: 18
-  uptime_hours: 450
-  uptime_seconds: 1620952
+  uptime: 25 days
+  uptime_days: 25
+  uptime_hours: 622
+  uptime_seconds: 2241954
   uuid: 00000000-0000-0000-0000-ac1f6b05e596
   vcsrepo_svn_ver: ''
   virtual: physical
   clientcert: db1.internal.staging.swh.network
   clientversion: 5.5.10
   clientnoop: false
-timestamp: '2020-12-07T10:41:06.840671898+00:00'
-expiration: '2020-12-07T11:11:06.841501925+00:00'
+timestamp: '2020-12-14T15:11:08.104350819+00:00'
+expiration: '2020-12-14T15:41:08.105234124+00:00'

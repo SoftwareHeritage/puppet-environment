@@ -3,10 +3,11 @@ name: tate.softwareheritage.org
 values:
   agent_specified_environment: production
   apache_version: 2.4.38
-  apt_dist_updates: 48
+  apt_dist_updates: 62
   apt_has_dist_updates: true
   apt_has_updates: true
   apt_package_dist_updates:
+  - php-common
   - php-apcu
   - php8.0-apcu
   - php7.4-apcu
@@ -15,6 +16,13 @@ values:
   - php7.1-apcu
   - php7.0-apcu
   - php5.6-apcu
+  - php-apcu-bc
+  - php7.4-apcu-bc
+  - php7.3-apcu-bc
+  - php7.2-apcu-bc
+  - php7.1-apcu-bc
+  - php7.0-apcu-bc
+  - libssl1.1
   - php8.0-common
   - libonig5
   - php8.0-mbstring
@@ -54,17 +62,29 @@ values:
   - php5.6-common
   - php5.6-mbstring
   - php5.6-mailparse
+  - libxxhash0
+  - borgbackup
+  - openssl
   - php7.4
+  - php
+  - php-zip
+  - python3-msgpack
   apt_package_security_dist_updates: []
   apt_package_security_updates: []
   apt_package_updates:
+  - php-common
   - php7.4-zip
   - php7.4-readline
   - php7.4-opcache
   - php7.4-json
+  - libssl1.1
   - libapache2-mod-php7.4
   - php7.4-cli
   - php7.4-common
+  - openssl
+  - php7.4
+  - php
+  - php-zip
   - php7.3-zip
   - php7.3-xml
   - php7.3-readline
@@ -77,12 +97,11 @@ values:
   - php7.3-curl
   - php7.3-cli
   - php7.3-common
-  - php7.4
   apt_reboot_required: true
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1607336892
-  apt_updates: 20
+  apt_update_last_success: 1607956083
+  apt_updates: 25
   architecture: amd64
   augeas:
     version: 1.11.0
@@ -240,9 +259,9 @@ values:
   kernelversion: 4.19.0
   letsencrypt_directory: {}
   load_averages:
-    15m: 2.91
-    1m: 4.44
-    5m: 2.79
+    15m: 0.65
+    1m: 0.51
+    5m: 0.53
   location: sesi_rocquencourt
   lsbdistcodename: buster
   lsbdistdescription: Debian GNU/Linux 10 (buster)
@@ -255,30 +274,30 @@ values:
   manufacturer: QEMU
   memory:
     swap:
-      available: 3.95 GiB
-      available_bytes: 4246216704
-      capacity: 1.11%
+      available: 3.94 GiB
+      available_bytes: 4233359360
+      capacity: 1.41%
       total: 4.00 GiB
       total_bytes: 4293914624
-      used: 45.49 MiB
-      used_bytes: 47697920
+      used: 57.75 MiB
+      used_bytes: 60555264
     system:
-      available: 4.97 GiB
-      available_bytes: 5333889024
-      capacity: 57.65%
+      available: 4.86 GiB
+      available_bytes: 5223739392
+      capacity: 58.52%
       total: 11.73 GiB
       total_bytes: 12593868800
-      used: 6.76 GiB
-      used_bytes: 7259979776
-  memoryfree: 4.97 GiB
-  memoryfree_mb: 5086.79296875
+      used: 6.86 GiB
+      used_bytes: 7370129408
+  memoryfree: 4.86 GiB
+  memoryfree_mb: 4981.74609375
   memorysize: 11.73 GiB
   memorysize_mb: 12010.44921875
   mountpoints:
     "/":
-      available: 24.11 GiB
-      available_bytes: 25885413376
-      capacity: 67.29%
+      available: 24.63 GiB
+      available_bytes: 26451202048
+      capacity: 66.57%
       device: "/dev/vda1"
       filesystem: ext4
       options:
@@ -287,8 +306,8 @@ values:
       - errors=remount-ro
       size: 73.70 GiB
       size_bytes: 79131844608
-      used: 49.59 GiB
-      used_bytes: 53246431232
+      used: 49.06 GiB
+      used_bytes: 52680642560
     "/dev/shm":
       available: 5.86 GiB
       available_bytes: 6296932352
@@ -305,7 +324,7 @@ values:
       used_bytes: 0
     "/run":
       available: 1.17 GiB
-      available_bytes: 1258840064
+      available_bytes: 1258856448
       capacity: 0.04%
       device: tmpfs
       filesystem: tmpfs
@@ -318,8 +337,8 @@ values:
       - mode=755
       size: 1.17 GiB
       size_bytes: 1259388928
-      used: 536.00 KiB
-      used_bytes: 548864
+      used: 520.00 KiB
+      used_bytes: 532480
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -335,26 +354,6 @@ values:
       - size=5120k
       size: 5.00 MiB
       size_bytes: 5242880
-      used: 0 bytes
-      used_bytes: 0
-    "/run/user/1001":
-      available: 1.17 GiB
-      available_bytes: 1259384832
-      capacity: 0%
-      device: tmpfs
-      filesystem: tmpfs
-      options:
-      - rw
-      - nosuid
-      - nodev
-      - relatime
-      - size=1229868k
-      - nr_inodes=307467
-      - mode=700
-      - uid=1001
-      - gid=1001
-      size: 1.17 GiB
-      size_bytes: 1259384832
       used: 0 bytes
       used_bytes: 0
     "/sys/fs/cgroup":
@@ -589,8 +588,8 @@ values:
   sshrsakey: AAAAB3NzaC1yc2EAAAADAQABAAABAQDIEv052pq1mvCDxaP+IBjYSEiAAjUwX+rLl1Tc4ZJ8ck7+/JuR9uSiBspeF4E8M6YE0JFczGqpJdMeU5uf/rUqeMLp53g7Q9BWdIzHBOGLSW80NZ9SYLoPZdhiLd+W3nHu6tze79txvwSqbVpw91NRiaQT8MmI3f7gcRYKClmtODO9Sz8hIUIwGtty7/SJEpZC8httIbsY6jjGM/IUbh6FWsfN3G7jxoq8OvwErSZ+zkfJ6IpPdkTrPRCbGNaO8DDQOBdhGu1z1DXkXeaa6jD7t2SiTpJ1B6BgjwuefimczGNohUisLdtUFarAByb7iklpeMvbiS9N/TsxV88D8qMD
   subnet: sesi_rocquencourt
   sudoversion: 1.8.27
-  swapfree: 3.95 GiB
-  swapfree_mb: 4049.5078125
+  swapfree: 3.94 GiB
+  swapfree_mb: 4037.24609375
   swapsize: 4.00 GiB
   swapsize_mb: 4094.99609375
   swh_hostname:
@@ -598,10 +597,10 @@ values:
     short: tate
     internal_fqdn: tate.internal.softwareheritage.org
   system_uptime:
-    days: 10
-    hours: 241
-    seconds: 869868
-    uptime: 10 days
+    days: 17
+    hours: 413
+    seconds: 1489044
+    uptime: 17 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -616,15 +615,15 @@ values:
     systemd-timesyncd.service: enabled
   systemd_version: '246'
   timezone: UTC
-  uptime: 10 days
-  uptime_days: 10
-  uptime_hours: 241
-  uptime_seconds: 869868
+  uptime: 17 days
+  uptime_days: 17
+  uptime_hours: 413
+  uptime_seconds: 1489044
   uuid: 1cfacaaf-2718-4794-9cc5-88dfde58fb43
   vcsrepo_svn_ver: ''
   virtual: kvm
   clientcert: tate.softwareheritage.org
   clientversion: 5.5.10
   clientnoop: false
-timestamp: '2020-12-07T10:54:41.745610744+00:00'
-expiration: '2020-12-07T11:24:41.747174177+00:00'
+timestamp: '2020-12-14T14:54:18.118336562+00:00'
+expiration: '2020-12-14T15:24:18.119745306+00:00'
