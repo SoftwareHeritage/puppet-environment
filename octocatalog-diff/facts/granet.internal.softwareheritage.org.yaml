@@ -2,21 +2,19 @@
 name: granet.internal.softwareheritage.org
 values:
   agent_specified_environment: production
-  apt_dist_updates: 25
+  apt_dist_updates: 20
   apt_has_dist_updates: true
   apt_has_updates: true
   apt_package_dist_updates:
-  - libzstd1
   - libsystemd-dev
-  - libnss-systemd
   - udev
   - libudev1
   - systemd-sysv
+  - libnss-systemd
   - systemd-timesyncd
   - libpam-systemd
   - systemd
   - libsystemd0
-  - containerd.io
   - docker-ce-cli
   - docker-ce
   - docker-ce-rootless-extras
@@ -26,42 +24,36 @@ values:
   - libzfs2linux
   - libzpool2linux
   - libnvpair1linux
-  - librdkafka-dev
-  - librdkafka1
-  - librdkafka++1
   - spl-dkms
   - zfs-zed
   apt_package_security_dist_updates: []
   apt_package_security_updates: []
   apt_package_updates:
-  - libzstd1
   - libsystemd-dev
-  - libnss-systemd
   - udev
   - libudev1
   - systemd-sysv
+  - libnss-systemd
   - systemd-timesyncd
   - libpam-systemd
   - systemd
   - libsystemd0
-  - containerd.io
   - docker-ce-cli
+  - docker-ce
+  - docker-ce-rootless-extras
   - zfs-dkms
   - zfsutils-linux
   - libuutil1linux
   - libzfs2linux
   - libzpool2linux
   - libnvpair1linux
-  - librdkafka-dev
-  - librdkafka1
-  - librdkafka++1
   - spl-dkms
   - zfs-zed
-  apt_reboot_required: true
+  apt_reboot_required: false
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1607955243
-  apt_updates: 23
+  apt_update_last_success: 1609917242
+  apt_updates: 20
   architecture: amd64
   bios_release_date: '08/15/2019'
   bios_vendor: Dell Inc.
@@ -188,7 +180,6 @@ values:
       - 'true'
     - - Native Overlay Diff
       - 'true'
-    SystemStatus: ''
     Plugins:
       Volume:
       - local
@@ -224,15 +215,17 @@ values:
     BridgeNfIptables: true
     BridgeNfIp6tables: true
     Debug: false
-    NFd: 22
+    NFd: 23
     OomKillDisable: true
-    NGoroutines: 34
-    SystemTime: '2020-12-14T15:09:04.967600878Z'
+    NGoroutines: 33
+    SystemTime: '2021-01-06T08:09:04.751695388Z'
     LoggingDriver: journald
     CgroupDriver: cgroupfs
+    CgroupVersion: '1'
     NEventsListener: 0
-    KernelVersion: 4.19.0-9-amd64
+    KernelVersion: 4.19.0-13-amd64
     OperatingSystem: Debian GNU/Linux 10 (buster)
+    OSVersion: '10'
     OSType: linux
     Architecture: x86_64
     IndexServerAddress: https://index.docker.io/v1/
@@ -249,7 +242,7 @@ values:
           Official: true
       Mirrors: []
     NCPU: 48
-    MemTotal: 810021470208
+    MemTotal: 810021474304
     GenericResources: ''
     DockerRootDir: "/var/lib/docker"
     HttpProxy: ''
@@ -258,10 +251,12 @@ values:
     Name: granet
     Labels: []
     ExperimentalBuild: false
-    ServerVersion: 19.03.12
-    ClusterStore: ''
-    ClusterAdvertise: ''
+    ServerVersion: 20.10.0
     Runtimes:
+      io.containerd.runc.v2:
+        path: runc
+      io.containerd.runtime.v1.linux:
+        path: runc
       runc:
         path: runc
     DefaultRuntime: runc
@@ -276,14 +271,14 @@ values:
     Isolation: ''
     InitBinary: docker-init
     ContainerdCommit:
-      ID: 7ad184331fa3e55e52b890ea95e65ba581ae3429
-      Expected: 7ad184331fa3e55e52b890ea95e65ba581ae3429
+      ID: 269548fa27e0089a8b8278fc4fc781d7f65a939b
+      Expected: 269548fa27e0089a8b8278fc4fc781d7f65a939b
     RuncCommit:
-      ID: dc9208a3303feef5b3839f4323d9beb36df0a9dd
-      Expected: dc9208a3303feef5b3839f4323d9beb36df0a9dd
+      ID: ff819c7e9184c13b7c2607fe6c30ae19403a7aff
+      Expected: ff819c7e9184c13b7c2607fe6c30ae19403a7aff
     InitCommit:
-      ID: fec3683
-      Expected: fec3683
+      ID: de40ad0
+      Expected: de40ad0
     SecurityOptions:
     - name=apparmor
     - name=seccomp,profile=default
@@ -291,14 +286,28 @@ values:
     - 'WARNING: No swap limit support'
     ClientInfo:
       Debug: false
-      Plugins: []
+      Context: default
+      Plugins:
+      - SchemaVersion: 0.1.0
+        Vendor: Docker Inc.
+        Version: v0.9.1-beta3
+        ShortDescription: Docker App
+        Experimental: true
+        Name: app
+        Path: "/usr/libexec/docker/cli-plugins/docker-app"
+      - SchemaVersion: 0.1.0
+        Vendor: Docker Inc.
+        Version: v0.4.2-docker
+        ShortDescription: Build with BuildKit
+        Name: buildx
+        Path: "/usr/libexec/docker/cli-plugins/docker-buildx"
       Warnings: ''
     network:
       managed_interfaces: {}
       bridge:
         Name: bridge
-        Id: 1241d971b8e47dc55c1d10b4ae37c44d1dc0e173c9fbf40f245ef8a2ff118385
-        Created: '2020-07-08T09:01:22.681985691Z'
+        Id: 0dd94ed298a5523e101cb5f9e88758fe4c6c3c09a6562272df34de4873294573
+        Created: '2020-12-14T20:57:34.841166212Z'
         Scope: local
         Driver: bridge
         EnableIPv6: false
@@ -363,7 +372,7 @@ values:
         Containers: {}
         Options: {}
         Labels: {}
-  docker_client_version: 19.03.12
+  docker_client_version: 20.10.0
   docker_home_dirs:
     root: "/root"
     daemon: "/usr/sbin"
@@ -430,60 +439,63 @@ values:
     vigna: "/home/vigna"
     tenma: "/home/tenma"
     vsellier: "/home/vsellier"
-  docker_server_version: 19.03.12
+    postgres: "/var/lib/postgresql"
+    tg1999: "/home/tg1999"
+  docker_server_version: 20.10.0
   docker_version:
     Client:
       Platform:
         Name: Docker Engine - Community
-      Version: 19.03.12
-      ApiVersion: '1.40'
-      DefaultAPIVersion: '1.40'
-      GitCommit: 48a66213fe
-      GoVersion: go1.13.10
+      Version: 20.10.0
+      ApiVersion: '1.41'
+      DefaultAPIVersion: '1.41'
+      GitCommit: 7287ab3
+      GoVersion: go1.13.15
       Os: linux
       Arch: amd64
-      BuildTime: Mon Jun 22 15:45:50 2020
-      Experimental: false
+      BuildTime: Tue Dec  8 18:59:49 2020
+      Context: default
+      Experimental: true
     Server:
       Platform:
         Name: Docker Engine - Community
       Components:
       - Name: Engine
-        Version: 19.03.12
+        Version: 20.10.0
         Details:
-          ApiVersion: '1.40'
+          ApiVersion: '1.41'
           Arch: amd64
-          BuildTime: Mon Jun 22 15:44:21 2020
+          BuildTime: Tue Dec  8 18:57:58 2020
           Experimental: 'false'
-          GitCommit: 48a66213fe
-          GoVersion: go1.13.10
-          KernelVersion: 4.19.0-9-amd64
+          GitCommit: eeddea2
+          GoVersion: go1.13.15
+          KernelVersion: 4.19.0-13-amd64
           MinAPIVersion: '1.12'
           Os: linux
       - Name: containerd
-        Version: 1.2.13
+        Version: 1.4.3
         Details:
-          GitCommit: 7ad184331fa3e55e52b890ea95e65ba581ae3429
+          GitCommit: 269548fa27e0089a8b8278fc4fc781d7f65a939b
       - Name: runc
-        Version: 1.0.0-rc10
+        Version: 1.0.0-rc92
         Details:
-          GitCommit: dc9208a3303feef5b3839f4323d9beb36df0a9dd
+          GitCommit: ff819c7e9184c13b7c2607fe6c30ae19403a7aff
       - Name: docker-init
-        Version: 0.18.0
+        Version: 0.19.0
         Details:
-          GitCommit: fec3683
-      Version: 19.03.12
-      ApiVersion: '1.40'
+          GitCommit: de40ad0
+      Version: 20.10.0
+      ApiVersion: '1.41'
       MinAPIVersion: '1.12'
-      GitCommit: 48a66213fe
-      GoVersion: go1.13.10
+      GitCommit: eeddea2
+      GoVersion: go1.13.15
       Os: linux
       Arch: amd64
-      KernelVersion: 4.19.0-9-amd64
-      BuildTime: '2020-06-22T15:44:21.000000000+00:00'
+      KernelVersion: 4.19.0-13-amd64
+      BuildTime: '2020-12-08T18:57:58.000000000+00:00'
   domain: internal.softwareheritage.org
   facterversion: 3.11.0
-  filesystems: btrfs,ext2,ext3,ext4,hfs,hfsplus,jfs,minix,msdos,qnx4,ufs,vfat,xfs
+  filesystems: ext2,ext3,ext4,vfat
   fips_enabled: false
   fqdn: granet.internal.softwareheritage.org
   gid: root
@@ -518,13 +530,13 @@ values:
   java_version: 11.0.9.1
   kernel: Linux
   kernelmajversion: '4.19'
-  kernelrelease: 4.19.0-9-amd64
+  kernelrelease: 4.19.0-13-amd64
   kernelversion: 4.19.0
   letsencrypt_directory: {}
   load_averages:
-    15m: 0.16
-    1m: 0.18
-    5m: 0.15
+    15m: 2.18
+    1m: 2.47
+    5m: 2.27
   location: sesi_rocquencourt
   lsbdistcodename: buster
   lsbdistdescription: Debian GNU/Linux 10 (buster)
@@ -532,7 +544,7 @@ values:
   lsbdistrelease: '10'
   lsbmajdistrelease: '10'
   macaddress: e4:43:4b:8a:fa:20
-  macaddress_docker0: 02:42:13:24:62:4b
+  macaddress_docker0: 02:42:f4:91:02:b6
   macaddress_eno1: e4:43:4b:8a:fa:20
   macaddress_eno2: e4:43:4b:8a:fa:21
   macaddress_eno3: e4:43:4b:8a:fa:22
@@ -541,22 +553,22 @@ values:
   manufacturer: Dell Inc.
   memory:
     system:
-      available: 574.47 GiB
-      available_bytes: 616837591040
-      capacity: 23.85%
+      available: 299.48 GiB
+      available_bytes: 321560879104
+      capacity: 60.30%
       total: 754.39 GiB
-      total_bytes: 810021470208
-      used: 179.92 GiB
-      used_bytes: 193183879168
-  memoryfree: 574.47 GiB
-  memoryfree_mb: 588262.16796875
+      total_bytes: 810021474304
+      used: 454.91 GiB
+      used_bytes: 488460595200
+  memoryfree: 299.48 GiB
+  memoryfree_mb: 306664.3515625
   memorysize: 754.39 GiB
-  memorysize_mb: 772496.671875
+  memorysize_mb: 772496.67578125
   mountpoints:
     "/":
-      available: 23.86 GiB
-      available_bytes: 25620926464
-      capacity: 34.67%
+      available: 23.29 GiB
+      available_bytes: 25008066560
+      capacity: 36.24%
       device: "/dev/mapper/ssd_mirror-root"
       filesystem: ext4
       options:
@@ -566,8 +578,8 @@ values:
       - stripe=128
       size: 36.53 GiB
       size_bytes: 39219421184
-      used: 12.66 GiB
-      used_bytes: 13598494720
+      used: 13.24 GiB
+      used_bytes: 14211354624
     "/boot/efi":
       available: 114.04 MiB
       available_bytes: 119580160
@@ -590,7 +602,7 @@ values:
       used_bytes: 5329408
     "/dev/shm":
       available: 166.80 GiB
-      available_bytes: 179098906624
+      available_bytes: 179098873856
       capacity: 55.78%
       device: tmpfs
       filesystem: tmpfs
@@ -601,10 +613,10 @@ values:
       size: 377.20 GiB
       size_bytes: 405010735104
       used: 210.40 GiB
-      used_bytes: 225911828480
+      used_bytes: 225911861248
     "/run":
       available: 75.44 GiB
-      available_bytes: 81000189952
+      available_bytes: 81000181760
       capacity: 0.00%
       device: tmpfs
       filesystem: tmpfs
@@ -617,8 +629,8 @@ values:
       - mode=755
       size: 75.44 GiB
       size_bytes: 81002147840
-      used: 1.87 MiB
-      used_bytes: 1957888
+      used: 1.88 MiB
+      used_bytes: 1966080
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -636,6 +648,26 @@ values:
       size_bytes: 5242880
       used: 0 bytes
       used_bytes: 0
+    "/run/user/1000":
+      available: 75.44 GiB
+      available_bytes: 81002143744
+      capacity: 0%
+      device: tmpfs
+      filesystem: tmpfs
+      options:
+      - rw
+      - nosuid
+      - nodev
+      - relatime
+      - size=79103656k
+      - nr_inodes=19775914
+      - mode=700
+      - uid=1000
+      - gid=1000
+      size: 75.44 GiB
+      size_bytes: 81002143744
+      used: 0 bytes
+      used_bytes: 0
     "/run/user/1013":
       available: 75.44 GiB
       available_bytes: 81002143744
@@ -648,28 +680,10 @@ values:
       - nodev
       - relatime
       - size=79103656k
+      - nr_inodes=19775914
       - mode=700
       - uid=1013
       - gid=1013
-      size: 75.44 GiB
-      size_bytes: 81002143744
-      used: 0 bytes
-      used_bytes: 0
-    "/run/user/1022":
-      available: 75.44 GiB
-      available_bytes: 81002143744
-      capacity: 0%
-      device: tmpfs
-      filesystem: tmpfs
-      options:
-      - rw
-      - nosuid
-      - nodev
-      - relatime
-      - size=79103656k
-      - mode=700
-      - uid=1022
-      - gid=1022
       size: 75.44 GiB
       size_bytes: 81002143744
       used: 0 bytes
@@ -686,6 +700,7 @@ values:
       - nodev
       - relatime
       - size=79103656k
+      - nr_inodes=19775914
       - mode=700
       - uid=1023
       - gid=1023
@@ -694,8 +709,8 @@ values:
       used: 0 bytes
       used_bytes: 0
     "/sys/fs/cgroup":
-      available: 377.20 GiB
-      available_bytes: 405010735104
+      available: 4.00 MiB
+      available_bytes: 4194304
       capacity: 0%
       device: tmpfs
       filesystem: tmpfs
@@ -704,16 +719,18 @@ values:
       - nosuid
       - nodev
       - noexec
+      - size=4096k
+      - nr_inodes=1024
       - mode=755
-      size: 377.20 GiB
-      size_bytes: 405010735104
+      size: 4.00 MiB
+      size_bytes: 4194304
       used: 0 bytes
       used_bytes: 0
   mounts:
   - "/"
   - "/boot/efi"
-  - "/srv/softwareheritage/ssd"
   - "/srv/softwareheritage/hdd"
+  - "/srv/softwareheritage/ssd"
   mtu_docker0: 1500
   mtu_eno1: 1500
   mtu_eno2: 1500
@@ -749,7 +766,7 @@ values:
           netmask: 255.255.0.0
           network: 172.17.0.0
         ip: 172.17.0.1
-        mac: 02:42:13:24:62:4b
+        mac: 02:42:f4:91:02:b6
         mtu: 1500
         netmask: 255.255.0.0
         network: 172.17.0.0
@@ -814,6 +831,7 @@ values:
     network: 192.168.100.0
     network6: 'fe80::'
     primary: vlan440
+  nginx_version: 1.14.2
   operatingsystem: Debian
   operatingsystemmajrelease: '10'
   operatingsystemrelease: '10.7'
@@ -1150,10 +1168,10 @@ values:
     short: granet
     internal_fqdn: granet.internal.softwareheritage.org
   system_uptime:
-    days: 159
-    hours: 3822
-    seconds: 13759688
-    uptime: 159 days
+    days: 22
+    hours: 539
+    seconds: 1941151
+    uptime: 22 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -1166,17 +1184,17 @@ values:
     systemd-resolved.service: disabled
     systemd-time-wait-sync.service: disabled
     systemd-timesyncd.service: enabled
-  systemd_version: '245'
+  systemd_version: '246'
   timezone: UTC
-  uptime: 159 days
-  uptime_days: 159
-  uptime_hours: 3822
-  uptime_seconds: 13759688
+  uptime: 22 days
+  uptime_days: 22
+  uptime_hours: 539
+  uptime_seconds: 1941151
   uuid: 4c4c4544-0039-3710-8031-b2c04f545a32
   vcsrepo_svn_ver: 1.10.4
   virtual: physical
   clientcert: granet.internal.softwareheritage.org
   clientversion: 5.5.10
   clientnoop: false
-timestamp: '2020-12-14T15:09:05.921216955+00:00'
-expiration: '2020-12-14T15:39:05.923148886+00:00'
+timestamp: '2021-01-06T08:09:06.394901917+00:00'
+expiration: '2021-01-06T08:39:06.396792340+00:00'

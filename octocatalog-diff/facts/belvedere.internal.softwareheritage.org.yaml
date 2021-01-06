@@ -2,37 +2,20 @@
 name: belvedere.internal.softwareheritage.org
 values:
   agent_specified_environment: production
-  apt_dist_updates: 11
+  apt_dist_updates: 1
   apt_has_dist_updates: true
   apt_has_updates: true
   apt_package_dist_updates:
-  - libxxhash0
-  - borgbackup
-  - libdbd-pg-perl
-  - zfs-dkms
-  - zfsutils-linux
-  - libuutil1linux
-  - libzfs2linux
-  - libzpool2linux
-  - libnvpair1linux
-  - python3-msgpack
-  - zfs-zed
+  - pgbouncer
   apt_package_security_dist_updates: []
   apt_package_security_updates: []
   apt_package_updates:
-  - libdbd-pg-perl
-  - zfs-dkms
-  - zfsutils-linux
-  - libuutil1linux
-  - libzfs2linux
-  - libzpool2linux
-  - libnvpair1linux
-  - zfs-zed
-  apt_reboot_required: true
+  - pgbouncer
+  apt_reboot_required: false
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1607956143
-  apt_updates: 8
+  apt_update_last_success: 1609918143
+  apt_updates: 1
   architecture: amd64
   bios_release_date: 04/09/2020
   bios_vendor: Dell Inc.
@@ -79,21 +62,21 @@ values:
   blockdevice_sdn_model: PX03SNB160
   blockdevice_sdn_size: 1600321314816
   blockdevice_sdn_vendor: TOSHIBA
-  blockdevice_sdo_model: PX03SNB160
-  blockdevice_sdo_size: 1600321314816
+  blockdevice_sdo_model: PX05SVB384Y
+  blockdevice_sdo_size: 3840755982336
   blockdevice_sdo_vendor: TOSHIBA
   blockdevice_sdp_model: PX05SVB384Y
   blockdevice_sdp_size: 3840755982336
   blockdevice_sdp_vendor: TOSHIBA
-  blockdevice_sdq_model: PX05SVB384Y
-  blockdevice_sdq_size: 3840755982336
+  blockdevice_sdq_model: PX03SNB160
+  blockdevice_sdq_size: 1600321314816
   blockdevice_sdq_vendor: TOSHIBA
-  blockdevice_sdr_model: PX03SNB160
-  blockdevice_sdr_size: 1600321314816
-  blockdevice_sdr_vendor: TOSHIBA
-  blockdevice_sds_model: PERC H730P Mini
-  blockdevice_sds_size: 239444426752
-  blockdevice_sds_vendor: DELL
+  blockdevice_sdr_model: SSDSC2KG240G8R
+  blockdevice_sdr_size: 240057409536
+  blockdevice_sdr_vendor: ATA
+  blockdevice_sds_model: SSDSC2KG240G8R
+  blockdevice_sds_size: 240057409536
+  blockdevice_sds_vendor: ATA
   blockdevices: sdf,sdo,sdd,sdm,sdb,sdk,sds,sdi,sdq,sdg,sde,sdn,sdc,sdl,sda,sdj,sdr,sdh,sdp
   boardmanufacturer: Dell Inc.
   boardproductname: '0923K0'
@@ -176,9 +159,9 @@ values:
       size_bytes: 1600321314816
       vendor: TOSHIBA
     sdo:
-      model: PX03SNB160
-      size: 1.46 TiB
-      size_bytes: 1600321314816
+      model: PX05SVB384Y
+      size: 3.49 TiB
+      size_bytes: 3840755982336
       vendor: TOSHIBA
     sdp:
       model: PX05SVB384Y
@@ -186,20 +169,20 @@ values:
       size_bytes: 3840755982336
       vendor: TOSHIBA
     sdq:
-      model: PX05SVB384Y
-      size: 3.49 TiB
-      size_bytes: 3840755982336
-      vendor: TOSHIBA
-    sdr:
       model: PX03SNB160
       size: 1.46 TiB
       size_bytes: 1600321314816
       vendor: TOSHIBA
+    sdr:
+      model: SSDSC2KG240G8R
+      size: 223.57 GiB
+      size_bytes: 240057409536
+      vendor: ATA
     sds:
-      model: PERC H730P Mini
-      size: 223.00 GiB
-      size_bytes: 239444426752
-      vendor: DELL
+      model: SSDSC2KG240G8R
+      size: 223.57 GiB
+      size_bytes: 240057409536
+      vendor: ATA
   dmi:
     bios:
       release_date: 04/09/2020
@@ -283,9 +266,11 @@ values:
     aeviso: "/home/aeviso"
     tenma: "/home/tenma"
     vsellier: "/home/vsellier"
+    tg1999: "/home/tg1999"
+    Debian-snmp: "/var/lib/snmp"
   domain: internal.softwareheritage.org
   facterversion: 3.11.0
-  filesystems: btrfs,ext2,ext3,ext4,hfs,hfsplus,jfs,minix,msdos,qnx4,ufs,vfat,xfs
+  filesystems: ext2,ext3,ext4,vfat
   fips_enabled: false
   fqdn: belvedere.internal.softwareheritage.org
   gid: root
@@ -313,14 +298,14 @@ values:
   is_pe: false
   is_virtual: false
   kernel: Linux
-  kernelmajversion: '4.19'
-  kernelrelease: 4.19.0-12-amd64
-  kernelversion: 4.19.0
+  kernelmajversion: '5.9'
+  kernelrelease: 5.9.0-0.bpo.2-amd64
+  kernelversion: 5.9.0
   letsencrypt_directory: {}
   load_averages:
-    15m: 38.97
-    1m: 36.66
-    5m: 41.11
+    15m: 31.67
+    1m: 39.89
+    5m: 35.43
   location: sesi_rocquencourt
   lsbdistcodename: buster
   lsbdistdescription: Debian GNU/Linux 10 (buster)
@@ -336,46 +321,39 @@ values:
   macaddress_vlan440: 52:29:9e:75:26:4f
   manufacturer: Dell Inc.
   memory:
-    swap:
-      available: 29.74 GiB
-      available_bytes: 31935950848
-      capacity: 0.20%
-      total: 29.80 GiB
-      total_bytes: 31999389696
-      used: 60.50 MiB
-      used_bytes: 63438848
     system:
-      available: 198.63 GiB
-      available_bytes: 213281153024
-      capacity: 73.68%
+      available: 335.65 GiB
+      available_bytes: 360400592896
+      capacity: 55.52%
       total: 754.56 GiB
-      total_bytes: 810202853376
-      used: 555.93 GiB
-      used_bytes: 596921700352
-  memoryfree: 198.63 GiB
-  memoryfree_mb: 203400.7578125
+      total_bytes: 810199945216
+      used: 418.91 GiB
+      used_bytes: 449799352320
+  memoryfree: 335.65 GiB
+  memoryfree_mb: 343704.7890625
   memorysize: 754.56 GiB
-  memorysize_mb: 772669.65234375
+  memorysize_mb: 772666.87890625
   mountpoints:
     "/":
-      available: 164.12 GiB
-      available_bytes: 176227549184
-      capacity: 12.81%
-      device: "/dev/sds3"
+      available: 204.53 GiB
+      available_bytes: 219609894912
+      capacity: 6.16%
+      device: "/dev/md0"
       filesystem: ext4
       options:
       - rw
       - relatime
       - errors=remount-ro
-      size: 188.25 GiB
-      size_bytes: 202127130624
-      used: 24.12 GiB
-      used_bytes: 25899581440
+      - stripe=256
+      size: 217.95 GiB
+      size_bytes: 234023702528
+      used: 13.42 GiB
+      used_bytes: 14413807616
     "/boot/efi":
-      available: 947.00 MiB
-      available_bytes: 993005568
-      capacity: 0.54%
-      device: "/dev/sds2"
+      available: 1016.87 MiB
+      available_bytes: 1066266624
+      capacity: 0.50%
+      device: "/dev/sdr1"
       filesystem: vfat
       options:
       - rw
@@ -387,13 +365,13 @@ values:
       - shortname=mixed
       - utf8
       - errors=remount-ro
-      size: 952.12 MiB
-      size_bytes: 998367232
+      size: 1021.98 MiB
+      size_bytes: 1071628288
       used: 5.11 MiB
       used_bytes: 5361664
     "/dev/shm":
       available: 377.28 GiB
-      available_bytes: 405099098112
+      available_bytes: 405099040768
       capacity: 0.00%
       device: tmpfs
       filesystem: tmpfs
@@ -402,12 +380,12 @@ values:
       - nosuid
       - nodev
       size: 377.28 GiB
-      size_bytes: 405101424640
-      used: 2.22 MiB
-      used_bytes: 2326528
+      size_bytes: 405099970560
+      used: 908.00 KiB
+      used_bytes: 929792
     "/run":
       available: 75.45 GiB
-      available_bytes: 81017942016
+      available_bytes: 81017696256
       capacity: 0.00%
       device: tmpfs
       filesystem: tmpfs
@@ -416,12 +394,12 @@ values:
       - nosuid
       - noexec
       - relatime
-      - size=79121376k
+      - size=79121092k
       - mode=755
       size: 75.46 GiB
-      size_bytes: 81020289024
-      used: 2.24 MiB
-      used_bytes: 2347008
+      size_bytes: 81019998208
+      used: 2.20 MiB
+      used_bytes: 2301952
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -461,9 +439,9 @@ values:
   - "/"
   - "/boot/efi"
   - "/srv/softwareheritage/postgres"
-  - "/srv/softwareheritage/postgres/12/secondary"
   - "/srv/softwareheritage/postgres/11/indexer"
   - "/srv/softwareheritage/postgres/12/main"
+  - "/srv/softwareheritage/postgres/12/secondary"
   mtu_bond0: 9000
   mtu_eno1: 9000
   mtu_eno2: 9000
@@ -750,28 +728,16 @@ values:
     "/dev/sdo1":
       filesystem: zfs_member
       label: data
-      partlabel: zfs-db140e98b4bf5bef
-      partuuid: 7d785fae-e138-a54f-b93d-f902fece1377
-      size: 1.46 TiB
-      size_bytes: 1600311525376
-      uuid: '11871562107936524821'
-    "/dev/sdo9":
-      partuuid: 7c5a766e-63fb-0645-94fc-64d24bfae573
-      size: 8.00 MiB
-      size_bytes: 8388608
-    "/dev/sdp1":
-      filesystem: zfs_member
-      label: data
       partlabel: zfs-99ea94d65d79ef80
       partuuid: 8a20b3ec-18ef-8c47-93ea-e173ec77ae4f
       size: 3.49 TiB
       size_bytes: 3840746192896
       uuid: '11871562107936524821'
-    "/dev/sdp9":
+    "/dev/sdo9":
       partuuid: a2f5d2c8-2aec-9d47-888b-2953e9de3921
       size: 8.00 MiB
       size_bytes: 8388608
-    "/dev/sdq1":
+    "/dev/sdp1":
       filesystem: zfs_member
       label: data
       partlabel: zfs-d2bd1e9c136b6b4d
@@ -779,43 +745,48 @@ values:
       size: 3.49 TiB
       size_bytes: 3840746192896
       uuid: '11871562107936524821'
-    "/dev/sdq9":
+    "/dev/sdp9":
       partuuid: 9a890b46-3179-3040-b922-fbcedde70cff
       size: 8.00 MiB
       size_bytes: 8388608
-    "/dev/sdr1":
-      filesystem: zfs_member
-      label: data
-      partlabel: zfs-698bbae5c5def605
-      partuuid: 87c1387d-bc6d-6849-914d-3610d3499ec8
+    "/dev/sdq1":
+      filesystem: ext4
+      partlabel: Linux filesystem
+      partuuid: 6143ec5e-c4cf-4e92-b0ec-78b5d4bc9c4a
       size: 1.46 TiB
-      size_bytes: 1600311525376
-      uuid: '11871562107936524821'
-    "/dev/sdr9":
-      partuuid: c1c7d743-16be-9a4f-93e4-2d0ccf1b05bd
-      size: 8.00 MiB
-      size_bytes: 8388608
-    "/dev/sds1":
-      filesystem: swap
-      partuuid: '0639647a-67d8-4aea-b277-a1d518ae17bb'
-      size: 29.80 GiB
-      size_bytes: 31999393792
-      uuid: ea2fe2c1-dc42-4d7f-93ac-9ba85ed08e36
-    "/dev/sds2":
+      size_bytes: 1600320249344
+      uuid: 24502205-7142-456d-847e-58af975face9
+    "/dev/sdr1":
       filesystem: vfat
       mount: "/boot/efi"
-      partlabel: EFI System Partition
-      partuuid: 466b596d-ec9b-406d-a4bc-e2e3cbd76bb3
-      size: 954.00 MiB
-      size_bytes: 1000341504
-      uuid: B116-D6F1
-    "/dev/sds3":
-      filesystem: ext4
-      mount: "/"
-      partuuid: 42d9b508-257d-404f-8bfc-88acfe641d15
-      size: 192.26 GiB
-      size_bytes: 206442594304
-      uuid: 4a08a680-6423-40ac-b863-ba5b264de89d
+      partlabel: EFI System
+      partuuid: f4aa5dad-5a50-476f-976c-fe7c667c5621
+      size: 1.00 GiB
+      size_bytes: 1073741824
+      uuid: 86B6-F861
+    "/dev/sdr2":
+      filesystem: linux_raid_member
+      label: grml:0
+      partlabel: Linux RAID
+      partuuid: b7d9130b-7ebc-40ff-b043-f99667fd1609
+      size: 222.57 GiB
+      size_bytes: 238982602240
+      uuid: 5929d143-4b2d-fb56-ef80-41c7dae893ee
+    "/dev/sds1":
+      filesystem: vfat
+      partlabel: EFI System
+      partuuid: 56094745-6a4d-4bcd-bbb2-8932626f582e
+      size: 1.00 GiB
+      size_bytes: 1073741824
+      uuid: 86E3-EA67
+    "/dev/sds2":
+      filesystem: linux_raid_member
+      label: grml:0
+      partlabel: Linux RAID
+      partuuid: 5274da2c-65bd-4a62-a07e-64b45aac3541
+      size: 222.57 GiB
+      size_bytes: 238982602240
+      uuid: 5929d143-4b2d-fb56-ef80-41c7dae893ee
   path: "/usr/bin:/bin:/usr/sbin:/sbin"
   physicalprocessorcount: 2
   processor0: Intel(R) Xeon(R) Silver 4114 CPU @ 2.20GHz
@@ -908,14 +879,14 @@ values:
         key: AAAAC3NzaC1lZDI1NTE5AAAAIKXyzgqz25OektDdvVAvGwPWFxOA7Op8K9goWsUsCIqX
         comment: root@belvedere.internal.softwareheritage.org
     postgres:
-      id_ed25519.dbreplica1.pub:
-        type: ed25519
-        key: AAAAC3NzaC1lZDI1NTE5AAAAIMxBSDGFs9V3ECf+gG64+rqv4XuxwTmkoIM+Vv83H1VJ
-        comment: postgres@belvedere.internal.softwareheritage.org
       id_rsa.pub:
         type: rsa
         key: AAAAB3NzaC1yc2EAAAADAQABAAABAQDpKVypehTETbbaKigwvNFzf1sGvnUtVnaMvGGScxTkeSvs/L3kWyUsx2kqLf/pT0CZp+wn8umAWtHwgqX6ksUj3OZ53CowYvGdPNqoY/XtbCtnwEy997hWB9wCAxjUz8injnPIiviwh9ooH2VdQSBiLar2lncVbWlcmcokMA58LiVUUPjCYMX+0Vi6/URwcVDNGyvdcwgNaA4V+D1RyI/tfbUqbIugyT5KjTZSDpgchL/SCXM8kzfOHwFPnhMeNy+mM/EJmMtkVuxoJhLey8nuD2jOizKbg05HiC5NyZwb6gyRPWaqvdYE0pxwwUXazSlmZYTiXidY3VrqzZpRzLJb
         comment: postgres@prado
+      id_ed25519.dbreplica1.pub:
+        type: ed25519
+        key: AAAAC3NzaC1lZDI1NTE5AAAAIMxBSDGFs9V3ECf+gG64+rqv4XuxwTmkoIM+Vv83H1VJ
+        comment: postgres@belvedere.internal.softwareheritage.org
   ssh_server_version_full: 7.9p1
   ssh_server_version_major: '7'
   ssh_server_version_release: '7.9'
@@ -933,19 +904,15 @@ values:
   sshrsakey: AAAAB3NzaC1yc2EAAAADAQABAAABAQDM+wnEpFidX6Afkrkngq83k1/4JW9yBDVRqgAKIZ9LMbjYdAdwVvtYNXNwKo89+jsU51+VQu9KTMcTvA6EdDhif92Tf33uipZwaAedSGW7Mqqo4ZV2FfiAtLlXM+X6XOWM0Mq8tRuldWQ0vJECBNYfm55xpyd4h1rBMDIdbuXobd4DV8g7WDcA6NYhEjtugVjuNT7y5nD+xHGfKd1UhUhUYRpWkGSFBzQcmcAlD7fWBER9AsSFnuc0fTYlY11yhAEuWHXXf7JlVzVzPSmcy64+tg9ohDzajVs7hOR43tY+umDf/uHE6I3tgJ6Ukz5DPJTpfaNUyVf+W0+khGIWQYA3
   subnet: sesi_rocquencourt
   sudoversion: 1.8.27
-  swapfree: 29.74 GiB
-  swapfree_mb: 30456.49609375
-  swapsize: 29.80 GiB
-  swapsize_mb: 30516.99609375
   swh_hostname:
     fqdn: belvedere.internal.softwareheritage.org
     short: belvedere
     internal_fqdn: belvedere.internal.softwareheritage.org
   system_uptime:
-    days: 26
-    hours: 643
-    seconds: 2316589
-    uptime: 26 days
+    days: 5
+    hours: 136
+    seconds: 492377
+    uptime: 5 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -958,17 +925,17 @@ values:
     systemd-resolved.service: disabled
     systemd-time-wait-sync.service: disabled
     systemd-timesyncd.service: enabled
-  systemd_version: '246'
+  systemd_version: '247'
   timezone: UTC
-  uptime: 26 days
-  uptime_days: 26
-  uptime_hours: 643
-  uptime_seconds: 2316589
+  uptime: 5 days
+  uptime_days: 5
+  uptime_hours: 136
+  uptime_seconds: 492377
   uuid: 4c4c4544-0053-4c10-8043-b8c04f575732
   vcsrepo_svn_ver: ''
   virtual: physical
   clientcert: belvedere.internal.softwareheritage.org
   clientversion: 5.5.10
   clientnoop: false
-timestamp: '2020-12-14T14:58:07.192140212+00:00'
-expiration: '2020-12-14T15:28:07.192848926+00:00'
+timestamp: '2021-01-06T08:28:06.273533658+00:00'
+expiration: '2021-01-06T08:58:06.274320007+00:00'

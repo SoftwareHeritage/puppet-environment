@@ -2,47 +2,10 @@
 name: storage1.internal.staging.swh.network
 values:
   agent_specified_environment: staging
-  apt_dist_updates: 20
-  apt_has_dist_updates: true
-  apt_has_updates: true
-  apt_package_dist_updates:
-  - libxxhash0
-  - borgbackup
-  - zfs-dkms
-  - zfsutils-linux
-  - libuutil1linux
-  - libzfs2linux
-  - libzpool2linux
-  - libnvpair1linux
-  - linux-headers-5.9.0-0.bpo.2-common
-  - linux-kbuild-5.9
-  - linux-headers-5.9.0-0.bpo.2-amd64
-  - linux-headers-amd64
-  - linux-image-5.9.0-0.bpo.2-amd64
-  - linux-image-amd64
-  - python3-humanize
-  - python3-msgpack
-  - python3-swh.core
-  - python3-swh.journal
-  - python3-swh.scheduler
-  - zfs-zed
-  apt_package_security_dist_updates: []
-  apt_package_security_updates: []
-  apt_package_updates:
-  - zfs-dkms
-  - zfsutils-linux
-  - libuutil1linux
-  - libzfs2linux
-  - libzpool2linux
-  - libnvpair1linux
-  - python3-swh.core
-  - python3-swh.journal
-  - zfs-zed
+  apt_has_dist_updates: false
+  apt_has_updates: false
   apt_reboot_required: false
-  apt_security_dist_updates: 0
-  apt_security_updates: 0
-  apt_update_last_success: 1607954343
-  apt_updates: 9
+  apt_update_last_success: 1609919943
   architecture: amd64
   bios_release_date: 11/21/2019
   bios_vendor: American Megatrends Inc.
@@ -260,9 +223,10 @@ values:
     prometheus: "/var/lib/prometheus"
     nagios: "/var/lib/nagios"
     postgres: "/var/lib/postgresql"
+    tg1999: "/home/tg1999"
   domain: internal.staging.swh.network
   facterversion: 3.11.0
-  filesystems: ext2,ext3,ext4,vfat
+  filesystems: btrfs,ext2,ext3,ext4,hfs,hfsplus,jfs,minix,msdos,qnx4,ufs,vfat,xfs
   fips_enabled: false
   fqdn: storage1.internal.staging.swh.network
   gid: root
@@ -290,14 +254,14 @@ values:
   is_pe: false
   is_virtual: false
   kernel: Linux
-  kernelmajversion: '5.8'
-  kernelrelease: 5.8.0-0.bpo.2-amd64
-  kernelversion: 5.8.0
+  kernelmajversion: '5.9'
+  kernelrelease: 5.9.0-0.bpo.2-amd64
+  kernelversion: 5.9.0
   letsencrypt_directory: {}
   load_averages:
-    15m: 1.08
-    1m: 0.77
-    5m: 1.08
+    15m: 0.74
+    1m: 1.06
+    5m: 0.86
   lsbdistcodename: buster
   lsbdistdescription: Debian GNU/Linux 10 (buster)
   lsbdistid: Debian
@@ -313,30 +277,30 @@ values:
   manufacturer: Supermicro
   memory:
     swap:
-      available: 14.89 GiB
-      available_bytes: 15988944896
-      capacity: 0.05%
+      available: 14.90 GiB
+      available_bytes: 15997071360
+      capacity: 0%
       total: 14.90 GiB
       total_bytes: 15997071360
-      used: 7.75 MiB
-      used_bytes: 8126464
+      used: 0 bytes
+      used_bytes: 0
     system:
-      available: 24.16 GiB
-      available_bytes: 25940619264
-      capacity: 74.36%
+      available: 52.89 GiB
+      available_bytes: 56791244800
+      capacity: 43.86%
       total: 94.21 GiB
-      total_bytes: 101158682624
-      used: 70.05 GiB
-      used_bytes: 75218063360
-  memoryfree: 24.16 GiB
-  memoryfree_mb: 24738.90234375
+      total_bytes: 101158936576
+      used: 41.32 GiB
+      used_bytes: 44367691776
+  memoryfree: 52.89 GiB
+  memoryfree_mb: 54160.3515625
   memorysize: 94.21 GiB
-  memorysize_mb: 96472.4375
+  memorysize_mb: 96472.6796875
   mountpoints:
     "/":
-      available: 14.64 GiB
-      available_bytes: 15716978688
-      capacity: 19.61%
+      available: 14.08 GiB
+      available_bytes: 15114919936
+      capacity: 22.69%
       device: "/dev/mapper/storage1-root"
       filesystem: ext4
       options:
@@ -345,8 +309,8 @@ values:
       - errors=remount-ro
       size: 18.21 GiB
       size_bytes: 19550347264
-      used: 3.57 GiB
-      used_bytes: 3833368576
+      used: 4.13 GiB
+      used_bytes: 4435427328
     "/boot/efi":
       available: 480.93 MiB
       available_bytes: 504291328
@@ -369,7 +333,7 @@ values:
       used_bytes: 5349376
     "/dev/shm":
       available: 47.11 GiB
-      available_bytes: 50579341312
+      available_bytes: 50579468288
       capacity: 0%
       device: tmpfs
       filesystem: tmpfs
@@ -378,12 +342,12 @@ values:
       - nosuid
       - nodev
       size: 47.11 GiB
-      size_bytes: 50579341312
+      size_bytes: 50579468288
       used: 0 bytes
       used_bytes: 0
     "/run":
       available: 9.42 GiB
-      available_bytes: 10114539520
+      available_bytes: 10114568192
       capacity: 0.01%
       device: tmpfs
       filesystem: tmpfs
@@ -392,12 +356,12 @@ values:
       - nosuid
       - noexec
       - relatime
-      - size=9878780k
+      - size=9878804k
       - mode=755
       size: 9.42 GiB
-      size_bytes: 10115870720
+      size_bytes: 10115895296
       used: 1.27 MiB
-      used_bytes: 1331200
+      used_bytes: 1327104
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -413,26 +377,6 @@ values:
       - size=5120k
       size: 5.00 MiB
       size_bytes: 5242880
-      used: 0 bytes
-      used_bytes: 0
-    "/run/user/1003":
-      available: 9.42 GiB
-      available_bytes: 10115866624
-      capacity: 0%
-      device: tmpfs
-      filesystem: tmpfs
-      options:
-      - rw
-      - nosuid
-      - nodev
-      - relatime
-      - size=9878776k
-      - nr_inodes=2469694
-      - mode=700
-      - uid=1003
-      - gid=1003
-      size: 9.42 GiB
-      size_bytes: 10115866624
       used: 0 bytes
       used_bytes: 0
     "/sys/fs/cgroup":
@@ -656,52 +600,28 @@ values:
     "/dev/sdf1":
       filesystem: zfs_member
       label: data
-      partlabel: zfs-bfd8e60183eb97e6
-      partuuid: 259fedc5-9be4-f644-9194-00fa29807854
-      size: 5.46 TiB
-      size_bytes: 6001165074432
-      uuid: '17386961492666999696'
-    "/dev/sdf9":
-      partuuid: e7c0bc36-053c-2445-b9d0-ab87b82ee952
-      size: 8.00 MiB
-      size_bytes: 8388608
-    "/dev/sdg1":
-      filesystem: zfs_member
-      label: data
       partlabel: zfs-54e51b5895bedee3
       partuuid: 15978b70-9fb8-ef4b-9bf3-ff26e8e7cdd7
       size: 5.46 TiB
       size_bytes: 6001165074432
       uuid: '17386961492666999696'
-    "/dev/sdg9":
+    "/dev/sdf9":
       partuuid: b84d4a46-353f-1146-8cdf-eef2d588cd6c
       size: 8.00 MiB
       size_bytes: 8388608
+    "/dev/sdg1":
+      filesystem: zfs_member
+      label: data
+      partlabel: zfs-bfd8e60183eb97e6
+      partuuid: 259fedc5-9be4-f644-9194-00fa29807854
+      size: 5.46 TiB
+      size_bytes: 6001165074432
+      uuid: '17386961492666999696'
+    "/dev/sdg9":
+      partuuid: e7c0bc36-053c-2445-b9d0-ab87b82ee952
+      size: 8.00 MiB
+      size_bytes: 8388608
     "/dev/sdh1":
-      filesystem: zfs_member
-      label: data
-      partlabel: zfs-a9a8928ae712e4cb
-      partuuid: 94b64dc5-fb56-ff44-8d07-4067f5c31e0b
-      size: 5.46 TiB
-      size_bytes: 6001165074432
-      uuid: '17386961492666999696'
-    "/dev/sdh9":
-      partuuid: 3e4edc49-d51f-6941-bb22-46634d38c991
-      size: 8.00 MiB
-      size_bytes: 8388608
-    "/dev/sdi1":
-      filesystem: zfs_member
-      label: data
-      partlabel: zfs-4eefbc94db222808
-      partuuid: 696e3d56-0c9c-7947-9b9a-974463eb3f2d
-      size: 5.46 TiB
-      size_bytes: 6001165074432
-      uuid: '17386961492666999696'
-    "/dev/sdi9":
-      partuuid: a33b4088-7136-dd4c-b730-cd6fc1808496
-      size: 8.00 MiB
-      size_bytes: 8388608
-    "/dev/sdj1":
       filesystem: zfs_member
       label: data
       partlabel: zfs-34dbb3094da22888
@@ -709,11 +629,44 @@ values:
       size: 5.46 TiB
       size_bytes: 6001165074432
       uuid: '17386961492666999696'
-    "/dev/sdj9":
+    "/dev/sdh9":
       partuuid: 27d131da-82f5-5547-80ab-b96ee18166cc
       size: 8.00 MiB
       size_bytes: 8388608
+    "/dev/sdi1":
+      filesystem: zfs_member
+      label: data
+      partlabel: zfs-a9a8928ae712e4cb
+      partuuid: 94b64dc5-fb56-ff44-8d07-4067f5c31e0b
+      size: 5.46 TiB
+      size_bytes: 6001165074432
+      uuid: '17386961492666999696'
+    "/dev/sdi9":
+      partuuid: 3e4edc49-d51f-6941-bb22-46634d38c991
+      size: 8.00 MiB
+      size_bytes: 8388608
+    "/dev/sdj1":
+      filesystem: zfs_member
+      label: data
+      partlabel: zfs-4eefbc94db222808
+      partuuid: 696e3d56-0c9c-7947-9b9a-974463eb3f2d
+      size: 5.46 TiB
+      size_bytes: 6001165074432
+      uuid: '17386961492666999696'
+    "/dev/sdj9":
+      partuuid: a33b4088-7136-dd4c-b730-cd6fc1808496
+      size: 8.00 MiB
+      size_bytes: 8388608
     "/dev/sdk1":
+      partlabel: zfs-d0f9ec9e617498dd
+      partuuid: 0003f362-0e15-bb4f-b80b-c3feb9c75a29
+      size: 5.46 TiB
+      size_bytes: 6001165074432
+    "/dev/sdk9":
+      partuuid: b87d47bc-773b-2f4c-beb1-052d6667bdbd
+      size: 8.00 MiB
+      size_bytes: 8388608
+    "/dev/sdl1":
       filesystem: zfs_member
       label: data
       partlabel: zfs-e532dd19c9eb2695
@@ -721,17 +674,8 @@ values:
       size: 5.46 TiB
       size_bytes: 6001165074432
       uuid: '17386961492666999696'
-    "/dev/sdk9":
-      partuuid: c231834c-1647-a34b-8422-b691e15f651c
-      size: 8.00 MiB
-      size_bytes: 8388608
-    "/dev/sdl1":
-      partlabel: zfs-d0f9ec9e617498dd
-      partuuid: 0003f362-0e15-bb4f-b80b-c3feb9c75a29
-      size: 5.46 TiB
-      size_bytes: 6001165074432
     "/dev/sdl9":
-      partuuid: b87d47bc-773b-2f4c-beb1-052d6667bdbd
+      partuuid: c231834c-1647-a34b-8422-b691e15f651c
       size: 8.00 MiB
       size_bytes: 8388608
     "/dev/sdm1":
@@ -862,8 +806,8 @@ values:
   sshrsakey: AAAAB3NzaC1yc2EAAAADAQABAAABAQC/QR26wVGV/GW74eCTrieJ5ZUqWgwoP8Arw0lQ9y5ydWPar2lyXxuJrrMNkA4vnW7gXTAdyVspXnt01YTmWOqQ3D+5UTGnUcv8fqE6UBKyTv7pgbVRhncsox0ZbDhrpsvC1GtrJilxY14ld95NIxrtvoxkeIdjx3jzLLksAAjPKHUxAP6CoY4J4ufG30vyY5IcXo9Mhofourg4jhWZHVQSuHoa9uAwsvSN2jrqHRPqGFlj0m6qY8dDzRXBdyvK7NfrYjHd5qBbhe2A88Qhb2223n6Rhsam0aQlB8HEL8dK37N3tFsUlcexcq2jKNgxbIlWy9ZgmmDU46s4zGxiQ8PF
   subnet: sesi_rocquencourt_staging
   sudoversion: 1.8.27
-  swapfree: 14.89 GiB
-  swapfree_mb: 15248.24609375
+  swapfree: 14.90 GiB
+  swapfree_mb: 15255.99609375
   swapsize: 14.90 GiB
   swapsize_mb: 15255.99609375
   swh_hostname:
@@ -871,10 +815,10 @@ values:
     short: storage1
     internal_fqdn: storage1.internal.staging.swh.network
   system_uptime:
-    days: 25
-    hours: 622
-    seconds: 2241937
-    uptime: 25 days
+    days: 5
+    hours: 136
+    seconds: 491660
+    uptime: 5 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -887,17 +831,17 @@ values:
     systemd-resolved.service: disabled
     systemd-time-wait-sync.service: disabled
     systemd-timesyncd.service: enabled
-  systemd_version: '246'
+  systemd_version: '247'
   timezone: UTC
-  uptime: 25 days
-  uptime_days: 25
-  uptime_hours: 622
-  uptime_seconds: 2241937
+  uptime: 5 days
+  uptime_days: 5
+  uptime_hours: 136
+  uptime_seconds: 491660
   uuid: 00000000-0000-0000-0000-ac1f6b407898
   vcsrepo_svn_ver: ''
   virtual: physical
   clientcert: storage1.internal.staging.swh.network
   clientversion: 5.5.10
   clientnoop: false
-timestamp: '2020-12-14T14:57:07.240050912+00:00'
-expiration: '2020-12-14T15:27:07.240844650+00:00'
+timestamp: '2021-01-06T08:27:06.677883472+00:00'
+expiration: '2021-01-06T08:57:06.678654900+00:00'
