@@ -19,12 +19,6 @@ puppet_production_facts = {
   "deployment"      => "production",
   "subnet"          => "vagrant"
 }
-puppet_admin_facts = {
-  "vagrant_testing" => "1",
-  "testing"         => "vagrant",
-  "deployment"      => "production",
-  "subnet"          => "sesi_rocquencourt_admin"
-}
 # used to define the local vm template path
 puppet_env_path = ENV["SWH_PUPPET_ENVIRONMENT_HOME"]
 
@@ -614,7 +608,7 @@ Vagrant.configure("2") do |global_config|
       puppet.manifest_file = "#{manifest_file}"
       puppet.manifests_path = "#{manifests_path}"
       puppet.options = "#{puppet_options}"
-      puppet.facter = puppet_admin_facts
+      puppet.facter = puppet_production_facts
       puppet.synced_folder_type = 'nfs'
     end
   end
