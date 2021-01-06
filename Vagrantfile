@@ -6,7 +6,7 @@ environment = "staging"
 environment_path = "/tmp/puppet/environments"
 manifest_file = "site.pp"
 manifests_path = "swh-site/manifests"
-puppet_options = "--fileserverconfig=/etc/puppet/fileserver.conf --verbose"  # --debug --trace for more
+puppet_options = "--fileserverconfig=/etc/puppet/fileserver.conf --verbose"  # --debug --trace"
 puppet_staging_facts = {
   "vagrant_testing" => "1",
   "testing"         => "vagrant",
