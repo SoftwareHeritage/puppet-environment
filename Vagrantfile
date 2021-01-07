@@ -590,7 +590,7 @@ Vagrant.configure("2") do |global_config|
     end
   end
 
-  global_config.vm.define :"prod-bardo" do |config|
+  global_config.vm.define :"admin-bardo" do |config|
     config.vm.box                     = $global_debian10_box
     config.vm.box_url                 = $global_debian10_box_url
     config.vm.hostname                = "bardo.internal.admin.swh.network"
