@@ -61,7 +61,7 @@ Vagrant.configure("2") do |global_config|
     config.vm.synced_folder "vagrant/le_certs", "/etc/puppet/le_certs", type: 'nfs'
 
     config.vm.provider :libvirt do |provider|
-      provider.memory = 512
+      provider.memory = 1024
       provider.cpus = 2
       # local test run: https://github.com/vagrant-libvirt/vagrant-libvirt/issues/45
       provider.driver = 'kvm'
