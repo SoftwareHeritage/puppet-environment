@@ -1,37 +1,34 @@
 --- !ruby/object:Puppet::Node::Facts
-name: objstorage0.internal.staging.swh.network
+name: rp1.internal.admin.swh.network
 values:
-  agent_specified_environment: staging
-  apt_dist_updates: 9
+  agent_specified_environment: production
+  apt_dist_updates: 10
   apt_has_dist_updates: true
   apt_has_updates: true
   apt_package_dist_updates:
-  - libnss-systemd
-  - libsystemd0
-  - systemd-timesyncd
-  - libpam-systemd
-  - systemd
+  - libzstd1
   - udev
+  - libpam-systemd
+  - libnss-systemd
+  - systemd
+  - systemd-timesyncd
   - libudev1
+  - libsystemd0
   - systemd-sysv
-  - python3-swh.model
+  - borgbackup
   apt_package_security_dist_updates: []
   apt_package_security_updates: []
   apt_package_updates:
-  - libnss-systemd
-  - libsystemd0
-  - systemd-timesyncd
-  - libpam-systemd
-  - systemd
+  - systemd-sysv
   - udev
   - libudev1
-  - systemd-sysv
-  - python3-swh.model
-  apt_reboot_required: true
+  - libzstd1
+  - borgbackup
+  apt_reboot_required: false
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1612265822
-  apt_updates: 9
+  apt_update_last_success: 1612164131
+  apt_updates: 5
   architecture: amd64
   bios_release_date: 04/01/2014
   bios_vendor: SeaBIOS
@@ -50,7 +47,7 @@ values:
   cassandraheapnewsize: 200
   cassandramaxheapsize: 1024
   chassistype: Other
-  deployment: staging
+  deployment: admin
   disks:
     sr0:
       model: QEMU DVD-ROM
@@ -76,7 +73,7 @@ values:
     manufacturer: QEMU
     product:
       name: Standard PC (i440FX + PIIX, 1996)
-      uuid: 851b6111-fbd3-4345-a754-59194bca0296
+      uuid: 59e95e85-0139-4187-8938-808a19e8933f
   docker_home_dirs:
     root: "/root"
     daemon: "/usr/sbin"
@@ -143,17 +140,21 @@ values:
     vsellier: "/home/vsellier"
     prometheus: "/var/lib/prometheus"
     nagios: "/var/lib/nagios"
-  domain: internal.staging.swh.network
+    _hitch: "/nonexistent"
+    varnish: "/nonexistent"
+    vcache: "/nonexistent"
+    varnishlog: "/nonexistent"
+  domain: internal.admin.swh.network
   facterversion: 3.11.0
   filesystems: btrfs,ext2,ext3,ext4,hfs,hfsplus,iso9660,jfs,minix,msdos,qnx4,ufs,vfat,xfs
   fips_enabled: false
-  fqdn: objstorage0.internal.staging.swh.network
+  fqdn: rp1.internal.admin.swh.network
   gid: root
   hardwareisa: unknown
   hardwaremodel: x86_64
-  hostname: objstorage0
-  icinga2_puppet_hostcert: "/var/lib/puppet/ssl/certs/objstorage0.internal.staging.swh.network.pem"
-  icinga2_puppet_hostprivkey: "/var/lib/puppet/ssl/private_keys/objstorage0.internal.staging.swh.network.pem"
+  hostname: rp1
+  icinga2_puppet_hostcert: "/var/lib/puppet/ssl/certs/rp1.internal.admin.swh.network.pem"
+  icinga2_puppet_hostprivkey: "/var/lib/puppet/ssl/private_keys/rp1.internal.admin.swh.network.pem"
   icinga2_puppet_localcacert: "/var/lib/puppet/ssl/certs/ca.pem"
   id: root
   identity:
@@ -163,57 +164,57 @@ values:
     uid: 0
     user: root
   interfaces: eth0,lo
-  ipaddress: 192.168.130.110
-  ipaddress6: fe80::5c28:eaff:fe7d:500d
-  ipaddress6_eth0: fe80::5c28:eaff:fe7d:500d
+  ipaddress: 192.168.50.20
+  ipaddress6: fe80::4c42:20ff:fee0:b665
+  ipaddress6_eth0: fe80::4c42:20ff:fee0:b665
   ipaddress6_lo: "::1"
-  ipaddress_eth0: 192.168.130.110
+  ipaddress_eth0: 192.168.50.20
   ipaddress_lo: 127.0.0.1
   is_pe: false
   is_virtual: true
   kernel: Linux
   kernelmajversion: '4.19'
-  kernelrelease: 4.19.0-13-amd64
+  kernelrelease: 4.19.0-12-amd64
   kernelversion: 4.19.0
   letsencrypt_directory: {}
   load_averages:
-    15m: 0.01
-    1m: 0.08
-    5m: 0.04
+    15m: 0.04
+    1m: 0.14
+    5m: 0.11
   lsbdistcodename: buster
   lsbdistdescription: Debian GNU/Linux 10 (buster)
   lsbdistid: Debian
   lsbdistrelease: '10'
   lsbmajdistrelease: '10'
-  macaddress: 5e:28:ea:7d:50:0d
-  macaddress_eth0: 5e:28:ea:7d:50:0d
+  macaddress: 4e:42:20:e0:b6:65
+  macaddress_eth0: 4e:42:20:e0:b6:65
   manufacturer: QEMU
   memory:
     swap:
-      available: 1020.00 MiB
-      available_bytes: 1069543424
-      capacity: 0%
+      available: 1019.48 MiB
+      available_bytes: 1069006848
+      capacity: 0.05%
       total: 1020.00 MiB
       total_bytes: 1069543424
-      used: 0 bytes
-      used_bytes: 0
+      used: 524.00 KiB
+      used_bytes: 536576
     system:
-      available: 3.45 GiB
-      available_bytes: 3705487360
-      capacity: 10.46%
+      available: 3.32 GiB
+      available_bytes: 3568889856
+      capacity: 13.76%
       total: 3.85 GiB
-      total_bytes: 4138471424
-      used: 412.93 MiB
-      used_bytes: 432984064
-  memoryfree: 3.45 GiB
-  memoryfree_mb: 3533.828125
+      total_bytes: 4138463232
+      used: 543.19 MiB
+      used_bytes: 569573376
+  memoryfree: 3.32 GiB
+  memoryfree_mb: 3403.55859375
   memorysize: 3.85 GiB
-  memorysize_mb: 3946.75390625
+  memorysize_mb: 3946.74609375
   mountpoints:
     "/":
-      available: 13.96 GiB
-      available_bytes: 14989348864
-      capacity: 14.84%
+      available: 13.97 GiB
+      available_bytes: 14995656704
+      capacity: 14.80%
       device: "/dev/mapper/base--template--vg-root"
       filesystem: ext4
       options:
@@ -223,11 +224,11 @@ values:
       size: 16.39 GiB
       size_bytes: 17601216512
       used: 2.43 GiB
-      used_bytes: 2611867648
+      used_bytes: 2605559808
     "/boot":
-      available: 115.57 MiB
-      available_bytes: 121187328
-      capacity: 50.89%
+      available: 151.53 MiB
+      available_bytes: 158891008
+      capacity: 35.61%
       device: "/dev/vda1"
       filesystem: ext2
       options:
@@ -235,11 +236,11 @@ values:
       - relatime
       size: 235.32 MiB
       size_bytes: 246755328
-      used: 119.75 MiB
-      used_bytes: 125568000
+      used: 83.79 MiB
+      used_bytes: 87864320
     "/dev/shm":
       available: 1.93 GiB
-      available_bytes: 2069233664
+      available_bytes: 2069229568
       capacity: 0%
       device: tmpfs
       filesystem: tmpfs
@@ -248,12 +249,12 @@ values:
       - nosuid
       - nodev
       size: 1.93 GiB
-      size_bytes: 2069233664
+      size_bytes: 2069229568
       used: 0 bytes
       used_bytes: 0
     "/run":
-      available: 394.14 MiB
-      available_bytes: 413290496
+      available: 394.16 MiB
+      available_bytes: 413310976
       capacity: 0.13%
       device: tmpfs
       filesystem: tmpfs
@@ -266,8 +267,8 @@ values:
       - mode=755
       size: 394.68 MiB
       size_bytes: 413847552
-      used: 544.00 KiB
-      used_bytes: 557056
+      used: 524.00 KiB
+      used_bytes: 536576
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -285,45 +286,80 @@ values:
       size_bytes: 5242880
       used: 0 bytes
       used_bytes: 0
+    "/run/user/1003":
+      available: 87.47 MiB
+      available_bytes: 91721728
+      capacity: 0%
+      device: tmpfs
+      filesystem: tmpfs
+      options:
+      - rw
+      - nosuid
+      - nodev
+      - relatime
+      - size=89572k
+      - mode=700
+      - uid=1003
+      - gid=1003
+      size: 87.47 MiB
+      size_bytes: 91721728
+      used: 0 bytes
+      used_bytes: 0
+    "/sys/fs/cgroup":
+      available: 1.93 GiB
+      available_bytes: 2069229568
+      capacity: 0%
+      device: tmpfs
+      filesystem: tmpfs
+      options:
+      - ro
+      - nosuid
+      - nodev
+      - noexec
+      - mode=755
+      size: 1.93 GiB
+      size_bytes: 2069229568
+      used: 0 bytes
+      used_bytes: 0
   mounts:
   - "/"
   - "/boot"
   mtu_eth0: 1500
   mtu_lo: 65536
-  mysql_server_id: 61858829
+  mysql_server_id: 9317861
   netmask: 255.255.255.0
   netmask6: 'ffff:ffff:ffff:ffff::'
   netmask6_eth0: 'ffff:ffff:ffff:ffff::'
   netmask6_lo: ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff
   netmask_eth0: 255.255.255.0
   netmask_lo: 255.0.0.0
-  network: 192.168.130.0
+  network: 192.168.50.0
   network6: 'fe80::'
   network6_eth0: 'fe80::'
   network6_lo: "::1"
-  network_eth0: 192.168.130.0
+  network_eth0: 192.168.50.0
   network_lo: 127.0.0.0
   networking:
-    domain: internal.staging.swh.network
-    fqdn: objstorage0.internal.staging.swh.network
-    hostname: objstorage0
+    domain: internal.admin.swh.network
+    fqdn: rp1.internal.admin.swh.network
+    hostname: rp1
     interfaces:
       eth0:
         bindings:
-        - address: 192.168.130.110
+        - address: 192.168.50.20
           netmask: 255.255.255.0
-          network: 192.168.130.0
+          network: 192.168.50.0
         bindings6:
-        - address: fe80::5c28:eaff:fe7d:500d
+        - address: fe80::4c42:20ff:fee0:b665
           netmask: 'ffff:ffff:ffff:ffff::'
           network: 'fe80::'
-        ip: 192.168.130.110
-        ip6: fe80::5c28:eaff:fe7d:500d
-        mac: 5e:28:ea:7d:50:0d
+        ip: 192.168.50.20
+        ip6: fe80::4c42:20ff:fee0:b665
+        mac: 4e:42:20:e0:b6:65
         mtu: 1500
         netmask: 255.255.255.0
         netmask6: 'ffff:ffff:ffff:ffff::'
-        network: 192.168.130.0
+        network: 192.168.50.0
         network6: 'fe80::'
       lo:
         bindings:
@@ -341,16 +377,15 @@ values:
         netmask6: ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff
         network: 127.0.0.0
         network6: "::1"
-    ip: 192.168.130.110
-    ip6: fe80::5c28:eaff:fe7d:500d
-    mac: 5e:28:ea:7d:50:0d
+    ip: 192.168.50.20
+    ip6: fe80::4c42:20ff:fee0:b665
+    mac: 4e:42:20:e0:b6:65
     mtu: 1500
     netmask: 255.255.255.0
     netmask6: 'ffff:ffff:ffff:ffff::'
-    network: 192.168.130.0
+    network: 192.168.50.0
     network6: 'fe80::'
     primary: eth0
-  nginx_version: 1.14.2
   operatingsystem: Debian
   operatingsystemmajrelease: '10'
   operatingsystemrelease: '10.7'
@@ -404,15 +439,15 @@ values:
       uuid: 3pkyW9-JF6T-y3GS-R3NZ-OeQp-ePTO-Dd3a0C
   path: "/usr/bin:/bin:/usr/sbin:/sbin"
   physicalprocessorcount: 1
-  processor0: Intel(R) Xeon(R) CPU E5-2630 v4 @ 2.20GHz
-  processor1: Intel(R) Xeon(R) CPU E5-2630 v4 @ 2.20GHz
+  processor0: AMD EPYC 7402 24-Core Processor
+  processor1: AMD EPYC 7402 24-Core Processor
   processorcount: 2
   processors:
     count: 2
     isa: unknown
     models:
-    - Intel(R) Xeon(R) CPU E5-2630 v4 @ 2.20GHz
-    - Intel(R) Xeon(R) CPU E5-2630 v4 @ 2.20GHz
+    - AMD EPYC 7402 24-Core Processor
+    - AMD EPYC 7402 24-Core Processor
     physicalcount: 1
   productname: Standard PC (i440FX + PIIX, 1996)
   public_ipaddresses: []
@@ -433,87 +468,89 @@ values:
   ssh:
     dsa:
       fingerprints:
-        sha1: SSHFP 2 1 c4763937c8b8528900d2e2c4312c2dc1cf7e3f5a
-        sha256: SSHFP 2 2 b158aed45b841777d895a88cff128514686f7878638e22972093bd4028ceced0
-      key: AAAAB3NzaC1kc3MAAACBALxsw+V3g8RI0w5AbTr7JIPJjGxYCzyj3eddqHkMLV61eeOptblEeUOZeGbb2nHAz42HnDOS+Q80LpEwRy1QhL0PvtDRbQQcer2rkbBNbPGAUsCC8KDrRkcY2EV0RltpS7B33o1PNH8/pYQnndGSnwwcFvoEZ6nckfvM1Ry6Xv4DAAAAFQDm0zyapxUZ/4b8sXYhZL2B1GczjwAAAIAsnjDfLqMg8+d0bPMLhL6CzxNMFRmsFQe4HwYGDSrCk8xmZ6Uwni2vRPRyg2fHWK2BrukDhld0m0exeOz3Cugy2y6drwaGM9CI2EPudc3ktC33T6NoAWnG+ISM0HAqzGj8T6SYIawOl5GOdXnofIpbOye8vlHPz6tv8HZzgsUCMAAAAIEAoPDt0C8CwZrFfFo5y3lBJUgCH3/Rl6cuKf7qUnvzOTXubcMna6RSlqz9pYCVzP4rqspEdrm5QNyelmF1wQLLDh3MiHzQ+7pw2bdyoDyeAIbVaoh+6DF0Bg4G2spmxObpfDFgQruqkbjfI2a5rufqUoAHTr1WUVF0lNoDI2OLiAM=
+        sha1: SSHFP 2 1 85f8c6f83056382e06b347bfe8ce518bd6ac87cb
+        sha256: SSHFP 2 2 fb70621cacf85d76c48a09ba3865d11b1f246752a5b6ed8f7a5d82994b9798d2
+      key: AAAAB3NzaC1kc3MAAACBAPRTvLG/IYhyolIa12HPq39e19UOlLqmw19k1YCpFhS/7MQkad2KVLjBg34YoNi4asdJc/Pz+ONIrhmmz9wDZaAjt67GkR5+sxQv/g1+20uT1x6SwM25Vmu0qLK6YZMwcmD9lmH4huTmFjkpYFxw8nE/3rHEiTo/HLeXo0Vh4YKxAAAAFQDIBg73QyDJOWOWaGhJSXb1WpmVSwAAAIAdZ2Wbgk+2N56oGBADeSFoJE8tef7KlD+/aNjTpmJcuwaz9ZVDQGr2r+YGMsys6IKODaXN6IZTBeCB6ZMVsUbwkC8asVjMczMVGHzZf/95nWrwFgRhb56IjBvX07zTUI2ktgxt/Bg+KGnBFnKekLO9CoxWzS/QtPY4+XRiUMyUDgAAAIEAs4psBr56wzPt7LfjhbdTRnKTB0DbNr2SznZGNJtRcWb2A0CJMoPCvGvcypDJRgzHPmiHUzfvI3wS4DQlT4UkuX/dEo05TACpVRgscnfOkn61Xmx31O8rcKK+WOU9W98tziGnmUt1UajfaRx6a2UNOMBQeN6856LtLpZz1rGouhk=
       type: ssh-dss
     ecdsa:
       fingerprints:
-        sha1: SSHFP 3 1 49dc2b2e634728982a9cd05fbabef932fd166d23
-        sha256: SSHFP 3 2 2271db9bab3799e001d02ec3581dac3f7c383b102e649106371cba614b118398
-      key: AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBIE28PxVHNl2dq2t+WiVh9ZImDDwcwpbdON9nJovpI6COqbYITh70kY7PizIF+z6K1ID6zGExkHjB2p3oDzboMo=
+        sha1: SSHFP 3 1 10b77ac603acbb15edbe920e204c59a0699571df
+        sha256: SSHFP 3 2 e5829246ac70277f385f1af097c123f720fab7fc69caae563468e8d109ccd103
+      key: AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBJ3K73CbK65gzMWLNIP0W2e6XaUQWk7TiF6UEhD8IE3uDDXq6mD2wq4xf9JPnsLuAxLUlXRuDP3VlCdvNv5IpC8=
       type: ecdsa-sha2-nistp256
     ed25519:
       fingerprints:
-        sha1: SSHFP 4 1 fb03030ad8c5c11b4407406aace040c8f55081b9
-        sha256: SSHFP 4 2 312b2787080fabd827a4f70f00522d3979e6685f5147b5ab5ba6bfa8b7e2f705
-      key: AAAAC3NzaC1lZDI1NTE5AAAAIIuOvYaAj/jQjnOAdwbXQj/G68039n+1qlX0TA0a7gwL
+        sha1: SSHFP 4 1 fc0378c7e8685388d8019995d62a92a164a2ace1
+        sha256: SSHFP 4 2 f1851cc12395018db619a4ec9b6b12ed9af1e72073afc328896c715166440d22
+      key: AAAAC3NzaC1lZDI1NTE5AAAAIAMBSDpHlZ4LaHrKK2HlnsXMLUECoMoveHbKSuTbHONb
       type: ssh-ed25519
     rsa:
       fingerprints:
-        sha1: SSHFP 1 1 1ba27d8d59782ab9d039128bb9d0e7af80f698cd
-        sha256: SSHFP 1 2 8c84a658f12bc5168ba28467d60aeaf5e6dede82adfd5db65978bf29d62eac5c
-      key: AAAAB3NzaC1yc2EAAAADAQABAAABAQDT0v8Xj2ht6Mb72jFl0W4oLN+Mv1iZSukRbXXZzyeuB/VTanwF6PIwke1oWcmmadeEYi+eNplDvgY/76+SXZNiv1LSRldO4mvLnCsHTiZBnfQ9NOf01K0q9a7TdSI6vxNX+v2hvyIVRa5Hci0XYITWX6u5FDUuYdrZWYB4tr7Io1nSx7tC+jCDI8/Cn6Go+HAvSRF0ZCXBdoOf1M9Er6tJIoNLgmz+yLy3nXfR4/PKFxpBI2MIuJacaOGpgV2sjO5R6ms9fla2NCcUbZeIuis94FZr0IVhmSX0FfHocRnasTAtVLPM2tRZtFUB4jIMDsn1ShhB14W0SK0yyzaxyi0P
+        sha1: SSHFP 1 1 9db37ec00af276593343c673f81939e7b6620761
+        sha256: SSHFP 1 2 717e245c81ef266b43563bde0d20d7f033b330e9027ab6338918049afa3de523
+      key: AAAAB3NzaC1yc2EAAAADAQABAAABAQDgiPW8vE3z/TWZfFo7d3GlWLkcwiU2fgqmefL+nboV/aw0wai3YaIhP2TV3qDIdWcYXBb45uDz6q8WQSQTEuAvuzVYUfjc+bbzwBck2GYQUXOZ4qHtDhGKS9MSZt4MAMtZ7n+wD2BZ+nzysjFCH7ARPkHHxnmG/VdgMno4DdbimW3nHr3qvNrvwWAB/+YxYBYYgSvvU1CrBoNRM8FFK6m0gR5d/82hLiJI5qmajt2QUic2mQc9xXPPpStSOrYvPi8WDHkPfOQoRnRH/cNqIz9L1jxaY046GDGpwr4coYerKq7YT6EwzrIoEesIp2TBG5hoU46rp8MxGIEfxsIkZhK5
       type: ssh-rsa
   ssh_client_version_full: 7.9p1
-  ssh_keys_users: {}
+  ssh_keys_users:
+    root:
+      id_ed25519.borg.pub:
+        type: ed25519
+        key: AAAAC3NzaC1lZDI1NTE5AAAAIGdKG9wX5sOJO91IhQPGk2WK4eqWZIvEGt/ncm52h2Gc
+        comment: root@rp1
   ssh_server_version_full: 7.9p1
   ssh_server_version_major: '7'
   ssh_server_version_release: '7.9'
-  sshdsakey: AAAAB3NzaC1kc3MAAACBALxsw+V3g8RI0w5AbTr7JIPJjGxYCzyj3eddqHkMLV61eeOptblEeUOZeGbb2nHAz42HnDOS+Q80LpEwRy1QhL0PvtDRbQQcer2rkbBNbPGAUsCC8KDrRkcY2EV0RltpS7B33o1PNH8/pYQnndGSnwwcFvoEZ6nckfvM1Ry6Xv4DAAAAFQDm0zyapxUZ/4b8sXYhZL2B1GczjwAAAIAsnjDfLqMg8+d0bPMLhL6CzxNMFRmsFQe4HwYGDSrCk8xmZ6Uwni2vRPRyg2fHWK2BrukDhld0m0exeOz3Cugy2y6drwaGM9CI2EPudc3ktC33T6NoAWnG+ISM0HAqzGj8T6SYIawOl5GOdXnofIpbOye8vlHPz6tv8HZzgsUCMAAAAIEAoPDt0C8CwZrFfFo5y3lBJUgCH3/Rl6cuKf7qUnvzOTXubcMna6RSlqz9pYCVzP4rqspEdrm5QNyelmF1wQLLDh3MiHzQ+7pw2bdyoDyeAIbVaoh+6DF0Bg4G2spmxObpfDFgQruqkbjfI2a5rufqUoAHTr1WUVF0lNoDI2OLiAM=
-  sshecdsakey: AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBIE28PxVHNl2dq2t+WiVh9ZImDDwcwpbdON9nJovpI6COqbYITh70kY7PizIF+z6K1ID6zGExkHjB2p3oDzboMo=
-  sshed25519key: AAAAC3NzaC1lZDI1NTE5AAAAIIuOvYaAj/jQjnOAdwbXQj/G68039n+1qlX0TA0a7gwL
+  sshdsakey: AAAAB3NzaC1kc3MAAACBAPRTvLG/IYhyolIa12HPq39e19UOlLqmw19k1YCpFhS/7MQkad2KVLjBg34YoNi4asdJc/Pz+ONIrhmmz9wDZaAjt67GkR5+sxQv/g1+20uT1x6SwM25Vmu0qLK6YZMwcmD9lmH4huTmFjkpYFxw8nE/3rHEiTo/HLeXo0Vh4YKxAAAAFQDIBg73QyDJOWOWaGhJSXb1WpmVSwAAAIAdZ2Wbgk+2N56oGBADeSFoJE8tef7KlD+/aNjTpmJcuwaz9ZVDQGr2r+YGMsys6IKODaXN6IZTBeCB6ZMVsUbwkC8asVjMczMVGHzZf/95nWrwFgRhb56IjBvX07zTUI2ktgxt/Bg+KGnBFnKekLO9CoxWzS/QtPY4+XRiUMyUDgAAAIEAs4psBr56wzPt7LfjhbdTRnKTB0DbNr2SznZGNJtRcWb2A0CJMoPCvGvcypDJRgzHPmiHUzfvI3wS4DQlT4UkuX/dEo05TACpVRgscnfOkn61Xmx31O8rcKK+WOU9W98tziGnmUt1UajfaRx6a2UNOMBQeN6856LtLpZz1rGouhk=
+  sshecdsakey: AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBJ3K73CbK65gzMWLNIP0W2e6XaUQWk7TiF6UEhD8IE3uDDXq6mD2wq4xf9JPnsLuAxLUlXRuDP3VlCdvNv5IpC8=
+  sshed25519key: AAAAC3NzaC1lZDI1NTE5AAAAIAMBSDpHlZ4LaHrKK2HlnsXMLUECoMoveHbKSuTbHONb
   sshfp_dsa: |-
-    SSHFP 2 1 c4763937c8b8528900d2e2c4312c2dc1cf7e3f5a
-    SSHFP 2 2 b158aed45b841777d895a88cff128514686f7878638e22972093bd4028ceced0
+    SSHFP 2 1 85f8c6f83056382e06b347bfe8ce518bd6ac87cb
+    SSHFP 2 2 fb70621cacf85d76c48a09ba3865d11b1f246752a5b6ed8f7a5d82994b9798d2
   sshfp_ecdsa: |-
-    SSHFP 3 1 49dc2b2e634728982a9cd05fbabef932fd166d23
-    SSHFP 3 2 2271db9bab3799e001d02ec3581dac3f7c383b102e649106371cba614b118398
+    SSHFP 3 1 10b77ac603acbb15edbe920e204c59a0699571df
+    SSHFP 3 2 e5829246ac70277f385f1af097c123f720fab7fc69caae563468e8d109ccd103
   sshfp_ed25519: |-
-    SSHFP 4 1 fb03030ad8c5c11b4407406aace040c8f55081b9
-    SSHFP 4 2 312b2787080fabd827a4f70f00522d3979e6685f5147b5ab5ba6bfa8b7e2f705
+    SSHFP 4 1 fc0378c7e8685388d8019995d62a92a164a2ace1
+    SSHFP 4 2 f1851cc12395018db619a4ec9b6b12ed9af1e72073afc328896c715166440d22
   sshfp_rsa: |-
-    SSHFP 1 1 1ba27d8d59782ab9d039128bb9d0e7af80f698cd
-    SSHFP 1 2 8c84a658f12bc5168ba28467d60aeaf5e6dede82adfd5db65978bf29d62eac5c
-  sshrsakey: AAAAB3NzaC1yc2EAAAADAQABAAABAQDT0v8Xj2ht6Mb72jFl0W4oLN+Mv1iZSukRbXXZzyeuB/VTanwF6PIwke1oWcmmadeEYi+eNplDvgY/76+SXZNiv1LSRldO4mvLnCsHTiZBnfQ9NOf01K0q9a7TdSI6vxNX+v2hvyIVRa5Hci0XYITWX6u5FDUuYdrZWYB4tr7Io1nSx7tC+jCDI8/Cn6Go+HAvSRF0ZCXBdoOf1M9Er6tJIoNLgmz+yLy3nXfR4/PKFxpBI2MIuJacaOGpgV2sjO5R6ms9fla2NCcUbZeIuis94FZr0IVhmSX0FfHocRnasTAtVLPM2tRZtFUB4jIMDsn1ShhB14W0SK0yyzaxyi0P
-  subnet: sesi_rocquencourt_staging
+    SSHFP 1 1 9db37ec00af276593343c673f81939e7b6620761
+    SSHFP 1 2 717e245c81ef266b43563bde0d20d7f033b330e9027ab6338918049afa3de523
+  sshrsakey: AAAAB3NzaC1yc2EAAAADAQABAAABAQDgiPW8vE3z/TWZfFo7d3GlWLkcwiU2fgqmefL+nboV/aw0wai3YaIhP2TV3qDIdWcYXBb45uDz6q8WQSQTEuAvuzVYUfjc+bbzwBck2GYQUXOZ4qHtDhGKS9MSZt4MAMtZ7n+wD2BZ+nzysjFCH7ARPkHHxnmG/VdgMno4DdbimW3nHr3qvNrvwWAB/+YxYBYYgSvvU1CrBoNRM8FFK6m0gR5d/82hLiJI5qmajt2QUic2mQc9xXPPpStSOrYvPi8WDHkPfOQoRnRH/cNqIz9L1jxaY046GDGpwr4coYerKq7YT6EwzrIoEesIp2TBG5hoU46rp8MxGIEfxsIkZhK5
+  subnet: sesi_rocquencourt_admin
   sudoversion: 1.8.27
-  swapfree: 1020.00 MiB
-  swapfree_mb: 1019.99609375
+  swapfree: 1019.48 MiB
+  swapfree_mb: 1019.484375
   swapsize: 1020.00 MiB
   swapsize_mb: 1019.99609375
   swh_hostname:
-    fqdn: objstorage0.internal.staging.swh.network
-    short: objstorage0
-    internal_fqdn: objstorage0.internal.staging.swh.network
+    fqdn: rp1.internal.admin.swh.network
+    short: rp1
+    internal_fqdn: rp1.internal.softwareheritage.org
   system_uptime:
-    days: 12
-    hours: 306
-    seconds: 1102114
-    uptime: 12 days
+    days: 25
+    hours: 602
+    seconds: 2170030
+    uptime: 25 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
     systemd-fsck-root.service: enabled-runtime
-    systemd-network-generator.service: disabled
     systemd-networkd-wait-online.service: disabled
     systemd-networkd.service: disabled
-    systemd-pstore.service: enabled
-    systemd-remount-fs.service: enabled-runtime
     systemd-resolved.service: disabled
     systemd-time-wait-sync.service: disabled
     systemd-timesyncd.service: enabled
-  systemd_version: '247'
+  systemd_version: '241'
   timezone: UTC
-  uptime: 12 days
-  uptime_days: 12
-  uptime_hours: 306
-  uptime_seconds: 1102114
-  uuid: 851b6111-fbd3-4345-a754-59194bca0296
+  uptime: 25 days
+  uptime_days: 25
+  uptime_hours: 602
+  uptime_seconds: 2170030
+  uuid: 59e95e85-0139-4187-8938-808a19e8933f
   vcsrepo_svn_ver: ''
   virtual: kvm
-  clientcert: objstorage0.internal.staging.swh.network
+  clientcert: rp1.internal.admin.swh.network
   clientversion: 5.5.10
   clientnoop: false
-timestamp: '2021-02-02T12:07:06.249094380+00:00'
-expiration: '2021-02-02T12:37:06.249980346+00:00'
+timestamp: '2021-02-02T12:26:05.345031004+00:00'
+expiration: '2021-02-02T12:56:05.345399715+00:00'

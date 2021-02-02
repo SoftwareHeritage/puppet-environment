@@ -2,10 +2,38 @@
 name: uffizi.internal.softwareheritage.org
 values:
   agent_specified_environment: production
-  apt_has_dist_updates: false
-  apt_has_updates: false
-  apt_reboot_required: false
-  apt_update_last_success: 1609921504
+  apt_dist_updates: 10
+  apt_has_dist_updates: true
+  apt_has_updates: true
+  apt_package_dist_updates:
+  - libsystemd-dev
+  - libnss-systemd
+  - libsystemd0
+  - systemd-timesyncd
+  - libpam-systemd
+  - systemd
+  - udev
+  - libudev1
+  - systemd-sysv
+  - borgbackup
+  apt_package_security_dist_updates: []
+  apt_package_security_updates: []
+  apt_package_updates:
+  - libsystemd-dev
+  - libnss-systemd
+  - libsystemd0
+  - systemd-timesyncd
+  - libpam-systemd
+  - systemd
+  - udev
+  - libudev1
+  - systemd-sysv
+  - borgbackup
+  apt_reboot_required: true
+  apt_security_dist_updates: 0
+  apt_security_updates: 0
+  apt_update_last_success: 1612268703
+  apt_updates: 10
   architecture: amd64
   bios_release_date: 05/23/2018
   bios_vendor: Dell Inc.
@@ -149,12 +177,15 @@ values:
     privileged: true
     uid: 0
     user: root
-  interfaces: bond0,eno1,eno2,eno3,eno4,enp97s0f0,enp97s0f1,enp97s0f2,enp97s0f3,lo,vlan440,vmbr0
+  interfaces: bond0,eno1,eno2,eno3,eno4,enp97s0f0,enp97s0f1,enp97s0f2,enp97s0f3,lo,tap132i0,tap135i0,vlan1300,vlan440,vlan442,vlan443,vmbr0,vmbr1300,vmbr442,vmbr443
   ipaddress: 192.168.100.101
   ipaddress6: fe80::f4e8:53ff:fe1a:1b47
   ipaddress6_bond0: fe80::e853:27ff:fe13:b7ea
   ipaddress6_lo: "::1"
   ipaddress6_vmbr0: fe80::f4e8:53ff:fe1a:1b47
+  ipaddress6_vmbr1300: fe80::389a:deff:fe5c:ff64
+  ipaddress6_vmbr442: fe80::306f:7aff:fe48:7c4d
+  ipaddress6_vmbr443: fe80::244f:b3ff:fee0:3f73
   ipaddress_eno2: 192.168.253.1
   ipaddress_eno3: 192.168.254.94
   ipaddress_eno4: 192.168.254.96
@@ -173,9 +204,9 @@ values:
   kernelversion: 5.4.78
   letsencrypt_directory: {}
   load_averages:
-    15m: 0.16
-    1m: 0.24
-    5m: 0.16
+    15m: 0.37
+    1m: 0.56
+    5m: 0.35
   location: sesi_rocquencourt
   lsbdistcodename: buster
   lsbdistdescription: Debian GNU/Linux 10 (buster)
@@ -192,8 +223,16 @@ values:
   macaddress_enp97s0f1: f8:f2:1e:0c:3c:7a
   macaddress_enp97s0f2: f8:f2:1e:0c:3c:7c
   macaddress_enp97s0f3: f8:f2:1e:0c:3c:7e
+  macaddress_tap132i0: b6:62:61:b4:78:80
+  macaddress_tap135i0: 3e:42:94:30:17:d5
+  macaddress_vlan1300: ea:53:27:13:b7:ea
   macaddress_vlan440: ea:53:27:13:b7:ea
+  macaddress_vlan442: ea:53:27:13:b7:ea
+  macaddress_vlan443: ea:53:27:13:b7:ea
   macaddress_vmbr0: f6:e8:53:1a:1b:47
+  macaddress_vmbr1300: 3a:9a:de:5c:ff:64
+  macaddress_vmbr442: 32:6f:7a:48:7c:4d
+  macaddress_vmbr443: 26:4f:b3:e0:3f:73
   manufacturer: Dell Inc.
   memory:
     swap:
@@ -205,22 +244,22 @@ values:
       used: 0 bytes
       used_bytes: 0
     system:
-      available: 499.52 GiB
-      available_bytes: 536351186944
-      capacity: 0.86%
+      available: 466.52 GiB
+      available_bytes: 500924923904
+      capacity: 7.41%
       total: 503.86 GiB
       total_bytes: 541012516864
-      used: 4.34 GiB
-      used_bytes: 4661329920
-  memoryfree: 499.52 GiB
-  memoryfree_mb: 511504.3515625
+      used: 37.33 GiB
+      used_bytes: 40087592960
+  memoryfree: 466.52 GiB
+  memoryfree_mb: 477719.234375
   memorysize: 503.86 GiB
   memorysize_mb: 515949.7421875
   mountpoints:
     "/":
-      available: 62.92 GiB
-      available_bytes: 67557711872
-      capacity: 19.97%
+      available: 62.45 GiB
+      available_bytes: 67059257344
+      capacity: 20.56%
       device: "/dev/mapper/vg--louvre-uffizi--root"
       filesystem: ext4
       options:
@@ -230,8 +269,8 @@ values:
       - stripe=256
       size: 78.62 GiB
       size_bytes: 84417077248
-      used: 15.70 GiB
-      used_bytes: 16859365376
+      used: 16.17 GiB
+      used_bytes: 17357819904
     "/dev/shm":
       available: 251.88 GiB
       available_bytes: 270449930240
@@ -267,7 +306,7 @@ values:
       used_bytes: 233472
     "/run":
       available: 50.38 GiB
-      available_bytes: 54096908288
+      available_bytes: 54097588224
       capacity: 0.01%
       device: tmpfs
       filesystem: tmpfs
@@ -280,8 +319,8 @@ values:
       - mode=755
       size: 50.39 GiB
       size_bytes: 54101254144
-      used: 4.14 MiB
-      used_bytes: 4345856
+      used: 3.50 MiB
+      used_bytes: 3665920
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -318,24 +357,6 @@ values:
       size_bytes: 8589934592
       used: 0 bytes
       used_bytes: 0
-    "/sys/fs/cgroup":
-      available: 4.00 MiB
-      available_bytes: 4194304
-      capacity: 0%
-      device: tmpfs
-      filesystem: tmpfs
-      options:
-      - ro
-      - nosuid
-      - nodev
-      - noexec
-      - size=4096k
-      - nr_inodes=1024
-      - mode=755
-      size: 4.00 MiB
-      size_bytes: 4194304
-      used: 0 bytes
-      used_bytes: 0
   mounts:
   - "/"
   - "/mnt/pve/proxmox-cephfs"
@@ -349,14 +370,25 @@ values:
   mtu_enp97s0f2: 1500
   mtu_enp97s0f3: 9000
   mtu_lo: 65536
+  mtu_tap132i0: 9000
+  mtu_tap135i0: 9000
+  mtu_vlan1300: 9000
   mtu_vlan440: 9000
+  mtu_vlan442: 9000
+  mtu_vlan443: 9000
   mtu_vmbr0: 9000
+  mtu_vmbr1300: 9000
+  mtu_vmbr442: 9000
+  mtu_vmbr443: 9000
   mysql_server_id: 21866247
   netmask: 255.255.255.0
   netmask6: 'ffff:ffff:ffff:ffff::'
   netmask6_bond0: 'ffff:ffff:ffff:ffff::'
   netmask6_lo: ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff
   netmask6_vmbr0: 'ffff:ffff:ffff:ffff::'
+  netmask6_vmbr1300: 'ffff:ffff:ffff:ffff::'
+  netmask6_vmbr442: 'ffff:ffff:ffff:ffff::'
+  netmask6_vmbr443: 'ffff:ffff:ffff:ffff::'
   netmask_eno2: 255.255.255.0
   netmask_eno3: 255.255.255.254
   netmask_eno4: 255.255.255.254
@@ -367,6 +399,9 @@ values:
   network6_bond0: 'fe80::'
   network6_lo: "::1"
   network6_vmbr0: 'fe80::'
+  network6_vmbr1300: 'fe80::'
+  network6_vmbr442: 'fe80::'
+  network6_vmbr443: 'fe80::'
   network_eno2: 192.168.253.0
   network_eno3: 192.168.254.94
   network_eno4: 192.168.254.96
@@ -448,7 +483,22 @@ values:
         netmask6: ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff
         network: 127.0.0.0
         network6: "::1"
+      tap132i0:
+        mac: b6:62:61:b4:78:80
+        mtu: 9000
+      tap135i0:
+        mac: 3e:42:94:30:17:d5
+        mtu: 9000
+      vlan1300:
+        mac: ea:53:27:13:b7:ea
+        mtu: 9000
       vlan440:
+        mac: ea:53:27:13:b7:ea
+        mtu: 9000
+      vlan442:
+        mac: ea:53:27:13:b7:ea
+        mtu: 9000
+      vlan443:
         mac: ea:53:27:13:b7:ea
         mtu: 9000
       vmbr0:
@@ -467,6 +517,36 @@ values:
         netmask: 255.255.255.0
         netmask6: 'ffff:ffff:ffff:ffff::'
         network: 192.168.100.0
+        network6: 'fe80::'
+      vmbr1300:
+        bindings6:
+        - address: fe80::389a:deff:fe5c:ff64
+          netmask: 'ffff:ffff:ffff:ffff::'
+          network: 'fe80::'
+        ip6: fe80::389a:deff:fe5c:ff64
+        mac: 3a:9a:de:5c:ff:64
+        mtu: 9000
+        netmask6: 'ffff:ffff:ffff:ffff::'
+        network6: 'fe80::'
+      vmbr442:
+        bindings6:
+        - address: fe80::306f:7aff:fe48:7c4d
+          netmask: 'ffff:ffff:ffff:ffff::'
+          network: 'fe80::'
+        ip6: fe80::306f:7aff:fe48:7c4d
+        mac: 32:6f:7a:48:7c:4d
+        mtu: 9000
+        netmask6: 'ffff:ffff:ffff:ffff::'
+        network6: 'fe80::'
+      vmbr443:
+        bindings6:
+        - address: fe80::244f:b3ff:fee0:3f73
+          netmask: 'ffff:ffff:ffff:ffff::'
+          network: 'fe80::'
+        ip6: fe80::244f:b3ff:fee0:3f73
+        mac: 26:4f:b3:e0:3f:73
+        mtu: 9000
+        netmask6: 'ffff:ffff:ffff:ffff::'
         network6: 'fe80::'
     ip: 192.168.100.101
     ip6: fe80::f4e8:53ff:fe1a:1b47
@@ -761,10 +841,10 @@ values:
     short: uffizi
     internal_fqdn: uffizi.internal.softwareheritage.org
   system_uptime:
-    days: 5
-    hours: 136
-    seconds: 492422
-    uptime: 5 days
+    days: 13
+    hours: 329
+    seconds: 1187299
+    uptime: 13 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -779,15 +859,15 @@ values:
     systemd-timesyncd.service: enabled
   systemd_version: '247'
   timezone: UTC
-  uptime: 5 days
-  uptime_days: 5
-  uptime_hours: 136
-  uptime_seconds: 492422
+  uptime: 13 days
+  uptime_days: 13
+  uptime_hours: 329
+  uptime_seconds: 1187299
   uuid: 4c4c4544-0054-5110-8052-b5c04f373632
   vcsrepo_svn_ver: 1.10.4
   virtual: physical
   clientcert: uffizi.internal.softwareheritage.org
   clientversion: 5.5.10
   clientnoop: false
-timestamp: '2021-01-06T08:28:08.428927762+00:00'
-expiration: '2021-01-06T08:58:08.429842047+00:00'
+timestamp: '2021-02-02T12:28:09.446012034+00:00'
+expiration: '2021-02-02T12:58:09.447471102+00:00'

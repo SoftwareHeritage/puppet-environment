@@ -2,7 +2,7 @@
 name: bardo.internal.admin.swh.network
 values:
   agent_specified_environment: production
-  apt_dist_updates: 9
+  apt_dist_updates: 10
   apt_has_dist_updates: true
   apt_has_updates: true
   apt_package_dist_updates:
@@ -15,6 +15,7 @@ values:
   - libudev1
   - libsystemd0
   - systemd-sysv
+  - borgbackup
   apt_package_security_dist_updates: []
   apt_package_security_updates: []
   apt_package_updates:
@@ -22,11 +23,12 @@ values:
   - udev
   - libudev1
   - libzstd1
-  apt_reboot_required: false
+  - borgbackup
+  apt_reboot_required: true
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1609920541
-  apt_updates: 4
+  apt_update_last_success: 1612264142
+  apt_updates: 5
   architecture: amd64
   bios_release_date: 04/01/2014
   bios_vendor: SeaBIOS
@@ -45,7 +47,7 @@ values:
   cassandraheapnewsize: 200
   cassandramaxheapsize: 1995
   chassistype: Other
-  deployment: production
+  deployment: admin
   disks:
     sr0:
       model: QEMU DVD-ROM
@@ -142,7 +144,7 @@ values:
     postgres: "/var/lib/postgresql"
   domain: internal.admin.swh.network
   facterversion: 3.11.0
-  filesystems: ext2,ext3,ext4,iso9660
+  filesystems: btrfs,ext2,ext3,ext4,hfs,hfsplus,iso9660,jfs,minix,msdos,qnx4,ufs,vfat,xfs
   fips_enabled: false
   fqdn: bardo.internal.admin.swh.network
   gid: root
@@ -174,9 +176,9 @@ values:
   kernelversion: 4.19.0
   letsencrypt_directory: {}
   load_averages:
-    15m: 0.0
-    1m: 0.0
-    5m: 0.0
+    15m: 0.01
+    1m: 0.1
+    5m: 0.04
   lsbdistcodename: buster
   lsbdistdescription: Debian GNU/Linux 10 (buster)
   lsbdistid: Debian
@@ -195,22 +197,22 @@ values:
       used: 0 bytes
       used_bytes: 0
     system:
-      available: 7.08 GiB
-      available_bytes: 7598149632
-      capacity: 9.18%
+      available: 6.71 GiB
+      available_bytes: 7202959360
+      capacity: 13.91%
       total: 7.79 GiB
       total_bytes: 8366325760
-      used: 732.59 MiB
-      used_bytes: 768176128
-  memoryfree: 7.08 GiB
-  memoryfree_mb: 7246.16015625
+      used: 1.08 GiB
+      used_bytes: 1163366400
+  memoryfree: 6.71 GiB
+  memoryfree_mb: 6869.27734375
   memorysize: 7.79 GiB
   memorysize_mb: 7978.75
   mountpoints:
     "/":
-      available: 12.35 GiB
-      available_bytes: 13263409152
-      capacity: 24.64%
+      available: 11.28 GiB
+      available_bytes: 12116897792
+      capacity: 31.16%
       device: "/dev/mapper/base--template--vg-root"
       filesystem: ext4
       options:
@@ -219,12 +221,12 @@ values:
       - errors=remount-ro
       size: 16.39 GiB
       size_bytes: 17601216512
-      used: 4.04 GiB
-      used_bytes: 4337807360
+      used: 5.11 GiB
+      used_bytes: 5484318720
     "/boot":
-      available: 151.53 MiB
-      available_bytes: 158889984
-      capacity: 35.61%
+      available: 115.92 MiB
+      available_bytes: 121550848
+      capacity: 50.74%
       device: "/dev/vda1"
       filesystem: ext2
       options:
@@ -232,8 +234,8 @@ values:
       - relatime
       size: 235.32 MiB
       size_bytes: 246755328
-      used: 83.79 MiB
-      used_bytes: 87865344
+      used: 119.40 MiB
+      used_bytes: 125204480
     "/dev/shm":
       available: 3.90 GiB
       available_bytes: 4183154688
@@ -249,8 +251,8 @@ values:
       used: 8.00 KiB
       used_bytes: 8192
     "/run":
-      available: 797.33 MiB
-      available_bytes: 836059136
+      available: 797.30 MiB
+      available_bytes: 836026368
       capacity: 0.07%
       device: tmpfs
       filesystem: tmpfs
@@ -263,8 +265,8 @@ values:
       - mode=755
       size: 797.88 MiB
       size_bytes: 836632576
-      used: 560.00 KiB
-      used_bytes: 573440
+      used: 592.00 KiB
+      used_bytes: 606208
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -280,6 +282,25 @@ values:
       - size=5120k
       size: 5.00 MiB
       size_bytes: 5242880
+      used: 0 bytes
+      used_bytes: 0
+    "/run/user/1003":
+      available: 81.07 MiB
+      available_bytes: 85012480
+      capacity: 0%
+      device: tmpfs
+      filesystem: tmpfs
+      options:
+      - rw
+      - nosuid
+      - nodev
+      - relatime
+      - size=83020k
+      - mode=700
+      - uid=1003
+      - gid=1003
+      size: 81.07 MiB
+      size_bytes: 85012480
       used: 0 bytes
       used_bytes: 0
     "/sys/fs/cgroup":
@@ -504,10 +525,10 @@ values:
     short: bardo
     internal_fqdn: bardo.internal.softwareheritage.org
   system_uptime:
-    days: 5
-    hours: 139
-    seconds: 502622
-    uptime: 5 days
+    days: 32
+    hours: 791
+    seconds: 2848022
+    uptime: 32 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -519,15 +540,15 @@ values:
     systemd-timesyncd.service: enabled
   systemd_version: '241'
   timezone: UTC
-  uptime: 5 days
-  uptime_days: 5
-  uptime_hours: 139
-  uptime_seconds: 502622
+  uptime: 32 days
+  uptime_days: 32
+  uptime_hours: 791
+  uptime_seconds: 2848022
   uuid: 688d0b6c-359f-4ce9-8e50-896089fba39b
   vcsrepo_svn_ver: ''
   virtual: kvm
   clientcert: bardo.internal.admin.swh.network
   clientversion: 5.5.10
   clientnoop: false
-timestamp: '2021-01-06T08:22:05.062160362+00:00'
-expiration: '2021-01-06T08:52:05.062500851+00:00'
+timestamp: '2021-02-02T11:52:05.414209927+00:00'
+expiration: '2021-02-02T12:22:05.414601932+00:00'

@@ -2,24 +2,26 @@
 name: worker06.softwareheritage.org
 values:
   agent_specified_environment: production
-  apt_dist_updates: 3
+  apt_dist_updates: 4
   apt_has_dist_updates: true
   apt_has_updates: true
   apt_package_dist_updates:
-  - python3-swh.deposit
-  - python3-swh.deposit.loader
-  - python3-swh.deposit.client
+  - python3-swh.model
+  - python3-swh.storage
+  - python3-swh.journal
+  - python3-swh.lister
   apt_package_security_dist_updates: []
   apt_package_security_updates: []
   apt_package_updates:
-  - python3-swh.deposit
-  - python3-swh.deposit.loader
-  - python3-swh.deposit.client
+  - python3-swh.model
+  - python3-swh.storage
+  - python3-swh.journal
+  - python3-swh.lister
   apt_reboot_required: false
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1609918323
-  apt_updates: 3
+  apt_update_last_success: 1612265523
+  apt_updates: 4
   architecture: amd64
   augeas:
     version: 1.11.0
@@ -131,7 +133,7 @@ values:
     tg1999: "/home/tg1999"
   domain: softwareheritage.org
   facterversion: 3.11.0
-  filesystems: ext2,ext3,ext4
+  filesystems: btrfs,ext2,ext3,ext4,hfs,hfsplus,jfs,minix,msdos,qnx4,ufs,vfat,xfs
   fips_enabled: false
   fqdn: worker06.softwareheritage.org
   gid: root
@@ -161,13 +163,13 @@ values:
   is_virtual: true
   kernel: Linux
   kernelmajversion: '5.9'
-  kernelrelease: 5.9.0-0.bpo.2-amd64
+  kernelrelease: 5.9.0-0.bpo.5-amd64
   kernelversion: 5.9.0
   letsencrypt_directory: {}
   load_averages:
-    15m: 1.42
-    1m: 1.3
-    5m: 1.59
+    15m: 1.43
+    1m: 1.35
+    5m: 1.35
   location: sesi_rocquencourt
   lsbdistcodename: buster
   lsbdistdescription: Debian GNU/Linux 10 (buster)
@@ -180,30 +182,30 @@ values:
   manufacturer: QEMU
   memory:
     swap:
-      available: 488.21 MiB
-      available_bytes: 511922176
-      capacity: 87.51%
+      available: 2.80 GiB
+      available_bytes: 3008913408
+      capacity: 26.57%
       total: 3.82 GiB
       total_bytes: 4097830912
-      used: 3.34 GiB
-      used_bytes: 3585908736
+      used: 1.01 GiB
+      used_bytes: 1088917504
     system:
-      available: 8.98 GiB
-      available_bytes: 9640382464
-      capacity: 23.44%
+      available: 2.57 GiB
+      available_bytes: 2754494464
+      capacity: 78.12%
       total: 11.73 GiB
-      total_bytes: 12591374336
-      used: 2.75 GiB
-      used_bytes: 2950991872
-  memoryfree: 8.98 GiB
-  memoryfree_mb: 9193.78515625
+      total_bytes: 12591349760
+      used: 9.16 GiB
+      used_bytes: 9836855296
+  memoryfree: 2.57 GiB
+  memoryfree_mb: 2626.890625
   memorysize: 11.73 GiB
-  memorysize_mb: 12008.0703125
+  memorysize_mb: 12008.046875
   mountpoints:
     "/":
-      available: 27.74 GiB
-      available_bytes: 29784608768
-      capacity: 21.84%
+      available: 28.49 GiB
+      available_bytes: 30586843136
+      capacity: 19.73%
       device: "/dev/mapper/worker06--vg-root"
       filesystem: ext4
       options:
@@ -212,12 +214,12 @@ values:
       - errors=remount-ro
       size: 35.49 GiB
       size_bytes: 38104956928
-      used: 7.75 GiB
-      used_bytes: 8320348160
+      used: 7.00 GiB
+      used_bytes: 7518113792
     "/dev/shm":
       available: 5.86 GiB
-      available_bytes: 6294593536
-      capacity: 0.02%
+      available_bytes: 6295023616
+      capacity: 0.01%
       device: tmpfs
       filesystem: tmpfs
       options:
@@ -225,13 +227,13 @@ values:
       - nosuid
       - nodev
       size: 5.86 GiB
-      size_bytes: 6295687168
-      used: 1.04 MiB
-      used_bytes: 1093632
+      size_bytes: 6295674880
+      used: 636.00 KiB
+      used_bytes: 651264
     "/run":
       available: 1.17 GiB
-      available_bytes: 1258577920
-      capacity: 0.04%
+      available_bytes: 1258565632
+      capacity: 0.05%
       device: tmpfs
       filesystem: tmpfs
       options:
@@ -239,12 +241,12 @@ values:
       - nosuid
       - noexec
       - relatime
-      - size=1229628k
+      - size=1229624k
       - mode=755
       size: 1.17 GiB
-      size_bytes: 1259139072
-      used: 548.00 KiB
-      used_bytes: 561152
+      size_bytes: 1259134976
+      used: 556.00 KiB
+      used_bytes: 569344
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -260,24 +262,6 @@ values:
       - size=5120k
       size: 5.00 MiB
       size_bytes: 5242880
-      used: 0 bytes
-      used_bytes: 0
-    "/sys/fs/cgroup":
-      available: 4.00 MiB
-      available_bytes: 4194304
-      capacity: 0%
-      device: tmpfs
-      filesystem: tmpfs
-      options:
-      - ro
-      - nosuid
-      - nodev
-      - noexec
-      - size=4096k
-      - nr_inodes=1024
-      - mode=755
-      size: 4.00 MiB
-      size_bytes: 4194304
       used: 0 bytes
       used_bytes: 0
   mounts:
@@ -476,8 +460,8 @@ values:
   sshrsakey: AAAAB3NzaC1yc2EAAAADAQABAAABAQDYjZ96pOWt6t2QA8yov+O5FF5gBI2rVCQ6cdLBOgjzCrWKhMI53JdoUqfZuxWhwWEYw1pv9WPq97E6BeLwHLCYWgn9LA3aJEIglxjYxx4SJbkAQpZPlcM5AhI5g1BTlJSLhy4Omkp4pZyULU1VsgMFrhs2YKAsUqlGmd+K5y24/7LUuUD0R/mM+2OvXuS3fjg2Nj4IGTVEiGXTcWukucvl5vWkR7zF9CnFRCJAcr2aiPiyqC2Wfep9kEXleBqRa6sJpbSj7eDU0IjYKkHlO0Ud7qGr4MbdVj3ZIORhd6iQEhfUoc7zNP2g7zs/g7L/4WGB4wdKrk8IAqkVobFiyZAn
   subnet: sesi_rocquencourt
   sudoversion: 1.8.27
-  swapfree: 488.21 MiB
-  swapfree_mb: 488.20703125
+  swapfree: 2.80 GiB
+  swapfree_mb: 2869.5234375
   swapsize: 3.82 GiB
   swapsize_mb: 3907.99609375
   swh_hostname:
@@ -485,10 +469,10 @@ values:
     short: worker06
     internal_fqdn: worker06.internal.softwareheritage.org
   system_uptime:
-    days: 5
-    hours: 130
-    seconds: 471529
-    uptime: 5 days
+    days: 7
+    hours: 169
+    seconds: 611716
+    uptime: 7 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -503,15 +487,15 @@ values:
     systemd-timesyncd.service: enabled
   systemd_version: '247'
   timezone: UTC
-  uptime: 5 days
-  uptime_days: 5
-  uptime_hours: 130
-  uptime_seconds: 471529
+  uptime: 7 days
+  uptime_days: 7
+  uptime_hours: 169
+  uptime_seconds: 611716
   uuid: 1cfacaaf-2718-4794-9cc5-88dfde58fb43
   vcsrepo_svn_ver: 1.10.4
   virtual: kvm
   clientcert: worker06.softwareheritage.org
   clientversion: 5.5.10
   clientnoop: false
-timestamp: '2021-01-06T08:19:05.857030110+00:00'
-expiration: '2021-01-06T08:49:05.857450949+00:00'
+timestamp: '2021-02-02T12:19:06.645399243+00:00'
+expiration: '2021-02-02T12:49:06.645873864+00:00'

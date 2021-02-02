@@ -3,33 +3,22 @@ name: webapp1.internal.softwareheritage.org
 values:
   agent_specified_environment: production
   apache_version: 2.4.38
-  apt_dist_updates: 10
+  apt_dist_updates: 2
   apt_has_dist_updates: true
   apt_has_updates: true
   apt_package_dist_updates:
-  - libzstd1
-  - udev
-  - libpam-systemd
-  - libnss-systemd
-  - systemd
-  - systemd-timesyncd
-  - libudev1
-  - libsystemd0
-  - systemd-sysv
-  - python3-django
+  - python3-swh.indexer
+  - python3-swh.indexer.storage
   apt_package_security_dist_updates: []
   apt_package_security_updates: []
   apt_package_updates:
-  - systemd-sysv
-  - udev
-  - libudev1
-  - libzstd1
-  - python3-django
-  apt_reboot_required: false
+  - python3-swh.indexer
+  - python3-swh.indexer.storage
+  apt_reboot_required: true
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1609920362
-  apt_updates: 5
+  apt_update_last_success: 1612267562
+  apt_updates: 2
   architecture: amd64
   bios_release_date: 04/01/2014
   bios_vendor: SeaBIOS
@@ -148,7 +137,7 @@ values:
     varnishlog: "/nonexistent"
   domain: internal.softwareheritage.org
   facterversion: 3.11.0
-  filesystems: ext2,ext3,ext4,iso9660
+  filesystems: btrfs,ext2,ext3,ext4,hfs,hfsplus,iso9660,jfs,minix,msdos,qnx4,ufs,vfat,xfs
   fips_enabled: false
   fqdn: webapp1.internal.softwareheritage.org
   gid: root
@@ -180,9 +169,9 @@ values:
   kernelversion: 4.19.0
   letsencrypt_directory: {}
   load_averages:
-    15m: 0.15
-    1m: 0.1
-    5m: 0.23
+    15m: 0.06
+    1m: 0.08
+    5m: 0.04
   lsbdistcodename: buster
   lsbdistdescription: Debian GNU/Linux 10 (buster)
   lsbdistid: Debian
@@ -201,22 +190,22 @@ values:
       used: 0 bytes
       used_bytes: 0
     system:
-      available: 4.40 GiB
-      available_bytes: 4720160768
-      capacity: 43.58%
+      available: 3.54 GiB
+      available_bytes: 3801468928
+      capacity: 54.56%
       total: 7.79 GiB
-      total_bytes: 8366325760
-      used: 3.40 GiB
-      used_bytes: 3646164992
-  memoryfree: 4.40 GiB
-  memoryfree_mb: 4501.49609375
+      total_bytes: 8366309376
+      used: 4.25 GiB
+      used_bytes: 4564840448
+  memoryfree: 3.54 GiB
+  memoryfree_mb: 3625.36328125
   memorysize: 7.79 GiB
-  memorysize_mb: 7978.75
+  memorysize_mb: 7978.734375
   mountpoints:
     "/":
-      available: 13.66 GiB
-      available_bytes: 14666608640
-      capacity: 16.67%
+      available: 13.00 GiB
+      available_bytes: 13955358720
+      capacity: 20.71%
       device: "/dev/mapper/base--template--vg-root"
       filesystem: ext4
       options:
@@ -225,12 +214,12 @@ values:
       - errors=remount-ro
       size: 16.39 GiB
       size_bytes: 17601216512
-      used: 2.73 GiB
-      used_bytes: 2934607872
+      used: 3.40 GiB
+      used_bytes: 3645857792
     "/boot":
-      available: 151.45 MiB
-      available_bytes: 158808064
-      capacity: 35.64%
+      available: 115.35 MiB
+      available_bytes: 120952832
+      capacity: 50.98%
       device: "/dev/vda1"
       filesystem: ext2
       options:
@@ -238,11 +227,11 @@ values:
       - relatime
       size: 235.32 MiB
       size_bytes: 246755328
-      used: 83.87 MiB
-      used_bytes: 87947264
+      used: 119.97 MiB
+      used_bytes: 125802496
     "/dev/shm":
       available: 3.90 GiB
-      available_bytes: 4183162880
+      available_bytes: 4183154688
       capacity: 0%
       device: tmpfs
       filesystem: tmpfs
@@ -251,13 +240,13 @@ values:
       - nosuid
       - nodev
       size: 3.90 GiB
-      size_bytes: 4183162880
+      size_bytes: 4183154688
       used: 0 bytes
       used_bytes: 0
     "/run":
-      available: 797.36 MiB
-      available_bytes: 836091904
-      capacity: 0.06%
+      available: 797.29 MiB
+      available_bytes: 836022272
+      capacity: 0.07%
       device: tmpfs
       filesystem: tmpfs
       options:
@@ -269,8 +258,8 @@ values:
       - mode=755
       size: 797.88 MiB
       size_bytes: 836632576
-      used: 528.00 KiB
-      used_bytes: 540672
+      used: 596.00 KiB
+      used_bytes: 610304
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -286,22 +275,6 @@ values:
       - size=5120k
       size: 5.00 MiB
       size_bytes: 5242880
-      used: 0 bytes
-      used_bytes: 0
-    "/sys/fs/cgroup":
-      available: 3.90 GiB
-      available_bytes: 4183162880
-      capacity: 0%
-      device: tmpfs
-      filesystem: tmpfs
-      options:
-      - ro
-      - nosuid
-      - nodev
-      - noexec
-      - mode=755
-      size: 3.90 GiB
-      size_bytes: 4183162880
       used: 0 bytes
       used_bytes: 0
   mounts:
@@ -511,30 +484,33 @@ values:
     short: webapp1
     internal_fqdn: webapp1.internal.softwareheritage.org
   system_uptime:
-    days: 5
-    hours: 140
-    seconds: 504272
-    uptime: 5 days
+    days: 7
+    hours: 169
+    seconds: 610878
+    uptime: 7 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
     systemd-fsck-root.service: enabled-runtime
+    systemd-network-generator.service: disabled
     systemd-networkd-wait-online.service: disabled
     systemd-networkd.service: disabled
+    systemd-pstore.service: enabled
+    systemd-remount-fs.service: enabled-runtime
     systemd-resolved.service: disabled
     systemd-time-wait-sync.service: disabled
     systemd-timesyncd.service: enabled
-  systemd_version: '241'
+  systemd_version: '247'
   timezone: UTC
-  uptime: 5 days
-  uptime_days: 5
-  uptime_hours: 140
-  uptime_seconds: 504272
+  uptime: 7 days
+  uptime_days: 7
+  uptime_hours: 169
+  uptime_seconds: 610878
   uuid: 7c320e32-ad12-43dd-91f5-e4808dd7596e
   vcsrepo_svn_ver: ''
   virtual: kvm
   clientcert: webapp1.internal.softwareheritage.org
   clientversion: 5.5.10
   clientnoop: false
-timestamp: '2021-01-06T08:33:06.666996954+00:00'
-expiration: '2021-01-06T09:03:06.667429915+00:00'
+timestamp: '2021-02-02T12:33:06.623469660+00:00'
+expiration: '2021-02-02T13:03:06.623970069+00:00'

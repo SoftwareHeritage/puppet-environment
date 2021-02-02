@@ -2,10 +2,36 @@
 name: rp0.internal.staging.swh.network
 values:
   agent_specified_environment: staging
-  apt_has_dist_updates: false
-  apt_has_updates: false
-  apt_reboot_required: false
-  apt_update_last_success: 1609919522
+  apt_dist_updates: 9
+  apt_has_dist_updates: true
+  apt_has_updates: true
+  apt_package_dist_updates:
+  - libnss-systemd
+  - libsystemd0
+  - systemd-timesyncd
+  - libpam-systemd
+  - systemd
+  - udev
+  - libudev1
+  - systemd-sysv
+  - borgbackup
+  apt_package_security_dist_updates: []
+  apt_package_security_updates: []
+  apt_package_updates:
+  - libnss-systemd
+  - libsystemd0
+  - systemd-timesyncd
+  - libpam-systemd
+  - systemd
+  - udev
+  - libudev1
+  - systemd-sysv
+  - borgbackup
+  apt_reboot_required: true
+  apt_security_dist_updates: 0
+  apt_security_updates: 0
+  apt_update_last_success: 1612266722
+  apt_updates: 9
   architecture: amd64
   bios_release_date: 04/01/2014
   bios_vendor: SeaBIOS
@@ -123,7 +149,7 @@ values:
     tg1999: "/home/tg1999"
   domain: internal.staging.swh.network
   facterversion: 3.11.0
-  filesystems: ext2,ext3,ext4,iso9660
+  filesystems: btrfs,ext2,ext3,ext4,hfs,hfsplus,iso9660,jfs,minix,msdos,qnx4,ufs,vfat,xfs
   fips_enabled: false
   fqdn: rp0.internal.staging.swh.network
   gid: root
@@ -155,9 +181,9 @@ values:
   kernelversion: 4.19.0
   letsencrypt_directory: {}
   load_averages:
-    15m: 0.01
+    15m: 0.03
     1m: 0.08
-    5m: 0.04
+    5m: 0.05
   lsbdistcodename: buster
   lsbdistdescription: Debian GNU/Linux 10 (buster)
   lsbdistid: Debian
@@ -168,30 +194,30 @@ values:
   manufacturer: QEMU
   memory:
     swap:
-      available: 1019.48 MiB
-      available_bytes: 1069006848
-      capacity: 0.05%
+      available: 1018.98 MiB
+      available_bytes: 1068482560
+      capacity: 0.10%
       total: 1020.00 MiB
       total_bytes: 1069543424
-      used: 524.00 KiB
-      used_bytes: 536576
+      used: 1.01 MiB
+      used_bytes: 1060864
     system:
-      available: 1.51 GiB
-      available_bytes: 1622859776
-      capacity: 22.42%
+      available: 1.49 GiB
+      available_bytes: 1602146304
+      capacity: 23.41%
       total: 1.95 GiB
       total_bytes: 2091921408
-      used: 447.33 MiB
-      used_bytes: 469061632
-  memoryfree: 1.51 GiB
-  memoryfree_mb: 1547.6796875
+      used: 467.09 MiB
+      used_bytes: 489775104
+  memoryfree: 1.49 GiB
+  memoryfree_mb: 1527.92578125
   memorysize: 1.95 GiB
   memorysize_mb: 1995.01171875
   mountpoints:
     "/":
-      available: 13.94 GiB
-      available_bytes: 14970683392
-      capacity: 14.95%
+      available: 13.70 GiB
+      available_bytes: 14706573312
+      capacity: 16.45%
       device: "/dev/mapper/base--template--vg-root"
       filesystem: ext4
       options:
@@ -200,12 +226,12 @@ values:
       - errors=remount-ro
       size: 16.39 GiB
       size_bytes: 17601216512
-      used: 2.45 GiB
-      used_bytes: 2630533120
+      used: 2.70 GiB
+      used_bytes: 2894643200
     "/boot":
-      available: 151.20 MiB
-      available_bytes: 158546944
-      capacity: 35.75%
+      available: 115.35 MiB
+      available_bytes: 120952832
+      capacity: 50.98%
       device: "/dev/vda1"
       filesystem: ext2
       options:
@@ -213,8 +239,8 @@ values:
       - relatime
       size: 235.32 MiB
       size_bytes: 246755328
-      used: 84.12 MiB
-      used_bytes: 88208384
+      used: 119.97 MiB
+      used_bytes: 125802496
     "/dev/shm":
       available: 997.50 MiB
       available_bytes: 1045958656
@@ -230,9 +256,9 @@ values:
       used: 0 bytes
       used_bytes: 0
     "/run":
-      available: 198.98 MiB
-      available_bytes: 208646144
-      capacity: 0.26%
+      available: 198.97 MiB
+      available_bytes: 208633856
+      capacity: 0.27%
       device: tmpfs
       filesystem: tmpfs
       options:
@@ -244,8 +270,8 @@ values:
       - mode=755
       size: 199.50 MiB
       size_bytes: 209195008
-      used: 536.00 KiB
-      used_bytes: 548864
+      used: 548.00 KiB
+      used_bytes: 561152
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -478,8 +504,8 @@ values:
   sshrsakey: AAAAB3NzaC1yc2EAAAADAQABAAABAQDlcUPtZALeqOlj+J1RcZRoKhw9TYkFpB/v3RqsE8xlP/U6hdBYSsgek5wokX0bcipSu7QD7QXnlBtODnc5vUJ6zVDCusH1t3vg825IWZWgvlA+upPXiaNtCsVGb9bFYHzxXHtoMhsOtVxqp/MSIOBUL3ylh2GwpaZAiK1it3AzAM5ABvqu2BaV45iYzgxOmc4a+OrWUudCkpZOIjA1alixdw8Elj6WuCuvkSwLE6KBw+3a2VuRbsDG2HA0kAs3ZXdQLFRjfOB5V33281JukZK0tScxa7xqZ/qAmDgUGS0e3Jd3QNY+BOU4AUMJOex9gWiyRgdRsDiJ/Vj0POiAxscn
   subnet: sesi_rocquencourt_staging
   sudoversion: 1.8.27
-  swapfree: 1019.48 MiB
-  swapfree_mb: 1019.484375
+  swapfree: 1018.98 MiB
+  swapfree_mb: 1018.984375
   swapsize: 1020.00 MiB
   swapsize_mb: 1019.99609375
   swh_hostname:
@@ -487,10 +513,10 @@ values:
     short: rp0
     internal_fqdn: rp0.internal.staging.swh.network
   system_uptime:
-    days: 20
-    hours: 495
-    seconds: 1783458
-    uptime: 20 days
+    days: 47
+    hours: 1147
+    seconds: 4130658
+    uptime: 47 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -505,15 +531,15 @@ values:
     systemd-timesyncd.service: enabled
   systemd_version: '247'
   timezone: UTC
-  uptime: 20 days
-  uptime_days: 20
-  uptime_hours: 495
-  uptime_seconds: 1783458
+  uptime: 47 days
+  uptime_days: 47
+  uptime_hours: 1147
+  uptime_seconds: 4130658
   uuid: 7b545baa-c39a-4735-b6ea-6f74751ea0b9
   vcsrepo_svn_ver: ''
   virtual: kvm
   clientcert: rp0.internal.staging.swh.network
   clientversion: 5.5.10
   clientnoop: false
-timestamp: '2021-01-06T08:12:06.165776791+00:00'
-expiration: '2021-01-06T08:42:06.166282994+00:00'
+timestamp: '2021-02-02T12:12:06.392211286+00:00'
+expiration: '2021-02-02T12:42:06.392635154+00:00'

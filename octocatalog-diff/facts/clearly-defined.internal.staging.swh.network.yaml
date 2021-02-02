@@ -2,7 +2,7 @@
 name: clearly-defined.internal.staging.swh.network
 values:
   agent_specified_environment: staging
-  apt_dist_updates: 8
+  apt_dist_updates: 9
   apt_has_dist_updates: true
   apt_has_updates: true
   apt_package_dist_updates:
@@ -14,6 +14,7 @@ values:
   - libpam-systemd
   - systemd
   - libsystemd0
+  - python3-psycopg2
   apt_package_security_dist_updates: []
   apt_package_security_updates: []
   apt_package_updates:
@@ -25,11 +26,12 @@ values:
   - libpam-systemd
   - systemd
   - libsystemd0
-  apt_reboot_required: false
+  - python3-psycopg2
+  apt_reboot_required: true
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1609921982
-  apt_updates: 8
+  apt_update_last_success: 1612265583
+  apt_updates: 9
   architecture: amd64
   bios_release_date: 04/01/2014
   bios_vendor: SeaBIOS
@@ -42,7 +44,7 @@ values:
   blockdevice_sr1_vendor: QEMU
   blockdevice_vda_size: 34359738368
   blockdevice_vda_vendor: '0x1af4'
-  blockdevice_vdb_size: 107374182400
+  blockdevice_vdb_size: 549755813888
   blockdevice_vdb_vendor: '0x1af4'
   blockdevices: vdb,sr0,vda,sr1
   cassandracmsheapnewsize: 200
@@ -67,8 +69,8 @@ values:
       size_bytes: 34359738368
       vendor: '0x1af4'
     vdb:
-      size: 100.00 GiB
-      size_bytes: 107374182400
+      size: 512.00 GiB
+      size_bytes: 549755813888
       vendor: '0x1af4'
   dmi:
     bios:
@@ -183,8 +185,8 @@ values:
   letsencrypt_directory: {}
   load_averages:
     15m: 0.01
-    1m: 0.1
-    5m: 0.06
+    1m: 0.15
+    5m: 0.04
   lsbdistcodename: buster
   lsbdistdescription: Debian GNU/Linux 10 (buster)
   lsbdistid: Debian
@@ -203,22 +205,22 @@ values:
       used: 0 bytes
       used_bytes: 0
     system:
-      available: 5.77 GiB
-      available_bytes: 6192095232
-      capacity: 25.99%
+      available: 6.96 GiB
+      available_bytes: 7477018624
+      capacity: 10.63%
       total: 7.79 GiB
-      total_bytes: 8366297088
-      used: 2.02 GiB
-      used_bytes: 2174201856
-  memoryfree: 5.77 GiB
-  memoryfree_mb: 5905.2421875
+      total_bytes: 8366313472
+      used: 848.10 MiB
+      used_bytes: 889294848
+  memoryfree: 6.96 GiB
+  memoryfree_mb: 7130.640625
   memorysize: 7.79 GiB
-  memorysize_mb: 7978.72265625
+  memorysize_mb: 7978.73828125
   mountpoints:
     "/":
-      available: 13.34 GiB
-      available_bytes: 14326452224
-      capacity: 18.61%
+      available: 13.11 GiB
+      available_bytes: 14078484480
+      capacity: 20.01%
       device: "/dev/mapper/base--template--vg-root"
       filesystem: ext4
       options:
@@ -227,12 +229,12 @@ values:
       - errors=remount-ro
       size: 16.39 GiB
       size_bytes: 17601216512
-      used: 3.05 GiB
-      used_bytes: 3274764288
+      used: 3.28 GiB
+      used_bytes: 3522732032
     "/boot":
-      available: 151.22 MiB
-      available_bytes: 158570496
-      capacity: 35.74%
+      available: 115.31 MiB
+      available_bytes: 120911872
+      capacity: 51.00%
       device: "/dev/vda1"
       filesystem: ext2
       options:
@@ -240,11 +242,11 @@ values:
       - relatime
       size: 235.32 MiB
       size_bytes: 246755328
-      used: 84.10 MiB
-      used_bytes: 88184832
+      used: 120.01 MiB
+      used_bytes: 125843456
     "/dev/shm":
       available: 3.90 GiB
-      available_bytes: 4183113728
+      available_bytes: 4183121920
       capacity: 0.00%
       device: tmpfs
       filesystem: tmpfs
@@ -253,12 +255,12 @@ values:
       - nosuid
       - nodev
       size: 3.90 GiB
-      size_bytes: 4183146496
+      size_bytes: 4183154688
       used: 32.00 KiB
       used_bytes: 32768
     "/run":
-      available: 797.29 MiB
-      available_bytes: 836022272
+      available: 797.31 MiB
+      available_bytes: 836038656
       capacity: 0.07%
       device: tmpfs
       filesystem: tmpfs
@@ -271,8 +273,8 @@ values:
       - mode=755
       size: 797.88 MiB
       size_bytes: 836632576
-      used: 596.00 KiB
-      used_bytes: 610304
+      used: 580.00 KiB
+      used_bytes: 593920
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -290,29 +292,9 @@ values:
       size_bytes: 5242880
       used: 0 bytes
       used_bytes: 0
-    "/run/user/1003":
-      available: 617.67 MiB
-      available_bytes: 647675904
-      capacity: 0%
-      device: tmpfs
-      filesystem: tmpfs
-      options:
-      - rw
-      - nosuid
-      - nodev
-      - relatime
-      - size=632496k
-      - nr_inodes=158124
-      - mode=700
-      - uid=1003
-      - gid=1003
-      size: 617.67 MiB
-      size_bytes: 647675904
-      used: 0 bytes
-      used_bytes: 0
     "/run/user/1027":
-      available: 617.67 MiB
-      available_bytes: 647675904
+      available: 797.87 MiB
+      available_bytes: 836628480
       capacity: 0%
       device: tmpfs
       filesystem: tmpfs
@@ -321,15 +303,28 @@ values:
       - nosuid
       - nodev
       - relatime
-      - size=632496k
-      - nr_inodes=158124
+      - size=817020k
+      - nr_inodes=204255
       - mode=700
       - uid=1027
       - gid=1027
-      size: 617.67 MiB
-      size_bytes: 647675904
+      size: 797.87 MiB
+      size_bytes: 836628480
       used: 0 bytes
       used_bytes: 0
+    "/srv/softwareheritage/clearlydefined":
+      available: 37.42 GiB
+      available_bytes: 40181211136
+      capacity: 92.56%
+      device: "/dev/vdb1"
+      filesystem: ext4
+      options:
+      - rw
+      - relatime
+      size: 502.96 GiB
+      size_bytes: 540052721664
+      used: 465.54 GiB
+      used_bytes: 499871510528
     "/sys/fs/cgroup":
       available: 4.00 MiB
       available_bytes: 4194304
@@ -351,6 +346,7 @@ values:
   mounts:
   - "/"
   - "/boot"
+  - "/srv/softwareheritage/clearlydefined"
   mtu_eth0: 1500
   mtu_lo: 65536
   mysql_server_id: 12929202
@@ -464,17 +460,25 @@ values:
       size: 19.76 GiB
       size_bytes: 21216886784
       uuid: 3pkyW9-JF6T-y3GS-R3NZ-OeQp-ePTO-Dd3a0C
+    "/dev/vdb1":
+      filesystem: ext4
+      mount: "/srv/softwareheritage/clearlydefined"
+      partlabel: Linux filesystem
+      partuuid: bd28b0b9-b65a-4622-9938-204d65e2f52c
+      size: 512.00 GiB
+      size_bytes: 549754748416
+      uuid: 90a6177d-ea48-4c27-bef8-1d46732d7cce
   path: "/usr/bin:/bin:/usr/sbin:/sbin"
   physicalprocessorcount: 1
-  processor0: Intel(R) Xeon(R) CPU E5-2630 v4 @ 2.20GHz
-  processor1: Intel(R) Xeon(R) CPU E5-2630 v4 @ 2.20GHz
+  processor0: Intel(R) Xeon(R) CPU E7-4809 v2 @ 1.90GHz
+  processor1: Intel(R) Xeon(R) CPU E7-4809 v2 @ 1.90GHz
   processorcount: 2
   processors:
     count: 2
     isa: unknown
     models:
-    - Intel(R) Xeon(R) CPU E5-2630 v4 @ 2.20GHz
-    - Intel(R) Xeon(R) CPU E5-2630 v4 @ 2.20GHz
+    - Intel(R) Xeon(R) CPU E7-4809 v2 @ 1.90GHz
+    - Intel(R) Xeon(R) CPU E7-4809 v2 @ 1.90GHz
     physicalcount: 1
   productname: Standard PC (i440FX + PIIX, 1996)
   public_ipaddresses: []
@@ -549,10 +553,10 @@ values:
     short: clearly-defined
     internal_fqdn: clearly-defined.internal.staging.swh.network
   system_uptime:
-    days: 20
-    hours: 497
-    seconds: 1789224
-    uptime: 20 days
+    days: 12
+    hours: 305
+    seconds: 1101544
+    uptime: 12 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -567,15 +571,15 @@ values:
     systemd-timesyncd.service: enabled
   systemd_version: '246'
   timezone: UTC
-  uptime: 20 days
-  uptime_days: 20
-  uptime_hours: 497
-  uptime_seconds: 1789224
+  uptime: 12 days
+  uptime_days: 12
+  uptime_hours: 305
+  uptime_seconds: 1101544
   uuid: 5fa27c0e-efca-4ed3-b9e0-ee9ef1c0029c
   vcsrepo_svn_ver: ''
   virtual: kvm
   clientcert: clearly-defined.internal.staging.swh.network
   clientversion: 5.5.10
   clientnoop: false
-timestamp: '2021-01-06T08:36:07.186485903+00:00'
-expiration: '2021-01-06T09:06:07.186977419+00:00'
+timestamp: '2021-02-02T12:06:10.099915737+00:00'
+expiration: '2021-02-02T12:36:10.100776346+00:00'
