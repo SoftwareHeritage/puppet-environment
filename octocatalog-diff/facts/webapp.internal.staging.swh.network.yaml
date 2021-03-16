@@ -3,7 +3,7 @@ name: webapp.internal.staging.swh.network
 values:
   agent_specified_environment: staging
   apache_version: 2.4.38
-  apt_dist_updates: 14
+  apt_dist_updates: 12
   apt_has_dist_updates: true
   apt_has_updates: true
   apt_package_dist_updates:
@@ -15,12 +15,10 @@ values:
   - udev
   - libudev1
   - systemd-sysv
-  - borgbackup
+  - python3-django
   - python3-swh.model
+  - python3-swh.search
   - python3-swh.storage
-  - python3-swh.scheduler
-  - python3-swh.journal
-  - python3-swh.indexer.storage
   apt_package_security_dist_updates: []
   apt_package_security_updates: []
   apt_package_updates:
@@ -32,17 +30,15 @@ values:
   - udev
   - libudev1
   - systemd-sysv
-  - borgbackup
+  - python3-django
   - python3-swh.model
+  - python3-swh.search
   - python3-swh.storage
-  - python3-swh.scheduler
-  - python3-swh.journal
-  - python3-swh.indexer.storage
   apt_reboot_required: true
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1612265702
-  apt_updates: 14
+  apt_update_last_success: 1615890903
+  apt_updates: 12
   architecture: amd64
   bios_release_date: 04/01/2014
   bios_vendor: SeaBIOS
@@ -152,6 +148,7 @@ values:
     vsellier: "/home/vsellier"
     postgres: "/var/lib/postgresql"
     tg1999: "/home/tg1999"
+    hakb: "/home/hakb"
   domain: internal.staging.swh.network
   facterversion: 3.11.0
   filesystems: ext2,ext3,ext4,iso9660
@@ -186,9 +183,9 @@ values:
   kernelversion: 4.19.0
   letsencrypt_directory: {}
   load_averages:
-    15m: 0.0
-    1m: 0.0
-    5m: 0.0
+    15m: 0.02
+    1m: 0.1
+    5m: 0.04
   location: sesi_rocquencourt_staging
   lsbdistcodename: buster
   lsbdistdescription: Debian GNU/Linux 10 (buster)
@@ -200,22 +197,22 @@ values:
   manufacturer: QEMU
   memory:
     system:
-      available: 13.13 GiB
-      available_bytes: 14096674816
-      capacity: 16.20%
+      available: 12.80 GiB
+      available_bytes: 13747154944
+      capacity: 18.28%
       total: 15.67 GiB
       total_bytes: 16821665792
-      used: 2.54 GiB
-      used_bytes: 2724990976
-  memoryfree: 13.13 GiB
-  memoryfree_mb: 13443.63671875
+      used: 2.86 GiB
+      used_bytes: 3074510848
+  memoryfree: 12.80 GiB
+  memoryfree_mb: 13110.30859375
   memorysize: 15.67 GiB
   memorysize_mb: 16042.390625
   mountpoints:
     "/":
-      available: 26.77 GiB
-      available_bytes: 28739981312
-      capacity: 14.93%
+      available: 27.00 GiB
+      available_bytes: 28986556416
+      capacity: 14.21%
       device: "/dev/vda1"
       filesystem: ext4
       options:
@@ -224,8 +221,8 @@ values:
       - errors=remount-ro
       size: 31.47 GiB
       size_bytes: 33785901056
-      used: 4.70 GiB
-      used_bytes: 5045919744
+      used: 4.47 GiB
+      used_bytes: 4799344640
     "/dev/shm":
       available: 7.83 GiB
       available_bytes: 8410832896
@@ -274,7 +271,7 @@ values:
       size_bytes: 5242880
       used: 0 bytes
       used_bytes: 0
-    "/run/user/1025":
+    "/run/user/1003":
       available: 1.57 GiB
       available_bytes: 1682165760
       capacity: 0%
@@ -288,8 +285,8 @@ values:
       - size=1642740k
       - nr_inodes=410685
       - mode=700
-      - uid=1025
-      - gid=1025
+      - uid=1003
+      - gid=1003
       size: 1.57 GiB
       size_bytes: 1682165760
       used: 0 bytes
@@ -360,7 +357,7 @@ values:
     primary: eth0
   operatingsystem: Debian
   operatingsystemmajrelease: '10'
-  operatingsystemrelease: '10.7'
+  operatingsystemrelease: '10.8'
   os:
     architecture: amd64
     distro:
@@ -374,9 +371,9 @@ values:
     hardware: x86_64
     name: Debian
     release:
-      full: '10.7'
+      full: '10.8'
       major: '10'
-      minor: '7'
+      minor: '8'
     selinux:
       enabled: false
   osfamily: Debian
@@ -478,10 +475,10 @@ values:
     short: webapp
     internal_fqdn: webapp.internal.staging.swh.network
   system_uptime:
-    days: 12
-    hours: 306
-    seconds: 1102872
-    uptime: 12 days
+    days: 54
+    hours: 1312
+    seconds: 4726275
+    uptime: 54 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -496,15 +493,15 @@ values:
     systemd-timesyncd.service: enabled
   systemd_version: '247'
   timezone: UTC
-  uptime: 12 days
-  uptime_days: 12
-  uptime_hours: 306
-  uptime_seconds: 1102872
+  uptime: 54 days
+  uptime_days: 54
+  uptime_hours: 1312
+  uptime_seconds: 4726275
   uuid: a43344ae-3925-4a0f-afe6-9982634a66f7
   vcsrepo_svn_ver: ''
   virtual: kvm
   clientcert: webapp.internal.staging.swh.network
   clientversion: 5.5.10
   clientnoop: false
-timestamp: '2021-02-02T12:14:05.779575674+00:00'
-expiration: '2021-02-02T12:44:05.779951725+00:00'
+timestamp: '2021-03-16T10:44:06.627272632+00:00'
+expiration: '2021-03-16T11:14:06.627713411+00:00'

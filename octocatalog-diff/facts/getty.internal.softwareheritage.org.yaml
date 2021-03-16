@@ -2,46 +2,20 @@
 name: getty.internal.softwareheritage.org
 values:
   agent_specified_environment: production
-  apt_dist_updates: 15
+  apt_dist_updates: 1
   apt_has_dist_updates: true
   apt_has_updates: true
   apt_package_dist_updates:
-  - libnss-systemd
-  - libsystemd0
-  - systemd-timesyncd
-  - libpam-systemd
-  - systemd
-  - udev
-  - libudev1
-  - systemd-sysv
-  - linux-image-5.9.0-0.bpo.5-amd64
-  - linux-image-amd64
   - python3-swh.model
-  - python3-swh.storage
-  - python3-swh.journal
-  - python3-swh.indexer
-  - python3-swh.indexer.storage
   apt_package_security_dist_updates: []
   apt_package_security_updates: []
   apt_package_updates:
-  - libnss-systemd
-  - libsystemd0
-  - systemd-timesyncd
-  - libpam-systemd
-  - systemd
-  - udev
-  - libudev1
-  - systemd-sysv
   - python3-swh.model
-  - python3-swh.storage
-  - python3-swh.journal
-  - python3-swh.indexer
-  - python3-swh.indexer.storage
-  apt_reboot_required: false
+  apt_reboot_required: true
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1612265823
-  apt_updates: 13
+  apt_update_last_success: 1615887422
+  apt_updates: 1
   architecture: amd64
   augeas:
     version: 1.11.0
@@ -54,10 +28,10 @@ values:
   blockdevice_vdb_size: 4294967296
   blockdevice_vdb_vendor: '0x1af4'
   blockdevices: vdb,vda
-  cassandracmsheapnewsize: 1500
-  cassandracmsmaxheapsize: 6000
-  cassandraheapnewsize: 1500
-  cassandramaxheapsize: 6000
+  cassandracmsheapnewsize: 1506
+  cassandracmsmaxheapsize: 6025
+  cassandraheapnewsize: 1506
+  cassandramaxheapsize: 6025
   chassistype: Other
   deployment: production
   disks:
@@ -154,10 +128,11 @@ values:
     vsellier: "/home/vsellier"
     postgres: "/var/lib/postgresql"
     tg1999: "/home/tg1999"
+    hakb: "/home/hakb"
     _duc15e44b522fbc348: "/"
   domain: internal.softwareheritage.org
   facterversion: 3.11.0
-  filesystems: ext2,ext3,ext4
+  filesystems: btrfs,ext2,ext3,ext4,hfs,hfsplus,jfs,minix,msdos,qnx4,ufs,vfat,xfs
   fips_enabled: false
   fqdn: getty.internal.softwareheritage.org
   gid: root
@@ -195,8 +170,8 @@ values:
   letsencrypt_directory: {}
   load_averages:
     15m: 0.18
-    1m: 0.24
-    5m: 0.29
+    1m: 0.45
+    5m: 0.28
   location: sesi_rocquencourt
   lsbdistcodename: buster
   lsbdistdescription: Debian GNU/Linux 10 (buster)
@@ -216,22 +191,22 @@ values:
       used: 0 bytes
       used_bytes: 0
     system:
-      available: 21.27 GiB
-      available_bytes: 22837739520
-      capacity: 9.25%
-      total: 23.44 GiB
-      total_bytes: 25165012992
-      used: 2.17 GiB
-      used_bytes: 2327273472
-  memoryfree: 21.27 GiB
-  memoryfree_mb: 21779.765625
-  memorysize: 23.44 GiB
-  memorysize_mb: 23999.2265625
+      available: 21.48 GiB
+      available_bytes: 23063650304
+      capacity: 8.73%
+      total: 23.53 GiB
+      total_bytes: 25269870592
+      used: 2.05 GiB
+      used_bytes: 2206220288
+  memoryfree: 21.48 GiB
+  memoryfree_mb: 21995.2109375
+  memorysize: 23.53 GiB
+  memorysize_mb: 24099.2265625
   mountpoints:
     "/":
-      available: 11.69 GiB
-      available_bytes: 12555755520
-      capacity: 40.22%
+      available: 11.87 GiB
+      available_bytes: 12749983744
+      capacity: 39.29%
       device: "/dev/vda1"
       filesystem: ext4
       options:
@@ -240,8 +215,8 @@ values:
       - errors=remount-ro
       size: 19.56 GiB
       size_bytes: 21001531392
-      used: 7.87 GiB
-      used_bytes: 8445775872
+      used: 7.68 GiB
+      used_bytes: 8251547648
     "/dev/shm":
       available: 11.77 GiB
       available_bytes: 12634935296
@@ -252,16 +227,14 @@ values:
       - rw
       - nosuid
       - nodev
-      - size=12338804k
-      - nr_inodes=3084701
       size: 11.77 GiB
       size_bytes: 12634935296
       used: 0 bytes
       used_bytes: 0
     "/run":
       available: 2.35 GiB
-      available_bytes: 2526380032
-      capacity: 0.02%
+      available_bytes: 2526351360
+      capacity: 0.03%
       device: tmpfs
       filesystem: tmpfs
       options:
@@ -270,12 +243,11 @@ values:
       - noexec
       - relatime
       - size=2467764k
-      - nr_inodes=3084701
       - mode=755
       size: 2.35 GiB
       size_bytes: 2526990336
-      used: 596.00 KiB
-      used_bytes: 610304
+      used: 624.00 KiB
+      used_bytes: 638976
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -289,9 +261,28 @@ values:
       - noexec
       - relatime
       - size=5120k
-      - nr_inodes=3084701
       size: 5.00 MiB
       size_bytes: 5242880
+      used: 0 bytes
+      used_bytes: 0
+    "/run/user/1001":
+      available: 2.25 GiB
+      available_bytes: 2418143232
+      capacity: 0%
+      device: tmpfs
+      filesystem: tmpfs
+      options:
+      - rw
+      - nosuid
+      - nodev
+      - relatime
+      - size=2361468k
+      - nr_inodes=590367
+      - mode=700
+      - uid=1001
+      - gid=1001
+      size: 2.25 GiB
+      size_bytes: 2418143232
       used: 0 bytes
       used_bytes: 0
     "/run/user/1003":
@@ -398,7 +389,7 @@ values:
     primary: eth0
   operatingsystem: Debian
   operatingsystemmajrelease: '10'
-  operatingsystemrelease: '10.7'
+  operatingsystemrelease: '10.8'
   os:
     architecture: amd64
     distro:
@@ -412,9 +403,9 @@ values:
     hardware: x86_64
     name: Debian
     release:
-      full: '10.7'
+      full: '10.8'
       major: '10'
-      minor: '7'
+      minor: '8'
     selinux:
       enabled: false
   osfamily: Debian
@@ -562,10 +553,10 @@ values:
     short: getty
     internal_fqdn: getty.internal.softwareheritage.org
   system_uptime:
-    days: 32
-    hours: 791
-    seconds: 2851025
-    uptime: 32 days
+    days: 74
+    hours: 1797
+    seconds: 6472624
+    uptime: 74 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -580,15 +571,15 @@ values:
     systemd-timesyncd.service: enabled
   systemd_version: '247'
   timezone: UTC
-  uptime: 32 days
-  uptime_days: 32
-  uptime_hours: 791
-  uptime_seconds: 2851025
+  uptime: 74 days
+  uptime_days: 74
+  uptime_hours: 1797
+  uptime_seconds: 6472624
   uuid: 1cfacaaf-2718-4794-9cc5-88dfde58fb43
   vcsrepo_svn_ver: ''
   virtual: kvm
   clientcert: getty.internal.softwareheritage.org
   clientversion: 5.5.10
   clientnoop: false
-timestamp: '2021-02-02T12:20:07.784259493+00:00'
-expiration: '2021-02-02T12:50:07.784806159+00:00'
+timestamp: '2021-03-16T10:20:07.339704533+00:00'
+expiration: '2021-03-16T10:50:07.340369831+00:00'

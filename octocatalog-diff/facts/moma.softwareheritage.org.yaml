@@ -3,7 +3,7 @@ name: moma.softwareheritage.org
 values:
   agent_specified_environment: production
   apache_version: 2.4.38
-  apt_dist_updates: 18
+  apt_dist_updates: 13
   apt_has_dist_updates: true
   apt_has_updates: true
   apt_package_dist_updates:
@@ -15,16 +15,11 @@ values:
   - udev
   - libudev1
   - systemd-sysv
-  - borgbackup
-  - linux-image-5.9.0-0.bpo.5-amd64
-  - linux-image-amd64
   - python3-swh.model
+  - python3-swh.deposit
+  - python3-swh.deposit.loader
+  - python3-swh.deposit.client
   - python3-swh.storage
-  - python3-swh.scheduler
-  - python3-swh.journal
-  - python3-swh.indexer
-  - python3-swh.indexer.storage
-  - python3-swh.search
   apt_package_security_dist_updates: []
   apt_package_security_updates: []
   apt_package_updates:
@@ -36,19 +31,16 @@ values:
   - udev
   - libudev1
   - systemd-sysv
-  - borgbackup
   - python3-swh.model
+  - python3-swh.deposit
+  - python3-swh.deposit.loader
+  - python3-swh.deposit.client
   - python3-swh.storage
-  - python3-swh.scheduler
-  - python3-swh.journal
-  - python3-swh.indexer
-  - python3-swh.indexer.storage
-  - python3-swh.search
-  apt_reboot_required: false
+  apt_reboot_required: true
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1612267144
-  apt_updates: 16
+  apt_update_last_success: 1615888743
+  apt_updates: 13
   architecture: amd64
   bios_release_date: 04/01/2014
   bios_vendor: SeaBIOS
@@ -59,9 +51,9 @@ values:
   blockdevice_vdb_vendor: '0x1af4'
   blockdevices: vdb,vda
   cassandracmsheapnewsize: 400
-  cassandracmsmaxheapsize: 8042
+  cassandracmsmaxheapsize: 8017
   cassandraheapnewsize: 400
-  cassandramaxheapsize: 8042
+  cassandramaxheapsize: 8017
   chassistype: Other
   deployment: production
   dhcp_servers:
@@ -166,6 +158,7 @@ values:
     vsellier: "/home/vsellier"
     postgres: "/var/lib/postgresql"
     tg1999: "/home/tg1999"
+    hakb: "/home/hakb"
   domain: softwareheritage.org
   facterversion: 3.11.0
   filesystems: btrfs,ext2,ext3,ext4,hfs,hfsplus,jfs,minix,msdos,qnx4,ufs,vfat,xfs
@@ -204,9 +197,9 @@ values:
   kernelversion: 5.9.0
   letsencrypt_directory: {}
   load_averages:
-    15m: 0.56
-    1m: 0.79
-    5m: 0.61
+    15m: 0.5
+    1m: 0.37
+    5m: 0.39
   location: sesi_rocquencourt
   lsbdistcodename: buster
   lsbdistdescription: Debian GNU/Linux 10 (buster)
@@ -221,29 +214,29 @@ values:
   memory:
     swap:
       available: 3.97 GiB
-      available_bytes: 4261437440
-      capacity: 0.73%
+      available_bytes: 4265369600
+      capacity: 0.64%
       total: 4.00 GiB
       total_bytes: 4292866048
-      used: 29.97 MiB
-      used_bytes: 31428608
+      used: 26.22 MiB
+      used_bytes: 27496448
     system:
-      available: 22.85 GiB
-      available_bytes: 24530972672
-      capacity: 27.27%
-      total: 31.41 GiB
-      total_bytes: 33730355200
-      used: 8.57 GiB
-      used_bytes: 9199382528
-  memoryfree: 22.85 GiB
-  memoryfree_mb: 23394.55859375
-  memorysize: 31.41 GiB
-  memorysize_mb: 32167.7734375
+      available: 23.08 GiB
+      available_bytes: 24781398016
+      capacity: 26.30%
+      total: 31.32 GiB
+      total_bytes: 33625497600
+      used: 8.24 GiB
+      used_bytes: 8844099584
+  memoryfree: 23.08 GiB
+  memoryfree_mb: 23633.3828125
+  memorysize: 31.32 GiB
+  memorysize_mb: 32067.7734375
   mountpoints:
     "/":
-      available: 10.91 GiB
-      available_bytes: 11716829184
-      capacity: 44.21%
+      available: 10.73 GiB
+      available_bytes: 11518070784
+      capacity: 45.16%
       device: "/dev/vda1"
       filesystem: ext4
       options:
@@ -253,8 +246,8 @@ values:
       - stripe=32742
       size: 19.56 GiB
       size_bytes: 21002579968
-      used: 8.65 GiB
-      used_bytes: 9285750784
+      used: 8.83 GiB
+      used_bytes: 9484509184
     "/dev/shm":
       available: 15.71 GiB
       available_bytes: 16865177600
@@ -265,13 +258,15 @@ values:
       - rw
       - nosuid
       - nodev
+      - size=16469900k
+      - nr_inodes=4117475
       size: 15.71 GiB
       size_bytes: 16865177600
       used: 0 bytes
       used_bytes: 0
     "/run":
       available: 3.14 GiB
-      available_bytes: 3372421120
+      available_bytes: 3372404736
       capacity: 0.02%
       device: tmpfs
       filesystem: tmpfs
@@ -281,11 +276,12 @@ values:
       - noexec
       - relatime
       - size=3293980k
+      - nr_inodes=4117475
       - mode=755
       size: 3.14 GiB
       size_bytes: 3373035520
-      used: 600.00 KiB
-      used_bytes: 614400
+      used: 616.00 KiB
+      used_bytes: 630784
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -299,6 +295,7 @@ values:
       - noexec
       - relatime
       - size=5120k
+      - nr_inodes=4117475
       size: 5.00 MiB
       size_bytes: 5242880
       used: 0 bytes
@@ -474,7 +471,7 @@ values:
   nginx_version: 1.14.2
   operatingsystem: Debian
   operatingsystemmajrelease: '10'
-  operatingsystemrelease: '10.7'
+  operatingsystemrelease: '10.8'
   os:
     architecture: amd64
     distro:
@@ -488,9 +485,9 @@ values:
     hardware: x86_64
     name: Debian
     release:
-      full: '10.7'
+      full: '10.8'
       major: '10'
-      minor: '7'
+      minor: '8'
     selinux:
       enabled: false
   osfamily: Debian
@@ -611,7 +608,7 @@ values:
   subnet: sesi_rocquencourt
   sudoversion: 1.8.27
   swapfree: 3.97 GiB
-  swapfree_mb: 4064.0234375
+  swapfree_mb: 4067.7734375
   swapsize: 4.00 GiB
   swapsize_mb: 4093.99609375
   swh_hostname:
@@ -619,10 +616,10 @@ values:
     short: moma
     internal_fqdn: moma.internal.softwareheritage.org
   system_uptime:
-    days: 32
-    hours: 790
-    seconds: 2845116
-    uptime: 32 days
+    days: 74
+    hours: 1796
+    seconds: 6468516
+    uptime: 74 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -637,15 +634,15 @@ values:
     systemd-timesyncd.service: enabled
   systemd_version: '247'
   timezone: UTC
-  uptime: 32 days
-  uptime_days: 32
-  uptime_hours: 790
-  uptime_seconds: 2845116
+  uptime: 74 days
+  uptime_days: 74
+  uptime_hours: 1796
+  uptime_seconds: 6468516
   uuid: f9773017-6bf5-4aec-8531-f37668cd7203
   vcsrepo_svn_ver: ''
   virtual: kvm
   clientcert: moma.softwareheritage.org
   clientversion: 5.5.10
   clientnoop: false
-timestamp: '2021-02-02T12:05:10.662995411+00:00'
-expiration: '2021-02-02T12:35:10.663810055+00:00'
+timestamp: '2021-03-16T10:35:10.846626502+00:00'
+expiration: '2021-03-16T11:05:10.847369570+00:00'

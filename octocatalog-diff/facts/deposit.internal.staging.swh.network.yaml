@@ -3,7 +3,7 @@ name: deposit.internal.staging.swh.network
 values:
   agent_specified_environment: staging
   apache_version: 2.4.38
-  apt_dist_updates: 12
+  apt_dist_updates: 13
   apt_has_dist_updates: true
   apt_has_updates: true
   apt_package_dist_updates:
@@ -15,10 +15,11 @@ values:
   - udev
   - libudev1
   - systemd-sysv
-  - borgbackup
   - python3-swh.model
+  - python3-swh.deposit
+  - python3-swh.deposit.loader
+  - python3-swh.deposit.client
   - python3-swh.storage
-  - python3-swh.scheduler
   apt_package_security_dist_updates: []
   apt_package_security_updates: []
   apt_package_updates:
@@ -30,15 +31,16 @@ values:
   - udev
   - libudev1
   - systemd-sysv
-  - borgbackup
   - python3-swh.model
+  - python3-swh.deposit
+  - python3-swh.deposit.loader
+  - python3-swh.deposit.client
   - python3-swh.storage
-  - python3-swh.scheduler
   apt_reboot_required: true
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1612265702
-  apt_updates: 12
+  apt_update_last_success: 1615887302
+  apt_updates: 13
   architecture: amd64
   bios_release_date: 04/01/2014
   bios_vendor: SeaBIOS
@@ -148,6 +150,7 @@ values:
     tenma: "/home/tenma"
     vsellier: "/home/vsellier"
     tg1999: "/home/tg1999"
+    hakb: "/home/hakb"
   domain: internal.staging.swh.network
   facterversion: 3.11.0
   filesystems: ext2,ext3,ext4,iso9660
@@ -187,9 +190,9 @@ values:
   kernelversion: 4.19.0
   letsencrypt_directory: {}
   load_averages:
-    15m: 0.01
-    1m: 0.22
-    5m: 0.06
+    15m: 0.04
+    1m: 0.39
+    5m: 0.14
   location: sesi_rocquencourt_staging
   lsbdistcodename: buster
   lsbdistdescription: Debian GNU/Linux 10 (buster)
@@ -201,22 +204,22 @@ values:
   manufacturer: QEMU
   memory:
     system:
-      available: 6.79 GiB
-      available_bytes: 7289896960
-      capacity: 12.86%
+      available: 6.47 GiB
+      available_bytes: 6943895552
+      capacity: 17.00%
       total: 7.79 GiB
       total_bytes: 8365957120
-      used: 1.00 GiB
-      used_bytes: 1076060160
-  memoryfree: 6.79 GiB
-  memoryfree_mb: 6952.1875
+      used: 1.32 GiB
+      used_bytes: 1422061568
+  memoryfree: 6.47 GiB
+  memoryfree_mb: 6622.21484375
   memorysize: 7.79 GiB
   memorysize_mb: 7978.3984375
   mountpoints:
     "/":
-      available: 26.80 GiB
-      available_bytes: 28777385984
-      capacity: 14.82%
+      available: 27.12 GiB
+      available_bytes: 29124710400
+      capacity: 13.80%
       device: "/dev/vda1"
       filesystem: ext4
       options:
@@ -225,8 +228,8 @@ values:
       - errors=remount-ro
       size: 31.47 GiB
       size_bytes: 33785901056
-      used: 4.66 GiB
-      used_bytes: 5008515072
+      used: 4.34 GiB
+      used_bytes: 4661190656
     "/dev/shm":
       available: 3.90 GiB
       available_bytes: 4182978560
@@ -242,9 +245,9 @@ values:
       used: 0 bytes
       used_bytes: 0
     "/run":
-      available: 797.33 MiB
-      available_bytes: 836059136
-      capacity: 0.06%
+      available: 797.30 MiB
+      available_bytes: 836034560
+      capacity: 0.07%
       device: tmpfs
       filesystem: tmpfs
       options:
@@ -256,8 +259,8 @@ values:
       - mode=755
       size: 797.84 MiB
       size_bytes: 836595712
-      used: 524.00 KiB
-      used_bytes: 536576
+      used: 548.00 KiB
+      used_bytes: 561152
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -273,6 +276,26 @@ values:
       - size=5120k
       size: 5.00 MiB
       size_bytes: 5242880
+      used: 0 bytes
+      used_bytes: 0
+    "/run/user/1003":
+      available: 797.84 MiB
+      available_bytes: 836595712
+      capacity: 0%
+      device: tmpfs
+      filesystem: tmpfs
+      options:
+      - rw
+      - nosuid
+      - nodev
+      - relatime
+      - size=816988k
+      - nr_inodes=204247
+      - mode=700
+      - uid=1003
+      - gid=1003
+      size: 797.84 MiB
+      size_bytes: 836595712
       used: 0 bytes
       used_bytes: 0
   mounts:
@@ -341,7 +364,7 @@ values:
     primary: eth0
   operatingsystem: Debian
   operatingsystemmajrelease: '10'
-  operatingsystemrelease: '10.7'
+  operatingsystemrelease: '10.8'
   os:
     architecture: amd64
     distro:
@@ -355,9 +378,9 @@ values:
     hardware: x86_64
     name: Debian
     release:
-      full: '10.7'
+      full: '10.8'
       major: '10'
-      minor: '7'
+      minor: '8'
     selinux:
       enabled: false
   osfamily: Debian
@@ -459,10 +482,10 @@ values:
     short: deposit
     internal_fqdn: deposit.internal.staging.swh.network
   system_uptime:
-    days: 12
-    hours: 306
-    seconds: 1103475
-    uptime: 12 days
+    days: 54
+    hours: 1312
+    seconds: 4725199
+    uptime: 54 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -477,15 +500,15 @@ values:
     systemd-timesyncd.service: enabled
   systemd_version: '247'
   timezone: UTC
-  uptime: 12 days
-  uptime_days: 12
-  uptime_hours: 306
-  uptime_seconds: 1103475
+  uptime: 54 days
+  uptime_days: 54
+  uptime_hours: 1312
+  uptime_seconds: 4725199
   uuid: 5fa5531e-8c1f-49de-b0cc-af0b9002ffa1
   vcsrepo_svn_ver: ''
   virtual: kvm
   clientcert: deposit.internal.staging.swh.network
   clientversion: 5.5.10
   clientnoop: false
-timestamp: '2021-02-02T12:27:06.687626055+00:00'
-expiration: '2021-02-02T12:57:06.688029955+00:00'
+timestamp: '2021-03-16T10:27:07.450395312+00:00'
+expiration: '2021-03-16T10:57:07.451228463+00:00'

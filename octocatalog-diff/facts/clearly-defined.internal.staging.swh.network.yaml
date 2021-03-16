@@ -2,7 +2,7 @@
 name: clearly-defined.internal.staging.swh.network
 values:
   agent_specified_environment: staging
-  apt_dist_updates: 9
+  apt_dist_updates: 17
   apt_has_dist_updates: true
   apt_has_updates: true
   apt_package_dist_updates:
@@ -11,9 +11,17 @@ values:
   - systemd-sysv
   - libnss-systemd
   - systemd-timesyncd
+  - postgresql-common
+  - postgresql-client-common
   - libpam-systemd
   - systemd
   - libsystemd0
+  - libpq-dev
+  - libpq5
+  - postgresql-client-13
+  - postgresql-13
+  - postgresql
+  - postgresql-client
   - python3-psycopg2
   apt_package_security_dist_updates: []
   apt_package_security_updates: []
@@ -23,15 +31,23 @@ values:
   - systemd-sysv
   - libnss-systemd
   - systemd-timesyncd
+  - postgresql-common
+  - postgresql-client-common
   - libpam-systemd
   - systemd
   - libsystemd0
+  - libpq-dev
+  - libpq5
+  - postgresql-client-13
+  - postgresql-13
+  - postgresql
+  - postgresql-client
   - python3-psycopg2
   apt_reboot_required: true
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1612265583
-  apt_updates: 9
+  apt_update_last_success: 1615890782
+  apt_updates: 17
   architecture: amd64
   bios_release_date: 04/01/2014
   bios_vendor: SeaBIOS
@@ -150,6 +166,7 @@ values:
     prometheus: "/var/lib/prometheus"
     nagios: "/var/lib/nagios"
     postgres: "/var/lib/postgresql"
+    hakb: "/home/hakb"
   domain: internal.staging.swh.network
   facterversion: 3.11.0
   filesystems: btrfs,ext2,ext3,ext4,hfs,hfsplus,iso9660,jfs,minix,msdos,qnx4,ufs,vfat,xfs
@@ -185,7 +202,7 @@ values:
   letsencrypt_directory: {}
   load_averages:
     15m: 0.01
-    1m: 0.15
+    1m: 0.11
     5m: 0.04
   lsbdistcodename: buster
   lsbdistdescription: Debian GNU/Linux 10 (buster)
@@ -197,30 +214,30 @@ values:
   manufacturer: QEMU
   memory:
     swap:
-      available: 1020.00 MiB
-      available_bytes: 1069543424
-      capacity: 0%
+      available: 1016.25 MiB
+      available_bytes: 1065611264
+      capacity: 0.37%
       total: 1020.00 MiB
       total_bytes: 1069543424
-      used: 0 bytes
-      used_bytes: 0
+      used: 3.75 MiB
+      used_bytes: 3932160
     system:
-      available: 6.96 GiB
-      available_bytes: 7477018624
-      capacity: 10.63%
+      available: 7.33 GiB
+      available_bytes: 7872876544
+      capacity: 5.90%
       total: 7.79 GiB
       total_bytes: 8366313472
-      used: 848.10 MiB
-      used_bytes: 889294848
-  memoryfree: 6.96 GiB
-  memoryfree_mb: 7130.640625
+      used: 470.58 MiB
+      used_bytes: 493436928
+  memoryfree: 7.33 GiB
+  memoryfree_mb: 7508.16015625
   memorysize: 7.79 GiB
   memorysize_mb: 7978.73828125
   mountpoints:
     "/":
-      available: 13.11 GiB
-      available_bytes: 14078484480
-      capacity: 20.01%
+      available: 13.37 GiB
+      available_bytes: 14355226624
+      capacity: 18.44%
       device: "/dev/mapper/base--template--vg-root"
       filesystem: ext4
       options:
@@ -229,12 +246,12 @@ values:
       - errors=remount-ro
       size: 16.39 GiB
       size_bytes: 17601216512
-      used: 3.28 GiB
-      used_bytes: 3522732032
+      used: 3.02 GiB
+      used_bytes: 3245989888
     "/boot":
-      available: 115.31 MiB
-      available_bytes: 120911872
-      capacity: 51.00%
+      available: 150.73 MiB
+      available_bytes: 158048256
+      capacity: 35.95%
       device: "/dev/vda1"
       filesystem: ext2
       options:
@@ -242,11 +259,11 @@ values:
       - relatime
       size: 235.32 MiB
       size_bytes: 246755328
-      used: 120.01 MiB
-      used_bytes: 125843456
+      used: 84.60 MiB
+      used_bytes: 88707072
     "/dev/shm":
       available: 3.90 GiB
-      available_bytes: 4183121920
+      available_bytes: 4183138304
       capacity: 0.00%
       device: tmpfs
       filesystem: tmpfs
@@ -256,11 +273,11 @@ values:
       - nodev
       size: 3.90 GiB
       size_bytes: 4183154688
-      used: 32.00 KiB
-      used_bytes: 32768
+      used: 16.00 KiB
+      used_bytes: 16384
     "/run":
-      available: 797.31 MiB
-      available_bytes: 836038656
+      available: 797.32 MiB
+      available_bytes: 836055040
       capacity: 0.07%
       device: tmpfs
       filesystem: tmpfs
@@ -273,8 +290,8 @@ values:
       - mode=755
       size: 797.88 MiB
       size_bytes: 836632576
-      used: 580.00 KiB
-      used_bytes: 593920
+      used: 564.00 KiB
+      used_bytes: 577536
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -290,26 +307,6 @@ values:
       - size=5120k
       size: 5.00 MiB
       size_bytes: 5242880
-      used: 0 bytes
-      used_bytes: 0
-    "/run/user/1027":
-      available: 797.87 MiB
-      available_bytes: 836628480
-      capacity: 0%
-      device: tmpfs
-      filesystem: tmpfs
-      options:
-      - rw
-      - nosuid
-      - nodev
-      - relatime
-      - size=817020k
-      - nr_inodes=204255
-      - mode=700
-      - uid=1027
-      - gid=1027
-      size: 797.87 MiB
-      size_bytes: 836628480
       used: 0 bytes
       used_bytes: 0
     "/srv/softwareheritage/clearlydefined":
@@ -411,7 +408,7 @@ values:
     primary: eth0
   operatingsystem: Debian
   operatingsystemmajrelease: '10'
-  operatingsystemrelease: '10.7'
+  operatingsystemrelease: '10.8'
   os:
     architecture: amd64
     distro:
@@ -425,9 +422,9 @@ values:
     hardware: x86_64
     name: Debian
     release:
-      full: '10.7'
+      full: '10.8'
       major: '10'
-      minor: '7'
+      minor: '8'
     selinux:
       enabled: false
   osfamily: Debian
@@ -544,8 +541,8 @@ values:
   sshrsakey: AAAAB3NzaC1yc2EAAAADAQABAAABAQDpMuizgJ2MKNc+Risl/6FxXxz8XkC3bFFg+qS7D1giHJB2YowSrQjLjo6bIye8Q47Phr2mmr24pPebCtTX+P3e/GruyrBQgc34bfIaNV0mgqEXPpFcVVb4JjtpVQmoFx/YDL93VfYm4ylv/yG9TjMc48IyzP290htiZlKvffbi32T45z0rMK5dLM6SVITfRcDesr2TiPM4Z04dW0yjnmwLOTzdNl+L0dRPCsmZcvrW3lFiFVEu1/miCtPEwo1k/Cau9hherfLjVTztL+Ju3ikscwtQ073tRbqGE7fF6cbUH9TO0370JX2EoYj3fzbs5OFDsLu3bDJnMyiyxo7lnwAD
   subnet: sesi_rocquencourt_staging
   sudoversion: 1.8.27
-  swapfree: 1020.00 MiB
-  swapfree_mb: 1019.99609375
+  swapfree: 1016.25 MiB
+  swapfree_mb: 1016.24609375
   swapsize: 1020.00 MiB
   swapsize_mb: 1019.99609375
   swh_hostname:
@@ -553,10 +550,10 @@ values:
     short: clearly-defined
     internal_fqdn: clearly-defined.internal.staging.swh.network
   system_uptime:
-    days: 12
-    hours: 305
-    seconds: 1101544
-    uptime: 12 days
+    days: 54
+    hours: 1312
+    seconds: 4724837
+    uptime: 54 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -571,15 +568,15 @@ values:
     systemd-timesyncd.service: enabled
   systemd_version: '246'
   timezone: UTC
-  uptime: 12 days
-  uptime_days: 12
-  uptime_hours: 305
-  uptime_seconds: 1101544
+  uptime: 54 days
+  uptime_days: 54
+  uptime_hours: 1312
+  uptime_seconds: 4724837
   uuid: 5fa27c0e-efca-4ed3-b9e0-ee9ef1c0029c
   vcsrepo_svn_ver: ''
   virtual: kvm
   clientcert: clearly-defined.internal.staging.swh.network
   clientversion: 5.5.10
   clientnoop: false
-timestamp: '2021-02-02T12:06:10.099915737+00:00'
-expiration: '2021-02-02T12:36:10.100776346+00:00'
+timestamp: '2021-03-16T10:36:10.468308898+00:00'
+expiration: '2021-03-16T11:06:10.469138550+00:00'

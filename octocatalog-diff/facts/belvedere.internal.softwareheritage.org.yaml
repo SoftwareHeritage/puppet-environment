@@ -2,26 +2,41 @@
 name: belvedere.internal.softwareheritage.org
 values:
   agent_specified_environment: production
-  apt_dist_updates: 17
+  apt_dist_updates: 32
   apt_has_dist_updates: true
   apt_has_updates: true
   apt_package_dist_updates:
   - libnss-systemd
   - libsystemd0
   - systemd-timesyncd
+  - postgresql-client-common
+  - postgresql-common
   - libpam-systemd
   - systemd
   - udev
   - libudev1
   - systemd-sysv
+  - libnvpair3linux
+  - libuutil3linux
+  - libzfs4linux
+  - libzpool4linux
+  - zfs-dkms
+  - zfsutils-linux
+  - zfs-zed
   - borgbackup
-  - linux-headers-5.9.0-0.bpo.5-common
-  - linux-kbuild-5.9
-  - linux-headers-5.9.0-0.bpo.5-amd64
+  - libpq5
+  - linux-headers-5.10.0-0.bpo.3-common
+  - linux-kbuild-5.10
+  - linux-headers-5.10.0-0.bpo.3-amd64
   - linux-headers-amd64
-  - linux-image-5.9.0-0.bpo.5-amd64
+  - linux-image-5.10.0-0.bpo.3-amd64
   - linux-image-amd64
+  - linux-kbuild-5.9
   - pgbouncer
+  - postgresql-client-11
+  - postgresql-11
+  - postgresql-client-12
+  - postgresql-12
   - python3-psycopg2
   apt_package_security_dist_updates: []
   apt_package_security_updates: []
@@ -29,20 +44,27 @@ values:
   - libnss-systemd
   - libsystemd0
   - systemd-timesyncd
+  - postgresql-client-common
+  - postgresql-common
   - libpam-systemd
   - systemd
   - udev
   - libudev1
   - systemd-sysv
   - borgbackup
+  - libpq5
   - linux-kbuild-5.9
   - pgbouncer
+  - postgresql-client-11
+  - postgresql-11
+  - postgresql-client-12
+  - postgresql-12
   - python3-psycopg2
   apt_reboot_required: false
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1612265342
-  apt_updates: 12
+  apt_update_last_success: 1615886943
+  apt_updates: 19
   architecture: amd64
   bios_release_date: 04/09/2020
   bios_vendor: Dell Inc.
@@ -295,6 +317,7 @@ values:
     vsellier: "/home/vsellier"
     tg1999: "/home/tg1999"
     Debian-snmp: "/var/lib/snmp"
+    hakb: "/home/hakb"
   domain: internal.softwareheritage.org
   facterversion: 3.11.0
   filesystems: ext2,ext3,ext4,vfat
@@ -330,9 +353,9 @@ values:
   kernelversion: 5.9.0
   letsencrypt_directory: {}
   load_averages:
-    15m: 23.69
-    1m: 24.16
-    5m: 24.47
+    15m: 21.96
+    1m: 16.26
+    5m: 19.61
   location: sesi_rocquencourt
   lsbdistcodename: buster
   lsbdistdescription: Debian GNU/Linux 10 (buster)
@@ -349,22 +372,22 @@ values:
   manufacturer: Dell Inc.
   memory:
     system:
-      available: 292.57 GiB
-      available_bytes: 314139750400
-      capacity: 61.23%
+      available: 270.02 GiB
+      available_bytes: 289926569984
+      capacity: 64.22%
       total: 754.56 GiB
       total_bytes: 810199945216
-      used: 461.99 GiB
-      used_bytes: 496060194816
-  memoryfree: 292.57 GiB
-  memoryfree_mb: 299587.01171875
+      used: 484.54 GiB
+      used_bytes: 520273375232
+  memoryfree: 270.02 GiB
+  memoryfree_mb: 276495.5234375
   memorysize: 754.56 GiB
   memorysize_mb: 772666.87890625
   mountpoints:
     "/":
-      available: 204.12 GiB
-      available_bytes: 219173023744
-      capacity: 6.35%
+      available: 204.14 GiB
+      available_bytes: 219197554688
+      capacity: 6.34%
       device: "/dev/md0"
       filesystem: ext4
       options:
@@ -374,11 +397,11 @@ values:
       - stripe=256
       size: 217.95 GiB
       size_bytes: 234023702528
-      used: 13.83 GiB
-      used_bytes: 14850678784
+      used: 13.81 GiB
+      used_bytes: 14826147840
     "/boot/efi":
-      available: 1016.87 MiB
-      available_bytes: 1066266624
+      available: 1016.86 MiB
+      available_bytes: 1066250240
       capacity: 0.50%
       device: "/dev/sdr1"
       filesystem: vfat
@@ -394,11 +417,11 @@ values:
       - errors=remount-ro
       size: 1021.98 MiB
       size_bytes: 1071628288
-      used: 5.11 MiB
-      used_bytes: 5361664
+      used: 5.13 MiB
+      used_bytes: 5378048
     "/dev/shm":
-      available: 377.27 GiB
-      available_bytes: 405095628800
+      available: 377.28 GiB
+      available_bytes: 405097238528
       capacity: 0.00%
       device: tmpfs
       filesystem: tmpfs
@@ -408,11 +431,11 @@ values:
       - nodev
       size: 377.28 GiB
       size_bytes: 405099970560
-      used: 4.14 MiB
-      used_bytes: 4341760
+      used: 2.61 MiB
+      used_bytes: 2732032
     "/run":
       available: 75.45 GiB
-      available_bytes: 81017663488
+      available_bytes: 81017610240
       capacity: 0.00%
       device: tmpfs
       filesystem: tmpfs
@@ -425,8 +448,8 @@ values:
       - mode=755
       size: 75.46 GiB
       size_bytes: 81019998208
-      used: 2.23 MiB
-      used_bytes: 2334720
+      used: 2.28 MiB
+      used_bytes: 2387968
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -582,7 +605,7 @@ values:
     primary: vlan440
   operatingsystem: Debian
   operatingsystemmajrelease: '10'
-  operatingsystemrelease: '10.7'
+  operatingsystemrelease: '10.8'
   os:
     architecture: amd64
     distro:
@@ -596,9 +619,9 @@ values:
     hardware: x86_64
     name: Debian
     release:
-      full: '10.7'
+      full: '10.8'
       major: '10'
-      minor: '7'
+      minor: '8'
     selinux:
       enabled: false
   osfamily: Debian
@@ -956,10 +979,10 @@ values:
     short: belvedere
     internal_fqdn: belvedere.internal.softwareheritage.org
   system_uptime:
-    days: 32
-    hours: 788
-    seconds: 2839577
-    uptime: 32 days
+    days: 74
+    hours: 1794
+    seconds: 6461177
+    uptime: 74 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -974,15 +997,15 @@ values:
     systemd-timesyncd.service: enabled
   systemd_version: '247'
   timezone: UTC
-  uptime: 32 days
-  uptime_days: 32
-  uptime_hours: 788
-  uptime_seconds: 2839577
+  uptime: 74 days
+  uptime_days: 74
+  uptime_hours: 1794
+  uptime_seconds: 6461177
   uuid: 4c4c4544-0053-4c10-8043-b8c04f575732
   vcsrepo_svn_ver: ''
   virtual: physical
   clientcert: belvedere.internal.softwareheritage.org
   clientversion: 5.5.10
   clientnoop: false
-timestamp: '2021-02-02T12:28:06.940639445+00:00'
-expiration: '2021-02-02T12:58:06.941384280+00:00'
+timestamp: '2021-03-16T10:28:06.857531970+00:00'
+expiration: '2021-03-16T10:58:06.858913959+00:00'

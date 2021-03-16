@@ -2,7 +2,7 @@
 name: granet.internal.softwareheritage.org
 values:
   agent_specified_environment: production
-  apt_dist_updates: 20
+  apt_dist_updates: 25
   apt_has_dist_updates: true
   apt_has_updates: true
   apt_package_dist_updates:
@@ -15,17 +15,22 @@ values:
   - libpam-systemd
   - systemd
   - libsystemd0
+  - libnvpair3linux
+  - libuutil3linux
+  - libzfs4linux
+  - libzpool4linux
+  - zfs-dkms
+  - zfsutils-linux
+  - zfs-zed
+  - containerd.io
   - docker-ce-cli
   - docker-ce
   - docker-ce-rootless-extras
-  - zfs-dkms
-  - zfsutils-linux
+  - libnvpair1linux
   - libuutil1linux
   - libzfs2linux
   - libzpool2linux
-  - libnvpair1linux
   - spl-dkms
-  - zfs-zed
   apt_package_security_dist_updates: []
   apt_package_security_updates: []
   apt_package_updates:
@@ -38,22 +43,16 @@ values:
   - libpam-systemd
   - systemd
   - libsystemd0
+  - containerd.io
   - docker-ce-cli
   - docker-ce
   - docker-ce-rootless-extras
-  - zfs-dkms
-  - zfsutils-linux
-  - libuutil1linux
-  - libzfs2linux
-  - libzpool2linux
-  - libnvpair1linux
   - spl-dkms
-  - zfs-zed
   apt_reboot_required: true
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1612264442
-  apt_updates: 20
+  apt_update_last_success: 1615889642
+  apt_updates: 14
   architecture: amd64
   bios_release_date: '08/15/2019'
   bios_vendor: Dell Inc.
@@ -218,7 +217,7 @@ values:
     NFd: 23
     OomKillDisable: true
     NGoroutines: 33
-    SystemTime: '2021-02-02T12:09:05.154872655Z'
+    SystemTime: '2021-03-16T10:39:05.374254597Z'
     LoggingDriver: journald
     CgroupDriver: cgroupfs
     CgroupVersion: '1'
@@ -441,6 +440,7 @@ values:
     vsellier: "/home/vsellier"
     postgres: "/var/lib/postgresql"
     tg1999: "/home/tg1999"
+    hakb: "/home/hakb"
   docker_server_version: 20.10.0
   docker_version:
     Client:
@@ -534,9 +534,9 @@ values:
   kernelversion: 4.19.0
   letsencrypt_directory: {}
   load_averages:
-    15m: 0.04
-    1m: 0.23
-    5m: 0.09
+    15m: 1.4
+    1m: 1.15
+    5m: 1.28
   location: sesi_rocquencourt
   lsbdistcodename: buster
   lsbdistdescription: Debian GNU/Linux 10 (buster)
@@ -553,22 +553,22 @@ values:
   manufacturer: Dell Inc.
   memory:
     system:
-      available: 649.47 GiB
-      available_bytes: 697358229504
-      capacity: 13.91%
+      available: 427.04 GiB
+      available_bytes: 458526261248
+      capacity: 43.39%
       total: 754.39 GiB
       total_bytes: 810021474304
-      used: 104.93 GiB
-      used_bytes: 112663244800
-  memoryfree: 649.47 GiB
-  memoryfree_mb: 665052.6328125
+      used: 327.36 GiB
+      used_bytes: 351495213056
+  memoryfree: 427.04 GiB
+  memoryfree_mb: 437284.71875
   memorysize: 754.39 GiB
   memorysize_mb: 772496.67578125
   mountpoints:
     "/":
-      available: 21.95 GiB
-      available_bytes: 23569416192
-      capacity: 39.90%
+      available: 18.40 GiB
+      available_bytes: 19751739392
+      capacity: 49.64%
       device: "/dev/mapper/ssd_mirror-root"
       filesystem: ext4
       options:
@@ -578,12 +578,12 @@ values:
       - stripe=128
       size: 36.53 GiB
       size_bytes: 39219421184
-      used: 14.58 GiB
-      used_bytes: 15650004992
+      used: 18.13 GiB
+      used_bytes: 19467681792
     "/boot/efi":
-      available: 114.04 MiB
-      available_bytes: 119580160
-      capacity: 4.27%
+      available: 114.02 MiB
+      available_bytes: 119563776
+      capacity: 4.28%
       device: "/dev/sda1"
       filesystem: vfat
       options:
@@ -598,8 +598,8 @@ values:
       - errors=remount-ro
       size: 119.12 MiB
       size_bytes: 124909568
-      used: 5.08 MiB
-      used_bytes: 5329408
+      used: 5.10 MiB
+      used_bytes: 5345792
     "/dev/shm":
       available: 138.04 GiB
       available_bytes: 148214087680
@@ -616,7 +616,7 @@ values:
       used_bytes: 256796647424
     "/run":
       available: 75.44 GiB
-      available_bytes: 81000194048
+      available_bytes: 81000161280
       capacity: 0.00%
       device: tmpfs
       filesystem: tmpfs
@@ -629,8 +629,8 @@ values:
       - mode=755
       size: 75.44 GiB
       size_bytes: 81002147840
-      used: 1.86 MiB
-      used_bytes: 1953792
+      used: 1.89 MiB
+      used_bytes: 1986560
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -646,6 +646,26 @@ values:
       - size=5120k
       size: 5.00 MiB
       size_bytes: 5242880
+      used: 0 bytes
+      used_bytes: 0
+    "/run/user/1000":
+      available: 75.44 GiB
+      available_bytes: 81002143744
+      capacity: 0%
+      device: tmpfs
+      filesystem: tmpfs
+      options:
+      - rw
+      - nosuid
+      - nodev
+      - relatime
+      - size=79103656k
+      - nr_inodes=19775914
+      - mode=700
+      - uid=1000
+      - gid=1000
+      size: 75.44 GiB
+      size_bytes: 81002143744
       used: 0 bytes
       used_bytes: 0
     "/run/user/1013":
@@ -668,7 +688,7 @@ values:
       size_bytes: 81002143744
       used: 0 bytes
       used_bytes: 0
-    "/run/user/1023":
+    "/run/user/1025":
       available: 75.44 GiB
       available_bytes: 81002143744
       capacity: 0%
@@ -682,8 +702,8 @@ values:
       - size=79103656k
       - nr_inodes=19775914
       - mode=700
-      - uid=1023
-      - gid=1023
+      - uid=1025
+      - gid=1025
       size: 75.44 GiB
       size_bytes: 81002143744
       used: 0 bytes
@@ -814,7 +834,7 @@ values:
   nginx_version: 1.14.2
   operatingsystem: Debian
   operatingsystemmajrelease: '10'
-  operatingsystemrelease: '10.7'
+  operatingsystemrelease: '10.8'
   os:
     architecture: amd64
     distro:
@@ -828,9 +848,9 @@ values:
     hardware: x86_64
     name: Debian
     release:
-      full: '10.7'
+      full: '10.8'
       major: '10'
-      minor: '7'
+      minor: '8'
     selinux:
       enabled: false
   osfamily: Debian
@@ -980,7 +1000,7 @@ values:
       size: 8.00 MiB
       size_bytes: 8388608
   path: "/usr/bin:/bin:/usr/sbin:/sbin"
-  phpversion: 7.3.19-1~deb10u1
+  phpversion: 7.3.27-1~deb10u1
   physicalprocessorcount: 2
   processor0: Intel(R) Xeon(R) Silver 4214Y CPU @ 2.20GHz
   processor1: Intel(R) Xeon(R) Silver 4214Y CPU @ 2.20GHz
@@ -1149,10 +1169,10 @@ values:
     short: granet
     internal_fqdn: granet.internal.softwareheritage.org
   system_uptime:
-    days: 49
-    hours: 1191
-    seconds: 4288351
-    uptime: 49 days
+    days: 91
+    hours: 2197
+    seconds: 7911751
+    uptime: 91 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -1167,15 +1187,15 @@ values:
     systemd-timesyncd.service: enabled
   systemd_version: '246'
   timezone: UTC
-  uptime: 49 days
-  uptime_days: 49
-  uptime_hours: 1191
-  uptime_seconds: 4288351
+  uptime: 91 days
+  uptime_days: 91
+  uptime_hours: 2197
+  uptime_seconds: 7911751
   uuid: 4c4c4544-0039-3710-8031-b2c04f545a32
   vcsrepo_svn_ver: 1.10.4
   virtual: physical
   clientcert: granet.internal.softwareheritage.org
   clientversion: 5.5.10
   clientnoop: false
-timestamp: '2021-02-02T12:09:06.124076000+00:00'
-expiration: '2021-02-02T12:39:06.126164448+00:00'
+timestamp: '2021-03-16T10:39:06.727544621+00:00'
+expiration: '2021-03-16T11:09:06.728786725+00:00'

@@ -2,12 +2,13 @@
 name: bardo.internal.admin.swh.network
 values:
   agent_specified_environment: production
-  apt_dist_updates: 10
+  apt_dist_updates: 15
   apt_has_dist_updates: true
   apt_has_updates: true
   apt_package_dist_updates:
   - libzstd1
   - udev
+  - postgresql-common
   - libpam-systemd
   - libnss-systemd
   - systemd
@@ -15,7 +16,11 @@ values:
   - libudev1
   - libsystemd0
   - systemd-sysv
+  - postgresql-client-common
   - borgbackup
+  - libpq5
+  - postgresql-client-12
+  - postgresql-12
   apt_package_security_dist_updates: []
   apt_package_security_updates: []
   apt_package_updates:
@@ -24,11 +29,16 @@ values:
   - libudev1
   - libzstd1
   - borgbackup
+  - libpq5
+  - postgresql-common
+  - postgresql-client-common
+  - postgresql-client-12
+  - postgresql-12
   apt_reboot_required: true
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1612264142
-  apt_updates: 5
+  apt_update_last_success: 1615889342
+  apt_updates: 10
   architecture: amd64
   bios_release_date: 04/01/2014
   bios_vendor: SeaBIOS
@@ -126,7 +136,7 @@ values:
     aeviso: "/home/aeviso"
     tenma: "/home/tenma"
     tg1999: "/home/tg1999"
-    hedgedoc: "/home/hedgedoc"
+    hedgedoc: "/nonexistent"
     journalbeat: "/var/lib/journalbeat"
     ntp: "/nonexistent"
     postfix: "/var/spool/postfix"
@@ -142,6 +152,7 @@ values:
     prometheus: "/var/lib/prometheus"
     nagios: "/var/lib/nagios"
     postgres: "/var/lib/postgresql"
+    hakb: "/home/hakb"
   domain: internal.admin.swh.network
   facterversion: 3.11.0
   filesystems: btrfs,ext2,ext3,ext4,hfs,hfsplus,iso9660,jfs,minix,msdos,qnx4,ufs,vfat,xfs
@@ -177,8 +188,8 @@ values:
   letsencrypt_directory: {}
   load_averages:
     15m: 0.01
-    1m: 0.1
-    5m: 0.04
+    1m: 0.08
+    5m: 0.03
   lsbdistcodename: buster
   lsbdistdescription: Debian GNU/Linux 10 (buster)
   lsbdistid: Debian
@@ -197,22 +208,22 @@ values:
       used: 0 bytes
       used_bytes: 0
     system:
-      available: 6.71 GiB
-      available_bytes: 7202959360
-      capacity: 13.91%
+      available: 6.45 GiB
+      available_bytes: 6922592256
+      capacity: 17.26%
       total: 7.79 GiB
       total_bytes: 8366325760
-      used: 1.08 GiB
-      used_bytes: 1163366400
-  memoryfree: 6.71 GiB
-  memoryfree_mb: 6869.27734375
+      used: 1.34 GiB
+      used_bytes: 1443733504
+  memoryfree: 6.45 GiB
+  memoryfree_mb: 6601.8984375
   memorysize: 7.79 GiB
   memorysize_mb: 7978.75
   mountpoints:
     "/":
-      available: 11.28 GiB
-      available_bytes: 12116897792
-      capacity: 31.16%
+      available: 10.32 GiB
+      available_bytes: 11076653056
+      capacity: 37.07%
       device: "/dev/mapper/base--template--vg-root"
       filesystem: ext4
       options:
@@ -221,12 +232,12 @@ values:
       - errors=remount-ro
       size: 16.39 GiB
       size_bytes: 17601216512
-      used: 5.11 GiB
-      used_bytes: 5484318720
+      used: 6.08 GiB
+      used_bytes: 6524563456
     "/boot":
-      available: 115.92 MiB
-      available_bytes: 121550848
-      capacity: 50.74%
+      available: 151.34 MiB
+      available_bytes: 158688256
+      capacity: 35.69%
       device: "/dev/vda1"
       filesystem: ext2
       options:
@@ -234,8 +245,8 @@ values:
       - relatime
       size: 235.32 MiB
       size_bytes: 246755328
-      used: 119.40 MiB
-      used_bytes: 125204480
+      used: 83.99 MiB
+      used_bytes: 88067072
     "/dev/shm":
       available: 3.90 GiB
       available_bytes: 4183154688
@@ -251,8 +262,8 @@ values:
       used: 8.00 KiB
       used_bytes: 8192
     "/run":
-      available: 797.30 MiB
-      available_bytes: 836026368
+      available: 797.28 MiB
+      available_bytes: 836009984
       capacity: 0.07%
       device: tmpfs
       filesystem: tmpfs
@@ -265,8 +276,8 @@ values:
       - mode=755
       size: 797.88 MiB
       size_bytes: 836632576
-      used: 592.00 KiB
-      used_bytes: 606208
+      used: 608.00 KiB
+      used_bytes: 622592
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -386,7 +397,7 @@ values:
     primary: eth0
   operatingsystem: Debian
   operatingsystemmajrelease: '10'
-  operatingsystemrelease: '10.7'
+  operatingsystemrelease: '10.8'
   os:
     architecture: amd64
     distro:
@@ -400,9 +411,9 @@ values:
     hardware: x86_64
     name: Debian
     release:
-      full: '10.7'
+      full: '10.8'
       major: '10'
-      minor: '7'
+      minor: '8'
     selinux:
       enabled: false
   osfamily: Debian
@@ -525,10 +536,10 @@ values:
     short: bardo
     internal_fqdn: bardo.internal.softwareheritage.org
   system_uptime:
-    days: 32
-    hours: 791
-    seconds: 2848022
-    uptime: 32 days
+    days: 74
+    hours: 1797
+    seconds: 6471417
+    uptime: 74 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -540,15 +551,15 @@ values:
     systemd-timesyncd.service: enabled
   systemd_version: '241'
   timezone: UTC
-  uptime: 32 days
-  uptime_days: 32
-  uptime_hours: 791
-  uptime_seconds: 2848022
+  uptime: 74 days
+  uptime_days: 74
+  uptime_hours: 1797
+  uptime_seconds: 6471417
   uuid: 688d0b6c-359f-4ce9-8e50-896089fba39b
   vcsrepo_svn_ver: ''
   virtual: kvm
   clientcert: bardo.internal.admin.swh.network
   clientversion: 5.5.10
   clientnoop: false
-timestamp: '2021-02-02T11:52:05.414209927+00:00'
-expiration: '2021-02-02T12:22:05.414601932+00:00'
+timestamp: '2021-03-16T10:22:05.512438466+00:00'
+expiration: '2021-03-16T10:52:05.512805986+00:00'

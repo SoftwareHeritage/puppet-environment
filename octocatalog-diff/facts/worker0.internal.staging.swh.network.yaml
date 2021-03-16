@@ -2,7 +2,7 @@
 name: worker0.internal.staging.swh.network
 values:
   agent_specified_environment: staging
-  apt_dist_updates: 9
+  apt_dist_updates: 14
   apt_has_dist_updates: true
   apt_has_updates: true
   apt_package_dist_updates:
@@ -14,7 +14,12 @@ values:
   - udev
   - libudev1
   - systemd-sysv
-  - python3-swh.scheduler
+  - python3-swh.model
+  - python3-swh.deposit
+  - python3-swh.deposit.loader
+  - python3-swh.deposit.client
+  - python3-swh.lister
+  - python3-swh.storage
   apt_package_security_dist_updates: []
   apt_package_security_updates: []
   apt_package_updates:
@@ -26,12 +31,17 @@ values:
   - udev
   - libudev1
   - systemd-sysv
-  - python3-swh.scheduler
-  apt_reboot_required: false
+  - python3-swh.model
+  - python3-swh.deposit
+  - python3-swh.deposit.loader
+  - python3-swh.deposit.client
+  - python3-swh.lister
+  - python3-swh.storage
+  apt_reboot_required: true
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1611590687
-  apt_updates: 9
+  apt_update_last_success: 1615888562
+  apt_updates: 14
   architecture: amd64
   bios_release_date: 04/01/2014
   bios_vendor: SeaBIOS
@@ -136,6 +146,7 @@ values:
     vsellier: "/home/vsellier"
     postgres: "/var/lib/postgresql"
     tg1999: "/home/tg1999"
+    hakb: "/home/hakb"
   domain: internal.staging.swh.network
   facterversion: 3.11.0
   filesystems: ext2,ext3,ext4,iso9660
@@ -170,9 +181,9 @@ values:
   kernelversion: 5.9.0
   letsencrypt_directory: {}
   load_averages:
-    15m: 0.46
-    1m: 0.49
-    5m: 0.46
+    15m: 0.93
+    1m: 1.2
+    5m: 1.05
   location: sesi_rocquencourt_staging
   lsbdistcodename: buster
   lsbdistdescription: Debian GNU/Linux 10 (buster)
@@ -184,22 +195,22 @@ values:
   manufacturer: QEMU
   memory:
     system:
-      available: 6.26 GiB
-      available_bytes: 6718963712
-      capacity: 46.54%
+      available: 5.85 GiB
+      available_bytes: 6283358208
+      capacity: 50.01%
       total: 11.71 GiB
       total_bytes: 12568461312
-      used: 5.45 GiB
-      used_bytes: 5849497600
-  memoryfree: 6.26 GiB
-  memoryfree_mb: 6407.703125
+      used: 5.85 GiB
+      used_bytes: 6285103104
+  memoryfree: 5.85 GiB
+  memoryfree_mb: 5992.27734375
   memorysize: 11.71 GiB
   memorysize_mb: 11986.21875
   mountpoints:
     "/":
-      available: 20.29 GiB
-      available_bytes: 21781921792
-      capacity: 35.53%
+      available: 21.50 GiB
+      available_bytes: 23081193472
+      capacity: 31.68%
       device: "/dev/vda1"
       filesystem: ext4
       options:
@@ -208,11 +219,11 @@ values:
       - errors=remount-ro
       size: 31.47 GiB
       size_bytes: 33785901056
-      used: 11.18 GiB
-      used_bytes: 12003979264
+      used: 9.97 GiB
+      used_bytes: 10704707584
     "/dev/shm":
       available: 5.85 GiB
-      available_bytes: 6283190272
+      available_bytes: 6283264000
       capacity: 0.02%
       device: tmpfs
       filesystem: tmpfs
@@ -222,11 +233,11 @@ values:
       - nodev
       size: 5.85 GiB
       size_bytes: 6284230656
-      used: 1016.00 KiB
-      used_bytes: 1040384
+      used: 944.00 KiB
+      used_bytes: 966656
     "/run":
       available: 1.17 GiB
-      available_bytes: 1256316928
+      available_bytes: 1256300544
       capacity: 0.04%
       device: tmpfs
       filesystem: tmpfs
@@ -239,8 +250,8 @@ values:
       - mode=755
       size: 1.17 GiB
       size_bytes: 1256849408
-      used: 520.00 KiB
-      used_bytes: 532480
+      used: 536.00 KiB
+      used_bytes: 548864
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -258,9 +269,9 @@ values:
       size_bytes: 5242880
       used: 0 bytes
       used_bytes: 0
-    "/run/user/0":
-      available: 909.72 MiB
-      available_bytes: 953909248
+    "/run/user/1003":
+      available: 1.17 GiB
+      available_bytes: 1256845312
       capacity: 0%
       device: tmpfs
       filesystem: tmpfs
@@ -269,11 +280,13 @@ values:
       - nosuid
       - nodev
       - relatime
-      - size=931552k
-      - nr_inodes=232888
+      - size=1227388k
+      - nr_inodes=306847
       - mode=700
-      size: 909.72 MiB
-      size_bytes: 953909248
+      - uid=1003
+      - gid=1003
+      size: 1.17 GiB
+      size_bytes: 1256845312
       used: 0 bytes
       used_bytes: 0
   mounts:
@@ -342,7 +355,7 @@ values:
     primary: eth0
   operatingsystem: Debian
   operatingsystemmajrelease: '10'
-  operatingsystemrelease: '10.7'
+  operatingsystemrelease: '10.8'
   os:
     architecture: amd64
     distro:
@@ -356,9 +369,9 @@ values:
     hardware: x86_64
     name: Debian
     release:
-      full: '10.7'
+      full: '10.8'
       major: '10'
-      minor: '7'
+      minor: '8'
     selinux:
       enabled: false
   osfamily: Debian
@@ -370,7 +383,7 @@ values:
       size: 32.00 GiB
       size_bytes: 34358672896
       uuid: d958fd0e-647f-4373-ae1c-f77f565cb93f
-  path: "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+  path: "/usr/bin:/bin:/usr/sbin:/sbin"
   physicalprocessorcount: 1
   processor0: Intel(R) Xeon(R) CPU E5-2630 v4 @ 2.20GHz
   processor1: Intel(R) Xeon(R) CPU E5-2630 v4 @ 2.20GHz
@@ -455,10 +468,10 @@ values:
     short: worker0
     internal_fqdn: worker0.internal.staging.swh.network
   system_uptime:
-    days: 4
-    hours: 119
-    seconds: 429634
-    uptime: 4 days
+    days: 40
+    hours: 977
+    seconds: 3520387
+    uptime: 40 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -473,15 +486,15 @@ values:
     systemd-timesyncd.service: enabled
   systemd_version: '247'
   timezone: UTC
-  uptime: 4 days
-  uptime_days: 4
-  uptime_hours: 119
-  uptime_seconds: 429634
+  uptime: 40 days
+  uptime_days: 40
+  uptime_hours: 977
+  uptime_seconds: 3520387
   uuid: 7df01691-da81-4308-b3fc-31b157a6e72c
   vcsrepo_svn_ver: 1.10.4
   virtual: kvm
   clientcert: worker0.internal.staging.swh.network
   clientversion: 5.5.10
   clientnoop: false
-timestamp: '2021-01-25T16:05:04.220411625+00:00'
-expiration: '2021-01-25T16:35:04.220921394+00:00'
+timestamp: '2021-03-16T10:23:07.173734607+00:00'
+expiration: '2021-03-16T10:53:07.174122105+00:00'

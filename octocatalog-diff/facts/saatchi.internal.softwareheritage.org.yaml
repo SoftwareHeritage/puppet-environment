@@ -2,7 +2,7 @@
 name: saatchi.internal.softwareheritage.org
 values:
   agent_specified_environment: production
-  apt_dist_updates: 19
+  apt_dist_updates: 21
   apt_has_dist_updates: true
   apt_has_updates: true
   apt_package_dist_updates:
@@ -15,16 +15,18 @@ values:
   - libudev1
   - systemd-sysv
   - borgbackup
-  - linux-image-5.9.0-0.bpo.5-amd64
+  - linux-image-5.10.0-0.bpo.3-amd64
   - linux-image-amd64
   - python3-swh.model
+  - python3-swh.storage
+  - python3-swh.loader.core
   - python3-swh.deposit.loader
   - python3-swh.deposit.client
-  - python3-swh.storage
-  - python3-swh.journal
-  - python3-swh.indexer
-  - python3-swh.indexer.storage
   - python3-swh.lister
+  - python3-swh.loader.git
+  - python3-swh.loader.mercurial
+  - python3-swh.loader.svn
+  - fossology-nomossa
   apt_package_security_dist_updates: []
   apt_package_security_updates: []
   apt_package_updates:
@@ -38,18 +40,20 @@ values:
   - systemd-sysv
   - borgbackup
   - python3-swh.model
+  - python3-swh.storage
+  - python3-swh.loader.core
   - python3-swh.deposit.loader
   - python3-swh.deposit.client
-  - python3-swh.storage
-  - python3-swh.journal
-  - python3-swh.indexer
-  - python3-swh.indexer.storage
   - python3-swh.lister
+  - python3-swh.loader.git
+  - python3-swh.loader.mercurial
+  - python3-swh.loader.svn
+  - fossology-nomossa
   apt_reboot_required: false
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1612265522
-  apt_updates: 17
+  apt_update_last_success: 1615887122
+  apt_updates: 19
   architecture: amd64
   bios_release_date: 04/01/2014
   bios_vendor: SeaBIOS
@@ -154,11 +158,12 @@ values:
     tenma: "/home/tenma"
     vsellier: "/home/vsellier"
     tg1999: "/home/tg1999"
+    hakb: "/home/hakb"
     prometheus-rabbitmq-exporter: "/"
   domain: internal.softwareheritage.org
   erl_ssl_path: "/usr/lib/erlang/lib/ssl-9.1.2/ebin"
   facterversion: 3.11.0
-  filesystems: ext2,ext3,ext4
+  filesystems: btrfs,ext2,ext3,ext4,hfs,hfsplus,jfs,minix,msdos,qnx4,ufs,vfat,xfs
   fips_enabled: false
   fqdn: saatchi.internal.softwareheritage.org
   gid: root
@@ -190,9 +195,9 @@ values:
   kernelversion: 5.9.0
   letsencrypt_directory: {}
   load_averages:
-    15m: 0.4
-    1m: 0.47
-    5m: 0.44
+    15m: 0.53
+    1m: 0.33
+    5m: 0.46
   location: sesi_rocquencourt
   lsbdistcodename: buster
   lsbdistdescription: Debian GNU/Linux 10 (buster)
@@ -212,22 +217,22 @@ values:
       used: 0 bytes
       used_bytes: 0
     system:
-      available: 16.77 GiB
-      available_bytes: 18009128960
-      capacity: 14.43%
+      available: 14.91 GiB
+      available_bytes: 16008433664
+      capacity: 23.94%
       total: 19.60 GiB
       total_bytes: 21046788096
-      used: 2.83 GiB
-      used_bytes: 3037659136
-  memoryfree: 16.77 GiB
-  memoryfree_mb: 17174.84375
+      used: 4.69 GiB
+      used_bytes: 5038354432
+  memoryfree: 14.91 GiB
+  memoryfree_mb: 15266.83203125
   memorysize: 19.60 GiB
   memorysize_mb: 20071.78125
   mountpoints:
     "/":
-      available: 26.60 GiB
-      available_bytes: 28562350080
-      capacity: 22.51%
+      available: 26.29 GiB
+      available_bytes: 28231393280
+      capacity: 23.40%
       device: "/dev/mapper/saatchi--vg-root"
       filesystem: ext4
       options:
@@ -236,12 +241,12 @@ values:
       - errors=remount-ro
       size: 34.33 GiB
       size_bytes: 36857053184
-      used: 7.73 GiB
-      used_bytes: 8294703104
+      used: 8.03 GiB
+      used_bytes: 8625659904
     "/boot":
-      available: 113.03 MiB
-      available_bytes: 118518784
-      capacity: 51.97%
+      available: 113.01 MiB
+      available_bytes: 118502400
+      capacity: 51.98%
       device: "/dev/sda1"
       filesystem: ext2
       options:
@@ -249,8 +254,8 @@ values:
       - relatime
       size: 235.32 MiB
       size_bytes: 246755328
-      used: 122.30 MiB
-      used_bytes: 128236544
+      used: 122.31 MiB
+      used_bytes: 128252928
     "/dev/shm":
       available: 9.80 GiB
       available_bytes: 10523394048
@@ -267,7 +272,7 @@ values:
       used_bytes: 0
     "/run":
       available: 1.96 GiB
-      available_bytes: 2104107008
+      available_bytes: 2104102912
       capacity: 0.03%
       device: tmpfs
       filesystem: tmpfs
@@ -280,8 +285,8 @@ values:
       - mode=755
       size: 1.96 GiB
       size_bytes: 2104680448
-      used: 560.00 KiB
-      used_bytes: 573440
+      used: 564.00 KiB
+      used_bytes: 577536
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -425,7 +430,7 @@ values:
   nginx_version: 1.14.2
   operatingsystem: Debian
   operatingsystemmajrelease: '10'
-  operatingsystemrelease: '10.7'
+  operatingsystemrelease: '10.8'
   os:
     architecture: amd64
     distro:
@@ -439,9 +444,9 @@ values:
     hardware: x86_64
     name: Debian
     release:
-      full: '10.7'
+      full: '10.8'
       major: '10'
-      minor: '7'
+      minor: '8'
     selinux:
       enabled: false
   osfamily: Debian
@@ -572,10 +577,10 @@ values:
     short: saatchi
     internal_fqdn: saatchi.internal.softwareheritage.org
   system_uptime:
-    days: 32
-    hours: 791
-    seconds: 2850882
-    uptime: 32 days
+    days: 74
+    hours: 1797
+    seconds: 6472481
+    uptime: 74 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -590,15 +595,15 @@ values:
     systemd-timesyncd.service: enabled
   systemd_version: '247'
   timezone: UTC
-  uptime: 32 days
-  uptime_days: 32
-  uptime_hours: 791
-  uptime_seconds: 2850882
+  uptime: 74 days
+  uptime_days: 74
+  uptime_hours: 1797
+  uptime_seconds: 6472481
   uuid: 96fa444d-c818-495c-b41d-a63aaa3fa36b
   vcsrepo_svn_ver: 1.10.4
   virtual: kvm
   clientcert: saatchi.internal.softwareheritage.org
   clientversion: 5.5.10
   clientnoop: false
-timestamp: '2021-02-02T12:25:07.277385759+00:00'
-expiration: '2021-02-02T12:55:07.277760744+00:00'
+timestamp: '2021-03-16T10:25:06.385926895+00:00'
+expiration: '2021-03-16T10:55:06.386269878+00:00'

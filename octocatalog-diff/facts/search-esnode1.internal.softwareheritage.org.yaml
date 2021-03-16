@@ -2,7 +2,7 @@
 name: search-esnode1.internal.softwareheritage.org
 values:
   agent_specified_environment: production
-  apt_dist_updates: 14
+  apt_dist_updates: 22
   apt_has_dist_updates: true
   apt_has_updates: true
   apt_package_dist_updates:
@@ -14,12 +14,20 @@ values:
   - udev
   - libudev1
   - systemd-sysv
-  - linux-headers-5.9.0-0.bpo.5-common
-  - linux-kbuild-5.9
-  - linux-headers-5.9.0-0.bpo.5-amd64
+  - libnvpair3linux
+  - libuutil3linux
+  - libzfs4linux
+  - libzpool4linux
+  - zfs-dkms
+  - zfsutils-linux
+  - zfs-zed
+  - linux-headers-5.10.0-0.bpo.3-common
+  - linux-kbuild-5.10
+  - linux-headers-5.10.0-0.bpo.3-amd64
   - linux-headers-amd64
-  - linux-image-5.9.0-0.bpo.5-amd64
+  - linux-image-5.10.0-0.bpo.3-amd64
   - linux-image-amd64
+  - linux-kbuild-5.9
   apt_package_security_dist_updates: []
   apt_package_security_updates: []
   apt_package_updates:
@@ -35,7 +43,7 @@ values:
   apt_reboot_required: false
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1612267322
+  apt_update_last_success: 1615888923
   apt_updates: 9
   architecture: amd64
   bios_release_date: 04/01/2014
@@ -155,10 +163,11 @@ values:
     prometheus: "/var/lib/prometheus"
     nagios: "/var/lib/nagios"
     elasticsearch: "/nonexistent"
+    hakb: "/home/hakb"
   domain: internal.softwareheritage.org
   elasticsearch: {}
   facterversion: 3.11.0
-  filesystems: ext2,ext3,ext4,iso9660
+  filesystems: btrfs,ext2,ext3,ext4,hfs,hfsplus,iso9660,jfs,minix,msdos,qnx4,ufs,vfat,xfs
   fips_enabled: false
   fqdn: search-esnode1.internal.softwareheritage.org
   gid: root
@@ -190,9 +199,9 @@ values:
   kernelversion: 5.9.0
   letsencrypt_directory: {}
   load_averages:
-    15m: 0.01
-    1m: 0.08
-    5m: 0.02
+    15m: 0.42
+    1m: 0.61
+    5m: 0.43
   lsbdistcodename: buster
   lsbdistdescription: Debian GNU/Linux 10 (buster)
   lsbdistid: Debian
@@ -203,30 +212,30 @@ values:
   manufacturer: QEMU
   memory:
     swap:
-      available: 1019.23 MiB
-      available_bytes: 1068744704
-      capacity: 0.07%
+      available: 392.29 MiB
+      available_bytes: 411344896
+      capacity: 61.54%
       total: 1020.00 MiB
       total_bytes: 1069543424
-      used: 780.00 KiB
-      used_bytes: 798720
+      used: 627.71 MiB
+      used_bytes: 658198528
     system:
-      available: 8.47 GiB
-      available_bytes: 9093390336
-      capacity: 63.95%
+      available: 7.66 GiB
+      available_bytes: 8220778496
+      capacity: 67.41%
       total: 23.49 GiB
       total_bytes: 25224433664
-      used: 15.02 GiB
-      used_bytes: 16131043328
-  memoryfree: 8.47 GiB
-  memoryfree_mb: 8672.1328125
+      used: 15.84 GiB
+      used_bytes: 17003655168
+  memoryfree: 7.66 GiB
+  memoryfree_mb: 7839.9453125
   memorysize: 23.49 GiB
   memorysize_mb: 24055.89453125
   mountpoints:
     "/":
-      available: 12.65 GiB
-      available_bytes: 13583777792
-      capacity: 22.82%
+      available: 12.10 GiB
+      available_bytes: 12995108864
+      capacity: 26.17%
       device: "/dev/mapper/base--template--vg-root"
       filesystem: ext4
       options:
@@ -235,11 +244,11 @@ values:
       - errors=remount-ro
       size: 16.39 GiB
       size_bytes: 17601216512
-      used: 3.74 GiB
-      used_bytes: 4017438720
+      used: 4.29 GiB
+      used_bytes: 4606107648
     "/boot":
-      available: 152.66 MiB
-      available_bytes: 160079872
+      available: 152.65 MiB
+      available_bytes: 160064512
       capacity: 35.13%
       device: "/dev/vda1"
       filesystem: ext2
@@ -248,8 +257,8 @@ values:
       - relatime
       size: 235.32 MiB
       size_bytes: 246755328
-      used: 82.66 MiB
-      used_bytes: 86675456
+      used: 82.67 MiB
+      used_bytes: 86690816
     "/dev/shm":
       available: 11.75 GiB
       available_bytes: 12612214784
@@ -266,7 +275,7 @@ values:
       used_bytes: 0
     "/run":
       available: 2.35 GiB
-      available_bytes: 2521853952
+      available_bytes: 2521817088
       capacity: 0.02%
       device: tmpfs
       filesystem: tmpfs
@@ -279,8 +288,8 @@ values:
       - mode=755
       size: 2.35 GiB
       size_bytes: 2522443776
-      used: 576.00 KiB
-      used_bytes: 589824
+      used: 612.00 KiB
+      used_bytes: 626688
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -296,6 +305,46 @@ values:
       - size=5120k
       size: 5.00 MiB
       size_bytes: 5242880
+      used: 0 bytes
+      used_bytes: 0
+    "/run/user/1003":
+      available: 2.16 GiB
+      available_bytes: 2317758464
+      capacity: 0%
+      device: tmpfs
+      filesystem: tmpfs
+      options:
+      - rw
+      - nosuid
+      - nodev
+      - relatime
+      - size=2263436k
+      - nr_inodes=565859
+      - mode=700
+      - uid=1003
+      - gid=1003
+      size: 2.16 GiB
+      size_bytes: 2317758464
+      used: 0 bytes
+      used_bytes: 0
+    "/run/user/1025":
+      available: 2.16 GiB
+      available_bytes: 2317758464
+      capacity: 0%
+      device: tmpfs
+      filesystem: tmpfs
+      options:
+      - rw
+      - nosuid
+      - nodev
+      - relatime
+      - size=2263436k
+      - nr_inodes=565859
+      - mode=700
+      - uid=1025
+      - gid=1025
+      size: 2.16 GiB
+      size_bytes: 2317758464
       used: 0 bytes
       used_bytes: 0
     "/sys/fs/cgroup":
@@ -384,7 +433,7 @@ values:
     primary: eth0
   operatingsystem: Debian
   operatingsystemmajrelease: '10'
-  operatingsystemrelease: '10.7'
+  operatingsystemrelease: '10.8'
   os:
     architecture: amd64
     distro:
@@ -398,9 +447,9 @@ values:
     hardware: x86_64
     name: Debian
     release:
-      full: '10.7'
+      full: '10.8'
       major: '10'
-      minor: '7'
+      minor: '8'
     selinux:
       enabled: false
   osfamily: Debian
@@ -525,8 +574,8 @@ values:
   sshrsakey: AAAAB3NzaC1yc2EAAAADAQABAAABAQDKLWZyMmw0XIFQZIQY8fRPEw0me2SHZte1j2YBwur6C79VJ5l12jZE7OxVIB6qzVFHNfTl1OlxcmAUlOl8RUZak/+5fPi8vPH+Zmh70GjTLLH9Cw6vzPB6J29At0nmiia/s9tBMo/7/Sa2bqSctgybXQSVxsrteWElPci/U3KkQ0m0IBkHhNe7uGYFD55DmMv9eohqPJ9RSR7ypMptT9jTNJSafnvsPp6fincO6tQvM/JB9OzRsVZt8XviGBQS17Yz1g5VGMnCY9cpd1YRwt307kTKDdRD8WCkCwrpPoPpCy0elevRZNyxu39LSu+DeRHrVjb5S+hVtXgi13vJRqwP
   subnet: sesi_rocquencourt
   sudoversion: 1.8.27
-  swapfree: 1019.23 MiB
-  swapfree_mb: 1019.234375
+  swapfree: 392.29 MiB
+  swapfree_mb: 392.2890625
   swapsize: 1020.00 MiB
   swapsize_mb: 1019.99609375
   swh_hostname:
@@ -534,10 +583,10 @@ values:
     short: search-esnode1
     internal_fqdn: search-esnode1.internal.softwareheritage.org
   system_uptime:
-    days: 27
-    hours: 666
-    seconds: 2401044
-    uptime: 27 days
+    days: 69
+    hours: 1673
+    seconds: 6024444
+    uptime: 69 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -552,15 +601,15 @@ values:
     systemd-timesyncd.service: enabled
   systemd_version: '247'
   timezone: UTC
-  uptime: 27 days
-  uptime_days: 27
-  uptime_hours: 666
-  uptime_seconds: 2401044
+  uptime: 69 days
+  uptime_days: 69
+  uptime_hours: 1673
+  uptime_seconds: 6024444
   uuid: b0539667-2dbc-4da4-bb5d-4faf8d162645
   vcsrepo_svn_ver: ''
   virtual: kvm
   clientcert: search-esnode1.internal.softwareheritage.org
   clientversion: 5.5.10
   clientnoop: false
-timestamp: '2021-02-02T12:14:07.484937411+00:00'
-expiration: '2021-02-02T12:44:07.485386984+00:00'
+timestamp: '2021-03-16T10:44:07.457653850+00:00'
+expiration: '2021-03-16T11:14:07.458166743+00:00'

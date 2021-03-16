@@ -2,33 +2,21 @@
 name: saam.internal.softwareheritage.org
 values:
   agent_specified_environment: production
-  apt_dist_updates: 10
+  apt_dist_updates: 7
   apt_has_dist_updates: true
-  apt_has_updates: true
+  apt_has_updates: false
   apt_package_dist_updates:
-  - borgbackup
-  - linux-headers-5.9.0-0.bpo.5-common
-  - linux-kbuild-5.9
-  - linux-headers-5.9.0-0.bpo.5-amd64
-  - linux-headers-amd64
-  - linux-image-5.9.0-0.bpo.5-amd64
-  - linux-image-amd64
-  - python3-swh.model
-  - python3-swh.storage
-  - python3-swh.journal
+  - libnvpair3linux
+  - libuutil3linux
+  - libzfs4linux
+  - libzpool4linux
+  - zfs-dkms
+  - zfsutils-linux
+  - zfs-zed
   apt_package_security_dist_updates: []
-  apt_package_security_updates: []
-  apt_package_updates:
-  - borgbackup
-  - linux-kbuild-5.9
-  - python3-swh.model
-  - python3-swh.storage
-  - python3-swh.journal
-  apt_reboot_required: false
+  apt_reboot_required: true
   apt_security_dist_updates: 0
-  apt_security_updates: 0
-  apt_update_last_success: 1612089122
-  apt_updates: 5
+  apt_update_last_success: 1615890722
   architecture: amd64
   bios_release_date: 05/04/2020
   bios_vendor: Dell Inc.
@@ -2138,9 +2126,10 @@ values:
     postgres: "/var/lib/postgresql"
     ceph: "/var/lib/ceph"
     tg1999: "/home/tg1999"
+    hakb: "/home/hakb"
   domain: internal.softwareheritage.org
   facterversion: 3.11.0
-  filesystems: btrfs,ext2,ext3,ext4,vfat,xfs
+  filesystems: btrfs,ext2,ext3,ext4,hfs,hfsplus,jfs,minix,msdos,qnx4,ufs,vfat,xfs
   fips_enabled: false
   fqdn: saam.internal.softwareheritage.org
   gid: root
@@ -2173,9 +2162,9 @@ values:
   kernelversion: 5.9.0
   letsencrypt_directory: {}
   load_averages:
-    15m: 4.89
-    1m: 2.03
-    5m: 2.92
+    15m: 75.01
+    1m: 71.27
+    5m: 69.21
   lsbdistcodename: buster
   lsbdistdescription: Debian GNU/Linux 10 (buster)
   lsbdistid: Debian
@@ -2191,22 +2180,22 @@ values:
   manufacturer: Dell Inc.
   memory:
     system:
-      available: 176.83 GiB
-      available_bytes: 189870059520
-      capacity: 53.16%
+      available: 82.87 GiB
+      available_bytes: 88977956864
+      capacity: 78.05%
       total: 377.48 GiB
       total_bytes: 405316800512
-      used: 200.65 GiB
-      used_bytes: 215446740992
-  memoryfree: 176.83 GiB
-  memoryfree_mb: 181074.19921875
+      used: 294.61 GiB
+      used_bytes: 316338843648
+  memoryfree: 82.87 GiB
+  memoryfree_mb: 84855.9921875
   memorysize: 377.48 GiB
   memorysize_mb: 386540.22265625
   mountpoints:
     "/":
-      available: 41.48 GiB
-      available_bytes: 44540669952
-      capacity: 8.99%
+      available: 36.77 GiB
+      available_bytes: 39476629504
+      capacity: 19.34%
       device: "/dev/mapper/saam--vg-root"
       filesystem: ext4
       options:
@@ -2215,12 +2204,12 @@ values:
       - errors=remount-ro
       size: 45.58 GiB
       size_bytes: 48942002176
-      used: 4.10 GiB
-      used_bytes: 4401332224
+      used: 8.82 GiB
+      used_bytes: 9465372672
     "/boot/efi":
-      available: 140.88 MiB
-      available_bytes: 147728384
-      capacity: 3.50%
+      available: 140.87 MiB
+      available_bytes: 147712000
+      capacity: 3.51%
       device: "/dev/sdds1"
       filesystem: vfat
       options:
@@ -2235,8 +2224,8 @@ values:
       - errors=remount-ro
       size: 146.00 MiB
       size_bytes: 153092096
-      used: 5.12 MiB
-      used_bytes: 5363712
+      used: 5.13 MiB
+      used_bytes: 5380096
     "/dev/shm":
       available: 188.74 GiB
       available_bytes: 202658398208
@@ -2253,7 +2242,7 @@ values:
       used_bytes: 0
     "/run":
       available: 37.74 GiB
-      available_bytes: 40528138240
+      available_bytes: 40527364096
       capacity: 0.01%
       device: tmpfs
       filesystem: tmpfs
@@ -2266,8 +2255,8 @@ values:
       - mode=755
       size: 37.75 GiB
       size_bytes: 40531681280
-      used: 3.38 MiB
-      used_bytes: 3543040
+      used: 4.12 MiB
+      used_bytes: 4317184
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -2300,25 +2289,6 @@ values:
       - mode=700
       - uid=1003
       - gid=1003
-      size: 37.75 GiB
-      size_bytes: 40531677184
-      used: 0 bytes
-      used_bytes: 0
-    "/run/user/1025":
-      available: 37.75 GiB
-      available_bytes: 40531677184
-      capacity: 0%
-      device: tmpfs
-      filesystem: tmpfs
-      options:
-      - rw
-      - nosuid
-      - nodev
-      - relatime
-      - size=39581716k
-      - mode=700
-      - uid=1025
-      - gid=1025
       size: 37.75 GiB
       size_bytes: 40531677184
       used: 0 bytes
@@ -2794,7 +2764,7 @@ values:
   nginx_version: 1.14.2
   operatingsystem: Debian
   operatingsystemmajrelease: '10'
-  operatingsystemrelease: '10.7'
+  operatingsystemrelease: '10.8'
   os:
     architecture: amd64
     distro:
@@ -2808,9 +2778,9 @@ values:
     hardware: x86_64
     name: Debian
     release:
-      full: '10.7'
+      full: '10.8'
       major: '10'
-      minor: '7'
+      minor: '8'
     selinux:
       enabled: false
   osfamily: Debian
@@ -3702,7 +3672,7 @@ values:
       size: 222.58 GiB
       size_bytes: 238989344768
       uuid: f6pQEU-RLTW-xPV8-xw41-GNTj-gUHx-gIdIAJ
-  path: "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+  path: "/usr/bin:/bin:/usr/sbin:/sbin"
   physicalprocessorcount: 2
   processor0: Intel(R) Xeon(R) Gold 5222 CPU @ 3.80GHz
   processor1: Intel(R) Xeon(R) Gold 5222 CPU @ 3.80GHz
@@ -3808,10 +3778,10 @@ values:
     short: saam
     internal_fqdn: saam.internal.softwareheritage.org
   system_uptime:
-    days: 30
-    hours: 737
-    seconds: 2656695
-    uptime: 30 days
+    days: 74
+    hours: 1793
+    seconds: 6457288
+    uptime: 74 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -3822,15 +3792,15 @@ values:
     systemd-time-wait-sync.service: disabled
   systemd_version: '241'
   timezone: UTC
-  uptime: 30 days
-  uptime_days: 30
-  uptime_hours: 737
-  uptime_seconds: 2656695
+  uptime: 74 days
+  uptime_days: 74
+  uptime_hours: 1793
+  uptime_seconds: 6457288
   uuid: 4c4c4544-004a-4410-8037-c4c04f593533
   vcsrepo_svn_ver: ''
   virtual: physical
   clientcert: saam.internal.softwareheritage.org
   clientversion: 5.5.10
-  clientnoop: true
-timestamp: '2021-01-31T11:06:20.915513289+00:00'
-expiration: '2021-01-31T11:36:20.917690336+00:00'
+  clientnoop: false
+timestamp: '2021-03-16T10:49:39.677626249+00:00'
+expiration: '2021-03-16T11:19:39.680519742+00:00'
