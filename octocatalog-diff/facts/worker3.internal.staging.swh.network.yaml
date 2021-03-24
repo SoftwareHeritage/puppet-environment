@@ -2,7 +2,7 @@
 name: worker3.internal.staging.swh.network
 values:
   agent_specified_environment: staging
-  apt_dist_updates: 10
+  apt_dist_updates: 11
   apt_has_dist_updates: true
   apt_has_updates: true
   apt_package_dist_updates:
@@ -15,6 +15,7 @@ values:
   - libudev1
   - systemd-sysv
   - python3-swh.model
+  - python3-tenacity
   - python3-swh.storage
   apt_package_security_dist_updates: []
   apt_package_security_updates: []
@@ -28,16 +29,17 @@ values:
   - libudev1
   - systemd-sysv
   - python3-swh.model
+  - python3-tenacity
   - python3-swh.storage
   apt_reboot_required: false
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1615873928
-  apt_updates: 10
+  apt_update_last_success: 1616604722
+  apt_updates: 11
   architecture: amd64
   bios_release_date: 04/01/2014
   bios_vendor: SeaBIOS
-  bios_version: rel-1.13.0-48-gd9c812dda519-prebuilt.qemu.org
+  bios_version: rel-1.14.0-0-g155821a1990b-prebuilt.qemu.org
   blockdevice_sr0_model: QEMU DVD-ROM
   blockdevice_sr0_size: 1073741312
   blockdevice_sr0_vendor: QEMU
@@ -72,7 +74,7 @@ values:
     bios:
       release_date: 04/01/2014
       vendor: SeaBIOS
-      version: rel-1.13.0-48-gd9c812dda519-prebuilt.qemu.org
+      version: rel-1.14.0-0-g155821a1990b-prebuilt.qemu.org
     chassis:
       type: Other
     manufacturer: QEMU
@@ -148,7 +150,7 @@ values:
     hakb: "/home/hakb"
   domain: internal.staging.swh.network
   facterversion: 3.11.0
-  filesystems: btrfs,ext2,ext3,ext4,hfs,hfsplus,iso9660,jfs,minix,msdos,qnx4,ufs,vfat,xfs
+  filesystems: ext2,ext3,ext4,iso9660
   fips_enabled: false
   fqdn: worker3.internal.staging.swh.network
   gid: root
@@ -176,13 +178,13 @@ values:
   is_virtual: true
   kernel: Linux
   kernelmajversion: '4.19'
-  kernelrelease: 4.19.0-12-amd64
+  kernelrelease: 4.19.0-14-amd64
   kernelversion: 4.19.0
   letsencrypt_directory: {}
   load_averages:
-    15m: 0.11
-    1m: 0.16
-    5m: 0.12
+    15m: 0.08
+    1m: 0.17
+    5m: 0.09
   lsbdistcodename: buster
   lsbdistdescription: Debian GNU/Linux 10 (buster)
   lsbdistid: Debian
@@ -201,22 +203,22 @@ values:
       used: 0 bytes
       used_bytes: 0
     system:
-      available: 10.97 GiB
-      available_bytes: 11775668224
-      capacity: 6.50%
+      available: 11.21 GiB
+      available_bytes: 12035411968
+      capacity: 4.43%
       total: 11.73 GiB
-      total_bytes: 12593823744
-      used: 780.25 MiB
-      used_bytes: 818155520
-  memoryfree: 10.97 GiB
-  memoryfree_mb: 11230.15234375
+      total_bytes: 12593799168
+      used: 532.52 MiB
+      used_bytes: 558387200
+  memoryfree: 11.21 GiB
+  memoryfree_mb: 11477.86328125
   memorysize: 11.73 GiB
-  memorysize_mb: 12010.40625
+  memorysize_mb: 12010.3828125
   mountpoints:
     "/":
-      available: 12.49 GiB
-      available_bytes: 13413363712
-      capacity: 23.79%
+      available: 12.59 GiB
+      available_bytes: 13517631488
+      capacity: 23.20%
       device: "/dev/mapper/base--template--vg-root"
       filesystem: ext4
       options:
@@ -225,8 +227,8 @@ values:
       - errors=remount-ro
       size: 16.39 GiB
       size_bytes: 17601216512
-      used: 3.90 GiB
-      used_bytes: 4187852800
+      used: 3.80 GiB
+      used_bytes: 4083585024
     "/boot":
       available: 151.64 MiB
       available_bytes: 159007744
@@ -242,7 +244,7 @@ values:
       used_bytes: 87747584
     "/dev/shm":
       available: 5.86 GiB
-      available_bytes: 6296788992
+      available_bytes: 6296801280
       capacity: 0.00%
       device: tmpfs
       filesystem: tmpfs
@@ -251,13 +253,13 @@ values:
       - nosuid
       - nodev
       size: 5.86 GiB
-      size_bytes: 6296911872
-      used: 120.00 KiB
-      used_bytes: 122880
+      size_bytes: 6296899584
+      used: 96.00 KiB
+      used_bytes: 98304
     "/run":
       available: 1.17 GiB
-      available_bytes: 1258831872
-      capacity: 0.04%
+      available_bytes: 1258811392
+      capacity: 0.05%
       device: tmpfs
       filesystem: tmpfs
       options:
@@ -265,12 +267,12 @@ values:
       - nosuid
       - noexec
       - relatime
-      - size=1229868k
+      - size=1229864k
       - mode=755
       size: 1.17 GiB
-      size_bytes: 1259384832
-      used: 540.00 KiB
-      used_bytes: 552960
+      size_bytes: 1259380736
+      used: 556.00 KiB
+      used_bytes: 569344
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -286,42 +288,6 @@ values:
       - size=5120k
       size: 5.00 MiB
       size_bytes: 5242880
-      used: 0 bytes
-      used_bytes: 0
-    "/run/user/1003":
-      available: 361.34 MiB
-      available_bytes: 378892288
-      capacity: 0%
-      device: tmpfs
-      filesystem: tmpfs
-      options:
-      - rw
-      - nosuid
-      - nodev
-      - relatime
-      - size=370012k
-      - nr_inodes=1102516
-      - mode=700
-      - uid=1003
-      - gid=1003
-      size: 361.34 MiB
-      size_bytes: 378892288
-      used: 0 bytes
-      used_bytes: 0
-    "/sys/fs/cgroup":
-      available: 5.86 GiB
-      available_bytes: 6296911872
-      capacity: 0%
-      device: tmpfs
-      filesystem: tmpfs
-      options:
-      - ro
-      - nosuid
-      - nodev
-      - noexec
-      - mode=755
-      size: 5.86 GiB
-      size_bytes: 6296911872
       used: 0 bytes
       used_bytes: 0
   mounts:
@@ -529,10 +495,10 @@ values:
     short: worker3
     internal_fqdn: worker3.internal.staging.swh.network
   system_uptime:
-    days: 33
-    hours: 814
-    seconds: 2932537
-    uptime: 33 days
+    days: 6
+    hours: 146
+    seconds: 526008
+    uptime: 6 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -547,15 +513,15 @@ values:
     systemd-timesyncd.service: enabled
   systemd_version: '247'
   timezone: UTC
-  uptime: 33 days
-  uptime_days: 33
-  uptime_hours: 814
-  uptime_seconds: 2932537
+  uptime: 6 days
+  uptime_days: 6
+  uptime_hours: 146
+  uptime_seconds: 526008
   uuid: 36f63213-cc80-4001-a198-b49ad300df39
   vcsrepo_svn_ver: ''
   virtual: kvm
   clientcert: worker3.internal.staging.swh.network
   clientversion: 5.5.10
   clientnoop: false
-timestamp: '2021-03-16T10:23:07.412361785+00:00'
-expiration: '2021-03-16T10:53:07.413144642+00:00'
+timestamp: '2021-03-24T17:23:06.532518842+00:00'
+expiration: '2021-03-24T17:53:06.532966434+00:00'

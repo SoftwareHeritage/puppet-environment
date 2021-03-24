@@ -3,44 +3,25 @@ name: moma.softwareheritage.org
 values:
   agent_specified_environment: production
   apache_version: 2.4.38
-  apt_dist_updates: 13
+  apt_dist_updates: 5
   apt_has_dist_updates: true
   apt_has_updates: true
   apt_package_dist_updates:
-  - libnss-systemd
-  - libsystemd0
-  - systemd-timesyncd
-  - libpam-systemd
-  - systemd
-  - udev
-  - libudev1
-  - systemd-sysv
-  - python3-swh.model
+  - python3-swh.auth
+  - python3-swh.auth.django
   - python3-swh.deposit
   - python3-swh.deposit.loader
   - python3-swh.deposit.client
-  - python3-swh.storage
   apt_package_security_dist_updates: []
   apt_package_security_updates: []
   apt_package_updates:
-  - libnss-systemd
-  - libsystemd0
-  - systemd-timesyncd
-  - libpam-systemd
-  - systemd
-  - udev
-  - libudev1
-  - systemd-sysv
-  - python3-swh.model
-  - python3-swh.deposit
   - python3-swh.deposit.loader
   - python3-swh.deposit.client
-  - python3-swh.storage
-  apt_reboot_required: true
+  apt_reboot_required: false
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1615888743
-  apt_updates: 13
+  apt_update_last_success: 1616605143
+  apt_updates: 2
   architecture: amd64
   bios_release_date: 04/01/2014
   bios_vendor: SeaBIOS
@@ -51,9 +32,9 @@ values:
   blockdevice_vdb_vendor: '0x1af4'
   blockdevices: vdb,vda
   cassandracmsheapnewsize: 400
-  cassandracmsmaxheapsize: 8017
+  cassandracmsmaxheapsize: 8041
   cassandraheapnewsize: 400
-  cassandramaxheapsize: 8017
+  cassandramaxheapsize: 8041
   chassistype: Other
   deployment: production
   dhcp_servers:
@@ -161,7 +142,7 @@ values:
     hakb: "/home/hakb"
   domain: softwareheritage.org
   facterversion: 3.11.0
-  filesystems: btrfs,ext2,ext3,ext4,hfs,hfsplus,jfs,minix,msdos,qnx4,ufs,vfat,xfs
+  filesystems: ext2,ext3,ext4
   fips_enabled: false
   fqdn: moma.softwareheritage.org
   gid: root
@@ -192,14 +173,14 @@ values:
   is_pe: false
   is_virtual: true
   kernel: Linux
-  kernelmajversion: '5.9'
-  kernelrelease: 5.9.0-0.bpo.2-amd64
-  kernelversion: 5.9.0
+  kernelmajversion: '5.10'
+  kernelrelease: 5.10.0-0.bpo.3-amd64
+  kernelversion: 5.10.0
   letsencrypt_directory: {}
   load_averages:
-    15m: 0.5
-    1m: 0.37
-    5m: 0.39
+    15m: 0.57
+    1m: 0.33
+    5m: 0.43
   location: sesi_rocquencourt
   lsbdistcodename: buster
   lsbdistdescription: Debian GNU/Linux 10 (buster)
@@ -213,30 +194,30 @@ values:
   manufacturer: QEMU
   memory:
     swap:
-      available: 3.97 GiB
-      available_bytes: 4265369600
-      capacity: 0.64%
+      available: 4.00 GiB
+      available_bytes: 4292866048
+      capacity: 0%
       total: 4.00 GiB
       total_bytes: 4292866048
-      used: 26.22 MiB
-      used_bytes: 27496448
+      used: 0 bytes
+      used_bytes: 0
     system:
-      available: 23.08 GiB
-      available_bytes: 24781398016
-      capacity: 26.30%
-      total: 31.32 GiB
-      total_bytes: 33625497600
-      used: 8.24 GiB
-      used_bytes: 8844099584
-  memoryfree: 23.08 GiB
-  memoryfree_mb: 23633.3828125
-  memorysize: 31.32 GiB
-  memorysize_mb: 32067.7734375
+      available: 22.47 GiB
+      available_bytes: 24127119360
+      capacity: 28.46%
+      total: 31.41 GiB
+      total_bytes: 33724846080
+      used: 8.94 GiB
+      used_bytes: 9597726720
+  memoryfree: 22.47 GiB
+  memoryfree_mb: 23009.4140625
+  memorysize: 31.41 GiB
+  memorysize_mb: 32162.51953125
   mountpoints:
     "/":
-      available: 10.73 GiB
-      available_bytes: 11518070784
-      capacity: 45.16%
+      available: 10.00 GiB
+      available_bytes: 10739277824
+      capacity: 48.87%
       device: "/dev/vda1"
       filesystem: ext4
       options:
@@ -246,11 +227,11 @@ values:
       - stripe=32742
       size: 19.56 GiB
       size_bytes: 21002579968
-      used: 8.83 GiB
-      used_bytes: 9484509184
+      used: 9.56 GiB
+      used_bytes: 10263302144
     "/dev/shm":
-      available: 15.71 GiB
-      available_bytes: 16865177600
+      available: 15.70 GiB
+      available_bytes: 16862420992
       capacity: 0%
       device: tmpfs
       filesystem: tmpfs
@@ -258,15 +239,13 @@ values:
       - rw
       - nosuid
       - nodev
-      - size=16469900k
-      - nr_inodes=4117475
-      size: 15.71 GiB
-      size_bytes: 16865177600
+      size: 15.70 GiB
+      size_bytes: 16862420992
       used: 0 bytes
       used_bytes: 0
     "/run":
       available: 3.14 GiB
-      available_bytes: 3372404736
+      available_bytes: 3371876352
       capacity: 0.02%
       device: tmpfs
       filesystem: tmpfs
@@ -275,13 +254,12 @@ values:
       - nosuid
       - noexec
       - relatime
-      - size=3293980k
-      - nr_inodes=4117475
+      - size=3293444k
       - mode=755
       size: 3.14 GiB
-      size_bytes: 3373035520
-      used: 616.00 KiB
-      used_bytes: 630784
+      size_bytes: 3372486656
+      used: 596.00 KiB
+      used_bytes: 610304
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -295,34 +273,13 @@ values:
       - noexec
       - relatime
       - size=5120k
-      - nr_inodes=4117475
       size: 5.00 MiB
       size_bytes: 5242880
       used: 0 bytes
       used_bytes: 0
-    "/run/user/1001":
-      available: 3.13 GiB
-      available_bytes: 3356045312
-      capacity: 0%
-      device: tmpfs
-      filesystem: tmpfs
-      options:
-      - rw
-      - nosuid
-      - nodev
-      - relatime
-      - size=3277388k
-      - nr_inodes=819347
-      - mode=700
-      - uid=1001
-      - gid=1001
-      size: 3.13 GiB
-      size_bytes: 3356045312
-      used: 0 bytes
-      used_bytes: 0
     "/run/user/1003":
-      available: 3.13 GiB
-      available_bytes: 3356045312
+      available: 3.14 GiB
+      available_bytes: 3372482560
       capacity: 0%
       device: tmpfs
       filesystem: tmpfs
@@ -331,31 +288,13 @@ values:
       - nosuid
       - nodev
       - relatime
-      - size=3277388k
-      - nr_inodes=819347
+      - size=3293440k
+      - nr_inodes=823360
       - mode=700
       - uid=1003
       - gid=1003
-      size: 3.13 GiB
-      size_bytes: 3356045312
-      used: 0 bytes
-      used_bytes: 0
-    "/sys/fs/cgroup":
-      available: 4.00 MiB
-      available_bytes: 4194304
-      capacity: 0%
-      device: tmpfs
-      filesystem: tmpfs
-      options:
-      - ro
-      - nosuid
-      - nodev
-      - noexec
-      - size=4096k
-      - nr_inodes=1024
-      - mode=755
-      size: 4.00 MiB
-      size_bytes: 4194304
+      size: 3.14 GiB
+      size_bytes: 3372482560
       used: 0 bytes
       used_bytes: 0
   mounts:
@@ -607,8 +546,8 @@ values:
   sshrsakey: AAAAB3NzaC1yc2EAAAADAQABAAABAQDQKinwK9kcSED+cNf0VvdbmF2R2+bQswFjcTlY0bieRIR1x/wwkNc6p17bZBlTuB2c328gD1+QaYXCrEJ7iVILRtpV/sTkTAVhpHc4NVCJIh1vss1MOx1oKZC72AS6GrSV8VFQHcdXHIulvEtk8O0UJlCJVuvKwGRymZ/uFe/CLpK83qHfjT/o/QIlgTkhBiEvkx1fTZseqYqVwp7M472uI3sHlCk37iwqi55dFbS6FEeb97v0chSrpzyB5xQtDRIFsdpdiXzM5wKfDWysAtp9M80FrOC5w30aSWtTBu1vGmtyLhcKpoYWwB2QE+x7XSaLNE+Lu2+AKACkp3OTRNpt
   subnet: sesi_rocquencourt
   sudoversion: 1.8.27
-  swapfree: 3.97 GiB
-  swapfree_mb: 4067.7734375
+  swapfree: 4.00 GiB
+  swapfree_mb: 4093.99609375
   swapsize: 4.00 GiB
   swapsize_mb: 4093.99609375
   swh_hostname:
@@ -616,10 +555,10 @@ values:
     short: moma
     internal_fqdn: moma.internal.softwareheritage.org
   system_uptime:
-    days: 74
-    hours: 1796
-    seconds: 6468516
-    uptime: 74 days
+    days: 6
+    hours: 148
+    seconds: 532812
+    uptime: 6 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -634,15 +573,15 @@ values:
     systemd-timesyncd.service: enabled
   systemd_version: '247'
   timezone: UTC
-  uptime: 74 days
-  uptime_days: 74
-  uptime_hours: 1796
-  uptime_seconds: 6468516
+  uptime: 6 days
+  uptime_days: 6
+  uptime_hours: 148
+  uptime_seconds: 532812
   uuid: f9773017-6bf5-4aec-8531-f37668cd7203
   vcsrepo_svn_ver: ''
   virtual: kvm
   clientcert: moma.softwareheritage.org
   clientversion: 5.5.10
   clientnoop: false
-timestamp: '2021-03-16T10:35:10.846626502+00:00'
-expiration: '2021-03-16T11:05:10.847369570+00:00'
+timestamp: '2021-03-24T17:35:11.141951564+00:00'
+expiration: '2021-03-24T18:05:11.145090435+00:00'
