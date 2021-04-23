@@ -434,13 +434,13 @@ Vagrant.configure("2") do |global_config|
     end
   end
 
-  global_config.vm.define :"staging-clearly-defined" do |config|
+  global_config.vm.define :"staging-mirror-test" do |config|
     # config.ssh.insert_key = false
     config.vm.box                     = $global_debian10_box
     config.vm.box_url                 = $global_debian10_box_url
     config.vm.box_check_update        = false
-    config.vm.hostname                = "clearly-defined.internal.staging.swh.network"
-    config.vm.network   :private_network, ip: "10.168.130.200", netmask: "255.255.0.0"
+    config.vm.hostname                = "mirror-test.internal.staging.swh.network"
+    config.vm.network   :private_network, ip: "10.168.130.160", netmask: "255.255.0.0"
 
     config.vm.synced_folder "/tmp/puppet/", "/tmp/puppet", type: 'nfs'
     # ssl certificates share
