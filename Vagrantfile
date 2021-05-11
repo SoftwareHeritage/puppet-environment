@@ -6,7 +6,7 @@ environment = "staging"
 environment_path = "/tmp/puppet/environments"
 manifest_file = "site.pp"
 manifests_path = "swh-site/manifests"
-puppet_options = "--fileserverconfig=/etc/puppet/fileserver.conf --verbose"  # --debug --trace"
+puppet_options = "--fileserverconfig=/etc/puppet/fileserver.conf --verbose" # --debug --trace"
 puppet_staging_facts = {
   "vagrant_testing" => "1",
   "testing"         => "vagrant",
@@ -510,7 +510,8 @@ Vagrant.configure("2") do |global_config|
 
     config.vm.synced_folder "/tmp/puppet/", "/tmp/puppet", type: 'nfs'
     # ssl certificates share
-    config.vm.synced_folder "vagrant/le_certs", "/etc/puppet/le_certs", type: 'nfs'
+    # As a puppet master, the path is different compared to the other servers
+    config.vm.synced_folder "vagrant/le_certs", "/var/lib/puppet/letsencrypt_exports", type: 'nfs'
 
     config.vm.provider :libvirt do |provider|
       provider.memory = 512
