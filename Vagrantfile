@@ -527,7 +527,7 @@ Vagrant.configure("2") do |global_config|
       puppet.manifest_file = "#{manifest_file}"
       puppet.manifests_path = "#{manifests_path}"
       puppet.options = "#{puppet_options}"
-      puppet.facter = puppet_staging_facts
+      puppet.facter = puppet_production_facts
       puppet.synced_folder_type = 'nfs'
     end
   end
