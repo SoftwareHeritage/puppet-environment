@@ -512,6 +512,7 @@ Vagrant.configure("2") do |global_config|
     # ssl certificates share
     # As a puppet master, the path is different compared to the other servers
     config.vm.synced_folder "vagrant/le_certs", "/var/lib/puppet/letsencrypt_exports", type: 'nfs'
+    config.vm.synced_folder "/tmp/puppet/", "/etc/puppet/code", type: 'nfs'
 
     config.vm.provider :libvirt do |provider|
       provider.memory = 512
