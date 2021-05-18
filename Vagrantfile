@@ -29,12 +29,12 @@ puppet_admin_facts = {
 puppet_env_path = ENV["SWH_PUPPET_ENVIRONMENT_HOME"]
 
 # Images/local configuration (libvirt)
-$local_debian10_box = "debian10-20201012-1352"
-$local_debian10_box_url = "file://#{puppet_env_path}/packer/builds/swh-debian-10.6-amd64-20201012-1352.qcow2"
+$local_debian10_box = "debian10-20210517-1348"
+$local_debian10_box_url = "file://#{puppet_env_path}/packer/builds/swh-debian-10.9-amd64-20210517-1348.qcow2"
 
 # Images/remote configuration
-$global_debian10_box = "debian10-20201012-1352"
-$global_debian10_box_url = "https://annex.softwareheritage.org/public/isos/libvirt/debian/swh-debian-10.6-amd64-20201012-1352.qcow2"
+$global_debian10_box = "debian10-20210517-1348"
+$global_debian10_box_url = "https://annex.softwareheritage.org/public/isos/libvirt/debian/swh-debian-10.9-amd64-20210517-1348.qcow2"
 
 unless Vagrant.has_plugin?("libvirt")
   $stderr.puts <<-MSG
@@ -58,7 +58,7 @@ Vagrant.configure("2") do |global_config|
 
     config.vm.synced_folder "/tmp/puppet/", "/tmp/puppet", type: 'nfs'
     # ssl certificates share
-    config.vm.synced_folder "vagrant/le_certs", "/etc/puppet/le_certs", type: 'nfs'
+    config.vm.synced_folder "vagrant/le_certs", "/var/lib/puppet/letsencrypt_exports", type: 'nfs'
 
     config.vm.provider :libvirt do |provider|
       provider.memory = 1024
@@ -88,7 +88,7 @@ Vagrant.configure("2") do |global_config|
 
     config.vm.synced_folder "/tmp/puppet/", "/tmp/puppet", type: 'nfs'
     # ssl certificates share
-    config.vm.synced_folder "vagrant/le_certs", "/etc/puppet/le_certs", type: 'nfs'
+    config.vm.synced_folder "vagrant/le_certs", "/var/lib/puppet/letsencrypt_exports", type: 'nfs'
 
     config.vm.provider :libvirt do |provider|
       provider.memory = 512
@@ -118,7 +118,7 @@ Vagrant.configure("2") do |global_config|
 
     config.vm.synced_folder "/tmp/puppet/", "/tmp/puppet", type: 'nfs'
     # ssl certificates share
-    config.vm.synced_folder "vagrant/le_certs", "/etc/puppet/le_certs", type: 'nfs'
+    config.vm.synced_folder "vagrant/le_certs", "/var/lib/puppet/letsencrypt_exports", type: 'nfs'
 
     config.vm.provider :libvirt do |provider|
       provider.memory = 512
@@ -148,7 +148,7 @@ Vagrant.configure("2") do |global_config|
 
     config.vm.synced_folder "/tmp/puppet/", "/tmp/puppet", type: 'nfs'
     # ssl certificates share
-    config.vm.synced_folder "vagrant/le_certs", "/etc/puppet/le_certs", type: 'nfs'
+    config.vm.synced_folder "vagrant/le_certs", "/var/lib/puppet/letsencrypt_exports", type: 'nfs'
 
     config.vm.provider :libvirt do |provider|
       provider.memory = 1024
@@ -178,7 +178,7 @@ Vagrant.configure("2") do |global_config|
 
     config.vm.synced_folder "/tmp/puppet/", "/tmp/puppet", type: 'nfs'
     # ssl certificates share
-    config.vm.synced_folder "vagrant/le_certs", "/etc/puppet/le_certs", type: 'nfs'
+    config.vm.synced_folder "vagrant/le_certs", "/var/lib/puppet/letsencrypt_exports", type: 'nfs'
 
     config.vm.provider :libvirt do |provider|
       provider.memory = 512
@@ -207,7 +207,7 @@ Vagrant.configure("2") do |global_config|
 
     config.vm.synced_folder "/tmp/puppet/", "/tmp/puppet", type: 'nfs'
     # ssl certificates share
-    config.vm.synced_folder "vagrant/le_certs", "/etc/puppet/le_certs", type: 'nfs'
+    config.vm.synced_folder "vagrant/le_certs", "/var/lib/puppet/letsencrypt_exports", type: 'nfs'
 
     config.vm.provider :libvirt do |provider|
       provider.memory = 512
@@ -235,7 +235,7 @@ Vagrant.configure("2") do |global_config|
 
     config.vm.synced_folder "/tmp/puppet/", "/tmp/puppet", type: 'nfs'
     # ssl certificates share
-    config.vm.synced_folder "vagrant/le_certs", "/etc/puppet/le_certs", type: 'nfs'
+    config.vm.synced_folder "vagrant/le_certs", "/var/lib/puppet/letsencrypt_exports", type: 'nfs'
 
     config.vm.provider :libvirt do |provider|
       provider.memory = 4096
@@ -265,7 +265,7 @@ Vagrant.configure("2") do |global_config|
 
     config.vm.synced_folder "/tmp/puppet/", "/tmp/puppet", type: 'nfs'
     # ssl certificates share
-    config.vm.synced_folder "vagrant/le_certs", "/etc/puppet/le_certs", type: 'nfs'
+    config.vm.synced_folder "vagrant/le_certs", "/var/lib/puppet/letsencrypt_exports", type: 'nfs'
 
     config.vm.provider :libvirt do |provider|
       provider.memory = 4096
@@ -294,7 +294,7 @@ Vagrant.configure("2") do |global_config|
 
     config.vm.synced_folder "/tmp/puppet/", "/tmp/puppet", type: 'nfs'
     # ssl certificates share
-    config.vm.synced_folder "vagrant/le_certs", "/etc/puppet/le_certs", type: 'nfs'
+    config.vm.synced_folder "vagrant/le_certs", "/var/lib/puppet/letsencrypt_exports", type: 'nfs'
 
     config.vm.provider :libvirt do |provider|
       provider.memory = 1024
@@ -323,7 +323,7 @@ Vagrant.configure("2") do |global_config|
 
     config.vm.synced_folder "/tmp/puppet/", "/tmp/puppet", type: 'nfs'
     # ssl certificates share
-    config.vm.synced_folder "vagrant/le_certs", "/etc/puppet/le_certs", type: 'nfs'
+    config.vm.synced_folder "vagrant/le_certs", "/var/lib/puppet/letsencrypt_exports", type: 'nfs'
 
     config.vm.provider :libvirt do |provider|
       provider.memory = 1024
@@ -354,7 +354,7 @@ Vagrant.configure("2") do |global_config|
 
     config.vm.synced_folder "/tmp/puppet/", "/tmp/puppet", type: 'nfs'
     # ssl certificates share
-    config.vm.synced_folder "vagrant/le_certs", "/etc/puppet/le_certs", type: 'nfs'
+    config.vm.synced_folder "vagrant/le_certs", "/var/lib/puppet/letsencrypt_exports", type: 'nfs'
 
     config.vm.provider :libvirt do |provider|
       provider.memory = 1024
@@ -384,7 +384,7 @@ Vagrant.configure("2") do |global_config|
 
     config.vm.synced_folder "/tmp/puppet/", "/tmp/puppet", type: 'nfs'
     # ssl certificates share
-    config.vm.synced_folder "vagrant/le_certs", "/etc/puppet/le_certs", type: 'nfs'
+    config.vm.synced_folder "vagrant/le_certs", "/var/lib/puppet/letsencrypt_exports", type: 'nfs'
 
     config.vm.provider :libvirt do |provider|
       provider.memory = 1024
@@ -414,7 +414,7 @@ Vagrant.configure("2") do |global_config|
 
     config.vm.synced_folder "/tmp/puppet/", "/tmp/puppet", type: 'nfs'
     # ssl certificates share
-    config.vm.synced_folder "vagrant/le_certs", "/etc/puppet/le_certs", type: 'nfs'
+    config.vm.synced_folder "vagrant/le_certs", "/var/lib/puppet/letsencrypt_exports", type: 'nfs'
 
     config.vm.provider :libvirt do |provider|
       provider.memory = 1024
@@ -444,7 +444,7 @@ Vagrant.configure("2") do |global_config|
 
     config.vm.synced_folder "/tmp/puppet/", "/tmp/puppet", type: 'nfs'
     # ssl certificates share
-    config.vm.synced_folder "vagrant/le_certs", "/etc/puppet/le_certs", type: 'nfs'
+    config.vm.synced_folder "vagrant/le_certs", "/var/lib/puppet/letsencrypt_exports", type: 'nfs'
 
     config.vm.provider :libvirt do |provider|
       provider.memory = 1024
@@ -478,7 +478,7 @@ Vagrant.configure("2") do |global_config|
 
     config.vm.synced_folder "/tmp/puppet/", "/tmp/puppet", type: 'nfs'
     # ssl certificates share
-    config.vm.synced_folder "vagrant/le_certs", "/etc/puppet/le_certs", type: 'nfs'
+    config.vm.synced_folder "vagrant/le_certs", "/var/lib/puppet/letsencrypt_exports", type: 'nfs'
 
     config.vm.provider :libvirt do |provider|
       provider.memory = 512
@@ -512,13 +512,17 @@ Vagrant.configure("2") do |global_config|
     # ssl certificates share
     # As a puppet master, the path is different compared to the other servers
     config.vm.synced_folder "vagrant/le_certs", "/var/lib/puppet/letsencrypt_exports", type: 'nfs'
+    # config.vm.synced_folder "vagrant/puppet_master", "/var/lib/puppet/vagrant_certificates", type: 'nfs'
 
     config.vm.provider :libvirt do |provider|
-      provider.memory = 512
+      provider.memory = 3192
       provider.cpus = 2
       # local test run: https://github.com/vagrant-libvirt/vagrant-libvirt/issues/45
       provider.driver = 'kvm'
     end
+
+    config.vm.provision "file", source: "vagrant/puppet_master/", destination: "/tmp/"
+    config.vm.provision :shell, :path => "vagrant/puppet_master/install_certs.sh"
 
     config.vm.provision "puppet" do |puppet|
       puppet.environment_path = "#{environment_path}"
@@ -543,7 +547,7 @@ Vagrant.configure("2") do |global_config|
 
     config.vm.synced_folder "/tmp/puppet/", "/tmp/puppet", type: 'nfs'
     # ssl certificates share
-    config.vm.synced_folder "vagrant/le_certs", "/etc/puppet/le_certs", type: 'nfs'
+    config.vm.synced_folder "vagrant/le_certs", "/var/lib/puppet/letsencrypt_exports", type: 'nfs'
 
     config.vm.provider :libvirt do |provider|
       provider.memory = 4096
@@ -573,7 +577,7 @@ Vagrant.configure("2") do |global_config|
 
     config.vm.synced_folder "/tmp/puppet/", "/tmp/puppet", type: 'nfs'
     # ssl certificates share
-    config.vm.synced_folder "vagrant/le_certs", "/etc/puppet/le_certs", type: 'nfs'
+    config.vm.synced_folder "vagrant/le_certs", "/var/lib/puppet/letsencrypt_exports", type: 'nfs'
 
     config.vm.provider :libvirt do |provider|
       provider.memory = 1024
@@ -602,7 +606,7 @@ Vagrant.configure("2") do |global_config|
 
     config.vm.synced_folder "/tmp/puppet/", "/tmp/puppet", type: 'nfs'
     # ssl certificates share
-    config.vm.synced_folder "vagrant/le_certs", "/etc/puppet/le_certs", type: 'nfs'
+    config.vm.synced_folder "vagrant/le_certs", "/var/lib/puppet/letsencrypt_exports", type: 'nfs'
 
     config.vm.provider :libvirt do |provider|
       provider.memory = 1024
@@ -631,7 +635,7 @@ Vagrant.configure("2") do |global_config|
 
     config.vm.synced_folder "/tmp/puppet/", "/tmp/puppet", type: 'nfs'
     # ssl certificates share
-    config.vm.synced_folder "vagrant/le_certs", "/etc/puppet/le_certs", type: 'nfs'
+    config.vm.synced_folder "vagrant/le_certs", "/var/lib/puppet/letsencrypt_exports", type: 'nfs'
 
     config.vm.provider :libvirt do |provider|
       provider.memory = 1024
@@ -659,7 +663,7 @@ Vagrant.configure("2") do |global_config|
 
     config.vm.synced_folder "/tmp/puppet/", "/tmp/puppet", type: 'nfs'
     # ssl certificates share
-    config.vm.synced_folder "vagrant/le_certs", "/etc/puppet/le_certs", type: 'nfs'
+    config.vm.synced_folder "vagrant/le_certs", "/var/lib/puppet/letsencrypt_exports", type: 'nfs'
 
     config.vm.provider :libvirt do |provider|
       provider.memory = 2048
@@ -688,7 +692,7 @@ Vagrant.configure("2") do |global_config|
 
     config.vm.synced_folder "/tmp/puppet/", "/tmp/puppet", type: 'nfs'
     # ssl certificates share
-    config.vm.synced_folder "vagrant/le_certs", "/etc/puppet/le_certs", type: 'nfs'
+    config.vm.synced_folder "vagrant/le_certs", "/var/lib/puppet/letsencrypt_exports", type: 'nfs'
 
     config.vm.provider :libvirt do |provider|
       provider.memory = 4096
@@ -717,7 +721,7 @@ Vagrant.configure("2") do |global_config|
 
     config.vm.synced_folder "/tmp/puppet/", "/tmp/puppet", type: 'nfs'
     # ssl certificates share
-    config.vm.synced_folder "vagrant/le_certs", "/etc/puppet/le_certs", type: 'nfs'
+    config.vm.synced_folder "vagrant/le_certs", "/var/lib/puppet/letsencrypt_exports", type: 'nfs'
 
     config.vm.provider :libvirt do |provider|
       provider.memory = 4096
@@ -746,7 +750,7 @@ Vagrant.configure("2") do |global_config|
 
     config.vm.synced_folder "/tmp/puppet/", "/tmp/puppet", type: 'nfs'
     # ssl certificates share
-    config.vm.synced_folder "vagrant/le_certs", "/etc/puppet/le_certs", type: 'nfs'
+    config.vm.synced_folder "vagrant/le_certs", "/var/lib/puppet/letsencrypt_exports", type: 'nfs'
 
     config.vm.provider :libvirt do |provider|
       provider.memory = 4096
@@ -775,7 +779,7 @@ Vagrant.configure("2") do |global_config|
 
     config.vm.synced_folder "/tmp/puppet/", "/tmp/puppet", type: 'nfs'
     # ssl certificates share
-    config.vm.synced_folder "vagrant/le_certs", "/etc/puppet/le_certs", type: 'nfs'
+    config.vm.synced_folder "vagrant/le_certs", "/var/lib/puppet/letsencrypt_exports", type: 'nfs'
 
     config.vm.provider :libvirt do |provider|
       provider.memory = 4096
@@ -804,7 +808,7 @@ Vagrant.configure("2") do |global_config|
 
     config.vm.synced_folder "/tmp/puppet/", "/tmp/puppet", type: 'nfs'
     # ssl certificates share
-    config.vm.synced_folder "vagrant/le_certs", "/etc/puppet/le_certs", type: 'nfs'
+    config.vm.synced_folder "vagrant/le_certs", "/var/lib/puppet/letsencrypt_exports", type: 'nfs'
 
     config.vm.provider :libvirt do |provider|
       provider.memory = 4096
@@ -833,7 +837,7 @@ Vagrant.configure("2") do |global_config|
 
     config.vm.synced_folder "/tmp/puppet/", "/tmp/puppet", type: 'nfs'
     # ssl certificates share
-    config.vm.synced_folder "vagrant/le_certs", "/etc/puppet/le_certs", type: 'nfs'
+    config.vm.synced_folder "vagrant/le_certs", "/var/lib/puppet/letsencrypt_exports", type: 'nfs'
 
     config.vm.provider :libvirt do |provider|
       provider.memory = 4096
@@ -862,7 +866,7 @@ Vagrant.configure("2") do |global_config|
 
     config.vm.synced_folder "/tmp/puppet/", "/tmp/puppet", type: 'nfs'
     # ssl certificates share
-    config.vm.synced_folder "vagrant/le_certs", "/etc/puppet/le_certs", type: 'nfs'
+    config.vm.synced_folder "vagrant/le_certs", "/var/lib/puppet/letsencrypt_exports", type: 'nfs'
 
     config.vm.provider :libvirt do |provider|
       provider.memory = 4096
@@ -891,7 +895,7 @@ Vagrant.configure("2") do |global_config|
 
     config.vm.synced_folder "/tmp/puppet/", "/tmp/puppet", type: 'nfs'
     # ssl certificates share
-    config.vm.synced_folder "vagrant/le_certs", "/etc/puppet/le_certs", type: 'nfs'
+    config.vm.synced_folder "vagrant/le_certs", "/var/lib/puppet/letsencrypt_exports", type: 'nfs'
 
     config.vm.provider :libvirt do |provider|
       provider.memory = 4096
@@ -920,7 +924,7 @@ Vagrant.configure("2") do |global_config|
 
     config.vm.synced_folder "/tmp/puppet/", "/tmp/puppet", type: 'nfs'
     # ssl certificates share
-    config.vm.synced_folder "vagrant/le_certs", "/etc/puppet/le_certs", type: 'nfs'
+    config.vm.synced_folder "vagrant/le_certs", "/var/lib/puppet/letsencrypt_exports", type: 'nfs'
 
     config.vm.provider :libvirt do |provider|
       provider.memory = 1024
@@ -957,7 +961,7 @@ Vagrant.configure("2") do |global_config|
 
     config.vm.synced_folder "/tmp/puppet/", "/tmp/puppet", type: 'nfs'
     # ssl certificates share
-    config.vm.synced_folder "vagrant/le_certs", "/etc/puppet/le_certs", type: 'nfs'
+    config.vm.synced_folder "vagrant/le_certs", "/var/lib/puppet/letsencrypt_exports", type: 'nfs'
 
     config.vm.provider :libvirt do |provider|
       provider.memory = 512
