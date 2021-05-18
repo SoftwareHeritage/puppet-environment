@@ -42,9 +42,10 @@ apt-get install -y puppet
 
 # Configure the fileserver for the "le_certs" share
 # In the vm, this directory is a mount of the vagrant/le_certs directory configured on the vagrantfile
+mkdir -p /var/lib/puppet/letsencrypt_exports
 cat > /etc/puppet/fileserver.conf <<EOF
 [le_certs]
-  path /etc/puppet/le_certs
+  path /var/lib/puppet/letsencrypt_exports
   allow *
 EOF
 
