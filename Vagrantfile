@@ -17,7 +17,8 @@ puppet_production_facts = {
   "vagrant_testing" => "1",
   "testing"         => "vagrant",
   "deployment"      => "production",
-  "subnet"          => "vagrant"
+  "subnet"          => "vagrant",
+  "puppet_vardir"   => "/var/lib/puppet"
 }
 puppet_admin_facts = {
   "vagrant_testing" => "1",
