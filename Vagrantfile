@@ -27,6 +27,7 @@ puppet_admin_facts = {
 }
 # used to define the local vm template path
 puppet_env_path = ENV["SWH_PUPPET_ENVIRONMENT_HOME"]
+install_facts_script_path = "vagrant/puppet_agent/install_facts.sh"
 
 # Images/local configuration (libvirt)
 $local_debian10_box = "debian10-20210517-1348"
@@ -76,6 +77,14 @@ Vagrant.configure("2") do |global_config|
       puppet.facter = puppet_staging_facts
       puppet.synced_folder_type = 'nfs'
     end
+    # installs fact for `puppet agent --test` cli to work within the vm
+    config.vm.provision :shell do |s|
+      s.path = install_facts_script_path
+      s.args = [
+        puppet_staging_facts["deployment"],
+        puppet_staging_facts["subnet"]
+      ]
+    end
   end
 
   global_config.vm.define :"staging-rp0" do |config|
@@ -105,6 +114,14 @@ Vagrant.configure("2") do |global_config|
       puppet.options = "#{puppet_options}"
       puppet.facter = puppet_staging_facts
       puppet.synced_folder_type = 'nfs'
+    end
+    # installs fact for `puppet agent --test` cli to work within the vm
+    config.vm.provision :shell do |s|
+      s.path = install_facts_script_path
+      s.args = [
+        puppet_staging_facts["deployment"],
+        puppet_staging_facts["subnet"]
+      ]
     end
   end
 
@@ -136,6 +153,14 @@ Vagrant.configure("2") do |global_config|
       puppet.facter = puppet_staging_facts
       puppet.synced_folder_type = 'nfs'
     end
+    # installs fact for `puppet agent --test` cli to work within the vm
+    config.vm.provision :shell do |s|
+      s.path = install_facts_script_path
+      s.args = [
+        puppet_staging_facts["deployment"],
+        puppet_staging_facts["subnet"]
+      ]
+    end
   end
 
   global_config.vm.define :"staging-storage1" do |config|
@@ -165,6 +190,14 @@ Vagrant.configure("2") do |global_config|
       puppet.options = "#{puppet_options}"
       puppet.facter = puppet_staging_facts
       puppet.synced_folder_type = 'nfs'
+    end
+    # installs fact for `puppet agent --test` cli to work within the vm
+    config.vm.provision :shell do |s|
+      s.path = install_facts_script_path
+      s.args = [
+        puppet_staging_facts["deployment"],
+        puppet_staging_facts["subnet"]
+      ]
     end
   end
 
@@ -196,6 +229,14 @@ Vagrant.configure("2") do |global_config|
       puppet.facter = puppet_staging_facts
       puppet.synced_folder_type = 'nfs'
     end
+    # installs fact for `puppet agent --test` cli to work within the vm
+    config.vm.provision :shell do |s|
+      s.path = install_facts_script_path
+      s.args = [
+        puppet_staging_facts["deployment"],
+        puppet_staging_facts["subnet"]
+      ]
+    end
   end
 
   global_config.vm.define :"staging-deposit" do |config|
@@ -225,6 +266,14 @@ Vagrant.configure("2") do |global_config|
       puppet.facter = puppet_staging_facts
       puppet.synced_folder_type = 'nfs'
     end
+    # installs fact for `puppet agent --test` cli to work within the vm
+    config.vm.provision :shell do |s|
+      s.path = install_facts_script_path
+      s.args = [
+        puppet_staging_facts["deployment"],
+        puppet_staging_facts["subnet"]
+      ]
+    end
   end
 
   global_config.vm.define :"staging-worker0" do |config|
@@ -253,6 +302,15 @@ Vagrant.configure("2") do |global_config|
       puppet.options = "#{puppet_options}"
       puppet.facter = puppet_staging_facts
       puppet.synced_folder_type = 'nfs'
+    end
+
+    # installs fact for `puppet agent --test` cli to work within the vm
+    config.vm.provision :shell do |s|
+      s.path = install_facts_script_path
+      s.args = [
+        puppet_staging_facts["deployment"],
+        puppet_staging_facts["subnet"]
+      ]
     end
   end
 
@@ -284,6 +342,14 @@ Vagrant.configure("2") do |global_config|
       puppet.facter = puppet_staging_facts
       puppet.synced_folder_type = 'nfs'
     end
+    # installs fact for `puppet agent --test` cli to work within the vm
+    config.vm.provision :shell do |s|
+      s.path = install_facts_script_path
+      s.args = [
+        puppet_staging_facts["deployment"],
+        puppet_staging_facts["subnet"]
+      ]
+    end
   end
 
   global_config.vm.define :"staging-scheduler0" do |config|
@@ -313,6 +379,14 @@ Vagrant.configure("2") do |global_config|
       puppet.facter = puppet_staging_facts
       puppet.synced_folder_type = 'nfs'
     end
+    # installs fact for `puppet agent --test` cli to work within the vm
+    config.vm.provision :shell do |s|
+      s.path = install_facts_script_path
+      s.args = [
+        puppet_staging_facts["deployment"],
+        puppet_staging_facts["subnet"]
+      ]
+    end
   end
 
   global_config.vm.define :"staging-journal0" do |config|
@@ -341,6 +415,14 @@ Vagrant.configure("2") do |global_config|
       puppet.options = "#{puppet_options}"
       puppet.facter = puppet_staging_facts
       puppet.synced_folder_type = 'nfs'
+    end
+    # installs fact for `puppet agent --test` cli to work within the vm
+    config.vm.provision :shell do |s|
+      s.path = install_facts_script_path
+      s.args = [
+        puppet_staging_facts["deployment"],
+        puppet_staging_facts["subnet"]
+      ]
     end
   end
 
@@ -372,6 +454,14 @@ Vagrant.configure("2") do |global_config|
       puppet.facter = puppet_staging_facts
       puppet.synced_folder_type = 'nfs'
     end
+    # installs fact for `puppet agent --test` cli to work within the vm
+    config.vm.provision :shell do |s|
+      s.path = install_facts_script_path
+      s.args = [
+        puppet_staging_facts["deployment"],
+        puppet_staging_facts["subnet"]
+      ]
+    end
   end
 
   global_config.vm.define :"staging-search0" do |config|
@@ -401,6 +491,14 @@ Vagrant.configure("2") do |global_config|
       puppet.options = "#{puppet_options}"
       puppet.facter = puppet_staging_facts
       puppet.synced_folder_type = 'nfs'
+    end
+    # installs fact for `puppet agent --test` cli to work within the vm
+    config.vm.provision :shell do |s|
+      s.path = install_facts_script_path
+      s.args = [
+        puppet_staging_facts["deployment"],
+        puppet_staging_facts["subnet"]
+      ]
     end
   end
 
@@ -432,6 +530,14 @@ Vagrant.configure("2") do |global_config|
       puppet.facter = puppet_staging_facts
       puppet.synced_folder_type = 'nfs'
     end
+    # installs fact for `puppet agent --test` cli to work within the vm
+    config.vm.provision :shell do |s|
+      s.path = install_facts_script_path
+      s.args = [
+        puppet_staging_facts["deployment"],
+        puppet_staging_facts["subnet"]
+      ]
+    end
   end
 
   global_config.vm.define :"staging-mirror-test" do |config|
@@ -461,6 +567,14 @@ Vagrant.configure("2") do |global_config|
       puppet.options = "#{puppet_options}"
       puppet.facter = puppet_staging_facts
       puppet.synced_folder_type = 'nfs'
+    end
+    # installs fact for `puppet agent --test` cli to work within the vm
+    config.vm.provision :shell do |s|
+      s.path = install_facts_script_path
+      s.args = [
+        puppet_staging_facts["deployment"],
+        puppet_staging_facts["subnet"]
+      ]
     end
   end
 
@@ -496,6 +610,13 @@ Vagrant.configure("2") do |global_config|
       puppet.options = "#{puppet_options}"
       puppet.facter = puppet_staging_facts
       puppet.synced_folder_type = 'nfs'
+    end
+    config.vm.provision :shell do |s|
+      s.path = install_facts_script_path
+      s.args = [
+        puppet_production_facts["deployment"],
+        puppet_production_facts["subnet"]
+      ]
     end
   end
 
@@ -533,6 +654,13 @@ Vagrant.configure("2") do |global_config|
       puppet.facter = puppet_production_facts
       puppet.synced_folder_type = 'nfs'
     end
+    config.vm.provision :shell do |s|
+      s.path = install_facts_script_path
+      s.args = [
+        puppet_production_facts["deployment"],
+        puppet_production_facts["subnet"]
+      ]
+    end
   end
 
   ################
@@ -565,6 +693,13 @@ Vagrant.configure("2") do |global_config|
       puppet.facter = puppet_production_facts
       puppet.synced_folder_type = 'nfs'
     end
+    config.vm.provision :shell do |s|
+      s.path = install_facts_script_path
+      s.args = [
+        puppet_production_facts["deployment"],
+        puppet_production_facts["subnet"]
+      ]
+    end
   end
 
   global_config.vm.define :"esnode1" do |config|
@@ -593,6 +728,13 @@ Vagrant.configure("2") do |global_config|
       puppet.options = "#{puppet_options}"
       puppet.facter = puppet_production_facts
       puppet.synced_folder_type = 'nfs'
+    end
+    config.vm.provision :shell do |s|
+      s.path = install_facts_script_path
+      s.args = [
+        puppet_production_facts["deployment"],
+        puppet_production_facts["subnet"]
+      ]
     end
   end
 
@@ -623,6 +765,13 @@ Vagrant.configure("2") do |global_config|
       puppet.facter = puppet_production_facts
       puppet.synced_folder_type = 'nfs'
     end
+    config.vm.provision :shell do |s|
+      s.path = install_facts_script_path
+      s.args = [
+        puppet_production_facts["deployment"],
+        puppet_production_facts["subnet"]
+      ]
+    end
   end
 
   global_config.vm.define :"esnode3" do |config|
@@ -651,6 +800,13 @@ Vagrant.configure("2") do |global_config|
       puppet.options = "#{puppet_options}"
       puppet.facter = puppet_production_facts
       puppet.synced_folder_type = 'nfs'
+    end
+    config.vm.provision :shell do |s|
+      s.path = install_facts_script_path
+      s.args = [
+        puppet_production_facts["deployment"],
+        puppet_production_facts["subnet"]
+      ]
     end
   end
 
@@ -681,6 +837,13 @@ Vagrant.configure("2") do |global_config|
       puppet.facter = puppet_production_facts
       puppet.synced_folder_type = 'nfs'
     end
+    config.vm.provision :shell do |s|
+      s.path = install_facts_script_path
+      s.args = [
+        puppet_production_facts["deployment"],
+        puppet_production_facts["subnet"]
+      ]
+    end
   end
 
   global_config.vm.define :"admin-bardo" do |config|
@@ -709,6 +872,13 @@ Vagrant.configure("2") do |global_config|
       puppet.options = "#{puppet_options}"
       puppet.facter = puppet_admin_facts
       puppet.synced_folder_type = 'nfs'
+    end
+    config.vm.provision :shell do |s|
+      s.path = install_facts_script_path
+      s.args = [
+        puppet_production_facts["deployment"],
+        puppet_production_facts["subnet"]
+      ]
     end
   end
 
@@ -739,6 +909,13 @@ Vagrant.configure("2") do |global_config|
       puppet.facter = puppet_admin_facts
       puppet.synced_folder_type = 'nfs'
     end
+    config.vm.provision :shell do |s|
+      s.path = install_facts_script_path
+      s.args = [
+        puppet_production_facts["deployment"],
+        puppet_production_facts["subnet"]
+      ]
+    end
   end
 
   global_config.vm.define :"prod-webapp1" do |config|
@@ -767,6 +944,13 @@ Vagrant.configure("2") do |global_config|
       puppet.options = "#{puppet_options}"
       puppet.facter = puppet_production_facts
       puppet.synced_folder_type = 'nfs'
+    end
+    config.vm.provision :shell do |s|
+      s.path = install_facts_script_path
+      s.args = [
+        puppet_production_facts["deployment"],
+        puppet_production_facts["subnet"]
+      ]
     end
   end
 
@@ -797,6 +981,13 @@ Vagrant.configure("2") do |global_config|
       puppet.facter = puppet_production_facts
       puppet.synced_folder_type = 'nfs'
     end
+    config.vm.provision :shell do |s|
+      s.path = install_facts_script_path
+      s.args = [
+        puppet_production_facts["deployment"],
+        puppet_production_facts["subnet"]
+      ]
+    end
   end
 
   global_config.vm.define :"prod-search1" do |config|
@@ -825,6 +1016,13 @@ Vagrant.configure("2") do |global_config|
       puppet.options = "#{puppet_options}"
       puppet.facter = puppet_production_facts
       puppet.synced_folder_type = 'nfs'
+    end
+    config.vm.provision :shell do |s|
+      s.path = install_facts_script_path
+      s.args = [
+        puppet_production_facts["deployment"],
+        puppet_production_facts["subnet"]
+      ]
     end
   end
 
@@ -855,6 +1053,13 @@ Vagrant.configure("2") do |global_config|
       puppet.facter = puppet_production_facts
       puppet.synced_folder_type = 'nfs'
     end
+    config.vm.provision :shell do |s|
+      s.path = install_facts_script_path
+      s.args = [
+        puppet_production_facts["deployment"],
+        puppet_production_facts["subnet"]
+      ]
+    end
   end
 
   global_config.vm.define :"prod-search-esnode2" do |config|
@@ -883,6 +1088,13 @@ Vagrant.configure("2") do |global_config|
       puppet.options = "#{puppet_options}"
       puppet.facter = puppet_production_facts
       puppet.synced_folder_type = 'nfs'
+    end
+    config.vm.provision :shell do |s|
+      s.path = install_facts_script_path
+      s.args = [
+        puppet_production_facts["deployment"],
+        puppet_production_facts["subnet"]
+      ]
     end
   end
 
@@ -913,6 +1125,13 @@ Vagrant.configure("2") do |global_config|
       puppet.facter = puppet_production_facts
       puppet.synced_folder_type = 'nfs'
     end
+    config.vm.provision :shell do |s|
+      s.path = install_facts_script_path
+      s.args = [
+        puppet_production_facts["deployment"],
+        puppet_production_facts["subnet"]
+      ]
+    end
   end
 
   global_config.vm.define :"prod-counters1" do |config|
@@ -941,6 +1160,13 @@ Vagrant.configure("2") do |global_config|
       puppet.options = "#{puppet_options}"
       puppet.facter = puppet_production_facts
       puppet.synced_folder_type = 'nfs'
+    end
+    config.vm.provision :shell do |s|
+      s.path = install_facts_script_path
+      s.args = [
+        puppet_production_facts["deployment"],
+        puppet_production_facts["subnet"]
+      ]
     end
   end
 
@@ -977,6 +1203,14 @@ Vagrant.configure("2") do |global_config|
       puppet.options = "#{puppet_options}"
       puppet.facter = puppet_staging_facts
       puppet.synced_folder_type = 'nfs'
+    end
+    # installs fact for `puppet agent --test` cli to work within the vm
+    config.vm.provision :shell do |s|
+      s.path = install_facts_script_path
+      s.args = [
+        puppet_staging_facts["deployment"],
+        puppet_staging_facts["subnet"]
+      ]
     end
   end
 end
