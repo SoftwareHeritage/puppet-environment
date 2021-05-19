@@ -2,7 +2,6 @@ Vagrant.require_version ">= 2.2.0"
 ENV["LC_ALL"] = "en_US.UTF-8"
 
 # Default configuration for all defines node below
-environment = "staging"
 environment_path = "/tmp/puppet/environments"
 manifest_file = "site.pp"
 manifests_path = "swh-site/manifests"
@@ -69,7 +68,7 @@ Vagrant.configure("2") do |global_config|
     end
     config.vm.provision "puppet" do |puppet|
       puppet.environment_path = "#{environment_path}"
-      puppet.environment = "#{environment}"
+      puppet.environment = "staging"
       puppet.hiera_config_path = "#{puppet.environment_path}/#{puppet.environment}/hiera.yaml"
       puppet.manifest_file = "#{manifest_file}"
       puppet.manifests_path = "#{manifests_path}"
@@ -99,7 +98,7 @@ Vagrant.configure("2") do |global_config|
     end
     config.vm.provision "puppet" do |puppet|
       puppet.environment_path = "#{environment_path}"
-      puppet.environment = "#{environment}"
+      puppet.environment = "staging"
       puppet.hiera_config_path = "#{puppet.environment_path}/#{puppet.environment}/hiera.yaml"
       puppet.manifest_file = "#{manifest_file}"
       puppet.manifests_path = "#{manifests_path}"
@@ -129,7 +128,7 @@ Vagrant.configure("2") do |global_config|
     end
     config.vm.provision "puppet" do |puppet|
       puppet.environment_path = "#{environment_path}"
-      puppet.environment = "#{environment}"
+      puppet.environment = "staging"
       puppet.hiera_config_path = "#{puppet.environment_path}/#{puppet.environment}/hiera.yaml"
       puppet.manifest_file = "#{manifest_file}"
       puppet.manifests_path = "#{manifests_path}"
@@ -159,7 +158,7 @@ Vagrant.configure("2") do |global_config|
     end
     config.vm.provision "puppet" do |puppet|
       puppet.environment_path = "#{environment_path}"
-      puppet.environment = "#{environment}"
+      puppet.environment = "staging"
       puppet.hiera_config_path = "#{puppet.environment_path}/#{puppet.environment}/hiera.yaml"
       puppet.manifest_file = "#{manifest_file}"
       puppet.manifests_path = "#{manifests_path}"
@@ -189,7 +188,7 @@ Vagrant.configure("2") do |global_config|
     end
     config.vm.provision "puppet" do |puppet|
       puppet.environment_path = "#{environment_path}"
-      puppet.environment = "#{environment}"
+      puppet.environment = "staging"
       puppet.hiera_config_path = "#{puppet.environment_path}/#{puppet.environment}/hiera.yaml"
       puppet.manifest_file = "#{manifest_file}"
       puppet.manifests_path = "#{manifests_path}"
@@ -218,7 +217,7 @@ Vagrant.configure("2") do |global_config|
     end
     config.vm.provision "puppet" do |puppet|
       puppet.environment_path = "#{environment_path}"
-      puppet.environment = "#{environment}"
+      puppet.environment = "staging"
       puppet.hiera_config_path = "#{puppet.environment_path}/#{puppet.environment}/hiera.yaml"
       puppet.manifest_file = "#{manifest_file}"
       puppet.manifests_path = "#{manifests_path}"
@@ -247,7 +246,7 @@ Vagrant.configure("2") do |global_config|
 
     config.vm.provision "puppet" do |puppet|
       puppet.environment_path = "#{environment_path}"
-      puppet.environment = "#{environment}"
+      puppet.environment = "staging"
       puppet.hiera_config_path = "#{puppet.environment_path}/#{puppet.environment}/hiera.yaml"
       puppet.manifest_file = "#{manifest_file}"
       puppet.manifests_path = "#{manifests_path}"
@@ -277,7 +276,7 @@ Vagrant.configure("2") do |global_config|
 
     config.vm.provision "puppet" do |puppet|
       puppet.environment_path = "#{environment_path}"
-      puppet.environment = "#{environment}"
+      puppet.environment = "staging"
       puppet.hiera_config_path = "#{puppet.environment_path}/#{puppet.environment}/hiera.yaml"
       puppet.manifest_file = "#{manifest_file}"
       puppet.manifests_path = "#{manifests_path}"
@@ -306,7 +305,7 @@ Vagrant.configure("2") do |global_config|
 
     config.vm.provision "puppet" do |puppet|
       puppet.environment_path = "#{environment_path}"
-      puppet.environment = "#{environment}"
+      puppet.environment = "staging"
       puppet.hiera_config_path = "#{puppet.environment_path}/#{puppet.environment}/hiera.yaml"
       puppet.manifest_file = "#{manifest_file}"
       puppet.manifests_path = "#{manifests_path}"
@@ -335,7 +334,7 @@ Vagrant.configure("2") do |global_config|
 
     config.vm.provision "puppet" do |puppet|
       puppet.environment_path = "#{environment_path}"
-      puppet.environment = "#{environment}"
+      puppet.environment = "staging"
       puppet.hiera_config_path = "#{puppet.environment_path}/#{puppet.environment}/hiera.yaml"
       puppet.manifest_file = "#{manifest_file}"
       puppet.manifests_path = "#{manifests_path}"
@@ -365,7 +364,7 @@ Vagrant.configure("2") do |global_config|
     end
     config.vm.provision "puppet" do |puppet|
       puppet.environment_path = "#{environment_path}"
-      puppet.environment = "#{environment}"
+      puppet.environment = "staging"
       puppet.hiera_config_path = "#{puppet.environment_path}/#{puppet.environment}/hiera.yaml"
       puppet.manifest_file = "#{manifest_file}"
       puppet.manifests_path = "#{manifests_path}"
@@ -395,7 +394,7 @@ Vagrant.configure("2") do |global_config|
     end
     config.vm.provision "puppet" do |puppet|
       puppet.environment_path = "#{environment_path}"
-      puppet.environment = "#{environment}"
+      puppet.environment = "staging"
       puppet.hiera_config_path = "#{puppet.environment_path}/#{puppet.environment}/hiera.yaml"
       puppet.manifest_file = "#{manifest_file}"
       puppet.manifests_path = "#{manifests_path}"
@@ -425,7 +424,7 @@ Vagrant.configure("2") do |global_config|
     end
     config.vm.provision "puppet" do |puppet|
       puppet.environment_path = "#{environment_path}"
-      puppet.environment = "#{environment}"
+      puppet.environment = "staging"
       puppet.hiera_config_path = "#{puppet.environment_path}/#{puppet.environment}/hiera.yaml"
       puppet.manifest_file = "#{manifest_file}"
       puppet.manifests_path = "#{manifests_path}"
@@ -455,7 +454,7 @@ Vagrant.configure("2") do |global_config|
     end
     config.vm.provision "puppet" do |puppet|
       puppet.environment_path = "#{environment_path}"
-      puppet.environment = "#{environment}"
+      puppet.environment = "staging"
       puppet.hiera_config_path = "#{puppet.environment_path}/#{puppet.environment}/hiera.yaml"
       puppet.manifest_file = "#{manifest_file}"
       puppet.manifests_path = "#{manifests_path}"
@@ -490,7 +489,7 @@ Vagrant.configure("2") do |global_config|
 
     config.vm.provision "puppet" do |puppet|
       puppet.environment_path = "#{environment_path}"
-      puppet.environment = "#{environment}"
+      puppet.environment = "production"
       puppet.hiera_config_path = "#{puppet.environment_path}/#{puppet.environment}/hiera.yaml"
       puppet.manifest_file = "#{manifest_file}"
       puppet.manifests_path = "#{manifests_path}"
@@ -558,7 +557,7 @@ Vagrant.configure("2") do |global_config|
 
     config.vm.provision "puppet" do |puppet|
       puppet.environment_path = "#{environment_path}"
-      puppet.environment = "#{environment}"
+      puppet.environment = "production"
       puppet.hiera_config_path = "#{puppet.environment_path}/#{puppet.environment}/hiera.yaml"
       puppet.manifest_file = "#{manifest_file}"
       puppet.manifests_path = "#{manifests_path}"
@@ -587,7 +586,7 @@ Vagrant.configure("2") do |global_config|
     end
     config.vm.provision "puppet" do |puppet|
       puppet.environment_path = "#{environment_path}"
-      puppet.environment = "#{environment}"
+      puppet.environment = "production"
       puppet.hiera_config_path = "#{puppet.environment_path}/#{puppet.environment}/hiera.yaml"
       puppet.manifest_file = "#{manifest_file}"
       puppet.manifests_path = "#{manifests_path}"
@@ -616,7 +615,7 @@ Vagrant.configure("2") do |global_config|
     end
     config.vm.provision "puppet" do |puppet|
       puppet.environment_path = "#{environment_path}"
-      puppet.environment = "#{environment}"
+      puppet.environment = "production"
       puppet.hiera_config_path = "#{puppet.environment_path}/#{puppet.environment}/hiera.yaml"
       puppet.manifest_file = "#{manifest_file}"
       puppet.manifests_path = "#{manifests_path}"
@@ -644,8 +643,8 @@ Vagrant.configure("2") do |global_config|
       provider.driver = 'kvm'
     end
     config.vm.provision "puppet" do |puppet|
-      puppet.environment_path = "#{environment_path}"
-      puppet.environment = "#{environment}"
+      puppet.environment_path = "production"
+      puppet.environment = "production"
       puppet.hiera_config_path = "#{puppet.environment_path}/#{puppet.environment}/hiera.yaml"
       puppet.manifest_file = "#{manifest_file}"
       puppet.manifests_path = "#{manifests_path}"
@@ -674,7 +673,7 @@ Vagrant.configure("2") do |global_config|
 
     config.vm.provision "puppet" do |puppet|
       puppet.environment_path = "#{environment_path}"
-      puppet.environment = "#{environment}"
+      puppet.environment = "production"
       puppet.hiera_config_path = "#{puppet.environment_path}/#{puppet.environment}/hiera.yaml"
       puppet.manifest_file = "#{manifest_file}"
       puppet.manifests_path = "#{manifests_path}"
@@ -703,7 +702,7 @@ Vagrant.configure("2") do |global_config|
 
     config.vm.provision "puppet" do |puppet|
       puppet.environment_path = "#{environment_path}"
-      puppet.environment = "#{environment}"
+      puppet.environment = "production"
       puppet.hiera_config_path = "#{puppet.environment_path}/#{puppet.environment}/hiera.yaml"
       puppet.manifest_file = "#{manifest_file}"
       puppet.manifests_path = "#{manifests_path}"
@@ -732,7 +731,7 @@ Vagrant.configure("2") do |global_config|
 
     config.vm.provision "puppet" do |puppet|
       puppet.environment_path = "#{environment_path}"
-      puppet.environment = "#{environment}"
+      puppet.environment = "production"
       puppet.hiera_config_path = "#{puppet.environment_path}/#{puppet.environment}/hiera.yaml"
       puppet.manifest_file = "#{manifest_file}"
       puppet.manifests_path = "#{manifests_path}"
@@ -761,7 +760,7 @@ Vagrant.configure("2") do |global_config|
 
     config.vm.provision "puppet" do |puppet|
       puppet.environment_path = "#{environment_path}"
-      puppet.environment = "#{environment}"
+      puppet.environment = "production"
       puppet.hiera_config_path = "#{puppet.environment_path}/#{puppet.environment}/hiera.yaml"
       puppet.manifest_file = "#{manifest_file}"
       puppet.manifests_path = "#{manifests_path}"
@@ -790,7 +789,7 @@ Vagrant.configure("2") do |global_config|
 
     config.vm.provision "puppet" do |puppet|
       puppet.environment_path = "#{environment_path}"
-      puppet.environment = "#{environment}"
+      puppet.environment = "production"
       puppet.hiera_config_path = "#{puppet.environment_path}/#{puppet.environment}/hiera.yaml"
       puppet.manifest_file = "#{manifest_file}"
       puppet.manifests_path = "#{manifests_path}"
@@ -819,7 +818,7 @@ Vagrant.configure("2") do |global_config|
 
     config.vm.provision "puppet" do |puppet|
       puppet.environment_path = "#{environment_path}"
-      puppet.environment = "#{environment}"
+      puppet.environment = "production"
       puppet.hiera_config_path = "#{puppet.environment_path}/#{puppet.environment}/hiera.yaml"
       puppet.manifest_file = "#{manifest_file}"
       puppet.manifests_path = "#{manifests_path}"
@@ -848,7 +847,7 @@ Vagrant.configure("2") do |global_config|
 
     config.vm.provision "puppet" do |puppet|
       puppet.environment_path = "#{environment_path}"
-      puppet.environment = "#{environment}"
+      puppet.environment = "production"
       puppet.hiera_config_path = "#{puppet.environment_path}/#{puppet.environment}/hiera.yaml"
       puppet.manifest_file = "#{manifest_file}"
       puppet.manifests_path = "#{manifests_path}"
@@ -877,7 +876,7 @@ Vagrant.configure("2") do |global_config|
 
     config.vm.provision "puppet" do |puppet|
       puppet.environment_path = "#{environment_path}"
-      puppet.environment = "#{environment}"
+      puppet.environment = "production"
       puppet.hiera_config_path = "#{puppet.environment_path}/#{puppet.environment}/hiera.yaml"
       puppet.manifest_file = "#{manifest_file}"
       puppet.manifests_path = "#{manifests_path}"
@@ -906,7 +905,7 @@ Vagrant.configure("2") do |global_config|
 
     config.vm.provision "puppet" do |puppet|
       puppet.environment_path = "#{environment_path}"
-      puppet.environment = "#{environment}"
+      puppet.environment = "production"
       puppet.hiera_config_path = "#{puppet.environment_path}/#{puppet.environment}/hiera.yaml"
       puppet.manifest_file = "#{manifest_file}"
       puppet.manifests_path = "#{manifests_path}"
@@ -935,7 +934,7 @@ Vagrant.configure("2") do |global_config|
 
     config.vm.provision "puppet" do |puppet|
       puppet.environment_path = "#{environment_path}"
-      puppet.environment = "#{environment}"
+      puppet.environment = "production"
       puppet.hiera_config_path = "#{puppet.environment_path}/#{puppet.environment}/hiera.yaml"
       puppet.manifest_file = "#{manifest_file}"
       puppet.manifests_path = "#{manifests_path}"
@@ -971,7 +970,7 @@ Vagrant.configure("2") do |global_config|
     end
     config.vm.provision "puppet" do |puppet|
       puppet.environment_path = "#{environment_path}"
-      puppet.environment = "#{environment}"
+      puppet.environment = "staging"
       puppet.hiera_config_path = "#{puppet.environment_path}/#{puppet.environment}/hiera.yaml"
       puppet.manifest_file = "#{manifest_file}"
       puppet.manifests_path = "#{manifests_path}"
