@@ -30,12 +30,14 @@ puppet_env_path = ENV["SWH_PUPPET_ENVIRONMENT_HOME"]
 install_facts_script_path = "vagrant/puppet_agent/install_facts.sh"
 
 # Images/local configuration (libvirt)
-$local_debian10_box = "debian10-20210517-1348"
-$local_debian10_box_url = "file://#{puppet_env_path}/packer/builds/swh-debian-10.9-amd64-20210517-1348.qcow2"
+$local_debian10_box = "debian10-20210519-1457"
+$local_debian10_box_url = "file://#{puppet_env_path}/packer/builds/swh-debian-10.9-amd64-20210519-1457.qcow2"
 
 # Images/remote configuration
-$global_debian10_box = "debian10-20210517-1348"
-$global_debian10_box_url = "https://annex.softwareheritage.org/public/isos/libvirt/debian/swh-debian-10.9-amd64-20210517-1348.qcow2"
+$global_debian10_box = "debian10-20210519-1457"
+# $global_debian10_box_url = "https://annex.softwareheritage.org/public/isos/libvirt/debian/swh-debian-10.9-amd64-20210519-1457.qcow2"
+$global_debian10_box_url = "file:/#{puppet_env_path}/packer/builds/swh-debian-10.9-amd64-20210519-1457.qcow2"
+
 
 unless Vagrant.has_plugin?("libvirt")
   $stderr.puts <<-MSG
@@ -67,6 +69,14 @@ Vagrant.configure("2") do |global_config|
       # local test run: https://github.com/vagrant-libvirt/vagrant-libvirt/issues/45
       provider.driver = 'kvm'
     end
+    # installs fact for `puppet agent --test` cli to work within the vm
+    config.vm.provision :shell do |s|
+      s.path = install_facts_script_path
+      s.args = [
+        puppet_staging_facts["deployment"],
+        puppet_staging_facts["subnet"]
+      ]
+    end
     config.vm.provision "puppet" do |puppet|
       puppet.environment_path = "#{environment_path}"
       puppet.environment = "staging"
@@ -76,14 +86,6 @@ Vagrant.configure("2") do |global_config|
       puppet.options = "#{puppet_options}"
       puppet.facter = puppet_staging_facts
       puppet.synced_folder_type = 'nfs'
-    end
-    # installs fact for `puppet agent --test` cli to work within the vm
-    config.vm.provision :shell do |s|
-      s.path = install_facts_script_path
-      s.args = [
-        puppet_staging_facts["deployment"],
-        puppet_staging_facts["subnet"]
-      ]
     end
   end
 
@@ -105,6 +107,14 @@ Vagrant.configure("2") do |global_config|
       # local test run: https://github.com/vagrant-libvirt/vagrant-libvirt/issues/45
       provider.driver = 'kvm'
     end
+    # installs fact for `puppet agent --test` cli to work within the vm
+    config.vm.provision :shell do |s|
+      s.path = install_facts_script_path
+      s.args = [
+        puppet_staging_facts["deployment"],
+        puppet_staging_facts["subnet"]
+      ]
+    end
     config.vm.provision "puppet" do |puppet|
       puppet.environment_path = "#{environment_path}"
       puppet.environment = "staging"
@@ -114,14 +124,6 @@ Vagrant.configure("2") do |global_config|
       puppet.options = "#{puppet_options}"
       puppet.facter = puppet_staging_facts
       puppet.synced_folder_type = 'nfs'
-    end
-    # installs fact for `puppet agent --test` cli to work within the vm
-    config.vm.provision :shell do |s|
-      s.path = install_facts_script_path
-      s.args = [
-        puppet_staging_facts["deployment"],
-        puppet_staging_facts["subnet"]
-      ]
     end
   end
 
@@ -143,6 +145,14 @@ Vagrant.configure("2") do |global_config|
       # local test run: https://github.com/vagrant-libvirt/vagrant-libvirt/issues/45
       provider.driver = 'kvm'
     end
+    # installs fact for `puppet agent --test` cli to work within the vm
+    config.vm.provision :shell do |s|
+      s.path = install_facts_script_path
+      s.args = [
+        puppet_staging_facts["deployment"],
+        puppet_staging_facts["subnet"]
+      ]
+    end
     config.vm.provision "puppet" do |puppet|
       puppet.environment_path = "#{environment_path}"
       puppet.environment = "staging"
@@ -152,14 +162,6 @@ Vagrant.configure("2") do |global_config|
       puppet.options = "#{puppet_options}"
       puppet.facter = puppet_staging_facts
       puppet.synced_folder_type = 'nfs'
-    end
-    # installs fact for `puppet agent --test` cli to work within the vm
-    config.vm.provision :shell do |s|
-      s.path = install_facts_script_path
-      s.args = [
-        puppet_staging_facts["deployment"],
-        puppet_staging_facts["subnet"]
-      ]
     end
   end
 
@@ -181,6 +183,14 @@ Vagrant.configure("2") do |global_config|
       # local test run: https://github.com/vagrant-libvirt/vagrant-libvirt/issues/45
       provider.driver = 'kvm'
     end
+    # installs fact for `puppet agent --test` cli to work within the vm
+    config.vm.provision :shell do |s|
+      s.path = install_facts_script_path
+      s.args = [
+        puppet_staging_facts["deployment"],
+        puppet_staging_facts["subnet"]
+      ]
+    end
     config.vm.provision "puppet" do |puppet|
       puppet.environment_path = "#{environment_path}"
       puppet.environment = "staging"
@@ -190,14 +200,6 @@ Vagrant.configure("2") do |global_config|
       puppet.options = "#{puppet_options}"
       puppet.facter = puppet_staging_facts
       puppet.synced_folder_type = 'nfs'
-    end
-    # installs fact for `puppet agent --test` cli to work within the vm
-    config.vm.provision :shell do |s|
-      s.path = install_facts_script_path
-      s.args = [
-        puppet_staging_facts["deployment"],
-        puppet_staging_facts["subnet"]
-      ]
     end
   end
 
@@ -219,6 +221,14 @@ Vagrant.configure("2") do |global_config|
       # local test run: https://github.com/vagrant-libvirt/vagrant-libvirt/issues/45
       provider.driver = 'kvm'
     end
+    # installs fact for `puppet agent --test` cli to work within the vm
+    config.vm.provision :shell do |s|
+      s.path = install_facts_script_path
+      s.args = [
+        puppet_staging_facts["deployment"],
+        puppet_staging_facts["subnet"]
+      ]
+    end
     config.vm.provision "puppet" do |puppet|
       puppet.environment_path = "#{environment_path}"
       puppet.environment = "staging"
@@ -228,14 +238,6 @@ Vagrant.configure("2") do |global_config|
       puppet.options = "#{puppet_options}"
       puppet.facter = puppet_staging_facts
       puppet.synced_folder_type = 'nfs'
-    end
-    # installs fact for `puppet agent --test` cli to work within the vm
-    config.vm.provision :shell do |s|
-      s.path = install_facts_script_path
-      s.args = [
-        puppet_staging_facts["deployment"],
-        puppet_staging_facts["subnet"]
-      ]
     end
   end
 
@@ -256,6 +258,14 @@ Vagrant.configure("2") do |global_config|
       # local test run: https://github.com/vagrant-libvirt/vagrant-libvirt/issues/45
       provider.driver = 'kvm'
     end
+    # installs fact for `puppet agent --test` cli to work within the vm
+    config.vm.provision :shell do |s|
+      s.path = install_facts_script_path
+      s.args = [
+        puppet_staging_facts["deployment"],
+        puppet_staging_facts["subnet"]
+      ]
+    end
     config.vm.provision "puppet" do |puppet|
       puppet.environment_path = "#{environment_path}"
       puppet.environment = "staging"
@@ -265,14 +275,6 @@ Vagrant.configure("2") do |global_config|
       puppet.options = "#{puppet_options}"
       puppet.facter = puppet_staging_facts
       puppet.synced_folder_type = 'nfs'
-    end
-    # installs fact for `puppet agent --test` cli to work within the vm
-    config.vm.provision :shell do |s|
-      s.path = install_facts_script_path
-      s.args = [
-        puppet_staging_facts["deployment"],
-        puppet_staging_facts["subnet"]
-      ]
     end
   end
 
@@ -292,7 +294,14 @@ Vagrant.configure("2") do |global_config|
       # local test run: https://github.com/vagrant-libvirt/vagrant-libvirt/issues/45
       provider.driver = 'kvm'
     end
-
+    # installs fact for `puppet agent --test` cli to work within the vm
+    config.vm.provision :shell do |s|
+      s.path = install_facts_script_path
+      s.args = [
+        puppet_staging_facts["deployment"],
+        puppet_staging_facts["subnet"]
+      ]
+    end
     config.vm.provision "puppet" do |puppet|
       puppet.environment_path = "#{environment_path}"
       puppet.environment = "staging"
@@ -302,15 +311,6 @@ Vagrant.configure("2") do |global_config|
       puppet.options = "#{puppet_options}"
       puppet.facter = puppet_staging_facts
       puppet.synced_folder_type = 'nfs'
-    end
-
-    # installs fact for `puppet agent --test` cli to work within the vm
-    config.vm.provision :shell do |s|
-      s.path = install_facts_script_path
-      s.args = [
-        puppet_staging_facts["deployment"],
-        puppet_staging_facts["subnet"]
-      ]
     end
   end
 
@@ -331,7 +331,14 @@ Vagrant.configure("2") do |global_config|
       # local test run: https://github.com/vagrant-libvirt/vagrant-libvirt/issues/45
       provider.driver = 'kvm'
     end
-
+    # installs fact for `puppet agent --test` cli to work within the vm
+    config.vm.provision :shell do |s|
+      s.path = install_facts_script_path
+      s.args = [
+        puppet_staging_facts["deployment"],
+        puppet_staging_facts["subnet"]
+      ]
+    end
     config.vm.provision "puppet" do |puppet|
       puppet.environment_path = "#{environment_path}"
       puppet.environment = "staging"
@@ -341,14 +348,6 @@ Vagrant.configure("2") do |global_config|
       puppet.options = "#{puppet_options}"
       puppet.facter = puppet_staging_facts
       puppet.synced_folder_type = 'nfs'
-    end
-    # installs fact for `puppet agent --test` cli to work within the vm
-    config.vm.provision :shell do |s|
-      s.path = install_facts_script_path
-      s.args = [
-        puppet_staging_facts["deployment"],
-        puppet_staging_facts["subnet"]
-      ]
     end
   end
 
@@ -369,6 +368,14 @@ Vagrant.configure("2") do |global_config|
       provider.driver = 'kvm'
     end
 
+    # installs fact for `puppet agent --test` cli to work within the vm
+    config.vm.provision :shell do |s|
+      s.path = install_facts_script_path
+      s.args = [
+        puppet_staging_facts["deployment"],
+        puppet_staging_facts["subnet"]
+      ]
+    end
     config.vm.provision "puppet" do |puppet|
       puppet.environment_path = "#{environment_path}"
       puppet.environment = "staging"
@@ -378,14 +385,6 @@ Vagrant.configure("2") do |global_config|
       puppet.options = "#{puppet_options}"
       puppet.facter = puppet_staging_facts
       puppet.synced_folder_type = 'nfs'
-    end
-    # installs fact for `puppet agent --test` cli to work within the vm
-    config.vm.provision :shell do |s|
-      s.path = install_facts_script_path
-      s.args = [
-        puppet_staging_facts["deployment"],
-        puppet_staging_facts["subnet"]
-      ]
     end
   end
 
@@ -406,6 +405,14 @@ Vagrant.configure("2") do |global_config|
       provider.driver = 'kvm'
     end
 
+    # installs fact for `puppet agent --test` cli to work within the vm
+    config.vm.provision :shell do |s|
+      s.path = install_facts_script_path
+      s.args = [
+        puppet_staging_facts["deployment"],
+        puppet_staging_facts["subnet"]
+      ]
+    end
     config.vm.provision "puppet" do |puppet|
       puppet.environment_path = "#{environment_path}"
       puppet.environment = "staging"
@@ -415,14 +422,6 @@ Vagrant.configure("2") do |global_config|
       puppet.options = "#{puppet_options}"
       puppet.facter = puppet_staging_facts
       puppet.synced_folder_type = 'nfs'
-    end
-    # installs fact for `puppet agent --test` cli to work within the vm
-    config.vm.provision :shell do |s|
-      s.path = install_facts_script_path
-      s.args = [
-        puppet_staging_facts["deployment"],
-        puppet_staging_facts["subnet"]
-      ]
     end
   end
 
@@ -444,6 +443,14 @@ Vagrant.configure("2") do |global_config|
       # local test run: https://github.com/vagrant-libvirt/vagrant-libvirt/issues/45
       provider.driver = 'kvm'
     end
+    # installs fact for `puppet agent --test` cli to work within the vm
+    config.vm.provision :shell do |s|
+      s.path = install_facts_script_path
+      s.args = [
+        puppet_staging_facts["deployment"],
+        puppet_staging_facts["subnet"]
+      ]
+    end
     config.vm.provision "puppet" do |puppet|
       puppet.environment_path = "#{environment_path}"
       puppet.environment = "staging"
@@ -453,14 +460,6 @@ Vagrant.configure("2") do |global_config|
       puppet.options = "#{puppet_options}"
       puppet.facter = puppet_staging_facts
       puppet.synced_folder_type = 'nfs'
-    end
-    # installs fact for `puppet agent --test` cli to work within the vm
-    config.vm.provision :shell do |s|
-      s.path = install_facts_script_path
-      s.args = [
-        puppet_staging_facts["deployment"],
-        puppet_staging_facts["subnet"]
-      ]
     end
   end
 
@@ -482,6 +481,14 @@ Vagrant.configure("2") do |global_config|
       # local test run: https://github.com/vagrant-libvirt/vagrant-libvirt/issues/45
       provider.driver = 'kvm'
     end
+    # installs fact for `puppet agent --test` cli to work within the vm
+    config.vm.provision :shell do |s|
+      s.path = install_facts_script_path
+      s.args = [
+        puppet_staging_facts["deployment"],
+        puppet_staging_facts["subnet"]
+      ]
+    end
     config.vm.provision "puppet" do |puppet|
       puppet.environment_path = "#{environment_path}"
       puppet.environment = "staging"
@@ -491,14 +498,6 @@ Vagrant.configure("2") do |global_config|
       puppet.options = "#{puppet_options}"
       puppet.facter = puppet_staging_facts
       puppet.synced_folder_type = 'nfs'
-    end
-    # installs fact for `puppet agent --test` cli to work within the vm
-    config.vm.provision :shell do |s|
-      s.path = install_facts_script_path
-      s.args = [
-        puppet_staging_facts["deployment"],
-        puppet_staging_facts["subnet"]
-      ]
     end
   end
 
@@ -520,6 +519,14 @@ Vagrant.configure("2") do |global_config|
       # local test run: https://github.com/vagrant-libvirt/vagrant-libvirt/issues/45
       provider.driver = 'kvm'
     end
+    # installs fact for `puppet agent --test` cli to work within the vm
+    config.vm.provision :shell do |s|
+      s.path = install_facts_script_path
+      s.args = [
+        puppet_staging_facts["deployment"],
+        puppet_staging_facts["subnet"]
+      ]
+    end
     config.vm.provision "puppet" do |puppet|
       puppet.environment_path = "#{environment_path}"
       puppet.environment = "staging"
@@ -529,14 +536,6 @@ Vagrant.configure("2") do |global_config|
       puppet.options = "#{puppet_options}"
       puppet.facter = puppet_staging_facts
       puppet.synced_folder_type = 'nfs'
-    end
-    # installs fact for `puppet agent --test` cli to work within the vm
-    config.vm.provision :shell do |s|
-      s.path = install_facts_script_path
-      s.args = [
-        puppet_staging_facts["deployment"],
-        puppet_staging_facts["subnet"]
-      ]
     end
   end
 
@@ -558,6 +557,14 @@ Vagrant.configure("2") do |global_config|
       # local test run: https://github.com/vagrant-libvirt/vagrant-libvirt/issues/45
       provider.driver = 'kvm'
     end
+    # installs fact for `puppet agent --test` cli to work within the vm
+    config.vm.provision :shell do |s|
+      s.path = install_facts_script_path
+      s.args = [
+        puppet_staging_facts["deployment"],
+        puppet_staging_facts["subnet"]
+      ]
+    end
     config.vm.provision "puppet" do |puppet|
       puppet.environment_path = "#{environment_path}"
       puppet.environment = "staging"
@@ -567,14 +574,6 @@ Vagrant.configure("2") do |global_config|
       puppet.options = "#{puppet_options}"
       puppet.facter = puppet_staging_facts
       puppet.synced_folder_type = 'nfs'
-    end
-    # installs fact for `puppet agent --test` cli to work within the vm
-    config.vm.provision :shell do |s|
-      s.path = install_facts_script_path
-      s.args = [
-        puppet_staging_facts["deployment"],
-        puppet_staging_facts["subnet"]
-      ]
     end
   end
 
@@ -601,6 +600,14 @@ Vagrant.configure("2") do |global_config|
       provider.driver = 'kvm'
     end
 
+    # installs fact for `puppet agent --test` cli to work within the vm
+    config.vm.provision :shell do |s|
+      s.path = install_facts_script_path
+      s.args = [
+        puppet_staging_facts["deployment"],
+        puppet_staging_facts["subnet"]
+      ]
+    end
     config.vm.provision "puppet" do |puppet|
       puppet.environment_path = "#{environment_path}"
       puppet.environment = "production"
@@ -610,13 +617,6 @@ Vagrant.configure("2") do |global_config|
       puppet.options = "#{puppet_options}"
       puppet.facter = puppet_staging_facts
       puppet.synced_folder_type = 'nfs'
-    end
-    config.vm.provision :shell do |s|
-      s.path = install_facts_script_path
-      s.args = [
-        puppet_production_facts["deployment"],
-        puppet_production_facts["subnet"]
-      ]
     end
   end
 
@@ -644,6 +644,14 @@ Vagrant.configure("2") do |global_config|
     config.vm.provision "file", source: "vagrant/puppet_master/", destination: "/tmp/"
     config.vm.provision :shell, :path => "vagrant/puppet_master/prepare_puppet_master.sh"
 
+    # installs fact for `puppet agent --test` cli to work within the vm
+    config.vm.provision :shell do |s|
+      s.path = install_facts_script_path
+      s.args = [
+        puppet_staging_facts["deployment"],
+        puppet_staging_facts["subnet"]
+      ]
+    end
     config.vm.provision "puppet" do |puppet|
       puppet.environment = "production"
       puppet.manifest_file = "#{manifest_file}"
@@ -651,13 +659,6 @@ Vagrant.configure("2") do |global_config|
       puppet.options = "#{puppet_options}"
       puppet.facter = puppet_production_facts
       puppet.synced_folder_type = 'nfs'
-    end
-    config.vm.provision :shell do |s|
-      s.path = install_facts_script_path
-      s.args = [
-        puppet_production_facts["deployment"],
-        puppet_production_facts["subnet"]
-      ]
     end
   end
 
@@ -681,6 +682,14 @@ Vagrant.configure("2") do |global_config|
       provider.driver = 'kvm'
     end
 
+    # installs fact for `puppet agent --test` cli to work within the vm
+    config.vm.provision :shell do |s|
+      s.path = install_facts_script_path
+      s.args = [
+        puppet_staging_facts["deployment"],
+        puppet_staging_facts["subnet"]
+      ]
+    end
     config.vm.provision "puppet" do |puppet|
       puppet.environment_path = "#{environment_path}"
       puppet.environment = "production"
@@ -690,13 +699,6 @@ Vagrant.configure("2") do |global_config|
       puppet.options = "#{puppet_options}"
       puppet.facter = puppet_production_facts
       puppet.synced_folder_type = 'nfs'
-    end
-    config.vm.provision :shell do |s|
-      s.path = install_facts_script_path
-      s.args = [
-        puppet_production_facts["deployment"],
-        puppet_production_facts["subnet"]
-      ]
     end
   end
 
@@ -717,6 +719,14 @@ Vagrant.configure("2") do |global_config|
       # local test run: https://github.com/vagrant-libvirt/vagrant-libvirt/issues/45
       provider.driver = 'kvm'
     end
+    # installs fact for `puppet agent --test` cli to work within the vm
+    config.vm.provision :shell do |s|
+      s.path = install_facts_script_path
+      s.args = [
+        puppet_staging_facts["deployment"],
+        puppet_staging_facts["subnet"]
+      ]
+    end
     config.vm.provision "puppet" do |puppet|
       puppet.environment_path = "#{environment_path}"
       puppet.environment = "production"
@@ -726,13 +736,6 @@ Vagrant.configure("2") do |global_config|
       puppet.options = "#{puppet_options}"
       puppet.facter = puppet_production_facts
       puppet.synced_folder_type = 'nfs'
-    end
-    config.vm.provision :shell do |s|
-      s.path = install_facts_script_path
-      s.args = [
-        puppet_production_facts["deployment"],
-        puppet_production_facts["subnet"]
-      ]
     end
   end
 
@@ -753,6 +756,14 @@ Vagrant.configure("2") do |global_config|
       # local test run: https://github.com/vagrant-libvirt/vagrant-libvirt/issues/45
       provider.driver = 'kvm'
     end
+    # installs fact for `puppet agent --test` cli to work within the vm
+    config.vm.provision :shell do |s|
+      s.path = install_facts_script_path
+      s.args = [
+        puppet_staging_facts["deployment"],
+        puppet_staging_facts["subnet"]
+      ]
+    end
     config.vm.provision "puppet" do |puppet|
       puppet.environment_path = "#{environment_path}"
       puppet.environment = "production"
@@ -762,13 +773,6 @@ Vagrant.configure("2") do |global_config|
       puppet.options = "#{puppet_options}"
       puppet.facter = puppet_production_facts
       puppet.synced_folder_type = 'nfs'
-    end
-    config.vm.provision :shell do |s|
-      s.path = install_facts_script_path
-      s.args = [
-        puppet_production_facts["deployment"],
-        puppet_production_facts["subnet"]
-      ]
     end
   end
 
@@ -789,6 +793,14 @@ Vagrant.configure("2") do |global_config|
       # local test run: https://github.com/vagrant-libvirt/vagrant-libvirt/issues/45
       provider.driver = 'kvm'
     end
+    # installs fact for `puppet agent --test` cli to work within the vm
+    config.vm.provision :shell do |s|
+      s.path = install_facts_script_path
+      s.args = [
+        puppet_staging_facts["deployment"],
+        puppet_staging_facts["subnet"]
+      ]
+    end
     config.vm.provision "puppet" do |puppet|
       puppet.environment_path = "production"
       puppet.environment = "production"
@@ -798,13 +810,6 @@ Vagrant.configure("2") do |global_config|
       puppet.options = "#{puppet_options}"
       puppet.facter = puppet_production_facts
       puppet.synced_folder_type = 'nfs'
-    end
-    config.vm.provision :shell do |s|
-      s.path = install_facts_script_path
-      s.args = [
-        puppet_production_facts["deployment"],
-        puppet_production_facts["subnet"]
-      ]
     end
   end
 
@@ -825,6 +830,14 @@ Vagrant.configure("2") do |global_config|
       provider.driver = 'kvm'
     end
 
+    # installs fact for `puppet agent --test` cli to work within the vm
+    config.vm.provision :shell do |s|
+      s.path = install_facts_script_path
+      s.args = [
+        puppet_staging_facts["deployment"],
+        puppet_staging_facts["subnet"]
+      ]
+    end
     config.vm.provision "puppet" do |puppet|
       puppet.environment_path = "#{environment_path}"
       puppet.environment = "production"
@@ -834,13 +847,6 @@ Vagrant.configure("2") do |global_config|
       puppet.options = "#{puppet_options}"
       puppet.facter = puppet_production_facts
       puppet.synced_folder_type = 'nfs'
-    end
-    config.vm.provision :shell do |s|
-      s.path = install_facts_script_path
-      s.args = [
-        puppet_production_facts["deployment"],
-        puppet_production_facts["subnet"]
-      ]
     end
   end
 
@@ -861,6 +867,14 @@ Vagrant.configure("2") do |global_config|
       provider.driver = 'kvm'
     end
 
+    # installs fact for `puppet agent --test` cli to work within the vm
+    config.vm.provision :shell do |s|
+      s.path = install_facts_script_path
+      s.args = [
+        puppet_staging_facts["deployment"],
+        puppet_staging_facts["subnet"]
+      ]
+    end
     config.vm.provision "puppet" do |puppet|
       puppet.environment_path = "#{environment_path}"
       puppet.environment = "production"
@@ -870,13 +884,6 @@ Vagrant.configure("2") do |global_config|
       puppet.options = "#{puppet_options}"
       puppet.facter = puppet_admin_facts
       puppet.synced_folder_type = 'nfs'
-    end
-    config.vm.provision :shell do |s|
-      s.path = install_facts_script_path
-      s.args = [
-        puppet_production_facts["deployment"],
-        puppet_production_facts["subnet"]
-      ]
     end
   end
 
@@ -897,6 +904,14 @@ Vagrant.configure("2") do |global_config|
       provider.driver = 'kvm'
     end
 
+    # installs fact for `puppet agent --test` cli to work within the vm
+    config.vm.provision :shell do |s|
+      s.path = install_facts_script_path
+      s.args = [
+        puppet_staging_facts["deployment"],
+        puppet_staging_facts["subnet"]
+      ]
+    end
     config.vm.provision "puppet" do |puppet|
       puppet.environment_path = "#{environment_path}"
       puppet.environment = "production"
@@ -906,13 +921,6 @@ Vagrant.configure("2") do |global_config|
       puppet.options = "#{puppet_options}"
       puppet.facter = puppet_admin_facts
       puppet.synced_folder_type = 'nfs'
-    end
-    config.vm.provision :shell do |s|
-      s.path = install_facts_script_path
-      s.args = [
-        puppet_production_facts["deployment"],
-        puppet_production_facts["subnet"]
-      ]
     end
   end
 
@@ -933,6 +941,14 @@ Vagrant.configure("2") do |global_config|
       provider.driver = 'kvm'
     end
 
+    # installs fact for `puppet agent --test` cli to work within the vm
+    config.vm.provision :shell do |s|
+      s.path = install_facts_script_path
+      s.args = [
+        puppet_staging_facts["deployment"],
+        puppet_staging_facts["subnet"]
+      ]
+    end
     config.vm.provision "puppet" do |puppet|
       puppet.environment_path = "#{environment_path}"
       puppet.environment = "production"
@@ -942,13 +958,6 @@ Vagrant.configure("2") do |global_config|
       puppet.options = "#{puppet_options}"
       puppet.facter = puppet_production_facts
       puppet.synced_folder_type = 'nfs'
-    end
-    config.vm.provision :shell do |s|
-      s.path = install_facts_script_path
-      s.args = [
-        puppet_production_facts["deployment"],
-        puppet_production_facts["subnet"]
-      ]
     end
   end
 
@@ -969,6 +978,14 @@ Vagrant.configure("2") do |global_config|
       provider.driver = 'kvm'
     end
 
+    # installs fact for `puppet agent --test` cli to work within the vm
+    config.vm.provision :shell do |s|
+      s.path = install_facts_script_path
+      s.args = [
+        puppet_staging_facts["deployment"],
+        puppet_staging_facts["subnet"]
+      ]
+    end
     config.vm.provision "puppet" do |puppet|
       puppet.environment_path = "#{environment_path}"
       puppet.environment = "production"
@@ -978,13 +995,6 @@ Vagrant.configure("2") do |global_config|
       puppet.options = "#{puppet_options}"
       puppet.facter = puppet_production_facts
       puppet.synced_folder_type = 'nfs'
-    end
-    config.vm.provision :shell do |s|
-      s.path = install_facts_script_path
-      s.args = [
-        puppet_production_facts["deployment"],
-        puppet_production_facts["subnet"]
-      ]
     end
   end
 
@@ -1005,6 +1015,14 @@ Vagrant.configure("2") do |global_config|
       provider.driver = 'kvm'
     end
 
+    # installs fact for `puppet agent --test` cli to work within the vm
+    config.vm.provision :shell do |s|
+      s.path = install_facts_script_path
+      s.args = [
+        puppet_staging_facts["deployment"],
+        puppet_staging_facts["subnet"]
+      ]
+    end
     config.vm.provision "puppet" do |puppet|
       puppet.environment_path = "#{environment_path}"
       puppet.environment = "production"
@@ -1014,13 +1032,6 @@ Vagrant.configure("2") do |global_config|
       puppet.options = "#{puppet_options}"
       puppet.facter = puppet_production_facts
       puppet.synced_folder_type = 'nfs'
-    end
-    config.vm.provision :shell do |s|
-      s.path = install_facts_script_path
-      s.args = [
-        puppet_production_facts["deployment"],
-        puppet_production_facts["subnet"]
-      ]
     end
   end
 
@@ -1041,6 +1052,14 @@ Vagrant.configure("2") do |global_config|
       provider.driver = 'kvm'
     end
 
+    # installs fact for `puppet agent --test` cli to work within the vm
+    config.vm.provision :shell do |s|
+      s.path = install_facts_script_path
+      s.args = [
+        puppet_staging_facts["deployment"],
+        puppet_staging_facts["subnet"]
+      ]
+    end
     config.vm.provision "puppet" do |puppet|
       puppet.environment_path = "#{environment_path}"
       puppet.environment = "production"
@@ -1050,13 +1069,6 @@ Vagrant.configure("2") do |global_config|
       puppet.options = "#{puppet_options}"
       puppet.facter = puppet_production_facts
       puppet.synced_folder_type = 'nfs'
-    end
-    config.vm.provision :shell do |s|
-      s.path = install_facts_script_path
-      s.args = [
-        puppet_production_facts["deployment"],
-        puppet_production_facts["subnet"]
-      ]
     end
   end
 
@@ -1077,6 +1089,14 @@ Vagrant.configure("2") do |global_config|
       provider.driver = 'kvm'
     end
 
+    # installs fact for `puppet agent --test` cli to work within the vm
+    config.vm.provision :shell do |s|
+      s.path = install_facts_script_path
+      s.args = [
+        puppet_staging_facts["deployment"],
+        puppet_staging_facts["subnet"]
+      ]
+    end
     config.vm.provision "puppet" do |puppet|
       puppet.environment_path = "#{environment_path}"
       puppet.environment = "production"
@@ -1086,13 +1106,6 @@ Vagrant.configure("2") do |global_config|
       puppet.options = "#{puppet_options}"
       puppet.facter = puppet_production_facts
       puppet.synced_folder_type = 'nfs'
-    end
-    config.vm.provision :shell do |s|
-      s.path = install_facts_script_path
-      s.args = [
-        puppet_production_facts["deployment"],
-        puppet_production_facts["subnet"]
-      ]
     end
   end
 
@@ -1113,6 +1126,14 @@ Vagrant.configure("2") do |global_config|
       provider.driver = 'kvm'
     end
 
+    # installs fact for `puppet agent --test` cli to work within the vm
+    config.vm.provision :shell do |s|
+      s.path = install_facts_script_path
+      s.args = [
+        puppet_staging_facts["deployment"],
+        puppet_staging_facts["subnet"]
+      ]
+    end
     config.vm.provision "puppet" do |puppet|
       puppet.environment_path = "#{environment_path}"
       puppet.environment = "production"
@@ -1122,13 +1143,6 @@ Vagrant.configure("2") do |global_config|
       puppet.options = "#{puppet_options}"
       puppet.facter = puppet_production_facts
       puppet.synced_folder_type = 'nfs'
-    end
-    config.vm.provision :shell do |s|
-      s.path = install_facts_script_path
-      s.args = [
-        puppet_production_facts["deployment"],
-        puppet_production_facts["subnet"]
-      ]
     end
   end
 
@@ -1149,6 +1163,14 @@ Vagrant.configure("2") do |global_config|
       provider.driver = 'kvm'
     end
 
+    # installs fact for `puppet agent --test` cli to work within the vm
+    config.vm.provision :shell do |s|
+      s.path = install_facts_script_path
+      s.args = [
+        puppet_staging_facts["deployment"],
+        puppet_staging_facts["subnet"]
+      ]
+    end
     config.vm.provision "puppet" do |puppet|
       puppet.environment_path = "#{environment_path}"
       puppet.environment = "production"
@@ -1158,13 +1180,6 @@ Vagrant.configure("2") do |global_config|
       puppet.options = "#{puppet_options}"
       puppet.facter = puppet_production_facts
       puppet.synced_folder_type = 'nfs'
-    end
-    config.vm.provision :shell do |s|
-      s.path = install_facts_script_path
-      s.args = [
-        puppet_production_facts["deployment"],
-        puppet_production_facts["subnet"]
-      ]
     end
   end
 
@@ -1192,6 +1207,14 @@ Vagrant.configure("2") do |global_config|
       # local test run: https://github.com/vagrant-libvirt/vagrant-libvirt/issues/45
       provider.driver = 'kvm'
     end
+    # installs fact for `puppet agent --test` cli to work within the vm
+    config.vm.provision :shell do |s|
+      s.path = install_facts_script_path
+      s.args = [
+        puppet_staging_facts["deployment"],
+        puppet_staging_facts["subnet"]
+      ]
+    end
     config.vm.provision "puppet" do |puppet|
       puppet.environment_path = "#{environment_path}"
       puppet.environment = "staging"
@@ -1203,12 +1226,5 @@ Vagrant.configure("2") do |global_config|
       puppet.synced_folder_type = 'nfs'
     end
     # installs fact for `puppet agent --test` cli to work within the vm
-    config.vm.provision :shell do |s|
-      s.path = install_facts_script_path
-      s.args = [
-        puppet_staging_facts["deployment"],
-        puppet_staging_facts["subnet"]
-      ]
-    end
   end
 end
