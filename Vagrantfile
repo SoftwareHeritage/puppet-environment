@@ -629,7 +629,7 @@ Vagrant.configure("2") do |global_config|
     config.vm.hostname                = "pergamon.softwareheritage.org"
     config.vm.network   :private_network, ip: "10.168.100.29", netmask: "255.255.0.0"
 
-    config.vm.synced_folder "/tmp/puppet/", "/tmp/puppet", type: 'nfs'
+    config.vm.synced_folder "/tmp/puppet/", "/etc/puppet/code", type: 'nfs'
     # ssl certificates share
     # As a puppet master, the path is different compared to the other servers
     config.vm.synced_folder "vagrant/le_certs", "/var/lib/puppet/letsencrypt_exports", type: 'nfs'
@@ -642,10 +642,10 @@ Vagrant.configure("2") do |global_config|
     end
 
     config.vm.provision "file", source: "vagrant/puppet_master/", destination: "/tmp/"
-    config.vm.provision :shell, :path => "vagrant/puppet_master/install_certs.sh"
+    config.vm.provision :shell, :path => "vagrant/puppet_master/prepare_puppet_master.sh"
 
     config.vm.provision "puppet" do |puppet|
-      puppet.environment_path = "#{environment_path}"
+      puppet.environment_path = "/etc/puppet/code/environments"
       puppet.environment = "production"
       puppet.hiera_config_path = "#{puppet.environment_path}/#{puppet.environment}/hiera.yaml"
       puppet.manifest_file = "#{manifest_file}"

@@ -11,4 +11,6 @@ if [ ! -d ${PUPPET_CERT_DIR} ]; then
   mkdir -p ${PUPPET_CERT_DIR}/
   cp -r $CERT_DIR/* ${PUPPET_CERT_DIR}
   chown -R puppet:puppet ${PUPPET_CERT_DIR}
+
+  echo "/etc/puppet/code" >> /etc/.gitignore
 fi
