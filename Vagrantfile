@@ -645,9 +645,7 @@ Vagrant.configure("2") do |global_config|
     config.vm.provision :shell, :path => "vagrant/puppet_master/prepare_puppet_master.sh"
 
     config.vm.provision "puppet" do |puppet|
-      puppet.environment_path = "/etc/puppet/code/environments"
       puppet.environment = "production"
-      puppet.hiera_config_path = "#{puppet.environment_path}/#{puppet.environment}/hiera.yaml"
       puppet.manifest_file = "#{manifest_file}"
       puppet.manifests_path = "#{manifests_path}"
       puppet.options = "#{puppet_options}"
