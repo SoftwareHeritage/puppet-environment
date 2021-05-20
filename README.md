@@ -295,13 +295,13 @@ $ vagrant up <vm name>
 If it's the first time this vm is launched, vagrant will apply the puppet configuration
 to init the server.
 
-#### Apply the puppet configuration
+#### Apply the puppet configuration (through vagrant)
 
 To speedup the tests, a scripts can be used to synchronize the changes made on the
 working directories and the puppet configuration directories used by vagrant. This
 script avoid to have to commit each change before being able to test it.
 
-In one terminal:
+In one terminal, execute the preparatory steps:
 ```
 bin/prepare-vagrant-conf
 bin/watch-vagrant-conf
@@ -321,6 +321,18 @@ In this case, the configuration will always be up-to-date with the local directo
 > **_NOTE_**: The ``watch-vagrant-conf`` script uses inotify and especially the
 > ``inotifywait`` command to detect the changes. The package ``inotify-tools`` needs to
 > be installed on the local environment.
+
+#### Apply the puppet configuration (standard puppet)
+
+The preparatory steps mentioned in the previous paragraph still applies.
+
+Providing the puppet master node ("pergamon") is up, connect to the vm to update and
+execute the puppet agent command:
+
+```
+vagrant ssh <vm-name>
+vagrant@vm-name$ sudo puppet agent --test
+```
 
 #### connect to a vm
 
