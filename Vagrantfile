@@ -6,25 +6,6 @@ environment_path = "/tmp/puppet/environments"
 manifest_file = "site.pp"
 manifests_path = "swh-site/manifests"
 puppet_options = "--fileserverconfig=/etc/puppet/fileserver.conf --verbose" # --debug --trace"
-puppet_staging_facts = {
-  "vagrant_testing" => "1",
-  "testing"         => "vagrant",
-  "deployment"      => "staging",
-  "subnet"          => "vagrant"
-}
-puppet_production_facts = {
-  "vagrant_testing" => "1",
-  "testing"         => "vagrant",
-  "deployment"      => "production",
-  "subnet"          => "vagrant",
-  "puppet_vardir"   => "/var/lib/puppet"
-}
-puppet_admin_facts = {
-  "vagrant_testing" => "1",
-  "testing"         => "vagrant",
-  "deployment"      => "admin",
-  "subnet"          => "vagrant"
-}
 # used to define the local vm template path
 puppet_env_path = ENV["SWH_PUPPET_ENVIRONMENT_HOME"]
 install_facts_script_path = "vagrant/puppet_agent/install_facts.sh"
@@ -45,1184 +26,351 @@ MSG
   exit 1
 end
 
-Vagrant.configure("2") do |global_config|
+TYPE_AGENT = "agent"
+TYPE_MASTER = "master"
+ENV_ADMIN = "admin"
+ENV_PRODUCTION = "production"
+ENV_STAGING = "staging"
+
+ENVIRONMENT_FACTS = {
+  ENV_ADMIN      => {
+    "vagrant_testing" => "1",
+    "testing"         => "vagrant",
+    "deployment"      => ENV_ADMIN,
+    "subnet"          => "vagrant"
+  },
+  ENV_PRODUCTION => {
+    "vagrant_testing" => "1",
+    "testing"         => "vagrant",
+    "deployment"      => ENV_PRODUCTION,
+    "subnet"          => "vagrant",
+    "puppet_vardir"   => "/var/lib/puppet"
+  },
+  ENV_STAGING => {
+    "vagrant_testing" => "1",
+    "testing"         => "vagrant",
+    "deployment"      => ENV_STAGING,
+    "subnet"          => "vagrant"
+  },
+}
+
+vms = {
   ################
-  ## STAGING
+  # STAGING
   ################
-  global_config.vm.define :"staging-webapp" do |config|
-    # config.ssh.insert_key = false
-    config.vm.box                     = $global_debian10_box
-    config.vm.box_url                 = $global_debian10_box_url
-    config.vm.box_check_update        = false
-    config.vm.hostname                = "webapp.internal.staging.swh.network"
-    config.vm.network   :private_network, ip: "10.168.130.30", netmask: "255.255.0.0"
-
-    config.vm.synced_folder "/tmp/puppet/", "/tmp/puppet", type: 'nfs'
-    # ssl certificates share
-    config.vm.synced_folder "vagrant/le_certs", "/var/lib/puppet/letsencrypt_exports", type: 'nfs'
-
-    config.vm.provider :libvirt do |provider|
-      provider.memory = 1024
-      provider.cpus = 2
-      # local test run: https://github.com/vagrant-libvirt/vagrant-libvirt/issues/45
-      provider.driver = 'kvm'
-    end
-    # installs fact for `puppet agent --test` cli to work within the vm
-    config.vm.provision :shell do |s|
-      s.path = install_facts_script_path
-      s.args = [
-        puppet_staging_facts["deployment"],
-        puppet_staging_facts["subnet"]
-      ]
-    end
-    config.vm.provision "puppet" do |puppet|
-      puppet.environment_path = "#{environment_path}"
-      puppet.environment = "staging"
-      puppet.hiera_config_path = "#{puppet.environment_path}/#{puppet.environment}/hiera.yaml"
-      puppet.manifest_file = "#{manifest_file}"
-      puppet.manifests_path = "#{manifests_path}"
-      puppet.options = "#{puppet_options}"
-      puppet.facter = puppet_staging_facts
-      puppet.synced_folder_type = 'nfs'
-    end
-  end
-
-  global_config.vm.define :"staging-rp0" do |config|
-    # config.ssh.insert_key = false
-    config.vm.box                     = $global_debian10_box
-    config.vm.box_url                 = $global_debian10_box_url
-    config.vm.box_check_update        = false
-    config.vm.hostname                = "rp0.internal.staging.swh.network"
-    config.vm.network   :private_network, ip: "10.168.130.20", netmask: "255.255.0.0"
-
-    config.vm.synced_folder "/tmp/puppet/", "/tmp/puppet", type: 'nfs'
-    # ssl certificates share
-    config.vm.synced_folder "vagrant/le_certs", "/var/lib/puppet/letsencrypt_exports", type: 'nfs'
-
-    config.vm.provider :libvirt do |provider|
-      provider.memory = 512
-      provider.cpus = 2
-      # local test run: https://github.com/vagrant-libvirt/vagrant-libvirt/issues/45
-      provider.driver = 'kvm'
-    end
-    # installs fact for `puppet agent --test` cli to work within the vm
-    config.vm.provision :shell do |s|
-      s.path = install_facts_script_path
-      s.args = [
-        puppet_staging_facts["deployment"],
-        puppet_staging_facts["subnet"]
-      ]
-    end
-    config.vm.provision "puppet" do |puppet|
-      puppet.environment_path = "#{environment_path}"
-      puppet.environment = "staging"
-      puppet.hiera_config_path = "#{puppet.environment_path}/#{puppet.environment}/hiera.yaml"
-      puppet.manifest_file = "#{manifest_file}"
-      puppet.manifests_path = "#{manifests_path}"
-      puppet.options = "#{puppet_options}"
-      puppet.facter = puppet_staging_facts
-      puppet.synced_folder_type = 'nfs'
-    end
-  end
-
-  global_config.vm.define :"staging-db1" do |config|
-    # config.ssh.insert_key = false
-    config.vm.box                     = $global_debian10_box
-    config.vm.box_url                 = $global_debian10_box_url
-    config.vm.box_check_update        = false
-    config.vm.hostname                = "db1.internal.staging.swh.network"
-    config.vm.network   :private_network, ip: "10.168.130.11", netmask: "255.255.0.0"
-
-    config.vm.synced_folder "/tmp/puppet/", "/tmp/puppet", type: 'nfs'
-    # ssl certificates share
-    config.vm.synced_folder "vagrant/le_certs", "/var/lib/puppet/letsencrypt_exports", type: 'nfs'
-
-    config.vm.provider :libvirt do |provider|
-      provider.memory = 512
-      provider.cpus = 2
-      # local test run: https://github.com/vagrant-libvirt/vagrant-libvirt/issues/45
-      provider.driver = 'kvm'
-    end
-    # installs fact for `puppet agent --test` cli to work within the vm
-    config.vm.provision :shell do |s|
-      s.path = install_facts_script_path
-      s.args = [
-        puppet_staging_facts["deployment"],
-        puppet_staging_facts["subnet"]
-      ]
-    end
-    config.vm.provision "puppet" do |puppet|
-      puppet.environment_path = "#{environment_path}"
-      puppet.environment = "staging"
-      puppet.hiera_config_path = "#{puppet.environment_path}/#{puppet.environment}/hiera.yaml"
-      puppet.manifest_file = "#{manifest_file}"
-      puppet.manifests_path = "#{manifests_path}"
-      puppet.options = "#{puppet_options}"
-      puppet.facter = puppet_staging_facts
-      puppet.synced_folder_type = 'nfs'
-    end
-  end
-
-  global_config.vm.define :"staging-storage1" do |config|
-    # config.ssh.insert_key = false
-    config.vm.box                     = $global_debian10_box
-    config.vm.box_url                 = $global_debian10_box_url
-    config.vm.box_check_update        = false
-    config.vm.hostname                = "storage1.internal.staging.swh.network"
-    config.vm.network   :private_network, ip: "10.168.130.41", netmask: "255.255.0.0"
-
-    config.vm.synced_folder "/tmp/puppet/", "/tmp/puppet", type: 'nfs'
-    # ssl certificates share
-    config.vm.synced_folder "vagrant/le_certs", "/var/lib/puppet/letsencrypt_exports", type: 'nfs'
-
-    config.vm.provider :libvirt do |provider|
-      provider.memory = 1024
-      provider.cpus = 2
-      # local test run: https://github.com/vagrant-libvirt/vagrant-libvirt/issues/45
-      provider.driver = 'kvm'
-    end
-    # installs fact for `puppet agent --test` cli to work within the vm
-    config.vm.provision :shell do |s|
-      s.path = install_facts_script_path
-      s.args = [
-        puppet_staging_facts["deployment"],
-        puppet_staging_facts["subnet"]
-      ]
-    end
-    config.vm.provision "puppet" do |puppet|
-      puppet.environment_path = "#{environment_path}"
-      puppet.environment = "staging"
-      puppet.hiera_config_path = "#{puppet.environment_path}/#{puppet.environment}/hiera.yaml"
-      puppet.manifest_file = "#{manifest_file}"
-      puppet.manifests_path = "#{manifests_path}"
-      puppet.options = "#{puppet_options}"
-      puppet.facter = puppet_staging_facts
-      puppet.synced_folder_type = 'nfs'
-    end
-  end
-
-  global_config.vm.define :"staging-objstorage0" do |config|
-    # config.ssh.insert_key = false
-    config.vm.box                     = $global_debian10_box
-    config.vm.box_url                 = $global_debian10_box_url
-    config.vm.box_check_update        = false
-    config.vm.hostname                = "objstorage0.internal.staging.swh.network"
-    config.vm.network   :private_network, ip: "10.168.130.110", netmask: "255.255.0.0"
-
-    config.vm.synced_folder "/tmp/puppet/", "/tmp/puppet", type: 'nfs'
-    # ssl certificates share
-    config.vm.synced_folder "vagrant/le_certs", "/var/lib/puppet/letsencrypt_exports", type: 'nfs'
-
-    config.vm.provider :libvirt do |provider|
-      provider.memory = 512
-      provider.cpus = 2
-      # local test run: https://github.com/vagrant-libvirt/vagrant-libvirt/issues/45
-      provider.driver = 'kvm'
-    end
-    # installs fact for `puppet agent --test` cli to work within the vm
-    config.vm.provision :shell do |s|
-      s.path = install_facts_script_path
-      s.args = [
-        puppet_staging_facts["deployment"],
-        puppet_staging_facts["subnet"]
-      ]
-    end
-    config.vm.provision "puppet" do |puppet|
-      puppet.environment_path = "#{environment_path}"
-      puppet.environment = "staging"
-      puppet.hiera_config_path = "#{puppet.environment_path}/#{puppet.environment}/hiera.yaml"
-      puppet.manifest_file = "#{manifest_file}"
-      puppet.manifests_path = "#{manifests_path}"
-      puppet.options = "#{puppet_options}"
-      puppet.facter = puppet_staging_facts
-      puppet.synced_folder_type = 'nfs'
-    end
-  end
-
-  global_config.vm.define :"staging-deposit" do |config|
-    config.vm.box                     = $global_debian10_box
-    config.vm.box_url                 = $global_debian10_box_url
-    config.vm.box_check_update        = false
-    config.vm.hostname                = "deposit.internal.staging.swh.network"
-    config.vm.network   :private_network, ip: "10.168.130.31", netmask: "255.255.0.0"
-
-    config.vm.synced_folder "/tmp/puppet/", "/tmp/puppet", type: 'nfs'
-    # ssl certificates share
-    config.vm.synced_folder "vagrant/le_certs", "/var/lib/puppet/letsencrypt_exports", type: 'nfs'
-
-    config.vm.provider :libvirt do |provider|
-      provider.memory = 512
-      provider.cpus = 2
-      # local test run: https://github.com/vagrant-libvirt/vagrant-libvirt/issues/45
-      provider.driver = 'kvm'
-    end
-    # installs fact for `puppet agent --test` cli to work within the vm
-    config.vm.provision :shell do |s|
-      s.path = install_facts_script_path
-      s.args = [
-        puppet_staging_facts["deployment"],
-        puppet_staging_facts["subnet"]
-      ]
-    end
-    config.vm.provision "puppet" do |puppet|
-      puppet.environment_path = "#{environment_path}"
-      puppet.environment = "staging"
-      puppet.hiera_config_path = "#{puppet.environment_path}/#{puppet.environment}/hiera.yaml"
-      puppet.manifest_file = "#{manifest_file}"
-      puppet.manifests_path = "#{manifests_path}"
-      puppet.options = "#{puppet_options}"
-      puppet.facter = puppet_staging_facts
-      puppet.synced_folder_type = 'nfs'
-    end
-  end
-
-  global_config.vm.define :"staging-worker0" do |config|
-    config.vm.box                     = $global_debian10_box
-    config.vm.box_url                 = $global_debian10_box_url
-    config.vm.hostname                = "worker0.internal.staging.swh.network"
-    config.vm.network   :private_network, ip: "10.168.130.100", netmask: "255.255.0.0"
-
-    config.vm.synced_folder "/tmp/puppet/", "/tmp/puppet", type: 'nfs'
-    # ssl certificates share
-    config.vm.synced_folder "vagrant/le_certs", "/var/lib/puppet/letsencrypt_exports", type: 'nfs'
-
-    config.vm.provider :libvirt do |provider|
-      provider.memory = 4096
-      provider.cpus = 2
-      # local test run: https://github.com/vagrant-libvirt/vagrant-libvirt/issues/45
-      provider.driver = 'kvm'
-    end
-    # installs fact for `puppet agent --test` cli to work within the vm
-    config.vm.provision :shell do |s|
-      s.path = install_facts_script_path
-      s.args = [
-        puppet_staging_facts["deployment"],
-        puppet_staging_facts["subnet"]
-      ]
-    end
-    config.vm.provision "puppet" do |puppet|
-      puppet.environment_path = "#{environment_path}"
-      puppet.environment = "staging"
-      puppet.hiera_config_path = "#{puppet.environment_path}/#{puppet.environment}/hiera.yaml"
-      puppet.manifest_file = "#{manifest_file}"
-      puppet.manifests_path = "#{manifests_path}"
-      puppet.options = "#{puppet_options}"
-      puppet.facter = puppet_staging_facts
-      puppet.synced_folder_type = 'nfs'
-    end
-  end
-
-  # indexer worker
-  global_config.vm.define :"staging-worker3" do |config|
-    config.vm.box                     = $global_debian10_box
-    config.vm.box_url                 = $global_debian10_box_url
-    config.vm.hostname                = "worker3.internal.staging.swh.network"
-    config.vm.network   :private_network, ip: "10.168.130.103", netmask: "255.255.0.0"
-
-    config.vm.synced_folder "/tmp/puppet/", "/tmp/puppet", type: 'nfs'
-    # ssl certificates share
-    config.vm.synced_folder "vagrant/le_certs", "/var/lib/puppet/letsencrypt_exports", type: 'nfs'
-
-    config.vm.provider :libvirt do |provider|
-      provider.memory = 4096
-      provider.cpus = 2
-      # local test run: https://github.com/vagrant-libvirt/vagrant-libvirt/issues/45
-      provider.driver = 'kvm'
-    end
-    # installs fact for `puppet agent --test` cli to work within the vm
-    config.vm.provision :shell do |s|
-      s.path = install_facts_script_path
-      s.args = [
-        puppet_staging_facts["deployment"],
-        puppet_staging_facts["subnet"]
-      ]
-    end
-    config.vm.provision "puppet" do |puppet|
-      puppet.environment_path = "#{environment_path}"
-      puppet.environment = "staging"
-      puppet.hiera_config_path = "#{puppet.environment_path}/#{puppet.environment}/hiera.yaml"
-      puppet.manifest_file = "#{manifest_file}"
-      puppet.manifests_path = "#{manifests_path}"
-      puppet.options = "#{puppet_options}"
-      puppet.facter = puppet_staging_facts
-      puppet.synced_folder_type = 'nfs'
-    end
-  end
-
-  global_config.vm.define :"staging-scheduler0" do |config|
-    config.vm.box                     = $global_debian10_box
-    config.vm.box_url                 = $global_debian10_box_url
-    config.vm.hostname                = "scheduler0.internal.staging.swh.network"
-    config.vm.network   :private_network, ip: "10.168.130.50", netmask: "255.255.0.0"
-
-    config.vm.synced_folder "/tmp/puppet/", "/tmp/puppet", type: 'nfs'
-    # ssl certificates share
-    config.vm.synced_folder "vagrant/le_certs", "/var/lib/puppet/letsencrypt_exports", type: 'nfs'
-
-    config.vm.provider :libvirt do |provider|
-      provider.memory = 1024
-      provider.cpus = 2
-      # local test run: https://github.com/vagrant-libvirt/vagrant-libvirt/issues/45
-      provider.driver = 'kvm'
-    end
-
-    # installs fact for `puppet agent --test` cli to work within the vm
-    config.vm.provision :shell do |s|
-      s.path = install_facts_script_path
-      s.args = [
-        puppet_staging_facts["deployment"],
-        puppet_staging_facts["subnet"]
-      ]
-    end
-    config.vm.provision "puppet" do |puppet|
-      puppet.environment_path = "#{environment_path}"
-      puppet.environment = "staging"
-      puppet.hiera_config_path = "#{puppet.environment_path}/#{puppet.environment}/hiera.yaml"
-      puppet.manifest_file = "#{manifest_file}"
-      puppet.manifests_path = "#{manifests_path}"
-      puppet.options = "#{puppet_options}"
-      puppet.facter = puppet_staging_facts
-      puppet.synced_folder_type = 'nfs'
-    end
-  end
-
-  global_config.vm.define :"staging-journal0" do |config|
-    config.vm.box                     = $global_debian10_box
-    config.vm.box_url                 = $global_debian10_box_url
-    config.vm.hostname                = "journal0.internal.staging.swh.network"
-    config.vm.network   :private_network, ip: "10.168.130.70", netmask: "255.255.0.0"
-
-    config.vm.synced_folder "/tmp/puppet/", "/tmp/puppet", type: 'nfs'
-    # ssl certificates share
-    config.vm.synced_folder "vagrant/le_certs", "/var/lib/puppet/letsencrypt_exports", type: 'nfs'
-
-    config.vm.provider :libvirt do |provider|
-      provider.memory = 1024
-      provider.cpus = 2
-      # local test run: https://github.com/vagrant-libvirt/vagrant-libvirt/issues/45
-      provider.driver = 'kvm'
-    end
-
-    # installs fact for `puppet agent --test` cli to work within the vm
-    config.vm.provision :shell do |s|
-      s.path = install_facts_script_path
-      s.args = [
-        puppet_staging_facts["deployment"],
-        puppet_staging_facts["subnet"]
-      ]
-    end
-    config.vm.provision "puppet" do |puppet|
-      puppet.environment_path = "#{environment_path}"
-      puppet.environment = "staging"
-      puppet.hiera_config_path = "#{puppet.environment_path}/#{puppet.environment}/hiera.yaml"
-      puppet.manifest_file = "#{manifest_file}"
-      puppet.manifests_path = "#{manifests_path}"
-      puppet.options = "#{puppet_options}"
-      puppet.facter = puppet_staging_facts
-      puppet.synced_folder_type = 'nfs'
-    end
-  end
-
-  global_config.vm.define :"staging-esnode0" do |config|
-    # config.ssh.insert_key = false
-    config.vm.box                     = $global_debian10_box
-    config.vm.box_url                 = $global_debian10_box_url
-    config.vm.box_check_update        = false
-    config.vm.hostname                = "search-esnode0.internal.staging.swh.network"
-    config.vm.network   :private_network, ip: "10.168.130.80", netmask: "255.255.0.0"
-
-    config.vm.synced_folder "/tmp/puppet/", "/tmp/puppet", type: 'nfs'
-    # ssl certificates share
-    config.vm.synced_folder "vagrant/le_certs", "/var/lib/puppet/letsencrypt_exports", type: 'nfs'
-
-    config.vm.provider :libvirt do |provider|
-      provider.memory = 1024
-      provider.cpus = 2
-      # local test run: https://github.com/vagrant-libvirt/vagrant-libvirt/issues/45
-      provider.driver = 'kvm'
-    end
-    # installs fact for `puppet agent --test` cli to work within the vm
-    config.vm.provision :shell do |s|
-      s.path = install_facts_script_path
-      s.args = [
-        puppet_staging_facts["deployment"],
-        puppet_staging_facts["subnet"]
-      ]
-    end
-    config.vm.provision "puppet" do |puppet|
-      puppet.environment_path = "#{environment_path}"
-      puppet.environment = "staging"
-      puppet.hiera_config_path = "#{puppet.environment_path}/#{puppet.environment}/hiera.yaml"
-      puppet.manifest_file = "#{manifest_file}"
-      puppet.manifests_path = "#{manifests_path}"
-      puppet.options = "#{puppet_options}"
-      puppet.facter = puppet_staging_facts
-      puppet.synced_folder_type = 'nfs'
-    end
-  end
-
-  global_config.vm.define :"staging-search0" do |config|
-    # config.ssh.insert_key = false
-    config.vm.box                     = $global_debian10_box
-    config.vm.box_url                 = $global_debian10_box_url
-    config.vm.box_check_update        = false
-    config.vm.hostname                = "search0.internal.staging.swh.network"
-    config.vm.network   :private_network, ip: "10.168.130.90", netmask: "255.255.0.0"
-
-    config.vm.synced_folder "/tmp/puppet/", "/tmp/puppet", type: 'nfs'
-    # ssl certificates share
-    config.vm.synced_folder "vagrant/le_certs", "/var/lib/puppet/letsencrypt_exports", type: 'nfs'
-
-    config.vm.provider :libvirt do |provider|
-      provider.memory = 1024
-      provider.cpus = 2
-      # local test run: https://github.com/vagrant-libvirt/vagrant-libvirt/issues/45
-      provider.driver = 'kvm'
-    end
-    # installs fact for `puppet agent --test` cli to work within the vm
-    config.vm.provision :shell do |s|
-      s.path = install_facts_script_path
-      s.args = [
-        puppet_staging_facts["deployment"],
-        puppet_staging_facts["subnet"]
-      ]
-    end
-    config.vm.provision "puppet" do |puppet|
-      puppet.environment_path = "#{environment_path}"
-      puppet.environment = "staging"
-      puppet.hiera_config_path = "#{puppet.environment_path}/#{puppet.environment}/hiera.yaml"
-      puppet.manifest_file = "#{manifest_file}"
-      puppet.manifests_path = "#{manifests_path}"
-      puppet.options = "#{puppet_options}"
-      puppet.facter = puppet_staging_facts
-      puppet.synced_folder_type = 'nfs'
-    end
-  end
-
-  global_config.vm.define :"staging-counters0" do |config|
-    # config.ssh.insert_key = false
-    config.vm.box                     = $global_debian10_box
-    config.vm.box_url                 = $global_debian10_box_url
-    config.vm.box_check_update        = false
-    config.vm.hostname                = "counters0.internal.staging.swh.network"
-    config.vm.network   :private_network, ip: "10.168.130.95", netmask: "255.255.0.0"
-
-    config.vm.synced_folder "/tmp/puppet/", "/tmp/puppet", type: 'nfs'
-    # ssl certificates share
-    config.vm.synced_folder "vagrant/le_certs", "/var/lib/puppet/letsencrypt_exports", type: 'nfs'
-
-    config.vm.provider :libvirt do |provider|
-      provider.memory = 1024
-      provider.cpus = 2
-      # local test run: https://github.com/vagrant-libvirt/vagrant-libvirt/issues/45
-      provider.driver = 'kvm'
-    end
-    # installs fact for `puppet agent --test` cli to work within the vm
-    config.vm.provision :shell do |s|
-      s.path = install_facts_script_path
-      s.args = [
-        puppet_staging_facts["deployment"],
-        puppet_staging_facts["subnet"]
-      ]
-    end
-    config.vm.provision "puppet" do |puppet|
-      puppet.environment_path = "#{environment_path}"
-      puppet.environment = "staging"
-      puppet.hiera_config_path = "#{puppet.environment_path}/#{puppet.environment}/hiera.yaml"
-      puppet.manifest_file = "#{manifest_file}"
-      puppet.manifests_path = "#{manifests_path}"
-      puppet.options = "#{puppet_options}"
-      puppet.facter = puppet_staging_facts
-      puppet.synced_folder_type = 'nfs'
-    end
-  end
-
-  global_config.vm.define :"staging-mirror-test" do |config|
-    # config.ssh.insert_key = false
-    config.vm.box                     = $global_debian10_box
-    config.vm.box_url                 = $global_debian10_box_url
-    config.vm.box_check_update        = false
-    config.vm.hostname                = "mirror-test.internal.staging.swh.network"
-    config.vm.network   :private_network, ip: "10.168.130.160", netmask: "255.255.0.0"
-
-    config.vm.synced_folder "/tmp/puppet/", "/tmp/puppet", type: 'nfs'
-    # ssl certificates share
-    config.vm.synced_folder "vagrant/le_certs", "/var/lib/puppet/letsencrypt_exports", type: 'nfs'
-
-    config.vm.provider :libvirt do |provider|
-      provider.memory = 1024
-      provider.cpus = 2
-      # local test run: https://github.com/vagrant-libvirt/vagrant-libvirt/issues/45
-      provider.driver = 'kvm'
-    end
-    # installs fact for `puppet agent --test` cli to work within the vm
-    config.vm.provision :shell do |s|
-      s.path = install_facts_script_path
-      s.args = [
-        puppet_staging_facts["deployment"],
-        puppet_staging_facts["subnet"]
-      ]
-    end
-    config.vm.provision "puppet" do |puppet|
-      puppet.environment_path = "#{environment_path}"
-      puppet.environment = "staging"
-      puppet.hiera_config_path = "#{puppet.environment_path}/#{puppet.environment}/hiera.yaml"
-      puppet.manifest_file = "#{manifest_file}"
-      puppet.manifests_path = "#{manifests_path}"
-      puppet.options = "#{puppet_options}"
-      puppet.facter = puppet_staging_facts
-      puppet.synced_folder_type = 'nfs'
-    end
-  end
-
+  "staging-webapp" => {
+    :hostname    => "webapp.internal.staging.swh.network",
+    :ip          => "10.168.130.30",
+    :type        => TYPE_AGENT,
+    :memory      => 1024,
+    :cpus        => 2,
+    :environment => ENV_STAGING,
+  },
+  "staging-rp0" => {
+    :hostname    => "rp0.internal.staging.swh.network",
+    :ip          => "10.168.130.20",
+    :type        => TYPE_AGENT,
+    :memory      => 512,
+    :cpus        => 2,
+    :environment => ENV_STAGING,
+  },
+  "staging-db1" => {
+    :hostname    => "db1.internal.staging.swh.network",
+    :ip          => "10.168.130.11",
+    :type        => TYPE_AGENT,
+    :memory      => 512,
+    :cpus        => 2,
+    :environment => ENV_STAGING,
+  },
+  "staging-storage1" => {
+    :hostname    => "storage1.internal.staging.swh.network",
+    :ip          => "10.168.130.41",
+    :type        => TYPE_AGENT,
+    :memory      => 512,
+    :cpus        => 2,
+    :environment => ENV_STAGING,
+  },
+  "staging-objstorage0" => {
+    :hostname    => "objstorage0.internal.staging.swh.network",
+    :ip          => "10.168.130.110",
+    :type        => TYPE_AGENT,
+    :memory      => 512,
+    :cpus        => 2,
+    :environment => ENV_STAGING,
+  },
+  "staging-deposit" => {
+    :hostname    => "deposit.internal.staging.swh.network",
+    :ip          => "10.168.130.31",
+    :type        => TYPE_AGENT,
+    :memory      => 512,
+    :cpus        => 2,
+    :environment => ENV_STAGING,
+  },
+  "staging-worker0" => {
+    :hostname    => "worker0.internal.staging.swh.network",
+    :ip          => "10.168.130.100",
+    :type        => TYPE_AGENT,
+    :memory      => 4096,
+    :cpus        => 2,
+    :environment => ENV_STAGING,
+  },
+  "staging-worker3" => {
+    :hostname    => "worker0.internal.staging.swh.network",
+    :ip          => "10.168.130.103",
+    :type        => TYPE_AGENT,
+    :memory      => 4096,
+    :cpus        => 2,
+    :environment => ENV_STAGING,
+  },
+  "staging-scheduler0" => {
+    :hostname    => "scheduler0.internal.staging.swh.network",
+    :ip          => "10.168.130.50",
+    :type        => TYPE_AGENT,
+    :memory      => 1024,
+    :cpus        => 2,
+    :environment => ENV_STAGING,
+  },
+  "staging-journal0" => {
+    :hostname    => "journal0.internal.staging.swh.network",
+    :ip          => "10.168.130.70",
+    :type        => TYPE_AGENT,
+    :memory      => 1024,
+    :cpus        => 2,
+    :environment => ENV_STAGING,
+  },
+  "staging-esnode0" => {
+    :hostname    => "search-esnode0.internal.staging.swh.network",
+    :ip          => "10.168.130.80",
+    :type        => TYPE_AGENT,
+    :memory      => 1024,
+    :cpus        => 2,
+    :environment => ENV_STAGING,
+  },
+  "staging-search0" => {
+    :hostname    => "search-search0.internal.staging.swh.network",
+    :ip          => "10.168.130.90",
+    :type        => TYPE_AGENT,
+    :memory      => 1024,
+    :cpus        => 2,
+    :environment => ENV_STAGING,
+  },
+  "staging-counters0" => {
+    :hostname    => "counters0.internal.staging.swh.network",
+    :ip          => "10.168.130.95",
+    :type        => TYPE_AGENT,
+    :memory      => 1024,
+    :cpus        => 2,
+    :environment => ENV_STAGING,
+  },
+  "staging-mirror-test" => {
+    :hostname    => "mirror-test.internal.staging.swh.network",
+    :ip          => "10.168.130.160",
+    :type        => TYPE_AGENT,
+    :memory      => 1024,
+    :cpus        => 2,
+    :environment => ENV_STAGING,
+  },
   ################
   # ADMIN
   ################
-  global_config.vm.define :"bojimans" do |config|
-    # config.ssh.insert_key = false
-
-    config.vm.box                     = $global_debian10_box
-    config.vm.box_url                 = $global_debian10_box_url
-    config.vm.box_check_update        = false
-    config.vm.hostname                = "bojimans.internal.softwareheritage.org"
-    config.vm.network   :private_network, ip: "10.168.100.199", netmask: "255.255.0.0"
-
-    config.vm.synced_folder "/tmp/puppet/", "/tmp/puppet", type: 'nfs'
-    # ssl certificates share
-    config.vm.synced_folder "vagrant/le_certs", "/var/lib/puppet/letsencrypt_exports", type: 'nfs'
-
-    config.vm.provider :libvirt do |provider|
-      provider.memory = 512
-      provider.cpus = 2
-      # local test run: https://github.com/vagrant-libvirt/vagrant-libvirt/issues/45
-      provider.driver = 'kvm'
-    end
-
-    # installs fact for `puppet agent --test` cli to work within the vm
-    config.vm.provision :shell do |s|
-      s.path = install_facts_script_path
-      s.args = [
-        puppet_production_facts["deployment"],
-        puppet_production_facts["subnet"]
-      ]
-    end
-    config.vm.provision "puppet" do |puppet|
-      puppet.environment_path = "#{environment_path}"
-      puppet.environment = "production"
-      puppet.hiera_config_path = "#{puppet.environment_path}/#{puppet.environment}/hiera.yaml"
-      puppet.manifest_file = "#{manifest_file}"
-      puppet.manifests_path = "#{manifests_path}"
-      puppet.options = "#{puppet_options}"
-      puppet.facter = puppet_production_facts
-      puppet.synced_folder_type = 'nfs'
-    end
-  end
-
-  global_config.vm.define :"pergamon" do |config|
-    # config.ssh.insert_key = false
-
-    config.vm.box                     = $global_debian10_box
-    config.vm.box_url                 = $global_debian10_box_url
-    config.vm.box_check_update        = false
-    config.vm.hostname                = "pergamon.softwareheritage.org"
-    config.vm.network   :private_network, ip: "10.168.100.29", netmask: "255.255.0.0"
-
-    config.vm.synced_folder "/tmp/puppet/", "/etc/puppet/code", type: 'nfs'
-    # ssl certificates share
-    # As a puppet master, the path is different compared to the other servers
-    config.vm.synced_folder "vagrant/le_certs", "/var/lib/puppet/letsencrypt_exports", type: 'nfs'
-
-    config.vm.provider :libvirt do |provider|
-      provider.memory = 3192
-      provider.cpus = 2
-      # local test run: https://github.com/vagrant-libvirt/vagrant-libvirt/issues/45
-      provider.driver = 'kvm'
-    end
-
-    config.vm.provision "file", source: "vagrant/puppet_master/", destination: "/tmp/"
-    config.vm.provision :shell, :path => "vagrant/puppet_master/prepare_puppet_master.sh"
-
-    # installs fact for `puppet agent --test` cli to work within the vm
-    config.vm.provision :shell do |s|
-      s.path = install_facts_script_path
-      s.args = [
-        puppet_production_facts["deployment"],
-        puppet_production_facts["subnet"]
-      ]
-    end
-    config.vm.provision "puppet" do |puppet|
-      puppet.environment = "production"
-      puppet.manifest_file = "#{manifest_file}"
-      puppet.manifests_path = "#{manifests_path}"
-      puppet.options = "#{puppet_options}"
-      puppet.facter = puppet_production_facts
-      puppet.synced_folder_type = 'nfs'
-    end
-  end
-
+  "admin-bardo" => {
+    :hostname    => "bardo.internal.admin.swh.network",
+    :ip          => "10.168.50.10",
+    :type        => TYPE_AGENT,
+    :memory      => 4096,
+    :cpus        => 2,
+    :environment => ENV_ADMIN,
+  },
+  "admin-rp1" => {
+    :hostname    => "rp1.internal.admin.swh.network",
+    :ip          => "10.168.50.20",
+    :type        => TYPE_AGENT,
+    :memory      => 4096,
+    :cpus        => 2,
+    :environment => ENV_ADMIN,
+  },
   ################
-  ## PRODUCTION
+  # PUPPET MASTER
   ################
-  global_config.vm.define :"prod-worker01" do |config|
-    config.vm.box                     = $global_debian10_box
-    config.vm.box_url                 = $global_debian10_box_url
-    config.vm.hostname                = "worker01.softwareheritage.org"
-    config.vm.network   :private_network, ip: "10.168.100.21", netmask: "255.255.0.0"
-
-    config.vm.synced_folder "/tmp/puppet/", "/tmp/puppet", type: 'nfs'
-    # ssl certificates share
-    config.vm.synced_folder "vagrant/le_certs", "/var/lib/puppet/letsencrypt_exports", type: 'nfs'
-
-    config.vm.provider :libvirt do |provider|
-      provider.memory = 4096
-      provider.cpus = 2
-      # local test run: https://github.com/vagrant-libvirt/vagrant-libvirt/issues/45
-      provider.driver = 'kvm'
-    end
-
-    # installs fact for `puppet agent --test` cli to work within the vm
-    config.vm.provision :shell do |s|
-      s.path = install_facts_script_path
-      s.args = [
-        puppet_production_facts["deployment"],
-        puppet_production_facts["subnet"]
-      ]
-    end
-    config.vm.provision "puppet" do |puppet|
-      puppet.environment_path = "#{environment_path}"
-      puppet.environment = "production"
-      puppet.hiera_config_path = "#{puppet.environment_path}/#{puppet.environment}/hiera.yaml"
-      puppet.manifest_file = "#{manifest_file}"
-      puppet.manifests_path = "#{manifests_path}"
-      puppet.options = "#{puppet_options}"
-      puppet.facter = puppet_production_facts
-      puppet.synced_folder_type = 'nfs'
-    end
-  end
-
-  global_config.vm.define :"esnode1" do |config|
-    config.vm.box                     = $global_debian10_box
-    config.vm.box_url                 = $global_debian10_box_url
-    config.vm.box_check_update        = false
-    config.vm.hostname                = "esnode1.internal.softwareheritage.org"
-    config.vm.network   :private_network, ip: "10.168.100.61", netmask: "255.255.0.0"
-
-    config.vm.synced_folder "/tmp/puppet/", "/tmp/puppet", type: 'nfs'
-    # ssl certificates share
-    config.vm.synced_folder "vagrant/le_certs", "/var/lib/puppet/letsencrypt_exports", type: 'nfs'
-
-    config.vm.provider :libvirt do |provider|
-      provider.memory = 1024
-      provider.cpus = 2
-      # local test run: https://github.com/vagrant-libvirt/vagrant-libvirt/issues/45
-      provider.driver = 'kvm'
-    end
-    # installs fact for `puppet agent --test` cli to work within the vm
-    config.vm.provision :shell do |s|
-      s.path = install_facts_script_path
-      s.args = [
-        puppet_production_facts["deployment"],
-        puppet_production_facts["subnet"]
-      ]
-    end
-    config.vm.provision "puppet" do |puppet|
-      puppet.environment_path = "#{environment_path}"
-      puppet.environment = "production"
-      puppet.hiera_config_path = "#{puppet.environment_path}/#{puppet.environment}/hiera.yaml"
-      puppet.manifest_file = "#{manifest_file}"
-      puppet.manifests_path = "#{manifests_path}"
-      puppet.options = "#{puppet_options}"
-      puppet.facter = puppet_production_facts
-      puppet.synced_folder_type = 'nfs'
-    end
-  end
-
-  global_config.vm.define :"esnode2" do |config|
-    config.vm.box                     = $global_debian10_box
-    config.vm.box_url                 = $global_debian10_box_url
-    config.vm.box_check_update        = false
-    config.vm.hostname                = "esnode2.internal.softwareheritage.org"
-    config.vm.network   :private_network, ip: "10.168.100.62", netmask: "255.255.0.0"
-
-    config.vm.synced_folder "/tmp/puppet/", "/tmp/puppet", type: 'nfs'
-    # ssl certificates share
-    config.vm.synced_folder "vagrant/le_certs", "/var/lib/puppet/letsencrypt_exports", type: 'nfs'
-
-    config.vm.provider :libvirt do |provider|
-      provider.memory = 1024
-      provider.cpus = 2
-      # local test run: https://github.com/vagrant-libvirt/vagrant-libvirt/issues/45
-      provider.driver = 'kvm'
-    end
-    # installs fact for `puppet agent --test` cli to work within the vm
-    config.vm.provision :shell do |s|
-      s.path = install_facts_script_path
-      s.args = [
-        puppet_production_facts["deployment"],
-        puppet_production_facts["subnet"]
-      ]
-    end
-    config.vm.provision "puppet" do |puppet|
-      puppet.environment_path = "#{environment_path}"
-      puppet.environment = "production"
-      puppet.hiera_config_path = "#{puppet.environment_path}/#{puppet.environment}/hiera.yaml"
-      puppet.manifest_file = "#{manifest_file}"
-      puppet.manifests_path = "#{manifests_path}"
-      puppet.options = "#{puppet_options}"
-      puppet.facter = puppet_production_facts
-      puppet.synced_folder_type = 'nfs'
-    end
-  end
-
-  global_config.vm.define :"esnode3" do |config|
-    config.vm.box                     = $global_debian10_box
-    config.vm.box_url                 = $global_debian10_box_url
-    config.vm.box_check_update        = false
-    config.vm.hostname                = "esnode3.internal.softwareheritage.org"
-    config.vm.network   :private_network, ip: "10.168.100.63", netmask: "255.255.0.0"
-
-    config.vm.synced_folder "/tmp/puppet/", "/tmp/puppet", type: 'nfs'
-    # ssl certificates share
-    config.vm.synced_folder "vagrant/le_certs", "/var/lib/puppet/letsencrypt_exports", type: 'nfs'
-
-    config.vm.provider :libvirt do |provider|
-      provider.memory = 1024
-      provider.cpus = 2
-      # local test run: https://github.com/vagrant-libvirt/vagrant-libvirt/issues/45
-      provider.driver = 'kvm'
-    end
-    # installs fact for `puppet agent --test` cli to work within the vm
-    config.vm.provision :shell do |s|
-      s.path = install_facts_script_path
-      s.args = [
-        puppet_production_facts["deployment"],
-        puppet_production_facts["subnet"]
-      ]
-    end
-    config.vm.provision "puppet" do |puppet|
-      puppet.environment_path = "production"
-      puppet.environment = "production"
-      puppet.hiera_config_path = "#{puppet.environment_path}/#{puppet.environment}/hiera.yaml"
-      puppet.manifest_file = "#{manifest_file}"
-      puppet.manifests_path = "#{manifests_path}"
-      puppet.options = "#{puppet_options}"
-      puppet.facter = puppet_production_facts
-      puppet.synced_folder_type = 'nfs'
-    end
-  end
-
-  global_config.vm.define :"logstash" do |config|
-    config.vm.box                     = $global_debian10_box
-    config.vm.box_url                 = $global_debian10_box_url
-    config.vm.hostname                = "logstash0.internal.softwareheritage.org"
-    config.vm.network   :private_network, ip: "10.168.100.19", netmask: "255.255.0.0"
-
-    config.vm.synced_folder "/tmp/puppet/", "/tmp/puppet", type: 'nfs'
-    # ssl certificates share
-    config.vm.synced_folder "vagrant/le_certs", "/var/lib/puppet/letsencrypt_exports", type: 'nfs'
-
-    config.vm.provider :libvirt do |provider|
-      provider.memory = 2048
-      provider.cpus = 2
-      # local test run: https://github.com/vagrant-libvirt/vagrant-libvirt/issues/45
-      provider.driver = 'kvm'
-    end
-
-    # installs fact for `puppet agent --test` cli to work within the vm
-    config.vm.provision :shell do |s|
-      s.path = install_facts_script_path
-      s.args = [
-        puppet_production_facts["deployment"],
-        puppet_production_facts["subnet"]
-      ]
-    end
-    config.vm.provision "puppet" do |puppet|
-      puppet.environment_path = "#{environment_path}"
-      puppet.environment = "production"
-      puppet.hiera_config_path = "#{puppet.environment_path}/#{puppet.environment}/hiera.yaml"
-      puppet.manifest_file = "#{manifest_file}"
-      puppet.manifests_path = "#{manifests_path}"
-      puppet.options = "#{puppet_options}"
-      puppet.facter = puppet_production_facts
-      puppet.synced_folder_type = 'nfs'
-    end
-  end
-
-  global_config.vm.define :"admin-bardo" do |config|
-    config.vm.box                     = $global_debian10_box
-    config.vm.box_url                 = $global_debian10_box_url
-    config.vm.hostname                = "bardo.internal.admin.swh.network"
-    config.vm.network   :private_network, ip: "10.168.50.10", netmask: "255.255.0.0"
-
-    config.vm.synced_folder "/tmp/puppet/", "/tmp/puppet", type: 'nfs'
-    # ssl certificates share
-    config.vm.synced_folder "vagrant/le_certs", "/var/lib/puppet/letsencrypt_exports", type: 'nfs'
-
-    config.vm.provider :libvirt do |provider|
-      provider.memory = 4096
-      provider.cpus = 2
-      # local test run: https://github.com/vagrant-libvirt/vagrant-libvirt/issues/45
-      provider.driver = 'kvm'
-    end
-
-    # installs fact for `puppet agent --test` cli to work within the vm
-    config.vm.provision :shell do |s|
-      s.path = install_facts_script_path
-      s.args = [
-        puppet_admin_facts["deployment"],
-        puppet_admin_facts["subnet"]
-      ]
-    end
-    config.vm.provision "puppet" do |puppet|
-      puppet.environment_path = "#{environment_path}"
-      puppet.environment = "production"
-      puppet.hiera_config_path = "#{puppet.environment_path}/#{puppet.environment}/hiera.yaml"
-      puppet.manifest_file = "#{manifest_file}"
-      puppet.manifests_path = "#{manifests_path}"
-      puppet.options = "#{puppet_options}"
-      puppet.facter = puppet_admin_facts
-      puppet.synced_folder_type = 'nfs'
-    end
-  end
-
-  global_config.vm.define :"admin-rp1" do |config|
-    config.vm.box                     = $global_debian10_box
-    config.vm.box_url                 = $global_debian10_box_url
-    config.vm.hostname                = "rp1.internal.admin.swh.network"
-    config.vm.network   :private_network, ip: "10.168.50.20", netmask: "255.255.0.0"
-
-    config.vm.synced_folder "/tmp/puppet/", "/tmp/puppet", type: 'nfs'
-    # ssl certificates share
-    config.vm.synced_folder "vagrant/le_certs", "/var/lib/puppet/letsencrypt_exports", type: 'nfs'
-
-    config.vm.provider :libvirt do |provider|
-      provider.memory = 4096
-      provider.cpus = 2
-      # local test run: https://github.com/vagrant-libvirt/vagrant-libvirt/issues/45
-      provider.driver = 'kvm'
-    end
-
-    # installs fact for `puppet agent --test` cli to work within the vm
-    config.vm.provision :shell do |s|
-      s.path = install_facts_script_path
-      s.args = [
-        puppet_admin_facts["deployment"],
-        puppet_admin_facts["subnet"]
-      ]
-    end
-    config.vm.provision "puppet" do |puppet|
-      puppet.environment_path = "#{environment_path}"
-      puppet.environment = "production"
-      puppet.hiera_config_path = "#{puppet.environment_path}/#{puppet.environment}/hiera.yaml"
-      puppet.manifest_file = "#{manifest_file}"
-      puppet.manifests_path = "#{manifests_path}"
-      puppet.options = "#{puppet_options}"
-      puppet.facter = puppet_admin_facts
-      puppet.synced_folder_type = 'nfs'
-    end
-  end
-
-  global_config.vm.define :"prod-webapp1" do |config|
-    config.vm.box                     = $global_debian10_box
-    config.vm.box_url                 = $global_debian10_box_url
-    config.vm.hostname                = "webapp1.internal.softwareheritage.org"
-    config.vm.network   :private_network, ip: "10.168.100.71", netmask: "255.255.0.0"
-
-    config.vm.synced_folder "/tmp/puppet/", "/tmp/puppet", type: 'nfs'
-    # ssl certificates share
-    config.vm.synced_folder "vagrant/le_certs", "/var/lib/puppet/letsencrypt_exports", type: 'nfs'
-
-    config.vm.provider :libvirt do |provider|
-      provider.memory = 4096
-      provider.cpus = 2
-      # local test run: https://github.com/vagrant-libvirt/vagrant-libvirt/issues/45
-      provider.driver = 'kvm'
-    end
-
-    # installs fact for `puppet agent --test` cli to work within the vm
-    config.vm.provision :shell do |s|
-      s.path = install_facts_script_path
-      s.args = [
-        puppet_production_facts["deployment"],
-        puppet_production_facts["subnet"]
-      ]
-    end
-    config.vm.provision "puppet" do |puppet|
-      puppet.environment_path = "#{environment_path}"
-      puppet.environment = "production"
-      puppet.hiera_config_path = "#{puppet.environment_path}/#{puppet.environment}/hiera.yaml"
-      puppet.manifest_file = "#{manifest_file}"
-      puppet.manifests_path = "#{manifests_path}"
-      puppet.options = "#{puppet_options}"
-      puppet.facter = puppet_production_facts
-      puppet.synced_folder_type = 'nfs'
-    end
-  end
-
-  global_config.vm.define :"prod-moma" do |config|
-    config.vm.box                     = $global_debian10_box
-    config.vm.box_url                 = $global_debian10_box_url
-    config.vm.hostname                = "moma.softwareheritage.org"
-    config.vm.network   :private_network, ip: "10.168.100.31", netmask: "255.255.0.0"
-
-    config.vm.synced_folder "/tmp/puppet/", "/tmp/puppet", type: 'nfs'
-    # ssl certificates share
-    config.vm.synced_folder "vagrant/le_certs", "/var/lib/puppet/letsencrypt_exports", type: 'nfs'
-
-    config.vm.provider :libvirt do |provider|
-      provider.memory = 4096
-      provider.cpus = 2
-      # local test run: https://github.com/vagrant-libvirt/vagrant-libvirt/issues/45
-      provider.driver = 'kvm'
-    end
-
-    # installs fact for `puppet agent --test` cli to work within the vm
-    config.vm.provision :shell do |s|
-      s.path = install_facts_script_path
-      s.args = [
-        puppet_production_facts["deployment"],
-        puppet_production_facts["subnet"]
-      ]
-    end
-    config.vm.provision "puppet" do |puppet|
-      puppet.environment_path = "#{environment_path}"
-      puppet.environment = "production"
-      puppet.hiera_config_path = "#{puppet.environment_path}/#{puppet.environment}/hiera.yaml"
-      puppet.manifest_file = "#{manifest_file}"
-      puppet.manifests_path = "#{manifests_path}"
-      puppet.options = "#{puppet_options}"
-      puppet.facter = puppet_production_facts
-      puppet.synced_folder_type = 'nfs'
-    end
-  end
-
-  global_config.vm.define :"prod-search1" do |config|
-    config.vm.box                     = $global_debian10_box
-    config.vm.box_url                 = $global_debian10_box_url
-    config.vm.hostname                = "search1.internal.softwareheritage.org"
-    config.vm.network   :private_network, ip: "10.168.100.85", netmask: "255.255.0.0"
-
-    config.vm.synced_folder "/tmp/puppet/", "/tmp/puppet", type: 'nfs'
-    # ssl certificates share
-    config.vm.synced_folder "vagrant/le_certs", "/var/lib/puppet/letsencrypt_exports", type: 'nfs'
-
-    config.vm.provider :libvirt do |provider|
-      provider.memory = 4096
-      provider.cpus = 2
-      # local test run: https://github.com/vagrant-libvirt/vagrant-libvirt/issues/45
-      provider.driver = 'kvm'
-    end
-
-    # installs fact for `puppet agent --test` cli to work within the vm
-    config.vm.provision :shell do |s|
-      s.path = install_facts_script_path
-      s.args = [
-        puppet_production_facts["deployment"],
-        puppet_production_facts["subnet"]
-      ]
-    end
-    config.vm.provision "puppet" do |puppet|
-      puppet.environment_path = "#{environment_path}"
-      puppet.environment = "production"
-      puppet.hiera_config_path = "#{puppet.environment_path}/#{puppet.environment}/hiera.yaml"
-      puppet.manifest_file = "#{manifest_file}"
-      puppet.manifests_path = "#{manifests_path}"
-      puppet.options = "#{puppet_options}"
-      puppet.facter = puppet_production_facts
-      puppet.synced_folder_type = 'nfs'
-    end
-  end
-
-  global_config.vm.define :"prod-search-esnode1" do |config|
-    config.vm.box                     = $global_debian10_box
-    config.vm.box_url                 = $global_debian10_box_url
-    config.vm.hostname                = "search-esnode1.internal.softwareheritage.org"
-    config.vm.network   :private_network, ip: "10.168.100.81", netmask: "255.255.0.0"
-
-    config.vm.synced_folder "/tmp/puppet/", "/tmp/puppet", type: 'nfs'
-    # ssl certificates share
-    config.vm.synced_folder "vagrant/le_certs", "/var/lib/puppet/letsencrypt_exports", type: 'nfs'
-
-    config.vm.provider :libvirt do |provider|
-      provider.memory = 4096
-      provider.cpus = 2
-      # local test run: https://github.com/vagrant-libvirt/vagrant-libvirt/issues/45
-      provider.driver = 'kvm'
-    end
-
-    # installs fact for `puppet agent --test` cli to work within the vm
-    config.vm.provision :shell do |s|
-      s.path = install_facts_script_path
-      s.args = [
-        puppet_production_facts["deployment"],
-        puppet_production_facts["subnet"]
-      ]
-    end
-    config.vm.provision "puppet" do |puppet|
-      puppet.environment_path = "#{environment_path}"
-      puppet.environment = "production"
-      puppet.hiera_config_path = "#{puppet.environment_path}/#{puppet.environment}/hiera.yaml"
-      puppet.manifest_file = "#{manifest_file}"
-      puppet.manifests_path = "#{manifests_path}"
-      puppet.options = "#{puppet_options}"
-      puppet.facter = puppet_production_facts
-      puppet.synced_folder_type = 'nfs'
-    end
-  end
-
-  global_config.vm.define :"prod-search-esnode2" do |config|
-    config.vm.box                     = $global_debian10_box
-    config.vm.box_url                 = $global_debian10_box_url
-    config.vm.hostname                = "search-esnode2.internal.softwareheritage.org"
-    config.vm.network   :private_network, ip: "10.168.100.82", netmask: "255.255.0.0"
-
-    config.vm.synced_folder "/tmp/puppet/", "/tmp/puppet", type: 'nfs'
-    # ssl certificates share
-    config.vm.synced_folder "vagrant/le_certs", "/var/lib/puppet/letsencrypt_exports", type: 'nfs'
-
-    config.vm.provider :libvirt do |provider|
-      provider.memory = 4096
-      provider.cpus = 2
-      # local test run: https://github.com/vagrant-libvirt/vagrant-libvirt/issues/45
-      provider.driver = 'kvm'
-    end
-
-    # installs fact for `puppet agent --test` cli to work within the vm
-    config.vm.provision :shell do |s|
-      s.path = install_facts_script_path
-      s.args = [
-        puppet_production_facts["deployment"],
-        puppet_production_facts["subnet"]
-      ]
-    end
-    config.vm.provision "puppet" do |puppet|
-      puppet.environment_path = "#{environment_path}"
-      puppet.environment = "production"
-      puppet.hiera_config_path = "#{puppet.environment_path}/#{puppet.environment}/hiera.yaml"
-      puppet.manifest_file = "#{manifest_file}"
-      puppet.manifests_path = "#{manifests_path}"
-      puppet.options = "#{puppet_options}"
-      puppet.facter = puppet_production_facts
-      puppet.synced_folder_type = 'nfs'
-    end
-  end
-
-  global_config.vm.define :"prod-search-esnode3" do |config|
-    config.vm.box                     = $global_debian10_box
-    config.vm.box_url                 = $global_debian10_box_url
-    config.vm.hostname                = "search-esnode3.internal.softwareheritage.org"
-    config.vm.network   :private_network, ip: "10.168.100.83", netmask: "255.255.0.0"
-
-    config.vm.synced_folder "/tmp/puppet/", "/tmp/puppet", type: 'nfs'
-    # ssl certificates share
-    config.vm.synced_folder "vagrant/le_certs", "/var/lib/puppet/letsencrypt_exports", type: 'nfs'
-
-    config.vm.provider :libvirt do |provider|
-      provider.memory = 4096
-      provider.cpus = 2
-      # local test run: https://github.com/vagrant-libvirt/vagrant-libvirt/issues/45
-      provider.driver = 'kvm'
-    end
-
-    # installs fact for `puppet agent --test` cli to work within the vm
-    config.vm.provision :shell do |s|
-      s.path = install_facts_script_path
-      s.args = [
-        puppet_production_facts["deployment"],
-        puppet_production_facts["subnet"]
-      ]
-    end
-    config.vm.provision "puppet" do |puppet|
-      puppet.environment_path = "#{environment_path}"
-      puppet.environment = "production"
-      puppet.hiera_config_path = "#{puppet.environment_path}/#{puppet.environment}/hiera.yaml"
-      puppet.manifest_file = "#{manifest_file}"
-      puppet.manifests_path = "#{manifests_path}"
-      puppet.options = "#{puppet_options}"
-      puppet.facter = puppet_production_facts
-      puppet.synced_folder_type = 'nfs'
-    end
-  end
-
-  global_config.vm.define :"prod-counters1" do |config|
-    config.vm.box                     = $global_debian10_box
-    config.vm.box_url                 = $global_debian10_box_url
-    config.vm.hostname                = "counters1.internal.softwareheritage.org"
-    config.vm.network   :private_network, ip: "10.168.100.95", netmask: "255.255.0.0"
-
-    config.vm.synced_folder "/tmp/puppet/", "/tmp/puppet", type: 'nfs'
-    # ssl certificates share
-    config.vm.synced_folder "vagrant/le_certs", "/var/lib/puppet/letsencrypt_exports", type: 'nfs'
-
-    config.vm.provider :libvirt do |provider|
-      provider.memory = 1024
-      provider.cpus = 2
-      # local test run: https://github.com/vagrant-libvirt/vagrant-libvirt/issues/45
-      provider.driver = 'kvm'
-    end
-
-    # installs fact for `puppet agent --test` cli to work within the vm
-    config.vm.provision :shell do |s|
-      s.path = install_facts_script_path
-      s.args = [
-        puppet_production_facts["deployment"],
-        puppet_production_facts["subnet"]
-      ]
-    end
-    config.vm.provision "puppet" do |puppet|
-      puppet.environment_path = "#{environment_path}"
-      puppet.environment = "production"
-      puppet.hiera_config_path = "#{puppet.environment_path}/#{puppet.environment}/hiera.yaml"
-      puppet.manifest_file = "#{manifest_file}"
-      puppet.manifests_path = "#{manifests_path}"
-      puppet.options = "#{puppet_options}"
-      puppet.facter = puppet_production_facts
-      puppet.synced_folder_type = 'nfs'
-    end
-  end
-
+  "pergamon" => {
+    :hostname    => "pergamon.internal.softwareheritage.org",
+    :ip          => "10.168.100.29",
+    :type        => TYPE_MASTER,
+    :memory      => 3192,
+    :cpus        => 2,
+    :environment => ENV_PRODUCTION,
+  },
+  ################
+  # PRODUCTION
+  ################
+  "bojimans" => {
+    :hostname    => "bojimans.internal.softwareheritage.org",
+    :ip          => "10.168.100.199",
+    :type        => TYPE_AGENT,
+    :memory      => 512,
+    :cpus        => 2,
+    :environment => ENV_PRODUCTION,
+  },
+  "prod-worker01" => {
+    :hostname    => "worker01.internal.softwareheritage.org",
+    :ip          => "10.168.100.21",
+    :type        => TYPE_AGENT,
+    :memory      => 4096,
+    :cpus        => 2,
+    :environment => ENV_PRODUCTION,
+  },
+  "esnode1" => {
+    :hostname    => "esnode1.internal.softwareheritage.org",
+    :ip          => "10.168.100.61",
+    :type        => TYPE_AGENT,
+    :memory      => 1024,
+    :cpus        => 2,
+    :environment => ENV_PRODUCTION,
+  },
+  "esnode2" => {
+    :hostname    => "esnode2.internal.softwareheritage.org",
+    :ip          => "10.168.100.62",
+    :type        => TYPE_AGENT,
+    :memory      => 1024,
+    :cpus        => 2,
+    :environment => ENV_PRODUCTION,
+  },
+  "esnode3" => {
+    :hostname    => "esnode3.internal.softwareheritage.org",
+    :ip          => "10.168.100.63",
+    :type        => TYPE_AGENT,
+    :memory      => 1024,
+    :cpus        => 2,
+    :environment => ENV_PRODUCTION,
+  },
+  "logstash" => {
+    :hostname    => "logstash0.internal.softwareheritage.org",
+    :ip          => "10.168.100.19",
+    :type        => TYPE_AGENT,
+    :memory      => 2048,
+    :cpus        => 2,
+    :environment => ENV_PRODUCTION,
+  },
+  "prod-webapp1" => {
+    :hostname    => "webapp1.internal.softwareheritage.org",
+    :ip          => "10.168.100.71",
+    :type        => TYPE_AGENT,
+    :memory      => 4096,
+    :cpus        => 2,
+    :environment => ENV_PRODUCTION,
+  },
+  "prod-moma" => {
+    :hostname    => "webapp1.internal.softwareheritage.org",
+    :ip          => "10.168.100.31",
+    :type        => TYPE_AGENT,
+    :memory      => 4096,
+    :cpus        => 2,
+    :environment => ENV_PRODUCTION,
+  },
+  "prod-search1" => {
+    :hostname    => "search1.internal.softwareheritage.org",
+    :ip          => "10.168.100.85",
+    :type        => TYPE_AGENT,
+    :memory      => 4096,
+    :cpus        => 2,
+    :environment => ENV_PRODUCTION,
+  },
+  "prod-search-esnode1" => {
+    :hostname    => "search-esnode1.internal.softwareheritage.org",
+    :ip          => "10.168.100.81",
+    :type        => TYPE_AGENT,
+    :memory      => 4096,
+    :cpus        => 2,
+    :environment => ENV_PRODUCTION,
+  },
+  "prod-search-esnode2" => {
+    :hostname    => "search-esnode2.internal.softwareheritage.org",
+    :ip          => "10.168.100.82",
+    :type        => TYPE_AGENT,
+    :memory      => 4096,
+    :cpus        => 2,
+    :environment => ENV_PRODUCTION,
+  },
+  "prod-search-esnode3" => {
+    :hostname    => "search-esnode3.internal.softwareheritage.org",
+    :ip          => "10.168.100.83",
+    :type        => TYPE_AGENT,
+    :memory      => 4096,
+    :cpus        => 2,
+    :environment => ENV_PRODUCTION,
+  },
+  "prod-counters1" => {
+    :hostname    => "counters1.internal.softwareheritage.org",
+    :ip          => "10.168.100.95",
+    :type        => TYPE_AGENT,
+    :memory      => 1024,
+    :cpus        => 2,
+    :environment => ENV_PRODUCTION,
+  },
   ################
   ## MISC
   ################
-  global_config.vm.define :test do |config|
-    config.ssh.insert_key = false
+  "test" => {
+    :hostname    => "test.softwareheritage.org",
+    :ip          => "10.168.100.130",
+    :type        => TYPE_AGENT,
+    :memory      => 512,
+    :cpus        => 2,
+    :environment => ENV_STAGING,
+  },
+}
 
-    config.vm.box                     = $global_debian10_box
-    config.vm.box_url                 = $global_debian10_box_url
-    config.vm.box_check_update = false
-    config.vm.hostname                = "test.softwareheritage.org"
-    config.vm.network   :private_network, ip: "10.168.100.30", netmask: "255.255.0.0"
-    config.vm.network   :private_network, ip: "10.168.101.30", netmask: "255.255.0.0"
-    config.vm.network "forwarded_port", guest: 10030, host: 22
+vms.each { | vm_name, vm_props |
+  Vagrant.configure("2") do |global_config|
+    global_config.vm.define vm_name do |config|
+      _environment = vm_props[:environment]
+      _facts = ENVIRONMENT_FACTS[_environment]
+      _mount_point_puppet = vm_props[:type] == TYPE_MASTER ? "/etc/puppet/code" : "/tmp/puppet"
 
-    config.vm.synced_folder "/tmp/puppet/", "/tmp/puppet", type: 'nfs'
-    # ssl certificates share
-    config.vm.synced_folder "vagrant/le_certs", "/var/lib/puppet/letsencrypt_exports", type: 'nfs'
+      # config.ssh.insert_key = false
+      config.vm.box                     = $global_debian10_box
+      config.vm.box_url                 = $global_debian10_box_url
+      config.vm.box_check_update        = false
+      config.vm.hostname                = vm_props[:hostname]
+      config.vm.network   :private_network, ip: vm_props[:ip], netmask: "255.255.0.0"
 
-    config.vm.provider :libvirt do |provider|
-      provider.memory = 512
-      provider.cpus = 2
-      # local test run: https://github.com/vagrant-libvirt/vagrant-libvirt/issues/45
-      provider.driver = 'kvm'
+      config.vm.synced_folder "/tmp/puppet/", _mount_point_puppet, type: 'nfs'
+
+      # ssl certificates share
+      config.vm.synced_folder "vagrant/le_certs", "/var/lib/puppet/letsencrypt_exports", type: 'nfs'
+
+      config.vm.provider :libvirt do |provider|
+        provider.memory = vm_props[:memory]
+        provider.cpus = vm_props[:cpus]
+        # local test run: https://github.com/vagrant-libvirt/vagrant-libvirt/issues/45
+        provider.driver = 'kvm'
+      end
+      # installs fact for `puppet agent --test` cli to work within the vm
+      config.vm.provision :shell do |s|
+        s.path = install_facts_script_path
+        s.args = [
+          _facts["deployment"],
+          _facts["subnet"]
+        ]
+      end
+
+      if vm_props[:type] == TYPE_MASTER
+        config.vm.provision "file", source: "vagrant/puppet_master/", destination: "/tmp/"
+        config.vm.provision :shell, :path => "vagrant/puppet_master/prepare_puppet_master.sh"
+      end
+
+      config.vm.provision "puppet" do |puppet|
+        puppet.environment = _environment
+        if vm_props[:type] == TYPE_AGENT
+          puppet.environment_path = "#{environment_path}"
+          puppet.hiera_config_path = "#{puppet.environment_path}/#{puppet.environment}/hiera.yaml"
+        end
+        puppet.manifest_file = "#{manifest_file}"
+        puppet.manifests_path = "#{manifests_path}"
+        puppet.options = "#{puppet_options}"
+        puppet.facter = _facts
+        puppet.synced_folder_type = 'nfs'
+      end
     end
-    # installs fact for `puppet agent --test` cli to work within the vm
-    config.vm.provision :shell do |s|
-      s.path = install_facts_script_path
-      s.args = [
-        puppet_staging_facts["deployment"],
-        puppet_staging_facts["subnet"]
-      ]
-    end
-    config.vm.provision "puppet" do |puppet|
-      puppet.environment_path = "#{environment_path}"
-      puppet.environment = "staging"
-      puppet.hiera_config_path = "#{puppet.environment_path}/#{puppet.environment}/hiera.yaml"
-      puppet.manifest_file = "#{manifest_file}"
-      puppet.manifests_path = "#{manifests_path}"
-      puppet.options = "#{puppet_options}"
-      puppet.facter = puppet_staging_facts
-      puppet.synced_folder_type = 'nfs'
-    end
-    # installs fact for `puppet agent --test` cli to work within the vm
   end
-end
+}
