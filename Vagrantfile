@@ -602,8 +602,8 @@ Vagrant.configure("2") do |global_config|
     config.vm.provision :shell do |s|
       s.path = install_facts_script_path
       s.args = [
-        puppet_staging_facts["deployment"],
-        puppet_staging_facts["subnet"]
+        puppet_production_facts["deployment"],
+        puppet_production_facts["subnet"]
       ]
     end
     config.vm.provision "puppet" do |puppet|
@@ -613,7 +613,7 @@ Vagrant.configure("2") do |global_config|
       puppet.manifest_file = "#{manifest_file}"
       puppet.manifests_path = "#{manifests_path}"
       puppet.options = "#{puppet_options}"
-      puppet.facter = puppet_staging_facts
+      puppet.facter = puppet_production_facts
       puppet.synced_folder_type = 'nfs'
     end
   end
@@ -646,8 +646,8 @@ Vagrant.configure("2") do |global_config|
     config.vm.provision :shell do |s|
       s.path = install_facts_script_path
       s.args = [
-        puppet_staging_facts["deployment"],
-        puppet_staging_facts["subnet"]
+        puppet_production_facts["deployment"],
+        puppet_production_facts["subnet"]
       ]
     end
     config.vm.provision "puppet" do |puppet|
@@ -684,8 +684,8 @@ Vagrant.configure("2") do |global_config|
     config.vm.provision :shell do |s|
       s.path = install_facts_script_path
       s.args = [
-        puppet_staging_facts["deployment"],
-        puppet_staging_facts["subnet"]
+        puppet_production_facts["deployment"],
+        puppet_production_facts["subnet"]
       ]
     end
     config.vm.provision "puppet" do |puppet|
@@ -721,8 +721,8 @@ Vagrant.configure("2") do |global_config|
     config.vm.provision :shell do |s|
       s.path = install_facts_script_path
       s.args = [
-        puppet_staging_facts["deployment"],
-        puppet_staging_facts["subnet"]
+        puppet_production_facts["deployment"],
+        puppet_production_facts["subnet"]
       ]
     end
     config.vm.provision "puppet" do |puppet|
@@ -758,8 +758,8 @@ Vagrant.configure("2") do |global_config|
     config.vm.provision :shell do |s|
       s.path = install_facts_script_path
       s.args = [
-        puppet_staging_facts["deployment"],
-        puppet_staging_facts["subnet"]
+        puppet_production_facts["deployment"],
+        puppet_production_facts["subnet"]
       ]
     end
     config.vm.provision "puppet" do |puppet|
@@ -795,8 +795,8 @@ Vagrant.configure("2") do |global_config|
     config.vm.provision :shell do |s|
       s.path = install_facts_script_path
       s.args = [
-        puppet_staging_facts["deployment"],
-        puppet_staging_facts["subnet"]
+        puppet_production_facts["deployment"],
+        puppet_production_facts["subnet"]
       ]
     end
     config.vm.provision "puppet" do |puppet|
@@ -832,8 +832,8 @@ Vagrant.configure("2") do |global_config|
     config.vm.provision :shell do |s|
       s.path = install_facts_script_path
       s.args = [
-        puppet_staging_facts["deployment"],
-        puppet_staging_facts["subnet"]
+        puppet_production_facts["deployment"],
+        puppet_production_facts["subnet"]
       ]
     end
     config.vm.provision "puppet" do |puppet|
@@ -869,8 +869,8 @@ Vagrant.configure("2") do |global_config|
     config.vm.provision :shell do |s|
       s.path = install_facts_script_path
       s.args = [
-        puppet_staging_facts["deployment"],
-        puppet_staging_facts["subnet"]
+        puppet_admin_facts["deployment"],
+        puppet_admin_facts["subnet"]
       ]
     end
     config.vm.provision "puppet" do |puppet|
@@ -906,8 +906,8 @@ Vagrant.configure("2") do |global_config|
     config.vm.provision :shell do |s|
       s.path = install_facts_script_path
       s.args = [
-        puppet_staging_facts["deployment"],
-        puppet_staging_facts["subnet"]
+        puppet_admin_facts["deployment"],
+        puppet_admin_facts["subnet"]
       ]
     end
     config.vm.provision "puppet" do |puppet|
@@ -943,8 +943,8 @@ Vagrant.configure("2") do |global_config|
     config.vm.provision :shell do |s|
       s.path = install_facts_script_path
       s.args = [
-        puppet_staging_facts["deployment"],
-        puppet_staging_facts["subnet"]
+        puppet_production_facts["deployment"],
+        puppet_production_facts["subnet"]
       ]
     end
     config.vm.provision "puppet" do |puppet|
@@ -980,8 +980,8 @@ Vagrant.configure("2") do |global_config|
     config.vm.provision :shell do |s|
       s.path = install_facts_script_path
       s.args = [
-        puppet_staging_facts["deployment"],
-        puppet_staging_facts["subnet"]
+        puppet_production_facts["deployment"],
+        puppet_production_facts["subnet"]
       ]
     end
     config.vm.provision "puppet" do |puppet|
@@ -1017,8 +1017,8 @@ Vagrant.configure("2") do |global_config|
     config.vm.provision :shell do |s|
       s.path = install_facts_script_path
       s.args = [
-        puppet_staging_facts["deployment"],
-        puppet_staging_facts["subnet"]
+        puppet_production_facts["deployment"],
+        puppet_production_facts["subnet"]
       ]
     end
     config.vm.provision "puppet" do |puppet|
@@ -1054,8 +1054,8 @@ Vagrant.configure("2") do |global_config|
     config.vm.provision :shell do |s|
       s.path = install_facts_script_path
       s.args = [
-        puppet_staging_facts["deployment"],
-        puppet_staging_facts["subnet"]
+        puppet_production_facts["deployment"],
+        puppet_production_facts["subnet"]
       ]
     end
     config.vm.provision "puppet" do |puppet|
@@ -1091,8 +1091,8 @@ Vagrant.configure("2") do |global_config|
     config.vm.provision :shell do |s|
       s.path = install_facts_script_path
       s.args = [
-        puppet_staging_facts["deployment"],
-        puppet_staging_facts["subnet"]
+        puppet_production_facts["deployment"],
+        puppet_production_facts["subnet"]
       ]
     end
     config.vm.provision "puppet" do |puppet|
@@ -1128,8 +1128,8 @@ Vagrant.configure("2") do |global_config|
     config.vm.provision :shell do |s|
       s.path = install_facts_script_path
       s.args = [
-        puppet_staging_facts["deployment"],
-        puppet_staging_facts["subnet"]
+        puppet_production_facts["deployment"],
+        puppet_production_facts["subnet"]
       ]
     end
     config.vm.provision "puppet" do |puppet|
@@ -1165,8 +1165,8 @@ Vagrant.configure("2") do |global_config|
     config.vm.provision :shell do |s|
       s.path = install_facts_script_path
       s.args = [
-        puppet_staging_facts["deployment"],
-        puppet_staging_facts["subnet"]
+        puppet_production_facts["deployment"],
+        puppet_production_facts["subnet"]
       ]
     end
     config.vm.provision "puppet" do |puppet|
