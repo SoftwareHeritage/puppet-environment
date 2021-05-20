@@ -30,14 +30,12 @@ puppet_env_path = ENV["SWH_PUPPET_ENVIRONMENT_HOME"]
 install_facts_script_path = "vagrant/puppet_agent/install_facts.sh"
 
 # Images/local configuration (libvirt)
-$local_debian10_box = "debian10-20210519-1457"
-$local_debian10_box_url = "file://#{puppet_env_path}/packer/builds/swh-debian-10.9-amd64-20210519-1457.qcow2"
+$local_debian10_box = "debian10-20210517-1348"
+$local_debian10_box_url = "file://#{puppet_env_path}/packer/builds/swh-debian-10.9-amd64-20210517-1348.qcow2"
 
 # Images/remote configuration
-$global_debian10_box = "debian10-20210519-1457"
-# $global_debian10_box_url = "https://annex.softwareheritage.org/public/isos/libvirt/debian/swh-debian-10.9-amd64-20210519-1457.qcow2"
-$global_debian10_box_url = "file:/#{puppet_env_path}/packer/builds/swh-debian-10.9-amd64-20210519-1457.qcow2"
-
+$global_debian10_box = "debian10-20210517-1348"
+$global_debian10_box_url = "https://annex.softwareheritage.org/public/isos/libvirt/debian/swh-debian-10.9-amd64-20210517-1348.qcow2"
 
 unless Vagrant.has_plugin?("libvirt")
   $stderr.puts <<-MSG
