@@ -219,6 +219,14 @@ vms = {
     :cpus        => 2,
     :environment => ENV_PRODUCTION,
   },
+  "prod-worker17" => {
+    :hostname    => "worker17.softwareheritage.org",
+    :ip          => "10.168.100.43",
+    :type        => TYPE_AGENT,
+    :memory      => 4096,
+    :cpus        => 2,
+    :environment => ENV_PRODUCTION,
+  },
   "esnode1" => {
     :hostname    => "esnode1.internal.softwareheritage.org",
     :ip          => "10.168.100.61",
