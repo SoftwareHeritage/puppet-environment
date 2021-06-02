@@ -2,35 +2,52 @@
 name: worker09.softwareheritage.org
 values:
   agent_specified_environment: production
-  apt_dist_updates: 12
+  apt_dist_updates: 17
   apt_has_dist_updates: true
   apt_has_updates: true
   apt_package_dist_updates:
-  - python3-ecdsa
-  - python3-pyasn1
-  - python3-rsa
-  - python3-jose
-  - python3-keycloak
-  - python3-swh.auth
-  - python3-swh.auth.django
+  - libnss-systemd
+  - libsystemd0
+  - systemd-timesyncd
+  - libpam-systemd
+  - systemd
+  - udev
+  - libudev1
+  - systemd-sysv
+  - mercurial
+  - mercurial-common
+  - python3-swh.model
   - python3-swh.deposit
   - python3-swh.storage
   - python3-swh.loader.core
   - python3-swh.deposit.loader
   - python3-swh.deposit.client
-  apt_package_security_dist_updates:
-  - python3-ecdsa
+  - python3-swh.loader.mercurial
+  apt_package_security_dist_updates: []
   apt_package_security_updates: []
   apt_package_updates:
+  - libnss-systemd
+  - libsystemd0
+  - systemd-timesyncd
+  - libpam-systemd
+  - systemd
+  - udev
+  - libudev1
+  - systemd-sysv
+  - mercurial
+  - mercurial-common
+  - python3-swh.model
+  - python3-swh.deposit
   - python3-swh.storage
   - python3-swh.loader.core
   - python3-swh.deposit.loader
   - python3-swh.deposit.client
-  apt_reboot_required: false
-  apt_security_dist_updates: 1
+  - python3-swh.loader.mercurial
+  apt_reboot_required: true
+  apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1617271082
-  apt_updates: 4
+  apt_update_last_success: 1622645882
+  apt_updates: 17
   architecture: amd64
   augeas:
     version: 1.11.0
@@ -141,9 +158,11 @@ values:
     postgres: "/var/lib/postgresql"
     tg1999: "/home/tg1999"
     hakb: "/home/hakb"
+    jayesh: "/home/jayesh"
+    zaboukha: "/home/zaboukha"
   domain: softwareheritage.org
   facterversion: 3.11.0
-  filesystems: ext2,ext3,ext4
+  filesystems: btrfs,ext2,ext3,ext4,hfs,hfsplus,jfs,minix,msdos,qnx4,ufs,vfat,xfs
   fips_enabled: false
   fqdn: worker09.softwareheritage.org
   gid: root
@@ -177,9 +196,9 @@ values:
   kernelversion: 5.10.0
   letsencrypt_directory: {}
   load_averages:
-    15m: 0.26
-    1m: 0.35
-    5m: 0.27
+    15m: 0.77
+    1m: 0.57
+    5m: 0.68
   location: sesi_rocquencourt
   lsbdistcodename: buster
   lsbdistdescription: Debian GNU/Linux 10 (buster)
@@ -192,30 +211,30 @@ values:
   manufacturer: QEMU
   memory:
     swap:
-      available: 1.08 GiB
-      available_bytes: 1163767808
-      capacity: 71.60%
+      available: 871.86 MiB
+      available_bytes: 914206720
+      capacity: 77.69%
       total: 3.82 GiB
       total_bytes: 4097830912
-      used: 2.73 GiB
-      used_bytes: 2934063104
+      used: 2.96 GiB
+      used_bytes: 3183624192
     system:
-      available: 13.90 GiB
-      available_bytes: 14928482304
-      capacity: 11.21%
+      available: 10.63 GiB
+      available_bytes: 11413975040
+      capacity: 32.11%
       total: 15.66 GiB
       total_bytes: 16813486080
-      used: 1.76 GiB
-      used_bytes: 1885003776
-  memoryfree: 13.90 GiB
-  memoryfree_mb: 14236.91015625
+      used: 5.03 GiB
+      used_bytes: 5399511040
+  memoryfree: 10.63 GiB
+  memoryfree_mb: 10885.21484375
   memorysize: 15.66 GiB
   memorysize_mb: 16034.58984375
   mountpoints:
     "/":
-      available: 28.25 GiB
-      available_bytes: 30336589824
-      capacity: 20.39%
+      available: 18.17 GiB
+      available_bytes: 19505057792
+      capacity: 48.81%
       device: "/dev/mapper/worker09--vg-root"
       filesystem: ext4
       options:
@@ -224,11 +243,11 @@ values:
       - errors=remount-ro
       size: 35.49 GiB
       size_bytes: 38104956928
-      used: 7.23 GiB
-      used_bytes: 7768367104
+      used: 17.32 GiB
+      used_bytes: 18599899136
     "/dev/shm":
       available: 7.83 GiB
-      available_bytes: 8406212608
+      available_bytes: 8406040576
       capacity: 0.01%
       device: tmpfs
       filesystem: tmpfs
@@ -238,11 +257,11 @@ values:
       - nodev
       size: 7.83 GiB
       size_bytes: 8406740992
-      used: 516.00 KiB
-      used_bytes: 528384
+      used: 684.00 KiB
+      used_bytes: 700416
     "/run":
       available: 1.57 GiB
-      available_bytes: 1680789504
+      available_bytes: 1680781312
       capacity: 0.03%
       device: tmpfs
       filesystem: tmpfs
@@ -255,8 +274,8 @@ values:
       - mode=755
       size: 1.57 GiB
       size_bytes: 1681350656
-      used: 548.00 KiB
-      used_bytes: 561152
+      used: 556.00 KiB
+      used_bytes: 569344
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -472,8 +491,8 @@ values:
   sshrsakey: AAAAB3NzaC1yc2EAAAADAQABAAABAQDDOemlArf147ZDFgynuxMDzWyaJtQ0BdPUGDoobY4zB4hL75ACUBKT1dG71oihE9etiLMQaAyFzkj5j2+cjImlndkJEBZcm3wZ+vpFPK42ZPuuQLMepMfTAQnqfW5SGWFJGCCzY/SFZfV+KQhVSw4IduUNlgP9Rq//YxQVI++7IZJu2V+TEyHiiSnvDpvZgkf6cDe8NmM7+mtBlSQV51OYcArMhWQVDZyzsis3oozOz+UmgNDE+i3X5i6fiBEyYWcYM3O2Ev5/2lmIOZ2iaSScyM0PqWs5GpREIbjl7UaLxUK0CeMDWTw0QyyX4qfMkY+38q++jIzA+az1ZZN1I82r
   subnet: sesi_rocquencourt
   sudoversion: 1.8.27
-  swapfree: 1.08 GiB
-  swapfree_mb: 1109.85546875
+  swapfree: 871.86 MiB
+  swapfree_mb: 871.85546875
   swapsize: 3.82 GiB
   swapsize_mb: 3907.99609375
   swh_hostname:
@@ -481,10 +500,10 @@ values:
     short: worker09
     internal_fqdn: worker09.internal.softwareheritage.org
   system_uptime:
-    days: 13
-    hours: 329
-    seconds: 1186269
-    uptime: 13 days
+    days: 75
+    hours: 1822
+    seconds: 6561069
+    uptime: 75 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -499,15 +518,15 @@ values:
     systemd-timesyncd.service: enabled
   systemd_version: '247'
   timezone: UTC
-  uptime: 13 days
-  uptime_days: 13
-  uptime_hours: 329
-  uptime_seconds: 1186269
+  uptime: 75 days
+  uptime_days: 75
+  uptime_hours: 1822
+  uptime_seconds: 6561069
   uuid: 83c0b029-1273-47f1-8ea5-b7833b8f9b94
   vcsrepo_svn_ver: 1.10.4
   virtual: kvm
   clientcert: worker09.softwareheritage.org
   clientversion: 5.5.10
   clientnoop: false
-timestamp: '2021-04-01T10:17:05.879883316+00:00'
-expiration: '2021-04-01T10:47:05.880309184+00:00'
+timestamp: '2021-06-02T15:17:05.215114978+00:00'
+expiration: '2021-06-02T15:47:05.215463662+00:00'

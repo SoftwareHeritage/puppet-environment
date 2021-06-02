@@ -3,20 +3,42 @@ name: moma.softwareheritage.org
 values:
   agent_specified_environment: production
   apache_version: 2.4.38
-  apt_dist_updates: 1
+  apt_dist_updates: 12
   apt_has_dist_updates: true
   apt_has_updates: true
   apt_package_dist_updates:
+  - libnss-systemd
+  - libsystemd0
+  - systemd-timesyncd
+  - libpam-systemd
+  - systemd
+  - udev
+  - libudev1
+  - systemd-sysv
+  - python3-swh.model
   - python3-swh.storage
+  - python3-swh.indexer
+  - python3-swh.indexer.storage
   apt_package_security_dist_updates: []
   apt_package_security_updates: []
   apt_package_updates:
+  - libnss-systemd
+  - libsystemd0
+  - systemd-timesyncd
+  - libpam-systemd
+  - systemd
+  - udev
+  - libudev1
+  - systemd-sysv
+  - python3-swh.model
   - python3-swh.storage
-  apt_reboot_required: false
+  - python3-swh.indexer
+  - python3-swh.indexer.storage
+  apt_reboot_required: true
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1617271143
-  apt_updates: 1
+  apt_update_last_success: 1622645943
+  apt_updates: 12
   architecture: amd64
   bios_release_date: 04/01/2014
   bios_vendor: SeaBIOS
@@ -35,6 +57,7 @@ values:
   dhcp_servers:
     eth0: 192.168.100.1
     eth1: 192.168.100.1
+    system: 192.168.100.1
   disks:
     vda:
       size: 20.00 GiB
@@ -135,9 +158,11 @@ values:
     postgres: "/var/lib/postgresql"
     tg1999: "/home/tg1999"
     hakb: "/home/hakb"
+    jayesh: "/home/jayesh"
+    zaboukha: "/home/zaboukha"
   domain: softwareheritage.org
   facterversion: 3.11.0
-  filesystems: ext2,ext3,ext4
+  filesystems: btrfs,ext2,ext3,ext4,hfs,hfsplus,jfs,minix,msdos,qnx4,ufs,vfat,xfs
   fips_enabled: false
   fqdn: moma.softwareheritage.org
   gid: root
@@ -154,38 +179,35 @@ values:
     privileged: true
     uid: 0
     user: root
-  interfaces: eth0,eth1,eth2,lo
+  interfaces: eth0,eth1,lo
   ipaddress: 128.93.166.15
-  ipaddress6: fe80::10f2:64ff:fe95:3981
+  ipaddress6: fe80::48fa:eaff:fecf:d3fb
   ipaddress6_eth0: fe80::48fa:eaff:fecf:d3fb
   ipaddress6_eth1: fe80::40fd:baff:fe45:92a1
-  ipaddress6_eth2: fe80::10f2:64ff:fe95:3981
   ipaddress6_lo: "::1"
-  ipaddress_eth0: 128.93.193.31
+  ipaddress_eth0: 128.93.166.15
   ipaddress_eth1: 192.168.100.31
-  ipaddress_eth2: 128.93.166.15
   ipaddress_lo: 127.0.0.1
   is_pe: false
   is_virtual: true
   kernel: Linux
   kernelmajversion: '5.10'
-  kernelrelease: 5.10.0-0.bpo.3-amd64
+  kernelrelease: 5.10.0-0.bpo.4-amd64
   kernelversion: 5.10.0
   letsencrypt_directory: {}
   load_averages:
-    15m: 0.45
-    1m: 0.74
-    5m: 0.56
+    15m: 1.16
+    1m: 1.71
+    5m: 1.45
   location: sesi_rocquencourt
   lsbdistcodename: buster
   lsbdistdescription: Debian GNU/Linux 10 (buster)
   lsbdistid: Debian
   lsbdistrelease: '10'
   lsbmajdistrelease: '10'
-  macaddress: 12:f2:64:95:39:81
+  macaddress: 4a:fa:ea:cf:d3:fb
   macaddress_eth0: 4a:fa:ea:cf:d3:fb
   macaddress_eth1: 42:fd:ba:45:92:a1
-  macaddress_eth2: 12:f2:64:95:39:81
   manufacturer: QEMU
   memory:
     swap:
@@ -197,22 +219,22 @@ values:
       used: 0 bytes
       used_bytes: 0
     system:
-      available: 23.71 GiB
-      available_bytes: 25456975872
-      capacity: 24.52%
+      available: 24.28 GiB
+      available_bytes: 26072969216
+      capacity: 22.69%
       total: 31.41 GiB
-      total_bytes: 33724846080
-      used: 7.70 GiB
-      used_bytes: 8267870208
-  memoryfree: 23.71 GiB
-  memoryfree_mb: 24277.6640625
+      total_bytes: 33724813312
+      used: 7.13 GiB
+      used_bytes: 7651844096
+  memoryfree: 24.28 GiB
+  memoryfree_mb: 24865.12109375
   memorysize: 31.41 GiB
-  memorysize_mb: 32162.51953125
+  memorysize_mb: 32162.48828125
   mountpoints:
     "/":
-      available: 9.34 GiB
-      available_bytes: 10031153152
-      capacity: 52.24%
+      available: 9.80 GiB
+      available_bytes: 10520764416
+      capacity: 49.91%
       device: "/dev/vda1"
       filesystem: ext4
       options:
@@ -222,11 +244,11 @@ values:
       - stripe=32742
       size: 19.56 GiB
       size_bytes: 21002579968
-      used: 10.22 GiB
-      used_bytes: 10971426816
+      used: 9.76 GiB
+      used_bytes: 10481815552
     "/dev/shm":
       available: 15.70 GiB
-      available_bytes: 16862420992
+      available_bytes: 16862404608
       capacity: 0%
       device: tmpfs
       filesystem: tmpfs
@@ -235,12 +257,12 @@ values:
       - nosuid
       - nodev
       size: 15.70 GiB
-      size_bytes: 16862420992
+      size_bytes: 16862404608
       used: 0 bytes
       used_bytes: 0
     "/run":
       available: 3.14 GiB
-      available_bytes: 3371876352
+      available_bytes: 3371884544
       capacity: 0.02%
       device: tmpfs
       filesystem: tmpfs
@@ -249,12 +271,12 @@ values:
       - nosuid
       - noexec
       - relatime
-      - size=3293444k
+      - size=3293440k
       - mode=755
       size: 3.14 GiB
-      size_bytes: 3372486656
-      used: 596.00 KiB
-      used_bytes: 610304
+      size_bytes: 3372482560
+      used: 584.00 KiB
+      used_bytes: 598016
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -274,7 +296,7 @@ values:
       used_bytes: 0
     "/run/user/1003":
       available: 3.14 GiB
-      available_bytes: 3372482560
+      available_bytes: 3372478464
       capacity: 0%
       device: tmpfs
       filesystem: tmpfs
@@ -283,64 +305,60 @@ values:
       - nosuid
       - nodev
       - relatime
-      - size=3293440k
-      - nr_inodes=823360
+      - size=3293436k
+      - nr_inodes=823359
       - mode=700
       - uid=1003
       - gid=1003
       size: 3.14 GiB
-      size_bytes: 3372482560
+      size_bytes: 3372478464
       used: 0 bytes
       used_bytes: 0
   mounts:
   - "/"
   mtu_eth0: 1500
   mtu_eth1: 1500
-  mtu_eth2: 1500
   mtu_lo: 65536
-  mysql_server_id: 26828481
+  mysql_server_id: 62203323
   netmask: 255.255.255.192
   netmask6: 'ffff:ffff:ffff:ffff::'
   netmask6_eth0: 'ffff:ffff:ffff:ffff::'
   netmask6_eth1: 'ffff:ffff:ffff:ffff::'
-  netmask6_eth2: 'ffff:ffff:ffff:ffff::'
   netmask6_lo: ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff
-  netmask_eth0: 255.255.255.0
+  netmask_eth0: 255.255.255.192
   netmask_eth1: 255.255.255.0
-  netmask_eth2: 255.255.255.192
   netmask_lo: 255.0.0.0
   network: 128.93.166.0
   network6: 'fe80::'
   network6_eth0: 'fe80::'
   network6_eth1: 'fe80::'
-  network6_eth2: 'fe80::'
   network6_lo: "::1"
-  network_eth0: 128.93.193.0
+  network_eth0: 128.93.166.0
   network_eth1: 192.168.100.0
-  network_eth2: 128.93.166.0
   network_lo: 127.0.0.0
   networking:
+    dhcp: 192.168.100.1
     domain: softwareheritage.org
     fqdn: moma.softwareheritage.org
     hostname: moma
     interfaces:
       eth0:
         bindings:
-        - address: 128.93.193.31
-          netmask: 255.255.255.0
-          network: 128.93.193.0
+        - address: 128.93.166.15
+          netmask: 255.255.255.192
+          network: 128.93.166.0
         bindings6:
         - address: fe80::48fa:eaff:fecf:d3fb
           netmask: 'ffff:ffff:ffff:ffff::'
           network: 'fe80::'
         dhcp: 192.168.100.1
-        ip: 128.93.193.31
+        ip: 128.93.166.15
         ip6: fe80::48fa:eaff:fecf:d3fb
         mac: 4a:fa:ea:cf:d3:fb
         mtu: 1500
-        netmask: 255.255.255.0
+        netmask: 255.255.255.192
         netmask6: 'ffff:ffff:ffff:ffff::'
-        network: 128.93.193.0
+        network: 128.93.166.0
         network6: 'fe80::'
       eth1:
         bindings:
@@ -360,23 +378,6 @@ values:
         netmask6: 'ffff:ffff:ffff:ffff::'
         network: 192.168.100.0
         network6: 'fe80::'
-      eth2:
-        bindings:
-        - address: 128.93.166.15
-          netmask: 255.255.255.192
-          network: 128.93.166.0
-        bindings6:
-        - address: fe80::10f2:64ff:fe95:3981
-          netmask: 'ffff:ffff:ffff:ffff::'
-          network: 'fe80::'
-        ip: 128.93.166.15
-        ip6: fe80::10f2:64ff:fe95:3981
-        mac: 12:f2:64:95:39:81
-        mtu: 1500
-        netmask: 255.255.255.192
-        netmask6: 'ffff:ffff:ffff:ffff::'
-        network: 128.93.166.0
-        network6: 'fe80::'
       lo:
         bindings:
         - address: 127.0.0.1
@@ -394,14 +395,14 @@ values:
         network: 127.0.0.0
         network6: "::1"
     ip: 128.93.166.15
-    ip6: fe80::10f2:64ff:fe95:3981
-    mac: 12:f2:64:95:39:81
+    ip6: fe80::48fa:eaff:fecf:d3fb
+    mac: 4a:fa:ea:cf:d3:fb
     mtu: 1500
     netmask: 255.255.255.192
     netmask6: 'ffff:ffff:ffff:ffff::'
     network: 128.93.166.0
     network6: 'fe80::'
-    primary: eth2
+    primary: eth0
   nginx_version: 1.14.2
   operatingsystem: Debian
   operatingsystemmajrelease: '10'
@@ -458,7 +459,6 @@ values:
     physicalcount: 2
   productname: Standard PC (i440FX + PIIX, 1996)
   public_ipaddresses:
-  - 128.93.193.31
   - 128.93.166.15
   puppet_environmentpath: "/etc/puppet/code/environments"
   puppet_server: pergamon.internal.softwareheritage.org
@@ -550,10 +550,10 @@ values:
     short: moma
     internal_fqdn: moma.internal.softwareheritage.org
   system_uptime:
-    days: 13
-    hours: 333
-    seconds: 1198813
-    uptime: 13 days
+    days: 50
+    hours: 1222
+    seconds: 4402587
+    uptime: 50 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -568,15 +568,15 @@ values:
     systemd-timesyncd.service: enabled
   systemd_version: '247'
   timezone: UTC
-  uptime: 13 days
-  uptime_days: 13
-  uptime_hours: 333
-  uptime_seconds: 1198813
+  uptime: 50 days
+  uptime_days: 50
+  uptime_hours: 1222
+  uptime_seconds: 4402587
   uuid: f9773017-6bf5-4aec-8531-f37668cd7203
   vcsrepo_svn_ver: ''
   virtual: kvm
   clientcert: moma.softwareheritage.org
   clientversion: 5.5.10
   clientnoop: false
-timestamp: '2021-04-01T10:35:11.860081767+00:00'
-expiration: '2021-04-01T11:05:11.860786609+00:00'
+timestamp: '2021-06-02T15:05:12.047606695+00:00'
+expiration: '2021-06-02T15:35:12.048377247+00:00'

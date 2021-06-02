@@ -2,7 +2,7 @@
 name: granet.internal.softwareheritage.org
 values:
   agent_specified_environment: production
-  apt_dist_updates: 25
+  apt_dist_updates: 26
   apt_has_dist_updates: true
   apt_has_updates: true
   apt_package_dist_updates:
@@ -26,6 +26,7 @@ values:
   - docker-ce-cli
   - docker-ce
   - docker-ce-rootless-extras
+  - docker-scan-plugin
   - libnvpair1linux
   - libuutil1linux
   - libzfs2linux
@@ -44,15 +45,14 @@ values:
   - systemd
   - libsystemd0
   - containerd.io
-  - docker-ce-cli
   - docker-ce
   - docker-ce-rootless-extras
   - spl-dkms
   apt_reboot_required: true
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1617268443
-  apt_updates: 14
+  apt_update_last_success: 1622643242
+  apt_updates: 13
   architecture: amd64
   bios_release_date: '08/15/2019'
   bios_vendor: Dell Inc.
@@ -233,7 +233,7 @@ values:
     NFd: 23
     OomKillDisable: true
     NGoroutines: 33
-    SystemTime: '2021-04-01T10:09:06.600502698Z'
+    SystemTime: '2021-06-02T15:09:06.901166315Z'
     LoggingDriver: journald
     CgroupDriver: cgroupfs
     CgroupVersion: '1'
@@ -457,6 +457,8 @@ values:
     postgres: "/var/lib/postgresql"
     tg1999: "/home/tg1999"
     hakb: "/home/hakb"
+    jayesh: "/home/jayesh"
+    zaboukha: "/home/zaboukha"
   docker_server_version: 20.10.0
   docker_version:
     Client:
@@ -542,17 +544,17 @@ values:
   java_default_home: "/usr/lib/jvm/java-11-openjdk-amd64"
   java_libjvm_path: "/usr/lib/jvm/java-11-openjdk-amd64/lib/server"
   java_major_version: '11'
-  java_patch_level: '9'
-  java_version: 11.0.9.1
+  java_patch_level: '11'
+  java_version: 11.0.11
   kernel: Linux
   kernelmajversion: '4.19'
   kernelrelease: 4.19.0-13-amd64
   kernelversion: 4.19.0
   letsencrypt_directory: {}
   load_averages:
-    15m: 80.09
-    1m: 85.16
-    5m: 80.54
+    15m: 34.91
+    1m: 33.35
+    5m: 34.62
   location: sesi_rocquencourt
   lsbdistcodename: buster
   lsbdistdescription: Debian GNU/Linux 10 (buster)
@@ -569,22 +571,22 @@ values:
   manufacturer: Dell Inc.
   memory:
     system:
-      available: 603.48 GiB
-      available_bytes: 647977222144
-      capacity: 20.00%
+      available: 369.93 GiB
+      available_bytes: 397210574848
+      capacity: 50.96%
       total: 754.39 GiB
       total_bytes: 810021474304
-      used: 150.92 GiB
-      used_bytes: 162044252160
-  memoryfree: 603.48 GiB
-  memoryfree_mb: 617959.234375
+      used: 384.46 GiB
+      used_bytes: 412810899456
+  memoryfree: 369.93 GiB
+  memoryfree_mb: 378809.5234375
   memorysize: 754.39 GiB
   memorysize_mb: 772496.67578125
   mountpoints:
     "/":
-      available: 17.44 GiB
-      available_bytes: 18725715968
-      capacity: 52.25%
+      available: 11.25 GiB
+      available_bytes: 12080680960
+      capacity: 69.20%
       device: "/dev/mapper/ssd_mirror-root"
       filesystem: ext4
       options:
@@ -594,8 +596,8 @@ values:
       - stripe=128
       size: 36.53 GiB
       size_bytes: 39219421184
-      used: 19.09 GiB
-      used_bytes: 20493705216
+      used: 25.27 GiB
+      used_bytes: 27138740224
     "/boot/efi":
       available: 114.02 MiB
       available_bytes: 119563776
@@ -618,7 +620,7 @@ values:
       used_bytes: 5345792
     "/dev/shm":
       available: 138.04 GiB
-      available_bytes: 148214054912
+      available_bytes: 148214079488
       capacity: 63.40%
       device: tmpfs
       filesystem: tmpfs
@@ -629,10 +631,10 @@ values:
       size: 377.20 GiB
       size_bytes: 405010735104
       used: 239.16 GiB
-      used_bytes: 256796680192
+      used_bytes: 256796655616
     "/run":
       available: 75.44 GiB
-      available_bytes: 81000157184
+      available_bytes: 81000140800
       capacity: 0.00%
       device: tmpfs
       filesystem: tmpfs
@@ -645,8 +647,8 @@ values:
       - mode=755
       size: 75.44 GiB
       size_bytes: 81002147840
-      used: 1.90 MiB
-      used_bytes: 1990656
+      used: 1.91 MiB
+      used_bytes: 2007040
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -680,6 +682,26 @@ values:
       - mode=700
       - uid=1013
       - gid=1013
+      size: 75.44 GiB
+      size_bytes: 81002143744
+      used: 0 bytes
+      used_bytes: 0
+    "/run/user/1023":
+      available: 75.44 GiB
+      available_bytes: 81002143744
+      capacity: 0%
+      device: tmpfs
+      filesystem: tmpfs
+      options:
+      - rw
+      - nosuid
+      - nodev
+      - relatime
+      - size=79103656k
+      - nr_inodes=19775914
+      - mode=700
+      - uid=1023
+      - gid=1023
       size: 75.44 GiB
       size_bytes: 81002143744
       used: 0 bytes
@@ -1169,10 +1191,10 @@ values:
     short: granet
     internal_fqdn: granet.internal.softwareheritage.org
   system_uptime:
-    days: 107
-    hours: 2581
-    seconds: 9292353
-    uptime: 107 days
+    days: 169
+    hours: 4074
+    seconds: 14667153
+    uptime: 169 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -1187,15 +1209,15 @@ values:
     systemd-timesyncd.service: enabled
   systemd_version: '246'
   timezone: UTC
-  uptime: 107 days
-  uptime_days: 107
-  uptime_hours: 2581
-  uptime_seconds: 9292353
+  uptime: 169 days
+  uptime_days: 169
+  uptime_hours: 4074
+  uptime_seconds: 14667153
   uuid: 4c4c4544-0039-3710-8031-b2c04f545a32
   vcsrepo_svn_ver: 1.10.4
   virtual: physical
   clientcert: granet.internal.softwareheritage.org
   clientversion: 5.5.10
   clientnoop: false
-timestamp: '2021-04-01T10:09:08.962222952+00:00'
-expiration: '2021-04-01T10:39:08.963792616+00:00'
+timestamp: '2021-06-02T15:09:08.241941777+00:00'
+expiration: '2021-06-02T15:39:08.243553280+00:00'

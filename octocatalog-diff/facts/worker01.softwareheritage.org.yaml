@@ -2,35 +2,52 @@
 name: worker01.softwareheritage.org
 values:
   agent_specified_environment: production
-  apt_dist_updates: 12
+  apt_dist_updates: 17
   apt_has_dist_updates: true
   apt_has_updates: true
   apt_package_dist_updates:
-  - python3-ecdsa
-  - python3-pyasn1
-  - python3-rsa
-  - python3-jose
-  - python3-keycloak
-  - python3-swh.auth
-  - python3-swh.auth.django
+  - libnss-systemd
+  - libsystemd0
+  - systemd-timesyncd
+  - libpam-systemd
+  - systemd
+  - udev
+  - libudev1
+  - systemd-sysv
+  - mercurial
+  - mercurial-common
+  - python3-swh.model
   - python3-swh.deposit
   - python3-swh.storage
   - python3-swh.loader.core
   - python3-swh.deposit.loader
   - python3-swh.deposit.client
-  apt_package_security_dist_updates:
-  - python3-ecdsa
+  - python3-swh.loader.mercurial
+  apt_package_security_dist_updates: []
   apt_package_security_updates: []
   apt_package_updates:
+  - libnss-systemd
+  - libsystemd0
+  - systemd-timesyncd
+  - libpam-systemd
+  - systemd
+  - udev
+  - libudev1
+  - systemd-sysv
+  - mercurial
+  - mercurial-common
+  - python3-swh.model
+  - python3-swh.deposit
   - python3-swh.storage
   - python3-swh.loader.core
   - python3-swh.deposit.loader
   - python3-swh.deposit.client
-  apt_reboot_required: false
-  apt_security_dist_updates: 1
+  - python3-swh.loader.mercurial
+  apt_reboot_required: true
+  apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1617271383
-  apt_updates: 4
+  apt_update_last_success: 1622646183
+  apt_updates: 17
   architecture: amd64
   augeas:
     version: 1.11.0
@@ -141,10 +158,12 @@ values:
     postgres: "/var/lib/postgresql"
     tg1999: "/home/tg1999"
     hakb: "/home/hakb"
+    jayesh: "/home/jayesh"
+    zaboukha: "/home/zaboukha"
   domain: softwareheritage.org
   environment: production
   facterversion: 3.11.0
-  filesystems: ext2,ext3,ext4
+  filesystems: btrfs,ext2,ext3,ext4,hfs,hfsplus,jfs,minix,msdos,qnx4,ufs,vfat,xfs
   fips_enabled: false
   fqdn: worker01.softwareheritage.org
   gid: root
@@ -178,9 +197,9 @@ values:
   kernelversion: 5.10.0
   letsencrypt_directory: {}
   load_averages:
-    15m: 0.12
-    1m: 0.21
-    5m: 0.18
+    15m: 2.19
+    1m: 1.64
+    5m: 1.99
   location: sesi_rocquencourt
   lsbdistcodename: buster
   lsbdistdescription: Debian GNU/Linux 10 (buster)
@@ -193,30 +212,30 @@ values:
   manufacturer: QEMU
   memory:
     swap:
-      available: 449.23 MiB
-      available_bytes: 471052288
-      capacity: 88.50%
+      available: 2.08 GiB
+      available_bytes: 2231300096
+      capacity: 45.55%
       total: 3.82 GiB
       total_bytes: 4097830912
-      used: 3.38 GiB
-      used_bytes: 3626778624
+      used: 1.74 GiB
+      used_bytes: 1866530816
     system:
-      available: 10.03 GiB
-      available_bytes: 10767142912
-      capacity: 14.45%
+      available: 7.43 GiB
+      available_bytes: 7975452672
+      capacity: 36.63%
       total: 11.72 GiB
       total_bytes: 12585713664
-      used: 1.69 GiB
-      used_bytes: 1818570752
-  memoryfree: 10.03 GiB
-  memoryfree_mb: 10268.34765625
+      used: 4.29 GiB
+      used_bytes: 4610260992
+  memoryfree: 7.43 GiB
+  memoryfree_mb: 7605.984375
   memorysize: 11.72 GiB
   memorysize_mb: 12002.671875
   mountpoints:
     "/":
-      available: 28.37 GiB
-      available_bytes: 30457274368
-      capacity: 20.07%
+      available: 25.56 GiB
+      available_bytes: 27449339904
+      capacity: 27.96%
       device: "/dev/mapper/worker01--vg-root"
       filesystem: ext4
       options:
@@ -225,12 +244,12 @@ values:
       - errors=remount-ro
       size: 35.49 GiB
       size_bytes: 38104956928
-      used: 7.12 GiB
-      used_bytes: 7647682560
+      used: 9.92 GiB
+      used_bytes: 10655617024
     "/dev/shm":
       available: 5.86 GiB
-      available_bytes: 6291763200
-      capacity: 0.02%
+      available_bytes: 6292279296
+      capacity: 0.01%
       device: tmpfs
       filesystem: tmpfs
       options:
@@ -239,11 +258,11 @@ values:
       - nodev
       size: 5.86 GiB
       size_bytes: 6292856832
-      used: 1.04 MiB
-      used_bytes: 1093632
+      used: 564.00 KiB
+      used_bytes: 577536
     "/run":
       available: 1.17 GiB
-      available_bytes: 1257984000
+      available_bytes: 1257979904
       capacity: 0.05%
       device: tmpfs
       filesystem: tmpfs
@@ -256,8 +275,8 @@ values:
       - mode=755
       size: 1.17 GiB
       size_bytes: 1258573824
-      used: 576.00 KiB
-      used_bytes: 589824
+      used: 580.00 KiB
+      used_bytes: 593920
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -275,7 +294,7 @@ values:
       size_bytes: 5242880
       used: 0 bytes
       used_bytes: 0
-    "/run/user/1021":
+    "/run/user/1003":
       available: 1.17 GiB
       available_bytes: 1258569728
       capacity: 0%
@@ -289,8 +308,8 @@ values:
       - size=1229072k
       - nr_inodes=307268
       - mode=700
-      - uid=1021
-      - gid=1021
+      - uid=1003
+      - gid=1003
       size: 1.17 GiB
       size_bytes: 1258569728
       used: 0 bytes
@@ -491,8 +510,8 @@ values:
   sshrsakey: AAAAB3NzaC1yc2EAAAADAQABAAABAQDc11JGV6kQ3G+KfRPfyJuOGSTBfsIfHfzpTwHaV1Tf0x89gXlTyiSX7md6Z5FnK0GdFks6TTSEO7q7f/EgqBKLTvohQUyb6IjEH64EybfwNJrVJMaI4PRjMDiFINAl6PQwaGAPoFL+Md2gv1OowXWYFJgdCxyMPBokGNznCSZyi4C8R1lNgK8ZZ4dIkKI/lcY5tbujSEfAqP8xbf3W4QjBIqFWpkq6MmVpwXhD/A9VsDDTwbfy1aEy6I6ea9fM0+CW3i6XuWAlyqVHyd+g4K0Xter3/mM7fk8ynfLJ/s2JzoUDcUQQHHM4xdZGWtsE5D3nwMXq2NmXDGFh7z16KF8D
   subnet: sesi_rocquencourt
   sudoversion: 1.8.27
-  swapfree: 449.23 MiB
-  swapfree_mb: 449.23046875
+  swapfree: 2.08 GiB
+  swapfree_mb: 2127.93359375
   swapsize: 3.82 GiB
   swapsize_mb: 3907.99609375
   swh_hostname:
@@ -500,10 +519,10 @@ values:
     short: worker01
     internal_fqdn: worker01.internal.softwareheritage.org
   system_uptime:
-    days: 13
-    hours: 329
-    seconds: 1187142
-    uptime: 13 days
+    days: 75
+    hours: 1822
+    seconds: 6561942
+    uptime: 75 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -518,15 +537,15 @@ values:
     systemd-timesyncd.service: enabled
   systemd_version: '247'
   timezone: UTC
-  uptime: 13 days
-  uptime_days: 13
-  uptime_hours: 329
-  uptime_seconds: 1187142
+  uptime: 75 days
+  uptime_days: 75
+  uptime_hours: 1822
+  uptime_seconds: 6561942
   uuid: 1cfacaaf-2718-4794-9cc5-88dfde58fb43
   vcsrepo_svn_ver: 1.10.4
   virtual: kvm
   clientcert: worker01.softwareheritage.org
   clientversion: 5.5.10
   clientnoop: false
-timestamp: '2021-04-01T10:26:07.580345038+00:00'
-expiration: '2021-04-01T10:56:07.580834776+00:00'
+timestamp: '2021-06-02T15:26:07.845933446+00:00'
+expiration: '2021-06-02T15:56:07.848107667+00:00'

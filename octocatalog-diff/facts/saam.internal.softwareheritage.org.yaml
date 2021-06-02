@@ -2,10 +2,24 @@
 name: saam.internal.softwareheritage.org
 values:
   agent_specified_environment: production
-  apt_has_dist_updates: false
-  apt_has_updates: false
-  apt_reboot_required: false
-  apt_update_last_success: 1617269522
+  apt_dist_updates: 3
+  apt_has_dist_updates: true
+  apt_has_updates: true
+  apt_package_dist_updates:
+  - python3-swh.model
+  - python3-swh.storage
+  - python3-swh.indexer.storage
+  apt_package_security_dist_updates: []
+  apt_package_security_updates: []
+  apt_package_updates:
+  - python3-swh.model
+  - python3-swh.storage
+  - python3-swh.indexer.storage
+  apt_reboot_required: true
+  apt_security_dist_updates: 0
+  apt_security_updates: 0
+  apt_update_last_success: 1622644322
+  apt_updates: 3
   architecture: amd64
   bios_release_date: 05/04/2020
   bios_vendor: Dell Inc.
@@ -2116,9 +2130,11 @@ values:
     ceph: "/var/lib/ceph"
     tg1999: "/home/tg1999"
     hakb: "/home/hakb"
+    jayesh: "/home/jayesh"
+    zaboukha: "/home/zaboukha"
   domain: internal.softwareheritage.org
   facterversion: 3.11.0
-  filesystems: btrfs,ext2,ext3,ext4,vfat,xfs
+  filesystems: btrfs,ext2,ext3,ext4,hfs,hfsplus,jfs,minix,msdos,qnx4,ufs,vfat,xfs
   fips_enabled: false
   fqdn: saam.internal.softwareheritage.org
   gid: root
@@ -2151,9 +2167,9 @@ values:
   kernelversion: 5.10.0
   letsencrypt_directory: {}
   load_averages:
-    15m: 31.77
-    1m: 41.23
-    5m: 33.68
+    15m: 53.24
+    1m: 41.28
+    5m: 52.57
   lsbdistcodename: buster
   lsbdistdescription: Debian GNU/Linux 10 (buster)
   lsbdistid: Debian
@@ -2169,22 +2185,22 @@ values:
   manufacturer: Dell Inc.
   memory:
     system:
-      available: 76.43 GiB
-      available_bytes: 82069311488
-      capacity: 79.75%
+      available: 78.67 GiB
+      available_bytes: 84466495488
+      capacity: 79.16%
       total: 377.48 GiB
       total_bytes: 405311340544
-      used: 301.04 GiB
-      used_bytes: 323242029056
-  memoryfree: 76.43 GiB
-  memoryfree_mb: 78267.39453125
+      used: 298.81 GiB
+      used_bytes: 320844845056
+  memoryfree: 78.67 GiB
+  memoryfree_mb: 80553.52734375
   memorysize: 377.48 GiB
   memorysize_mb: 386535.015625
   mountpoints:
     "/":
-      available: 37.26 GiB
-      available_bytes: 40007114752
-      capacity: 18.26%
+      available: 36.56 GiB
+      available_bytes: 39256473600
+      capacity: 19.79%
       device: "/dev/mapper/saam--vg-root"
       filesystem: ext4
       options:
@@ -2193,8 +2209,8 @@ values:
       - errors=remount-ro
       size: 45.58 GiB
       size_bytes: 48942002176
-      used: 8.32 GiB
-      used_bytes: 8934887424
+      used: 9.02 GiB
+      used_bytes: 9685528576
     "/boot/efi":
       available: 140.87 MiB
       available_bytes: 147712000
@@ -2231,7 +2247,7 @@ values:
       used_bytes: 0
     "/run":
       available: 37.74 GiB
-      available_bytes: 40526827520
+      available_bytes: 40527056896
       capacity: 0.01%
       device: tmpfs
       filesystem: tmpfs
@@ -2244,8 +2260,8 @@ values:
       - mode=755
       size: 37.75 GiB
       size_bytes: 40531136512
-      used: 4.11 MiB
-      used_bytes: 4308992
+      used: 3.89 MiB
+      used_bytes: 4079616
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -2261,6 +2277,25 @@ values:
       - size=5120k
       size: 5.00 MiB
       size_bytes: 5242880
+      used: 0 bytes
+      used_bytes: 0
+    "/run/user/1001":
+      available: 37.75 GiB
+      available_bytes: 40531132416
+      capacity: 0%
+      device: tmpfs
+      filesystem: tmpfs
+      options:
+      - rw
+      - nosuid
+      - nodev
+      - relatime
+      - size=39581184k
+      - mode=700
+      - uid=1001
+      - gid=1001
+      size: 37.75 GiB
+      size_bytes: 40531132416
       used: 0 bytes
       used_bytes: 0
     "/run/user/1013":
@@ -2659,6 +2694,7 @@ values:
   - "/srv/storage/space/mirrors/boatbucket"
   - "/srv/storage/space/annex/public"
   - "/srv/storage/space/mirrors/boatbucket/webroot"
+  - "/srv/storage/space/takedowns"
   mtu_bond0: 1500
   mtu_eno1: 1500
   mtu_eno2: 1500
@@ -3767,10 +3803,10 @@ values:
     short: saam
     internal_fqdn: saam.internal.softwareheritage.org
   system_uptime:
-    days: 13
-    hours: 331
-    seconds: 1193796
-    uptime: 13 days
+    days: 76
+    hours: 1824
+    seconds: 6568597
+    uptime: 76 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -3781,15 +3817,15 @@ values:
     systemd-time-wait-sync.service: disabled
   systemd_version: '241'
   timezone: UTC
-  uptime: 13 days
-  uptime_days: 13
-  uptime_hours: 331
-  uptime_seconds: 1193796
+  uptime: 76 days
+  uptime_days: 76
+  uptime_hours: 1824
+  uptime_seconds: 6568597
   uuid: 4c4c4544-004a-4410-8037-c4c04f593533
-  vcsrepo_svn_ver: ''
+  vcsrepo_svn_ver: 1.10.4
   virtual: physical
   clientcert: saam.internal.softwareheritage.org
   clientversion: 5.5.10
   clientnoop: false
-timestamp: '2021-04-01T10:19:42.736854811+00:00'
-expiration: '2021-04-01T10:49:42.739461363+00:00'
+timestamp: '2021-06-02T15:19:32.958988451+00:00'
+expiration: '2021-06-02T15:49:32.962312888+00:00'

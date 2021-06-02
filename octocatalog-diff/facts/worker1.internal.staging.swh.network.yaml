@@ -2,40 +2,10 @@
 name: worker1.internal.staging.swh.network
 values:
   agent_specified_environment: staging
-  apt_dist_updates: 14
-  apt_has_dist_updates: true
-  apt_has_updates: true
-  apt_package_dist_updates:
-  - python3-ecdsa
-  - python3-rsa
-  - python3-jose
-  - python3-keycloak
-  - python3-swh.auth
-  - python3-swh.auth.django
-  - python3-swh.model
-  - python3-swh.deposit
-  - python3-tenacity
-  - python3-swh.storage
-  - python3-swh.loader.core
-  - python3-swh.deposit.loader
-  - python3-swh.deposit.client
-  - python3-swh.lister
-  apt_package_security_dist_updates:
-  - python3-ecdsa
-  apt_package_security_updates: []
-  apt_package_updates:
-  - python3-swh.model
-  - python3-tenacity
-  - python3-swh.storage
-  - python3-swh.loader.core
-  - python3-swh.deposit.loader
-  - python3-swh.deposit.client
-  - python3-swh.lister
+  apt_has_dist_updates: false
+  apt_has_updates: false
   apt_reboot_required: true
-  apt_security_dist_updates: 1
-  apt_security_updates: 0
-  apt_update_last_success: 1617271443
-  apt_updates: 7
+  apt_update_last_success: 1622646243
   architecture: amd64
   bios_release_date: 04/01/2014
   bios_vendor: SeaBIOS
@@ -141,6 +111,8 @@ values:
     postgres: "/var/lib/postgresql"
     tg1999: "/home/tg1999"
     hakb: "/home/hakb"
+    jayesh: "/home/jayesh"
+    zaboukha: "/home/zaboukha"
   domain: internal.staging.swh.network
   facterversion: 3.11.0
   filesystems: ext2,ext3,ext4,iso9660
@@ -175,9 +147,9 @@ values:
   kernelversion: 5.10.0
   letsencrypt_directory: {}
   load_averages:
-    15m: 0.91
-    1m: 1.11
-    5m: 0.98
+    15m: 0.1
+    1m: 0.17
+    5m: 0.14
   location: sesi_rocquencourt_staging
   lsbdistcodename: buster
   lsbdistdescription: Debian GNU/Linux 10 (buster)
@@ -189,30 +161,30 @@ values:
   manufacturer: QEMU
   memory:
     swap:
-      available: 3.29 GiB
-      available_bytes: 3535962112
-      capacity: 17.67%
+      available: 3.60 GiB
+      available_bytes: 3862462464
+      capacity: 10.07%
       total: 4.00 GiB
       total_bytes: 4294963200
-      used: 723.84 MiB
-      used_bytes: 759001088
+      used: 412.46 MiB
+      used_bytes: 432500736
     system:
-      available: 5.34 GiB
-      available_bytes: 5737549824
-      capacity: 54.32%
+      available: 8.97 GiB
+      available_bytes: 9636302848
+      capacity: 23.28%
       total: 11.70 GiB
       total_bytes: 12561149952
-      used: 6.35 GiB
-      used_bytes: 6823600128
-  memoryfree: 5.34 GiB
-  memoryfree_mb: 5471.75390625
+      used: 2.72 GiB
+      used_bytes: 2924847104
+  memoryfree: 8.97 GiB
+  memoryfree_mb: 9189.89453125
   memorysize: 11.70 GiB
   memorysize_mb: 11979.24609375
   mountpoints:
     "/":
-      available: 21.20 GiB
-      available_bytes: 22766563328
-      capacity: 32.62%
+      available: 21.19 GiB
+      available_bytes: 22747799552
+      capacity: 32.67%
       device: "/dev/vda1"
       filesystem: ext4
       options:
@@ -221,11 +193,11 @@ values:
       - errors=remount-ro
       size: 31.47 GiB
       size_bytes: 33785901056
-      used: 10.26 GiB
-      used_bytes: 11019337728
+      used: 10.28 GiB
+      used_bytes: 11038101504
     "/dev/shm":
       available: 5.85 GiB
-      available_bytes: 6279475200
+      available_bytes: 6279450624
       capacity: 0.02%
       device: tmpfs
       filesystem: tmpfs
@@ -235,11 +207,11 @@ values:
       - nodev
       size: 5.85 GiB
       size_bytes: 6280572928
-      used: 1.05 MiB
-      used_bytes: 1097728
+      used: 1.07 MiB
+      used_bytes: 1122304
     "/run":
       available: 1.17 GiB
-      available_bytes: 1255583744
+      available_bytes: 1255571456
       capacity: 0.04%
       device: tmpfs
       filesystem: tmpfs
@@ -252,8 +224,8 @@ values:
       - mode=755
       size: 1.17 GiB
       size_bytes: 1256116224
-      used: 520.00 KiB
-      used_bytes: 532480
+      used: 532.00 KiB
+      used_bytes: 544768
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -445,8 +417,8 @@ values:
   sshrsakey: AAAAB3NzaC1yc2EAAAADAQABAAABAQC4kIhPx7oSyn/aprIHwu7MMZ4WmW2t5qZlachyk2GMe3nzhsJqqqSx7W7ZfUHBHhQbqF/nZs8yhzjBDeFomAy7iaPyh3BQmIdcvFZowGdwEigC6QdUHR6ERcLOvgQ+hBs6Z3Ncug+9lysZyNCNZeUp5GpeoucAboEI0jk3Jwa2qS63IIsLloWXiyk39xHzm5+PYIJFirz2mBBfrqxOvZvJKJcOlEdfxE0QaQ5EQKJJxqwSYdSXEEmbhZbfU0nZSCA/uNx82zX3M4AmAaLXf+z0YvzLps9HIJ10qOr5ADhQVBGRW64+H8y2KE3jqfI27AhBT3Qz3HUPs2iqoqwEPRWR
   subnet: sesi_rocquencourt_staging
   sudoversion: 1.8.27
-  swapfree: 3.29 GiB
-  swapfree_mb: 3372.15625
+  swapfree: 3.60 GiB
+  swapfree_mb: 3683.53125
   swapsize: 4.00 GiB
   swapsize_mb: 4095.99609375
   swh_hostname:
@@ -454,10 +426,10 @@ values:
     short: worker1
     internal_fqdn: worker1.internal.staging.swh.network
   system_uptime:
-    days: 13
-    hours: 331
-    seconds: 1192595
-    uptime: 13 days
+    days: 76
+    hours: 1824
+    seconds: 6567396
+    uptime: 76 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -472,15 +444,15 @@ values:
     systemd-timesyncd.service: enabled
   systemd_version: '247'
   timezone: UTC
-  uptime: 13 days
-  uptime_days: 13
-  uptime_hours: 331
-  uptime_seconds: 1192595
+  uptime: 76 days
+  uptime_days: 76
+  uptime_hours: 1824
+  uptime_seconds: 6567396
   uuid: ae3a8cce-925e-4968-bc0d-32283a635cd4
   vcsrepo_svn_ver: 1.10.4
   virtual: kvm
   clientcert: worker1.internal.staging.swh.network
   clientversion: 5.5.10
   clientnoop: false
-timestamp: '2021-04-01T10:32:06.837996049+00:00'
-expiration: '2021-04-01T11:02:06.838393761+00:00'
+timestamp: '2021-06-02T15:32:07.843855088+00:00'
+expiration: '2021-06-02T16:02:07.844359695+00:00'

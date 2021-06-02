@@ -3,28 +3,46 @@ name: webapp1.internal.softwareheritage.org
 values:
   agent_specified_environment: production
   apache_version: 2.4.38
-  apt_dist_updates: 3
+  apt_dist_updates: 12
   apt_has_dist_updates: true
   apt_has_updates: true
   apt_package_dist_updates:
+  - libnss-systemd
+  - libsystemd0
+  - systemd-timesyncd
+  - libpam-systemd
+  - systemd
+  - udev
+  - libudev1
+  - systemd-sysv
   - python3-swh.model
-  - python3-tenacity
   - python3-swh.storage
+  - python3-swh.indexer
+  - python3-swh.indexer.storage
   apt_package_security_dist_updates: []
   apt_package_security_updates: []
   apt_package_updates:
+  - libnss-systemd
+  - libsystemd0
+  - systemd-timesyncd
+  - libpam-systemd
+  - systemd
+  - udev
+  - libudev1
+  - systemd-sysv
   - python3-swh.model
-  - python3-tenacity
   - python3-swh.storage
-  apt_reboot_required: true
+  - python3-swh.indexer
+  - python3-swh.indexer.storage
+  apt_reboot_required: false
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1617271562
-  apt_updates: 3
+  apt_update_last_success: 1622646362
+  apt_updates: 12
   architecture: amd64
   bios_release_date: 04/01/2014
   bios_vendor: SeaBIOS
-  bios_version: rel-1.13.0-48-gd9c812dda519-prebuilt.qemu.org
+  bios_version: rel-1.14.0-0-g155821a1990b-prebuilt.qemu.org
   blockdevice_sr0_model: QEMU DVD-ROM
   blockdevice_sr0_size: 1073741312
   blockdevice_sr0_vendor: QEMU
@@ -59,7 +77,7 @@ values:
     bios:
       release_date: 04/01/2014
       vendor: SeaBIOS
-      version: rel-1.13.0-48-gd9c812dda519-prebuilt.qemu.org
+      version: rel-1.14.0-0-g155821a1990b-prebuilt.qemu.org
     chassis:
       type: Other
     manufacturer: QEMU
@@ -138,9 +156,11 @@ values:
     vcache: "/nonexistent"
     varnishlog: "/nonexistent"
     hakb: "/home/hakb"
+    jayesh: "/home/jayesh"
+    zaboukha: "/home/zaboukha"
   domain: internal.softwareheritage.org
   facterversion: 3.11.0
-  filesystems: btrfs,ext2,ext3,ext4,hfs,hfsplus,iso9660,jfs,minix,msdos,qnx4,ufs,vfat,xfs
+  filesystems: ext2,ext3,ext4,iso9660
   fips_enabled: false
   fqdn: webapp1.internal.softwareheritage.org
   gid: root
@@ -168,13 +188,13 @@ values:
   is_virtual: true
   kernel: Linux
   kernelmajversion: '4.19'
-  kernelrelease: 4.19.0-13-amd64
+  kernelrelease: 4.19.0-16-amd64
   kernelversion: 4.19.0
   letsencrypt_directory: {}
   load_averages:
     15m: 0.21
-    1m: 0.52
-    5m: 0.28
+    1m: 0.69
+    5m: 0.29
   lsbdistcodename: buster
   lsbdistdescription: Debian GNU/Linux 10 (buster)
   lsbdistid: Debian
@@ -185,30 +205,30 @@ values:
   manufacturer: QEMU
   memory:
     swap:
-      available: 1020.00 MiB
-      available_bytes: 1069543424
-      capacity: 0%
+      available: 969.50 MiB
+      available_bytes: 1016590336
+      capacity: 4.95%
       total: 1020.00 MiB
       total_bytes: 1069543424
-      used: 0 bytes
-      used_bytes: 0
+      used: 50.50 MiB
+      used_bytes: 52953088
     system:
-      available: 3.54 GiB
-      available_bytes: 3798888448
-      capacity: 54.59%
+      available: 2.39 GiB
+      available_bytes: 2564923392
+      capacity: 69.34%
       total: 7.79 GiB
-      total_bytes: 8366309376
-      used: 4.25 GiB
-      used_bytes: 4567420928
-  memoryfree: 3.54 GiB
-  memoryfree_mb: 3622.90234375
+      total_bytes: 8366321664
+      used: 5.40 GiB
+      used_bytes: 5801398272
+  memoryfree: 2.39 GiB
+  memoryfree_mb: 2446.1015625
   memorysize: 7.79 GiB
-  memorysize_mb: 7978.734375
+  memorysize_mb: 7978.74609375
   mountpoints:
     "/":
-      available: 12.93 GiB
-      available_bytes: 13883174912
-      capacity: 21.12%
+      available: 12.81 GiB
+      available_bytes: 13758435328
+      capacity: 21.83%
       device: "/dev/mapper/base--template--vg-root"
       filesystem: ext4
       options:
@@ -217,11 +237,11 @@ values:
       - errors=remount-ro
       size: 16.39 GiB
       size_bytes: 17601216512
-      used: 3.46 GiB
-      used_bytes: 3718041600
+      used: 3.58 GiB
+      used_bytes: 3842781184
     "/boot":
       available: 114.97 MiB
-      available_bytes: 120559616
+      available_bytes: 120554496
       capacity: 51.14%
       device: "/dev/vda1"
       filesystem: ext2
@@ -231,10 +251,10 @@ values:
       size: 235.32 MiB
       size_bytes: 246755328
       used: 120.35 MiB
-      used_bytes: 126195712
+      used_bytes: 126200832
     "/dev/shm":
       available: 3.90 GiB
-      available_bytes: 4183154688
+      available_bytes: 4183158784
       capacity: 0%
       device: tmpfs
       filesystem: tmpfs
@@ -243,12 +263,12 @@ values:
       - nosuid
       - nodev
       size: 3.90 GiB
-      size_bytes: 4183154688
+      size_bytes: 4183158784
       used: 0 bytes
       used_bytes: 0
     "/run":
       available: 797.28 MiB
-      available_bytes: 836005888
+      available_bytes: 836009984
       capacity: 0.07%
       device: tmpfs
       filesystem: tmpfs
@@ -261,8 +281,8 @@ values:
       - mode=755
       size: 797.88 MiB
       size_bytes: 836632576
-      used: 612.00 KiB
-      used_bytes: 626688
+      used: 608.00 KiB
+      used_bytes: 622592
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -281,8 +301,8 @@ values:
       used: 0 bytes
       used_bytes: 0
     "/run/user/1003":
-      available: 797.87 MiB
-      available_bytes: 836628480
+      available: 787.87 MiB
+      available_bytes: 826142720
       capacity: 0%
       device: tmpfs
       filesystem: tmpfs
@@ -291,13 +311,13 @@ values:
       - nosuid
       - nodev
       - relatime
-      - size=817020k
-      - nr_inodes=204255
+      - size=806780k
+      - nr_inodes=201695
       - mode=700
       - uid=1003
       - gid=1003
-      size: 797.87 MiB
-      size_bytes: 836628480
+      size: 787.87 MiB
+      size_bytes: 826142720
       used: 0 bytes
       used_bytes: 0
   mounts:
@@ -498,8 +518,8 @@ values:
   sshrsakey: AAAAB3NzaC1yc2EAAAADAQABAAABAQCcozzc0CoRAYhmqjKTTLQiJHf4yYR6sM9XI03ni1Dd5PCx6U/YMJhqaIGRYKunFI6yZ3ATTPfLvp5LdF+N0uLl4WX5nZ8RAgWFD9vBe6DTMj2s0YbYucZpzhSYxnj9O68EH/qxywI/FTxaQQsvZM6nTSO0cT4TLkFJMwI7ESzn6oE5/zjGKQKY4q6+qzzWohZ6CVk6oEjXfQagMuQBjStDkM+DyUBAoY+VnSGyDtzW95VoENqVKcZzDTbXfB5ewn8tn/onI6HdzoAoUpem2E98V/At1069HADifT5KtDs/qWN4i5xaO+tEX2Y1bqIC0ulNrPgizeyQThvymky+H+ND
   subnet: sesi_rocquencourt
   sudoversion: 1.8.27
-  swapfree: 1020.00 MiB
-  swapfree_mb: 1019.99609375
+  swapfree: 969.50 MiB
+  swapfree_mb: 969.49609375
   swapsize: 1020.00 MiB
   swapsize_mb: 1019.99609375
   swh_hostname:
@@ -507,10 +527,10 @@ values:
     short: webapp1
     internal_fqdn: webapp1.internal.softwareheritage.org
   system_uptime:
-    days: 64
-    hours: 1559
-    seconds: 5614880
-    uptime: 64 days
+    days: 12
+    hours: 291
+    seconds: 1048644
+    uptime: 12 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -525,15 +545,15 @@ values:
     systemd-timesyncd.service: enabled
   systemd_version: '247'
   timezone: UTC
-  uptime: 64 days
-  uptime_days: 64
-  uptime_hours: 1559
-  uptime_seconds: 5614880
+  uptime: 12 days
+  uptime_days: 12
+  uptime_hours: 291
+  uptime_seconds: 1048644
   uuid: 7c320e32-ad12-43dd-91f5-e4808dd7596e
   vcsrepo_svn_ver: ''
   virtual: kvm
   clientcert: webapp1.internal.softwareheritage.org
   clientversion: 5.5.10
   clientnoop: false
-timestamp: '2021-04-01T10:33:08.535733017+00:00'
-expiration: '2021-04-01T11:03:08.536287456+00:00'
+timestamp: '2021-06-02T15:33:08.401465889+00:00'
+expiration: '2021-06-02T16:03:08.401979743+00:00'
