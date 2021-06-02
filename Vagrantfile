@@ -193,7 +193,7 @@ vms = {
   # PUPPET MASTER
   ################
   "pergamon" => {
-    :hostname    => "pergamon.internal.softwareheritage.org",
+    :hostname    => "pergamon.softwareheritage.org",
     :ip          => "10.168.100.29",
     :type        => TYPE_MASTER,
     :memory      => 3192,
