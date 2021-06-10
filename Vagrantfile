@@ -283,25 +283,25 @@ vms = {
     :cpus        => 2,
     :environment => ENV_PRODUCTION,
   },
-  "prod-search-esnode1" => {
-    :hostname    => "search-esnode1.internal.softwareheritage.org",
-    :ip          => "10.168.100.81",
+  "prod-search-esnode4" => {
+    :hostname    => "search-esnode4.internal.softwareheritage.org",
+    :ip          => "10.168.100.86",
     :type        => TYPE_AGENT,
     :memory      => 4096,
     :cpus        => 2,
     :environment => ENV_PRODUCTION,
   },
-  "prod-search-esnode2" => {
-    :hostname    => "search-esnode2.internal.softwareheritage.org",
-    :ip          => "10.168.100.82",
+  "prod-search-esnode5" => {
+    :hostname    => "search-esnode5.internal.softwareheritage.org",
+    :ip          => "10.168.100.87",
     :type        => TYPE_AGENT,
     :memory      => 4096,
     :cpus        => 2,
     :environment => ENV_PRODUCTION,
   },
-  "prod-search-esnode3" => {
-    :hostname    => "search-esnode3.internal.softwareheritage.org",
-    :ip          => "10.168.100.83",
+  "prod-search-esnode6" => {
+    :hostname    => "search-esnode6.internal.softwareheritage.org",
+    :ip          => "10.168.100.88",
     :type        => TYPE_AGENT,
     :memory      => 4096,
     :cpus        => 2,
