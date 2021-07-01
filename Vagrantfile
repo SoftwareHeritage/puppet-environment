@@ -268,7 +268,7 @@ vms = {
     :environment => ENV_PRODUCTION,
   },
   "prod-moma" => {
-    :hostname    => "moma.internal.softwareheritage.org",
+    :hostname    => "moma.softwareheritage.org",
     :ip          => "10.168.100.31",
     :type        => TYPE_AGENT,
     :memory      => 4096,
