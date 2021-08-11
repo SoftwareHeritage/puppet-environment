@@ -315,6 +315,22 @@ vms = {
     :cpus        => 2,
     :environment => ENV_PRODUCTION,
   },
+  "uffizi" => {
+    :hostname    => "uffizi.internal.softwareheritage.org",
+    :ip          => "10.168.100.101",
+    :type        => TYPE_AGENT,
+    :memory      => 1024,
+    :cpus        => 2,
+    :environment => ENV_PRODUCTION,
+  },
+  "branly" => {
+    :hostname    => "branly.internal.softwareheritage.org",
+    :ip          => "10.168.100.108",
+    :type        => TYPE_AGENT,
+    :memory      => 1024,
+    :cpus        => 2,
+    :environment => ENV_PRODUCTION,
+  },
   ################
   ## MISC
   ################
