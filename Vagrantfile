@@ -331,6 +331,14 @@ vms = {
     :cpus        => 2,
     :environment => ENV_PRODUCTION,
   },
+  "belvedere" => {
+    :hostname    => "belvedere.internal.softwareheritage.org",
+    :ip          => "10.168.100.210",
+    :type        => TYPE_AGENT,
+    :memory      => 2048,
+    :cpus        => 2,
+    :environment => ENV_PRODUCTION,
+  },
   ################
   ## MISC
   ################
