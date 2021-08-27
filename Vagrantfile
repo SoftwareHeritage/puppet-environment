@@ -203,6 +203,14 @@ vms = {
   ################
   # PRODUCTION
   ################
+  "riverside" => {
+    :hostname    => "riverside.internal.softwareheritage.org",
+    :ip          => "10.168.100.52",
+    :type        => TYPE_MASTER,
+    :memory      => 1024,
+    :cpus        => 2,
+    :environment => ENV_PRODUCTION,
+  },
   "bojimans" => {
     :hostname    => "bojimans.internal.softwareheritage.org",
     :ip          => "10.168.100.199",
