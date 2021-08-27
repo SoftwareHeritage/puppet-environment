@@ -211,6 +211,14 @@ vms = {
     :cpus        => 2,
     :environment => ENV_PRODUCTION,
   },
+  "giverny" => {
+    :hostname    => "giverny.softwareheritage.org",
+    :ip          => "10.168.101.118",
+    :type        => TYPE_MASTER,
+    :memory      => 1024,
+    :cpus        => 2,
+    :environment => ENV_PRODUCTION,
+  },
   "bojimans" => {
     :hostname    => "bojimans.internal.softwareheritage.org",
     :ip          => "10.168.100.199",
