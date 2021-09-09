@@ -18,6 +18,9 @@ $local_debian10_box_url = "file://#{puppet_env_path}/packer/builds/swh-debian-10
 $global_debian10_box = "debian10-20210820-1622"
 $global_debian10_box_url = "https://annex.softwareheritage.org/public/isos/libvirt/debian/swh-debian-10.10-amd64-20210820-1622.qcow2"
 
+$global_debian11_box = "debian11-20210909-0725"
+$global_debian11_box_url = "https://annex.softwareheritage.org/public/isos/libvirt/debian/swh-debian-11.0-amd64-20210909-0725.qcow2"
+
 unless Vagrant.has_plugin?("libvirt")
   $stderr.puts <<-MSG
   vagrant-libvirt plugin is required for this.
@@ -374,6 +377,16 @@ vms = {
     :cpus        => 2,
     :environment => ENV_STAGING,
   },
+  "test-bullseye" => {
+    :hostname    => "test_bullseye.softwareheritage.org",
+    :ip          => "10.168.100.131",
+    :type        => TYPE_AGENT,
+    :memory      => 512,
+    :cpus        => 2,
+    :environment => ENV_STAGING,
+    :box         => $global_debian11_box,
+    :box_url     => $global_debian11_box_url,
+  },
 }
 
 vms.each { | vm_name, vm_props |
@@ -384,16 +397,21 @@ vms.each { | vm_name, vm_props |
       _mount_point_puppet = vm_props[:type] == TYPE_MASTER ? "/etc/puppet/code" : "/tmp/puppet"
 
       # config.ssh.insert_key = false
-      config.vm.box                     = $global_debian10_box
-      config.vm.box_url                 = $global_debian10_box_url
+      config.vm.box                     = vm_props[:box] ? vm_props[:box] : $global_debian10_box
+      config.vm.box_url                 = vm_props[:box_url] ? vm_props[:box_url] : $global_debian10_box_url
       config.vm.box_check_update        = false
       config.vm.hostname                = vm_props[:hostname]
       config.vm.network   :private_network, ip: vm_props[:ip], netmask: "255.255.0.0"
 
-      config.vm.synced_folder "/tmp/puppet/", _mount_point_puppet, type: 'nfs'
+      # Using nfs v4 to avoid using the default nfs v3 on udp not supported by the debian 11 kernel
+      config.vm.synced_folder "/tmp/puppet/", _mount_point_puppet, type: 'nfs', nfs_version:4
+      # Hack to speed up the puppet provisioner rsync
+      # It will synchronize between the same source and destination 
+      config.vm.synced_folder "/tmp/puppet/", '/vagrant', type: 'nfs', nfs_version:4
+      config.vm.synced_folder "/tmp/puppet/", '/vagrant-puppet', type: 'nfs', nfs_version:4
 
       # ssl certificates share
-      config.vm.synced_folder "vagrant/le_certs", "/var/lib/puppet/letsencrypt_exports", type: 'nfs'
+      config.vm.synced_folder "vagrant/le_certs", "/var/lib/puppet/letsencrypt_exports", type: 'nfs', nfs_version:4
 
       config.vm.provider :libvirt do |provider|
         provider.memory = vm_props[:memory]
@@ -425,7 +443,9 @@ vms.each { | vm_name, vm_props |
         puppet.manifests_path = "#{manifests_path}"
         puppet.options = "#{puppet_options}"
         puppet.facter = _facts
-        puppet.synced_folder_type = 'nfs'
+        # Dont use nfs mount as the nfs_version can't be 
+        # specified. The default is nfsv3 and udp which is not
+        # supported by the debian 11 kernel
       end
     end
   end
