@@ -294,6 +294,16 @@ vms = {
     :cpus        => 2,
     :environment => ENV_PRODUCTION,
   },
+  "prod-met" => {
+    :hostname    => "met.internal.softwareheritage.org",
+    :ip          => "10.168.100.110",
+    :type        => TYPE_AGENT,
+    :memory      => 2048,
+    :cpus        => 2,
+    :environment => ENV_PRODUCTION,
+    :box         => $global_debian11_box,
+    :box_url     => $global_debian11_box_url,
+  },
   "prod-moma" => {
     :hostname    => "moma.softwareheritage.org",
     :ip          => "10.168.100.31",
