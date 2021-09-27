@@ -389,9 +389,9 @@ vms = {
   },
 }
 
-vms.each { | vm_name, vm_props |
-  Vagrant.configure("2") do |global_config|
-    global_config.vm.define vm_name do |config|
+Vagrant.configure("2") do |global_config|
+  vms.each do | vm_name, vm_props |
+      global_config.vm.define vm_name do |config|
       _environment = vm_props[:environment]
       _facts = ENVIRONMENT_FACTS[_environment]
       _mount_point_puppet = vm_props[:type] == TYPE_MASTER ? "/etc/puppet/code" : "/tmp/puppet"
@@ -449,4 +449,4 @@ vms.each { | vm_name, vm_props |
       end
     end
   end
-}
+end
