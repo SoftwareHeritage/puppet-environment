@@ -2,7 +2,7 @@
 name: db1.internal.staging.swh.network
 values:
   agent_specified_environment: staging
-  apt_dist_updates: 31
+  apt_dist_updates: 40
   apt_has_dist_updates: true
   apt_has_updates: true
   apt_package_dist_updates:
@@ -17,22 +17,31 @@ values:
   - udev
   - libudev1
   - systemd-sysv
+  - zfs-dkms
+  - zfsutils-linux
+  - libnvpair3linux
+  - libuutil3linux
+  - libzfs4linux
+  - libzpool4linux
+  - zfs-zed
   - bind9-dnsutils
   - bind9-libs
   - libcommon-sense-perl
   - libtypes-serialiser-perl
   - libjson-xs-perl
   - libpq5
-  - linux-headers-5.10.0-0.bpo.5-common
+  - linux-headers-5.10.0-0.bpo.8-common
   - linux-kbuild-5.10
-  - linux-headers-5.10.0-0.bpo.5-amd64
+  - linux-headers-5.10.0-0.bpo.8-amd64
   - linux-headers-amd64
-  - linux-image-5.10.0-0.bpo.5-amd64
+  - linux-image-5.10.0-0.bpo.8-amd64
   - linux-image-amd64
+  - megacli
   - python3-attr
   - python3-blessed
   - python3-humanize
   - pg-activity
+  - pgbouncer
   - postgresql-client-12
   - postgresql-12
   - postgresql-client-13
@@ -48,10 +57,19 @@ values:
   - udev
   - libudev1
   - systemd-sysv
+  - zfs-dkms
+  - zfsutils-linux
+  - libnvpair3linux
+  - libuutil3linux
+  - libzfs4linux
+  - libzpool4linux
+  - zfs-zed
   - bind9-dnsutils
   - bind9-libs
   - libpq5
   - linux-kbuild-5.10
+  - megacli
+  - pgbouncer
   - postgresql-client-12
   - postgresql-12
   - postgresql-client-13
@@ -59,8 +77,8 @@ values:
   apt_reboot_required: false
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1623309242
-  apt_updates: 16
+  apt_update_last_success: 1632827643
+  apt_updates: 25
   architecture: amd64
   bios_release_date: 11/21/2019
   bios_vendor: American Megatrends Inc.
@@ -317,9 +335,9 @@ values:
   kernelversion: 5.10.0
   letsencrypt_directory: {}
   load_averages:
-    15m: 0.92
-    1m: 1.51
-    5m: 0.96
+    15m: 1.0
+    1m: 0.95
+    5m: 0.87
   lsbdistcodename: buster
   lsbdistdescription: Debian GNU/Linux 10 (buster)
   lsbdistid: Debian
@@ -335,30 +353,30 @@ values:
   manufacturer: Supermicro
   memory:
     swap:
-      available: 15.67 GiB
-      available_bytes: 16823873536
-      capacity: 2.07%
+      available: 15.87 GiB
+      available_bytes: 17037783040
+      capacity: 0.83%
       total: 16.00 GiB
       total_bytes: 17179865088
-      used: 339.50 MiB
-      used_bytes: 355991552
+      used: 135.50 MiB
+      used_bytes: 142082048
     system:
-      available: 41.57 GiB
-      available_bytes: 44633284608
-      capacity: 55.88%
+      available: 40.44 GiB
+      available_bytes: 43420131328
+      capacity: 57.08%
       total: 94.21 GiB
       total_bytes: 101153632256
-      used: 52.64 GiB
-      used_bytes: 56520347648
-  memoryfree: 41.57 GiB
-  memoryfree_mb: 42565.6171875
+      used: 53.77 GiB
+      used_bytes: 57733500928
+  memoryfree: 40.44 GiB
+  memoryfree_mb: 41408.6640625
   memorysize: 94.21 GiB
   memorysize_mb: 96467.62109375
   mountpoints:
     "/":
-      available: 15.87 GiB
-      available_bytes: 17041272832
-      capacity: 19.38%
+      available: 15.92 GiB
+      available_bytes: 17092501504
+      capacity: 19.14%
       device: "/dev/mapper/ssd-root"
       filesystem: ext2
       options:
@@ -367,12 +385,12 @@ values:
       - errors=remount-ro
       size: 19.69 GiB
       size_bytes: 21137846272
-      used: 3.82 GiB
-      used_bytes: 4096573440
+      used: 3.77 GiB
+      used_bytes: 4045344768
     "/boot/efi":
-      available: 480.91 MiB
-      available_bytes: 504274944
-      capacity: 1.05%
+      available: 482.75 MiB
+      available_bytes: 506204160
+      capacity: 0.67%
       device: "/dev/sdm1"
       filesystem: vfat
       options:
@@ -387,11 +405,11 @@ values:
       - errors=remount-ro
       size: 486.03 MiB
       size_bytes: 509640704
-      used: 5.12 MiB
-      used_bytes: 5365760
+      used: 3.28 MiB
+      used_bytes: 3436544
     "/dev/shm":
       available: 47.10 GiB
-      available_bytes: 50576396288
+      available_bytes: 50576596992
       capacity: 0.00%
       device: tmpfs
       filesystem: tmpfs
@@ -401,11 +419,11 @@ values:
       - nodev
       size: 47.10 GiB
       size_bytes: 50576814080
-      used: 408.00 KiB
-      used_bytes: 417792
+      used: 212.00 KiB
+      used_bytes: 217088
     "/run":
       available: 9.42 GiB
-      available_bytes: 10113458176
+      available_bytes: 10113404928
       capacity: 0.02%
       device: tmpfs
       filesystem: tmpfs
@@ -418,8 +436,8 @@ values:
       - mode=755
       size: 9.42 GiB
       size_bytes: 10115366912
-      used: 1.82 MiB
-      used_bytes: 1908736
+      used: 1.87 MiB
+      used_bytes: 1961984
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -557,7 +575,7 @@ values:
     primary: vlan443
   operatingsystem: Debian
   operatingsystemmajrelease: '10'
-  operatingsystemrelease: '10.9'
+  operatingsystemrelease: '10.10'
   os:
     architecture: amd64
     distro:
@@ -571,9 +589,9 @@ values:
     hardware: x86_64
     name: Debian
     release:
-      full: '10.9'
+      full: '10.10'
       major: '10'
-      minor: '9'
+      minor: '10'
     selinux:
       enabled: false
   osfamily: Debian
@@ -870,8 +888,8 @@ values:
   sshrsakey: AAAAB3NzaC1yc2EAAAADAQABAAABAQDBQxOD7pghY6fZFgDhgFB+8yRvUjhLHyN2KXvv5z6TJeICvKRVhCZr+U/96u9uY5pd5uv7Nf2MWtl0yTSUNQiAdAMbNP7RIx120lhoPxsMrz5izqAg1GRI5Vm6sWtTGPgazfau+jpmbNDV9lOHOl9aVdeAyCEu8eVGF5wqwsG1Kh6/DLMRJgJ2WpkrV7j2x5bXW41kC6Zj3io0qn5i/nW6REDwtHZUZNnU17OKtd7OlsImlj//78AGje2WadXODilY6wPCb3HTOYGMUKiMECHnUUB7Tfgo1KOAu2KO5GqtlCa4F0jMsOTHVcCf/CbWvLoaMT+A68X1K5cY7n/RUQQR
   subnet: sesi_rocquencourt_staging
   sudoversion: 1.8.27
-  swapfree: 15.67 GiB
-  swapfree_mb: 16044.49609375
+  swapfree: 15.87 GiB
+  swapfree_mb: 16248.49609375
   swapsize: 16.00 GiB
   swapsize_mb: 16383.99609375
   swh_hostname:
@@ -879,10 +897,10 @@ values:
     short: db1
     internal_fqdn: db1.internal.staging.swh.network
   system_uptime:
-    days: 90
-    hours: 2175
-    seconds: 7830269
-    uptime: 90 days
+    days: 200
+    hours: 4819
+    seconds: 17348668
+    uptime: 200 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -897,15 +915,15 @@ values:
     systemd-timesyncd.service: enabled
   systemd_version: '247'
   timezone: UTC
-  uptime: 90 days
-  uptime_days: 90
-  uptime_hours: 2175
-  uptime_seconds: 7830269
+  uptime: 200 days
+  uptime_days: 200
+  uptime_hours: 4819
+  uptime_seconds: 17348668
   uuid: 00000000-0000-0000-0000-ac1f6b05e596
   vcsrepo_svn_ver: ''
   virtual: physical
   clientcert: db1.internal.staging.swh.network
   clientversion: 5.5.10
   clientnoop: false
-timestamp: '2021-06-10T08:11:07.602074359+00:00'
-expiration: '2021-06-10T08:41:07.602876204+00:00'
+timestamp: '2021-09-28T12:11:07.245090301+00:00'
+expiration: '2021-09-28T12:41:07.245920151+00:00'

@@ -2,7 +2,7 @@
 name: somerset.internal.softwareheritage.org
 values:
   agent_specified_environment: production
-  apt_dist_updates: 30
+  apt_dist_updates: 40
   apt_has_dist_updates: true
   apt_has_updates: true
   apt_package_dist_updates:
@@ -18,12 +18,16 @@ values:
   - libudev1
   - systemd-sysv
   - libcommon-sense-perl
+  - libpq5
+  - libdbd-pg-perl
   - libtypes-serialiser-perl
   - libjson-xs-perl
-  - libpq5
+  - librdkafka1
+  - megacli
   - python3-blessed
   - python3-humanize
   - pg-activity
+  - pgbouncer
   - postgresql-client-13
   - postgresql-13
   - postgresql
@@ -31,11 +35,17 @@ values:
   - postgresql-plpython3-11
   - postgresql-client-11
   - postgresql-11
+  - python3-confluent-kafka
+  - python3-dulwich
+  - python3-magic
+  - python3-redis
   - python3-swh.core
   - python3-swh.model
   - python3-swh.objstorage
   - python3-tenacity
   - python3-swh.storage
+  - python3-swh.journal
+  - python3-swh.counters
   apt_package_security_dist_updates: []
   apt_package_security_updates: []
   apt_package_updates:
@@ -48,6 +58,9 @@ values:
   - libudev1
   - systemd-sysv
   - libpq5
+  - libdbd-pg-perl
+  - megacli
+  - pgbouncer
   - postgresql-client-13
   - postgresql-13
   - postgresql
@@ -55,16 +68,15 @@ values:
   - postgresql-plpython3-11
   - postgresql-client-11
   - postgresql-11
-  - python3-swh.core
+  - python3-dulwich
   - python3-swh.model
   - python3-swh.objstorage
   - python3-tenacity
-  - python3-swh.storage
   apt_reboot_required: false
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1623312003
-  apt_updates: 21
+  apt_update_last_success: 1632830410
+  apt_updates: 23
   architecture: amd64
   augeas:
     version: 1.11.0
@@ -343,9 +355,9 @@ values:
   kernelversion: 5.4.103
   letsencrypt_directory: {}
   load_averages:
-    15m: 7.66
-    1m: 6.46
-    5m: 7.86
+    15m: 2.52
+    1m: 2.68
+    5m: 2.57
   location: sesi_rocquencourt
   lsbdistcodename: buster
   lsbdistdescription: Debian GNU/Linux 10 (buster)
@@ -357,22 +369,22 @@ values:
   manufacturer: Dell Inc.
   memory:
     system:
-      available: 501.86 GiB
-      available_bytes: 538862866432
-      capacity: 0.39%
+      available: 500.84 GiB
+      available_bytes: 537776685056
+      capacity: 0.59%
       total: 503.80 GiB
       total_bytes: 540956139520
-      used: 1.95 GiB
-      used_bytes: 2093273088
-  memoryfree: 501.86 GiB
-  memoryfree_mb: 513899.67578125
+      used: 2.96 GiB
+      used_bytes: 3179454464
+  memoryfree: 500.84 GiB
+  memoryfree_mb: 512863.8125
   memorysize: 503.80 GiB
   memorysize_mb: 515895.9765625
   mountpoints:
     "/":
-      available: 12.39 GiB
-      available_bytes: 13306572800
-      capacity: 36.65%
+      available: 12.30 GiB
+      available_bytes: 13210230784
+      capacity: 37.10%
       device: "/dev/rbd0"
       filesystem: ext4
       options:
@@ -381,8 +393,8 @@ values:
       - stripe=16
       size: 19.56 GiB
       size_bytes: 21003583488
-      used: 7.17 GiB
-      used_bytes: 7697010688
+      used: 7.26 GiB
+      used_bytes: 7793352704
     "/dev":
       available: 488.00 KiB
       available_bytes: 499712
@@ -432,7 +444,7 @@ values:
       used_bytes: 4096
     "/run":
       available: 100.76 GiB
-      available_bytes: 108190986240
+      available_bytes: 108190945280
       capacity: 0.00%
       device: tmpfs
       filesystem: tmpfs
@@ -445,8 +457,8 @@ values:
       - mode=755
       size: 100.76 GiB
       size_bytes: 108191227904
-      used: 236.00 KiB
-      used_bytes: 241664
+      used: 276.00 KiB
+      used_bytes: 282624
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -464,6 +476,46 @@ values:
       size_bytes: 5242880
       used: 0 bytes
       used_bytes: 0
+    "/run/user/1000":
+      available: 50.38 GiB
+      available_bytes: 54095609856
+      capacity: 0.00%
+      device: tmpfs
+      filesystem: tmpfs
+      options:
+      - rw
+      - nosuid
+      - nodev
+      - relatime
+      - size=52827748k
+      - nr_inodes=13206937
+      - mode=700
+      - uid=1000
+      - gid=1000
+      size: 50.38 GiB
+      size_bytes: 54095613952
+      used: 4.00 KiB
+      used_bytes: 4096
+    "/run/user/1003":
+      available: 50.38 GiB
+      available_bytes: 54095609856
+      capacity: 0.00%
+      device: tmpfs
+      filesystem: tmpfs
+      options:
+      - rw
+      - nosuid
+      - nodev
+      - relatime
+      - size=52827748k
+      - nr_inodes=13206937
+      - mode=700
+      - uid=1003
+      - gid=1003
+      size: 50.38 GiB
+      size_bytes: 54095613952
+      used: 4.00 KiB
+      used_bytes: 4096
   mounts:
   - "/"
   - "/srv/softwareheritage/postgres"
@@ -532,7 +584,7 @@ values:
     primary: eth0
   operatingsystem: Debian
   operatingsystemmajrelease: '10'
-  operatingsystemrelease: '10.9'
+  operatingsystemrelease: '10.10'
   os:
     architecture: amd64
     distro:
@@ -546,9 +598,9 @@ values:
     hardware: x86_64
     name: Debian
     release:
-      full: '10.9'
+      full: '10.10'
       major: '10'
-      minor: '9'
+      minor: '10'
     selinux:
       enabled: false
   osfamily: Debian
@@ -792,10 +844,10 @@ values:
     short: somerset
     internal_fqdn: somerset.internal.softwareheritage.org
   system_uptime:
-    days: 83
-    hours: 2010
-    seconds: 7237339
-    uptime: 83 days
+    days: 193
+    hours: 4654
+    seconds: 16755739
+    uptime: 193 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -809,15 +861,15 @@ values:
     systemd-timesyncd.service: enabled
   systemd_version: '247'
   timezone: UTC
-  uptime: 83 days
-  uptime_days: 83
-  uptime_hours: 2010
-  uptime_seconds: 7237339
+  uptime: 193 days
+  uptime_days: 193
+  uptime_hours: 4654
+  uptime_seconds: 16755739
   uuid: 4c4c4544-0030-4e10-8056-c4c04f4a4732
   vcsrepo_svn_ver: ''
   virtual: physical
   clientcert: somerset.internal.softwareheritage.org
   clientversion: 5.5.10
   clientnoop: false
-timestamp: '2021-06-10T08:22:08.846589980+00:00'
-expiration: '2021-06-10T08:52:08.847585693+00:00'
+timestamp: '2021-09-28T12:22:09.020674290+00:00'
+expiration: '2021-09-28T12:52:09.021880990+00:00'

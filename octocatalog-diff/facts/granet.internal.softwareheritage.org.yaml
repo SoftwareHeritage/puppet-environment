@@ -2,7 +2,7 @@
 name: granet.internal.softwareheritage.org
 values:
   agent_specified_environment: production
-  apt_dist_updates: 26
+  apt_dist_updates: 24
   apt_has_dist_updates: true
   apt_has_updates: true
   apt_package_dist_updates:
@@ -27,10 +27,8 @@ values:
   - docker-ce
   - docker-ce-rootless-extras
   - docker-scan-plugin
-  - libnvpair1linux
-  - libuutil1linux
-  - libzfs2linux
-  - libzpool2linux
+  - megacli
+  - megaclisas-status
   - spl-dkms
   apt_package_security_dist_updates: []
   apt_package_security_updates: []
@@ -47,12 +45,14 @@ values:
   - containerd.io
   - docker-ce
   - docker-ce-rootless-extras
+  - megacli
+  - megaclisas-status
   - spl-dkms
   apt_reboot_required: true
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1623309243
-  apt_updates: 13
+  apt_update_last_success: 1632827643
+  apt_updates: 15
   architecture: amd64
   bios_release_date: '08/15/2019'
   bios_vendor: Dell Inc.
@@ -233,7 +233,7 @@ values:
     NFd: 23
     OomKillDisable: true
     NGoroutines: 33
-    SystemTime: '2021-06-10T08:09:04.651039566Z'
+    SystemTime: '2021-09-28T12:09:05.181943696Z'
     LoggingDriver: journald
     CgroupDriver: cgroupfs
     CgroupVersion: '1'
@@ -544,17 +544,17 @@ values:
   java_default_home: "/usr/lib/jvm/java-11-openjdk-amd64"
   java_libjvm_path: "/usr/lib/jvm/java-11-openjdk-amd64/lib/server"
   java_major_version: '11'
-  java_patch_level: '11'
-  java_version: 11.0.11
+  java_patch_level: '12'
+  java_version: 11.0.12
   kernel: Linux
   kernelmajversion: '4.19'
   kernelrelease: 4.19.0-13-amd64
   kernelversion: 4.19.0
   letsencrypt_directory: {}
   load_averages:
-    15m: 2.24
-    1m: 1.54
-    5m: 1.67
+    15m: 0.1
+    1m: 0.09
+    5m: 0.09
   location: sesi_rocquencourt
   lsbdistcodename: buster
   lsbdistdescription: Debian GNU/Linux 10 (buster)
@@ -571,22 +571,22 @@ values:
   manufacturer: Dell Inc.
   memory:
     system:
-      available: 299.33 GiB
-      available_bytes: 321398456320
-      capacity: 60.32%
+      available: 635.03 GiB
+      available_bytes: 681860681728
+      capacity: 15.82%
       total: 754.39 GiB
       total_bytes: 810021474304
-      used: 455.07 GiB
-      used_bytes: 488623017984
-  memoryfree: 299.33 GiB
-  memoryfree_mb: 306509.453125
+      used: 119.36 GiB
+      used_bytes: 128160792576
+  memoryfree: 635.03 GiB
+  memoryfree_mb: 650273.01953125
   memorysize: 754.39 GiB
   memorysize_mb: 772496.67578125
   mountpoints:
     "/":
-      available: 11.21 GiB
-      available_bytes: 12041310208
-      capacity: 69.30%
+      available: 10.43 GiB
+      available_bytes: 11198066688
+      capacity: 71.45%
       device: "/dev/mapper/ssd_mirror-root"
       filesystem: ext4
       options:
@@ -596,12 +596,12 @@ values:
       - stripe=128
       size: 36.53 GiB
       size_bytes: 39219421184
-      used: 25.31 GiB
-      used_bytes: 27178110976
+      used: 26.10 GiB
+      used_bytes: 28021354496
     "/boot/efi":
-      available: 114.02 MiB
-      available_bytes: 119563776
-      capacity: 4.28%
+      available: 115.87 MiB
+      available_bytes: 121498624
+      capacity: 2.73%
       device: "/dev/sda1"
       filesystem: vfat
       options:
@@ -616,8 +616,8 @@ values:
       - errors=remount-ro
       size: 119.12 MiB
       size_bytes: 124909568
-      used: 5.10 MiB
-      used_bytes: 5345792
+      used: 3.25 MiB
+      used_bytes: 3410944
     "/dev/shm":
       available: 138.04 GiB
       available_bytes: 148214079488
@@ -666,6 +666,26 @@ values:
       size_bytes: 5242880
       used: 0 bytes
       used_bytes: 0
+    "/run/user/1003":
+      available: 75.44 GiB
+      available_bytes: 81002143744
+      capacity: 0%
+      device: tmpfs
+      filesystem: tmpfs
+      options:
+      - rw
+      - nosuid
+      - nodev
+      - relatime
+      - size=79103656k
+      - nr_inodes=19775914
+      - mode=700
+      - uid=1003
+      - gid=1003
+      size: 75.44 GiB
+      size_bytes: 81002143744
+      used: 0 bytes
+      used_bytes: 0
     "/run/user/1013":
       available: 75.44 GiB
       available_bytes: 81002143744
@@ -682,26 +702,6 @@ values:
       - mode=700
       - uid=1013
       - gid=1013
-      size: 75.44 GiB
-      size_bytes: 81002143744
-      used: 0 bytes
-      used_bytes: 0
-    "/run/user/1023":
-      available: 75.44 GiB
-      available_bytes: 81002143744
-      capacity: 0%
-      device: tmpfs
-      filesystem: tmpfs
-      options:
-      - rw
-      - nosuid
-      - nodev
-      - relatime
-      - size=79103656k
-      - nr_inodes=19775914
-      - mode=700
-      - uid=1023
-      - gid=1023
       size: 75.44 GiB
       size_bytes: 81002143744
       used: 0 bytes
@@ -832,7 +832,7 @@ values:
   nginx_version: 1.14.2
   operatingsystem: Debian
   operatingsystemmajrelease: '10'
-  operatingsystemrelease: '10.9'
+  operatingsystemrelease: '10.10'
   os:
     architecture: amd64
     distro:
@@ -846,9 +846,9 @@ values:
     hardware: x86_64
     name: Debian
     release:
-      full: '10.9'
+      full: '10.10'
       major: '10'
-      minor: '9'
+      minor: '10'
     selinux:
       enabled: false
   osfamily: Debian
@@ -1022,7 +1022,7 @@ values:
       size: 8.00 MiB
       size_bytes: 8388608
   path: "/usr/bin:/bin:/usr/sbin:/sbin"
-  phpversion: 7.3.27-1~deb10u1
+  phpversion: 7.3.29-1~deb10u1
   physicalprocessorcount: 2
   processor0: Intel(R) Xeon(R) Silver 4214Y CPU @ 2.20GHz
   processor1: Intel(R) Xeon(R) Silver 4214Y CPU @ 2.20GHz
@@ -1191,10 +1191,10 @@ values:
     short: granet
     internal_fqdn: granet.internal.softwareheritage.org
   system_uptime:
-    days: 177
-    hours: 4259
-    seconds: 15333151
-    uptime: 177 days
+    days: 287
+    hours: 6903
+    seconds: 24851551
+    uptime: 287 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -1209,15 +1209,15 @@ values:
     systemd-timesyncd.service: enabled
   systemd_version: '246'
   timezone: UTC
-  uptime: 177 days
-  uptime_days: 177
-  uptime_hours: 4259
-  uptime_seconds: 15333151
+  uptime: 287 days
+  uptime_days: 287
+  uptime_hours: 6903
+  uptime_seconds: 24851551
   uuid: 4c4c4544-0039-3710-8031-b2c04f545a32
   vcsrepo_svn_ver: 1.10.4
   virtual: physical
   clientcert: granet.internal.softwareheritage.org
   clientversion: 5.5.10
   clientnoop: false
-timestamp: '2021-06-10T08:09:06.526185833+00:00'
-expiration: '2021-06-10T08:39:06.528326543+00:00'
+timestamp: '2021-09-28T12:09:06.016474917+00:00'
+expiration: '2021-09-28T12:39:06.018779300+00:00'

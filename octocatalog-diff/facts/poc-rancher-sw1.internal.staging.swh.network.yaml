@@ -1,71 +1,11 @@
 --- !ruby/object:Puppet::Node::Facts
-name: mirror-test.internal.staging.swh.network
+name: poc-rancher-sw1.internal.staging.swh.network
 values:
   agent_specified_environment: staging
-  apt_dist_updates: 29
-  apt_has_dist_updates: true
-  apt_has_updates: true
-  apt_package_dist_updates:
-  - libsystemd-dev
-  - libsystemd0
-  - systemd-timesyncd
-  - libjson-perl
-  - postgresql-client-common
-  - postgresql-common
-  - libnss-systemd
-  - libpam-systemd
-  - systemd
-  - udev
-  - libudev1
-  - systemd-sysv
-  - containerd.io
-  - docker-ce-cli
-  - docker-ce
-  - docker-ce-rootless-extras
-  - docker-scan-plugin
-  - libcommon-sense-perl
-  - libpq-dev
-  - libpq5
-  - libdbd-pg-perl
-  - libtypes-serialiser-perl
-  - libjson-xs-perl
-  - postgresql-client-13
-  - postgresql-13
-  - postgresql
-  - postgresql-client
-  - postgresql-client-11
-  - cassandra
-  apt_package_security_dist_updates: []
-  apt_package_security_updates: []
-  apt_package_updates:
-  - libsystemd-dev
-  - libsystemd0
-  - systemd-timesyncd
-  - libnss-systemd
-  - libpam-systemd
-  - systemd
-  - udev
-  - libudev1
-  - systemd-sysv
-  - containerd.io
-  - docker-ce-cli
-  - docker-ce
-  - docker-ce-rootless-extras
-  - docker-scan-plugin
-  - libpq-dev
-  - libpq5
-  - libdbd-pg-perl
-  - postgresql-client-13
-  - postgresql-13
-  - postgresql
-  - postgresql-client
-  - postgresql-client-11
-  - cassandra
+  apt_has_dist_updates: false
+  apt_has_updates: false
   apt_reboot_required: false
-  apt_security_dist_updates: 0
-  apt_security_updates: 0
-  apt_update_last_success: 1632316263
-  apt_updates: 23
+  apt_update_last_success: 1632829806
   architecture: amd64
   bios_release_date: 04/01/2014
   bios_vendor: SeaBIOS
@@ -79,9 +19,9 @@ values:
   blockdevice_vda_size: 34359738368
   blockdevice_vda_vendor: '0x1af4'
   blockdevices: sr0,vda,sr1
-  cassandracmsheapnewsize: 800
+  cassandracmsheapnewsize: 1000
   cassandracmsmaxheapsize: 14336
-  cassandraheapnewsize: 800
+  cassandraheapnewsize: 1000
   cassandramaxheapsize: 8192
   chassistype: Other
   deployment: staging
@@ -110,14 +50,14 @@ values:
     manufacturer: QEMU
     product:
       name: Standard PC (i440FX + PIIX, 1996)
-      uuid: 91dd638a-0479-48c0-a790-3df64c09656c
+      uuid: e757c2ca-93d2-41e0-9b5f-123616c90842
   docker:
-    ID: MZTI:ZCUN:W5PR:72GP:NJYG:H3SZ:W7P3:CW3D:UGXQ:5DSZ:2MWV:GEN7
+    ID: IJDB:EEPK:CSNZ:VVGF:5K73:NHSG:23RT:VN34:6AMV:B5CE:A7IF:I2ES
     Containers: 0
     ContainersRunning: 0
     ContainersPaused: 0
     ContainersStopped: 0
-    Images: 164
+    Images: 24
     Driver: overlay2
     DriverStatus:
     - - Backing Filesystem
@@ -151,25 +91,25 @@ values:
       - splunk
       - syslog
     MemoryLimit: true
-    SwapLimit: true
-    KernelMemory: false
-    KernelMemoryTCP: false
+    SwapLimit: false
+    KernelMemory: true
+    KernelMemoryTCP: true
     CpuCfsPeriod: true
     CpuCfsQuota: true
     CPUShares: true
-    CPUSet: false
+    CPUSet: true
     PidsLimit: true
     IPv4Forwarding: true
     BridgeNfIptables: true
     BridgeNfIp6tables: true
     Debug: false
-    NFd: 22
-    OomKillDisable: false
+    NFd: 25
+    OomKillDisable: true
     NGoroutines: 34
-    SystemTime: '2021-09-22T13:13:18.350938056Z'
+    SystemTime: '2021-09-28T12:26:08.196489513Z'
     LoggingDriver: json-file
-    CgroupDriver: systemd
-    CgroupVersion: '2'
+    CgroupDriver: cgroupfs
+    CgroupVersion: '1'
     NEventsListener: 0
     KernelVersion: 4.19.0-17-amd64
     OperatingSystem: Debian GNU/Linux 10 (buster)
@@ -189,17 +129,17 @@ values:
           Secure: true
           Official: true
       Mirrors: []
-    NCPU: 8
-    MemTotal: 67555176448
+    NCPU: 10
+    MemTotal: 67554807808
     GenericResources: ''
     DockerRootDir: "/var/lib/docker"
     HttpProxy: ''
     HttpsProxy: ''
     NoProxy: ''
-    Name: mirror-test
+    Name: poc-rancher-sw1
     Labels: []
     ExperimentalBuild: false
-    ServerVersion: 20.10.6
+    ServerVersion: 20.10.8
     Runtimes:
       io.containerd.runc.v2:
         path: runc
@@ -210,32 +150,28 @@ values:
     DefaultRuntime: runc
     Swarm:
       NodeID: ''
-      NodeAddr: 192.168.130.160
-      LocalNodeState: error
+      NodeAddr: ''
+      LocalNodeState: inactive
       ControlAvailable: false
-      Error: 'error while loading TLS certificate in /var/lib/docker/swarm/certificates/swarm-node.crt:
-        certificate (1 - uca1m61frumg36th566p8srll) not valid after Sat, 11 Sep 2021
-        00:06:00 UTC, and it is currently Wed, 22 Sep 2021 13:06:47 UTC: x509: certificate
-        has expired or is not yet valid'
+      Error: ''
       RemoteManagers: ''
     LiveRestoreEnabled: false
     Isolation: ''
     InitBinary: docker-init
     ContainerdCommit:
-      ID: 05f951a3781f4f2c1911b05e61c160e9c30eaa8e
-      Expected: 05f951a3781f4f2c1911b05e61c160e9c30eaa8e
+      ID: e25210fe30a0a703442421b0f60afac609f950a3
+      Expected: e25210fe30a0a703442421b0f60afac609f950a3
     RuncCommit:
-      ID: 12644e614e25b05da6fd08a38ffa0cfe1903fdec
-      Expected: 12644e614e25b05da6fd08a38ffa0cfe1903fdec
+      ID: v1.0.1-0-g4144b63
+      Expected: v1.0.1-0-g4144b63
     InitCommit:
       ID: de40ad0
       Expected: de40ad0
     SecurityOptions:
     - name=apparmor
     - name=seccomp,profile=default
-    - name=cgroupns
     Warnings:
-    - 'WARNING: No cpuset support'
+    - 'WARNING: No swap limit support'
     ClientInfo:
       Debug: false
       Context: default
@@ -249,13 +185,13 @@ values:
         Path: "/usr/libexec/docker/cli-plugins/docker-app"
       - SchemaVersion: 0.1.0
         Vendor: Docker Inc.
-        Version: v0.5.1-docker
+        Version: v0.6.1-docker
         ShortDescription: Build with BuildKit
         Name: buildx
         Path: "/usr/libexec/docker/cli-plugins/docker-buildx"
       - SchemaVersion: 0.1.0
         Vendor: Docker Inc.
-        Version: v0.7.0
+        Version: v0.8.0
         ShortDescription: Docker Scan
         Name: scan
         Path: "/usr/libexec/docker/cli-plugins/docker-scan"
@@ -264,8 +200,8 @@ values:
       managed_interfaces: {}
       bridge:
         Name: bridge
-        Id: b0aa6f1abf7a03d55f805aebad47ec32460a2752009641f96d760331ca163287
-        Created: '2021-09-22T13:06:47.192925094Z'
+        Id: d997c5a65c60c51b15178f3c90e1fd1b17e99aeb7b6fe99afebd8854e03fa214
+        Created: '2021-09-28T00:16:43.033152466Z'
         Scope: local
         Driver: bridge
         EnableIPv6: false
@@ -290,35 +226,10 @@ values:
           com.docker.network.bridge.name: docker0
           com.docker.network.driver.mtu: '1500'
         Labels: {}
-      docker_gwbridge:
-        Name: docker_gwbridge
-        Id: 8aa8936f6154f92c0ea21df4920a66b6dfa695d305d149efe323cdf0be65eb69
-        Created: '2021-04-23T10:06:55.702676218Z'
-        Scope: local
-        Driver: bridge
-        EnableIPv6: false
-        IPAM:
-          Driver: default
-          Options: ''
-          Config:
-          - Subnet: 172.18.0.0/16
-            Gateway: 172.18.0.1
-        Internal: false
-        Attachable: false
-        Ingress: false
-        ConfigFrom:
-          Network: ''
-        ConfigOnly: false
-        Containers: {}
-        Options:
-          com.docker.network.bridge.enable_icc: 'false'
-          com.docker.network.bridge.enable_ip_masquerade: 'true'
-          com.docker.network.bridge.name: docker_gwbridge
-        Labels: {}
       host:
         Name: host
-        Id: 740be532f83cace920abfe7a41fb619dae2ae1209deffe222c8c730663f9af33
-        Created: '2021-04-23T10:02:05.18158219Z'
+        Id: 9751bfb120595c0cec4c329edfa3ee82f0c9828bcdb1c58156a62824accad00a
+        Created: '2021-09-26T15:50:03.167595458Z'
         Scope: local
         Driver: host
         EnableIPv6: false
@@ -337,8 +248,8 @@ values:
         Labels: {}
       none:
         Name: none
-        Id: be92d8e3f7b5168f58af26d52082196cd23928e67f2b58c9695389ef8f361dca
-        Created: '2021-04-23T10:02:05.143864165Z'
+        Id: cbe0a7b06e9939464caa6eca930203b4f24a4f9e79cad3e192a86e713ec589d1
+        Created: '2021-09-26T15:50:03.123690281Z'
         Scope: local
         Driver: 'null'
         EnableIPv6: false
@@ -355,7 +266,7 @@ values:
         Containers: {}
         Options: {}
         Labels: {}
-  docker_client_version: 20.10.6
+  docker_client_version: 20.10.8
   docker_home_dirs:
     root: "/root"
     daemon: "/usr/sbin"
@@ -410,6 +321,7 @@ values:
     tg1999: "/home/tg1999"
     hakb: "/home/hakb"
     jayesh: "/home/jayesh"
+    zaboukha: "/home/zaboukha"
     journalbeat: "/var/lib/journalbeat"
     nagios: "/var/lib/nagios"
     ntp: "/nonexistent"
@@ -421,24 +333,22 @@ values:
     seirl: "/home/seirl"
     vlorentz: "/home/vlorentz"
     haltode: "/home/haltode"
-    danseraf: "/home/danseraf"
     vsellier: "/home/vsellier"
     prometheus: "/var/lib/prometheus"
-    postgres: "/var/lib/postgresql"
-    cassandra: "/var/lib/cassandra"
-  docker_server_version: 20.10.6
+    danseraf: "/home/danseraf"
+  docker_server_version: 20.10.8
   docker_version:
     Client:
       Platform:
         Name: Docker Engine - Community
-      Version: 20.10.6
+      Version: 20.10.8
       ApiVersion: '1.41'
       DefaultAPIVersion: '1.41'
-      GitCommit: 370c289
-      GoVersion: go1.13.15
+      GitCommit: 3967b7d
+      GoVersion: go1.16.6
       Os: linux
       Arch: amd64
-      BuildTime: Fri Apr  9 22:46:45 2021
+      BuildTime: Fri Jul 30 19:54:02 2021
       Context: default
       Experimental: true
     Server:
@@ -446,49 +356,49 @@ values:
         Name: Docker Engine - Community
       Components:
       - Name: Engine
-        Version: 20.10.6
+        Version: 20.10.8
         Details:
           ApiVersion: '1.41'
           Arch: amd64
-          BuildTime: Fri Apr  9 22:44:56 2021
+          BuildTime: Fri Jul 30 19:52:10 2021
           Experimental: 'false'
-          GitCommit: 8728dd2
-          GoVersion: go1.13.15
+          GitCommit: 75249d8
+          GoVersion: go1.16.6
           KernelVersion: 4.19.0-17-amd64
           MinAPIVersion: '1.12'
           Os: linux
       - Name: containerd
-        Version: 1.4.4
+        Version: 1.4.9
         Details:
-          GitCommit: 05f951a3781f4f2c1911b05e61c160e9c30eaa8e
+          GitCommit: e25210fe30a0a703442421b0f60afac609f950a3
       - Name: runc
-        Version: 1.0.0-rc93
+        Version: 1.0.1
         Details:
-          GitCommit: 12644e614e25b05da6fd08a38ffa0cfe1903fdec
+          GitCommit: v1.0.1-0-g4144b63
       - Name: docker-init
         Version: 0.19.0
         Details:
           GitCommit: de40ad0
-      Version: 20.10.6
+      Version: 20.10.8
       ApiVersion: '1.41'
       MinAPIVersion: '1.12'
-      GitCommit: 8728dd2
-      GoVersion: go1.13.15
+      GitCommit: 75249d8
+      GoVersion: go1.16.6
       Os: linux
       Arch: amd64
       KernelVersion: 4.19.0-17-amd64
-      BuildTime: '2021-04-09T22:44:56.000000000+00:00'
+      BuildTime: '2021-07-30T19:52:10.000000000+00:00'
   domain: internal.staging.swh.network
   facterversion: 3.11.0
   filesystems: ext2,ext3,ext4,iso9660
   fips_enabled: false
-  fqdn: mirror-test.internal.staging.swh.network
+  fqdn: poc-rancher-sw1.internal.staging.swh.network
   gid: root
   hardwareisa: unknown
   hardwaremodel: x86_64
-  hostname: mirror-test
-  icinga2_puppet_hostcert: "/var/lib/puppet/ssl/certs/mirror-test.internal.staging.swh.network.pem"
-  icinga2_puppet_hostprivkey: "/var/lib/puppet/ssl/private_keys/mirror-test.internal.staging.swh.network.pem"
+  hostname: poc-rancher-sw1
+  icinga2_puppet_hostcert: "/var/lib/puppet/ssl/certs/poc-rancher-sw1.internal.staging.swh.network.pem"
+  icinga2_puppet_hostprivkey: "/var/lib/puppet/ssl/private_keys/poc-rancher-sw1.internal.staging.swh.network.pem"
   icinga2_puppet_localcacert: "/var/lib/puppet/ssl/certs/ca.pem"
   id: root
   identity:
@@ -497,40 +407,43 @@ values:
     privileged: true
     uid: 0
     user: root
-  interfaces: docker0,docker_gwbridge,eth0,lo
-  ipaddress: 192.168.130.160
-  ipaddress6: fe80::e43c:8aff:feb7:265d
-  ipaddress6_eth0: fe80::e43c:8aff:feb7:265d
+  interfaces: cni0,docker0,eth0,flannel.1,lo,veth53cc76f4,veth9cbb49c8
+  ipaddress: 192.168.130.164
+  ipaddress6: fe80::432:6dff:fed8:9a0b
+  ipaddress6_cni0: fe80::7464:bcff:fe9a:58d5
+  ipaddress6_eth0: fe80::432:6dff:fed8:9a0b
+  ipaddress6_flannel.1: fe80::2c33:23ff:fe55:92e2
   ipaddress6_lo: "::1"
+  ipaddress6_veth53cc76f4: fe80::34b2:e1ff:fe75:b0e7
+  ipaddress6_veth9cbb49c8: fe80::34cd:bfff:fe32:5e4a
+  ipaddress_cni0: 10.42.1.1
   ipaddress_docker0: 172.17.0.1
-  ipaddress_docker_gwbridge: 172.18.0.1
-  ipaddress_eth0: 192.168.130.160
+  ipaddress_eth0: 192.168.130.164
+  ipaddress_flannel.1: 10.42.1.0
   ipaddress_lo: 127.0.0.1
   is_pe: false
   is_virtual: true
-  java_default_home: "/usr/lib/jvm/java-11-openjdk-amd64"
-  java_libjvm_path: "/usr/lib/jvm/java-11-openjdk-amd64/lib/server"
-  java_major_version: '11'
-  java_patch_level: '12'
-  java_version: 11.0.12
   kernel: Linux
   kernelmajversion: '4.19'
   kernelrelease: 4.19.0-17-amd64
   kernelversion: 4.19.0
   letsencrypt_directory: {}
   load_averages:
-    15m: 0.23
-    1m: 0.58
-    5m: 0.43
+    15m: 0.1
+    1m: 0.28
+    5m: 0.12
   lsbdistcodename: buster
   lsbdistdescription: Debian GNU/Linux 10 (buster)
   lsbdistid: Debian
   lsbdistrelease: '10'
   lsbmajdistrelease: '10'
-  macaddress: e6:3c:8a:b7:26:5d
-  macaddress_docker0: 02:42:92:0b:4e:05
-  macaddress_docker_gwbridge: 02:42:4d:5f:fe:a0
-  macaddress_eth0: e6:3c:8a:b7:26:5d
+  macaddress: 06:32:6d:d8:9a:0b
+  macaddress_cni0: 76:64:bc:9a:58:d5
+  macaddress_docker0: 02:42:5e:f4:ff:98
+  macaddress_eth0: 06:32:6d:d8:9a:0b
+  macaddress_flannel.1: 2e:33:23:55:92:e2
+  macaddress_veth53cc76f4: e2:ba:8b:c9:3e:d1
+  macaddress_veth9cbb49c8: 86:17:14:01:71:d5
   manufacturer: QEMU
   memory:
     swap:
@@ -542,22 +455,22 @@ values:
       used: 0 bytes
       used_bytes: 0
     system:
-      available: 62.43 GiB
-      available_bytes: 67031298048
-      capacity: 0.78%
+      available: 62.23 GiB
+      available_bytes: 66818342912
+      capacity: 1.09%
       total: 62.92 GiB
-      total_bytes: 67555176448
-      used: 499.61 MiB
-      used_bytes: 523878400
-  memoryfree: 62.43 GiB
-  memoryfree_mb: 63926.02734375
+      total_bytes: 67554807808
+      used: 702.35 MiB
+      used_bytes: 736464896
+  memoryfree: 62.23 GiB
+  memoryfree_mb: 63722.9375
   memorysize: 62.92 GiB
-  memorysize_mb: 64425.63671875
+  memorysize_mb: 64425.28515625
   mountpoints:
     "/":
-      available: 4.66 GiB
-      available_bytes: 5001560064
-      capacity: 71.58%
+      available: 6.22 GiB
+      available_bytes: 6679863296
+      capacity: 62.05%
       device: "/dev/mapper/base--template--vg-root"
       filesystem: ext4
       options:
@@ -566,12 +479,12 @@ values:
       - errors=remount-ro
       size: 16.39 GiB
       size_bytes: 17601216512
-      used: 11.73 GiB
-      used_bytes: 12599656448
+      used: 10.17 GiB
+      used_bytes: 10921353216
     "/boot":
-      available: 115.25 MiB
-      available_bytes: 120853504
-      capacity: 51.02%
+      available: 151.32 MiB
+      available_bytes: 158671872
+      capacity: 35.70%
       device: "/dev/vda1"
       filesystem: ext2
       options:
@@ -579,11 +492,11 @@ values:
       - relatime
       size: 235.32 MiB
       size_bytes: 246755328
-      used: 120.07 MiB
-      used_bytes: 125901824
+      used: 84.00 MiB
+      used_bytes: 88083456
     "/dev/shm":
       available: 31.46 GiB
-      available_bytes: 33777586176
+      available_bytes: 33777401856
       capacity: 0%
       device: tmpfs
       filesystem: tmpfs
@@ -592,12 +505,12 @@ values:
       - nosuid
       - nodev
       size: 31.46 GiB
-      size_bytes: 33777586176
+      size_bytes: 33777401856
       used: 0 bytes
       used_bytes: 0
     "/run":
       available: 6.29 GiB
-      available_bytes: 6754930688
+      available_bytes: 6754639872
       capacity: 0.01%
       device: tmpfs
       filesystem: tmpfs
@@ -606,12 +519,46 @@ values:
       - nosuid
       - noexec
       - relatime
-      - size=6597188k
+      - size=6597152k
       - mode=755
       size: 6.29 GiB
-      size_bytes: 6755520512
-      used: 576.00 KiB
-      used_bytes: 589824
+      size_bytes: 6755483648
+      used: 824.00 KiB
+      used_bytes: 843776
+    "/run/k3s/containerd/io.containerd.grpc.v1.cri/sandboxes/9d77f6520638b78a2c0d920bf73557aad4ab0b263c52b8dabea752574b59b33a/shm":
+      available: 64.00 MiB
+      available_bytes: 67108864
+      capacity: 0%
+      device: shm
+      filesystem: tmpfs
+      options:
+      - rw
+      - nosuid
+      - nodev
+      - noexec
+      - relatime
+      - size=65536k
+      size: 64.00 MiB
+      size_bytes: 67108864
+      used: 0 bytes
+      used_bytes: 0
+    "/run/k3s/containerd/io.containerd.grpc.v1.cri/sandboxes/d5588bd46f5f26a10712061dcc00f75eb08d05e8edeed4e90b9af897359a3cc9/shm":
+      available: 64.00 MiB
+      available_bytes: 67108864
+      capacity: 0%
+      device: shm
+      filesystem: tmpfs
+      options:
+      - rw
+      - nosuid
+      - nodev
+      - noexec
+      - relatime
+      - size=65536k
+      size: 64.00 MiB
+      size_bytes: 67108864
+      used: 0 bytes
+      used_bytes: 0
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -629,71 +576,157 @@ values:
       size_bytes: 5242880
       used: 0 bytes
       used_bytes: 0
+    "/sys/fs/cgroup":
+      available: 4.00 MiB
+      available_bytes: 4194304
+      capacity: 0%
+      device: tmpfs
+      filesystem: tmpfs
+      options:
+      - ro
+      - nosuid
+      - nodev
+      - noexec
+      - size=4096k
+      - nr_inodes=1024
+      - mode=755
+      size: 4.00 MiB
+      size_bytes: 4194304
+      used: 0 bytes
+      used_bytes: 0
+    "/var/lib/kubelet/pods/2f109420-a2a9-494a-8768-c4c46369be4d/volumes/kubernetes.io~projected/kube-api-access-4jt2h":
+      available: 31.46 GiB
+      available_bytes: 33777389568
+      capacity: 0.00%
+      device: tmpfs
+      filesystem: tmpfs
+      options:
+      - rw
+      - relatime
+      size: 31.46 GiB
+      size_bytes: 33777401856
+      used: 12.00 KiB
+      used_bytes: 12288
+    "/var/lib/kubelet/pods/84c5aaff-70e4-44a4-922f-24a2d8ab5e4c/volumes/kubernetes.io~projected/kube-api-access-ns9l9":
+      available: 31.46 GiB
+      available_bytes: 33777389568
+      capacity: 0.00%
+      device: tmpfs
+      filesystem: tmpfs
+      options:
+      - rw
+      - relatime
+      size: 31.46 GiB
+      size_bytes: 33777401856
+      used: 12.00 KiB
+      used_bytes: 12288
   mounts:
   - "/"
   - "/boot"
+  - "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/9d77f6520638b78a2c0d920bf73557aad4ab0b263c52b8dabea752574b59b33a/rootfs"
+  - "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/d5588bd46f5f26a10712061dcc00f75eb08d05e8edeed4e90b9af897359a3cc9/rootfs"
+  - "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/76de2452e928a42a225e4272a54508015d51d2476f20090b3bb399f7ba8ed71b/rootfs"
+  - "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/02185f9dadbf4df522037f63adf8e20c4bea4df4735c0d3d146b47477ddc3de3/rootfs"
+  - "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/a9b7ce4a43a9d123b5e6bb7e7b29892573d2087bd5de49626b5562924d9e9f5a/rootfs"
+  mtu_cni0: 1450
   mtu_docker0: 1500
-  mtu_docker_gwbridge: 1500
   mtu_eth0: 1500
+  mtu_flannel.1: 1450
   mtu_lo: 65536
-  mysql_server_id: 36927965
+  mtu_veth53cc76f4: 1450
+  mtu_veth9cbb49c8: 1450
+  mysql_server_id: 29468299
   netmask: 255.255.255.0
   netmask6: 'ffff:ffff:ffff:ffff::'
+  netmask6_cni0: 'ffff:ffff:ffff:ffff::'
   netmask6_eth0: 'ffff:ffff:ffff:ffff::'
+  netmask6_flannel.1: 'ffff:ffff:ffff:ffff::'
   netmask6_lo: ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff
+  netmask6_veth53cc76f4: 'ffff:ffff:ffff:ffff::'
+  netmask6_veth9cbb49c8: 'ffff:ffff:ffff:ffff::'
+  netmask_cni0: 255.255.255.0
   netmask_docker0: 255.255.0.0
-  netmask_docker_gwbridge: 255.255.0.0
   netmask_eth0: 255.255.255.0
+  netmask_flannel.1: 255.255.255.255
   netmask_lo: 255.0.0.0
   network: 192.168.130.0
   network6: 'fe80::'
+  network6_cni0: 'fe80::'
   network6_eth0: 'fe80::'
+  network6_flannel.1: 'fe80::'
   network6_lo: "::1"
+  network6_veth53cc76f4: 'fe80::'
+  network6_veth9cbb49c8: 'fe80::'
+  network_cni0: 10.42.1.0
   network_docker0: 172.17.0.0
-  network_docker_gwbridge: 172.18.0.0
   network_eth0: 192.168.130.0
+  network_flannel.1: 10.42.1.0
   network_lo: 127.0.0.0
   networking:
     domain: internal.staging.swh.network
-    fqdn: mirror-test.internal.staging.swh.network
-    hostname: mirror-test
+    fqdn: poc-rancher-sw1.internal.staging.swh.network
+    hostname: poc-rancher-sw1
     interfaces:
+      cni0:
+        bindings:
+        - address: 10.42.1.1
+          netmask: 255.255.255.0
+          network: 10.42.1.0
+        bindings6:
+        - address: fe80::7464:bcff:fe9a:58d5
+          netmask: 'ffff:ffff:ffff:ffff::'
+          network: 'fe80::'
+        ip: 10.42.1.1
+        ip6: fe80::7464:bcff:fe9a:58d5
+        mac: 76:64:bc:9a:58:d5
+        mtu: 1450
+        netmask: 255.255.255.0
+        netmask6: 'ffff:ffff:ffff:ffff::'
+        network: 10.42.1.0
+        network6: 'fe80::'
       docker0:
         bindings:
         - address: 172.17.0.1
           netmask: 255.255.0.0
           network: 172.17.0.0
         ip: 172.17.0.1
-        mac: 02:42:92:0b:4e:05
+        mac: 02:42:5e:f4:ff:98
         mtu: 1500
         netmask: 255.255.0.0
         network: 172.17.0.0
-      docker_gwbridge:
-        bindings:
-        - address: 172.18.0.1
-          netmask: 255.255.0.0
-          network: 172.18.0.0
-        ip: 172.18.0.1
-        mac: 02:42:4d:5f:fe:a0
-        mtu: 1500
-        netmask: 255.255.0.0
-        network: 172.18.0.0
       eth0:
         bindings:
-        - address: 192.168.130.160
+        - address: 192.168.130.164
           netmask: 255.255.255.0
           network: 192.168.130.0
         bindings6:
-        - address: fe80::e43c:8aff:feb7:265d
+        - address: fe80::432:6dff:fed8:9a0b
           netmask: 'ffff:ffff:ffff:ffff::'
           network: 'fe80::'
-        ip: 192.168.130.160
-        ip6: fe80::e43c:8aff:feb7:265d
-        mac: e6:3c:8a:b7:26:5d
+        ip: 192.168.130.164
+        ip6: fe80::432:6dff:fed8:9a0b
+        mac: 06:32:6d:d8:9a:0b
         mtu: 1500
         netmask: 255.255.255.0
         netmask6: 'ffff:ffff:ffff:ffff::'
         network: 192.168.130.0
+        network6: 'fe80::'
+      flannel.1:
+        bindings:
+        - address: 10.42.1.0
+          netmask: 255.255.255.255
+          network: 10.42.1.0
+        bindings6:
+        - address: fe80::2c33:23ff:fe55:92e2
+          netmask: 'ffff:ffff:ffff:ffff::'
+          network: 'fe80::'
+        ip: 10.42.1.0
+        ip6: fe80::2c33:23ff:fe55:92e2
+        mac: 2e:33:23:55:92:e2
+        mtu: 1450
+        netmask: 255.255.255.255
+        netmask6: 'ffff:ffff:ffff:ffff::'
+        network: 10.42.1.0
         network6: 'fe80::'
       lo:
         bindings:
@@ -711,9 +744,29 @@ values:
         netmask6: ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff
         network: 127.0.0.0
         network6: "::1"
-    ip: 192.168.130.160
-    ip6: fe80::e43c:8aff:feb7:265d
-    mac: e6:3c:8a:b7:26:5d
+      veth53cc76f4:
+        bindings6:
+        - address: fe80::34b2:e1ff:fe75:b0e7
+          netmask: 'ffff:ffff:ffff:ffff::'
+          network: 'fe80::'
+        ip6: fe80::34b2:e1ff:fe75:b0e7
+        mac: e2:ba:8b:c9:3e:d1
+        mtu: 1450
+        netmask6: 'ffff:ffff:ffff:ffff::'
+        network6: 'fe80::'
+      veth9cbb49c8:
+        bindings6:
+        - address: fe80::34cd:bfff:fe32:5e4a
+          netmask: 'ffff:ffff:ffff:ffff::'
+          network: 'fe80::'
+        ip6: fe80::34cd:bfff:fe32:5e4a
+        mac: 86:17:14:01:71:d5
+        mtu: 1450
+        netmask6: 'ffff:ffff:ffff:ffff::'
+        network6: 'fe80::'
+    ip: 192.168.130.164
+    ip6: fe80::432:6dff:fed8:9a0b
+    mac: 06:32:6d:d8:9a:0b
     mtu: 1500
     netmask: 255.255.255.0
     netmask6: 'ffff:ffff:ffff:ffff::'
@@ -781,11 +834,15 @@ values:
   processor5: Intel(R) Xeon(R) CPU E7-4809 v2 @ 1.90GHz
   processor6: Intel(R) Xeon(R) CPU E7-4809 v2 @ 1.90GHz
   processor7: Intel(R) Xeon(R) CPU E7-4809 v2 @ 1.90GHz
-  processorcount: 8
+  processor8: Intel(R) Xeon(R) CPU E7-4809 v2 @ 1.90GHz
+  processor9: Intel(R) Xeon(R) CPU E7-4809 v2 @ 1.90GHz
+  processorcount: 10
   processors:
-    count: 8
+    count: 10
     isa: unknown
     models:
+    - Intel(R) Xeon(R) CPU E7-4809 v2 @ 1.90GHz
+    - Intel(R) Xeon(R) CPU E7-4809 v2 @ 1.90GHz
     - Intel(R) Xeon(R) CPU E7-4809 v2 @ 1.90GHz
     - Intel(R) Xeon(R) CPU E7-4809 v2 @ 1.90GHz
     - Intel(R) Xeon(R) CPU E7-4809 v2 @ 1.90GHz
@@ -814,49 +871,49 @@ values:
   ssh:
     dsa:
       fingerprints:
-        sha1: SSHFP 2 1 c7e025e50e63940b0da40935078e4757ca1dcaab
-        sha256: SSHFP 2 2 bf3f80b0555cdb41364205b84e20c54310097d310385296e03d3953768f88757
-      key: AAAAB3NzaC1kc3MAAACBAJ9rHCna5WO0vTcZ7IXtsXZ5lYXVpbn2u2xsybRL8bciCRz2rXpeoUPQhU2n4iGlypbrWzlRrSMGDAlIUH8wwu4xTSJUzo07rY6LZzi0q96ZhMJnQjAfQKAmLLzg+BIFilcsQPKfP0j4tDlsmFR4Kk/vOuW3AbG/avbLIvAOIp8ZAAAAFQDBswb5jU/NY9ZZxsvVGG+m6YUCYQAAAIBZcOHgH42ww91s2Jp2Yemv0XqAM/GQu//GkjWEOl2a7CXuLRan2EPUKyhr74n5g17ZtTZil8INAvmiG9mGEXCYWf+XGkKklDxwJnzWuCc051CWJR6FCOiYTBm8iH7UMOn4DrKY++8kt1VUK1MrI0HVhSb145siGPzHkLciysswkQAAAIAsV2wIoR25835mvIHI9UIq/UKcv9tgZJOA29rkk63i+am/GzrwvCwZNKgNwUhjmv7GVgGOR8KCLoWW0OUze+Z7I7Mi25qqEPz0uPodYzIBFc1a57zSOM+vwkAQWUWbcDfajkMcBe+ofQI1nzSl9SBD0purq1PsvnTcoOwfUt/x/A==
+        sha1: SSHFP 2 1 86c0e798c4874a1b289323427a082d350f6352ac
+        sha256: SSHFP 2 2 46d467e24ec3944366b9a8fa32554105bec6784ff67521f3c5563d9a30df995a
+      key: AAAAB3NzaC1kc3MAAACBAM/7RVQSOHRftTVQ5bpRP1+KthnbuxMxQ9jRuDpeNvB9ffkCWDMxR3PXcNLDskNsS0GT2nbCGRSS4DR6rDYLdhbCMbdw1Rt5lllSqJrwSSp+R3ZYr1PzQr/RO8hK2Al5I6NL0nCTLcMVvVv/WRuRa2uVhO6kM/ks88q113MnswT3AAAAFQCxOrikiRl3IUnSZ3haOSaJBv01eQAAAIBws10rb4ibURNVsN3aRbFB0rb59VYfSKfJ2fTx4Iw41XoogqTlTaSzAvsjXlTmDkpWZk/3mHgp6tYTKPYaNv1dFV+9KWjt8FI7GJZEagBoxoGT0VbszAqVZA9Hn3KHQMoztV3rfHYACX4VzOTbW89OvB8JgMTMyhFMirdyqKY+HAAAAIBJZe/bKzYWSSkuxBOOAg5JPJZYzXpO5oU58/oWcsT/iZdETWbgPahwnDu2yjyJHawUozvZCy46/Dm/mSTquD/rWgGUiqgcfLUC/xWKDNdgqX8dNGfD64FxjGx8BqKa6YUPvZy3mtaceshi24uGsRC+82Mt1epnGywGQvDK3LmDqQ==
       type: ssh-dss
     ecdsa:
       fingerprints:
-        sha1: SSHFP 3 1 d3caf856aa9bc1a13339fa9572027e418821713b
-        sha256: SSHFP 3 2 a45e41db9e16136a258368cd8c6d0523f4d3fea7e94ec892830139e8bc03187e
-      key: AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBBJqfl/qc0pdhWKrH4Rm9NB2EbMLmwZ4zzYuyPzHAe7U7rXiq4YMaak98kxWVq5CNDhb/SmvH+BMt+fSE/yXSao=
+        sha1: SSHFP 3 1 bbd053932cf0675266dfec2377eb46665700c141
+        sha256: SSHFP 3 2 b603a13db7906c2c5dc1ad33dc458b5f61d0df36d43d3527b7b4a5aea24b7edc
+      key: AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBHB13HUX5PnVi35yNIxOE8u9kQAl9vcYfc0q2wwSGqxtWI6neIWMjbwfWRQP+Q8UBqZK40tawYLuffNAgrTag2A=
       type: ecdsa-sha2-nistp256
     ed25519:
       fingerprints:
-        sha1: SSHFP 4 1 5e8898628658d952935b095db1f904499d84bf09
-        sha256: SSHFP 4 2 92446a284312a1fecabb3692dbfbd72cb7a1bbf47c5330caff3b253c1487e305
-      key: AAAAC3NzaC1lZDI1NTE5AAAAICgsoMSxUHuAobQrilMBdFn86EXoj66FmI7T36XUJ+Ij
+        sha1: SSHFP 4 1 347935401824c782b3cf29ec451a551340abdbf5
+        sha256: SSHFP 4 2 311e45e35b4a9ffc2f4a1d9a957098806eb1fa158c0f5114a4a40c5b93a24627
+      key: AAAAC3NzaC1lZDI1NTE5AAAAIItyaJwWaW40TXqHrT9J40v63FSaizwZpq6GztZhT2EY
       type: ssh-ed25519
     rsa:
       fingerprints:
-        sha1: SSHFP 1 1 bf8f728eeaf7acfed4c0115e2d03a47aecf6e107
-        sha256: SSHFP 1 2 f760c64894b03490b0cb78f06e88cb1ce7f3cbc2492aeef2a6c7f0d9192dfdc0
-      key: AAAAB3NzaC1yc2EAAAADAQABAAABAQDa7pPDjkdv6U5VU5r0MhuFrD5+WxxpaGOABC1966c5G8jwhUoxzb70NYItZjkGMXGXQsgTM4irf7e3CAAr6Fc7yK6+CVHAubSUCYdeKbTKEMGh028DRclht8yvNV4/69hsiCzjhbUQNYmspzQti6niO2apyht9sY/p/taQ3+79qmWZAFMbbRmun5/+rQiJu3xvUk7NE4DJ6G4c/hwVSFHQxTqDQU8mygjP4txziOCliigsWOsAxQFjtcGL8n5w3GYb3VlsmFZ5JKUwC6o8pqKVx/wIRjC8VhxeI2lrM71hxp81N2hDkq813djTipEg+4L3RyrP/L7qBy3PHXpNMTcx
+        sha1: SSHFP 1 1 192a116d37f755e01b71505829c4a7262839ed9b
+        sha256: SSHFP 1 2 9042b84544930b7416dada4abb55a0711e0f071b6a0f412ae4969b6394c5bcd3
+      key: AAAAB3NzaC1yc2EAAAADAQABAAABAQDAdcDtKLdXdd6hJcqR+SaztNoF5NQcoqFu5ozzw+CSfxUJfOU3Pmd22fboMn35RvR5YQTFi4HLd1NZCeDG1lASoHP1hx+/NqGoLlaaI+Oz+oh4okY5KTsALX7I7H4+89kSZjJjXg3W2f9J+3JFDb9CFcCAsbpG9cg6aGehb5j9ayzhGbQBsfV7Q3Y1tFU5+aQqsrsBrKwbRKSUQB8e0shkM9vdhF2CJ3eJOo1nnf+Z1DcTFJZjOGf/QVi+aiwypdvsMMDNZ35jHhLvYVqttmJ/gwxHTySQBoVbZ7rLIJ9tB5Rv6FKzoUx5qGsa/Jmivz7/1vGUlWIIvJDxOJnnyzn5
       type: ssh-rsa
   ssh_client_version_full: 7.9p1
   ssh_keys_users: {}
   ssh_server_version_full: 7.9p1
   ssh_server_version_major: '7'
   ssh_server_version_release: '7.9'
-  sshdsakey: AAAAB3NzaC1kc3MAAACBAJ9rHCna5WO0vTcZ7IXtsXZ5lYXVpbn2u2xsybRL8bciCRz2rXpeoUPQhU2n4iGlypbrWzlRrSMGDAlIUH8wwu4xTSJUzo07rY6LZzi0q96ZhMJnQjAfQKAmLLzg+BIFilcsQPKfP0j4tDlsmFR4Kk/vOuW3AbG/avbLIvAOIp8ZAAAAFQDBswb5jU/NY9ZZxsvVGG+m6YUCYQAAAIBZcOHgH42ww91s2Jp2Yemv0XqAM/GQu//GkjWEOl2a7CXuLRan2EPUKyhr74n5g17ZtTZil8INAvmiG9mGEXCYWf+XGkKklDxwJnzWuCc051CWJR6FCOiYTBm8iH7UMOn4DrKY++8kt1VUK1MrI0HVhSb145siGPzHkLciysswkQAAAIAsV2wIoR25835mvIHI9UIq/UKcv9tgZJOA29rkk63i+am/GzrwvCwZNKgNwUhjmv7GVgGOR8KCLoWW0OUze+Z7I7Mi25qqEPz0uPodYzIBFc1a57zSOM+vwkAQWUWbcDfajkMcBe+ofQI1nzSl9SBD0purq1PsvnTcoOwfUt/x/A==
-  sshecdsakey: AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBBJqfl/qc0pdhWKrH4Rm9NB2EbMLmwZ4zzYuyPzHAe7U7rXiq4YMaak98kxWVq5CNDhb/SmvH+BMt+fSE/yXSao=
-  sshed25519key: AAAAC3NzaC1lZDI1NTE5AAAAICgsoMSxUHuAobQrilMBdFn86EXoj66FmI7T36XUJ+Ij
+  sshdsakey: AAAAB3NzaC1kc3MAAACBAM/7RVQSOHRftTVQ5bpRP1+KthnbuxMxQ9jRuDpeNvB9ffkCWDMxR3PXcNLDskNsS0GT2nbCGRSS4DR6rDYLdhbCMbdw1Rt5lllSqJrwSSp+R3ZYr1PzQr/RO8hK2Al5I6NL0nCTLcMVvVv/WRuRa2uVhO6kM/ks88q113MnswT3AAAAFQCxOrikiRl3IUnSZ3haOSaJBv01eQAAAIBws10rb4ibURNVsN3aRbFB0rb59VYfSKfJ2fTx4Iw41XoogqTlTaSzAvsjXlTmDkpWZk/3mHgp6tYTKPYaNv1dFV+9KWjt8FI7GJZEagBoxoGT0VbszAqVZA9Hn3KHQMoztV3rfHYACX4VzOTbW89OvB8JgMTMyhFMirdyqKY+HAAAAIBJZe/bKzYWSSkuxBOOAg5JPJZYzXpO5oU58/oWcsT/iZdETWbgPahwnDu2yjyJHawUozvZCy46/Dm/mSTquD/rWgGUiqgcfLUC/xWKDNdgqX8dNGfD64FxjGx8BqKa6YUPvZy3mtaceshi24uGsRC+82Mt1epnGywGQvDK3LmDqQ==
+  sshecdsakey: AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBHB13HUX5PnVi35yNIxOE8u9kQAl9vcYfc0q2wwSGqxtWI6neIWMjbwfWRQP+Q8UBqZK40tawYLuffNAgrTag2A=
+  sshed25519key: AAAAC3NzaC1lZDI1NTE5AAAAIItyaJwWaW40TXqHrT9J40v63FSaizwZpq6GztZhT2EY
   sshfp_dsa: |-
-    SSHFP 2 1 c7e025e50e63940b0da40935078e4757ca1dcaab
-    SSHFP 2 2 bf3f80b0555cdb41364205b84e20c54310097d310385296e03d3953768f88757
+    SSHFP 2 1 86c0e798c4874a1b289323427a082d350f6352ac
+    SSHFP 2 2 46d467e24ec3944366b9a8fa32554105bec6784ff67521f3c5563d9a30df995a
   sshfp_ecdsa: |-
-    SSHFP 3 1 d3caf856aa9bc1a13339fa9572027e418821713b
-    SSHFP 3 2 a45e41db9e16136a258368cd8c6d0523f4d3fea7e94ec892830139e8bc03187e
+    SSHFP 3 1 bbd053932cf0675266dfec2377eb46665700c141
+    SSHFP 3 2 b603a13db7906c2c5dc1ad33dc458b5f61d0df36d43d3527b7b4a5aea24b7edc
   sshfp_ed25519: |-
-    SSHFP 4 1 5e8898628658d952935b095db1f904499d84bf09
-    SSHFP 4 2 92446a284312a1fecabb3692dbfbd72cb7a1bbf47c5330caff3b253c1487e305
+    SSHFP 4 1 347935401824c782b3cf29ec451a551340abdbf5
+    SSHFP 4 2 311e45e35b4a9ffc2f4a1d9a957098806eb1fa158c0f5114a4a40c5b93a24627
   sshfp_rsa: |-
-    SSHFP 1 1 bf8f728eeaf7acfed4c0115e2d03a47aecf6e107
-    SSHFP 1 2 f760c64894b03490b0cb78f06e88cb1ce7f3cbc2492aeef2a6c7f0d9192dfdc0
-  sshrsakey: AAAAB3NzaC1yc2EAAAADAQABAAABAQDa7pPDjkdv6U5VU5r0MhuFrD5+WxxpaGOABC1966c5G8jwhUoxzb70NYItZjkGMXGXQsgTM4irf7e3CAAr6Fc7yK6+CVHAubSUCYdeKbTKEMGh028DRclht8yvNV4/69hsiCzjhbUQNYmspzQti6niO2apyht9sY/p/taQ3+79qmWZAFMbbRmun5/+rQiJu3xvUk7NE4DJ6G4c/hwVSFHQxTqDQU8mygjP4txziOCliigsWOsAxQFjtcGL8n5w3GYb3VlsmFZ5JKUwC6o8pqKVx/wIRjC8VhxeI2lrM71hxp81N2hDkq813djTipEg+4L3RyrP/L7qBy3PHXpNMTcx
+    SSHFP 1 1 192a116d37f755e01b71505829c4a7262839ed9b
+    SSHFP 1 2 9042b84544930b7416dada4abb55a0711e0f071b6a0f412ae4969b6394c5bcd3
+  sshrsakey: AAAAB3NzaC1yc2EAAAADAQABAAABAQDAdcDtKLdXdd6hJcqR+SaztNoF5NQcoqFu5ozzw+CSfxUJfOU3Pmd22fboMn35RvR5YQTFi4HLd1NZCeDG1lASoHP1hx+/NqGoLlaaI+Oz+oh4okY5KTsALX7I7H4+89kSZjJjXg3W2f9J+3JFDb9CFcCAsbpG9cg6aGehb5j9ayzhGbQBsfV7Q3Y1tFU5+aQqsrsBrKwbRKSUQB8e0shkM9vdhF2CJ3eJOo1nnf+Z1DcTFJZjOGf/QVi+aiwypdvsMMDNZ35jHhLvYVqttmJ/gwxHTySQBoVbZ7rLIJ9tB5Rv6FKzoUx5qGsa/Jmivz7/1vGUlWIIvJDxOJnnyzn5
   subnet: sesi_rocquencourt_staging
   sudoversion: 1.8.27
   swapfree: 1020.00 MiB
@@ -864,14 +921,14 @@ values:
   swapsize: 1020.00 MiB
   swapsize_mb: 1019.99609375
   swh_hostname:
-    fqdn: mirror-test.internal.staging.swh.network
-    short: mirror-test
-    internal_fqdn: mirror-test.internal.staging.swh.network
+    fqdn: poc-rancher-sw1.internal.staging.swh.network
+    short: poc-rancher-sw1
+    internal_fqdn: poc-rancher-sw1.internal.staging.swh.network
   system_uptime:
     days: 0
-    hours: 0
-    seconds: 415
-    uptime: 0:06 hours
+    hours: 12
+    seconds: 43782
+    uptime: 12:09 hours
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -886,15 +943,15 @@ values:
     systemd-timesyncd.service: enabled
   systemd_version: '247'
   timezone: UTC
-  uptime: 0:06 hours
+  uptime: 12:09 hours
   uptime_days: 0
-  uptime_hours: 0
-  uptime_seconds: 415
-  uuid: 91dd638a-0479-48c0-a790-3df64c09656c
+  uptime_hours: 12
+  uptime_seconds: 43782
+  uuid: e757c2ca-93d2-41e0-9b5f-123616c90842
   vcsrepo_svn_ver: ''
   virtual: kvm
-  clientcert: mirror-test.internal.staging.swh.network
+  clientcert: poc-rancher-sw1.internal.staging.swh.network
   clientversion: 5.5.10
   clientnoop: false
-timestamp: '2021-09-22T13:13:21.723975985+00:00'
-expiration: '2021-09-22T13:43:21.726277117+00:00'
+timestamp: '2021-09-28T12:26:10.061637238+00:00'
+expiration: '2021-09-28T12:56:10.062971076+00:00'
