@@ -278,6 +278,14 @@ vms = {
     :cpus        => 2,
     :environment => ENV_PRODUCTION,
   },
+  "prod-kibana0" => {
+    :hostname    => "kibana0.internal.softwareheritage.org",
+    :ip          => "10.168.100.50",
+    :type        => TYPE_AGENT,
+    :memory      => 1024,
+    :cpus        => 2,
+    :environment => ENV_PRODUCTION,
+  },
   "logstash" => {
     :hostname    => "logstash0.internal.softwareheritage.org",
     :ip          => "10.168.100.19",
