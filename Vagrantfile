@@ -136,14 +136,6 @@ vms = {
     :cpus        => 2,
     :environment => ENV_STAGING,
   },
-  "staging-journal0" => {
-    :hostname    => "journal0.internal.staging.swh.network",
-    :ip          => "10.168.130.70",
-    :type        => TYPE_AGENT,
-    :memory      => 1024,
-    :cpus        => 2,
-    :environment => ENV_STAGING,
-  },
   "staging-esnode0" => {
     :hostname    => "search-esnode0.internal.staging.swh.network",
     :ip          => "10.168.130.80",
