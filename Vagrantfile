@@ -424,7 +424,7 @@ Vagrant.configure("2") do |global_config|
       # Using nfs v4 to avoid using the default nfs v3 on udp not supported by the debian 11 kernel
       config.vm.synced_folder "/tmp/puppet/", _mount_point_puppet, type: 'nfs', nfs_version:4
       # Hack to speed up the puppet provisioner rsync
-      # It will synchronize between the same source and destination 
+      # It will synchronize between the same source and destination
       config.vm.synced_folder "/tmp/puppet/", '/vagrant', type: 'nfs', nfs_version:4
       config.vm.synced_folder "/tmp/puppet/", '/vagrant-puppet', type: 'nfs', nfs_version:4
 
@@ -461,7 +461,7 @@ Vagrant.configure("2") do |global_config|
         puppet.manifests_path = "#{manifests_path}"
         puppet.options = "#{puppet_options}"
         puppet.facter = _facts
-        # Dont use nfs mount as the nfs_version can't be 
+        # Dont use nfs mount as the nfs_version can't be
         # specified. The default is nfsv3 and udp which is not
         # supported by the debian 11 kernel
       end
