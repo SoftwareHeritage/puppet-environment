@@ -40,20 +40,23 @@ ENVIRONMENT_FACTS = {
     "vagrant_testing" => "1",
     "testing"         => "vagrant",
     "deployment"      => ENV_ADMIN,
-    "subnet"          => "vagrant"
+    "subnet"          => "vagrant",
+    "environment"     => ENV_PRODUCTION,
   },
   ENV_PRODUCTION => {
     "vagrant_testing" => "1",
     "testing"         => "vagrant",
     "deployment"      => ENV_PRODUCTION,
     "subnet"          => "vagrant",
-    "puppet_vardir"   => "/var/lib/puppet"
+    "puppet_vardir"   => "/var/lib/puppet",
+    "environment"     => ENV_PRODUCTION,
   },
   ENV_STAGING => {
     "vagrant_testing" => "1",
     "testing"         => "vagrant",
     "deployment"      => ENV_STAGING,
-    "subnet"          => "vagrant"
+    "subnet"          => "vagrant",
+    "environment"     => ENV_STAGING,
   },
 }
 
@@ -410,8 +413,8 @@ vms = {
 Vagrant.configure("2") do |global_config|
   vms.each do | vm_name, vm_props |
       global_config.vm.define vm_name do |config|
-      _environment = vm_props[:environment]
-      _facts = ENVIRONMENT_FACTS[_environment]
+      _environment_name = vm_props[:environment]
+      _vm_facts = ENVIRONMENT_FACTS[_environment_name]
       _mount_point_puppet = vm_props[:type] == TYPE_MASTER ? "/etc/puppet/code" : "/tmp/puppet"
 
       # config.ssh.insert_key = false
@@ -441,8 +444,8 @@ Vagrant.configure("2") do |global_config|
       config.vm.provision :shell do |s|
         s.path = install_facts_script_path
         s.args = [
-          _facts["deployment"],
-          _facts["subnet"]
+          _vm_facts["deployment"],
+          _vm_facts["subnet"]
         ]
       end
 
@@ -452,7 +455,7 @@ Vagrant.configure("2") do |global_config|
       end
 
       config.vm.provision "puppet" do |puppet|
-        puppet.environment = _environment
+        puppet.environment = _vm_facts["environment"]
         if vm_props[:type] == TYPE_AGENT
           puppet.environment_path = "#{environment_path}"
           puppet.hiera_config_path = "#{puppet.environment_path}/#{puppet.environment}/hiera.yaml"
@@ -460,7 +463,7 @@ Vagrant.configure("2") do |global_config|
         puppet.manifest_file = "#{manifest_file}"
         puppet.manifests_path = "#{manifests_path}"
         puppet.options = "#{puppet_options}"
-        puppet.facter = _facts
+        puppet.facter = _vm_facts
         # Dont use nfs mount as the nfs_version can't be
         # specified. The default is nfsv3 and udp which is not
         # supported by the debian 11 kernel
