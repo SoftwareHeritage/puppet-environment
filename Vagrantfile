@@ -143,6 +143,8 @@ vms = {
     :memory      => 1024,
     :cpus        => 2,
     :environment => ENV_STAGING,
+    :box         => $global_debian11_box,
+    :box_url     => $global_debian11_box_url,
   },
   "staging-search0" => {
     :hostname    => "search-search0.internal.staging.swh.network",
@@ -151,6 +153,8 @@ vms = {
     :memory      => 1024,
     :cpus        => 2,
     :environment => ENV_STAGING,
+    :box         => $global_debian11_box,
+    :box_url     => $global_debian11_box_url,
   },
   "staging-counters0" => {
     :hostname    => "counters0.internal.staging.swh.network",
@@ -178,6 +182,8 @@ vms = {
     :memory      => 4096,
     :cpus        => 2,
     :environment => ENV_ADMIN,
+    :box         => $global_debian11_box,
+    :box_url     => $global_debian11_box_url,
   },
   "admin-rp1" => {
     :hostname    => "rp1.internal.admin.swh.network",
@@ -186,6 +192,8 @@ vms = {
     :memory      => 4096,
     :cpus        => 2,
     :environment => ENV_ADMIN,
+    :box         => $global_debian11_box,
+    :box_url     => $global_debian11_box_url,
   },
   ################
   # PUPPET MASTER
@@ -256,6 +264,8 @@ vms = {
     :memory      => 1024,
     :cpus        => 2,
     :environment => ENV_PRODUCTION,
+    :box         => $global_debian11_box,
+    :box_url     => $global_debian11_box_url,
   },
   "esnode2" => {
     :hostname    => "esnode2.internal.softwareheritage.org",
@@ -264,6 +274,8 @@ vms = {
     :memory      => 1024,
     :cpus        => 2,
     :environment => ENV_PRODUCTION,
+    :box         => $global_debian11_box,
+    :box_url     => $global_debian11_box_url,
   },
   "esnode3" => {
     :hostname    => "esnode3.internal.softwareheritage.org",
@@ -272,6 +284,8 @@ vms = {
     :memory      => 1024,
     :cpus        => 2,
     :environment => ENV_PRODUCTION,
+    :box         => $global_debian11_box,
+    :box_url     => $global_debian11_box_url,
   },
   "prod-kibana0" => {
     :hostname    => "kibana0.internal.softwareheritage.org",
@@ -280,6 +294,8 @@ vms = {
     :memory      => 1024,
     :cpus        => 2,
     :environment => ENV_PRODUCTION,
+    :box         => $global_debian11_box,
+    :box_url     => $global_debian11_box_url,
   },
   "logstash" => {
     :hostname    => "logstash0.internal.softwareheritage.org",
@@ -288,6 +304,8 @@ vms = {
     :memory      => 2048,
     :cpus        => 2,
     :environment => ENV_PRODUCTION,
+    :box         => $global_debian11_box,
+    :box_url     => $global_debian11_box_url,
   },
   "prod-webapp1" => {
     :hostname    => "webapp1.internal.softwareheritage.org",
@@ -330,6 +348,8 @@ vms = {
     :memory      => 4096,
     :cpus        => 2,
     :environment => ENV_PRODUCTION,
+    :box         => $global_debian11_box,
+    :box_url     => $global_debian11_box_url,
   },
   "prod-search-esnode5" => {
     :hostname    => "search-esnode5.internal.softwareheritage.org",
@@ -338,6 +358,8 @@ vms = {
     :memory      => 4096,
     :cpus        => 2,
     :environment => ENV_PRODUCTION,
+    :box         => $global_debian11_box,
+    :box_url     => $global_debian11_box_url,
   },
   "prod-search-esnode6" => {
     :hostname    => "search-esnode6.internal.softwareheritage.org",
@@ -346,6 +368,8 @@ vms = {
     :memory      => 4096,
     :cpus        => 2,
     :environment => ENV_PRODUCTION,
+    :box         => $global_debian11_box,
+    :box_url     => $global_debian11_box_url,
   },
   "prod-counters1" => {
     :hostname    => "counters1.internal.softwareheritage.org",
