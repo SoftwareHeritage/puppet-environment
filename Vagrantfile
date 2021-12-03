@@ -221,7 +221,7 @@ vms = {
     :hostname    => "riverside.internal.softwareheritage.org",
     :ip          => "10.168.100.52",
     :type        => TYPE_MASTER,
-    :memory      => 1024,
+    :memory      => 3072,
     :cpus        => 2,
     :environment => ENV_PRODUCTION,
   },
