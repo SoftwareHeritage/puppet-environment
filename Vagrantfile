@@ -445,6 +445,30 @@ vms = {
     :cpus        => 2,
     :environment => ENV_PRODUCTION,
   },
+  "jenkins-debian1" => {
+    :hostname    => "jenkins-debian1.internal.softwareheritage.org",
+    :ip          => "10.168.100.150",
+    :type        => TYPE_AGENT,
+    :memory      => 2048,
+    :cpus        => 2,
+    :environment => ENV_PRODUCTION,
+  },
+  "thyssen" => {
+    :hostname    => "thyssen.internal.softwareheritage.org",
+    :ip          => "10.168.100.105",
+    :type        => TYPE_AGENT,
+    :memory      => 2048,
+    :cpus        => 2,
+    :environment => ENV_PRODUCTION,
+  },
+  "tate" => {
+    :hostname    => "tate.softwareheritage.org",
+    :ip          => "10.168.100.30",
+    :type        => TYPE_AGENT,
+    :memory      => 1024,
+    :cpus        => 2,
+    :environment => ENV_PRODUCTION,
+  },
   ################
   ## MISC
   ################
