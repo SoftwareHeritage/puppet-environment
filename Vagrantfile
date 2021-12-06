@@ -224,6 +224,8 @@ vms = {
     :memory      => 3072,
     :cpus        => 2,
     :environment => ENV_PRODUCTION,
+    :box         => $global_debian11_box,
+    :box_url     => $global_debian11_box_url,
   },
   "giverny" => {
     :hostname    => "giverny.softwareheritage.org",
