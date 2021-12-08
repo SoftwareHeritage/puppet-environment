@@ -452,6 +452,8 @@ vms = {
     :memory      => 2048,
     :cpus        => 2,
     :environment => ENV_PRODUCTION,
+    :box         => $global_debian11_box,
+    :box_url     => $global_debian11_box_url,
   },
   "thyssen" => {
     :hostname    => "thyssen.internal.softwareheritage.org",
@@ -460,6 +462,8 @@ vms = {
     :memory      => 2048,
     :cpus        => 2,
     :environment => ENV_PRODUCTION,
+    :box         => $global_debian11_box,
+    :box_url     => $global_debian11_box_url,
   },
   "tate" => {
     :hostname    => "tate.softwareheritage.org",
@@ -481,7 +485,7 @@ vms = {
     :environment => ENV_STAGING,
   },
   "test-bullseye" => {
-    :hostname    => "test_bullseye.softwareheritage.org",
+    :hostname    => "testbullseye.softwareheritage.org",
     :ip          => "10.168.100.131",
     :type        => TYPE_AGENT,
     :memory      => 512,
