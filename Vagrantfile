@@ -209,6 +209,16 @@ vms = {
   ################
   # PRODUCTION
   ################
+  "prod-ns0" => {
+    :hostname    => "ns0.euwest.azure.internal.softwareheritage.org",
+    :ip          => "10.168.200.22",
+    :type        => TYPE_AGENT,
+    :memory      => 512,
+    :cpus        => 2,
+    :environment => ENV_PRODUCTION,
+    :box         => $global_debian11_box,
+    :box_url     => $global_debian11_box_url,
+  },
   "saatchi" => {
     :hostname    => "saatchi.internal.softwareheritage.org",
     :ip          => "10.168.100.104",
