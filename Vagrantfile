@@ -428,6 +428,8 @@ vms = {
     :memory      => 1024,
     :cpus        => 2,
     :environment => ENV_PRODUCTION,
+    :box         => $global_debian11_box,
+    :box_url     => $global_debian11_box_url,
   },
   "branly" => {
     :hostname    => "branly.internal.softwareheritage.org",
@@ -436,6 +438,8 @@ vms = {
     :memory      => 1024,
     :cpus        => 2,
     :environment => ENV_PRODUCTION,
+    :box         => $global_debian11_box,
+    :box_url     => $global_debian11_box_url,
   },
   "belvedere" => {
     :hostname    => "belvedere.internal.softwareheritage.org",
@@ -444,6 +448,8 @@ vms = {
     :memory      => 2048,
     :cpus        => 2,
     :environment => ENV_PRODUCTION,
+    :box         => $global_debian11_box,
+    :box_url     => $global_debian11_box_url,
   },
   "jenkins-debian1" => {
     :hostname    => "jenkins-debian1.internal.softwareheritage.org",
