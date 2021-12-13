@@ -79,6 +79,8 @@ vms = {
     :memory      => 512,
     :cpus        => 2,
     :environment => ENV_STAGING,
+    :box         => $global_debian11_box,
+    :box_url     => $global_debian11_box_url,
   },
   "staging-db1" => {
     :hostname    => "db1.internal.staging.swh.network",
