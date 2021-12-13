@@ -153,8 +153,6 @@ vms = {
     :memory      => 1024,
     :cpus        => 2,
     :environment => ENV_STAGING,
-    :box         => $global_debian11_box,
-    :box_url     => $global_debian11_box_url,
   },
   "staging-counters0" => {
     :hostname    => "counters0.internal.staging.swh.network",
