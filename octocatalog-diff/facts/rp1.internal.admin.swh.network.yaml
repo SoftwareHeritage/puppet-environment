@@ -2,33 +2,10 @@
 name: rp1.internal.admin.swh.network
 values:
   agent_specified_environment: production
-  apt_dist_updates: 10
-  apt_has_dist_updates: true
-  apt_has_updates: true
-  apt_package_dist_updates:
-  - libzstd1
-  - udev
-  - libpam-systemd
-  - libnss-systemd
-  - systemd
-  - systemd-timesyncd
-  - libudev1
-  - libsystemd0
-  - systemd-sysv
-  - borgbackup
-  apt_package_security_dist_updates: []
-  apt_package_security_updates: []
-  apt_package_updates:
-  - systemd-sysv
-  - udev
-  - libudev1
-  - libzstd1
-  - borgbackup
-  apt_reboot_required: false
-  apt_security_dist_updates: 0
-  apt_security_updates: 0
-  apt_update_last_success: 1632829922
-  apt_updates: 5
+  apt_has_dist_updates: false
+  apt_has_updates: false
+  apt_reboot_required: true
+  apt_update_last_success: 1640688721
   architecture: amd64
   bios_release_date: 04/01/2014
   bios_vendor: SeaBIOS
@@ -47,6 +24,7 @@ values:
   cassandraheapnewsize: 200
   cassandramaxheapsize: 1024
   chassistype: Other
+  cloudinit_enabled: 'true'
   deployment: admin
   disks:
     sr0:
@@ -90,7 +68,7 @@ values:
     www-data: "/var/www"
     backup: "/var/backups"
     list: "/var/list"
-    irc: "/var/run/ircd"
+    irc: "/run/ircd"
     gnats: "/var/lib/gnats"
     nobody: "/nonexistent"
     _apt: "/nonexistent"
@@ -126,7 +104,6 @@ values:
     aeviso: "/home/aeviso"
     tenma: "/home/tenma"
     tg1999: "/home/tg1999"
-    journalbeat: "/var/lib/journalbeat"
     ntp: "/nonexistent"
     postfix: "/var/spool/postfix"
     _rpc: "/run/rpcbind"
@@ -147,9 +124,10 @@ values:
     hakb: "/home/hakb"
     jayesh: "/home/jayesh"
     zaboukha: "/home/zaboukha"
+    tcpdump: "/nonexistent"
   domain: internal.admin.swh.network
-  facterversion: 3.11.0
-  filesystems: ext2,ext3,ext4,iso9660
+  facterversion: 3.14.12
+  filesystems: btrfs,ext2,ext3,ext4,hfs,hfsplus,iso9660,jfs,minix,msdos,qnx4,ufs,vfat,xfs
   fips_enabled: false
   fqdn: rp1.internal.admin.swh.network
   gid: root
@@ -176,19 +154,20 @@ values:
   is_pe: false
   is_virtual: true
   kernel: Linux
-  kernelmajversion: '4.19'
-  kernelrelease: 4.19.0-17-amd64
-  kernelversion: 4.19.0
+  kernelmajversion: '5.10'
+  kernelrelease: 5.10.0-9-amd64
+  kernelversion: 5.10.0
   letsencrypt_directory: {}
   load_averages:
-    15m: 0.02
-    1m: 0.21
-    5m: 0.09
-  lsbdistcodename: buster
-  lsbdistdescription: Debian GNU/Linux 10 (buster)
+    15m: 0.0
+    1m: 0.08
+    5m: 0.03
+  lsbdistcodename: bullseye
+  lsbdistdescription: Debian GNU/Linux 11 (bullseye)
   lsbdistid: Debian
-  lsbdistrelease: '10'
-  lsbmajdistrelease: '10'
+  lsbdistrelease: '11.2'
+  lsbmajdistrelease: '11'
+  lsbminordistrelease: '2'
   macaddress: 4e:42:20:e0:b6:65
   macaddress_eth0: 4e:42:20:e0:b6:65
   manufacturer: QEMU
@@ -202,22 +181,22 @@ values:
       used: 0 bytes
       used_bytes: 0
     system:
-      available: 3.34 GiB
-      available_bytes: 3590090752
-      capacity: 13.25%
-      total: 3.85 GiB
-      total_bytes: 4138471424
-      used: 522.98 MiB
-      used_bytes: 548380672
-  memoryfree: 3.34 GiB
-  memoryfree_mb: 3423.77734375
-  memorysize: 3.85 GiB
-  memorysize_mb: 3946.75390625
+      available: 3.28 GiB
+      available_bytes: 3523616768
+      capacity: 14.52%
+      total: 3.84 GiB
+      total_bytes: 4122230784
+      used: 570.88 MiB
+      used_bytes: 598614016
+  memoryfree: 3.28 GiB
+  memoryfree_mb: 3360.3828125
+  memorysize: 3.84 GiB
+  memorysize_mb: 3931.265625
   mountpoints:
     "/":
-      available: 13.70 GiB
-      available_bytes: 14706257920
-      capacity: 16.45%
+      available: 12.75 GiB
+      available_bytes: 13692125184
+      capacity: 17.93%
       device: "/dev/mapper/base--template--vg-root"
       filesystem: ext4
       options:
@@ -226,12 +205,12 @@ values:
       - errors=remount-ro
       size: 16.39 GiB
       size_bytes: 17601216512
-      used: 2.70 GiB
-      used_bytes: 2894958592
+      used: 2.79 GiB
+      used_bytes: 2991378432
     "/boot":
-      available: 115.68 MiB
-      available_bytes: 121304064
-      capacity: 50.84%
+      available: 136.96 MiB
+      available_bytes: 143608832
+      capacity: 38.63%
       device: "/dev/vda1"
       filesystem: ext2
       options:
@@ -239,11 +218,76 @@ values:
       - relatime
       size: 235.32 MiB
       size_bytes: 246755328
-      used: 119.64 MiB
-      used_bytes: 125451264
+      used: 86.22 MiB
+      used_bytes: 90406912
+    "/dev":
+      available: 1.90 GiB
+      available_bytes: 2042920960
+      capacity: 0%
+      device: udev
+      filesystem: devtmpfs
+      options:
+      - rw
+      - nosuid
+      - relatime
+      - size=1995040k
+      - nr_inodes=498760
+      - mode=755
+      size: 1.90 GiB
+      size_bytes: 2042920960
+      used: 0 bytes
+      used_bytes: 0
+    "/dev/hugepages":
+      available: 0 bytes
+      available_bytes: 0
+      capacity: 100%
+      device: hugetlbfs
+      filesystem: hugetlbfs
+      options:
+      - rw
+      - relatime
+      - pagesize=2M
+      size: 0 bytes
+      size_bytes: 0
+      used: 0 bytes
+      used_bytes: 0
+    "/dev/mqueue":
+      available: 0 bytes
+      available_bytes: 0
+      capacity: 100%
+      device: mqueue
+      filesystem: mqueue
+      options:
+      - rw
+      - nosuid
+      - nodev
+      - noexec
+      - relatime
+      size: 0 bytes
+      size_bytes: 0
+      used: 0 bytes
+      used_bytes: 0
+    "/dev/pts":
+      available: 0 bytes
+      available_bytes: 0
+      capacity: 100%
+      device: devpts
+      filesystem: devpts
+      options:
+      - rw
+      - nosuid
+      - noexec
+      - relatime
+      - gid=5
+      - mode=620
+      - ptmxmode=000
+      size: 0 bytes
+      size_bytes: 0
+      used: 0 bytes
+      used_bytes: 0
     "/dev/shm":
-      available: 1.93 GiB
-      available_bytes: 2069233664
+      available: 1.92 GiB
+      available_bytes: 2061115392
       capacity: 0%
       device: tmpfs
       filesystem: tmpfs
@@ -251,27 +295,28 @@ values:
       - rw
       - nosuid
       - nodev
-      size: 1.93 GiB
-      size_bytes: 2069233664
+      size: 1.92 GiB
+      size_bytes: 2061115392
       used: 0 bytes
       used_bytes: 0
     "/run":
-      available: 394.18 MiB
-      available_bytes: 413323264
+      available: 392.60 MiB
+      available_bytes: 411672576
       capacity: 0.13%
       device: tmpfs
       filesystem: tmpfs
       options:
       - rw
       - nosuid
+      - nodev
       - noexec
       - relatime
-      - size=404148k
+      - size=402564k
       - mode=755
-      size: 394.68 MiB
-      size_bytes: 413847552
-      used: 512.00 KiB
-      used_bytes: 524288
+      size: 393.13 MiB
+      size_bytes: 412225536
+      used: 540.00 KiB
+      used_bytes: 552960
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -289,39 +334,17 @@ values:
       size_bytes: 5242880
       used: 0 bytes
       used_bytes: 0
-    "/run/user/1003":
-      available: 87.47 MiB
-      available_bytes: 91721728
-      capacity: 0%
-      device: tmpfs
-      filesystem: tmpfs
+    "/run/rpc_pipefs":
+      available: 0 bytes
+      available_bytes: 0
+      capacity: 100%
+      device: sunrpc
+      filesystem: rpc_pipefs
       options:
       - rw
-      - nosuid
-      - nodev
       - relatime
-      - size=89572k
-      - mode=700
-      - uid=1003
-      - gid=1003
-      size: 87.47 MiB
-      size_bytes: 91721728
-      used: 0 bytes
-      used_bytes: 0
-    "/sys/fs/cgroup":
-      available: 1.93 GiB
-      available_bytes: 2069233664
-      capacity: 0%
-      device: tmpfs
-      filesystem: tmpfs
-      options:
-      - ro
-      - nosuid
-      - nodev
-      - noexec
-      - mode=755
-      size: 1.93 GiB
-      size_bytes: 2069233664
+      size: 0 bytes
+      size_bytes: 0
       used: 0 bytes
       used_bytes: 0
   mounts:
@@ -364,6 +387,7 @@ values:
         netmask6: 'ffff:ffff:ffff:ffff::'
         network: 192.168.50.0
         network6: 'fe80::'
+        scope6: link
       lo:
         bindings:
         - address: 127.0.0.1
@@ -380,6 +404,7 @@ values:
         netmask6: ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff
         network: 127.0.0.0
         network6: "::1"
+        scope6: host
     ip: 192.168.50.20
     ip6: fe80::4c42:20ff:fee0:b665
     mac: 4e:42:20:e0:b6:65
@@ -389,25 +414,27 @@ values:
     network: 192.168.50.0
     network6: 'fe80::'
     primary: eth0
+    scope6: link
   operatingsystem: Debian
-  operatingsystemmajrelease: '10'
-  operatingsystemrelease: '10.10'
+  operatingsystemmajrelease: '11'
+  operatingsystemrelease: '11.2'
   os:
     architecture: amd64
     distro:
-      codename: buster
-      description: Debian GNU/Linux 10 (buster)
+      codename: bullseye
+      description: Debian GNU/Linux 11 (bullseye)
       id: Debian
       release:
-        full: '10'
-        major: '10'
+        full: '11.2'
+        major: '11'
+        minor: '2'
     family: Debian
     hardware: x86_64
     name: Debian
     release:
-      full: '10.10'
-      major: '10'
-      minor: '10'
+      full: '11.2'
+      major: '11'
+      minor: '2'
     selinux:
       enabled: false
   osfamily: Debian
@@ -442,30 +469,33 @@ values:
       uuid: 3pkyW9-JF6T-y3GS-R3NZ-OeQp-ePTO-Dd3a0C
   path: "/usr/bin:/bin:/usr/sbin:/sbin"
   physicalprocessorcount: 1
-  processor0: AMD EPYC 7402 24-Core Processor
-  processor1: AMD EPYC 7402 24-Core Processor
+  processor0: Common KVM processor
+  processor1: Common KVM processor
   processorcount: 2
   processors:
     count: 2
     isa: unknown
     models:
-    - AMD EPYC 7402 24-Core Processor
-    - AMD EPYC 7402 24-Core Processor
+    - Common KVM processor
+    - Common KVM processor
     physicalcount: 1
   productname: Standard PC (i440FX + PIIX, 1996)
   public_ipaddresses: []
   puppet_environmentpath: "/etc/puppet/code/environments"
   puppet_server: pergamon.internal.softwareheritage.org
   puppet_vardir: "/var/lib/puppet"
-  puppetversion: 5.5.10
+  puppetversion: 5.5.22
   root_home: "/root"
   ruby:
     platform: x86_64-linux-gnu
-    sitedir: "/usr/local/lib/site_ruby/2.5.0"
-    version: 2.5.5
+    sitedir: "/usr/local/lib/site_ruby/2.7.0"
+    version: 2.7.4
   rubyplatform: x86_64-linux-gnu
-  rubysitedir: "/usr/local/lib/site_ruby/2.5.0"
-  rubyversion: 2.5.5
+  rubysitedir: "/usr/local/lib/site_ruby/2.7.0"
+  rubyversion: 2.7.4
+  scope6: link
+  scope6_eth0: link
+  scope6_lo: host
   selinux: false
   service_provider: systemd
   ssh:
@@ -493,16 +523,16 @@ values:
         sha256: SSHFP 1 2 717e245c81ef266b43563bde0d20d7f033b330e9027ab6338918049afa3de523
       key: AAAAB3NzaC1yc2EAAAADAQABAAABAQDgiPW8vE3z/TWZfFo7d3GlWLkcwiU2fgqmefL+nboV/aw0wai3YaIhP2TV3qDIdWcYXBb45uDz6q8WQSQTEuAvuzVYUfjc+bbzwBck2GYQUXOZ4qHtDhGKS9MSZt4MAMtZ7n+wD2BZ+nzysjFCH7ARPkHHxnmG/VdgMno4DdbimW3nHr3qvNrvwWAB/+YxYBYYgSvvU1CrBoNRM8FFK6m0gR5d/82hLiJI5qmajt2QUic2mQc9xXPPpStSOrYvPi8WDHkPfOQoRnRH/cNqIz9L1jxaY046GDGpwr4coYerKq7YT6EwzrIoEesIp2TBG5hoU46rp8MxGIEfxsIkZhK5
       type: ssh-rsa
-  ssh_client_version_full: 7.9p1
+  ssh_client_version_full: 8.4p1
   ssh_keys_users:
     root:
       id_ed25519.borg.pub:
         type: ed25519
         key: AAAAC3NzaC1lZDI1NTE5AAAAIGdKG9wX5sOJO91IhQPGk2WK4eqWZIvEGt/ncm52h2Gc
         comment: root@rp1
-  ssh_server_version_full: 7.9p1
-  ssh_server_version_major: '7'
-  ssh_server_version_release: '7.9'
+  ssh_server_version_full: 8.4p1
+  ssh_server_version_major: '8'
+  ssh_server_version_release: '8.4'
   sshdsakey: AAAAB3NzaC1kc3MAAACBAPRTvLG/IYhyolIa12HPq39e19UOlLqmw19k1YCpFhS/7MQkad2KVLjBg34YoNi4asdJc/Pz+ONIrhmmz9wDZaAjt67GkR5+sxQv/g1+20uT1x6SwM25Vmu0qLK6YZMwcmD9lmH4huTmFjkpYFxw8nE/3rHEiTo/HLeXo0Vh4YKxAAAAFQDIBg73QyDJOWOWaGhJSXb1WpmVSwAAAIAdZ2Wbgk+2N56oGBADeSFoJE8tef7KlD+/aNjTpmJcuwaz9ZVDQGr2r+YGMsys6IKODaXN6IZTBeCB6ZMVsUbwkC8asVjMczMVGHzZf/95nWrwFgRhb56IjBvX07zTUI2ktgxt/Bg+KGnBFnKekLO9CoxWzS/QtPY4+XRiUMyUDgAAAIEAs4psBr56wzPt7LfjhbdTRnKTB0DbNr2SznZGNJtRcWb2A0CJMoPCvGvcypDJRgzHPmiHUzfvI3wS4DQlT4UkuX/dEo05TACpVRgscnfOkn61Xmx31O8rcKK+WOU9W98tziGnmUt1UajfaRx6a2UNOMBQeN6856LtLpZz1rGouhk=
   sshecdsakey: AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBJ3K73CbK65gzMWLNIP0W2e6XaUQWk7TiF6UEhD8IE3uDDXq6mD2wq4xf9JPnsLuAxLUlXRuDP3VlCdvNv5IpC8=
   sshed25519key: AAAAC3NzaC1lZDI1NTE5AAAAIAMBSDpHlZ4LaHrKK2HlnsXMLUECoMoveHbKSuTbHONb
@@ -520,7 +550,7 @@ values:
     SSHFP 1 2 717e245c81ef266b43563bde0d20d7f033b330e9027ab6338918049afa3de523
   sshrsakey: AAAAB3NzaC1yc2EAAAADAQABAAABAQDgiPW8vE3z/TWZfFo7d3GlWLkcwiU2fgqmefL+nboV/aw0wai3YaIhP2TV3qDIdWcYXBb45uDz6q8WQSQTEuAvuzVYUfjc+bbzwBck2GYQUXOZ4qHtDhGKS9MSZt4MAMtZ7n+wD2BZ+nzysjFCH7ARPkHHxnmG/VdgMno4DdbimW3nHr3qvNrvwWAB/+YxYBYYgSvvU1CrBoNRM8FFK6m0gR5d/82hLiJI5qmajt2QUic2mQc9xXPPpStSOrYvPi8WDHkPfOQoRnRH/cNqIz9L1jxaY046GDGpwr4coYerKq7YT6EwzrIoEesIp2TBG5hoU46rp8MxGIEfxsIkZhK5
   subnet: sesi_rocquencourt_admin
-  sudoversion: 1.8.27
+  sudoversion: 1.9.5p2
   swapfree: 1020.00 MiB
   swapfree_mb: 1019.99609375
   swapsize: 1020.00 MiB
@@ -530,30 +560,33 @@ values:
     short: rp1
     internal_fqdn: rp1.internal.softwareheritage.org
   system_uptime:
-    days: 63
-    hours: 1534
-    seconds: 5522904
-    uptime: 63 days
+    days: 17
+    hours: 427
+    seconds: 1539595
+    uptime: 17 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
     systemd-fsck-root.service: enabled-runtime
+    systemd-network-generator.service: disabled
     systemd-networkd-wait-online.service: disabled
     systemd-networkd.service: disabled
+    systemd-pstore.service: enabled
+    systemd-remount-fs.service: enabled-runtime
     systemd-resolved.service: disabled
     systemd-time-wait-sync.service: disabled
     systemd-timesyncd.service: enabled
-  systemd_version: '241'
+  systemd_version: '247'
   timezone: UTC
-  uptime: 63 days
-  uptime_days: 63
-  uptime_hours: 1534
-  uptime_seconds: 5522904
+  uptime: 17 days
+  uptime_days: 17
+  uptime_hours: 427
+  uptime_seconds: 1539595
   uuid: 59e95e85-0139-4187-8938-808a19e8933f
   vcsrepo_svn_ver: ''
   virtual: kvm
   clientcert: rp1.internal.admin.swh.network
-  clientversion: 5.5.10
+  clientversion: 5.5.22
   clientnoop: false
-timestamp: '2021-09-28T12:26:05.888019604+00:00'
-expiration: '2021-09-28T12:56:05.888366786+00:00'
+timestamp: '2021-12-28T10:56:04.993900581+00:00'
+expiration: '2021-12-28T11:26:04.994363259+00:00'

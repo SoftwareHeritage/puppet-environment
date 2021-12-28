@@ -2,36 +2,16 @@
 name: branly.internal.softwareheritage.org
 values:
   agent_specified_environment: production
-  apt_dist_updates: 9
+  apt_dist_updates: 2
   apt_has_dist_updates: true
-  apt_has_updates: true
+  apt_has_updates: false
   apt_package_dist_updates:
-  - libnss-systemd
-  - libsystemd0
-  - systemd-timesyncd
-  - libpam-systemd
-  - systemd
-  - udev
-  - libudev1
-  - systemd-sysv
-  - megacli
+  - guile-2.2-libs
+  - libgc1
   apt_package_security_dist_updates: []
-  apt_package_security_updates: []
-  apt_package_updates:
-  - libnss-systemd
-  - libsystemd0
-  - systemd-timesyncd
-  - libpam-systemd
-  - systemd
-  - udev
-  - libudev1
-  - systemd-sysv
-  - megacli
   apt_reboot_required: true
   apt_security_dist_updates: 0
-  apt_security_updates: 0
-  apt_update_last_success: 1632830705
-  apt_updates: 9
+  apt_update_last_success: 1640689502
   architecture: amd64
   bios_release_date: 05/06/2020
   bios_vendor: Dell Inc.
@@ -67,10 +47,12 @@ values:
     - balancer
     - crash
     - devicehealth
-    - orchestrator_cli
+    - orchestrator
+    - pg_autoscaler
     - progress
     - rbd_support
     - status
+    - telemetry
     - volumes
     enabled_modules:
     - dashboard
@@ -92,6 +74,70 @@ values:
           max: ''
           enum_allowed: []
           desc: How frequently to reexamine health status
+          long_desc: ''
+          tags: []
+          see_also: []
+        log_level:
+          name: log_level
+          type: str
+          level: advanced
+          flags: 1
+          default_value: ''
+          min: ''
+          max: ''
+          enum_allowed:
+          - ''
+          - critical
+          - debug
+          - error
+          - info
+          - warning
+          desc: ''
+          long_desc: ''
+          tags: []
+          see_also: []
+        log_to_cluster:
+          name: log_to_cluster
+          type: bool
+          level: advanced
+          flags: 1
+          default_value: 'False'
+          min: ''
+          max: ''
+          enum_allowed: []
+          desc: ''
+          long_desc: ''
+          tags: []
+          see_also: []
+        log_to_cluster_level:
+          name: log_to_cluster_level
+          type: str
+          level: advanced
+          flags: 1
+          default_value: info
+          min: ''
+          max: ''
+          enum_allowed:
+          - ''
+          - critical
+          - debug
+          - error
+          - info
+          - warning
+          desc: ''
+          long_desc: ''
+          tags: []
+          see_also: []
+        log_to_file:
+          name: log_to_file
+          type: bool
+          level: advanced
+          flags: 1
+          default_value: 'False'
+          min: ''
+          max: ''
+          enum_allowed: []
+          desc: ''
           long_desc: ''
           tags: []
           see_also: []
@@ -199,118 +245,6 @@ values:
           long_desc: ''
           tags: []
           see_also: []
-    - name: ansible
-      can_run: true
-      error_string: ''
-      module_options:
-        password:
-          name: password
-          type: str
-          level: advanced
-          flags: 0
-          default_value: ''
-          min: ''
-          max: ''
-          enum_allowed: []
-          desc: ''
-          long_desc: ''
-          tags: []
-          see_also: []
-        server_url:
-          name: server_url
-          type: str
-          level: advanced
-          flags: 0
-          default_value: ''
-          min: ''
-          max: ''
-          enum_allowed: []
-          desc: ''
-          long_desc: ''
-          tags: []
-          see_also: []
-        username:
-          name: username
-          type: str
-          level: advanced
-          flags: 0
-          default_value: ''
-          min: ''
-          max: ''
-          enum_allowed: []
-          desc: ''
-          long_desc: ''
-          tags: []
-          see_also: []
-        verify_server:
-          name: verify_server
-          type: str
-          level: advanced
-          flags: 0
-          default_value: ''
-          min: ''
-          max: ''
-          enum_allowed: []
-          desc: ''
-          long_desc: ''
-          tags: []
-          see_also: []
-    - name: deepsea
-      can_run: true
-      error_string: ''
-      module_options:
-        salt_api_eauth:
-          name: salt_api_eauth
-          type: str
-          level: advanced
-          flags: 0
-          default_value: sharedsecret
-          min: ''
-          max: ''
-          enum_allowed: []
-          desc: ''
-          long_desc: ''
-          tags: []
-          see_also: []
-        salt_api_password:
-          name: salt_api_password
-          type: str
-          level: advanced
-          flags: 0
-          default_value: ''
-          min: ''
-          max: ''
-          enum_allowed: []
-          desc: ''
-          long_desc: ''
-          tags: []
-          see_also: []
-        salt_api_url:
-          name: salt_api_url
-          type: str
-          level: advanced
-          flags: 0
-          default_value: ''
-          min: ''
-          max: ''
-          enum_allowed: []
-          desc: ''
-          long_desc: ''
-          tags: []
-          see_also: []
-        salt_api_username:
-          name: salt_api_username
-          type: str
-          level: advanced
-          flags: 0
-          default_value: ''
-          min: ''
-          max: ''
-          enum_allowed: []
-          desc: ''
-          long_desc: ''
-          tags: []
-          see_also: []
     - name: influx
       can_run: false
       error_string: influxdb python module not found
@@ -360,6 +294,70 @@ values:
           level: advanced
           flags: 0
           default_value: '30'
+          min: ''
+          max: ''
+          enum_allowed: []
+          desc: ''
+          long_desc: ''
+          tags: []
+          see_also: []
+        log_level:
+          name: log_level
+          type: str
+          level: advanced
+          flags: 1
+          default_value: ''
+          min: ''
+          max: ''
+          enum_allowed:
+          - ''
+          - critical
+          - debug
+          - error
+          - info
+          - warning
+          desc: ''
+          long_desc: ''
+          tags: []
+          see_also: []
+        log_to_cluster:
+          name: log_to_cluster
+          type: bool
+          level: advanced
+          flags: 1
+          default_value: 'False'
+          min: ''
+          max: ''
+          enum_allowed: []
+          desc: ''
+          long_desc: ''
+          tags: []
+          see_also: []
+        log_to_cluster_level:
+          name: log_to_cluster_level
+          type: str
+          level: advanced
+          flags: 1
+          default_value: info
+          min: ''
+          max: ''
+          enum_allowed:
+          - ''
+          - critical
+          - debug
+          - error
+          - info
+          - warning
+          desc: ''
+          long_desc: ''
+          tags: []
+          see_also: []
+        log_to_file:
+          name: log_to_file
+          type: bool
+          level: advanced
+          flags: 1
+          default_value: 'False'
           min: ''
           max: ''
           enum_allowed: []
@@ -448,7 +446,71 @@ values:
     - name: insights
       can_run: true
       error_string: ''
-      module_options: {}
+      module_options:
+        log_level:
+          name: log_level
+          type: str
+          level: advanced
+          flags: 1
+          default_value: ''
+          min: ''
+          max: ''
+          enum_allowed:
+          - ''
+          - critical
+          - debug
+          - error
+          - info
+          - warning
+          desc: ''
+          long_desc: ''
+          tags: []
+          see_also: []
+        log_to_cluster:
+          name: log_to_cluster
+          type: bool
+          level: advanced
+          flags: 1
+          default_value: 'False'
+          min: ''
+          max: ''
+          enum_allowed: []
+          desc: ''
+          long_desc: ''
+          tags: []
+          see_also: []
+        log_to_cluster_level:
+          name: log_to_cluster_level
+          type: str
+          level: advanced
+          flags: 1
+          default_value: info
+          min: ''
+          max: ''
+          enum_allowed:
+          - ''
+          - critical
+          - debug
+          - error
+          - info
+          - warning
+          desc: ''
+          long_desc: ''
+          tags: []
+          see_also: []
+        log_to_file:
+          name: log_to_file
+          type: bool
+          level: advanced
+          flags: 1
+          default_value: 'False'
+          min: ''
+          max: ''
+          enum_allowed: []
+          desc: ''
+          long_desc: ''
+          tags: []
+          see_also: []
     - name: localpool
       can_run: true
       error_string: ''
@@ -463,6 +525,70 @@ values:
           max: ''
           enum_allowed: []
           desc: failure domain for any created local pool
+          long_desc: ''
+          tags: []
+          see_also: []
+        log_level:
+          name: log_level
+          type: str
+          level: advanced
+          flags: 1
+          default_value: ''
+          min: ''
+          max: ''
+          enum_allowed:
+          - ''
+          - critical
+          - debug
+          - error
+          - info
+          - warning
+          desc: ''
+          long_desc: ''
+          tags: []
+          see_also: []
+        log_to_cluster:
+          name: log_to_cluster
+          type: bool
+          level: advanced
+          flags: 1
+          default_value: 'False'
+          min: ''
+          max: ''
+          enum_allowed: []
+          desc: ''
+          long_desc: ''
+          tags: []
+          see_also: []
+        log_to_cluster_level:
+          name: log_to_cluster_level
+          type: str
+          level: advanced
+          flags: 1
+          default_value: info
+          min: ''
+          max: ''
+          enum_allowed:
+          - ''
+          - critical
+          - debug
+          - error
+          - info
+          - warning
+          desc: ''
+          long_desc: ''
+          tags: []
+          see_also: []
+        log_to_file:
+          name: log_to_file
+          type: bool
+          level: advanced
+          flags: 1
+          default_value: 'False'
+          min: ''
+          max: ''
+          enum_allowed: []
+          desc: ''
           long_desc: ''
           tags: []
           see_also: []
@@ -531,16 +657,67 @@ values:
           long_desc: ''
           tags: []
           see_also: []
-    - name: pg_autoscaler
+    - name: osd_support
       can_run: true
       error_string: ''
       module_options:
-        sleep_interval:
-          name: sleep_interval
+        log_level:
+          name: log_level
           type: str
           level: advanced
-          flags: 0
-          default_value: '60'
+          flags: 1
+          default_value: ''
+          min: ''
+          max: ''
+          enum_allowed:
+          - ''
+          - critical
+          - debug
+          - error
+          - info
+          - warning
+          desc: ''
+          long_desc: ''
+          tags: []
+          see_also: []
+        log_to_cluster:
+          name: log_to_cluster
+          type: bool
+          level: advanced
+          flags: 1
+          default_value: 'False'
+          min: ''
+          max: ''
+          enum_allowed: []
+          desc: ''
+          long_desc: ''
+          tags: []
+          see_also: []
+        log_to_cluster_level:
+          name: log_to_cluster_level
+          type: str
+          level: advanced
+          flags: 1
+          default_value: info
+          min: ''
+          max: ''
+          enum_allowed:
+          - ''
+          - critical
+          - debug
+          - error
+          - info
+          - warning
+          desc: ''
+          long_desc: ''
+          tags: []
+          see_also: []
+        log_to_file:
+          name: log_to_file
+          type: bool
+          level: advanced
+          flags: 1
+          default_value: 'False'
           min: ''
           max: ''
           enum_allowed: []
@@ -552,6 +729,70 @@ values:
       can_run: true
       error_string: ''
       module_options:
+        log_level:
+          name: log_level
+          type: str
+          level: advanced
+          flags: 1
+          default_value: ''
+          min: ''
+          max: ''
+          enum_allowed:
+          - ''
+          - critical
+          - debug
+          - error
+          - info
+          - warning
+          desc: ''
+          long_desc: ''
+          tags: []
+          see_also: []
+        log_to_cluster:
+          name: log_to_cluster
+          type: bool
+          level: advanced
+          flags: 1
+          default_value: 'False'
+          min: ''
+          max: ''
+          enum_allowed: []
+          desc: ''
+          long_desc: ''
+          tags: []
+          see_also: []
+        log_to_cluster_level:
+          name: log_to_cluster_level
+          type: str
+          level: advanced
+          flags: 1
+          default_value: info
+          min: ''
+          max: ''
+          enum_allowed:
+          - ''
+          - critical
+          - debug
+          - error
+          - info
+          - warning
+          desc: ''
+          long_desc: ''
+          tags: []
+          see_also: []
+        log_to_file:
+          name: log_to_file
+          type: bool
+          level: advanced
+          flags: 1
+          default_value: 'False'
+          min: ''
+          max: ''
+          enum_allowed: []
+          desc: ''
+          long_desc: ''
+          tags: []
+          see_also: []
         roption1:
           name: roption1
           type: str
@@ -725,54 +966,30 @@ values:
           long_desc: ''
           tags: []
           see_also: []
-    - name: telemetry
-      can_run: true
-      error_string: ''
-      module_options:
-        channel_basic:
-          name: channel_basic
-          type: bool
+        log_level:
+          name: log_level
+          type: str
           level: advanced
-          flags: 0
-          default_value: 'True'
+          flags: 1
+          default_value: ''
           min: ''
           max: ''
-          enum_allowed: []
-          desc: Share basic cluster information (size, version)
-          long_desc: ''
-          tags: []
-          see_also: []
-        channel_crash:
-          name: channel_crash
-          type: bool
-          level: advanced
-          flags: 0
-          default_value: 'True'
-          min: ''
-          max: ''
-          enum_allowed: []
+          enum_allowed:
+          - ''
+          - critical
+          - debug
+          - error
+          - info
+          - warning
           desc: ''
           long_desc: ''
           tags: []
           see_also: []
-        channel_device:
-          name: channel_device
+        log_to_cluster:
+          name: log_to_cluster
           type: bool
           level: advanced
-          flags: 0
-          default_value: 'True'
-          min: ''
-          max: ''
-          enum_allowed: []
-          desc: ''
-          long_desc: ''
-          tags: []
-          see_also: []
-        channel_ident:
-          name: channel_ident
-          type: bool
-          level: advanced
-          flags: 0
+          flags: 1
           default_value: 'False'
           min: ''
           max: ''
@@ -781,129 +998,31 @@ values:
           long_desc: ''
           tags: []
           see_also: []
-        contact:
-          name: contact
+        log_to_cluster_level:
+          name: log_to_cluster_level
           type: str
           level: advanced
-          flags: 0
-          default_value: None
+          flags: 1
+          default_value: info
           min: ''
           max: ''
-          enum_allowed: []
+          enum_allowed:
+          - ''
+          - critical
+          - debug
+          - error
+          - info
+          - warning
           desc: ''
           long_desc: ''
           tags: []
           see_also: []
-        description:
-          name: description
-          type: str
-          level: advanced
-          flags: 0
-          default_value: None
-          min: ''
-          max: ''
-          enum_allowed: []
-          desc: ''
-          long_desc: ''
-          tags: []
-          see_also: []
-        device_url:
-          name: device_url
-          type: str
-          level: advanced
-          flags: 0
-          default_value: https://telemetry.ceph.com/device
-          min: ''
-          max: ''
-          enum_allowed: []
-          desc: ''
-          long_desc: ''
-          tags: []
-          see_also: []
-        enabled:
-          name: enabled
+        log_to_file:
+          name: log_to_file
           type: bool
           level: advanced
-          flags: 0
+          flags: 1
           default_value: 'False'
-          min: ''
-          max: ''
-          enum_allowed: []
-          desc: ''
-          long_desc: ''
-          tags: []
-          see_also: []
-        interval:
-          name: interval
-          type: int
-          level: advanced
-          flags: 0
-          default_value: '24'
-          min: '8'
-          max: ''
-          enum_allowed: []
-          desc: ''
-          long_desc: ''
-          tags: []
-          see_also: []
-        last_opt_revision:
-          name: last_opt_revision
-          type: int
-          level: advanced
-          flags: 0
-          default_value: '1'
-          min: ''
-          max: ''
-          enum_allowed: []
-          desc: ''
-          long_desc: ''
-          tags: []
-          see_also: []
-        leaderboard:
-          name: leaderboard
-          type: bool
-          level: advanced
-          flags: 0
-          default_value: 'False'
-          min: ''
-          max: ''
-          enum_allowed: []
-          desc: ''
-          long_desc: ''
-          tags: []
-          see_also: []
-        organization:
-          name: organization
-          type: str
-          level: advanced
-          flags: 0
-          default_value: None
-          min: ''
-          max: ''
-          enum_allowed: []
-          desc: ''
-          long_desc: ''
-          tags: []
-          see_also: []
-        proxy:
-          name: proxy
-          type: str
-          level: advanced
-          flags: 0
-          default_value: None
-          min: ''
-          max: ''
-          enum_allowed: []
-          desc: ''
-          long_desc: ''
-          tags: []
-          see_also: []
-        url:
-          name: url
-          type: str
-          level: advanced
-          flags: 0
-          default_value: https://telemetry.ceph.com/report
           min: ''
           max: ''
           enum_allowed: []
@@ -914,11 +1033,88 @@ values:
     - name: test_orchestrator
       can_run: true
       error_string: ''
-      module_options: {}
+      module_options:
+        log_level:
+          name: log_level
+          type: str
+          level: advanced
+          flags: 1
+          default_value: ''
+          min: ''
+          max: ''
+          enum_allowed:
+          - ''
+          - critical
+          - debug
+          - error
+          - info
+          - warning
+          desc: ''
+          long_desc: ''
+          tags: []
+          see_also: []
+        log_to_cluster:
+          name: log_to_cluster
+          type: bool
+          level: advanced
+          flags: 1
+          default_value: 'False'
+          min: ''
+          max: ''
+          enum_allowed: []
+          desc: ''
+          long_desc: ''
+          tags: []
+          see_also: []
+        log_to_cluster_level:
+          name: log_to_cluster_level
+          type: str
+          level: advanced
+          flags: 1
+          default_value: info
+          min: ''
+          max: ''
+          enum_allowed:
+          - ''
+          - critical
+          - debug
+          - error
+          - info
+          - warning
+          desc: ''
+          long_desc: ''
+          tags: []
+          see_also: []
+        log_to_file:
+          name: log_to_file
+          type: bool
+          level: advanced
+          flags: 1
+          default_value: 'False'
+          min: ''
+          max: ''
+          enum_allowed: []
+          desc: ''
+          long_desc: ''
+          tags: []
+          see_also: []
     - name: zabbix
       can_run: true
       error_string: ''
       module_options:
+        discovery_interval:
+          name: discovery_interval
+          type: str
+          level: advanced
+          flags: 0
+          default_value: '100'
+          min: ''
+          max: ''
+          enum_allowed: []
+          desc: ''
+          long_desc: ''
+          tags: []
+          see_also: []
         identifier:
           name: identifier
           type: str
@@ -938,6 +1134,70 @@ values:
           level: advanced
           flags: 0
           default_value: '60'
+          min: ''
+          max: ''
+          enum_allowed: []
+          desc: ''
+          long_desc: ''
+          tags: []
+          see_also: []
+        log_level:
+          name: log_level
+          type: str
+          level: advanced
+          flags: 1
+          default_value: ''
+          min: ''
+          max: ''
+          enum_allowed:
+          - ''
+          - critical
+          - debug
+          - error
+          - info
+          - warning
+          desc: ''
+          long_desc: ''
+          tags: []
+          see_also: []
+        log_to_cluster:
+          name: log_to_cluster
+          type: bool
+          level: advanced
+          flags: 1
+          default_value: 'False'
+          min: ''
+          max: ''
+          enum_allowed: []
+          desc: ''
+          long_desc: ''
+          tags: []
+          see_also: []
+        log_to_cluster_level:
+          name: log_to_cluster_level
+          type: str
+          level: advanced
+          flags: 1
+          default_value: info
+          min: ''
+          max: ''
+          enum_allowed:
+          - ''
+          - critical
+          - debug
+          - error
+          - info
+          - warning
+          desc: ''
+          long_desc: ''
+          tags: []
+          see_also: []
+        log_to_file:
+          name: log_to_file
+          type: bool
+          level: advanced
+          flags: 1
+          default_value: 'False'
           min: ''
           max: ''
           enum_allowed: []
@@ -1049,7 +1309,7 @@ values:
     www-data: "/var/www"
     backup: "/var/backups"
     list: "/var/list"
-    irc: "/var/run/ircd"
+    irc: "/run/ircd"
     gnats: "/var/lib/gnats"
     nobody: "/nonexistent"
     _apt: "/nonexistent"
@@ -1083,7 +1343,6 @@ values:
     swhvault: "/home/swhvault"
     ddouard: "/home/ddouard"
     aeviso: "/home/aeviso"
-    journalbeat: "/var/lib/journalbeat"
     ntp: "/nonexistent"
     postfix: "/var/spool/postfix"
     _rpc: "/run/rpcbind"
@@ -1105,8 +1364,10 @@ values:
     hakb: "/home/hakb"
     jayesh: "/home/jayesh"
     zaboukha: "/home/zaboukha"
+    tcpdump: "/nonexistent"
+    tss: "/var/lib/tpm"
   domain: internal.softwareheritage.org
-  facterversion: 3.11.0
+  facterversion: 3.14.12
   filesystems: ext2,ext3,ext4,squashfs,vfat
   fips_enabled: false
   fqdn: branly.internal.softwareheritage.org
@@ -1124,7 +1385,7 @@ values:
     privileged: true
     uid: 0
     user: root
-  interfaces: bond0,eno1,eno2,eno33,eno34,fwbr113i0,fwln113i0,fwpr113p0,lo,tap100i0,tap100i1,tap105i0,tap106i0,tap107i0,tap109i0,tap109i1,tap109i2,tap109i3,tap111i0,tap113i0,tap115i0,tap123i0,tap127i0,tap136i0,tap139i0,tap209i0,tap209i1,tap210i0,tap210i1,tap211i0,tap211i1,tap212i0,tap212i1,tap301i0,vlan1300,vlan210,vlan440,vlan442,vlan443,vmbr0,vmbr1,vmbr1300,vmbr442,vmbr443
+  interfaces: bond0,eno1,eno2,eno33,eno34,fwbr113i0,fwln113i0,fwpr113p0,lo,tap100i0,tap100i1,tap103i0,tap103i1,tap105i0,tap106i0,tap107i0,tap109i0,tap109i1,tap109i2,tap109i3,tap111i0,tap113i0,tap115i0,tap123i0,tap127i0,tap136i0,tap139i0,tap209i0,tap209i1,tap210i0,tap210i1,tap211i0,tap211i1,tap212i0,tap212i1,tap301i0,vlan1300,vlan210,vlan440,vlan442,vlan443,vmbr0,vmbr1,vmbr1300,vmbr442,vmbr443
   ipaddress: 192.168.100.108
   ipaddress6: fe80::24cd:98ff:fe09:dded
   ipaddress6_bond0: fe80::b8dd:fcff:fe08:23c6
@@ -1139,20 +1400,21 @@ values:
   is_pe: false
   is_virtual: false
   kernel: Linux
-  kernelmajversion: '5.4'
-  kernelrelease: 5.4.103-1-pve
-  kernelversion: 5.4.103
+  kernelmajversion: '5.13'
+  kernelrelease: 5.13.19-2-pve
+  kernelversion: 5.13.19
   letsencrypt_directory: {}
   load_averages:
-    15m: 19.69
-    1m: 18.09
-    5m: 19.15
+    15m: 11.54
+    1m: 10.81
+    5m: 11.62
   location: sesi_rocquencourt
-  lsbdistcodename: buster
-  lsbdistdescription: Debian GNU/Linux 10 (buster)
+  lsbdistcodename: bullseye
+  lsbdistdescription: Debian GNU/Linux 11 (bullseye)
   lsbdistid: Debian
-  lsbdistrelease: '10'
-  lsbmajdistrelease: '10'
+  lsbdistrelease: '11.2'
+  lsbmajdistrelease: '11'
+  lsbminordistrelease: '2'
   macaddress: 26:cd:98:09:dd:ed
   macaddress_bond0: ba:dd:fc:08:23:c6
   macaddress_eno1: f4:02:70:d7:8d:cc
@@ -1164,6 +1426,8 @@ values:
   macaddress_fwpr113p0: 86:e9:9d:15:d1:6d
   macaddress_tap100i0: 12:95:1a:44:4a:df
   macaddress_tap100i1: 3a:00:20:61:30:b6
+  macaddress_tap103i0: 86:ea:76:ca:af:ef
+  macaddress_tap103i1: 56:72:c3:62:cd:96
   macaddress_tap105i0: 42:05:1d:ba:08:27
   macaddress_tap106i0: b2:c8:30:57:7f:2f
   macaddress_tap107i0: e6:99:1e:c2:12:f2
@@ -1200,22 +1464,22 @@ values:
   manufacturer: Dell Inc.
   memory:
     system:
-      available: 124.76 GiB
-      available_bytes: 133960499200
-      capacity: 75.22%
-      total: 503.57 GiB
-      total_bytes: 540707205120
-      used: 378.81 GiB
-      used_bytes: 406746705920
-  memoryfree: 124.76 GiB
-  memoryfree_mb: 127754.6875
-  memorysize: 503.57 GiB
-  memorysize_mb: 515658.57421875
+      available: 196.68 GiB
+      available_bytes: 211180933120
+      capacity: 60.94%
+      total: 503.50 GiB
+      total_bytes: 540627349504
+      used: 306.82 GiB
+      used_bytes: 329446416384
+  memoryfree: 196.68 GiB
+  memoryfree_mb: 201397.83203125
+  memorysize: 503.50 GiB
+  memorysize_mb: 515582.41796875
   mountpoints:
     "/":
-      available: 33.57 GiB
-      available_bytes: 36040339456
-      capacity: 14.20%
+      available: 30.28 GiB
+      available_bytes: 32513105920
+      capacity: 18.40%
       device: "/dev/mapper/boot-root"
       filesystem: ext4
       options:
@@ -1225,12 +1489,12 @@ values:
       - stripe=256
       size: 39.12 GiB
       size_bytes: 42007232512
-      used: 5.56 GiB
-      used_bytes: 5966893056
+      used: 6.83 GiB
+      used_bytes: 7329865728
     "/boot/efi":
-      available: 1016.87 MiB
-      available_bytes: 1066266624
-      capacity: 0.50%
+      available: 1018.18 MiB
+      available_bytes: 1067638784
+      capacity: 0.37%
       device: "/dev/sdb1"
       filesystem: vfat
       options:
@@ -1244,11 +1508,77 @@ values:
       - errors=remount-ro
       size: 1021.98 MiB
       size_bytes: 1071628288
-      used: 5.11 MiB
-      used_bytes: 5361664
+      used: 3.80 MiB
+      used_bytes: 3989504
+    "/dev":
+      available: 251.72 GiB
+      available_bytes: 270283190272
+      capacity: 0%
+      device: udev
+      filesystem: devtmpfs
+      options:
+      - rw
+      - nosuid
+      - relatime
+      - size=263948428k
+      - nr_inodes=65987107
+      - mode=755
+      - inode64
+      size: 251.72 GiB
+      size_bytes: 270283190272
+      used: 0 bytes
+      used_bytes: 0
+    "/dev/hugepages":
+      available: 0 bytes
+      available_bytes: 0
+      capacity: 100%
+      device: hugetlbfs
+      filesystem: hugetlbfs
+      options:
+      - rw
+      - relatime
+      - pagesize=2M
+      size: 0 bytes
+      size_bytes: 0
+      used: 0 bytes
+      used_bytes: 0
+    "/dev/mqueue":
+      available: 0 bytes
+      available_bytes: 0
+      capacity: 100%
+      device: mqueue
+      filesystem: mqueue
+      options:
+      - rw
+      - nosuid
+      - nodev
+      - noexec
+      - relatime
+      size: 0 bytes
+      size_bytes: 0
+      used: 0 bytes
+      used_bytes: 0
+    "/dev/pts":
+      available: 0 bytes
+      available_bytes: 0
+      capacity: 100%
+      device: devpts
+      filesystem: devpts
+      options:
+      - rw
+      - nosuid
+      - noexec
+      - relatime
+      - gid=5
+      - mode=620
+      - ptmxmode=000
+      size: 0 bytes
+      size_bytes: 0
+      used: 0 bytes
+      used_bytes: 0
     "/dev/shm":
-      available: 251.73 GiB
-      available_bytes: 270294077440
+      available: 251.69 GiB
+      available_bytes: 270247759872
       capacity: 0.02%
       device: tmpfs
       filesystem: tmpfs
@@ -1256,14 +1586,15 @@ values:
       - rw
       - nosuid
       - nodev
-      size: 251.79 GiB
-      size_bytes: 270353600512
-      used: 56.77 MiB
-      used_bytes: 59523072
+      - inode64
+      size: 251.75 GiB
+      size_bytes: 270313672704
+      used: 62.86 MiB
+      used_bytes: 65912832
     "/etc/pve":
-      available: 29.75 MiB
-      available_bytes: 31199232
-      capacity: 0.82%
+      available: 127.75 MiB
+      available_bytes: 133959680
+      capacity: 0.19%
       device: "/dev/fuse"
       filesystem: fuse
       options:
@@ -1275,27 +1606,45 @@ values:
       - group_id=0
       - default_permissions
       - allow_other
-      size: 30.00 MiB
-      size_bytes: 31457280
+      size: 128.00 MiB
+      size_bytes: 134217728
       used: 252.00 KiB
       used_bytes: 258048
+    "/mnt/pve/proxmox-cephfs":
+      available: 2.16 TiB
+      available_bytes: 2372948459520
+      capacity: 0.21%
+      device: 192.168.100.108,192.168.100.32,192.168.100.34:/
+      filesystem: ceph
+      options:
+      - rw
+      - relatime
+      - name=admin
+      - secret=<hidden>
+      - acl
+      size: 2.16 TiB
+      size_bytes: 2377977430016
+      used: 4.68 GiB
+      used_bytes: 5028970496
     "/run":
       available: 50.35 GiB
-      available_bytes: 54066814976
+      available_bytes: 54058762240
       capacity: 0.01%
       device: tmpfs
       filesystem: tmpfs
       options:
       - rw
       - nosuid
+      - nodev
       - noexec
       - relatime
-      - size=52803440k
+      - size=52795640k
       - mode=755
-      size: 50.36 GiB
-      size_bytes: 54070722560
-      used: 3.73 MiB
-      used_bytes: 3907584
+      - inode64
+      size: 50.35 GiB
+      size_bytes: 54062735360
+      used: 3.79 MiB
+      used_bytes: 3973120
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -1309,13 +1658,27 @@ values:
       - noexec
       - relatime
       - size=5120k
+      - inode64
       size: 5.00 MiB
       size_bytes: 5242880
       used: 0 bytes
       used_bytes: 0
+    "/run/rpc_pipefs":
+      available: 0 bytes
+      available_bytes: 0
+      capacity: 100%
+      device: sunrpc
+      filesystem: rpc_pipefs
+      options:
+      - rw
+      - relatime
+      size: 0 bytes
+      size_bytes: 0
+      used: 0 bytes
+      used_bytes: 0
     "/run/user/1003":
-      available: 50.36 GiB
-      available_bytes: 54070718464
+      available: 50.35 GiB
+      available_bytes: 54062731264
       capacity: 0%
       device: tmpfs
       filesystem: tmpfs
@@ -1324,86 +1687,96 @@ values:
       - nosuid
       - nodev
       - relatime
-      - size=52803436k
-      - nr_inodes=13200859
+      - size=52795636k
+      - nr_inodes=13198909
       - mode=700
       - uid=1003
       - gid=1003
-      size: 50.36 GiB
-      size_bytes: 54070718464
+      - inode64
+      size: 50.35 GiB
+      size_bytes: 54062731264
       used: 0 bytes
       used_bytes: 0
     "/var/lib/ceph/osd/ceph-12":
-      available: 251.79 GiB
-      available_bytes: 270353575936
+      available: 251.75 GiB
+      available_bytes: 270313644032
       capacity: 0.00%
       device: tmpfs
       filesystem: tmpfs
       options:
       - rw
       - relatime
-      size: 251.79 GiB
-      size_bytes: 270353600512
-      used: 24.00 KiB
-      used_bytes: 24576
+      - inode64
+      size: 251.75 GiB
+      size_bytes: 270313672704
+      used: 28.00 KiB
+      used_bytes: 28672
     "/var/lib/ceph/osd/ceph-13":
-      available: 251.79 GiB
-      available_bytes: 270353575936
+      available: 251.75 GiB
+      available_bytes: 270313644032
       capacity: 0.00%
       device: tmpfs
       filesystem: tmpfs
       options:
       - rw
       - relatime
-      size: 251.79 GiB
-      size_bytes: 270353600512
-      used: 24.00 KiB
-      used_bytes: 24576
+      - inode64
+      size: 251.75 GiB
+      size_bytes: 270313672704
+      used: 28.00 KiB
+      used_bytes: 28672
     "/var/lib/ceph/osd/ceph-14":
-      available: 251.79 GiB
-      available_bytes: 270353575936
+      available: 251.75 GiB
+      available_bytes: 270313644032
       capacity: 0.00%
       device: tmpfs
       filesystem: tmpfs
       options:
       - rw
       - relatime
-      size: 251.79 GiB
-      size_bytes: 270353600512
-      used: 24.00 KiB
-      used_bytes: 24576
-    "/var/lib/ceph/osd/ceph-15":
-      available: 251.79 GiB
-      available_bytes: 270353575936
-      capacity: 0.00%
-      device: tmpfs
-      filesystem: tmpfs
+      - inode64
+      size: 251.75 GiB
+      size_bytes: 270313672704
+      used: 28.00 KiB
+      used_bytes: 28672
+    "/var/lib/lxcfs":
+      available: 0 bytes
+      available_bytes: 0
+      capacity: 100%
+      device: lxcfs
+      filesystem: fuse.lxcfs
       options:
       - rw
+      - nosuid
+      - nodev
       - relatime
-      size: 251.79 GiB
-      size_bytes: 270353600512
-      used: 24.00 KiB
-      used_bytes: 24576
+      - user_id=0
+      - group_id=0
+      - allow_other
+      size: 0 bytes
+      size_bytes: 0
+      used: 0 bytes
+      used_bytes: 0
     "/var/lib/vz":
-      available: 65.87 GiB
-      available_bytes: 70724005888
-      capacity: 32.74%
+      available: 60.85 GiB
+      available_bytes: 65338433536
+      capacity: 34.51%
       device: "/dev/mapper/boot-var--lib--vz"
       filesystem: ext4
       options:
       - rw
       - relatime
+      - errors=remount-ro
       - stripe=256
       size: 97.93 GiB
       size_bytes: 105152176128
       used: 32.06 GiB
-      used_bytes: 34428170240
+      used_bytes: 34428256256
   mounts:
   - "/"
   - "/boot/efi"
-  - "/mnt/pve/proxmox-cephfs"
   - "/var/lib/vz"
+  - "/mnt/pve/proxmox-cephfs"
   mtu_bond0: 9000
   mtu_eno1: 1500
   mtu_eno2: 1500
@@ -1415,6 +1788,8 @@ values:
   mtu_lo: 65536
   mtu_tap100i0: 9000
   mtu_tap100i1: 9000
+  mtu_tap103i0: 9000
+  mtu_tap103i1: 9000
   mtu_tap105i0: 9000
   mtu_tap106i0: 9000
   mtu_tap107i0: 9000
@@ -1486,6 +1861,7 @@ values:
         mtu: 9000
         netmask6: 'ffff:ffff:ffff:ffff::'
         network6: 'fe80::'
+        scope6: link
       eno1:
         mac: f4:02:70:d7:8d:cc
         mtu: 1500
@@ -1523,11 +1899,18 @@ values:
         netmask6: ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff
         network: 127.0.0.0
         network6: "::1"
+        scope6: host
       tap100i0:
         mac: 12:95:1a:44:4a:df
         mtu: 9000
       tap100i1:
         mac: 3a:00:20:61:30:b6
+        mtu: 9000
+      tap103i0:
+        mac: 86:ea:76:ca:af:ef
+        mtu: 9000
+      tap103i1:
+        mac: 56:72:c3:62:cd:96
         mtu: 9000
       tap105i0:
         mac: 42:05:1d:ba:08:27
@@ -1630,6 +2013,7 @@ values:
         netmask6: 'ffff:ffff:ffff:ffff::'
         network: 192.168.100.0
         network6: 'fe80::'
+        scope6: link
       vmbr1:
         bindings6:
         - address: fe80::40cb:d5ff:fe68:e7d7
@@ -1640,6 +2024,7 @@ values:
         mtu: 9000
         netmask6: 'ffff:ffff:ffff:ffff::'
         network6: 'fe80::'
+        scope6: link
       vmbr1300:
         bindings6:
         - address: fe80::8444:30ff:feb3:91ab
@@ -1650,6 +2035,7 @@ values:
         mtu: 9000
         netmask6: 'ffff:ffff:ffff:ffff::'
         network6: 'fe80::'
+        scope6: link
       vmbr442:
         bindings6:
         - address: fe80::f8fb:e6ff:fe2a:2a31
@@ -1660,6 +2046,7 @@ values:
         mtu: 9000
         netmask6: 'ffff:ffff:ffff:ffff::'
         network6: 'fe80::'
+        scope6: link
       vmbr443:
         bindings6:
         - address: fe80::589c:d0ff:fe33:4daa
@@ -1670,6 +2057,7 @@ values:
         mtu: 9000
         netmask6: 'ffff:ffff:ffff:ffff::'
         network6: 'fe80::'
+        scope6: link
     ip: 192.168.100.108
     ip6: fe80::24cd:98ff:fe09:dded
     mac: 26:cd:98:09:dd:ed
@@ -1679,25 +2067,27 @@ values:
     network: 192.168.100.0
     network6: 'fe80::'
     primary: vmbr0
+    scope6: link
   operatingsystem: Debian
-  operatingsystemmajrelease: '10'
-  operatingsystemrelease: '10.10'
+  operatingsystemmajrelease: '11'
+  operatingsystemrelease: '11.2'
   os:
     architecture: amd64
     distro:
-      codename: buster
-      description: Debian GNU/Linux 10 (buster)
+      codename: bullseye
+      description: Debian GNU/Linux 11 (bullseye)
       id: Debian
       release:
-        full: '10'
-        major: '10'
+        full: '11.2'
+        major: '11'
+        minor: '2'
     family: Debian
     hardware: x86_64
     name: Debian
     release:
-      full: '10.10'
-      major: '10'
-      minor: '10'
+      full: '11.2'
+      major: '11'
+      minor: '2'
     selinux:
       enabled: false
   osfamily: Debian
@@ -1716,17 +2106,53 @@ values:
       size_bytes: 107374182400
       uuid: 727f9a65-bdd6-4aa4-a932-59b6e247f077
     "/dev/mapper/ceph--2c4707df--bbe2--4211--aca3--a029b555d0ff-osd--block--f7fb991a--5c71--4f8d--a57e--b9bc0b090e50":
-      size: 1.46 TiB
-      size_bytes: 1600319913984
-    "/dev/mapper/ceph--2f73a5e7--56ad--4dc0--b819--57c267e83ce5-osd--block--99e73424--5d57--46b5--b88b--3aaf40f6f78d":
+      filesystem: ceph_bluestore
       size: 1.46 TiB
       size_bytes: 1600319913984
     "/dev/mapper/ceph--38e3915b--0d2d--42b8--b23d--f739293b8765-osd--block--3184c054--a647--4327--8196--5b4c16574fde":
+      filesystem: ceph_bluestore
       size: 1.46 TiB
       size_bytes: 1600319913984
     "/dev/mapper/ceph--884b4d39--2625--4700--9ba4--00659ca9d410-osd--block--f47e84a0--1300--4ca4--8842--f7a31b299ad3":
+      filesystem: ceph_bluestore
       size: 1.46 TiB
       size_bytes: 1600319913984
+    "/dev/mapper/scratch-data":
+      size: 1.40 TiB
+      size_bytes: 1539317956608
+    "/dev/mapper/scratch-data-tpool":
+      size: 1.40 TiB
+      size_bytes: 1539317956608
+    "/dev/mapper/scratch-data_tdata":
+      size: 1.40 TiB
+      size_bytes: 1539317956608
+    "/dev/mapper/scratch-data_tmeta":
+      size: 92.00 MiB
+      size_bytes: 96468992
+    "/dev/mapper/scratch-vm--209--disk--0":
+      filesystem: swap
+      label: swap
+      size: 100.00 GiB
+      size_bytes: 107374182400
+      uuid: d638b432-dd84-4e51-8829-fe2c7f73f32e
+    "/dev/mapper/scratch-vm--210--disk--0":
+      filesystem: swap
+      label: swap
+      size: 100.00 GiB
+      size_bytes: 107374182400
+      uuid: 89027d1d-c2ec-4513-8a65-90bc32f17cfe
+    "/dev/mapper/scratch-vm--211--disk--0":
+      filesystem: swap
+      label: swap
+      size: 100.00 GiB
+      size_bytes: 107374182400
+      uuid: 1d97aff4-b6af-4e1c-ab58-ef305f6f50b7
+    "/dev/mapper/scratch-vm--212--disk--0":
+      filesystem: swap
+      label: swap
+      size: 100.00 GiB
+      size_bytes: 107374182400
+      uuid: c99aece9-c347-4f01-b2c5-749374a08586
     "/dev/sda1":
       filesystem: vfat
       partuuid: 8ee9400b-62d9-c848-9ef0-2a6b622ee091
@@ -1863,15 +2289,23 @@ values:
   puppet_environmentpath: "/etc/puppet/code/environments"
   puppet_server: pergamon.internal.softwareheritage.org
   puppet_vardir: "/var/lib/puppet"
-  puppetversion: 5.5.10
+  puppetversion: 5.5.22
   root_home: "/root"
   ruby:
     platform: x86_64-linux-gnu
-    sitedir: "/usr/local/lib/site_ruby/2.5.0"
-    version: 2.5.5
+    sitedir: "/usr/local/lib/site_ruby/2.7.0"
+    version: 2.7.4
   rubyplatform: x86_64-linux-gnu
-  rubysitedir: "/usr/local/lib/site_ruby/2.5.0"
-  rubyversion: 2.5.5
+  rubysitedir: "/usr/local/lib/site_ruby/2.7.0"
+  rubyversion: 2.7.4
+  scope6: link
+  scope6_bond0: link
+  scope6_lo: host
+  scope6_vmbr0: link
+  scope6_vmbr1: link
+  scope6_vmbr1300: link
+  scope6_vmbr442: link
+  scope6_vmbr443: link
   selinux: false
   serialnumber: 7GJHN33
   service_provider: systemd
@@ -1894,7 +2328,7 @@ values:
         sha256: SSHFP 1 2 d754c7c646baa6949af86b602092f29db122030d5d3d4b5771472aa91f4a25e8
       key: AAAAB3NzaC1yc2EAAAADAQABAAABAQDTulX7D5mIpIL1uXrImPrOjLU4jtxn8HehU9YgtgVc8MXCiMmF65fA7wfr4VuNPX9iridNgv5GNMmuu180gsGQ6gfktbEbXEtMBUyBCxO5Pic2P/W33mTqRaZFpcY04JxLPYma8tunui1OxDQBvdE/SKrysF4lu8yXCwBFurMpuxuprKUPkWxd0rLvgx3rv0uYMF7DFcUJDDnhHO7uK4NN3YiYodszWn7vr+CXYEm6jBjCMZYNNGQnpnnaPNQy/Zv/uze8QqroUSfc/KNX72EV2fsSu7juud0CjDDpz2ofrvNgcpZ3AMj/UAThpf68j5CXvZcZfL/UszSEAR75HH6H
       type: ssh-rsa
-  ssh_client_version_full: 7.9p1
+  ssh_client_version_full: 8.4p1
   ssh_keys_users:
     root:
       id_rsa.pub:
@@ -1905,9 +2339,9 @@ values:
         type: ed25519
         key: AAAAC3NzaC1lZDI1NTE5AAAAIL/kyRSdZkHEicLS/UOVeE4B1px5/B2Tkoi7qJBEQ2j3
         comment: root@branly
-  ssh_server_version_full: 7.9p1
-  ssh_server_version_major: '7'
-  ssh_server_version_release: '7.9'
+  ssh_server_version_full: 8.4p1
+  ssh_server_version_major: '8'
+  ssh_server_version_release: '8.4'
   sshecdsakey: AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBE2WOu7NeALh6l9DFJ0z0dBoO1lDhYnxBEnD8VNPiHaJUlgiBe8XIHmCXLGN86mNmi9OiUWSm7UbbW6HG4CbrUA=
   sshed25519key: AAAAC3NzaC1lZDI1NTE5AAAAIK2hLSz10l/cgpRZ2Y9Q30efYYDGPGndf/2zsiEEa6vz
   sshfp_ecdsa: |-
@@ -1921,16 +2355,16 @@ values:
     SSHFP 1 2 d754c7c646baa6949af86b602092f29db122030d5d3d4b5771472aa91f4a25e8
   sshrsakey: AAAAB3NzaC1yc2EAAAADAQABAAABAQDTulX7D5mIpIL1uXrImPrOjLU4jtxn8HehU9YgtgVc8MXCiMmF65fA7wfr4VuNPX9iridNgv5GNMmuu180gsGQ6gfktbEbXEtMBUyBCxO5Pic2P/W33mTqRaZFpcY04JxLPYma8tunui1OxDQBvdE/SKrysF4lu8yXCwBFurMpuxuprKUPkWxd0rLvgx3rv0uYMF7DFcUJDDnhHO7uK4NN3YiYodszWn7vr+CXYEm6jBjCMZYNNGQnpnnaPNQy/Zv/uze8QqroUSfc/KNX72EV2fsSu7juud0CjDDpz2ofrvNgcpZ3AMj/UAThpf68j5CXvZcZfL/UszSEAR75HH6H
   subnet: sesi_rocquencourt
-  sudoversion: 1.8.27
+  sudoversion: 1.9.5p2
   swh_hostname:
     fqdn: branly.internal.softwareheritage.org
     short: branly
     internal_fqdn: branly.internal.softwareheritage.org
   system_uptime:
-    days: 193
-    hours: 4651
-    seconds: 16747079
-    uptime: 193 days
+    days: 17
+    hours: 427
+    seconds: 1539163
+    uptime: 17 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -1945,15 +2379,15 @@ values:
     systemd-timesyncd.service: enabled
   systemd_version: '247'
   timezone: UTC
-  uptime: 193 days
-  uptime_days: 193
-  uptime_hours: 4651
-  uptime_seconds: 16747079
+  uptime: 17 days
+  uptime_days: 17
+  uptime_hours: 427
+  uptime_seconds: 1539163
   uuid: 4c4c4544-0047-4a10-8048-b7c04f4e3333
   vcsrepo_svn_ver: ''
   virtual: physical
   clientcert: branly.internal.softwareheritage.org
-  clientversion: 5.5.10
+  clientversion: 5.5.22
   clientnoop: false
-timestamp: '2021-09-28T12:23:05.003637376+00:00'
-expiration: '2021-09-28T12:53:05.005066450+00:00'
+timestamp: '2021-12-28T11:23:04.313150923+00:00'
+expiration: '2021-12-28T11:53:04.314764262+00:00'

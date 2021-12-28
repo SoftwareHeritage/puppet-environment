@@ -2,10 +2,32 @@
 name: vault.internal.staging.swh.network
 values:
   agent_specified_environment: staging
-  apt_has_dist_updates: false
-  apt_has_updates: false
+  apt_dist_updates: 7
+  apt_has_dist_updates: true
+  apt_has_updates: true
+  apt_package_dist_updates:
+  - python3-swh.core
+  - python3-swh.model
+  - python3-swh.objstorage
+  - python3-swh.storage
+  - python3-swh.journal
+  - python3-swh.counters
+  - python3-swh.scheduler
+  apt_package_security_dist_updates: []
+  apt_package_security_updates: []
+  apt_package_updates:
+  - python3-swh.core
+  - python3-swh.model
+  - python3-swh.objstorage
+  - python3-swh.storage
+  - python3-swh.journal
+  - python3-swh.counters
+  - python3-swh.scheduler
   apt_reboot_required: false
-  apt_update_last_success: 1632829323
+  apt_security_dist_updates: 0
+  apt_security_updates: 0
+  apt_update_last_success: 1640688123
+  apt_updates: 7
   architecture: amd64
   bios_release_date: 04/01/2014
   bios_vendor: SeaBIOS
@@ -21,6 +43,7 @@ values:
   cassandraheapnewsize: 400
   cassandramaxheapsize: 1995
   chassistype: Other
+  cloudinit_enabled: 'true'
   deployment: staging
   disks:
     sr0:
@@ -43,77 +66,19 @@ values:
     product:
       name: Standard PC (i440FX + PIIX, 1996)
       uuid: 4670aebe-9c62-4e11-8336-d738a2f7a73f
-  docker_home_dirs:
-    root: "/root"
-    daemon: "/usr/sbin"
-    bin: "/bin"
-    sys: "/dev"
-    sync: "/bin"
-    games: "/usr/games"
-    man: "/var/cache/man"
-    lp: "/var/spool/lpd"
-    mail: "/var/mail"
-    news: "/var/spool/news"
-    uucp: "/var/spool/uucp"
-    proxy: "/bin"
-    www-data: "/var/www"
-    backup: "/var/backups"
-    list: "/var/list"
-    irc: "/var/run/ircd"
-    gnats: "/var/lib/gnats"
-    nobody: "/nonexistent"
-    systemd-timesync: "/run/systemd"
-    systemd-network: "/run/systemd/netif"
-    systemd-resolve: "/run/systemd/resolve"
-    unscd: "/var/lib/unscd"
-    ntp: "/home/ntp"
-    _apt: "/nonexistent"
-    messagebus: "/var/run/dbus"
-    sshd: "/run/sshd"
-    puppet: "/var/lib/puppet"
-    olasd: "/home/olasd"
-    swhworker: "/home/swhworker"
-    swhstorage: "/home/swhstorage"
-    swhwebapp: "/home/swhwebapp"
-    swhbackup: "/home/swhbackup"
-    rdicosmo: "/home/rdicosmo"
-    swhteamannex: "/home/swhteamannex"
-    swhscheduler: "/home/swhscheduler"
-    jbertran: "/home/jbertran"
-    qcampos: "/home/qcampos"
-    gitorious: "/home/gitorious"
-    fiendish: "/home/fiendish"
-    morane: "/home/morane"
-    ssushant: "/home/ssushant"
-    anlambert: "/home/anlambert"
-    grouss: "/home/grouss"
-    swhdeposit: "/home/swhdeposit"
-    swhvault: "/home/swhvault"
-    ddouard: "/home/ddouard"
-    journalbeat: "/var/lib/journalbeat"
-    postfix: "/var/spool/postfix"
-    statd: "/var/lib/nfs"
-    zack: "/home/zack"
-    ardumont: "/home/ardumont"
-    seirl: "/home/seirl"
-    ftigeot: "/home/ftigeot"
-    vlorentz: "/home/vlorentz"
-    haltode: "/home/haltode"
-    munin: "/var/lib/munin"
-    prometheus: "/var/lib/prometheus"
-    nagios: "/var/lib/nagios"
-    _rpc: "/run/rpcbind"
-    systemd-coredump: "/"
-    danseraf: "/home/danseraf"
-    aeviso: "/home/aeviso"
-    tenma: "/home/tenma"
-    vsellier: "/home/vsellier"
-    postgres: "/var/lib/postgresql"
-    tg1999: "/home/tg1999"
-    hakb: "/home/hakb"
-    jayesh: "/home/jayesh"
-    zaboukha: "/home/zaboukha"
   domain: internal.staging.swh.network
+  extlib__puppet_config:
+    master:
+      localcacert: "/var/lib/puppet/ssl/certs/ca.pem"
+      ssldir: "/var/lib/puppet/ssl"
+    main:
+      hostpubkey: "/var/lib/puppet/ssl/public_keys/vault.internal.staging.swh.network.pem"
+      hostprivkey: "/var/lib/puppet/ssl/private_keys/vault.internal.staging.swh.network.pem"
+      hostcert: "/var/lib/puppet/ssl/certs/vault.internal.staging.swh.network.pem"
+      localcacert: "/var/lib/puppet/ssl/certs/ca.pem"
+      ssldir: "/var/lib/puppet/ssl"
+      vardir: "/var/lib/puppet"
+      server: pergamon.internal.softwareheritage.org
   facterversion: 3.11.0
   filesystems: ext2,ext3,ext4,iso9660
   fips_enabled: false
@@ -143,7 +108,7 @@ values:
   is_virtual: true
   kernel: Linux
   kernelmajversion: '4.19'
-  kernelrelease: 4.19.0-17-amd64
+  kernelrelease: 4.19.0-18-amd64
   kernelversion: 4.19.0
   letsencrypt_directory: {}
   load_averages:
@@ -161,22 +126,22 @@ values:
   manufacturer: QEMU
   memory:
     system:
-      available: 7.25 GiB
-      available_bytes: 7788462080
-      capacity: 6.90%
+      available: 7.32 GiB
+      available_bytes: 7859564544
+      capacity: 6.05%
       total: 7.79 GiB
-      total_bytes: 8365957120
-      used: 550.74 MiB
-      used_bytes: 577495040
-  memoryfree: 7.25 GiB
-  memoryfree_mb: 7427.65625
+      total_bytes: 8365928448
+      used: 482.91 MiB
+      used_bytes: 506363904
+  memoryfree: 7.32 GiB
+  memoryfree_mb: 7495.46484375
   memorysize: 7.79 GiB
-  memorysize_mb: 7978.3984375
+  memorysize_mb: 7978.37109375
   mountpoints:
     "/":
-      available: 27.76 GiB
-      available_bytes: 29804195840
-      capacity: 11.79%
+      available: 26.86 GiB
+      available_bytes: 28838420480
+      capacity: 14.64%
       device: "/dev/vda1"
       filesystem: ext4
       options:
@@ -185,11 +150,11 @@ values:
       - errors=remount-ro
       size: 31.47 GiB
       size_bytes: 33785901056
-      used: 3.71 GiB
-      used_bytes: 3981705216
+      used: 4.61 GiB
+      used_bytes: 4947480576
     "/dev/shm":
       available: 3.90 GiB
-      available_bytes: 4182962176
+      available_bytes: 4182945792
       capacity: 0.00%
       device: tmpfs
       filesystem: tmpfs
@@ -198,12 +163,12 @@ values:
       - nosuid
       - nodev
       size: 3.90 GiB
-      size_bytes: 4182978560
+      size_bytes: 4182962176
       used: 16.00 KiB
       used_bytes: 16384
     "/run":
-      available: 797.30 MiB
-      available_bytes: 836030464
+      available: 797.32 MiB
+      available_bytes: 836050944
       capacity: 0.07%
       device: tmpfs
       filesystem: tmpfs
@@ -216,8 +181,8 @@ values:
       - mode=755
       size: 797.84 MiB
       size_bytes: 836595712
-      used: 552.00 KiB
-      used_bytes: 565248
+      used: 532.00 KiB
+      used_bytes: 544768
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -233,26 +198,6 @@ values:
       - size=5120k
       size: 5.00 MiB
       size_bytes: 5242880
-      used: 0 bytes
-      used_bytes: 0
-    "/run/user/1003":
-      available: 81.04 MiB
-      available_bytes: 84975616
-      capacity: 0%
-      device: tmpfs
-      filesystem: tmpfs
-      options:
-      - rw
-      - nosuid
-      - nodev
-      - relatime
-      - size=82984k
-      - nr_inodes=20746
-      - mode=700
-      - uid=1003
-      - gid=1003
-      size: 81.04 MiB
-      size_bytes: 84975616
       used: 0 bytes
       used_bytes: 0
     "/sys/fs/cgroup":
@@ -340,7 +285,7 @@ values:
   nginx_version: 1.14.2
   operatingsystem: Debian
   operatingsystemmajrelease: '10'
-  operatingsystemrelease: '10.10'
+  operatingsystemrelease: '10.11'
   os:
     architecture: amd64
     distro:
@@ -354,9 +299,9 @@ values:
     hardware: x86_64
     name: Debian
     release:
-      full: '10.10'
+      full: '10.11'
       major: '10'
-      minor: '10'
+      minor: '11'
     selinux:
       enabled: false
   osfamily: Debian
@@ -458,10 +403,10 @@ values:
     short: vault
     internal_fqdn: vault.internal.staging.swh.network
   system_uptime:
-    days: 63
-    hours: 1514
-    seconds: 5453467
-    uptime: 63 days
+    days: 17
+    hours: 429
+    seconds: 1546545
+    uptime: 17 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -476,15 +421,15 @@ values:
     systemd-timesyncd.service: enabled
   systemd_version: '247'
   timezone: UTC
-  uptime: 63 days
-  uptime_days: 63
-  uptime_hours: 1514
-  uptime_seconds: 5453467
+  uptime: 17 days
+  uptime_days: 17
+  uptime_hours: 429
+  uptime_seconds: 1546545
   uuid: 4670aebe-9c62-4e11-8336-d738a2f7a73f
   vcsrepo_svn_ver: ''
   virtual: kvm
   clientcert: vault.internal.staging.swh.network
   clientversion: 5.5.10
   clientnoop: false
-timestamp: '2021-09-28T12:21:07.488594271+00:00'
-expiration: '2021-09-28T12:51:07.489348589+00:00'
+timestamp: '2021-12-28T11:21:07.097694624+00:00'
+expiration: '2021-12-28T11:51:07.098253722+00:00'

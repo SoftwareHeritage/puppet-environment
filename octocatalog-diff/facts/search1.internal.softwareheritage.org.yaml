@@ -2,25 +2,35 @@
 name: search1.internal.softwareheritage.org
 values:
   agent_specified_environment: production
-  apt_dist_updates: 5
+  apt_dist_updates: 10
   apt_has_dist_updates: true
   apt_has_updates: true
   apt_package_dist_updates:
-  - python3-redis
+  - python3-frozendict
   - python3-swh.core
-  - python3-swh.counters
   - python3-swh.model
+  - python3-swh.objstorage
   - python3-swh.storage
+  - python3-swh.journal
+  - python3-swh.counters
+  - python3-swh.scheduler
+  - python3-swh.indexer
+  - python3-swh.indexer.storage
   apt_package_security_dist_updates: []
   apt_package_security_updates: []
   apt_package_updates:
   - python3-swh.core
   - python3-swh.model
+  - python3-swh.objstorage
+  - python3-swh.storage
+  - python3-swh.journal
+  - python3-swh.counters
+  - python3-swh.scheduler
   apt_reboot_required: false
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1632829505
-  apt_updates: 2
+  apt_update_last_success: 1640688302
+  apt_updates: 7
   architecture: amd64
   bios_release_date: 04/01/2014
   bios_vendor: SeaBIOS
@@ -39,6 +49,7 @@ values:
   cassandraheapnewsize: 373
   cassandramaxheapsize: 1491
   chassistype: Other
+  cloudinit_enabled: 'true'
   deployment: production
   disks:
     sr0:
@@ -118,7 +129,6 @@ values:
     aeviso: "/home/aeviso"
     tenma: "/home/tenma"
     tg1999: "/home/tg1999"
-    journalbeat: "/var/lib/journalbeat"
     ntp: "/nonexistent"
     postfix: "/var/spool/postfix"
     _rpc: "/run/rpcbind"
@@ -165,13 +175,13 @@ values:
   is_virtual: true
   kernel: Linux
   kernelmajversion: '4.19'
-  kernelrelease: 4.19.0-17-amd64
+  kernelrelease: 4.19.0-18-amd64
   kernelversion: 4.19.0
   letsencrypt_directory: {}
   load_averages:
-    15m: 0.08
-    1m: 0.07
-    5m: 0.13
+    15m: 0.07
+    1m: 0.09
+    5m: 0.07
   lsbdistcodename: buster
   lsbdistdescription: Debian GNU/Linux 10 (buster)
   lsbdistid: Debian
@@ -182,30 +192,30 @@ values:
   manufacturer: QEMU
   memory:
     swap:
-      available: 643.00 MiB
-      available_bytes: 674230272
-      capacity: 36.96%
+      available: 1020.00 MiB
+      available_bytes: 1069543424
+      capacity: 0%
       total: 1020.00 MiB
       total_bytes: 1069543424
-      used: 377.00 MiB
-      used_bytes: 395313152
+      used: 0 bytes
+      used_bytes: 0
     system:
-      available: 5.12 GiB
-      available_bytes: 5499973632
-      capacity: 12.03%
+      available: 5.18 GiB
+      available_bytes: 5562015744
+      capacity: 11.04%
       total: 5.82 GiB
-      total_bytes: 6252032000
-      used: 717.22 MiB
-      used_bytes: 752058368
-  memoryfree: 5.12 GiB
-  memoryfree_mb: 5245.18359375
+      total_bytes: 6252003328
+      used: 658.02 MiB
+      used_bytes: 689987584
+  memoryfree: 5.18 GiB
+  memoryfree_mb: 5304.3515625
   memorysize: 5.82 GiB
-  memorysize_mb: 5962.40234375
+  memorysize_mb: 5962.375
   mountpoints:
     "/":
-      available: 13.05 GiB
-      available_bytes: 14013652992
-      capacity: 20.38%
+      available: 13.02 GiB
+      available_bytes: 13980643328
+      capacity: 20.57%
       device: "/dev/mapper/base--template--vg-root"
       filesystem: ext4
       options:
@@ -214,12 +224,12 @@ values:
       - errors=remount-ro
       size: 16.39 GiB
       size_bytes: 17601216512
-      used: 3.34 GiB
-      used_bytes: 3587563520
+      used: 3.37 GiB
+      used_bytes: 3620573184
     "/boot":
-      available: 114.95 MiB
-      available_bytes: 120536064
-      capacity: 51.15%
+      available: 150.79 MiB
+      available_bytes: 158112768
+      capacity: 35.92%
       device: "/dev/vda1"
       filesystem: ext2
       options:
@@ -227,11 +237,11 @@ values:
       - relatime
       size: 235.32 MiB
       size_bytes: 246755328
-      used: 120.37 MiB
-      used_bytes: 126219264
+      used: 84.54 MiB
+      used_bytes: 88642560
     "/dev/shm":
       available: 2.91 GiB
-      available_bytes: 3126013952
+      available_bytes: 3126001664
       capacity: 0%
       device: tmpfs
       filesystem: tmpfs
@@ -240,12 +250,12 @@ values:
       - nosuid
       - nodev
       size: 2.91 GiB
-      size_bytes: 3126013952
+      size_bytes: 3126001664
       used: 0 bytes
       used_bytes: 0
     "/run":
-      available: 595.70 MiB
-      available_bytes: 624631808
+      available: 595.69 MiB
+      available_bytes: 624627712
       capacity: 0.09%
       device: tmpfs
       filesystem: tmpfs
@@ -254,10 +264,10 @@ values:
       - nosuid
       - noexec
       - relatime
-      - size=610552k
+      - size=610548k
       - mode=755
       size: 596.24 MiB
-      size_bytes: 625205248
+      size_bytes: 625201152
       used: 560.00 KiB
       used_bytes: 573440
     "/run/lock":
@@ -275,6 +285,24 @@ values:
       - size=5120k
       size: 5.00 MiB
       size_bytes: 5242880
+      used: 0 bytes
+      used_bytes: 0
+    "/sys/fs/cgroup":
+      available: 4.00 MiB
+      available_bytes: 4194304
+      capacity: 0%
+      device: tmpfs
+      filesystem: tmpfs
+      options:
+      - ro
+      - nosuid
+      - nodev
+      - noexec
+      - size=4096k
+      - nr_inodes=1024
+      - mode=755
+      size: 4.00 MiB
+      size_bytes: 4194304
       used: 0 bytes
       used_bytes: 0
   mounts:
@@ -345,7 +373,7 @@ values:
   nginx_version: 1.14.2
   operatingsystem: Debian
   operatingsystemmajrelease: '10'
-  operatingsystemrelease: '10.10'
+  operatingsystemrelease: '10.11'
   os:
     architecture: amd64
     distro:
@@ -359,9 +387,9 @@ values:
     hardware: x86_64
     name: Debian
     release:
-      full: '10.10'
+      full: '10.11'
       major: '10'
-      minor: '10'
+      minor: '11'
     selinux:
       enabled: false
   osfamily: Debian
@@ -396,19 +424,19 @@ values:
       uuid: 3pkyW9-JF6T-y3GS-R3NZ-OeQp-ePTO-Dd3a0C
   path: "/usr/bin:/bin:/usr/sbin:/sbin"
   physicalprocessorcount: 1
-  processor0: AMD EPYC 7402 24-Core Processor
-  processor1: AMD EPYC 7402 24-Core Processor
-  processor2: AMD EPYC 7402 24-Core Processor
-  processor3: AMD EPYC 7402 24-Core Processor
+  processor0: AMD EPYC 7301 16-Core Processor
+  processor1: AMD EPYC 7301 16-Core Processor
+  processor2: AMD EPYC 7301 16-Core Processor
+  processor3: AMD EPYC 7301 16-Core Processor
   processorcount: 4
   processors:
     count: 4
     isa: unknown
     models:
-    - AMD EPYC 7402 24-Core Processor
-    - AMD EPYC 7402 24-Core Processor
-    - AMD EPYC 7402 24-Core Processor
-    - AMD EPYC 7402 24-Core Processor
+    - AMD EPYC 7301 16-Core Processor
+    - AMD EPYC 7301 16-Core Processor
+    - AMD EPYC 7301 16-Core Processor
+    - AMD EPYC 7301 16-Core Processor
     physicalcount: 1
   productname: Standard PC (i440FX + PIIX, 1996)
   public_ipaddresses: []
@@ -479,8 +507,8 @@ values:
   sshrsakey: AAAAB3NzaC1yc2EAAAADAQABAAABAQDTbvhECIYZysz7EhB+5HBQ9zK3giwTKZW1qmGOeLLV/tTSioCYlltiBiXOB0tLmJ/mvpH2VTmDsMyXn7QgNTsk8OL7D4e1K9z3wVrzd7x9AObeTFE/ZozMQvTWqiJMq+Nwkd8malBxS19T9qxM0zeOXeUIv0svDnQrtNNPXzVjyEuOI8zQ2L5ZgIYb5Uo3NJYSvnnR07t0AbIvuyHJIJZyPRmc5xMmekEEpKyP5CT1XizFVzqFbiRgTBsiVtsG2iE0dTTY/L9Um9Bzo4BtpUZEOvWuL6lpQjoLf97+CvpJem7mL6l9XPbY8Y1GyYC9J7SqWSm5oQ+J1qhlRMOvPQD9
   subnet: sesi_rocquencourt
   sudoversion: 1.8.27
-  swapfree: 643.00 MiB
-  swapfree_mb: 642.99609375
+  swapfree: 1020.00 MiB
+  swapfree_mb: 1019.99609375
   swapsize: 1020.00 MiB
   swapsize_mb: 1019.99609375
   swh_hostname:
@@ -488,10 +516,10 @@ values:
     short: search1
     internal_fqdn: search1.internal.softwareheritage.org
   system_uptime:
-    days: 43
-    hours: 1035
-    seconds: 3727681
-    uptime: 43 days
+    days: 17
+    hours: 428
+    seconds: 1540986
+    uptime: 17 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -506,15 +534,15 @@ values:
     systemd-timesyncd.service: enabled
   systemd_version: '247'
   timezone: UTC
-  uptime: 43 days
-  uptime_days: 43
-  uptime_hours: 1035
-  uptime_seconds: 3727681
+  uptime: 17 days
+  uptime_days: 17
+  uptime_hours: 428
+  uptime_seconds: 1540986
   uuid: 313ece5c-105b-46ce-8696-2b421d91d7cd
   vcsrepo_svn_ver: ''
   virtual: kvm
   clientcert: search1.internal.softwareheritage.org
   clientversion: 5.5.10
   clientnoop: false
-timestamp: '2021-09-28T11:58:05.235763945+00:00'
-expiration: '2021-09-28T12:28:05.236127808+00:00'
+timestamp: '2021-12-28T10:58:05.246944964+00:00'
+expiration: '2021-12-28T11:28:05.247289802+00:00'

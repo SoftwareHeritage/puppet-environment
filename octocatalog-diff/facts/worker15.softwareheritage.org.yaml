@@ -4,8 +4,8 @@ values:
   agent_specified_environment: production
   apt_has_dist_updates: false
   apt_has_updates: false
-  apt_reboot_required: true
-  apt_update_last_success: 1632829628
+  apt_reboot_required: false
+  apt_update_last_success: 1640688423
   architecture: amd64
   augeas:
     version: 1.11.0
@@ -19,7 +19,9 @@ values:
   blockdevice_sr0_model: QEMU DVD-ROM
   blockdevice_sr0_size: 1073741312
   blockdevice_sr0_vendor: QEMU
-  blockdevices: sr0,sda
+  blockdevice_vda_size: 85899345920
+  blockdevice_vda_vendor: '0x1af4'
+  blockdevices: sr0,sda,vda
   cassandracmsheapnewsize: 400
   cassandracmsmaxheapsize: 4009
   cassandraheapnewsize: 400
@@ -37,6 +39,10 @@ values:
       size: 1.00 GiB
       size_bytes: 1073741312
       vendor: QEMU
+    vda:
+      size: 80.00 GiB
+      size_bytes: 85899345920
+      vendor: '0x1af4'
   dmi:
     bios:
       release_date: 04/01/2014
@@ -91,7 +97,6 @@ values:
     anlambert: "/home/anlambert"
     grouss: "/home/grouss"
     swhdeposit: "/home/swhdeposit"
-    journalbeat: "/var/lib/journalbeat"
     ntp: "/home/ntp"
     postfix: "/var/spool/postfix"
     statd: "/var/lib/nfs"
@@ -120,7 +125,7 @@ values:
     zaboukha: "/home/zaboukha"
   domain: softwareheritage.org
   facterversion: 3.11.0
-  filesystems: btrfs,ext2,ext3,ext4,hfs,hfsplus,jfs,minix,msdos,qnx4,ufs,vfat,xfs
+  filesystems: ext2,ext3,ext4
   fips_enabled: false
   fqdn: worker15.softwareheritage.org
   gid: root
@@ -150,13 +155,13 @@ values:
   is_virtual: true
   kernel: Linux
   kernelmajversion: '5.10'
-  kernelrelease: 5.10.0-0.bpo.7-amd64
+  kernelrelease: 5.10.0-0.bpo.9-amd64
   kernelversion: 5.10.0
   letsencrypt_directory: {}
   load_averages:
-    15m: 6.0
-    1m: 6.31
-    5m: 6.0
+    15m: 2.86
+    1m: 3.79
+    5m: 3.09
   location: sesi_rocquencourt
   lsbdistcodename: buster
   lsbdistdescription: Debian GNU/Linux 10 (buster)
@@ -168,36 +173,44 @@ values:
   macaddress_ens19: 52:54:00:1a:85:ba
   manufacturer: QEMU
   memory:
+    swap:
+      available: 59.60 GiB
+      available_bytes: 63991476224
+      capacity: 25.50%
+      total: 80.00 GiB
+      total_bytes: 85899341824
+      used: 20.40 GiB
+      used_bytes: 21907865600
     system:
-      available: 2.86 GiB
-      available_bytes: 3071844352
-      capacity: 81.73%
+      available: 5.94 GiB
+      available_bytes: 6381608960
+      capacity: 62.04%
       total: 15.66 GiB
-      total_bytes: 16813449216
-      used: 12.80 GiB
-      used_bytes: 13741604864
-  memoryfree: 2.86 GiB
-  memoryfree_mb: 2929.5390625
+      total_bytes: 16813445120
+      used: 9.72 GiB
+      used_bytes: 10431836160
+  memoryfree: 5.94 GiB
+  memoryfree_mb: 6085.9765625
   memorysize: 15.66 GiB
-  memorysize_mb: 16034.5546875
+  memorysize_mb: 16034.55078125
   mountpoints:
     "/":
-      available: 12.06 GiB
-      available_bytes: 12945518592
-      capacity: 66.03%
+      available: 32.99 GiB
+      available_bytes: 35421147136
+      capacity: 15.94%
       device: "/dev/mapper/worker15--vg-root"
       filesystem: ext4
       options:
       - rw
       - relatime
       - errors=remount-ro
-      size: 35.49 GiB
-      size_bytes: 38104956928
-      used: 23.43 GiB
-      used_bytes: 25159438336
+      size: 39.25 GiB
+      size_bytes: 42139877376
+      used: 6.26 GiB
+      used_bytes: 6718730240
     "/dev/shm":
       available: 7.83 GiB
-      available_bytes: 8405594112
+      available_bytes: 8405958656
       capacity: 0.01%
       device: tmpfs
       filesystem: tmpfs
@@ -206,12 +219,12 @@ values:
       - nosuid
       - nodev
       size: 7.83 GiB
-      size_bytes: 8406724608
-      used: 1.08 MiB
-      used_bytes: 1130496
+      size_bytes: 8406720512
+      used: 744.00 KiB
+      used_bytes: 761856
     "/run":
       available: 1.57 GiB
-      available_bytes: 1680769024
+      available_bytes: 1680773120
       capacity: 0.03%
       device: tmpfs
       filesystem: tmpfs
@@ -224,8 +237,8 @@ values:
       - mode=755
       size: 1.57 GiB
       size_bytes: 1681346560
-      used: 564.00 KiB
-      used_bytes: 577536
+      used: 560.00 KiB
+      used_bytes: 573440
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -261,6 +274,24 @@ values:
       size_bytes: 4194304
       used: 0 bytes
       used_bytes: 0
+    "/tmp":
+      available: 62.54 GiB
+      available_bytes: 67155484672
+      capacity: 21.82%
+      device: tmpfs
+      filesystem: tmpfs
+      options:
+      - rw
+      - nosuid
+      - nodev
+      - noexec
+      - relatime
+      - size=83886076k
+      - nr_inodes=209715200
+      size: 80.00 GiB
+      size_bytes: 85899341824
+      used: 17.46 GiB
+      used_bytes: 18743857152
   mounts:
   - "/"
   mtu_ens18: 1500
@@ -349,7 +380,7 @@ values:
     primary: ens18
   operatingsystem: Debian
   operatingsystemmajrelease: '10'
-  operatingsystemrelease: '10.10'
+  operatingsystemrelease: '10.11'
   os:
     architecture: amd64
     distro:
@@ -363,9 +394,9 @@ values:
     hardware: x86_64
     name: Debian
     release:
-      full: '10.10'
+      full: '10.11'
       major: '10'
-      minor: '10'
+      minor: '11'
     selinux:
       enabled: false
   osfamily: Debian
@@ -374,14 +405,9 @@ values:
     "/dev/mapper/worker15--vg-root":
       filesystem: ext4
       mount: "/"
-      size: 36.18 GiB
-      size_bytes: 38847643648
+      size: 40.00 GiB
+      size_bytes: 42945478656
       uuid: 5c0cb51c-4307-487e-87eb-7145196b1e90
-    "/dev/mapper/worker15--vg-swap_1":
-      filesystem: swap
-      size: 3.82 GiB
-      size_bytes: 4097835008
-      uuid: a0d6806a-29cb-4beb-895a-5029ffe0b61b
     "/dev/sda1":
       filesystem: LVM2_member
       partuuid: a5cf9975-01
@@ -459,15 +485,19 @@ values:
   sshrsakey: AAAAB3NzaC1yc2EAAAADAQABAAABAQDi12E/7CLc3AXtwPafq6kfg4GTBZiHZqIF9oeiG4MF7KIlJQhgRt8EOJP88SwWxsJ8RdKbFNNEFPDfwdYbqncTPmeq0hJH46YNeD4/knUref7mmM3mPXiUuxIofHnmxAP+srLY7q8Q9CuUX5pu0xQVVWSu/5gqzYfUkfO9WvVc41kcfyTQ6NGLsAIUfOAX5X+0pMkxtR7U8xep6yRYmq1wRgZXyT4w8hyV8Famvorls3aSSraQgE0mDYGLvUMIxduw48WVv6mUStPOclbkiZlVzn3dK0XNeOOD3OXpEUAGbxeQrq8r5ZSs11zLhHFai6ydCWcHe68VRHt7GcQxlOlf
   subnet: sesi_rocquencourt
   sudoversion: 1.8.27
+  swapfree: 59.60 GiB
+  swapfree_mb: 61027.02734375
+  swapsize: 80.00 GiB
+  swapsize_mb: 81919.99609375
   swh_hostname:
     fqdn: worker15.softwareheritage.org
     short: worker15
     internal_fqdn: worker15.internal.softwareheritage.org
   system_uptime:
-    days: 49
-    hours: 1177
-    seconds: 4238497
-    uptime: 49 days
+    days: 10
+    hours: 259
+    seconds: 935066
+    uptime: 10 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -482,15 +512,15 @@ values:
     systemd-timesyncd.service: enabled
   systemd_version: '247'
   timezone: UTC
-  uptime: 49 days
-  uptime_days: 49
-  uptime_hours: 1177
-  uptime_seconds: 4238497
+  uptime: 10 days
+  uptime_days: 10
+  uptime_hours: 259
+  uptime_seconds: 935066
   uuid: b02c7a5d-e3a8-4a1b-aeb3-896abd494e98
   vcsrepo_svn_ver: 1.10.4
   virtual: kvm
   clientcert: worker15.softwareheritage.org
   clientversion: 5.5.10
   clientnoop: false
-timestamp: '2021-09-28T12:11:12.399472307+00:00'
-expiration: '2021-09-28T12:41:12.400027568+00:00'
+timestamp: '2021-12-28T11:11:07.987475189+00:00'
+expiration: '2021-12-28T11:41:07.987941314+00:00'

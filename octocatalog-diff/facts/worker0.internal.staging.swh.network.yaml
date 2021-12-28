@@ -4,8 +4,8 @@ values:
   agent_specified_environment: staging
   apt_has_dist_updates: false
   apt_has_updates: false
-  apt_reboot_required: true
-  apt_update_last_success: 1632830163
+  apt_reboot_required: false
+  apt_update_last_success: 1640688963
   architecture: amd64
   bios_release_date: 04/01/2014
   bios_vendor: SeaBIOS
@@ -15,12 +15,15 @@ values:
   blockdevice_sr0_vendor: QEMU
   blockdevice_vda_size: 34359738368
   blockdevice_vda_vendor: '0x1af4'
-  blockdevices: sr0,vda
+  blockdevice_vdb_size: 85899345920
+  blockdevice_vdb_vendor: '0x1af4'
+  blockdevices: vdb,sr0,vda
   cassandracmsheapnewsize: 400
   cassandracmsmaxheapsize: 2995
   cassandraheapnewsize: 400
   cassandramaxheapsize: 2995
   chassistype: Other
+  cloudinit_enabled: 'true'
   deployment: staging
   disks:
     sr0:
@@ -31,6 +34,10 @@ values:
     vda:
       size: 32.00 GiB
       size_bytes: 34359738368
+      vendor: '0x1af4'
+    vdb:
+      size: 80.00 GiB
+      size_bytes: 85899345920
       vendor: '0x1af4'
   dmi:
     bios:
@@ -43,77 +50,19 @@ values:
     product:
       name: Standard PC (i440FX + PIIX, 1996)
       uuid: 7df01691-da81-4308-b3fc-31b157a6e72c
-  docker_home_dirs:
-    root: "/root"
-    daemon: "/usr/sbin"
-    bin: "/bin"
-    sys: "/dev"
-    sync: "/bin"
-    games: "/usr/games"
-    man: "/var/cache/man"
-    lp: "/var/spool/lpd"
-    mail: "/var/mail"
-    news: "/var/spool/news"
-    uucp: "/var/spool/uucp"
-    proxy: "/bin"
-    www-data: "/var/www"
-    backup: "/var/backups"
-    list: "/var/list"
-    irc: "/var/run/ircd"
-    gnats: "/var/lib/gnats"
-    nobody: "/nonexistent"
-    systemd-timesync: "/run/systemd"
-    systemd-network: "/run/systemd/netif"
-    systemd-resolve: "/run/systemd/resolve"
-    unscd: "/var/lib/unscd"
-    ntp: "/home/ntp"
-    _apt: "/nonexistent"
-    messagebus: "/var/run/dbus"
-    sshd: "/run/sshd"
-    puppet: "/var/lib/puppet"
-    olasd: "/home/olasd"
-    swhworker: "/home/swhworker"
-    swhstorage: "/home/swhstorage"
-    swhwebapp: "/home/swhwebapp"
-    swhbackup: "/home/swhbackup"
-    rdicosmo: "/home/rdicosmo"
-    swhteamannex: "/home/swhteamannex"
-    swhscheduler: "/home/swhscheduler"
-    jbertran: "/home/jbertran"
-    qcampos: "/home/qcampos"
-    gitorious: "/home/gitorious"
-    fiendish: "/home/fiendish"
-    morane: "/home/morane"
-    ssushant: "/home/ssushant"
-    anlambert: "/home/anlambert"
-    grouss: "/home/grouss"
-    swhdeposit: "/home/swhdeposit"
-    swhvault: "/home/swhvault"
-    ddouard: "/home/ddouard"
-    journalbeat: "/var/lib/journalbeat"
-    postfix: "/var/spool/postfix"
-    statd: "/var/lib/nfs"
-    zack: "/home/zack"
-    ardumont: "/home/ardumont"
-    seirl: "/home/seirl"
-    ftigeot: "/home/ftigeot"
-    vlorentz: "/home/vlorentz"
-    haltode: "/home/haltode"
-    munin: "/var/lib/munin"
-    prometheus: "/var/lib/prometheus"
-    nagios: "/var/lib/nagios"
-    _rpc: "/run/rpcbind"
-    systemd-coredump: "/"
-    danseraf: "/home/danseraf"
-    aeviso: "/home/aeviso"
-    tenma: "/home/tenma"
-    vsellier: "/home/vsellier"
-    postgres: "/var/lib/postgresql"
-    tg1999: "/home/tg1999"
-    hakb: "/home/hakb"
-    jayesh: "/home/jayesh"
-    zaboukha: "/home/zaboukha"
   domain: internal.staging.swh.network
+  extlib__puppet_config:
+    master:
+      localcacert: "/var/lib/puppet/ssl/certs/ca.pem"
+      ssldir: "/var/lib/puppet/ssl"
+    main:
+      hostpubkey: "/var/lib/puppet/ssl/public_keys/worker0.internal.staging.swh.network.pem"
+      hostprivkey: "/var/lib/puppet/ssl/private_keys/worker0.internal.staging.swh.network.pem"
+      hostcert: "/var/lib/puppet/ssl/certs/worker0.internal.staging.swh.network.pem"
+      localcacert: "/var/lib/puppet/ssl/certs/ca.pem"
+      ssldir: "/var/lib/puppet/ssl"
+      vardir: "/var/lib/puppet"
+      server: pergamon.internal.softwareheritage.org
   facterversion: 3.11.0
   filesystems: ext2,ext3,ext4,iso9660
   fips_enabled: false
@@ -143,13 +92,13 @@ values:
   is_virtual: true
   kernel: Linux
   kernelmajversion: '5.10'
-  kernelrelease: 5.10.0-0.bpo.8-cloud-amd64
+  kernelrelease: 5.10.0-0.bpo.9-cloud-amd64
   kernelversion: 5.10.0
   letsencrypt_directory: {}
   load_averages:
-    15m: 1.36
-    1m: 1.6
-    5m: 1.46
+    15m: 0.37
+    1m: 0.73
+    5m: 0.37
   location: sesi_rocquencourt_staging
   lsbdistcodename: buster
   lsbdistdescription: Debian GNU/Linux 10 (buster)
@@ -160,23 +109,31 @@ values:
   macaddress_eth0: 72:d9:03:46:b1:47
   manufacturer: QEMU
   memory:
+    swap:
+      available: 77.02 GiB
+      available_bytes: 82694975488
+      capacity: 3.73%
+      total: 80.00 GiB
+      total_bytes: 85899341824
+      used: 2.98 GiB
+      used_bytes: 3204366336
     system:
-      available: 7.95 GiB
-      available_bytes: 8541388800
-      capacity: 32.00%
+      available: 9.19 GiB
+      available_bytes: 9864208384
+      capacity: 21.47%
       total: 11.70 GiB
-      total_bytes: 12561104896
-      used: 3.74 GiB
-      used_bytes: 4019716096
-  memoryfree: 7.95 GiB
-  memoryfree_mb: 8145.703125
+      total_bytes: 12561096704
+      used: 2.51 GiB
+      used_bytes: 2696888320
+  memoryfree: 9.19 GiB
+  memoryfree_mb: 9407.2421875
   memorysize: 11.70 GiB
-  memorysize_mb: 11979.203125
+  memorysize_mb: 11979.1953125
   mountpoints:
     "/":
-      available: 15.82 GiB
-      available_bytes: 16989925376
-      capacity: 49.71%
+      available: 25.35 GiB
+      available_bytes: 27219709952
+      capacity: 19.43%
       device: "/dev/vda1"
       filesystem: ext4
       options:
@@ -185,11 +142,11 @@ values:
       - errors=remount-ro
       size: 31.47 GiB
       size_bytes: 33785901056
-      used: 15.64 GiB
-      used_bytes: 16795975680
+      used: 6.12 GiB
+      used_bytes: 6566191104
     "/dev/shm":
       available: 5.85 GiB
-      available_bytes: 6279380992
+      available_bytes: 6279352320
       capacity: 0.02%
       device: tmpfs
       filesystem: tmpfs
@@ -198,12 +155,12 @@ values:
       - nosuid
       - nodev
       size: 5.85 GiB
-      size_bytes: 6280552448
-      used: 1.12 MiB
-      used_bytes: 1171456
+      size_bytes: 6280548352
+      used: 1.14 MiB
+      used_bytes: 1196032
     "/run":
       available: 1.17 GiB
-      available_bytes: 1255526400
+      available_bytes: 1255538688
       capacity: 0.05%
       device: tmpfs
       filesystem: tmpfs
@@ -216,8 +173,8 @@ values:
       - mode=755
       size: 1.17 GiB
       size_bytes: 1256112128
-      used: 572.00 KiB
-      used_bytes: 585728
+      used: 560.00 KiB
+      used_bytes: 573440
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -236,8 +193,8 @@ values:
       used: 0 bytes
       used_bytes: 0
     "/run/user/1003":
-      available: 1.07 GiB
-      available_bytes: 1144332288
+      available: 1.17 GiB
+      available_bytes: 1256108032
       capacity: 0%
       device: tmpfs
       filesystem: tmpfs
@@ -246,13 +203,13 @@ values:
       - nosuid
       - nodev
       - relatime
-      - size=1117512k
-      - nr_inodes=279378
+      - size=1226668k
+      - nr_inodes=306667
       - mode=700
       - uid=1003
       - gid=1003
-      size: 1.07 GiB
-      size_bytes: 1144332288
+      size: 1.17 GiB
+      size_bytes: 1256108032
       used: 0 bytes
       used_bytes: 0
     "/sys/fs/cgroup":
@@ -273,6 +230,24 @@ values:
       size_bytes: 4194304
       used: 0 bytes
       used_bytes: 0
+    "/tmp":
+      available: 79.82 GiB
+      available_bytes: 85708922880
+      capacity: 0.22%
+      device: tmpfs
+      filesystem: tmpfs
+      options:
+      - rw
+      - nosuid
+      - nodev
+      - noexec
+      - relatime
+      - size=83886076k
+      - nr_inodes=209715200
+      size: 80.00 GiB
+      size_bytes: 85899341824
+      used: 181.60 MiB
+      used_bytes: 190418944
   mounts:
   - "/"
   mtu_eth0: 1500
@@ -339,7 +314,7 @@ values:
     primary: eth0
   operatingsystem: Debian
   operatingsystemmajrelease: '10'
-  operatingsystemrelease: '10.10'
+  operatingsystemrelease: '10.11'
   os:
     architecture: amd64
     distro:
@@ -353,9 +328,9 @@ values:
     hardware: x86_64
     name: Debian
     release:
-      full: '10.10'
+      full: '10.11'
       major: '10'
-      minor: '10'
+      minor: '11'
     selinux:
       enabled: false
   osfamily: Debian
@@ -447,15 +422,19 @@ values:
   sshrsakey: AAAAB3NzaC1yc2EAAAADAQABAAABAQDTcy+h2GfgNB3hmsQCCApSk1xpluSA3UT+KkoqA925Kog3Dp2HHWMUCKukxXqk8L3ume6QcDKjLppK278D7eYFmsap12MfEyS38GgS75Oz9dWpmD2w+LYomXVpfOrVCOc4Id33kOYHDvBmkRltNiQlqxk/EUUIyX+CieKudN9CS3gdIuWEzHVOW2RO6a0La2dGj7gFzLKTHLvx3krsZwZJ6bu/cRLoU707R70f5quLOn+pZ0rCK9Ed5ahP1JHEiLxmpjg3Xa0EXtrOKYJJx6g+Zd4XPB+cPKfBna5Gzgy5vqserbGR0s63gS2FjaLqvTPTrXNdCu+1PW2Chc+1jfOT
   subnet: sesi_rocquencourt_staging
   sudoversion: 1.8.27
+  swapfree: 77.02 GiB
+  swapfree_mb: 78864.07421875
+  swapsize: 80.00 GiB
+  swapsize_mb: 81919.99609375
   swh_hostname:
     fqdn: worker0.internal.staging.swh.network
     short: worker0
     internal_fqdn: worker0.internal.staging.swh.network
   system_uptime:
-    days: 49
-    hours: 1180
-    seconds: 4249943
-    uptime: 49 days
+    days: 10
+    hours: 260
+    seconds: 937219
+    uptime: 10 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -470,15 +449,15 @@ values:
     systemd-timesyncd.service: enabled
   systemd_version: '247'
   timezone: UTC
-  uptime: 49 days
-  uptime_days: 49
-  uptime_hours: 1180
-  uptime_seconds: 4249943
+  uptime: 10 days
+  uptime_days: 10
+  uptime_hours: 260
+  uptime_seconds: 937219
   uuid: 7df01691-da81-4308-b3fc-31b157a6e72c
   vcsrepo_svn_ver: 1.10.4
   virtual: kvm
   clientcert: worker0.internal.staging.swh.network
   clientversion: 5.5.10
   clientnoop: false
-timestamp: '2021-09-28T12:23:08.414392613+00:00'
-expiration: '2021-09-28T12:53:08.415167829+00:00'
+timestamp: '2021-12-28T11:23:06.851411416+00:00'
+expiration: '2021-12-28T11:53:06.851837860+00:00'
