@@ -254,7 +254,7 @@ vms = {
     :environment => ENV_PRODUCTION,
   },
   "prod-worker01" => {
-    :hostname    => "worker01.internal.softwareheritage.org",
+    :hostname    => "worker01.softwareheritage.org",
     :ip          => "10.168.100.21",
     :type        => TYPE_AGENT,
     :memory      => 4096,
