@@ -175,6 +175,16 @@ vms = {
   ################
   # ADMIN
   ################
+  "dali" => {
+    :hostname    => "dali.internal.admin.swh.network",
+    :ip          => "10.168.50.50",
+    :type        => TYPE_AGENT,
+    :memory      => 4096,
+    :cpus        => 2,
+    :environment => ENV_ADMIN,
+    :box         => $global_debian11_box,
+    :box_url     => $global_debian11_box_url,
+  },
   "admin-bardo" => {
     :hostname    => "bardo.internal.admin.swh.network",
     :ip          => "10.168.50.10",
