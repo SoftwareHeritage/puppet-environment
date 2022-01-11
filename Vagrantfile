@@ -597,6 +597,7 @@ Vagrant.configure("2") do |global_config|
         # Dont use nfs mount as the nfs_version can't be
         # specified. The default is nfsv3 and udp which is not
         # supported by the debian 11 kernel
+        puppet.synced_folder_type = 'rsync'
       end
     end
   end
