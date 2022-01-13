@@ -2,7 +2,7 @@
 name: met.internal.softwareheritage.org
 values:
   agent_specified_environment: production
-  apt_dist_updates: 5
+  apt_dist_updates: 6
   apt_has_dist_updates: true
   apt_has_updates: true
   apt_package_dist_updates:
@@ -11,6 +11,7 @@ values:
   - docker-ce-rootless-extras
   - docker-scan-plugin
   - pgbouncer
+  - prometheus-sql-exporter
   apt_package_security_dist_updates: []
   apt_package_security_updates: []
   apt_package_updates:
@@ -19,11 +20,12 @@ values:
   - docker-ce-rootless-extras
   - docker-scan-plugin
   - pgbouncer
+  - prometheus-sql-exporter
   apt_reboot_required: true
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1640687162
-  apt_updates: 5
+  apt_update_last_success: 1642069563
+  apt_updates: 6
   architecture: amd64
   bios_release_date: 05/13/2021
   bios_vendor: Dell Inc.
@@ -166,7 +168,7 @@ values:
     NFd: 25
     OomKillDisable: false
     NGoroutines: 33
-    SystemTime: '2021-12-28T11:23:04.376204428Z'
+    SystemTime: '2022-01-13T10:53:05.313264268Z'
     LoggingDriver: journald
     CgroupDriver: systemd
     CgroupVersion: '2'
@@ -327,79 +329,7 @@ values:
         Options: {}
         Labels: {}
   docker_client_version: 20.10.11
-  docker_home_dirs:
-    root: "/root"
-    daemon: "/usr/sbin"
-    bin: "/bin"
-    sys: "/dev"
-    sync: "/bin"
-    games: "/usr/games"
-    man: "/var/cache/man"
-    lp: "/var/spool/lpd"
-    mail: "/var/mail"
-    news: "/var/spool/news"
-    uucp: "/var/spool/uucp"
-    proxy: "/bin"
-    www-data: "/var/www"
-    backup: "/var/backups"
-    list: "/var/list"
-    irc: "/run/ircd"
-    gnats: "/var/lib/gnats"
-    nobody: "/nonexistent"
-    _apt: "/nonexistent"
-    systemd-timesync: "/run/systemd"
-    systemd-network: "/run/systemd"
-    systemd-resolve: "/run/systemd"
-    messagebus: "/nonexistent"
-    sshd: "/run/sshd"
-    systemd-coredump: "/"
-    puppet: "/var/lib/puppet"
-    swhworker: "/home/swhworker"
-    swhstorage: "/home/swhstorage"
-    swhwebapp: "/home/swhwebapp"
-    swhbackup: "/home/swhbackup"
-    rdicosmo: "/home/rdicosmo"
-    swhteamannex: "/home/swhteamannex"
-    swhscheduler: "/home/swhscheduler"
-    jbertran: "/home/jbertran"
-    qcampos: "/home/qcampos"
-    gitorious: "/home/gitorious"
-    fiendish: "/home/fiendish"
-    morane: "/home/morane"
-    ssushant: "/home/ssushant"
-    anlambert: "/home/anlambert"
-    grouss: "/home/grouss"
-    ftigeot: "/home/ftigeot"
-    swhdeposit: "/home/swhdeposit"
-    swhvault: "/home/swhvault"
-    tenma: "/home/tenma"
-    tg1999: "/home/tg1999"
-    hakb: "/home/hakb"
-    zaboukha: "/home/zaboukha"
-    nagios: "/var/lib/nagios"
-    ntp: "/nonexistent"
-    postfix: "/var/spool/postfix"
-    _rpc: "/run/rpcbind"
-    statd: "/var/lib/nfs"
-    tcpdump: "/nonexistent"
-    seirl: "/home/seirl"
-    vlorentz: "/home/vlorentz"
-    haltode: "/home/haltode"
-    danseraf: "/home/danseraf"
-    unbound: "/var/lib/unbound"
-    prometheus: "/var/lib/prometheus"
-    epmd: "/run/epmd"
-    rabbitmq: "/var/lib/rabbitmq"
-    postgres: "/var/lib/postgresql"
-    zack: "/home/zack"
-    olasd: "/home/olasd"
-    ardumont: "/home/ardumont"
-    ddouard: "/home/ddouard"
-    aeviso: "/home/aeviso"
-    vsellier: "/home/vsellier"
-    jayesh: "/home/jayesh"
-    uuidd: "/run/uuidd"
-    tss: "/var/lib/tpm"
+  docker_manager_join_token: ''
   docker_server_version: 20.10.11
   docker_version:
     Client:
@@ -452,8 +382,21 @@ values:
       Arch: amd64
       KernelVersion: 5.10.0-9-amd64
       BuildTime: '2021-11-18T00:35:39.000000000+00:00'
+  docker_worker_join_token: ''
   domain: internal.softwareheritage.org
   erl_ssl_path: "/usr/lib/erlang/lib/ssl-10.2.3/ebin"
+  extlib__puppet_config:
+    master:
+      localcacert: "/var/lib/puppet/ssl/certs/ca.pem"
+      ssldir: "/var/lib/puppet/ssl"
+    main:
+      hostpubkey: "/var/lib/puppet/ssl/public_keys/met.internal.softwareheritage.org.pem"
+      hostprivkey: "/var/lib/puppet/ssl/private_keys/met.internal.softwareheritage.org.pem"
+      hostcert: "/var/lib/puppet/ssl/certs/met.internal.softwareheritage.org.pem"
+      localcacert: "/var/lib/puppet/ssl/certs/ca.pem"
+      ssldir: "/var/lib/puppet/ssl"
+      vardir: "/var/lib/puppet"
+      server: pergamon.internal.softwareheritage.org
   facterversion: 3.14.12
   filesystems: btrfs,ext2,ext3,ext4,hfs,hfsplus,jfs,minix,msdos,qnx4,ufs,vfat,xfs
   fips_enabled: false
@@ -489,9 +432,9 @@ values:
   kernelversion: 5.10.0
   letsencrypt_directory: {}
   load_averages:
-    15m: 2.38
-    1m: 2.45
-    5m: 2.42
+    15m: 21.7
+    1m: 19.96
+    5m: 21.05
   lsbdistcodename: bullseye
   lsbdistdescription: Debian GNU/Linux 11 (bullseye)
   lsbdistid: Debian
@@ -509,30 +452,30 @@ values:
   manufacturer: Dell Inc.
   memory:
     swap:
-      available: 504.00 KiB
-      available_bytes: 516096
-      capacity: 99.95%
+      available: 4.00 KiB
+      available_bytes: 4096
+      capacity: 99.99%
       total: 976.00 MiB
       total_bytes: 1023406080
-      used: 975.50 MiB
-      used_bytes: 1022889984
+      used: 975.99 MiB
+      used_bytes: 1023401984
     system:
-      available: 236.48 GiB
-      available_bytes: 253918937088
-      capacity: 53.04%
+      available: 153.73 GiB
+      available_bytes: 165062107136
+      capacity: 69.47%
       total: 503.57 GiB
       total_bytes: 540704731136
-      used: 267.09 GiB
-      used_bytes: 286785794048
-  memoryfree: 236.48 GiB
-  memoryfree_mb: 242155.96875
+      used: 349.84 GiB
+      used_bytes: 375642624000
+  memoryfree: 153.73 GiB
+  memoryfree_mb: 157415.4921875
   memorysize: 503.57 GiB
   memorysize_mb: 515656.21484375
   mountpoints:
     "/":
-      available: 23.96 GiB
-      available_bytes: 25729519616
-      capacity: 28.68%
+      available: 23.26 GiB
+      available_bytes: 24980590592
+      capacity: 30.76%
       device: "/dev/mapper/met--vg-root"
       filesystem: ext4
       options:
@@ -541,8 +484,8 @@ values:
       - errors=remount-ro
       size: 35.43 GiB
       size_bytes: 38042947584
-      used: 9.64 GiB
-      used_bytes: 10347978752
+      used: 10.33 GiB
+      used_bytes: 11096907776
     "/boot":
       available: 351.64 MiB
       available_bytes: 368720896
@@ -578,8 +521,8 @@ values:
       used: 3.41 MiB
       used_bytes: 3579904
     "/data":
-      available: 15.14 TiB
-      available_bytes: 16642215903232
+      available: 13.34 TiB
+      available_bytes: 14664100347904
       capacity: 0.00%
       device: data
       filesystem: zfs
@@ -587,8 +530,8 @@ values:
       - rw
       - xattr
       - noacl
-      size: 15.14 TiB
-      size_bytes: 16642216034304
+      size: 13.34 TiB
+      size_bytes: 14664100478976
       used: 128.00 KiB
       used_bytes: 131072
     "/dev":
@@ -658,7 +601,7 @@ values:
       used_bytes: 0
     "/dev/shm":
       available: 251.78 GiB
-      available_bytes: 270352035840
+      available_bytes: 270349737984
       capacity: 0.00%
       device: tmpfs
       filesystem: tmpfs
@@ -668,12 +611,12 @@ values:
       - nodev
       size: 251.79 GiB
       size_bytes: 270352363520
-      used: 320.00 KiB
-      used_bytes: 327680
+      used: 2.50 MiB
+      used_bytes: 2625536
     "/home":
-      available: 15.14 TiB
-      available_bytes: 16642215903232
-      capacity: 0.44%
+      available: 13.34 TiB
+      available_bytes: 14664100347904
+      capacity: 0.50%
       device: data/home
       filesystem: zfs
       options:
@@ -681,14 +624,14 @@ values:
       - noatime
       - xattr
       - noacl
-      size: 15.20 TiB
-      size_bytes: 16716342362112
-      used: 69.04 GiB
-      used_bytes: 74126458880
+      size: 13.40 TiB
+      size_bytes: 14738284871680
+      used: 69.09 GiB
+      used_bytes: 74184523776
     "/run":
-      available: 50.35 GiB
-      available_bytes: 54067138560
-      capacity: 0.01%
+      available: 50.33 GiB
+      available_bytes: 54040760320
+      capacity: 0.05%
       device: tmpfs
       filesystem: tmpfs
       options:
@@ -701,8 +644,8 @@ values:
       - mode=755
       size: 50.36 GiB
       size_bytes: 54070476800
-      used: 3.18 MiB
-      used_bytes: 3338240
+      used: 28.34 MiB
+      used_bytes: 29716480
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -793,10 +736,24 @@ values:
       size_bytes: 54070472704
       used: 0 bytes
       used_bytes: 0
+    "/srv/softwareheritage/postgres/13/archive":
+      available: 13.34 TiB
+      available_bytes: 14664100347904
+      capacity: 12.48%
+      device: data/postgresql-swh-storage
+      filesystem: zfs
+      options:
+      - rw
+      - xattr
+      - noacl
+      size: 15.24 TiB
+      size_bytes: 16754527830016
+      used: 1.90 TiB
+      used_bytes: 2090427482112
     "/srv/softwareheritage/postgres/13/main":
-      available: 15.14 TiB
-      available_bytes: 16642215903232
-      capacity: 32.58%
+      available: 13.34 TiB
+      available_bytes: 14664100347904
+      capacity: 35.10%
       device: data/postgresql
       filesystem: zfs
       options:
@@ -804,10 +761,10 @@ values:
       - noatime
       - xattr
       - noacl
-      size: 22.45 TiB
-      size_bytes: 24684479250432
-      used: 7.31 TiB
-      used_bytes: 8042263347200
+      size: 20.55 TiB
+      size_bytes: 22595904602112
+      used: 7.21 TiB
+      used_bytes: 7931804254208
   mounts:
   - "/"
   - "/boot"
@@ -815,6 +772,7 @@ values:
   - "/home"
   - "/data"
   - "/srv/softwareheritage/postgres/13/main"
+  - "/srv/softwareheritage/postgres/13/archive"
   mtu_bond0: 1500
   mtu_bond0.440: 1500
   mtu_docker0: 1500
@@ -823,7 +781,7 @@ values:
   mtu_eno8303: 1500
   mtu_eno8403: 1500
   mtu_lo: 65536
-  mysql_server_id: 44149616
+  mysql_server_id: 2820272643
   netmask: 255.255.255.0
   netmask6: 'ffff:ffff:ffff:ffff::'
   netmask6_bond0: 'ffff:ffff:ffff:ffff::'
@@ -1236,6 +1194,7 @@ values:
   puppet_server: pergamon.internal.softwareheritage.org
   puppet_vardir: "/var/lib/puppet"
   puppetversion: 5.5.22
+  rabbitmq_clustername: rabbit@met.internal.softwareheritage.org
   rabbitmq_nodename: rabbit@met
   rabbitmq_plugins_dirs:
   - "/usr/lib/rabbitmq/plugins"
@@ -1299,8 +1258,8 @@ values:
   sshrsakey: AAAAB3NzaC1yc2EAAAADAQABAAABgQC3c/BmlSfHmQ8HmlqsSgevgWDJ51Pn0KmldzerA/g3H0gCw5B0xg5rptg4QrNmy7+r+UZpASb7h6YedeauZIyWUHleLt+eZDNYXR1JreKqCJB1hWe/XN8fPhUabIKTvTMooWK/yvvrQDob5YkyUJFVRY82Z+Znms0lG/8E3+L+HalyVaaYd7ckyDMA+bjnLu00p3BV6lBbmQyheojiUJSAdiabBmdKbXoaOJw2qXdxoEReggzBOgYk0E8Jr6YeZeS4oA+bo50Jq650vGftlUQd4nhM9nsA/uOEkqOQUATtAlFMqFT6lywvHMenjK8jJxpFoy9OZN7LeLkJv7dAbUV4mhS4D5tI2dWcq5COHAhmgcXk2Y2TbiDqlWpTjdTHUotFhluccgHU1OJZmVRIH0wV7vht2PIQx5UuEHkxoJ+bRV8C7mtSmhjE5rykRj304oHHoZtBHgKu7UOZVvrMMs09v8TCWhEA6L7qHYsqIkrYEEx39foO9gJBcSzHsmiTYH0=
   subnet: sesi_rocquencourt
   sudoversion: 1.9.5p2
-  swapfree: 504.00 KiB
-  swapfree_mb: 0.4921875
+  swapfree: 4.00 KiB
+  swapfree_mb: 0.00390625
   swapsize: 976.00 MiB
   swapsize_mb: 975.99609375
   swh_hostname:
@@ -1308,10 +1267,10 @@ values:
     short: met
     internal_fqdn: met.internal.softwareheritage.org
   system_uptime:
-    days: 26
-    hours: 624
-    seconds: 2247127
-    uptime: 26 days
+    days: 41
+    hours: 1007
+    seconds: 3627729
+    uptime: 41 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -1325,15 +1284,15 @@ values:
     systemd-time-wait-sync.service: disabled
   systemd_version: '247'
   timezone: UTC
-  uptime: 26 days
-  uptime_days: 26
-  uptime_hours: 624
-  uptime_seconds: 2247127
+  uptime: 41 days
+  uptime_days: 41
+  uptime_hours: 1007
+  uptime_seconds: 3627729
   uuid: 4c4c4544-0050-4210-8043-b7c04f534833
   vcsrepo_svn_ver: ''
   virtual: physical
   clientcert: met.internal.softwareheritage.org
   clientversion: 5.5.22
   clientnoop: false
-timestamp: '2021-12-28T11:23:06.446205125+00:00'
-expiration: '2021-12-28T11:53:06.446940134+00:00'
+timestamp: '2022-01-13T10:53:08.180263952+00:00'
+expiration: '2022-01-13T11:23:08.180920194+00:00'

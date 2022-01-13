@@ -2,7 +2,7 @@
 name: dbreplica0.euwest.azure.internal.softwareheritage.org
 values:
   agent_specified_environment: production
-  apt_dist_updates: 36
+  apt_dist_updates: 37
   apt_has_dist_updates: true
   apt_has_updates: true
   apt_package_dist_updates:
@@ -42,6 +42,7 @@ values:
   - postgresql-11
   - postgresql-client-13
   - postgresql-13
+  - prometheus-sql-exporter
   apt_package_security_dist_updates: []
   apt_package_security_updates: []
   apt_package_updates:
@@ -73,11 +74,12 @@ values:
   - postgresql-11
   - postgresql-client-13
   - postgresql-13
+  - prometheus-sql-exporter
   apt_reboot_required: true
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1640686863
-  apt_updates: 28
+  apt_update_last_success: 1642069263
+  apt_updates: 29
   architecture: amd64
   bios_release_date: 12/07/2018
   bios_vendor: American Megatrends Inc.
@@ -244,77 +246,19 @@ values:
       name: Virtual Machine
       serial_number: 0000-0013-8575-7153-3511-6748-02
       uuid: e3fb4fc0-87a0-b24b-b971-39f051ed59f9
-  docker_home_dirs:
-    root: "/root"
-    daemon: "/usr/sbin"
-    bin: "/bin"
-    sys: "/dev"
-    sync: "/bin"
-    games: "/usr/games"
-    man: "/var/cache/man"
-    lp: "/var/spool/lpd"
-    mail: "/var/mail"
-    news: "/var/spool/news"
-    uucp: "/var/spool/uucp"
-    proxy: "/bin"
-    www-data: "/var/www"
-    backup: "/var/backups"
-    list: "/var/list"
-    irc: "/var/run/ircd"
-    gnats: "/var/lib/gnats"
-    nobody: "/nonexistent"
-    systemd-timesync: "/run/systemd"
-    systemd-network: "/run/systemd/netif"
-    systemd-resolve: "/run/systemd/resolve"
-    _apt: "/nonexistent"
-    unscd: "/var/lib/unscd"
-    messagebus: "/var/run/dbus"
-    sshd: "/run/sshd"
-    zack: "/home/zack"
-    puppet: "/var/lib/puppet"
-    olasd: "/home/olasd"
-    swhworker: "/home/swhworker"
-    swhstorage: "/home/swhstorage"
-    swhwebapp: "/home/swhwebapp"
-    swhbackup: "/home/swhbackup"
-    rdicosmo: "/home/rdicosmo"
-    swhteamannex: "/home/swhteamannex"
-    swhscheduler: "/home/swhscheduler"
-    ftigeot: "/home/ftigeot"
-    jbertran: "/home/jbertran"
-    qcampos: "/home/qcampos"
-    gitorious: "/home/gitorious"
-    fiendish: "/home/fiendish"
-    morane: "/home/morane"
-    ssushant: "/home/ssushant"
-    anlambert: "/home/anlambert"
-    grouss: "/home/grouss"
-    swhdeposit: "/home/swhdeposit"
-    swhvault: "/home/swhvault"
-    ntp: "/home/ntp"
-    postfix: "/var/spool/postfix"
-    statd: "/var/lib/nfs"
-    ardumont: "/home/ardumont"
-    seirl: "/home/seirl"
-    unbound: "/var/lib/unbound"
-    munin: "/var/lib/munin"
-    nagios: "/var/lib/nagios"
-    postgres: "/var/lib/postgresql"
-    prometheus: "/var/lib/prometheus"
-    ddouard: "/home/ddouard"
-    vlorentz: "/home/vlorentz"
-    haltode: "/home/haltode"
-    _rpc: "/run/rpcbind"
-    systemd-coredump: "/"
-    danseraf: "/home/danseraf"
-    aeviso: "/home/aeviso"
-    tenma: "/home/tenma"
-    vsellier: "/home/vsellier"
-    tg1999: "/home/tg1999"
-    hakb: "/home/hakb"
-    jayesh: "/home/jayesh"
-    zaboukha: "/home/zaboukha"
   domain: euwest.azure.internal.softwareheritage.org
+  extlib__puppet_config:
+    master:
+      localcacert: "/var/lib/puppet/ssl/certs/ca.pem"
+      ssldir: "/var/lib/puppet/ssl"
+    main:
+      hostpubkey: "/var/lib/puppet/ssl/public_keys/dbreplica0.euwest.azure.internal.softwareheritage.org.pem"
+      hostprivkey: "/var/lib/puppet/ssl/private_keys/dbreplica0.euwest.azure.internal.softwareheritage.org.pem"
+      hostcert: "/var/lib/puppet/ssl/certs/dbreplica0.euwest.azure.internal.softwareheritage.org.pem"
+      localcacert: "/var/lib/puppet/ssl/certs/ca.pem"
+      ssldir: "/var/lib/puppet/ssl"
+      vardir: "/var/lib/puppet"
+      server: pergamon.internal.softwareheritage.org
   facterversion: 3.11.0
   filesystems: ext2,ext3,ext4
   fips_enabled: false
@@ -348,9 +292,9 @@ values:
   kernelversion: 5.10.0
   letsencrypt_directory: {}
   load_averages:
-    15m: 0.01
-    1m: 0.15
-    5m: 0.06
+    15m: 0.03
+    1m: 0.18
+    5m: 0.1
   location: azure_euwest
   lsbdistcodename: buster
   lsbdistdescription: Debian GNU/Linux 10 (buster)
@@ -362,22 +306,22 @@ values:
   manufacturer: Microsoft Corporation
   memory:
     system:
-      available: 77.99 GiB
-      available_bytes: 83737952256
-      capacity: 29.20%
+      available: 77.98 GiB
+      available_bytes: 83729707008
+      capacity: 29.21%
       total: 110.15 GiB
       total_bytes: 118277844992
-      used: 32.17 GiB
-      used_bytes: 34539892736
-  memoryfree: 77.99 GiB
-  memoryfree_mb: 79858.734375
+      used: 32.18 GiB
+      used_bytes: 34548137984
+  memoryfree: 77.98 GiB
+  memoryfree_mb: 79850.87109375
   memorysize: 110.15 GiB
   memorysize_mb: 112798.54296875
   mountpoints:
     "/":
-      available: 22.47 GiB
-      available_bytes: 24124452864
-      capacity: 23.59%
+      available: 22.43 GiB
+      available_bytes: 24082554880
+      capacity: 23.72%
       device: "/dev/sdp1"
       filesystem: ext4
       options:
@@ -386,8 +330,8 @@ values:
       - errors=remount-ro
       size: 29.40 GiB
       size_bytes: 31571480576
-      used: 6.94 GiB
-      used_bytes: 7447027712
+      used: 6.97 GiB
+      used_bytes: 7488925696
     "/dev/shm":
       available: 55.08 GiB
       available_bytes: 59138883584
@@ -442,7 +386,7 @@ values:
   - "/srv/softwareheritage/postgres/wal-archive"
   mtu_eth0: 1500
   mtu_lo: 65536
-  mysql_server_id: 15353222
+  mysql_server_id: 975393953
   netmask: 255.255.252.0
   netmask6: 'ffff:ffff:ffff:ffff::'
   netmask6_eth0: 'ffff:ffff:ffff:ffff::'
@@ -818,10 +762,10 @@ values:
     short: dbreplica0.euwest.azure
     internal_fqdn: dbreplica0.euwest.azure.internal.softwareheritage.org
   system_uptime:
-    days: 228
-    hours: 5473
-    seconds: 19703509
-    uptime: 228 days
+    days: 244
+    hours: 5856
+    seconds: 21084108
+    uptime: 244 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -836,15 +780,15 @@ values:
     systemd-timesyncd.service: enabled
   systemd_version: '247'
   timezone: UTC
-  uptime: 228 days
-  uptime_days: 228
-  uptime_hours: 5473
-  uptime_seconds: 19703509
+  uptime: 244 days
+  uptime_days: 244
+  uptime_hours: 5856
+  uptime_seconds: 21084108
   uuid: e3fb4fc0-87a0-b24b-b971-39f051ed59f9
   vcsrepo_svn_ver: ''
   virtual: hyperv
   clientcert: dbreplica0.euwest.azure.internal.softwareheritage.org
   clientversion: 5.5.10
   clientnoop: false
-timestamp: '2021-12-28T11:15:09.175550737+00:00'
-expiration: '2021-12-28T11:45:09.176100041+00:00'
+timestamp: '2022-01-13T10:45:09.162325644+00:00'
+expiration: '2022-01-13T11:15:09.162825548+00:00'

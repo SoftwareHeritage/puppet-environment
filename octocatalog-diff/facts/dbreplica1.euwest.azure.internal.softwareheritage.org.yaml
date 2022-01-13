@@ -2,7 +2,7 @@
 name: dbreplica1.euwest.azure.internal.softwareheritage.org
 values:
   agent_specified_environment: production
-  apt_dist_updates: 25
+  apt_dist_updates: 26
   apt_has_dist_updates: true
   apt_has_updates: true
   apt_package_dist_updates:
@@ -31,6 +31,7 @@ values:
   - postgresql-plperl-11
   - postgresql-client-11
   - postgresql-11
+  - prometheus-sql-exporter
   apt_package_security_dist_updates: []
   apt_package_security_updates: []
   apt_package_updates:
@@ -54,11 +55,12 @@ values:
   - postgresql-plperl-11
   - postgresql-client-11
   - postgresql-11
+  - prometheus-sql-exporter
   apt_reboot_required: true
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1640686863
-  apt_updates: 20
+  apt_update_last_success: 1642069263
+  apt_updates: 21
   architecture: amd64
   bios_release_date: 12/07/2018
   bios_vendor: American Megatrends Inc.
@@ -177,77 +179,19 @@ values:
       name: Virtual Machine
       serial_number: 0000-0016-5070-1210-2228-9536-81
       uuid: 0cb014e5-6e90-514a-ad9b-0e3b243245b1
-  docker_home_dirs:
-    root: "/root"
-    daemon: "/usr/sbin"
-    bin: "/bin"
-    sys: "/dev"
-    sync: "/bin"
-    games: "/usr/games"
-    man: "/var/cache/man"
-    lp: "/var/spool/lpd"
-    mail: "/var/mail"
-    news: "/var/spool/news"
-    uucp: "/var/spool/uucp"
-    proxy: "/bin"
-    www-data: "/var/www"
-    backup: "/var/backups"
-    list: "/var/list"
-    irc: "/var/run/ircd"
-    gnats: "/var/lib/gnats"
-    nobody: "/nonexistent"
-    systemd-timesync: "/run/systemd"
-    systemd-network: "/run/systemd/netif"
-    systemd-resolve: "/run/systemd/resolve"
-    _apt: "/nonexistent"
-    unscd: "/var/lib/unscd"
-    messagebus: "/var/run/dbus"
-    sshd: "/run/sshd"
-    zack: "/home/zack"
-    puppet: "/var/lib/puppet"
-    olasd: "/home/olasd"
-    swhworker: "/home/swhworker"
-    swhstorage: "/home/swhstorage"
-    swhwebapp: "/home/swhwebapp"
-    swhbackup: "/home/swhbackup"
-    rdicosmo: "/home/rdicosmo"
-    swhteamannex: "/home/swhteamannex"
-    swhscheduler: "/home/swhscheduler"
-    jbertran: "/home/jbertran"
-    qcampos: "/home/qcampos"
-    gitorious: "/home/gitorious"
-    fiendish: "/home/fiendish"
-    morane: "/home/morane"
-    ssushant: "/home/ssushant"
-    anlambert: "/home/anlambert"
-    grouss: "/home/grouss"
-    swhdeposit: "/home/swhdeposit"
-    swhvault: "/home/swhvault"
-    ntp: "/home/ntp"
-    postfix: "/var/spool/postfix"
-    statd: "/var/lib/nfs"
-    ardumont: "/home/ardumont"
-    seirl: "/home/seirl"
-    ftigeot: "/home/ftigeot"
-    unbound: "/var/lib/unbound"
-    munin: "/var/lib/munin"
-    nagios: "/var/lib/nagios"
-    prometheus: "/var/lib/prometheus"
-    postgres: "/var/lib/postgresql"
-    ddouard: "/home/ddouard"
-    vlorentz: "/home/vlorentz"
-    haltode: "/home/haltode"
-    _rpc: "/run/rpcbind"
-    systemd-coredump: "/"
-    danseraf: "/home/danseraf"
-    aeviso: "/home/aeviso"
-    tenma: "/home/tenma"
-    vsellier: "/home/vsellier"
-    tg1999: "/home/tg1999"
-    hakb: "/home/hakb"
-    jayesh: "/home/jayesh"
-    zaboukha: "/home/zaboukha"
   domain: euwest.azure.internal.softwareheritage.org
+  extlib__puppet_config:
+    master:
+      localcacert: "/var/lib/puppet/ssl/certs/ca.pem"
+      ssldir: "/var/lib/puppet/ssl"
+    main:
+      hostpubkey: "/var/lib/puppet/ssl/public_keys/dbreplica1.euwest.azure.internal.softwareheritage.org.pem"
+      hostprivkey: "/var/lib/puppet/ssl/private_keys/dbreplica1.euwest.azure.internal.softwareheritage.org.pem"
+      hostcert: "/var/lib/puppet/ssl/certs/dbreplica1.euwest.azure.internal.softwareheritage.org.pem"
+      localcacert: "/var/lib/puppet/ssl/certs/ca.pem"
+      ssldir: "/var/lib/puppet/ssl"
+      vardir: "/var/lib/puppet"
+      server: pergamon.internal.softwareheritage.org
   facterversion: 3.11.0
   filesystems: ext2,ext3,ext4
   fips_enabled: false
@@ -282,7 +226,7 @@ values:
   letsencrypt_directory: {}
   load_averages:
     15m: 0.01
-    1m: 0.08
+    1m: 0.14
     5m: 0.03
   location: azure_euwest
   lsbdistcodename: buster
@@ -295,22 +239,22 @@ values:
   manufacturer: Microsoft Corporation
   memory:
     system:
-      available: 59.82 GiB
-      available_bytes: 64228995072
-      capacity: 4.78%
+      available: 59.70 GiB
+      available_bytes: 64101298176
+      capacity: 4.97%
       total: 62.82 GiB
       total_bytes: 67454308352
-      used: 3.00 GiB
-      used_bytes: 3225313280
-  memoryfree: 59.82 GiB
-  memoryfree_mb: 61253.54296875
+      used: 3.12 GiB
+      used_bytes: 3353010176
+  memoryfree: 59.70 GiB
+  memoryfree_mb: 61131.76171875
   memorysize: 62.82 GiB
   memorysize_mb: 64329.44140625
   mountpoints:
     "/":
-      available: 25.90 GiB
-      available_bytes: 27812765696
-      capacity: 11.91%
+      available: 26.18 GiB
+      available_bytes: 28106334208
+      capacity: 10.98%
       device: "/dev/sda1"
       filesystem: ext4
       options:
@@ -319,8 +263,8 @@ values:
       - errors=remount-ro
       size: 29.40 GiB
       size_bytes: 31571480576
-      used: 3.50 GiB
-      used_bytes: 3758714880
+      used: 3.23 GiB
+      used_bytes: 3465146368
     "/dev/shm":
       available: 31.41 GiB
       available_bytes: 33727131648
@@ -350,7 +294,7 @@ values:
       used_bytes: 62943232
     "/run":
       available: 6.28 GiB
-      available_bytes: 6744756224
+      available_bytes: 6744772608
       capacity: 0.01%
       device: tmpfs
       filesystem: tmpfs
@@ -363,8 +307,8 @@ values:
       - mode=755
       size: 6.28 GiB
       size_bytes: 6745432064
-      used: 660.00 KiB
-      used_bytes: 675840
+      used: 644.00 KiB
+      used_bytes: 659456
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -382,30 +326,10 @@ values:
       size_bytes: 5242880
       used: 0 bytes
       used_bytes: 0
-    "/run/user/116":
-      available: 6.28 GiB
-      available_bytes: 6745427968
-      capacity: 0%
-      device: tmpfs
-      filesystem: tmpfs
-      options:
-      - rw
-      - nosuid
-      - nodev
-      - relatime
-      - size=6587332k
-      - nr_inodes=1646833
-      - mode=700
-      - uid=116
-      - gid=121
-      size: 6.28 GiB
-      size_bytes: 6745427968
-      used: 0 bytes
-      used_bytes: 0
     "/srv":
-      available: 3.94 TiB
-      available_bytes: 4334448422912
-      capacity: 49.92%
+      available: 3.90 TiB
+      available_bytes: 4290267418624
+      capacity: 50.44%
       device: "/dev/mapper/data--vg01-data--lv01"
       filesystem: ext4
       options:
@@ -414,8 +338,8 @@ values:
       - errors=remount-ro
       size: 7.87 TiB
       size_bytes: 8655877410816
-      used: 3.93 TiB
-      used_bytes: 4321428987904
+      used: 3.97 TiB
+      used_bytes: 4365609992192
     "/sys/fs/cgroup":
       available: 4.00 MiB
       available_bytes: 4194304
@@ -440,7 +364,7 @@ values:
   - "/mnt/resource"
   mtu_eth0: 1500
   mtu_lo: 65536
-  mysql_server_id: 15396008
+  mysql_server_id: 976056323
   netmask: 255.255.252.0
   netmask6: 'ffff:ffff:ffff:ffff::'
   netmask6_eth0: 'ffff:ffff:ffff:ffff::'
@@ -691,10 +615,10 @@ values:
     short: dbreplica1.euwest.azure
     internal_fqdn: dbreplica1.euwest.azure.internal.softwareheritage.org
   system_uptime:
-    days: 263
-    hours: 6320
-    seconds: 22754084
-    uptime: 263 days
+    days: 279
+    hours: 6704
+    seconds: 24134685
+    uptime: 279 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -709,15 +633,15 @@ values:
     systemd-timesyncd.service: enabled
   systemd_version: '247'
   timezone: UTC
-  uptime: 263 days
-  uptime_days: 263
-  uptime_hours: 6320
-  uptime_seconds: 22754084
+  uptime: 279 days
+  uptime_days: 279
+  uptime_hours: 6704
+  uptime_seconds: 24134685
   uuid: 0cb014e5-6e90-514a-ad9b-0e3b243245b1
   vcsrepo_svn_ver: ''
   virtual: hyperv
   clientcert: dbreplica1.euwest.azure.internal.softwareheritage.org
   clientversion: 5.5.10
   clientnoop: false
-timestamp: '2021-12-28T11:02:05.375802791+00:00'
-expiration: '2021-12-28T11:32:05.376302994+00:00'
+timestamp: '2022-01-13T10:32:06.189366882+00:00'
+expiration: '2022-01-13T11:02:06.189781384+00:00'

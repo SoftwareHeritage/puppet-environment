@@ -2,7 +2,7 @@
 name: saatchi.internal.softwareheritage.org
 values:
   agent_specified_environment: production
-  apt_dist_updates: 11
+  apt_dist_updates: 13
   apt_has_dist_updates: true
   apt_has_updates: true
   apt_package_dist_updates:
@@ -10,6 +10,7 @@ values:
   - linux-image-amd64
   - python3-dulwich
   - python3-frozendict
+  - python3-swh.counters
   - python3-swh.model
   - python3-swh.storage
   - python3-swh.loader.core
@@ -17,20 +18,23 @@ values:
   - python3-swh.deposit.client
   - python3-swh.indexer
   - python3-swh.indexer.storage
+  - python3-swh.loader.git
   apt_package_security_dist_updates: []
   apt_package_security_updates: []
   apt_package_updates:
   - python3-dulwich
+  - python3-swh.counters
   - python3-swh.model
   - python3-swh.storage
   - python3-swh.loader.core
   - python3-swh.deposit.loader
   - python3-swh.deposit.client
+  - python3-swh.loader.git
   apt_reboot_required: true
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1640687523
-  apt_updates: 6
+  apt_update_last_success: 1642070450
+  apt_updates: 8
   architecture: amd64
   bios_release_date: 04/01/2014
   bios_vendor: SeaBIOS
@@ -62,84 +66,20 @@ values:
     product:
       name: Standard PC (i440FX + PIIX, 1996)
       uuid: 96fa444d-c818-495c-b41d-a63aaa3fa36b
-  docker_home_dirs:
-    root: "/root"
-    daemon: "/usr/sbin"
-    bin: "/bin"
-    sys: "/dev"
-    sync: "/bin"
-    games: "/usr/games"
-    man: "/var/cache/man"
-    lp: "/var/spool/lpd"
-    mail: "/var/mail"
-    news: "/var/spool/news"
-    uucp: "/var/spool/uucp"
-    proxy: "/bin"
-    www-data: "/var/www"
-    backup: "/var/backups"
-    list: "/var/list"
-    irc: "/var/run/ircd"
-    gnats: "/var/lib/gnats"
-    nobody: "/nonexistent"
-    systemd-timesync: "/run/systemd"
-    systemd-network: "/run/systemd/netif"
-    systemd-resolve: "/run/systemd/resolve"
-    Debian-exim: "/var/spool/exim4"
-    messagebus: "/var/run/dbus"
-    statd: "/var/lib/nfs"
-    sshd: "/var/run/sshd"
-    puppet: "/var/lib/puppet"
-    qcampos: "/home/qcampos"
-    swhscheduler: "/home/swhscheduler"
-    swhwebapp: "/home/swhwebapp"
-    swhbackup: "/home/swhbackup"
-    rdicosmo: "/home/rdicosmo"
-    swhworker: "/home/swhworker"
-    swhstorage: "/home/swhstorage"
-    gitorious: "/home/gitorious"
-    jbertran: "/home/jbertran"
-    swhteamannex: "/home/swhteamannex"
-    olasd: "/home/olasd"
-    ntp: "/home/ntp"
-    postfix: "/var/spool/postfix"
-    munin: "/var/lib/munin"
-    zack: "/home/zack"
-    ardumont: "/home/ardumont"
-    epmd: "/var/run/epmd"
-    rabbitmq: "/var/lib/rabbitmq"
-    morane: "/home/morane"
-    fiendish: "/home/fiendish"
-    unbound: "/var/lib/unbound"
-    seirl: "/home/seirl"
-    systemd-journal-gateway: "/run/systemd"
-    systemd-journal-remote: "/run/systemd"
-    systemd-journal-upload: "/run/systemd"
-    nagios: "/var/lib/nagios"
-    ssushant: "/home/ssushant"
-    anlambert: "/home/anlambert"
-    grouss: "/home/grouss"
-    swhdeposit: "/home/swhdeposit"
-    ftigeot: "/home/ftigeot"
-    _apt: "/nonexistent"
-    postgres: "/var/lib/postgresql"
-    swhvault: "/home/swhvault"
-    prometheus: "/var/lib/prometheus"
-    ddouard: "/home/ddouard"
-    vlorentz: "/home/vlorentz"
-    haltode: "/home/haltode"
-    _rpc: "/run/rpcbind"
-    systemd-coredump: "/"
-    danseraf: "/home/danseraf"
-    aeviso: "/home/aeviso"
-    tenma: "/home/tenma"
-    vsellier: "/home/vsellier"
-    tg1999: "/home/tg1999"
-    hakb: "/home/hakb"
-    jayesh: "/home/jayesh"
-    zaboukha: "/home/zaboukha"
-    prometheus-rabbitmq-exporter: "/"
   domain: internal.softwareheritage.org
   erl_ssl_path: "/usr/lib/erlang/lib/ssl-9.1.2/ebin"
+  extlib__puppet_config:
+    master:
+      localcacert: "/var/lib/puppet/ssl/certs/ca.pem"
+      ssldir: "/var/lib/puppet/ssl"
+    main:
+      hostpubkey: "/var/lib/puppet/ssl/public_keys/saatchi.internal.softwareheritage.org.pem"
+      hostprivkey: "/var/lib/puppet/ssl/private_keys/saatchi.internal.softwareheritage.org.pem"
+      hostcert: "/var/lib/puppet/ssl/certs/saatchi.internal.softwareheritage.org.pem"
+      localcacert: "/var/lib/puppet/ssl/certs/ca.pem"
+      ssldir: "/var/lib/puppet/ssl"
+      vardir: "/var/lib/puppet"
+      server: pergamon.internal.softwareheritage.org
   facterversion: 3.11.0
   filesystems: btrfs,ext2,ext3,ext4,hfs,hfsplus,jfs,minix,msdos,qnx4,ufs,vfat,xfs
   fips_enabled: false
@@ -173,9 +113,9 @@ values:
   kernelversion: 5.10.0
   letsencrypt_directory: {}
   load_averages:
-    15m: 0.17
-    1m: 0.19
-    5m: 0.16
+    15m: 0.57
+    1m: 1.02
+    5m: 0.71
   location: sesi_rocquencourt
   lsbdistcodename: buster
   lsbdistdescription: Debian GNU/Linux 10 (buster)
@@ -187,30 +127,30 @@ values:
   manufacturer: QEMU
   memory:
     swap:
-      available: 3.73 GiB
-      available_bytes: 4008980480
-      capacity: 6.66%
+      available: 3.77 GiB
+      available_bytes: 4043059200
+      capacity: 5.87%
       total: 4.00 GiB
       total_bytes: 4294963200
-      used: 272.73 MiB
-      used_bytes: 285982720
+      used: 240.23 MiB
+      used_bytes: 251904000
     system:
-      available: 16.23 GiB
-      available_bytes: 17429606400
-      capacity: 17.16%
+      available: 16.10 GiB
+      available_bytes: 17290338304
+      capacity: 17.83%
       total: 19.60 GiB
       total_bytes: 21040939008
-      used: 3.36 GiB
-      used_bytes: 3611332608
-  memoryfree: 16.23 GiB
-  memoryfree_mb: 16622.16796875
+      used: 3.49 GiB
+      used_bytes: 3750600704
+  memoryfree: 16.10 GiB
+  memoryfree_mb: 16489.3515625
   memorysize: 19.60 GiB
   memorysize_mb: 20066.203125
   mountpoints:
     "/":
-      available: 28.05 GiB
-      available_bytes: 30120452096
-      capacity: 18.28%
+      available: 27.92 GiB
+      available_bytes: 29982547968
+      capacity: 18.65%
       device: "/dev/mapper/saatchi--vg-root"
       filesystem: ext4
       options:
@@ -219,8 +159,8 @@ values:
       - errors=remount-ro
       size: 34.33 GiB
       size_bytes: 36857053184
-      used: 6.27 GiB
-      used_bytes: 6736601088
+      used: 6.40 GiB
+      used_bytes: 6874505216
     "/boot":
       available: 148.05 MiB
       available_bytes: 155238400
@@ -250,8 +190,8 @@ values:
       used_bytes: 0
     "/run":
       available: 1.96 GiB
-      available_bytes: 2103492608
-      capacity: 0.03%
+      available_bytes: 2103222272
+      capacity: 0.04%
       device: tmpfs
       filesystem: tmpfs
       options:
@@ -263,8 +203,8 @@ values:
       - mode=755
       size: 1.96 GiB
       size_bytes: 2104094720
-      used: 588.00 KiB
-      used_bytes: 602112
+      used: 852.00 KiB
+      used_bytes: 872448
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -345,7 +285,7 @@ values:
   - "/boot"
   mtu_eth0: 1500
   mtu_lo: 65536
-  mysql_server_id: 4722785
+  mysql_server_id: 289375832
   netmask: 255.255.255.0
   netmask6: 'ffff:ffff:ffff:ffff::'
   netmask6_eth0: 'ffff:ffff:ffff:ffff::'
@@ -479,6 +419,7 @@ values:
   puppet_server: pergamon.internal.softwareheritage.org
   puppet_vardir: "/var/lib/puppet"
   puppetversion: 5.5.10
+  rabbitmq_clustername: rabbit@saatchi
   rabbitmq_nodename: rabbit@saatchi
   rabbitmq_plugins_dirs:
   - "/usr/lib/rabbitmq/plugins"
@@ -546,8 +487,8 @@ values:
   sshrsakey: AAAAB3NzaC1yc2EAAAADAQABAAABAQDFE0d1oYleqN260VndJAiHcGN2+UhOoNiXdKBlhxYNRWoOiUqvsxatgM238nWSbVnL9TrrfMTZUGXfElA22kzM11yGJ13OLfl2zvA4VsTcJcCckuhQJkFT+XWdmclXDrPAWr0DxPxNTXrf9uoJseEk0tYJHqB2sl3qIiq4UJY7aRka95qtrwtMYwRyOU5iB2HaemRxazZVRV6dRGT5aT+6m3++xq5oeadTfgdmOOMjmj7dn7W8yjELtQEJ16BUI/2OcumO6eJUM/r/NCN7HBmjZjJKIPPUyLUa4t6WxjtV5rNc6o7nEohdyQK2/5K0NxMiz1+8GPsyyZXFR3bsTVd/
   subnet: sesi_rocquencourt
   sudoversion: 1.8.27
-  swapfree: 3.73 GiB
-  swapfree_mb: 3823.26171875
+  swapfree: 3.77 GiB
+  swapfree_mb: 3855.76171875
   swapsize: 4.00 GiB
   swapsize_mb: 4095.99609375
   swh_hostname:
@@ -555,10 +496,10 @@ values:
     short: saatchi
     internal_fqdn: saatchi.internal.softwareheritage.org
   system_uptime:
-    days: 154
-    hours: 3719
-    seconds: 13388656
-    uptime: 154 days
+    days: 170
+    hours: 4103
+    seconds: 14771056
+    uptime: 170 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -573,15 +514,15 @@ values:
     systemd-timesyncd.service: enabled
   systemd_version: '247'
   timezone: UTC
-  uptime: 154 days
-  uptime_days: 154
-  uptime_hours: 3719
-  uptime_seconds: 13388656
+  uptime: 170 days
+  uptime_days: 170
+  uptime_hours: 4103
+  uptime_seconds: 14771056
   uuid: 96fa444d-c818-495c-b41d-a63aaa3fa36b
   vcsrepo_svn_ver: 1.10.4
   virtual: kvm
   clientcert: saatchi.internal.softwareheritage.org
   clientversion: 5.5.10
   clientnoop: false
-timestamp: '2021-12-28T10:55:08.231872866+00:00'
-expiration: '2021-12-28T11:25:08.232265243+00:00'
+timestamp: '2022-01-13T10:55:08.532357156+00:00'
+expiration: '2022-01-13T11:25:08.532735816+00:00'
