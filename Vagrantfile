@@ -1,8 +1,9 @@
 Vagrant.require_version ">= 2.2.0"
 ENV["LC_ALL"] = "en_US.UTF-8"
 
+tmpdir = "/var/tmp/puppet"
 # Default configuration for all defines node below
-environment_path = "/tmp/puppet/environments"
+environment_path = "#{tmpdir}/environments"
 manifest_file = "site.pp"
 manifests_path = "swh-site/manifests"
 puppet_options = "--fileserverconfig=/etc/puppet/fileserver.conf --verbose" # --debug --trace"
@@ -555,11 +556,11 @@ Vagrant.configure("2") do |global_config|
       config.vm.network   :private_network, ip: vm_props[:ip], netmask: "255.255.0.0"
 
       # Using nfs v4 to avoid using the default nfs v3 on udp not supported by the debian 11 kernel
-      config.vm.synced_folder "/tmp/puppet/", _mount_point_puppet, type: 'nfs', nfs_version:4
+      config.vm.synced_folder tmpdir, _mount_point_puppet, type: 'nfs', nfs_version:4
       # Hack to speed up the puppet provisioner rsync
       # It will synchronize between the same source and destination
-      config.vm.synced_folder "/tmp/puppet/", '/vagrant', type: 'nfs', nfs_version:4
-      config.vm.synced_folder "/tmp/puppet/", '/vagrant-puppet', type: 'nfs', nfs_version:4
+      config.vm.synced_folder tmpdir, '/vagrant', type: 'nfs', nfs_version:4
+      config.vm.synced_folder tmpdir, '/vagrant-puppet', type: 'nfs', nfs_version:4
 
       # ssl certificates share
       config.vm.synced_folder "vagrant/le_certs", "/var/lib/puppet/letsencrypt_exports", type: 'nfs', nfs_version:4

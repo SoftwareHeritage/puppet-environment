@@ -8,9 +8,10 @@
 set -ex
 
 WD=$(dirname $0)
+TMPDIR=${1-/var/tmp/puppet}
 
-if [ ! -d /tmp/puppet ]; then
-    $WD/prepare-vagrant-conf
+if [ ! -d $TMPDIR ]; then
+    $WD/prepare-vagrant-conf --tmpdir $TMPDIR
 fi
 
-$WD/watch-vagrant-conf
+$WD/watch-vagrant-conf $TMPDIR
