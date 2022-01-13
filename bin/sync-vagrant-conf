@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+# Wrapper around the prepare-vagrant-conf (local initial copy to host:/tmp/puppet/) and
+# watch-vagrant-conf (local rsync copy to host:/tmp/puppet). This wrapper avoids admins
+# to call 2 command calls to prepare the puppet manifest
+# Use: sync-vagrant-conf
+
+set -ex
+
+WD=$(dirname $0)
+
+if [ ! -d /tmp/puppet ]; then
+    $WD/prepare-vagrant-conf
+fi
+
+$WD/watch-vagrant-conf
