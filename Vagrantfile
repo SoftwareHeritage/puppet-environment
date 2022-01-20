@@ -258,6 +258,16 @@ vms = {
     :box         => $global_debian11_box,
     :box_url     => $global_debian11_box_url,
   },
+  "kelvingrove" => {
+    :hostname    => "kelvingrove.internal.softwareheritage.org",
+    :ip          => "10.168.100.106",
+    :type        => TYPE_AGENT,
+    :memory      => 2048,
+    :cpus        => 2,
+    :environment => ENV_PRODUCTION,
+    :box         => $global_debian11_box,
+    :box_url     => $global_debian11_box_url,
+  },
   "giverny" => {
     :hostname    => "giverny.softwareheritage.org",
     :type        => TYPE_AGENT,
