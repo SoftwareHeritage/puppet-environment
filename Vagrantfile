@@ -549,6 +549,7 @@ Vagrant.configure("2") do |global_config|
       _mount_point_puppet = vm_props[:type] == TYPE_MASTER ? "/etc/puppet/code" : "/tmp/puppet"
 
       # config.ssh.insert_key = false
+      config.vm.guest = :debian
       config.vm.box                     = vm_props[:box] ? vm_props[:box] : $global_debian10_box
       config.vm.box_url                 = vm_props[:box_url] ? vm_props[:box_url] : $global_debian10_box_url
       config.vm.box_check_update        = false
