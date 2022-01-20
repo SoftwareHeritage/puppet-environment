@@ -268,6 +268,14 @@ vms = {
     :box         => $global_debian11_box,
     :box_url     => $global_debian11_box_url,
   },
+  "getty" => {
+    :hostname    => "getty.internal.softwareheritage.org",
+    :type        => TYPE_AGENT,
+    :ip          => "10.168.100.102",
+    :memory      => 512,
+    :cpus        => 2,
+    :environment => ENV_PRODUCTION,
+  },
   "giverny" => {
     :hostname    => "giverny.softwareheritage.org",
     :type        => TYPE_AGENT,
