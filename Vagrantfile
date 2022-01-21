@@ -176,6 +176,14 @@ vms = {
   ################
   # ADMIN
   ################
+  "bojimans" => {
+    :hostname    => "bojimans.internal.admin.swh.network",
+    :ip          => "10.168.50.60",
+    :type        => TYPE_AGENT,
+    :memory      => 512,
+    :cpus        => 2,
+    :environment => ENV_ADMIN,
+  },
   "dali" => {
     :hostname    => "dali.internal.admin.swh.network",
     :ip          => "10.168.50.50",
@@ -281,14 +289,6 @@ vms = {
     :type        => TYPE_AGENT,
     :ip          => "10.168.101.118",
     :memory      => 1024,
-    :cpus        => 2,
-    :environment => ENV_PRODUCTION,
-  },
-  "bojimans" => {
-    :hostname    => "bojimans.internal.softwareheritage.org",
-    :ip          => "10.168.100.199",
-    :type        => TYPE_AGENT,
-    :memory      => 512,
     :cpus        => 2,
     :environment => ENV_PRODUCTION,
   },
