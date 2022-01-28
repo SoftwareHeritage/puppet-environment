@@ -257,8 +257,8 @@ vms = {
     :environment => ENV_PRODUCTION,
   },
   "riverside" => {
-    :hostname    => "riverside.internal.softwareheritage.org",
-    :ip          => "10.168.100.52",
+    :hostname    => "riverside.internal.admin.swh.network",
+    :ip          => "10.168.50.70",
     :type        => TYPE_AGENT,
     :memory      => 3072,
     :cpus        => 2,
