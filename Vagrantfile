@@ -248,6 +248,14 @@ vms = {
     :box         => $global_debian11_box,
     :box_url     => $global_debian11_box_url,
   },
+  "saam" => {
+    :hostname    => "saam.internal.softwareheritage.org",
+    :ip          => "10.168.100.109",
+    :type        => TYPE_AGENT,
+    :memory      => 1024,
+    :cpus        => 2,
+    :environment => ENV_PRODUCTION,
+  },
   "saatchi" => {
     :hostname    => "saatchi.internal.softwareheritage.org",
     :ip          => "10.168.100.104",
