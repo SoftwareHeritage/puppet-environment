@@ -90,6 +90,8 @@ vms = {
     :memory      => 512,
     :cpus        => 2,
     :environment => ENV_STAGING,
+    :box         => $global_debian11_box,
+    :box_url     => $global_debian11_box_url,
   },
   "staging-storage1" => {
     :hostname    => "storage1.internal.staging.swh.network",
@@ -183,6 +185,8 @@ vms = {
     :memory      => 512,
     :cpus        => 2,
     :environment => ENV_ADMIN,
+    :box         => $global_debian11_box,
+    :box_url     => $global_debian11_box_url,
   },
   "dali" => {
     :hostname    => "dali.internal.admin.swh.network",
@@ -515,6 +519,8 @@ vms = {
     :memory      => 2048,
     :cpus        => 2,
     :environment => ENV_PRODUCTION,
+    :box         => $global_debian11_box,
+    :box_url     => $global_debian11_box_url,
   },
   "jenkins-debian1" => {
     :hostname    => "jenkins-debian1.internal.softwareheritage.org",
