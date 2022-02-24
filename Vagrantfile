@@ -228,6 +228,17 @@ vms = {
     :box         => $global_debian11_box,
     :box_url     => $global_debian11_box_url,
   },
+  "admin-backup01" => {
+    :hostname    => "backup01.euwest.azure.internal.softwareheritage.org",
+    :ip          => "10.168.200.50",
+    :type        => TYPE_AGENT,
+    :memory      => 512,
+    :cpus        => 2,
+    :environment => ENV_ADMIN,
+    :box         => $global_debian11_box,
+    :box_url     => $global_debian11_box_url,
+  },
+
   ################
   # PUPPET MASTER
   ################
