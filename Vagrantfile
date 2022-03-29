@@ -238,6 +238,16 @@ vms = {
     :box         => $global_debian11_box,
     :box_url     => $global_debian11_box_url,
   },
+  "admin-money" => {
+    :hostname    => "money.internal.admin.swh.network",
+    :ip          => "10.168.200.65",
+    :type        => TYPE_AGENT,
+    :memory      => 512,
+    :cpus        => 1,
+    :environment => ENV_ADMIN,
+    :box         => $global_debian11_box,
+    :box_url     => $global_debian11_box_url,
+  },
 
   ################
   # PUPPET MASTER
