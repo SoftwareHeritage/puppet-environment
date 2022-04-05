@@ -73,6 +73,14 @@ vms = {
     :cpus        => 2,
     :environment => ENV_STAGING,
   },
+  "staging-maven-exporter" => {
+    :hostname    => "maven-exporter0.internal.staging.swh.network",
+    :ip          => "10.168.130.70",
+    :type        => TYPE_AGENT,
+    :memory      => 1024,
+    :cpus        => 2,
+    :environment => ENV_STAGING,
+  },
   "staging-rp0" => {
     :hostname    => "rp0.internal.staging.swh.network",
     :ip          => "10.168.130.20",
