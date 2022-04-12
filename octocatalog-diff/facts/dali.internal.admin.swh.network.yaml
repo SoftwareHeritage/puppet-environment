@@ -2,10 +2,28 @@
 name: dali.internal.admin.swh.network
 values:
   agent_specified_environment: production
-  apt_has_dist_updates: false
-  apt_has_updates: false
-  apt_reboot_required: false
-  apt_update_last_success: 1642153862
+  apt_dist_updates: 5
+  apt_has_dist_updates: true
+  apt_has_updates: true
+  apt_package_dist_updates:
+  - libpq5
+  - postgresql-common
+  - postgresql-client-common
+  - postgresql-client-14
+  - postgresql-14
+  apt_package_security_dist_updates: []
+  apt_package_security_updates: []
+  apt_package_updates:
+  - libpq5
+  - postgresql-common
+  - postgresql-client-common
+  - postgresql-client-14
+  - postgresql-14
+  apt_reboot_required: true
+  apt_security_dist_updates: 0
+  apt_security_updates: 0
+  apt_update_last_success: 1649746262
+  apt_updates: 5
   architecture: amd64
   bios_release_date: 04/01/2014
   bios_vendor: SeaBIOS
@@ -22,9 +40,9 @@ values:
   blockdevice_vdb_vendor: '0x1af4'
   blockdevices: vdb,sr0,vda,sr1
   cassandracmsheapnewsize: 400
-  cassandracmsmaxheapsize: 4002
+  cassandracmsmaxheapsize: 3775
   cassandraheapnewsize: 400
-  cassandramaxheapsize: 4002
+  cassandramaxheapsize: 3775
   chassistype: Other
   cloudinit_enabled: 'true'
   deployment: admin
@@ -72,7 +90,7 @@ values:
       vardir: "/var/lib/puppet"
       server: pergamon.internal.softwareheritage.org
   facterversion: 3.14.12
-  filesystems: ext2,ext3,ext4,iso9660
+  filesystems: btrfs,ext2,ext3,ext4,hfs,hfsplus,iso9660,jfs,minix,msdos,qnx4,ufs,vfat,xfs
   fips_enabled: false
   fqdn: dali.internal.admin.swh.network
   gid: root
@@ -104,44 +122,44 @@ values:
   kernelversion: 5.10.0
   letsencrypt_directory: {}
   load_averages:
-    15m: 0.0
-    1m: 0.02
-    5m: 0.02
+    15m: 0.06
+    1m: 0.11
+    5m: 0.11
   lsbdistcodename: bullseye
   lsbdistdescription: Debian GNU/Linux 11 (bullseye)
   lsbdistid: Debian
-  lsbdistrelease: '11.2'
+  lsbdistrelease: '11.3'
   lsbmajdistrelease: '11'
-  lsbminordistrelease: '2'
+  lsbminordistrelease: '3'
   macaddress: c2:7c:85:d0:e8:7c
   macaddress_eth0: c2:7c:85:d0:e8:7c
   manufacturer: QEMU
   memory:
     swap:
-      available: 976.00 MiB
-      available_bytes: 1023406080
-      capacity: 0%
+      available: 975.23 MiB
+      available_bytes: 1022607360
+      capacity: 0.08%
       total: 976.00 MiB
       total_bytes: 1023406080
-      used: 0 bytes
-      used_bytes: 0
+      used: 780.00 KiB
+      used_bytes: 798720
     system:
-      available: 14.86 GiB
-      available_bytes: 15951069184
-      capacity: 4.98%
-      total: 15.63 GiB
-      total_bytes: 16786382848
-      used: 796.62 MiB
-      used_bytes: 835313664
-  memoryfree: 14.86 GiB
-  memoryfree_mb: 15212.125
-  memorysize: 15.63 GiB
-  memorysize_mb: 16008.7421875
+      available: 5.87 GiB
+      available_bytes: 6304243712
+      capacity: 60.18%
+      total: 14.75 GiB
+      total_bytes: 15833182208
+      used: 8.87 GiB
+      used_bytes: 9528938496
+  memoryfree: 5.87 GiB
+  memoryfree_mb: 6012.1953125
+  memorysize: 14.75 GiB
+  memorysize_mb: 15099.69921875
   mountpoints:
     "/":
-      available: 12.78 GiB
-      available_bytes: 13724102656
-      capacity: 16.65%
+      available: 11.85 GiB
+      available_bytes: 12721971200
+      capacity: 22.73%
       device: "/dev/mapper/base--template--vg-root"
       filesystem: ext4
       options:
@@ -150,12 +168,12 @@ values:
       - errors=remount-ro
       size: 16.18 GiB
       size_bytes: 17373634560
-      used: 2.55 GiB
-      used_bytes: 2741047296
+      used: 3.49 GiB
+      used_bytes: 3743178752
     "/boot":
-      available: 397.44 MiB
-      available_bytes: 416748544
-      capacity: 10.69%
+      available: 324.20 MiB
+      available_bytes: 339943424
+      capacity: 27.15%
       device: "/dev/vda1"
       filesystem: ext2
       options:
@@ -163,11 +181,11 @@ values:
       - relatime
       size: 469.35 MiB
       size_bytes: 492152832
-      used: 47.56 MiB
-      used_bytes: 49871872
+      used: 120.81 MiB
+      used_bytes: 126676992
     "/data":
-      available: 192.73 GiB
-      available_bytes: 206945255424
+      available: 86.43 GiB
+      available_bytes: 92807626752
       capacity: 0.00%
       device: data
       filesystem: zfs
@@ -175,8 +193,8 @@ values:
       - rw
       - xattr
       - noacl
-      size: 192.73 GiB
-      size_bytes: 206945386496
+      size: 86.43 GiB
+      size_bytes: 92807757824
       used: 128.00 KiB
       used_bytes: 131072
     "/dev":
@@ -254,14 +272,16 @@ values:
       - rw
       - nosuid
       - nodev
+      - size=8196476k
+      - nr_inodes=2049119
       size: 7.82 GiB
       size_bytes: 8393191424
       used: 28.00 KiB
       used_bytes: 28672
     "/run":
       available: 1.56 GiB
-      available_bytes: 1677754368
-      capacity: 0.05%
+      available_bytes: 1677373440
+      capacity: 0.08%
       device: tmpfs
       filesystem: tmpfs
       options:
@@ -271,11 +291,12 @@ values:
       - noexec
       - relatime
       - size=1639296k
+      - nr_inodes=2049119
       - mode=755
       size: 1.56 GiB
       size_bytes: 1678639104
-      used: 864.00 KiB
-      used_bytes: 884736
+      used: 1.21 MiB
+      used_bytes: 1265664
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -289,6 +310,7 @@ values:
       - noexec
       - relatime
       - size=5120k
+      - nr_inodes=2049119
       size: 5.00 MiB
       size_bytes: 5242880
       used: 0 bytes
@@ -326,10 +348,30 @@ values:
       size_bytes: 1678635008
       used: 0 bytes
       used_bytes: 0
+    "/run/user/1025":
+      available: 1.56 GiB
+      available_bytes: 1678635008
+      capacity: 0%
+      device: tmpfs
+      filesystem: tmpfs
+      options:
+      - rw
+      - nosuid
+      - nodev
+      - relatime
+      - size=1639292k
+      - nr_inodes=409823
+      - mode=700
+      - uid=1025
+      - gid=1025
+      size: 1.56 GiB
+      size_bytes: 1678635008
+      used: 0 bytes
+      used_bytes: 0
     "/srv/postgresql/14/main":
-      available: 192.73 GiB
-      available_bytes: 206945255424
-      capacity: 0.02%
+      available: 86.43 GiB
+      available_bytes: 92807626752
+      capacity: 43.69%
       device: data/postgresql
       filesystem: zfs
       options:
@@ -337,15 +379,31 @@ values:
       - noatime
       - xattr
       - noacl
-      size: 192.78 GiB
-      size_bytes: 206996242432
-      used: 48.63 MiB
-      used_bytes: 50987008
+      size: 153.51 GiB
+      size_bytes: 164827365376
+      used: 67.07 GiB
+      used_bytes: 72019738624
+    "/srv/postgresql/14/main/pg_wal":
+      available: 86.43 GiB
+      available_bytes: 92807626752
+      capacity: 0.38%
+      device: data/postgresql/wal
+      filesystem: zfs
+      options:
+      - rw
+      - noatime
+      - xattr
+      - noacl
+      size: 86.77 GiB
+      size_bytes: 93164142592
+      used: 340.00 MiB
+      used_bytes: 356515840
   mounts:
   - "/"
   - "/boot"
   - "/data"
   - "/srv/postgresql/14/main"
+  - "/srv/postgresql/14/main/pg_wal"
   mtu_eth0: 1500
   mtu_lo: 65536
   mysql_server_id: 2245160309
@@ -413,7 +471,7 @@ values:
     scope6: link
   operatingsystem: Debian
   operatingsystemmajrelease: '11'
-  operatingsystemrelease: '11.2'
+  operatingsystemrelease: '11.3'
   os:
     architecture: amd64
     distro:
@@ -421,16 +479,16 @@ values:
       description: Debian GNU/Linux 11 (bullseye)
       id: Debian
       release:
-        full: '11.2'
+        full: '11.3'
         major: '11'
-        minor: '2'
+        minor: '3'
     family: Debian
     hardware: x86_64
     name: Debian
     release:
-      full: '11.2'
+      full: '11.3'
       major: '11'
-      minor: '2'
+      minor: '3'
     selinux:
       enabled: false
   osfamily: Debian
@@ -563,8 +621,8 @@ values:
   sshrsakey: AAAAB3NzaC1yc2EAAAADAQABAAABgQCTjZYwkcNx4yPdpLsMZL6e+guBKMLOa4fcCIezsYhQt0FuRdYVCfc9LQcC3md2fabrRAB7HFL4dMG1ZKlA4NzpWb3WHHSjwS4lDyJyBU39EUnv22TIa9/c8HKD24EX96BrDruz3BD+GkOWIsb7yH3RfI43iGClxMRDQIl52VJM1Xl7A1uKZBxgHtIseH+2kWpy20wDF7r7ruY7R56gzzeeTKP2OFLRpjtcmRvOZJVuYXzQnLKzQ+VYZthXm1HRstHm/f6lN2OoQBaPze3UcLGBh0RklNyXkoLfjO6t4RcFH2yYHmwspi/RxCiq0fxRp4vNySQrvhmlY7G/vUKSLjhanR7ABkQIc/MDsk1EkajxvZmRTgOH9KHdlN3IDGeZbc9GlH/+w5rUzuYO8DbFgk6W4yjmCNPAR3CBBeFCXDAciUbvoAYld9XEqcayDGCQ0znH1UZ4HSl6B8pJantPtkANsSCLz4gqCuY2u2dpfG0zB7A6tmb9bo9D2GZ+7y6f7Y0=
   subnet: sesi_rocquencourt_admin
   sudoversion: 1.9.5p2
-  swapfree: 976.00 MiB
-  swapfree_mb: 975.99609375
+  swapfree: 975.23 MiB
+  swapfree_mb: 975.234375
   swapsize: 976.00 MiB
   swapsize_mb: 975.99609375
   swh_hostname:
@@ -572,10 +630,10 @@ values:
     short: dali
     internal_fqdn: dali.internal.softwareheritage.org
   system_uptime:
-    days: 1
-    hours: 24
-    seconds: 87500
-    uptime: 1 day
+    days: 88
+    hours: 2132
+    seconds: 7678101
+    uptime: 88 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -589,15 +647,15 @@ values:
     systemd-time-wait-sync.service: disabled
   systemd_version: '247'
   timezone: UTC
-  uptime: 1 day
-  uptime_days: 1
-  uptime_hours: 24
-  uptime_seconds: 87500
+  uptime: 88 days
+  uptime_days: 88
+  uptime_hours: 2132
+  uptime_seconds: 7678101
   uuid: c4785c5b-6447-4402-b6e8-6c1c4ee8e004
   vcsrepo_svn_ver: ''
   virtual: kvm
   clientcert: dali.internal.admin.swh.network
   clientversion: 5.5.22
   clientnoop: false
-timestamp: '2022-01-14T10:27:04.990027590+00:00'
-expiration: '2022-01-14T10:57:04.990446065+00:00'
+timestamp: '2022-04-12T06:57:06.450750386+00:00'
+expiration: '2022-04-12T07:27:06.451244794+00:00'

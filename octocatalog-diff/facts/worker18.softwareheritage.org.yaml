@@ -6,17 +6,17 @@ values:
   apt_has_dist_updates: true
   apt_has_updates: true
   apt_package_dist_updates:
-  - python3-swh.counters
-  - python3-swh.loader.git
+  - python3-swh.model
+  - python3-swh.storage
   apt_package_security_dist_updates: []
   apt_package_security_updates: []
   apt_package_updates:
-  - python3-swh.counters
-  - python3-swh.loader.git
-  apt_reboot_required: false
+  - python3-swh.model
+  - python3-swh.storage
+  apt_reboot_required: true
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1642153623
+  apt_update_last_success: 1649744891
   apt_updates: 2
   architecture: amd64
   bios_release_date: 04/01/2014
@@ -78,7 +78,7 @@ values:
       vardir: "/var/lib/puppet"
       server: pergamon.internal.softwareheritage.org
   facterversion: 3.11.0
-  filesystems: ext2,ext3,ext4,iso9660
+  filesystems: btrfs,ext2,ext3,ext4,hfs,hfsplus,iso9660,jfs,minix,msdos,qnx4,ufs,vfat,xfs
   fips_enabled: false
   fqdn: worker18.softwareheritage.org
   gid: root
@@ -110,9 +110,9 @@ values:
   kernelversion: 4.19.0
   letsencrypt_directory: {}
   load_averages:
-    15m: 4.89
-    1m: 5.06
-    5m: 5.08
+    15m: 8.19
+    1m: 9.94
+    5m: 8.77
   lsbdistcodename: buster
   lsbdistdescription: Debian GNU/Linux 10 (buster)
   lsbdistid: Debian
@@ -123,22 +123,22 @@ values:
   manufacturer: QEMU
   memory:
     system:
-      available: 41.87 GiB
-      available_bytes: 44956545024
-      capacity: 11.23%
+      available: 37.60 GiB
+      available_bytes: 40373506048
+      capacity: 20.28%
       total: 47.17 GiB
       total_bytes: 50643382272
-      used: 5.30 GiB
-      used_bytes: 5686837248
-  memoryfree: 41.87 GiB
-  memoryfree_mb: 42873.90234375
+      used: 9.56 GiB
+      used_bytes: 10269876224
+  memoryfree: 37.60 GiB
+  memoryfree_mb: 38503.17578125
   memorysize: 47.17 GiB
   memorysize_mb: 48297.29296875
   mountpoints:
     "/":
-      available: 12.05 GiB
-      available_bytes: 12940566528
-      capacity: 26.48%
+      available: 11.11 GiB
+      available_bytes: 11930648576
+      capacity: 32.22%
       device: "/dev/mapper/base--template--vg-root"
       filesystem: ext4
       options:
@@ -147,12 +147,12 @@ values:
       - errors=remount-ro
       size: 16.39 GiB
       size_bytes: 17601216512
-      used: 4.34 GiB
-      used_bytes: 4660649984
+      used: 5.28 GiB
+      used_bytes: 5670567936
     "/boot":
-      available: 150.94 MiB
-      available_bytes: 158272512
-      capacity: 35.86%
+      available: 115.06 MiB
+      available_bytes: 120648704
+      capacity: 51.11%
       device: "/dev/vda1"
       filesystem: ext2
       options:
@@ -160,11 +160,11 @@ values:
       - relatime
       size: 235.32 MiB
       size_bytes: 246755328
-      used: 84.38 MiB
-      used_bytes: 88482816
+      used: 120.26 MiB
+      used_bytes: 126106624
     "/dev/shm":
       available: 23.58 GiB
-      available_bytes: 25319993344
+      available_bytes: 25318961152
       capacity: 0.01%
       device: tmpfs
       filesystem: tmpfs
@@ -174,11 +174,11 @@ values:
       - nodev
       size: 23.58 GiB
       size_bytes: 25321689088
-      used: 1.62 MiB
-      used_bytes: 1695744
+      used: 2.60 MiB
+      used_bytes: 2727936
     "/run":
       available: 4.72 GiB
-      available_bytes: 5063712768
+      available_bytes: 5063696384
       capacity: 0.01%
       device: tmpfs
       filesystem: tmpfs
@@ -191,8 +191,8 @@ values:
       - mode=755
       size: 4.72 GiB
       size_bytes: 5064339456
-      used: 612.00 KiB
-      used_bytes: 626688
+      used: 628.00 KiB
+      used_bytes: 643072
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -249,9 +249,9 @@ values:
       used: 0 bytes
       used_bytes: 0
     "/tmp":
-      available: 6.92 GiB
-      available_bytes: 7432613888
-      capacity: 70.65%
+      available: 6.29 GiB
+      available_bytes: 6754095104
+      capacity: 73.33%
       device: tmpfs
       filesystem: tmpfs
       options:
@@ -259,8 +259,8 @@ values:
       - noatime
       size: 23.58 GiB
       size_bytes: 25321689088
-      used: 16.66 GiB
-      used_bytes: 17889075200
+      used: 17.29 GiB
+      used_bytes: 18567593984
   mounts:
   - "/"
   - "/boot"
@@ -328,7 +328,7 @@ values:
     primary: eth0
   operatingsystem: Debian
   operatingsystemmajrelease: '10'
-  operatingsystemrelease: '10.11'
+  operatingsystemrelease: '10.12'
   os:
     architecture: amd64
     distro:
@@ -342,9 +342,9 @@ values:
     hardware: x86_64
     name: Debian
     release:
-      full: '10.11'
+      full: '10.12'
       major: '10'
-      minor: '11'
+      minor: '12'
     selinux:
       enabled: false
   osfamily: Debian
@@ -474,10 +474,10 @@ values:
     short: worker18
     internal_fqdn: worker18.internal.softwareheritage.org
   system_uptime:
-    days: 34
-    hours: 838
-    seconds: 3019576
-    uptime: 34 days
+    days: 122
+    hours: 2947
+    seconds: 10610180
+    uptime: 122 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -492,15 +492,15 @@ values:
     systemd-timesyncd.service: enabled
   systemd_version: '247'
   timezone: UTC
-  uptime: 34 days
-  uptime_days: 34
-  uptime_hours: 838
-  uptime_seconds: 3019576
+  uptime: 122 days
+  uptime_days: 122
+  uptime_hours: 2947
+  uptime_seconds: 10610180
   uuid: 395aaa4e-e397-470d-a2c6-54dc44ad779a
   vcsrepo_svn_ver: 1.10.4
   virtual: kvm
   clientcert: worker18.softwareheritage.org
   clientversion: 5.5.10
   clientnoop: false
-timestamp: '2022-01-14T10:13:13.607329540+00:00'
-expiration: '2022-01-14T10:43:13.608491566+00:00'
+timestamp: '2022-04-12T06:43:17.045792158+00:00'
+expiration: '2022-04-12T07:13:17.046538994+00:00'

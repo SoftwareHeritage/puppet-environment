@@ -2,35 +2,44 @@
 name: search1.internal.softwareheritage.org
 values:
   agent_specified_environment: production
-  apt_dist_updates: 10
+  apt_dist_updates: 16
   apt_has_dist_updates: true
   apt_has_updates: true
   apt_package_dist_updates:
-  - python3-frozendict
+  - libcmph0
+  - python3-ply
+  - python3-pycparser
+  - python3-cffi
+  - python3-setuptools
+  - python3-pkg-resources
+  - python3-requests
   - python3-swh.core
   - python3-swh.model
+  - python3-swh.perfecthash
   - python3-swh.objstorage
   - python3-swh.storage
-  - python3-swh.journal
-  - python3-swh.counters
   - python3-swh.scheduler
   - python3-swh.indexer
   - python3-swh.indexer.storage
+  - python3-swh.search
   apt_package_security_dist_updates: []
   apt_package_security_updates: []
   apt_package_updates:
+  - python3-setuptools
+  - python3-pkg-resources
+  - python3-requests
   - python3-swh.core
   - python3-swh.model
-  - python3-swh.objstorage
   - python3-swh.storage
-  - python3-swh.journal
-  - python3-swh.counters
   - python3-swh.scheduler
-  apt_reboot_required: false
+  - python3-swh.indexer
+  - python3-swh.indexer.storage
+  - python3-swh.search
+  apt_reboot_required: true
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1642153502
-  apt_updates: 7
+  apt_update_last_success: 1649745902
+  apt_updates: 10
   architecture: amd64
   bios_release_date: 04/01/2014
   bios_vendor: SeaBIOS
@@ -91,7 +100,7 @@ values:
       vardir: "/var/lib/puppet"
       server: pergamon.internal.softwareheritage.org
   facterversion: 3.11.0
-  filesystems: ext2,ext3,ext4,iso9660
+  filesystems: btrfs,ext2,ext3,ext4,hfs,hfsplus,iso9660,jfs,minix,msdos,qnx4,ufs,vfat,xfs
   fips_enabled: false
   fqdn: search1.internal.softwareheritage.org
   gid: root
@@ -123,9 +132,9 @@ values:
   kernelversion: 4.19.0
   letsencrypt_directory: {}
   load_averages:
-    15m: 0.02
-    1m: 0.1
-    5m: 0.08
+    15m: 0.09
+    1m: 0.18
+    5m: 0.11
   lsbdistcodename: buster
   lsbdistdescription: Debian GNU/Linux 10 (buster)
   lsbdistid: Debian
@@ -144,22 +153,22 @@ values:
       used: 0 bytes
       used_bytes: 0
     system:
-      available: 5.18 GiB
-      available_bytes: 5560786944
-      capacity: 11.06%
+      available: 4.79 GiB
+      available_bytes: 5139644416
+      capacity: 17.79%
       total: 5.82 GiB
       total_bytes: 6252003328
-      used: 659.20 MiB
-      used_bytes: 691216384
-  memoryfree: 5.18 GiB
-  memoryfree_mb: 5303.1796875
+      used: 1.04 GiB
+      used_bytes: 1112358912
+  memoryfree: 4.79 GiB
+  memoryfree_mb: 4901.546875
   memorysize: 5.82 GiB
   memorysize_mb: 5962.375
   mountpoints:
     "/":
-      available: 13.08 GiB
-      available_bytes: 14047612928
-      capacity: 20.19%
+      available: 12.54 GiB
+      available_bytes: 13466173440
+      capacity: 23.49%
       device: "/dev/mapper/base--template--vg-root"
       filesystem: ext4
       options:
@@ -168,12 +177,12 @@ values:
       - errors=remount-ro
       size: 16.39 GiB
       size_bytes: 17601216512
-      used: 3.31 GiB
-      used_bytes: 3553603584
+      used: 3.85 GiB
+      used_bytes: 4135043072
     "/boot":
-      available: 150.79 MiB
-      available_bytes: 158112768
-      capacity: 35.92%
+      available: 114.85 MiB
+      available_bytes: 120424448
+      capacity: 51.20%
       device: "/dev/vda1"
       filesystem: ext2
       options:
@@ -181,8 +190,8 @@ values:
       - relatime
       size: 235.32 MiB
       size_bytes: 246755328
-      used: 84.54 MiB
-      used_bytes: 88642560
+      used: 120.48 MiB
+      used_bytes: 126330880
     "/dev/shm":
       available: 2.91 GiB
       available_bytes: 3126001664
@@ -198,9 +207,9 @@ values:
       used: 0 bytes
       used_bytes: 0
     "/run":
-      available: 595.70 MiB
-      available_bytes: 624631808
-      capacity: 0.09%
+      available: 595.66 MiB
+      available_bytes: 624599040
+      capacity: 0.10%
       device: tmpfs
       filesystem: tmpfs
       options:
@@ -212,8 +221,8 @@ values:
       - mode=755
       size: 596.24 MiB
       size_bytes: 625201152
-      used: 556.00 KiB
-      used_bytes: 569344
+      used: 588.00 KiB
+      used_bytes: 602112
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -229,6 +238,26 @@ values:
       - size=5120k
       size: 5.00 MiB
       size_bytes: 5242880
+      used: 0 bytes
+      used_bytes: 0
+    "/run/user/1003":
+      available: 596.23 MiB
+      available_bytes: 625197056
+      capacity: 0%
+      device: tmpfs
+      filesystem: tmpfs
+      options:
+      - rw
+      - nosuid
+      - nodev
+      - relatime
+      - size=610544k
+      - nr_inodes=152636
+      - mode=700
+      - uid=1003
+      - gid=1003
+      size: 596.23 MiB
+      size_bytes: 625197056
       used: 0 bytes
       used_bytes: 0
     "/sys/fs/cgroup":
@@ -317,7 +346,7 @@ values:
   nginx_version: 1.14.2
   operatingsystem: Debian
   operatingsystemmajrelease: '10'
-  operatingsystemrelease: '10.11'
+  operatingsystemrelease: '10.12'
   os:
     architecture: amd64
     distro:
@@ -331,9 +360,9 @@ values:
     hardware: x86_64
     name: Debian
     release:
-      full: '10.11'
+      full: '10.12'
       major: '10'
-      minor: '11'
+      minor: '12'
     selinux:
       enabled: false
   osfamily: Debian
@@ -460,10 +489,10 @@ values:
     short: search1
     internal_fqdn: search1.internal.softwareheritage.org
   system_uptime:
-    days: 34
-    hours: 835
-    seconds: 3007986
-    uptime: 34 days
+    days: 122
+    hours: 2944
+    seconds: 10598587
+    uptime: 122 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -478,15 +507,15 @@ values:
     systemd-timesyncd.service: enabled
   systemd_version: '247'
   timezone: UTC
-  uptime: 34 days
-  uptime_days: 34
-  uptime_hours: 835
-  uptime_seconds: 3007986
+  uptime: 122 days
+  uptime_days: 122
+  uptime_hours: 2944
+  uptime_seconds: 10598587
   uuid: 313ece5c-105b-46ce-8696-2b421d91d7cd
   vcsrepo_svn_ver: ''
   virtual: kvm
   clientcert: search1.internal.softwareheritage.org
   clientversion: 5.5.10
   clientnoop: false
-timestamp: '2022-01-14T10:28:05.648813176+00:00'
-expiration: '2022-01-14T10:58:05.649110033+00:00'
+timestamp: '2022-04-12T06:58:06.385023584+00:00'
+expiration: '2022-04-12T07:28:06.385425408+00:00'

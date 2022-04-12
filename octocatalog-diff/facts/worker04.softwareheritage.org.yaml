@@ -6,17 +6,17 @@ values:
   apt_has_dist_updates: true
   apt_has_updates: true
   apt_package_dist_updates:
-  - python3-swh.counters
-  - python3-swh.loader.git
+  - python3-swh.model
+  - python3-swh.storage
   apt_package_security_dist_updates: []
   apt_package_security_updates: []
   apt_package_updates:
-  - python3-swh.counters
-  - python3-swh.loader.git
-  apt_reboot_required: false
+  - python3-swh.model
+  - python3-swh.storage
+  apt_reboot_required: true
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1642151102
+  apt_update_last_success: 1649743504
   apt_updates: 2
   architecture: amd64
   augeas:
@@ -80,7 +80,7 @@ values:
       vardir: "/var/lib/puppet"
       server: pergamon.internal.softwareheritage.org
   facterversion: 3.11.0
-  filesystems: ext2,ext3,ext4
+  filesystems: btrfs,ext2,ext3,ext4,hfs,hfsplus,jfs,minix,msdos,qnx4,ufs,vfat,xfs
   fips_enabled: false
   fqdn: worker04.softwareheritage.org
   gid: root
@@ -114,9 +114,9 @@ values:
   kernelversion: 5.10.0
   letsencrypt_directory: {}
   load_averages:
-    15m: 1.98
-    1m: 2.28
-    5m: 2.19
+    15m: 1.43
+    1m: 1.95
+    5m: 1.54
   location: sesi_rocquencourt
   lsbdistcodename: buster
   lsbdistdescription: Debian GNU/Linux 10 (buster)
@@ -129,30 +129,30 @@ values:
   manufacturer: QEMU
   memory:
     swap:
-      available: 77.60 GiB
-      available_bytes: 83323084800
-      capacity: 3.00%
+      available: 77.74 GiB
+      available_bytes: 83476340736
+      capacity: 2.82%
       total: 80.00 GiB
       total_bytes: 85899341824
-      used: 2.40 GiB
-      used_bytes: 2576257024
+      used: 2.26 GiB
+      used_bytes: 2423001088
     system:
-      available: 8.40 GiB
-      available_bytes: 9014083584
-      capacity: 28.38%
+      available: 8.55 GiB
+      available_bytes: 9178681344
+      capacity: 27.07%
       total: 11.72 GiB
       total_bytes: 12585652224
-      used: 3.33 GiB
-      used_bytes: 3571568640
-  memoryfree: 8.40 GiB
-  memoryfree_mb: 8596.5
+      used: 3.17 GiB
+      used_bytes: 3406970880
+  memoryfree: 8.55 GiB
+  memoryfree_mb: 8753.47265625
   memorysize: 11.72 GiB
   memorysize_mb: 12002.61328125
   mountpoints:
     "/":
-      available: 32.83 GiB
-      available_bytes: 35250257920
-      capacity: 16.35%
+      available: 30.13 GiB
+      available_bytes: 32352026624
+      capacity: 23.23%
       device: "/dev/mapper/worker04--vg-root"
       filesystem: ext4
       options:
@@ -161,12 +161,12 @@ values:
       - errors=remount-ro
       size: 39.25 GiB
       size_bytes: 42139877376
-      used: 6.42 GiB
-      used_bytes: 6889619456
+      used: 9.12 GiB
+      used_bytes: 9787850752
     "/dev/shm":
       available: 5.86 GiB
-      available_bytes: 6291681280
-      capacity: 0.02%
+      available_bytes: 6291202048
+      capacity: 0.03%
       device: tmpfs
       filesystem: tmpfs
       options:
@@ -175,11 +175,11 @@ values:
       - nodev
       size: 5.86 GiB
       size_bytes: 6292824064
-      used: 1.09 MiB
-      used_bytes: 1142784
+      used: 1.55 MiB
+      used_bytes: 1622016
     "/run":
       available: 1.17 GiB
-      available_bytes: 1257988096
+      available_bytes: 1257967616
       capacity: 0.05%
       device: tmpfs
       filesystem: tmpfs
@@ -192,8 +192,8 @@ values:
       - mode=755
       size: 1.17 GiB
       size_bytes: 1258565632
-      used: 564.00 KiB
-      used_bytes: 577536
+      used: 584.00 KiB
+      used_bytes: 598016
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -230,9 +230,9 @@ values:
       used: 0 bytes
       used_bytes: 0
     "/tmp":
-      available: 74.85 GiB
-      available_bytes: 80374714368
-      capacity: 6.43%
+      available: 77.16 GiB
+      available_bytes: 82851143680
+      capacity: 3.55%
       device: tmpfs
       filesystem: tmpfs
       options:
@@ -245,8 +245,8 @@ values:
       - nr_inodes=209715200
       size: 80.00 GiB
       size_bytes: 85899341824
-      used: 5.15 GiB
-      used_bytes: 5524627456
+      used: 2.84 GiB
+      used_bytes: 3048198144
   mounts:
   - "/"
   mtu_ens18: 1500
@@ -335,7 +335,7 @@ values:
     primary: ens18
   operatingsystem: Debian
   operatingsystemmajrelease: '10'
-  operatingsystemrelease: '10.11'
+  operatingsystemrelease: '10.12'
   os:
     architecture: amd64
     distro:
@@ -349,9 +349,9 @@ values:
     hardware: x86_64
     name: Debian
     release:
-      full: '10.11'
+      full: '10.12'
       major: '10'
-      minor: '11'
+      minor: '12'
     selinux:
       enabled: false
   osfamily: Debian
@@ -438,8 +438,8 @@ values:
   sshrsakey: AAAAB3NzaC1yc2EAAAADAQABAAABAQCsJL1z8fm1utr+CGyCDrAbbfTmR8iDh9PSbebXMSeHMATdpA0HJnOURRayxwiNJ3Q/AasEyWGgC3RoOvE+AkQekxk7RdXkMy5O/hpZ2PQ9MuUwTl/S2oOnOLYnysUTr+9rYdLy5hHBtXkSVs4y6CPjjThP04JpCgz2dlSdO9vc471KX9+XHvR7omC4QnEiHpooSFWR8moydu7wRSD/VtVuGCpES8+SNpLWOJC/2u23CKDnt0w7uo5LXY7P/A6tw9WwQKaY8K8vQgNAAVs4Uvwgis/Jx21+vR8XyVTz4LQBST/R77nXUOE9H4nyojFlZTJIZcPeZLhq4rnxNbp97snd
   subnet: sesi_rocquencourt
   sudoversion: 1.8.27
-  swapfree: 77.60 GiB
-  swapfree_mb: 79463.0859375
+  swapfree: 77.74 GiB
+  swapfree_mb: 79609.2421875
   swapsize: 80.00 GiB
   swapsize_mb: 81919.99609375
   swh_hostname:
@@ -447,10 +447,10 @@ values:
     short: worker04
     internal_fqdn: worker04.internal.softwareheritage.org
   system_uptime:
-    days: 27
-    hours: 666
-    seconds: 2399845
-    uptime: 27 days
+    days: 115
+    hours: 2775
+    seconds: 9992245
+    uptime: 115 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -465,15 +465,15 @@ values:
     systemd-timesyncd.service: enabled
   systemd_version: '247'
   timezone: UTC
-  uptime: 27 days
-  uptime_days: 27
-  uptime_hours: 666
-  uptime_seconds: 2399845
+  uptime: 115 days
+  uptime_days: 115
+  uptime_hours: 2775
+  uptime_seconds: 9992245
   uuid: 1cfacaaf-2718-4794-9cc5-88dfde58fb43
   vcsrepo_svn_ver: 1.10.4
   virtual: kvm
   clientcert: worker04.softwareheritage.org
   clientversion: 5.5.10
   clientnoop: false
-timestamp: '2022-01-14T10:04:08.456252060+00:00'
-expiration: '2022-01-14T10:34:08.456663972+00:00'
+timestamp: '2022-04-12T07:04:08.885487873+00:00'
+expiration: '2022-04-12T07:34:08.885935032+00:00'

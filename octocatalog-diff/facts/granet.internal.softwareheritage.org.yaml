@@ -2,7 +2,7 @@
 name: granet.internal.softwareheritage.org
 values:
   agent_specified_environment: production
-  apt_dist_updates: 24
+  apt_dist_updates: 28
   apt_has_dist_updates: true
   apt_has_updates: true
   apt_package_dist_updates:
@@ -27,8 +27,12 @@ values:
   - docker-ce
   - docker-ce-rootless-extras
   - docker-scan-plugin
+  - libjs-sphinxdoc
   - megacli
   - megaclisas-status
+  - python3-setuptools
+  - python3-pkg-resources
+  - python3-requests
   - spl-dkms
   apt_package_security_dist_updates: []
   apt_package_security_updates: []
@@ -45,14 +49,18 @@ values:
   - containerd.io
   - docker-ce
   - docker-ce-rootless-extras
+  - libjs-sphinxdoc
   - megacli
   - megaclisas-status
+  - python3-setuptools
+  - python3-pkg-resources
+  - python3-requests
   - spl-dkms
-  apt_reboot_required: false
+  apt_reboot_required: true
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1642151643
-  apt_updates: 15
+  apt_update_last_success: 1649744043
+  apt_updates: 19
   architecture: amd64
   bios_release_date: '08/15/2019'
   bios_vendor: Dell Inc.
@@ -233,7 +241,7 @@ values:
     NFd: 23
     OomKillDisable: true
     NGoroutines: 33
-    SystemTime: '2022-01-14T10:09:05.413080241Z'
+    SystemTime: '2022-04-12T07:09:04.945483271Z'
     LoggingDriver: journald
     CgroupDriver: cgroupfs
     CgroupVersion: '1'
@@ -321,8 +329,8 @@ values:
       managed_interfaces: {}
       bridge:
         Name: bridge
-        Id: 44d356a192fbf38d93f9b7b792c3ab2bb2b0fc3b3c34817a220b072ed3d7234a
-        Created: '2021-11-03T08:37:27.028245978Z'
+        Id: 90041b96ae68ef12ce193889a7d02918951a855e18f38cb6e6559944bc8828ca
+        Created: '2022-04-01T14:57:10.688429159Z'
         Scope: local
         Driver: bridge
         EnableIPv6: false
@@ -456,7 +464,7 @@ values:
       vardir: "/var/lib/puppet"
       server: pergamon.internal.softwareheritage.org
   facterversion: 3.11.0
-  filesystems: ext2,ext3,ext4,vfat
+  filesystems: btrfs,ext2,ext3,ext4,hfs,hfsplus,jfs,minix,msdos,qnx4,ufs,vfat,xfs
   fips_enabled: false
   fqdn: granet.internal.softwareheritage.org
   gid: root
@@ -487,8 +495,8 @@ values:
   java_default_home: "/usr/lib/jvm/java-11-openjdk-amd64"
   java_libjvm_path: "/usr/lib/jvm/java-11-openjdk-amd64/lib/server"
   java_major_version: '11'
-  java_patch_level: '13'
-  java_version: 11.0.13
+  java_patch_level: '14'
+  java_version: 11.0.14
   kernel: Linux
   kernelmajversion: '4.19'
   kernelrelease: 4.19.0-18-amd64
@@ -496,7 +504,7 @@ values:
   letsencrypt_directory: {}
   load_averages:
     15m: 0.01
-    1m: 0.08
+    1m: 0.16
     5m: 0.04
   location: sesi_rocquencourt
   lsbdistcodename: buster
@@ -514,22 +522,22 @@ values:
   manufacturer: Dell Inc.
   memory:
     system:
-      available: 493.21 GiB
-      available_bytes: 529576804352
+      available: 493.23 GiB
+      available_bytes: 529604182016
       capacity: 34.62%
       total: 754.39 GiB
       total_bytes: 810021462016
-      used: 261.18 GiB
-      used_bytes: 280444657664
-  memoryfree: 493.21 GiB
-  memoryfree_mb: 505043.796875
+      used: 261.16 GiB
+      used_bytes: 280417280000
+  memoryfree: 493.23 GiB
+  memoryfree_mb: 505069.90625
   memorysize: 754.39 GiB
   memorysize_mb: 772496.6640625
   mountpoints:
     "/":
-      available: 15.51 GiB
-      available_bytes: 16656199680
-      capacity: 57.53%
+      available: 12.02 GiB
+      available_bytes: 12908199936
+      capacity: 67.09%
       device: "/dev/mapper/ssd_mirror-root"
       filesystem: ext4
       options:
@@ -539,8 +547,8 @@ values:
       - stripe=128
       size: 36.53 GiB
       size_bytes: 39219421184
-      used: 21.01 GiB
-      used_bytes: 22563221504
+      used: 24.50 GiB
+      used_bytes: 26311221248
     "/boot/efi":
       available: 115.87 MiB
       available_bytes: 121498624
@@ -577,7 +585,7 @@ values:
       used_bytes: 256796655616
     "/run":
       available: 75.44 GiB
-      available_bytes: 81000214528
+      available_bytes: 81000157184
       capacity: 0.00%
       device: tmpfs
       filesystem: tmpfs
@@ -590,8 +598,8 @@ values:
       - mode=755
       size: 75.44 GiB
       size_bytes: 81002147840
-      used: 1.84 MiB
-      used_bytes: 1933312
+      used: 1.90 MiB
+      used_bytes: 1990656
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -607,6 +615,26 @@ values:
       - size=5120k
       size: 5.00 MiB
       size_bytes: 5242880
+      used: 0 bytes
+      used_bytes: 0
+    "/run/user/1003":
+      available: 75.44 GiB
+      available_bytes: 81002143744
+      capacity: 0%
+      device: tmpfs
+      filesystem: tmpfs
+      options:
+      - rw
+      - nosuid
+      - nodev
+      - relatime
+      - size=79103656k
+      - nr_inodes=19775914
+      - mode=700
+      - uid=1003
+      - gid=1003
+      size: 75.44 GiB
+      size_bytes: 81002143744
       used: 0 bytes
       used_bytes: 0
     "/run/user/1013":
@@ -625,6 +653,26 @@ values:
       - mode=700
       - uid=1013
       - gid=1013
+      size: 75.44 GiB
+      size_bytes: 81002143744
+      used: 0 bytes
+      used_bytes: 0
+    "/run/user/3001":
+      available: 75.44 GiB
+      available_bytes: 81002143744
+      capacity: 0%
+      device: tmpfs
+      filesystem: tmpfs
+      options:
+      - rw
+      - nosuid
+      - nodev
+      - relatime
+      - size=79103656k
+      - nr_inodes=19775914
+      - mode=700
+      - uid=3001
+      - gid=3001
       size: 75.44 GiB
       size_bytes: 81002143744
       used: 0 bytes
@@ -755,7 +803,7 @@ values:
   nginx_version: 1.14.2
   operatingsystem: Debian
   operatingsystemmajrelease: '10'
-  operatingsystemrelease: '10.11'
+  operatingsystemrelease: '10.12'
   os:
     architecture: amd64
     distro:
@@ -769,9 +817,9 @@ values:
     hardware: x86_64
     name: Debian
     release:
-      full: '10.11'
+      full: '10.12'
       major: '10'
-      minor: '11'
+      minor: '12'
     selinux:
       enabled: false
   osfamily: Debian
@@ -1114,10 +1162,10 @@ values:
     short: granet
     internal_fqdn: granet.internal.softwareheritage.org
   system_uptime:
-    days: 72
-    hours: 1729
-    seconds: 6226661
-    uptime: 72 days
+    days: 159
+    hours: 3838
+    seconds: 13819060
+    uptime: 159 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -1132,15 +1180,15 @@ values:
     systemd-timesyncd.service: enabled
   systemd_version: '246'
   timezone: UTC
-  uptime: 72 days
-  uptime_days: 72
-  uptime_hours: 1729
-  uptime_seconds: 6226661
+  uptime: 159 days
+  uptime_days: 159
+  uptime_hours: 3838
+  uptime_seconds: 13819060
   uuid: 4c4c4544-0039-3710-8031-b2c04f545a32
   vcsrepo_svn_ver: 1.10.4
   virtual: physical
   clientcert: granet.internal.softwareheritage.org
   clientversion: 5.5.10
   clientnoop: false
-timestamp: '2022-01-14T10:09:06.331775865+00:00'
-expiration: '2022-01-14T10:39:06.333374945+00:00'
+timestamp: '2022-04-12T07:09:05.890469854+00:00'
+expiration: '2022-04-12T07:39:05.892549408+00:00'
