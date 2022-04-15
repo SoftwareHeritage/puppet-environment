@@ -141,6 +141,14 @@ vms = {
     :cpus        => 2,
     :environment => ENV_STAGING,
   },
+  "staging-scrubber0" => {
+    :hostname    => "scrubber0.internal.staging.swh.network",
+    :ip          => "10.168.130.120",
+    :type        => TYPE_AGENT,
+    :memory      => 4096,
+    :cpus        => 2,
+    :environment => ENV_STAGING,
+  },
   "staging-scheduler0" => {
     :hostname    => "scheduler0.internal.staging.swh.network",
     :ip          => "10.168.130.50",
