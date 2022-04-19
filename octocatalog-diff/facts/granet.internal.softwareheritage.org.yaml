@@ -2,7 +2,7 @@
 name: granet.internal.softwareheritage.org
 values:
   agent_specified_environment: production
-  apt_dist_updates: 28
+  apt_dist_updates: 32
   apt_has_dist_updates: true
   apt_has_updates: true
   apt_package_dist_updates:
@@ -27,6 +27,10 @@ values:
   - docker-ce
   - docker-ce-rootless-extras
   - docker-scan-plugin
+  - icinga2
+  - icinga2-bin
+  - icinga2-common
+  - icinga2-doc
   - libjs-sphinxdoc
   - megacli
   - megaclisas-status
@@ -49,6 +53,10 @@ values:
   - containerd.io
   - docker-ce
   - docker-ce-rootless-extras
+  - icinga2
+  - icinga2-bin
+  - icinga2-common
+  - icinga2-doc
   - libjs-sphinxdoc
   - megacli
   - megaclisas-status
@@ -59,8 +67,8 @@ values:
   apt_reboot_required: true
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1649744043
-  apt_updates: 19
+  apt_update_last_success: 1650366843
+  apt_updates: 23
   architecture: amd64
   bios_release_date: '08/15/2019'
   bios_vendor: Dell Inc.
@@ -241,7 +249,7 @@ values:
     NFd: 23
     OomKillDisable: true
     NGoroutines: 33
-    SystemTime: '2022-04-12T07:09:04.945483271Z'
+    SystemTime: '2022-04-19T12:09:05.449443372Z'
     LoggingDriver: journald
     CgroupDriver: cgroupfs
     CgroupVersion: '1'
@@ -503,9 +511,9 @@ values:
   kernelversion: 4.19.0
   letsencrypt_directory: {}
   load_averages:
-    15m: 0.01
-    1m: 0.16
-    5m: 0.04
+    15m: 0.35
+    1m: 0.27
+    5m: 0.2
   location: sesi_rocquencourt
   lsbdistcodename: buster
   lsbdistdescription: Debian GNU/Linux 10 (buster)
@@ -522,22 +530,22 @@ values:
   manufacturer: Dell Inc.
   memory:
     system:
-      available: 493.23 GiB
-      available_bytes: 529604182016
-      capacity: 34.62%
+      available: 490.29 GiB
+      available_bytes: 526440271872
+      capacity: 35.01%
       total: 754.39 GiB
       total_bytes: 810021462016
-      used: 261.16 GiB
-      used_bytes: 280417280000
-  memoryfree: 493.23 GiB
-  memoryfree_mb: 505069.90625
+      used: 264.11 GiB
+      used_bytes: 283581190144
+  memoryfree: 490.29 GiB
+  memoryfree_mb: 502052.56640625
   memorysize: 754.39 GiB
   memorysize_mb: 772496.6640625
   mountpoints:
     "/":
-      available: 12.02 GiB
-      available_bytes: 12908199936
-      capacity: 67.09%
+      available: 10.23 GiB
+      available_bytes: 10989232128
+      capacity: 71.98%
       device: "/dev/mapper/ssd_mirror-root"
       filesystem: ext4
       options:
@@ -547,8 +555,8 @@ values:
       - stripe=128
       size: 36.53 GiB
       size_bytes: 39219421184
-      used: 24.50 GiB
-      used_bytes: 26311221248
+      used: 26.29 GiB
+      used_bytes: 28230189056
     "/boot/efi":
       available: 115.87 MiB
       available_bytes: 121498624
@@ -571,7 +579,7 @@ values:
       used_bytes: 3410944
     "/dev/shm":
       available: 138.04 GiB
-      available_bytes: 148214075392
+      available_bytes: 148214026240
       capacity: 63.40%
       device: tmpfs
       filesystem: tmpfs
@@ -582,10 +590,10 @@ values:
       size: 377.20 GiB
       size_bytes: 405010731008
       used: 239.16 GiB
-      used_bytes: 256796655616
+      used_bytes: 256796704768
     "/run":
       available: 75.44 GiB
-      available_bytes: 81000157184
+      available_bytes: 81000120320
       capacity: 0.00%
       device: tmpfs
       filesystem: tmpfs
@@ -598,8 +606,8 @@ values:
       - mode=755
       size: 75.44 GiB
       size_bytes: 81002147840
-      used: 1.90 MiB
-      used_bytes: 1990656
+      used: 1.93 MiB
+      used_bytes: 2027520
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -653,6 +661,26 @@ values:
       - mode=700
       - uid=1013
       - gid=1013
+      size: 75.44 GiB
+      size_bytes: 81002143744
+      used: 0 bytes
+      used_bytes: 0
+    "/run/user/1020":
+      available: 75.44 GiB
+      available_bytes: 81002143744
+      capacity: 0%
+      device: tmpfs
+      filesystem: tmpfs
+      options:
+      - rw
+      - nosuid
+      - nodev
+      - relatime
+      - size=79103656k
+      - nr_inodes=19775914
+      - mode=700
+      - uid=1020
+      - gid=1020
       size: 75.44 GiB
       size_bytes: 81002143744
       used: 0 bytes
@@ -1140,6 +1168,15 @@ values:
         type: ed25519
         key: AAAAC3NzaC1lZDI1NTE5AAAAIGNBDZNfvjnecd2yQcq8dNK+U/vmT00UR5f1U0L2apz5
         comment: root@granet
+    andreystar:
+      id_ed25519.pub:
+        type: ed25519
+        key: AAAAC3NzaC1lZDI1NTE5AAAAIFO8GFYqO4dW6FGp3qwO00UX23IHdWLoWv4FXtbp1p+p
+        comment: andreystar2403@gmail.com
+      id_rsa.pub:
+        type: rsa
+        key: AAAAB3NzaC1yc2EAAAADAQABAAACAQCp79fu/6zMEbVFDEptBV4KiP8iap1/dwEY8GB60LvlBku5+wCczRJkniHYui9E8WeIS4r44oBZ6wAiSBiDC8R1XMh3srUMX2XZHhPPHAQuKpidPSF7ArjY5ANzC8ZfhUbvux3YOfngT07y0Byi2iEW8+yFcGAleqfBXf61FhpuvuWlCaRGk8oFQgKIqymVWndZaICP2Sgvlfmrmb5viqQdovtUuwYKMwB0DkbVdP9gi/jSWybrYMnL0kE78xPDn1E4HEheIm1ykznjxQtuFQ63i2USZj/IfaKtSrpvXJumCWA0mw0LZy08FK/71tiTdx3X4WlzFvHzQVM0ApaLIoMspN2nra+ma0btwqqhdiArTjPexaFyUN85Jd4ejnlMpNaflBEUJAO3GJhKCGHWouZ+N3ONJyySaB9JaoX9oMgDmqjSlV4/s+Px9E5uuqZ/KSAlgeoT9P7eVNJtAnty2Q0uWIxc4Fm4hT2e1iBOuTDn3LTAbry0rdA9LnkCayJ4cFBFWF25FryRk7Us4KKjbkksr0FpkdpSbS6+yLL90dCT0smtokvBO3OkOhVrbjA2wCkMhY4YFTWpqxKnL3gRbyhsVTgPOb6va4JbwSV3hw3eOrh8zbe4YNEVyShAvPlw3FMEPFM88YN8RnZeMVMdjcQTWvWIDG1eOHKZb+Wa60HFxw==
+        comment: your_email@example.com
   ssh_server_version_full: 7.9p1
   ssh_server_version_major: '7'
   ssh_server_version_release: '7.9'
@@ -1162,10 +1199,10 @@ values:
     short: granet
     internal_fqdn: granet.internal.softwareheritage.org
   system_uptime:
-    days: 159
-    hours: 3838
-    seconds: 13819060
-    uptime: 159 days
+    days: 167
+    hours: 4011
+    seconds: 14441861
+    uptime: 167 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -1180,15 +1217,15 @@ values:
     systemd-timesyncd.service: enabled
   systemd_version: '246'
   timezone: UTC
-  uptime: 159 days
-  uptime_days: 159
-  uptime_hours: 3838
-  uptime_seconds: 13819060
+  uptime: 167 days
+  uptime_days: 167
+  uptime_hours: 4011
+  uptime_seconds: 14441861
   uuid: 4c4c4544-0039-3710-8031-b2c04f545a32
   vcsrepo_svn_ver: 1.10.4
   virtual: physical
   clientcert: granet.internal.softwareheritage.org
   clientversion: 5.5.10
   clientnoop: false
-timestamp: '2022-04-12T07:09:05.890469854+00:00'
-expiration: '2022-04-12T07:39:05.892549408+00:00'
+timestamp: '2022-04-19T12:09:07.315575726+00:00'
+expiration: '2022-04-19T12:39:07.317282764+00:00'

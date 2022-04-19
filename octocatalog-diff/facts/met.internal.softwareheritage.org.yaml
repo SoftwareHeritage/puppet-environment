@@ -2,7 +2,7 @@
 name: met.internal.softwareheritage.org
 values:
   agent_specified_environment: production
-  apt_dist_updates: 4
+  apt_dist_updates: 5
   apt_has_dist_updates: true
   apt_has_updates: true
   apt_package_dist_updates:
@@ -10,6 +10,7 @@ values:
   - docker-ce-cli
   - docker-ce
   - docker-ce-rootless-extras
+  - pgbouncer
   apt_package_security_dist_updates: []
   apt_package_security_updates: []
   apt_package_updates:
@@ -17,11 +18,12 @@ values:
   - docker-ce-cli
   - docker-ce
   - docker-ce-rootless-extras
-  apt_reboot_required: false
+  - pgbouncer
+  apt_reboot_required: true
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1648214763
-  apt_updates: 4
+  apt_update_last_success: 1649755563
+  apt_updates: 5
   architecture: amd64
   bios_release_date: 10/06/2021
   bios_vendor: Dell Inc.
@@ -212,7 +214,7 @@ values:
     NFd: 25
     OomKillDisable: false
     NGoroutines: 33
-    SystemTime: '2022-03-25T13:46:23.392697074Z'
+    SystemTime: '2022-04-12T09:48:20.877325319Z'
     LoggingDriver: journald
     CgroupDriver: systemd
     CgroupVersion: '2'
@@ -442,7 +444,7 @@ values:
       vardir: "/var/lib/puppet"
       server: pergamon.internal.softwareheritage.org
   facterversion: 3.14.12
-  filesystems: btrfs,ext2,ext3,ext4,vfat
+  filesystems: btrfs,ext2,ext3,ext4,hfs,hfsplus,jfs,minix,msdos,qnx4,ufs,vfat,xfs
   fips_enabled: false
   fqdn: met.internal.softwareheritage.org
   gid: root
@@ -481,15 +483,15 @@ values:
   kernelversion: 5.10.0
   letsencrypt_directory: {}
   load_averages:
-    15m: 91.91
-    1m: 63.71
-    5m: 85.23
+    15m: 89.24
+    1m: 93.92
+    5m: 93.13
   lsbdistcodename: bullseye
   lsbdistdescription: Debian GNU/Linux 11 (bullseye)
   lsbdistid: Debian
-  lsbdistrelease: '11.2'
+  lsbdistrelease: '11.3'
   lsbmajdistrelease: '11'
-  lsbminordistrelease: '2'
+  lsbminordistrelease: '3'
   macaddress: a2:c9:a8:18:ac:70
   macaddress_bond0: a2:c9:a8:18:ac:70
   macaddress_bond0.440: a2:c9:a8:18:ac:70
@@ -509,22 +511,22 @@ values:
       used: 976.00 MiB
       used_bytes: 1023406080
     system:
-      available: 169.40 GiB
-      available_bytes: 181886849024
-      capacity: 66.35%
+      available: 167.62 GiB
+      available_bytes: 179982286848
+      capacity: 66.71%
       total: 503.44 GiB
       total_bytes: 540568903680
-      used: 334.05 GiB
-      used_bytes: 358682054656
-  memoryfree: 169.40 GiB
-  memoryfree_mb: 173460.81640625
+      used: 335.82 GiB
+      used_bytes: 360586616832
+  memoryfree: 167.62 GiB
+  memoryfree_mb: 171644.484375
   memorysize: 503.44 GiB
   memorysize_mb: 515526.6796875
   mountpoints:
     "/":
-      available: 33.23 GiB
-      available_bytes: 35685314560
-      capacity: 23.07%
+      available: 33.25 GiB
+      available_bytes: 35701936128
+      capacity: 23.04%
       device: "/dev/mapper/met--vg-root"
       filesystem: ext4
       options:
@@ -533,12 +535,12 @@ values:
       - errors=remount-ro
       size: 45.43 GiB
       size_bytes: 48780365824
-      used: 9.97 GiB
-      used_bytes: 10703474688
+      used: 9.95 GiB
+      used_bytes: 10686853120
     "/boot":
-      available: 350.53 MiB
-      available_bytes: 367561728
-      capacity: 21.40%
+      available: 349.48 MiB
+      available_bytes: 366454784
+      capacity: 21.63%
       device: "/dev/sda2"
       filesystem: ext2
       options:
@@ -547,8 +549,8 @@ values:
       - stripe=4
       size: 470.35 MiB
       size_bytes: 493201408
-      used: 95.42 MiB
-      used_bytes: 100055040
+      used: 96.48 MiB
+      used_bytes: 101161984
     "/boot/efi":
       available: 507.57 MiB
       available_bytes: 532221952
@@ -649,9 +651,9 @@ values:
       used: 2.31 MiB
       used_bytes: 2424832
     "/home":
-      available: 23.79 TiB
-      available_bytes: 26158744469504
-      capacity: 1.05%
+      available: 54.44 TiB
+      available_bytes: 59862805250048
+      capacity: 0.46%
       device: data/home
       filesystem: zfs
       options:
@@ -659,14 +661,14 @@ values:
       - noatime
       - xattr
       - posixacl
-      size: 24.04 TiB
-      size_bytes: 26437436309504
+      size: 54.70 TiB
+      size_bytes: 60141497090048
       used: 259.55 GiB
       used_bytes: 278691840000
     "/run":
-      available: 50.33 GiB
-      available_bytes: 54040293376
-      capacity: 0.03%
+      available: 50.34 GiB
+      available_bytes: 54050705408
+      capacity: 0.01%
       device: tmpfs
       filesystem: tmpfs
       options:
@@ -679,8 +681,8 @@ values:
       - mode=755
       size: 50.34 GiB
       size_bytes: 54056890368
-      used: 15.83 MiB
-      used_bytes: 16596992
+      used: 5.90 MiB
+      used_bytes: 6184960
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -711,7 +713,7 @@ values:
       size_bytes: 0
       used: 0 bytes
       used_bytes: 0
-    "/run/user/1001":
+    "/run/user/1003":
       available: 50.34 GiB
       available_bytes: 54056890368
       capacity: 0%
@@ -725,8 +727,8 @@ values:
       - size=52789932k
       - nr_inodes=13197483
       - mode=700
-      - uid=1001
-      - gid=1001
+      - uid=1003
+      - gid=1003
       size: 50.34 GiB
       size_bytes: 54056890368
       used: 0 bytes
@@ -752,9 +754,9 @@ values:
       used: 0 bytes
       used_bytes: 0
     "/srv/softwareheritage/postgres/13/archive":
-      available: 23.79 TiB
-      available_bytes: 26158744469504
-      capacity: 7.60%
+      available: 54.44 TiB
+      available_bytes: 59862805250048
+      capacity: 3.47%
       device: data/postgresql-swh-storage
       filesystem: zfs
       options:
@@ -762,14 +764,14 @@ values:
       - noatime
       - xattr
       - posixacl
-      size: 25.75 TiB
-      size_bytes: 28309423783936
+      size: 56.40 TiB
+      size_bytes: 62013484564480
       used: 1.96 TiB
       used_bytes: 2150679314432
     "/srv/softwareheritage/postgres/13/main":
-      available: 23.79 TiB
-      available_bytes: 26158744469504
-      capacity: 18.92%
+      available: 54.44 TiB
+      available_bytes: 59862805250048
+      capacity: 10.58%
       device: data/postgresql
       filesystem: zfs
       options:
@@ -777,14 +779,14 @@ values:
       - noatime
       - xattr
       - posixacl
-      size: 29.34 TiB
-      size_bytes: 32260969332736
-      used: 5.55 TiB
-      used_bytes: 6102224863232
+      size: 60.89 TiB
+      size_bytes: 66946673803264
+      used: 6.44 TiB
+      used_bytes: 7083868553216
     "/srv/softwareheritage/postgres/13/main/pg_wal":
-      available: 23.79 TiB
-      available_bytes: 26158744469504
-      capacity: 0.01%
+      available: 54.44 TiB
+      available_bytes: 59862805250048
+      capacity: 0.02%
       device: data/postgresql-wals
       filesystem: zfs
       options:
@@ -792,10 +794,10 @@ values:
       - noatime
       - xattr
       - posixacl
-      size: 23.79 TiB
-      size_bytes: 26161389371392
-      used: 2.46 GiB
-      used_bytes: 2644901888
+      size: 54.45 TiB
+      size_bytes: 59873622491136
+      used: 10.07 GiB
+      used_bytes: 10817241088
   mounts:
   - "/"
   - "/boot"
@@ -914,7 +916,7 @@ values:
     scope6: link
   operatingsystem: Debian
   operatingsystemmajrelease: '11'
-  operatingsystemrelease: '11.2'
+  operatingsystemrelease: '11.3'
   os:
     architecture: amd64
     distro:
@@ -922,16 +924,16 @@ values:
       description: Debian GNU/Linux 11 (bullseye)
       id: Debian
       release:
-        full: '11.2'
+        full: '11.3'
         major: '11'
-        minor: '2'
+        minor: '3'
     family: Debian
     hardware: x86_64
     name: Debian
     release:
-      full: '11.2'
+      full: '11.3'
       major: '11'
-      minor: '2'
+      minor: '3'
     selinux:
       enabled: false
   osfamily: Debian
@@ -975,25 +977,25 @@ values:
     "/dev/nvme2n1p1":
       filesystem: zfs_member
       label: data
-      partlabel: zfs-966d155d417fe5a2
-      partuuid: 8463bf92-606d-c44a-85ea-c4aeb1eb8f9e
+      partlabel: zfs-05d0ca3d276d6428
+      partuuid: 23eae261-c20b-324e-bff2-155d7b7c50f8
       size: 5.82 TiB
       size_bytes: 6401170604032
       uuid: '15611792828715913713'
     "/dev/nvme2n1p9":
-      partuuid: 9cae5b0e-5d4c-5a41-966e-ac74967aee99
+      partuuid: 6a768ac8-e7b6-3741-bdfe-5f590fd47102
       size: 64.00 MiB
       size_bytes: 67108864
     "/dev/nvme3n1p1":
       filesystem: zfs_member
       label: data
-      partlabel: zfs-0b37e16731a9a65f
-      partuuid: 236e106c-66e7-9e4f-8142-bb302bef9424
+      partlabel: zfs-6dcbae9ad425de2f
+      partuuid: 8db047d2-123f-cb42-85bc-6843cea6863f
       size: 5.82 TiB
       size_bytes: 6401170604032
       uuid: '15611792828715913713'
     "/dev/nvme3n1p9":
-      partuuid: de883615-9698-fb46-a010-171bd7d94008
+      partuuid: 62e81c3d-21fc-4443-9f14-9c3b4695d174
       size: 64.00 MiB
       size_bytes: 67108864
     "/dev/sda1":
@@ -1020,73 +1022,73 @@ values:
     "/dev/sdb1":
       filesystem: zfs_member
       label: data
-      partlabel: zfs-53b92aff1086becf
-      partuuid: 960db55e-7422-104e-8ab3-4c65c8b201d9
+      partlabel: zfs-9f084fe61d1b49db
+      partuuid: a82f75f2-f43d-f847-85a2-973ddb15ddb5
       size: 6.99 TiB
       size_bytes: 7681491337216
       uuid: '15611792828715913713'
     "/dev/sdb9":
-      partuuid: c54eea07-dfa6-464d-b8db-72d7cbdb9386
+      partuuid: af7f7460-702c-254e-843d-38a2b0720b76
       size: 8.00 MiB
       size_bytes: 8388608
     "/dev/sdc1":
       filesystem: zfs_member
       label: data
-      partlabel: zfs-433fb42214608e26
-      partuuid: a0a1e098-cc03-8647-87d1-9f8531cd5d4c
+      partlabel: zfs-1d030ea7eea0c32b
+      partuuid: cf53607c-9582-6f4b-a0fa-28ec1fc71453
       size: 6.99 TiB
       size_bytes: 7681491337216
       uuid: '15611792828715913713'
     "/dev/sdc9":
-      partuuid: 8f875795-3c47-504d-a34a-7d841b4c1a9c
+      partuuid: d15953ec-4da6-9e4a-ae5c-fe66310e6fab
       size: 8.00 MiB
       size_bytes: 8388608
     "/dev/sdd1":
       filesystem: zfs_member
       label: data
-      partlabel: zfs-1b27d4622ed315db
-      partuuid: 6f4b8083-1981-2a4d-84c5-487828f18e12
+      partlabel: zfs-539de67251b52d77
+      partuuid: 520fb828-31d2-e648-bb6b-21a7e1e85ac6
       size: 6.99 TiB
       size_bytes: 7681491337216
       uuid: '15611792828715913713'
     "/dev/sdd9":
-      partuuid: 0063a3a1-9240-c544-9e82-980234563ebf
+      partuuid: 3a967093-b75c-0f4f-a6e2-5d2a8530b290
       size: 8.00 MiB
       size_bytes: 8388608
     "/dev/sde1":
       filesystem: zfs_member
       label: data
-      partlabel: zfs-0f775ee66ad9fc08
-      partuuid: bdb0d066-2727-3740-82a6-20440a093fd8
+      partlabel: zfs-fab2dc2722783d19
+      partuuid: d2f99066-0cc5-af49-89bf-d12a1f2c2513
       size: 6.99 TiB
       size_bytes: 7681491337216
       uuid: '15611792828715913713'
     "/dev/sde9":
-      partuuid: 19bef118-b53f-854d-b121-fde7eb314ab4
+      partuuid: de05189f-feb6-e949-a2ce-84a002be26d5
       size: 8.00 MiB
       size_bytes: 8388608
     "/dev/sdf1":
       filesystem: zfs_member
       label: data
-      partlabel: zfs-0f5219ca9206d51a
-      partuuid: 436be952-d5fd-b047-bb41-73655543a4b2
+      partlabel: zfs-c98bc3eff3bcdf8a
+      partuuid: 39097e54-cef2-de47-aade-7b51c0ef6ee3
       size: 6.99 TiB
       size_bytes: 7681491337216
       uuid: '15611792828715913713'
     "/dev/sdf9":
-      partuuid: 3995755a-fb6a-4445-9148-a8a317897cfe
+      partuuid: a39051d8-e4db-e64e-917d-488b80f58edd
       size: 8.00 MiB
       size_bytes: 8388608
     "/dev/sdg1":
       filesystem: zfs_member
       label: data
-      partlabel: zfs-10463aace31d97d8
-      partuuid: e76af3e4-7832-d44d-8e4e-701e5bcafda1
+      partlabel: zfs-3aefcea230904356
+      partuuid: feb08066-bcc7-b142-9786-17c37438c781
       size: 6.99 TiB
       size_bytes: 7681491337216
       uuid: '15611792828715913713'
     "/dev/sdg9":
-      partuuid: fd657932-fb3b-c64b-8952-f0850ba761e3
+      partuuid: 6f7d9888-711c-c644-9d59-3501f5c57bbe
       size: 8.00 MiB
       size_bytes: 8388608
   path: "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
@@ -1370,10 +1372,10 @@ values:
     short: met
     internal_fqdn: met.internal.softwareheritage.org
   system_uptime:
-    days: 10
-    hours: 254
-    seconds: 916846
-    uptime: 10 days
+    days: 28
+    hours: 682
+    seconds: 2457764
+    uptime: 28 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -1387,15 +1389,15 @@ values:
     systemd-time-wait-sync.service: disabled
   systemd_version: '247'
   timezone: UTC
-  uptime: 10 days
-  uptime_days: 10
-  uptime_hours: 254
-  uptime_seconds: 916846
+  uptime: 28 days
+  uptime_days: 28
+  uptime_hours: 682
+  uptime_seconds: 2457764
   uuid: 4c4c4544-0050-4210-8043-b7c04f534833
   vcsrepo_svn_ver: ''
   virtual: physical
   clientcert: met.internal.softwareheritage.org
   clientversion: 5.5.22
   clientnoop: true
-timestamp: '2022-03-25T13:46:28.094185332+00:00'
-expiration: '2022-03-25T14:16:28.095245150+00:00'
+timestamp: '2022-04-12T09:48:26.157245418+00:00'
+expiration: '2022-04-12T10:18:26.158287114+00:00'
