@@ -141,6 +141,17 @@ vms = {
     :cpus        => 2,
     :environment => ENV_STAGING,
   },
+  "staging-elastic-worker0" => {
+    :hostname    => "elastic-worker0.internal.staging.swh.network",
+    :ip          => "10.168.130.130",
+    :type        => TYPE_AGENT,
+    :memory      => 4096,
+    :cpus        => 2,
+    :environment => ENV_STAGING,
+    :box         => $global_debian11_box,
+    :box_url     => $global_debian11_box_url,
+    :extra_disk  => 'vdb',
+  },
   "staging-scrubber0" => {
     :hostname    => "scrubber0.internal.staging.swh.network",
     :ip          => "10.168.130.120",
@@ -640,6 +651,10 @@ Vagrant.configure("2") do |global_config|
         provider.cpus = vm_props[:cpus]
         # local test run: https://github.com/vagrant-libvirt/vagrant-libvirt/issues/45
         provider.driver = 'kvm'
+        if vm_props.has_key?(:extra_disk)
+          # https://github.com/vagrant-libvirt/vagrant-libvirt#additional-disks
+          provider.storage :file, :size => '20G', :device => vm_props[:extra_disk], :type => 'raw'
+        end
       end
       # installs fact for `puppet agent --test` cli to work within the vm
       config.vm.provision :shell do |s|
