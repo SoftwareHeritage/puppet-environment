@@ -3,6 +3,7 @@
 # Import a Puppet module from the Puppet Forge to the Software Heritage
 # Phabricator instance
 
+import click
 import copy
 import os
 import subprocess
@@ -79,31 +80,36 @@ def create_phab_repo(phabricator, module_name, release_metadata):
     return phabricator.diffusion.repository.edit(transactions=phabricator_data)
 
 
-def wait_phab_repo(phabricator, id):
+def wait_phab_repo(phabricator, repo_id):
     """Wait for the repository with the given id to be ready"""
     backoff = 0.5
     while True:
-        ret = phabricator.diffusion.repository.search(
-            constraints={'ids': [id]}
-        )
+        ret = phabricator.diffusion.repository.search(constraints={'ids': [repo_id]})
         repo = ret.data[0]
         if not repo['fields']['isImporting']:
             break
-        print("Repository %s still importing, sleeping for %s seconds..." %
-              (id, backoff))
+        print(
+            f"Repository {repo_id} still importing, sleeping for {backoff} seconds..."
+        )
         time.sleep(backoff)
         backoff = min(backoff * 2, 15.0)
 
 
-def clone_and_push_repo(module_name, phabricator_repo, upstream_repo):
+def clone_and_push_repo(module_name, phabricator_repo, upstream_repo, default_branch="master", skip_clone=False):
     """Clone the SWH repository, add the upstream remote and push to SWH"""
-    subprocess.check_call(['git', 'clone', phabricator_repo, module_name])
+    if not skip_clone:
+        subprocess.check_call(['git', 'clone', phabricator_repo, module_name])
     os.chdir(module_name)
-    subprocess.check_call(['git', 'remote', 'add', 'upstream', upstream_repo])
+    try:
+        subprocess.check_call(['git', 'remote', 'add', 'upstream', upstream_repo])
+    except subprocess.CalledProcessError:
+        # already configured, skipping
+        pass
     subprocess.check_call(['git', 'fetch', 'upstream', '--tags'])
-    subprocess.check_call(['git', 'merge', 'upstream/master'])
+    subprocess.check_call(['git', 'checkout', default_branch])
+    subprocess.check_call(['git', 'merge', f'upstream/{default_branch}'])
     subprocess.check_call(['git', 'push', '--tags', '--set-upstream',
-                           'origin', 'master:master'])
+                           'origin', f'{default_branch}:{default_branch}'])
     os.chdir('..')
 
 
@@ -179,13 +185,20 @@ def update_gitignore(modules):
     os.rename(f.name, '.gitignore')
 
 
-if __name__ == '__main__':
-    if len(sys.argv) != 2:
-        print('Usage: %s publisher-module_name' % sys.argv[0], file=sys.stderr)
-        sys.exit(2)
+@click.command()
+@click.option("--default-branch", default="master",
+              help="Repository's default branch name: e.g. main)")
+@click.option("-i", "--repo-id", type=click.INT,
+              help="When a repository already exists, skip creation and use it.")
+@click.option("--clone/--no-clone", "clone", type=click.BOOL,
+              help="By default clone a repository locally, we can inhibit that step.")
+@click.argument("module_name")
+def main(module_name, repo_id, default_branch, clone):
+    """Import necessary puppet module within the swh forge
 
-    module_name = sys.argv[1]
+    MODULE_NAME "Pupppetlabs' module name, e.g. elastic-elasticsearch, puppetlabs-zfs_core
 
+    """
     puppetforge_info = get_puppetforge_module_info(module_name)
     release_meta = puppetforge_info['current_release']['metadata']
     upstream_repo = release_meta['source']
@@ -193,9 +206,18 @@ if __name__ == '__main__':
     phabricator = Phabricator()
     phabricator.connect()
     phabricator.update_interfaces()
-    repo = create_phab_repo(phabricator, module_name, release_meta)
-    repo_id = repo['object']['id']
+
+    if not repo_id:
+        repo = create_phab_repo(phabricator, module_name, release_meta)
+        repo_id = repo['object']['id']
+
     wait_phab_repo(phabricator, repo_id)
-    clone_and_push_repo(module_name, phabricator_repo, upstream_repo)
+    clone_and_push_repo(
+        module_name, phabricator_repo, upstream_repo,
+        default_branch=default_branch, skip_clone=not clone)
     repos = update_mrconfig(module_name, phabricator_repo, upstream_repo)
     update_gitignore(repos)
+
+
+if __name__ == '__main__':
+    main()
