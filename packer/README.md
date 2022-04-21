@@ -1,17 +1,19 @@
 Packer usage
 ============
 
-packer[1] is used to generate the virtualbox[2] images used to locally simulate the different servers and to test the puppet configuration and the service deployments.
+packer[1] is used to generate the virtualbox[2] images used to locally simulate the
+different servers and to test the puppet configuration and the service deployments.
 
 Setup
 -----
 
-Packer and virtualbox tools are needed to create the base image.
-For the packer package, [hashicorp debian repository must be installed](https://learn.hashicorp.com/tutorials/packer/getting-started-install)
+Packer and virtualbox tools are needed to create the base image. For the packer package,
+[hashicorp debian repository must be
+installed](https://learn.hashicorp.com/tutorials/packer/getting-started-install)
 
 On debian(10) :
 ```
-apt install packer virtualbox-6.0  # 2020-09-17 vagrant is not working with virtualbox 6.1
+apt install packer virtualbox-6.0  # 2020-09-17 vagrant incompatible with virtualbox 6.1
 vagrant plugin install vagrant-vbguest
 ```
 
@@ -21,9 +23,13 @@ Generate a new virtualbox image
 ### Configuration description
 
 For the debian buster image, this files are used:
-* `debian_buster.json`: the configuration entrypoint describing the tasks packer will execute to generate the image
-* `http/buster-preseed.cfg`: The debian preseed file used by debian to manage the installation. Debian loads it through an http server started by packer during the build.
-* `scripts/post-install.sh`: Post installation steps script so vms are ready for the puppet configuration step (install puppet, manage vagrant's user key, ...)
+* `debian_buster.json`: the configuration entrypoint describing the tasks packer will
+  execute to generate the image
+* `http/buster-preseed.cfg`: The debian preseed file used by debian to manage the
+  installation. Debian loads it through an http server started by packer during the
+  build.
+* `scripts/post-install.sh`: Poast installation steps script so vms are ready for the
+  puppet configuration step (install puppet, manage vagrant's user key, ...)
 
 ### Build the image
 
@@ -37,22 +43,28 @@ For example, to build or rebuild the debian buster image:
 ```
 packer build debian_buster.json
 ```
-:WARNING: virtualbox open the vm's console during the build. Don't interact with it to avoid to interfere with the packer execution.
+:WARNING: virtualbox open the vm's console during the build. Don't interact with it to
+avoid to interfere with the packer execution.
 
 This command executes this process:
-* Create a new VM in virtualbox and boot it with the iso image defines in the ``iso_image`` parameter.
-* Simulate keyboard interactions to enter the ``boot_command`` which basically tells debian to start the installation based on the ``buster_preseed.cfg`` file
-* Call one or several provisioners after the installation to fine tune the installation. For our needs, only the ``scripts/post-install.sh`` script is executed
-* package the image into a vbox file directly usable by virtualbox and place it in the ``builds`` directory.
+* Create a new VM in virtualbox and boot it with the iso image defines in the
+  ``iso_image`` parameter.
+* Simulate keyboard interactions to enter the ``boot_command`` which basically tells
+  debian to start the installation based on the ``buster_preseed.cfg`` file
+* Call one or several provisioners after the installation to fine tune the installation.
+  For our needs, only the ``scripts/post-install.sh`` script is executed.
+* package the image into a vbox file directly usable by virtualbox and place it in the
+  ``builds`` directory.
 
 ### Publish the image
 
-The image must be published on the public annex site[3] to be usable.
-The images are published in the ``/isos/virtualbox/debian``[4] directory.
+The image must be published on the public annex site[3] to be usable. The images are
+published in the ``/isos/virtualbox/debian``[4] directory.
 
-The ``git-annex`` usage is documented on the intranet[5].
+The ``git-annex`` usage is documented on the intranet [5].
 
-Once the new image is published, the ``Vagrantfile`` [4] file can be updated to declare it (``$global_debian10_box`` and ``$global_debian10_box_url`` properties[6]).
+Once the new image is published, the ``Vagrantfile`` [4] file can be updated to declare
+it (``$global_debian10_box`` and ``$global_debian10_box_url`` properties[6]).
 
 
 [1]: https://www.packer.io
@@ -77,7 +89,8 @@ debconf-get-selections --installer > /tmp/preseed.cfg
 debconf-get-selections >>/tmp/preseed.cfg
 ```
 
-The preseed file must be adapted to specify the user passwords or the partitionning apparently not included in the preseed file.
+The preseed file must be adapted to specify the user passwords or the partitioning
+apparently not included in the preseed file.
 
 For buster, the following lines were added:
 ```
@@ -141,4 +154,5 @@ d-i apt-setup/use_mirror boolean false
 popularity-contest popularity-contest/participate boolean false
 ```
 
-It's important that the vagrant user doesn't have an UID of 1000 as puppet will try to create a user with a uid/gid of 1000/1000.
+Note: It's important that the vagrant user doesn't have the 1000/1000 UID/GID as puppet
+will try to create a user with that pair.
