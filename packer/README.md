@@ -1,31 +1,30 @@
 Packer usage
 ============
 
-packer[1] is used to generate the virtualbox[2] images used to locally simulate the
+packer [1] is used to generate the qemu/libvirt [2] images used to locally simulate the
 different servers and to test the puppet configuration and the service deployments.
 
 Setup
 -----
 
-Packer and virtualbox tools are needed to create the base image. For the packer package,
+Packer and libvirt tools are needed to create the base image. For the packer package,
 [hashicorp debian repository must be
 installed](https://learn.hashicorp.com/tutorials/packer/getting-started-install)
 
 On debian(10) :
 ```
-apt install packer virtualbox-6.0  # 2020-09-17 vagrant incompatible with virtualbox 6.1
-vagrant plugin install vagrant-vbguest
+apt install packer
 ```
 
-Generate a new virtualbox image
--------------------------------
+Generate a new image
+--------------------
 
 ### Configuration description
 
-For the debian buster image, this files are used:
-* `debian_buster.json`: the configuration entrypoint describing the tasks packer will
-  execute to generate the image
-* `http/buster-preseed.cfg`: The debian preseed file used by debian to manage the
+For the debian suite (buster, bullseye) image, these files are used:
+* `debian_{suite}.qemu.json`: the configuration entrypoint describing the tasks packer
+  will execute to generate the image
+* `http/{suite}-preseed.cfg`: The debian preseed file used by debian to manage the
   installation. Debian loads it through an http server started by packer during the
   build.
 * `scripts/post-install.sh`: Poast installation steps script so vms are ready for the
@@ -41,25 +40,24 @@ packer build <json file>
 
 For example, to build or rebuild the debian buster image:
 ```
-packer build debian_buster.json
+packer build debian_{suite}.qemu.json
 ```
-:WARNING: virtualbox open the vm's console during the build. Don't interact with it to
-avoid to interfere with the packer execution.
+:WARNING: virtualbox/qemu opens vm's console during the build. Don't interact with it to
+avoid interference with the packer execution.
 
 This command executes this process:
-* Create a new VM in virtualbox and boot it with the iso image defines in the
-  ``iso_image`` parameter.
+* Create a new VM and boot it with the iso image defines in the ``iso_image`` parameter.
 * Simulate keyboard interactions to enter the ``boot_command`` which basically tells
-  debian to start the installation based on the ``buster_preseed.cfg`` file
+  debian to start the installation based on the ``{suite}_preseed.cfg`` file
 * Call one or several provisioners after the installation to fine tune the installation.
   For our needs, only the ``scripts/post-install.sh`` script is executed.
-* package the image into a vbox file directly usable by virtualbox and place it in the
-  ``builds`` directory.
+* package the image into a format usable by libvirt and place it in the ``builds``
+  directory.
 
 ### Publish the image
 
 The image must be published on the public annex site[3] to be usable. The images are
-published in the ``/isos/virtualbox/debian``[4] directory.
+published in the ``/isos/libvirt/debian``[4] directory.
 
 The ``git-annex`` usage is documented on the intranet [5].
 
@@ -68,7 +66,7 @@ it (``$global_debian10_box`` and ``$global_debian10_box_url`` properties[6]).
 
 
 [1]: https://www.packer.io
-[2]: https://www.virtualbox.org
+[2]: https://github.com/vagrant-libvirt/vagrant-libvirt
 [3]: https://annex.softwareheritage.org/public
 [4]: https://forge.softwareheritage.org/source/annex-public/browse/master/isos/virtualbox/debian/
 [5]: https://intranet.softwareheritage.org/wiki/Git_annex
