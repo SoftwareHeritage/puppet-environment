@@ -22,6 +22,10 @@ $global_debian10_box_url = "https://annex.softwareheritage.org/public/isos/libvi
 $global_debian11_box = "debian11-20220422-1345"
 $global_debian11_box_url = "https://annex.softwareheritage.org/public/isos/libvirt/debian/swh-debian-11.3-amd64-20220422-1345.qcow2"
 
+# With zfs preinstalled
+$global_debian11_zfs_box = "debian11-zfs-20220422-1444"
+$global_debian11_zfs_box_url = "https://annex.softwareheritage.org/public/isos/libvirt/debian/swh-debian-zfs-11.3-amd64-20220422-1444.qcow2"
+
 unless Vagrant.has_plugin?("libvirt")
   $stderr.puts <<-MSG
   vagrant-libvirt plugin is required for this.
@@ -81,9 +85,8 @@ vms = {
     :cpus        => 2,
     :environment => ENV_STAGING,
     :extra_disk  => 'vdb',
-    :box         => $global_debian11_box,
-
-    :box_url     => $global_debian11_box_url,
+    :box         => $global_debian11_zfs_box,
+    :box_url     => $global_debian11_zfs_box_url,
   },
   "staging-rp0" => {
     :hostname    => "rp0.internal.staging.swh.network",
@@ -152,8 +155,8 @@ vms = {
     :memory      => 4096,
     :cpus        => 2,
     :environment => ENV_STAGING,
-    :box         => $global_debian11_box,
-    :box_url     => $global_debian11_box_url,
+    :box         => $global_debian11_zfs_box,
+    :box_url     => $global_debian11_zfs_box_url,
     :extra_disk  => 'vdb',
   },
   "staging-scrubber0" => {
