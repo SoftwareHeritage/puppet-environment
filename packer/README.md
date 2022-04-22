@@ -22,10 +22,10 @@ Generate a new image
 ### Configuration description
 
 For the debian suite (buster, bullseye) image, these files are used:
-* `debian_{suite}.qemu.json`: the configuration entrypoint describing the tasks packer
-  will execute to generate the image
-* `http/{suite}-preseed.cfg`: The debian preseed file used by debian to manage the
-  installation. Debian loads it through an http server started by packer during the
+* `debian_{distribution}.qemu.json`: the configuration entrypoint describing the tasks
+  packer will execute to generate the image
+* `http/{distribution}-preseed.cfg`: The debian preseed file used by debian to manage
+  the installation. Debian loads it through an http server started by packer during the
   build.
 * `scripts/post-install.sh`: Poast installation steps script so vms are ready for the
   puppet configuration step (install puppet, manage vagrant's user key, ...)
@@ -40,7 +40,7 @@ packer build <json file>
 
 For example, to build or rebuild the debian buster image:
 ```
-packer build debian_{suite}.qemu.json
+packer build debian_{distribution}.qemu.json
 ```
 :WARNING: virtualbox/qemu opens vm's console during the build. Don't interact with it to
 avoid interference with the packer execution.
@@ -48,7 +48,7 @@ avoid interference with the packer execution.
 This command executes this process:
 * Create a new VM and boot it with the iso image defines in the ``iso_image`` parameter.
 * Simulate keyboard interactions to enter the ``boot_command`` which basically tells
-  debian to start the installation based on the ``{suite}_preseed.cfg`` file
+  debian to start the installation based on the ``{distribution}_preseed.cfg`` file
 * Call one or several provisioners after the installation to fine tune the installation.
   For our needs, only the ``scripts/post-install.sh`` script is executed.
 * package the image into a format usable by libvirt and place it in the ``builds``

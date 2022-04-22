@@ -19,8 +19,8 @@ $local_debian10_box_url = "file://#{puppet_env_path}/packer/builds/swh-debian-10
 $global_debian10_box = "debian10-20210820-1622"
 $global_debian10_box_url = "https://annex.softwareheritage.org/public/isos/libvirt/debian/swh-debian-10.10-amd64-20210820-1622.qcow2"
 
-$global_debian11_box = "debian11-20210909-0725"
-$global_debian11_box_url = "https://annex.softwareheritage.org/public/isos/libvirt/debian/swh-debian-11.0-amd64-20210909-0725.qcow2"
+$global_debian11_box = "debian11-20220422-1345"
+$global_debian11_box_url = "https://annex.softwareheritage.org/public/isos/libvirt/debian/swh-debian-11.3-amd64-20220422-1345.qcow2"
 
 unless Vagrant.has_plugin?("libvirt")
   $stderr.puts <<-MSG
