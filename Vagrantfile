@@ -159,6 +159,17 @@ vms = {
     :box_url     => $global_debian11_zfs_box_url,
     :extra_disk  => 'vdb',
   },
+  "staging-rancher-node-intern0" => {
+    :hostname    => "rancher-node-intern0.internal.staging.swh.network",
+    :ip          => "10.168.130.140",
+    :type        => TYPE_AGENT,
+    :memory      => 3096,
+    :cpus        => 2,
+    :environment => ENV_STAGING,
+    :box         => $global_debian11_zfs_box,
+    :box_url     => $global_debian11_zfs_box_url,
+    :extra_disk  => 'vdb',
+  },
   "staging-scrubber0" => {
     :hostname    => "scrubber0.internal.staging.swh.network",
     :ip          => "10.168.130.120",
