@@ -2,14 +2,24 @@
 name: worker0.internal.staging.swh.network
 values:
   agent_specified_environment: staging
-  apt_has_dist_updates: false
-  apt_has_updates: false
+  apt_dist_updates: 1
+  apt_has_dist_updates: true
+  apt_has_updates: true
+  apt_package_dist_updates:
+  - python3-swh.loader.cvs
+  apt_package_security_dist_updates: []
+  apt_package_security_updates: []
+  apt_package_updates:
+  - python3-swh.loader.cvs
   apt_reboot_required: false
-  apt_update_last_success: 1650365764
+  apt_security_dist_updates: 0
+  apt_security_updates: 0
+  apt_update_last_success: 1652273765
+  apt_updates: 1
   architecture: amd64
   bios_release_date: 04/01/2014
   bios_vendor: SeaBIOS
-  bios_version: rel-1.14.0-0-g155821a1990b-prebuilt.qemu.org
+  bios_version: rel-1.15.0-0-g2dd4b9b3f840-prebuilt.qemu.org
   blockdevice_sr0_model: QEMU DVD-ROM
   blockdevice_sr0_size: 4194304
   blockdevice_sr0_vendor: QEMU
@@ -19,9 +29,9 @@ values:
   blockdevice_vdb_vendor: '0x1af4'
   blockdevices: vdb,sr0,vda
   cassandracmsheapnewsize: 400
-  cassandracmsmaxheapsize: 2995
+  cassandracmsmaxheapsize: 5988
   cassandraheapnewsize: 400
-  cassandramaxheapsize: 2995
+  cassandramaxheapsize: 5988
   chassistype: Other
   cloudinit_enabled: 'true'
   deployment: staging
@@ -43,7 +53,7 @@ values:
     bios:
       release_date: 04/01/2014
       vendor: SeaBIOS
-      version: rel-1.14.0-0-g155821a1990b-prebuilt.qemu.org
+      version: rel-1.15.0-0-g2dd4b9b3f840-prebuilt.qemu.org
     chassis:
       type: Other
     manufacturer: QEMU
@@ -96,9 +106,9 @@ values:
   kernelversion: 5.10.0
   letsencrypt_directory: {}
   load_averages:
-    15m: 0.68
-    1m: 0.89
-    5m: 0.72
+    15m: 1.63
+    1m: 1.99
+    5m: 1.78
   location: sesi_rocquencourt_staging
   lsbdistcodename: buster
   lsbdistdescription: Debian GNU/Linux 10 (buster)
@@ -110,30 +120,30 @@ values:
   manufacturer: QEMU
   memory:
     swap:
-      available: 77.59 GiB
-      available_bytes: 83307089920
-      capacity: 3.02%
+      available: 73.21 GiB
+      available_bytes: 78606016512
+      capacity: 8.49%
       total: 80.00 GiB
       total_bytes: 85899341824
-      used: 2.41 GiB
-      used_bytes: 2592251904
+      used: 6.79 GiB
+      used_bytes: 7293325312
     system:
-      available: 7.50 GiB
-      available_bytes: 8053702656
-      capacity: 35.88%
-      total: 11.70 GiB
-      total_bytes: 12561051648
-      used: 4.20 GiB
-      used_bytes: 4507348992
-  memoryfree: 7.50 GiB
-  memoryfree_mb: 7680.609375
-  memorysize: 11.70 GiB
-  memorysize_mb: 11979.15234375
+      available: 14.36 GiB
+      available_bytes: 15413714944
+      capacity: 38.63%
+      total: 23.39 GiB
+      total_bytes: 25114517504
+      used: 9.03 GiB
+      used_bytes: 9700802560
+  memoryfree: 14.36 GiB
+  memoryfree_mb: 14699.6640625
+  memorysize: 23.39 GiB
+  memorysize_mb: 23951.0703125
   mountpoints:
     "/":
-      available: 20.28 GiB
-      available_bytes: 21776113664
-      capacity: 35.55%
+      available: 22.53 GiB
+      available_bytes: 24187219968
+      capacity: 28.41%
       device: "/dev/vda1"
       filesystem: ext4
       options:
@@ -142,26 +152,28 @@ values:
       - errors=remount-ro
       size: 31.47 GiB
       size_bytes: 33785901056
-      used: 11.18 GiB
-      used_bytes: 12009787392
+      used: 8.94 GiB
+      used_bytes: 9598681088
     "/dev/shm":
-      available: 5.85 GiB
-      available_bytes: 6279057408
-      capacity: 0.02%
+      available: 11.74 GiB
+      available_bytes: 12608307200
+      capacity: 0.01%
       device: tmpfs
       filesystem: tmpfs
       options:
       - rw
       - nosuid
       - nodev
-      size: 5.85 GiB
-      size_bytes: 6280523776
-      used: 1.40 MiB
-      used_bytes: 1466368
+      - size=12314148k
+      - nr_inodes=3078537
+      size: 11.74 GiB
+      size_bytes: 12609687552
+      used: 1.32 MiB
+      used_bytes: 1380352
     "/run":
-      available: 1.17 GiB
-      available_bytes: 1255530496
-      capacity: 0.05%
+      available: 2.35 GiB
+      available_bytes: 2521358336
+      capacity: 0.02%
       device: tmpfs
       filesystem: tmpfs
       options:
@@ -169,12 +181,13 @@ values:
       - nosuid
       - noexec
       - relatime
-      - size=1226668k
+      - size=2462832k
+      - nr_inodes=3078537
       - mode=755
-      size: 1.17 GiB
-      size_bytes: 1256108032
-      used: 564.00 KiB
-      used_bytes: 577536
+      size: 2.35 GiB
+      size_bytes: 2521939968
+      used: 568.00 KiB
+      used_bytes: 581632
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -188,13 +201,14 @@ values:
       - noexec
       - relatime
       - size=5120k
+      - nr_inodes=3078537
       size: 5.00 MiB
       size_bytes: 5242880
       used: 0 bytes
       used_bytes: 0
     "/run/user/1003":
-      available: 1.17 GiB
-      available_bytes: 1256103936
+      available: 2.16 GiB
+      available_bytes: 2314211328
       capacity: 0%
       device: tmpfs
       filesystem: tmpfs
@@ -203,13 +217,13 @@ values:
       - nosuid
       - nodev
       - relatime
-      - size=1226664k
-      - nr_inodes=306666
+      - size=2259972k
+      - nr_inodes=564993
       - mode=700
       - uid=1003
       - gid=1003
-      size: 1.17 GiB
-      size_bytes: 1256103936
+      size: 2.16 GiB
+      size_bytes: 2314211328
       used: 0 bytes
       used_bytes: 0
     "/sys/fs/cgroup":
@@ -231,9 +245,9 @@ values:
       used: 0 bytes
       used_bytes: 0
     "/tmp":
-      available: 78.12 GiB
-      available_bytes: 83884224512
-      capacity: 2.35%
+      available: 65.78 GiB
+      available_bytes: 70626021376
+      capacity: 17.78%
       device: tmpfs
       filesystem: tmpfs
       options:
@@ -246,8 +260,8 @@ values:
       - nr_inodes=209715200
       size: 80.00 GiB
       size_bytes: 85899341824
-      used: 1.88 GiB
-      used_bytes: 2015117312
+      used: 14.22 GiB
+      used_bytes: 15273320448
   mounts:
   - "/"
   mtu_eth0: 1500
@@ -344,19 +358,19 @@ values:
       uuid: d958fd0e-647f-4373-ae1c-f77f565cb93f
   path: "/usr/bin:/bin:/usr/sbin:/sbin"
   physicalprocessorcount: 1
-  processor0: Intel(R) Xeon(R) CPU E5-2630 v4 @ 2.20GHz
-  processor1: Intel(R) Xeon(R) CPU E5-2630 v4 @ 2.20GHz
-  processor2: Intel(R) Xeon(R) CPU E5-2630 v4 @ 2.20GHz
-  processor3: Intel(R) Xeon(R) CPU E5-2630 v4 @ 2.20GHz
+  processor0: Common KVM processor
+  processor1: Common KVM processor
+  processor2: Common KVM processor
+  processor3: Common KVM processor
   processorcount: 4
   processors:
     count: 4
     isa: unknown
     models:
-    - Intel(R) Xeon(R) CPU E5-2630 v4 @ 2.20GHz
-    - Intel(R) Xeon(R) CPU E5-2630 v4 @ 2.20GHz
-    - Intel(R) Xeon(R) CPU E5-2630 v4 @ 2.20GHz
-    - Intel(R) Xeon(R) CPU E5-2630 v4 @ 2.20GHz
+    - Common KVM processor
+    - Common KVM processor
+    - Common KVM processor
+    - Common KVM processor
     physicalcount: 1
   productname: Standard PC (i440FX + PIIX, 1996)
   public_ipaddresses: []
@@ -422,8 +436,8 @@ values:
   sshrsakey: AAAAB3NzaC1yc2EAAAADAQABAAABAQDTcy+h2GfgNB3hmsQCCApSk1xpluSA3UT+KkoqA925Kog3Dp2HHWMUCKukxXqk8L3ume6QcDKjLppK278D7eYFmsap12MfEyS38GgS75Oz9dWpmD2w+LYomXVpfOrVCOc4Id33kOYHDvBmkRltNiQlqxk/EUUIyX+CieKudN9CS3gdIuWEzHVOW2RO6a0La2dGj7gFzLKTHLvx3krsZwZJ6bu/cRLoU707R70f5quLOn+pZ0rCK9Ed5ahP1JHEiLxmpjg3Xa0EXtrOKYJJx6g+Zd4XPB+cPKfBna5Gzgy5vqserbGR0s63gS2FjaLqvTPTrXNdCu+1PW2Chc+1jfOT
   subnet: sesi_rocquencourt_staging
   sudoversion: 1.8.27
-  swapfree: 77.59 GiB
-  swapfree_mb: 79447.83203125
+  swapfree: 73.21 GiB
+  swapfree_mb: 74964.5390625
   swapsize: 80.00 GiB
   swapsize_mb: 81919.99609375
   swh_hostname:
@@ -431,10 +445,10 @@ values:
     short: worker0
     internal_fqdn: worker0.internal.staging.swh.network
   system_uptime:
-    days: 4
-    hours: 100
-    seconds: 360723
-    uptime: 4 days
+    days: 13
+    hours: 335
+    seconds: 1209166
+    uptime: 13 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -449,15 +463,15 @@ values:
     systemd-timesyncd.service: enabled
   systemd_version: '247'
   timezone: UTC
-  uptime: 4 days
-  uptime_days: 4
-  uptime_hours: 100
-  uptime_seconds: 360723
+  uptime: 13 days
+  uptime_days: 13
+  uptime_hours: 335
+  uptime_seconds: 1209166
   uuid: 7df01691-da81-4308-b3fc-31b157a6e72c
   vcsrepo_svn_ver: 1.10.4
   virtual: kvm
   clientcert: worker0.internal.staging.swh.network
   clientversion: 5.5.10
   clientnoop: false
-timestamp: '2022-04-19T11:53:07.311854766+00:00'
-expiration: '2022-04-19T12:23:07.312265328+00:00'
+timestamp: '2022-05-11T13:23:10.610317698+00:00'
+expiration: '2022-05-11T13:53:10.610795951+00:00'
