@@ -1,0 +1,63 @@
+#!/usr/bin/python3
+
+# Copyright (C) 2022  The Software Heritage developers
+# See the AUTHORS file at the top-level directory of this distribution
+# License: GNU General Public License version 3, or any later version
+# See top-level LICENSE file for more information
+
+# Mirror an upstream repository to the Software Heritage Phabricator instance
+
+from os.path import basename
+import click
+from phabricator import Phabricator
+from common import (
+    PHABRICATOR_REPO_URL,
+    create_phab_repo,
+    wait_phab_repo,
+    clone_and_push_repo,
+)
+
+
+@click.command()
+@click.option(
+    "--default-branch",
+    default="master",
+    help="Repository's default branch name: e.g. main)",
+)
+@click.option(
+    "-i",
+    "--repo-id",
+    type=click.INT,
+    help="When a repository already exists, skip creation and use it.",
+)
+@click.option(
+    "--clone/--no-clone",
+    "clone",
+    type=click.BOOL,
+    help="To clone a repository locally prior to push, inhibit when already cloned.",
+)
+@click.argument("upstream_repo")
+def main(upstream_repo, repo_id, default_branch, clone):
+    """Mirror upstream repository within the swh forge"""
+    module_name = basename(upstream_repo.rstrip('/'))
+    phabricator_repo = f"{PHABRICATOR_REPO_URL}{module_name}.git"
+    phabricator = Phabricator()
+    phabricator.connect()
+    phabricator.update_interfaces()
+
+    if not repo_id:
+        repo = create_phab_repo(phabricator, module_name, upstream_forge_url=upstream_repo)
+        repo_id = repo["object"]["id"]
+
+    wait_phab_repo(phabricator, repo_id)
+    clone_and_push_repo(
+        module_name,
+        phabricator_repo,
+        upstream_repo,
+        default_branch=default_branch,
+        skip_clone=not clone,
+    )
+
+
+if __name__ == "__main__":
+    main()
