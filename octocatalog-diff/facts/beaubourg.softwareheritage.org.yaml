@@ -2,19 +2,25 @@
 name: beaubourg.softwareheritage.org
 values:
   agent_specified_environment: production
-  apt_dist_updates: 5
+  apt_dist_updates: 6
   apt_has_dist_updates: true
-  apt_has_updates: false
+  apt_has_updates: true
   apt_package_dist_updates:
   - icinga2
   - icinga2-bin
   - icinga2-common
   - libboost-context1.74.0
   - libboost-coroutine1.74.0
+  - lxc-pve
   apt_package_security_dist_updates: []
-  apt_reboot_required: false
+  apt_package_security_updates: []
+  apt_package_updates:
+  - lxc-pve
+  apt_reboot_required: true
   apt_security_dist_updates: 0
-  apt_update_last_success: 1656339182
+  apt_security_updates: 0
+  apt_update_last_success: 1657199583
+  apt_updates: 1
   architecture: amd64
   bios_release_date: 01/02/2020
   bios_vendor: Dell Inc.
@@ -1411,7 +1417,7 @@ values:
     privileged: true
     uid: 0
     user: root
-  interfaces: bond0,enp12s0f0,enp12s0f1,enp12s0f2,enp12s0f3,eth0,eth1,eth11,eth2,eth3,eth4,eth5,eth6,lo,veth110i0,vlan1300,vlan440,vlan442,vlan443,vmbr0,vmbr1,vmbr1300,vmbr442,vmbr443
+  interfaces: bond0,enp12s0f0,enp12s0f1,enp12s0f2,enp12s0f3,eth0,eth1,eth11,eth2,eth3,eth4,eth5,eth6,lo,tap159i0,veth110i0,vlan1300,vlan440,vlan442,vlan443,vmbr0,vmbr1,vmbr1300,vmbr442,vmbr443
   ipaddress: 192.168.100.32
   ipaddress6: fe80::2875:eeff:fe30:c9bd
   ipaddress6_lo: "::1"
@@ -1430,9 +1436,9 @@ values:
   kernelversion: 5.15.35
   letsencrypt_directory: {}
   load_averages:
-    15m: 2.01
-    1m: 1.84
-    5m: 1.86
+    15m: 3.81
+    1m: 3.25
+    5m: 3.05
   location: sesi_rocquencourt
   lsbdistcodename: bullseye
   lsbdistdescription: Debian GNU/Linux 11 (bullseye)
@@ -1454,6 +1460,7 @@ values:
   macaddress_eth4: a0:36:9f:b0:74:ec
   macaddress_eth5: a0:36:9f:b0:74:ed
   macaddress_eth6: a0:36:9f:b0:74:ee
+  macaddress_tap159i0: 56:86:7a:74:1b:14
   macaddress_veth110i0: fe:d3:20:7f:d9:2d
   macaddress_vlan1300: 56:ec:55:f9:92:12
   macaddress_vlan440: 56:ec:55:f9:92:12
@@ -1467,22 +1474,22 @@ values:
   manufacturer: Dell Inc.
   memory:
     system:
-      available: 227.74 GiB
-      available_bytes: 244532760576
-      capacity: 54.80%
+      available: 222.24 GiB
+      available_bytes: 238632288256
+      capacity: 55.89%
       total: 503.79 GiB
       total_bytes: 540945223680
-      used: 276.06 GiB
-      used_bytes: 296412463104
-  memoryfree: 227.74 GiB
-  memoryfree_mb: 233204.61328125
+      used: 281.55 GiB
+      used_bytes: 302312935424
+  memoryfree: 222.24 GiB
+  memoryfree_mb: 227577.484375
   memorysize: 503.79 GiB
   memorysize_mb: 515885.56640625
   mountpoints:
     "/":
-      available: 16.52 GiB
-      available_bytes: 17736568832
-      capacity: 36.37%
+      available: 16.56 GiB
+      available_bytes: 17781477376
+      capacity: 36.21%
       device: "/dev/mapper/hdd-beaubourg--root"
       filesystem: ext4
       options:
@@ -1491,8 +1498,8 @@ values:
       - errors=remount-ro
       size: 27.37 GiB
       size_bytes: 29392629760
-      used: 9.44 GiB
-      used_bytes: 10139402240
+      used: 9.40 GiB
+      used_bytes: 10094493696
     "/dev":
       available: 251.87 GiB
       available_bytes: 270440169472
@@ -1561,7 +1568,7 @@ values:
       used_bytes: 0
     "/dev/shm":
       available: 251.83 GiB
-      available_bytes: 270403502080
+      available_bytes: 270400307200
       capacity: 0.03%
       device: tmpfs
       filesystem: tmpfs
@@ -1572,12 +1579,12 @@ values:
       - inode64
       size: 251.90 GiB
       size_bytes: 270472609792
-      used: 65.91 MiB
-      used_bytes: 69107712
+      used: 68.95 MiB
+      used_bytes: 72302592
     "/etc/pve":
-      available: 127.71 MiB
-      available_bytes: 133918720
-      capacity: 0.22%
+      available: 127.70 MiB
+      available_bytes: 133902336
+      capacity: 0.23%
       device: "/dev/fuse"
       filesystem: fuse
       options:
@@ -1591,12 +1598,12 @@ values:
       - allow_other
       size: 128.00 MiB
       size_bytes: 134217728
-      used: 292.00 KiB
-      used_bytes: 299008
+      used: 308.00 KiB
+      used_bytes: 315392
     "/mnt/pve/proxmox-cephfs":
-      available: 878.72 GiB
-      available_bytes: 943517073408
-      capacity: 0.61%
+      available: 761.41 GiB
+      available_bytes: 817553735680
+      capacity: 0.71%
       device: 192.168.100.108,192.168.100.32,192.168.100.34:/
       filesystem: ceph
       options:
@@ -1605,13 +1612,13 @@ values:
       - name=admin
       - secret=<hidden>
       - acl
-      size: 884.14 GiB
-      size_bytes: 949338767360
+      size: 766.83 GiB
+      size_bytes: 823375429632
       used: 5.42 GiB
       used_bytes: 5821693952
     "/run":
       available: 50.38 GiB
-      available_bytes: 54091538432
+      available_bytes: 54091517952
       capacity: 0.01%
       device: tmpfs
       filesystem: tmpfs
@@ -1626,8 +1633,8 @@ values:
       - inode64
       size: 50.38 GiB
       size_bytes: 54094524416
-      used: 2.85 MiB
-      used_bytes: 2985984
+      used: 2.87 MiB
+      used_bytes: 3006464
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -1681,8 +1688,8 @@ values:
       used: 0 bytes
       used_bytes: 0
     "/srv/containers/somerset/postgres":
-      available: 4.87 TiB
-      available_bytes: 5353588391936
+      available: 4.84 TiB
+      available_bytes: 5327125741568
       capacity: 0.03%
       device: data/postgres-misc
       filesystem: zfs
@@ -1691,14 +1698,14 @@ values:
       - noatime
       - xattr
       - posixacl
-      size: 4.87 TiB
-      size_bytes: 5355435196416
+      size: 4.85 TiB
+      size_bytes: 5328972546048
       used: 1.72 GiB
       used_bytes: 1846804480
     "/srv/containers/somerset/postgres/13/replica":
-      available: 4.87 TiB
-      available_bytes: 5353588391936
-      capacity: 59.67%
+      available: 4.84 TiB
+      available_bytes: 5327125741568
+      capacity: 59.87%
       device: data/postgres-replica-13
       filesystem: zfs
       options:
@@ -1707,9 +1714,9 @@ values:
       - xattr
       - posixacl
       size: 12.07 TiB
-      size_bytes: 13275907227648
-      used: 7.21 TiB
-      used_bytes: 7922318835712
+      size_bytes: 13275911421952
+      used: 7.23 TiB
+      used_bytes: 7948785680384
     "/var/lib/ceph/osd/ceph-0":
       available: 251.90 GiB
       available_bytes: 270472581120
@@ -1803,6 +1810,7 @@ values:
   mtu_eth5: 1500
   mtu_eth6: 1500
   mtu_lo: 65536
+  mtu_tap159i0: 9000
   mtu_veth110i0: 9000
   mtu_vlan1300: 9000
   mtu_vlan440: 9000
@@ -1895,6 +1903,9 @@ values:
         network: 127.0.0.0
         network6: "::1"
         scope6: host
+      tap159i0:
+        mac: 56:86:7a:74:1b:14
+        mtu: 9000
       veth110i0:
         mac: fe:d3:20:7f:d9:2d
         mtu: 9000
@@ -2314,10 +2325,10 @@ values:
     short: beaubourg
     internal_fqdn: beaubourg.internal.softwareheritage.org
   system_uptime:
-    days: 4
-    hours: 102
-    seconds: 368793
-    uptime: 4 days
+    days: 14
+    hours: 341
+    seconds: 1229194
+    uptime: 14 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -2332,15 +2343,15 @@ values:
     systemd-timesyncd.service: enabled
   systemd_version: '247'
   timezone: UTC
-  uptime: 4 days
-  uptime_days: 4
-  uptime_hours: 102
-  uptime_seconds: 368793
+  uptime: 14 days
+  uptime_days: 14
+  uptime_hours: 341
+  uptime_seconds: 1229194
   uuid: 4c4c4544-0030-4e10-8056-c4c04f4a4732
   vcsrepo_svn_ver: ''
   virtual: physical
   clientcert: beaubourg.softwareheritage.org
   clientversion: 5.5.22
   clientnoop: false
-timestamp: '2022-06-27T14:31:08.090628691+00:00'
-expiration: '2022-06-27T15:01:08.093274804+00:00'
+timestamp: '2022-07-07T13:31:09.147916538+00:00'
+expiration: '2022-07-07T14:01:09.150631511+00:00'

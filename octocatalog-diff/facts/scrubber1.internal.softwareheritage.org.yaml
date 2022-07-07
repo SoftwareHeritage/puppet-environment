@@ -2,7 +2,7 @@
 name: scrubber1.internal.softwareheritage.org
 values:
   agent_specified_environment: production
-  apt_dist_updates: 10
+  apt_dist_updates: 15
   apt_has_dist_updates: true
   apt_has_updates: true
   apt_package_dist_updates:
@@ -15,7 +15,12 @@ values:
   - libudev1
   - libsystemd0
   - systemd-sysv
+  - icinga2
+  - icinga2-bin
+  - icinga2-common
+  - icinga2-doc
   - python3-requests
+  - python3-swh.core
   apt_package_security_dist_updates: []
   apt_package_security_updates: []
   apt_package_updates:
@@ -23,12 +28,17 @@ values:
   - udev
   - libudev1
   - libzstd1
+  - icinga2
+  - icinga2-bin
+  - icinga2-common
+  - icinga2-doc
   - python3-requests
-  apt_reboot_required: false
+  - python3-swh.core
+  apt_reboot_required: true
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1656339263
-  apt_updates: 5
+  apt_update_last_success: 1657178065
+  apt_updates: 10
   architecture: amd64
   bios_release_date: 04/01/2014
   bios_vendor: SeaBIOS
@@ -42,10 +52,10 @@ values:
   blockdevice_vda_size: 34359738368
   blockdevice_vda_vendor: '0x1af4'
   blockdevices: sr0,vda,sr1
-  cassandracmsheapnewsize: 256
-  cassandracmsmaxheapsize: 1024
-  cassandraheapnewsize: 256
-  cassandramaxheapsize: 1024
+  cassandracmsheapnewsize: 111
+  cassandracmsmaxheapsize: 443
+  cassandraheapnewsize: 111
+  cassandramaxheapsize: 443
   chassistype: Other
   cloudinit_enabled: 'true'
   deployment: production
@@ -121,9 +131,9 @@ values:
   kernelversion: 4.19.0
   letsencrypt_directory: {}
   load_averages:
-    15m: 0.03
-    1m: 0.08
-    5m: 0.02
+    15m: 1.0
+    1m: 0.64
+    5m: 0.79
   lsbdistcodename: buster
   lsbdistdescription: Debian GNU/Linux 10 (buster)
   lsbdistid: Debian
@@ -134,30 +144,30 @@ values:
   manufacturer: QEMU
   memory:
     swap:
-      available: 974.75 MiB
-      available_bytes: 1022095360
-      capacity: 0.13%
+      available: 30.31 MiB
+      available_bytes: 31780864
+      capacity: 96.89%
       total: 976.00 MiB
       total_bytes: 1023406080
-      used: 1.25 MiB
-      used_bytes: 1310720
+      used: 945.69 MiB
+      used_bytes: 991625216
     system:
-      available: 1.83 GiB
-      available_bytes: 1960730624
-      capacity: 18.30%
-      total: 2.24 GiB
-      total_bytes: 2399879168
-      used: 418.80 MiB
-      used_bytes: 439148544
-  memoryfree: 1.83 GiB
-  memoryfree_mb: 1869.8984375
-  memorysize: 2.24 GiB
-  memorysize_mb: 2288.703125
+      available: 225.35 MiB
+      available_bytes: 236298240
+      capacity: 74.58%
+      total: 886.59 MiB
+      total_bytes: 929660928
+      used: 661.24 MiB
+      used_bytes: 693362688
+  memoryfree: 225.35 MiB
+  memoryfree_mb: 225.3515625
+  memorysize: 886.59 MiB
+  memorysize_mb: 886.59375
   mountpoints:
     "/":
-      available: 13.88 GiB
-      available_bytes: 14904094720
-      capacity: 14.44%
+      available: 11.87 GiB
+      available_bytes: 12740972544
+      capacity: 26.86%
       device: "/dev/mapper/base--template--vg-root"
       filesystem: ext4
       options:
@@ -166,12 +176,12 @@ values:
       - errors=remount-ro
       size: 16.22 GiB
       size_bytes: 17419771904
-      used: 2.34 GiB
-      used_bytes: 2515677184
+      used: 4.36 GiB
+      used_bytes: 4678799360
     "/boot":
-      available: 387.43 MiB
-      available_bytes: 406254592
-      capacity: 17.85%
+      available: 351.84 MiB
+      available_bytes: 368935936
+      capacity: 25.39%
       device: "/dev/vda1"
       filesystem: ext2
       options:
@@ -179,8 +189,8 @@ values:
       - relatime
       size: 471.60 MiB
       size_bytes: 494512128
-      used: 84.17 MiB
-      used_bytes: 88257536
+      used: 119.76 MiB
+      used_bytes: 125576192
     "/dev/shm":
       available: 1.93 GiB
       available_bytes: 2069037056
@@ -198,9 +208,9 @@ values:
       used: 0 bytes
       used_bytes: 0
     "/run":
-      available: 394.16 MiB
-      available_bytes: 413310976
-      capacity: 0.12%
+      available: 394.09 MiB
+      available_bytes: 413233152
+      capacity: 0.14%
       device: tmpfs
       filesystem: tmpfs
       options:
@@ -213,8 +223,8 @@ values:
       - mode=755
       size: 394.64 MiB
       size_bytes: 413810688
-      used: 488.00 KiB
-      used_bytes: 499712
+      used: 564.00 KiB
+      used_bytes: 577536
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -231,6 +241,26 @@ values:
       - nr_inodes=505136
       size: 5.00 MiB
       size_bytes: 5242880
+      used: 0 bytes
+      used_bytes: 0
+    "/run/user/1003":
+      available: 374.64 MiB
+      available_bytes: 392835072
+      capacity: 0%
+      device: tmpfs
+      filesystem: tmpfs
+      options:
+      - rw
+      - nosuid
+      - nodev
+      - relatime
+      - size=383628k
+      - nr_inodes=284255
+      - mode=700
+      - uid=1003
+      - gid=1003
+      size: 374.64 MiB
+      size_bytes: 392835072
       used: 0 bytes
       used_bytes: 0
     "/sys/fs/cgroup":
@@ -447,8 +477,8 @@ values:
   sshrsakey: AAAAB3NzaC1yc2EAAAADAQABAAABAQCr+WDYeB1VylpAUUj1d5MPhbLzbG4iFmXl3KAbmTP6e/SyGaIkH0yfx+Y7L+NMvTJaK4grCTiBL+2m+ivXuQkfphvwh4Gf4ZvJ48myUcbu3/Pf42U/Hk85Q1LrSloSRIGGRR8nk5C6uxy14fVJJd76tEpSNmdD87hiG6tZxyTMnaxGnfsTalDWz6biEBDx/TdyCRVlEJoqhpPRC1fN9fWkzFM3L5WIYDSmyTY2amA37Tt2wzwUrVvyzYzVlRDB0NodB0k9LIe7nG+p98H+fyy5hFCSgUcNVu18RD0Lf6GRnHLg4Rh6joipZDj7g9BQ0TOqVmov7NRC1ux6+KneqcBl
   subnet: sesi_rocquencourt
   sudoversion: 1.8.27
-  swapfree: 974.75 MiB
-  swapfree_mb: 974.74609375
+  swapfree: 30.31 MiB
+  swapfree_mb: 30.30859375
   swapsize: 976.00 MiB
   swapsize_mb: 975.99609375
   swh_hostname:
@@ -456,10 +486,10 @@ values:
     short: scrubber1
     internal_fqdn: scrubber1.internal.softwareheritage.org
   system_uptime:
-    days: 0
-    hours: 0
-    seconds: 1879
-    uptime: 0:31 hours
+    days: 9
+    hours: 239
+    seconds: 862270
+    uptime: 9 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -471,15 +501,15 @@ values:
     systemd-timesyncd.service: enabled
   systemd_version: '241'
   timezone: UTC
-  uptime: 0:31 hours
-  uptime_days: 0
-  uptime_hours: 0
-  uptime_seconds: 1879
+  uptime: 9 days
+  uptime_days: 9
+  uptime_hours: 239
+  uptime_seconds: 862270
   uuid: b0ea5572-271d-42b7-a6ce-8ea1a061d3f6
   vcsrepo_svn_ver: ''
   virtual: kvm
   clientcert: scrubber1.internal.softwareheritage.org
   clientversion: 5.5.10
   clientnoop: false
-timestamp: '2022-06-27T14:44:18.183238957+00:00'
-expiration: '2022-06-27T15:14:18.183548701+00:00'
+timestamp: '2022-07-07T13:44:08.781537474+00:00'
+expiration: '2022-07-07T14:14:08.781877254+00:00'

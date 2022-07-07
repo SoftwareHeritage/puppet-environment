@@ -2,7 +2,7 @@
 name: granet.internal.softwareheritage.org
 values:
   agent_specified_environment: production
-  apt_dist_updates: 4
+  apt_dist_updates: 8
   apt_has_dist_updates: true
   apt_has_updates: true
   apt_package_dist_updates:
@@ -10,6 +10,10 @@ values:
   - docker-ce-cli
   - docker-ce
   - docker-ce-rootless-extras
+  - icinga2
+  - icinga2-bin
+  - icinga2-common
+  - icinga2-doc
   apt_package_security_dist_updates: []
   apt_package_security_updates: []
   apt_package_updates:
@@ -17,11 +21,15 @@ values:
   - docker-ce-cli
   - docker-ce
   - docker-ce-rootless-extras
-  apt_reboot_required: false
+  - icinga2
+  - icinga2-bin
+  - icinga2-common
+  - icinga2-doc
+  apt_reboot_required: true
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1656069243
-  apt_updates: 4
+  apt_update_last_success: 1657199643
+  apt_updates: 8
   architecture: amd64
   bios_release_date: 12/13/2021
   bios_vendor: Dell Inc.
@@ -204,7 +212,7 @@ values:
     NFd: 25
     OomKillDisable: true
     NGoroutines: 33
-    SystemTime: '2022-06-24T12:09:05.714749071Z'
+    SystemTime: '2022-07-07T13:39:05.854492292Z'
     LoggingDriver: journald
     CgroupDriver: cgroupfs
     CgroupVersion: '1'
@@ -433,7 +441,7 @@ values:
       vardir: "/var/lib/puppet"
       server: pergamon.internal.softwareheritage.org
   facterversion: 3.11.0
-  filesystems: ext2,ext3,ext4,vfat
+  filesystems: btrfs,ext2,ext3,ext4,hfs,hfsplus,jfs,minix,msdos,qnx4,ufs,vfat,xfs
   fips_enabled: false
   fqdn: granet.internal.softwareheritage.org
   gid: root
@@ -472,9 +480,9 @@ values:
   kernelversion: 4.19.0
   letsencrypt_directory: {}
   load_averages:
-    15m: 2.68
-    1m: 2.98
-    5m: 3.12
+    15m: 2.15
+    1m: 1.91
+    5m: 2.12
   location: sesi_rocquencourt
   lsbdistcodename: buster
   lsbdistdescription: Debian GNU/Linux 10 (buster)
@@ -491,22 +499,22 @@ values:
   manufacturer: Dell Inc.
   memory:
     system:
-      available: 528.18 GiB
-      available_bytes: 567128199168
-      capacity: 30.00%
+      available: 518.17 GiB
+      available_bytes: 556382171136
+      capacity: 31.33%
       total: 754.55 GiB
       total_bytes: 810196430848
-      used: 226.37 GiB
-      used_bytes: 243068231680
-  memoryfree: 528.18 GiB
-  memoryfree_mb: 540855.59765625
+      used: 236.38 GiB
+      used_bytes: 253814259712
+  memoryfree: 518.17 GiB
+  memoryfree_mb: 530607.38671875
   memorysize: 754.55 GiB
   memorysize_mb: 772663.52734375
   mountpoints:
     "/":
-      available: 9.43 GiB
-      available_bytes: 10127704064
-      capacity: 74.18%
+      available: 9.26 GiB
+      available_bytes: 9938538496
+      capacity: 74.66%
       device: "/dev/mapper/ssd_mirror-root"
       filesystem: ext4
       options:
@@ -516,8 +524,8 @@ values:
       - stripe=128
       size: 36.53 GiB
       size_bytes: 39219421184
-      used: 27.09 GiB
-      used_bytes: 29091717120
+      used: 27.27 GiB
+      used_bytes: 29280882688
     "/boot/efi":
       available: 115.87 MiB
       available_bytes: 121498624
@@ -539,9 +547,9 @@ values:
       used: 3.25 MiB
       used_bytes: 3410944
     "/dev/shm":
-      available: 247.50 GiB
-      available_bytes: 265751736320
-      capacity: 34.40%
+      available: 137.77 GiB
+      available_bytes: 147932348416
+      capacity: 63.48%
       device: tmpfs
       filesystem: tmpfs
       options:
@@ -550,11 +558,11 @@ values:
       - nodev
       size: 377.28 GiB
       size_bytes: 405098213376
-      used: 129.78 GiB
-      used_bytes: 139346477056
+      used: 239.50 GiB
+      used_bytes: 257165864960
     "/run":
       available: 75.45 GiB
-      available_bytes: 81017585664
+      available_bytes: 81017622528
       capacity: 0.00%
       device: tmpfs
       filesystem: tmpfs
@@ -567,8 +575,8 @@ values:
       - mode=755
       size: 75.46 GiB
       size_bytes: 81019645952
-      used: 1.96 MiB
-      used_bytes: 2060288
+      used: 1.93 MiB
+      used_bytes: 2023424
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -662,26 +670,6 @@ values:
       - mode=700
       - uid=1023
       - gid=1023
-      size: 75.46 GiB
-      size_bytes: 81019641856
-      used: 0 bytes
-      used_bytes: 0
-    "/run/user/1025":
-      available: 75.46 GiB
-      available_bytes: 81019641856
-      capacity: 0%
-      device: tmpfs
-      filesystem: tmpfs
-      options:
-      - rw
-      - nosuid
-      - nodev
-      - relatime
-      - size=79120744k
-      - nr_inodes=19780186
-      - mode=700
-      - uid=1025
-      - gid=1025
       size: 75.46 GiB
       size_bytes: 81019641856
       used: 0 bytes
@@ -1180,10 +1168,10 @@ values:
     short: granet
     internal_fqdn: granet.internal.softwareheritage.org
   system_uptime:
-    days: 49
-    hours: 1197
-    seconds: 4310249
-    uptime: 49 days
+    days: 62
+    hours: 1510
+    seconds: 5438849
+    uptime: 62 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -1198,15 +1186,15 @@ values:
     systemd-timesyncd.service: enabled
   systemd_version: '247'
   timezone: UTC
-  uptime: 49 days
-  uptime_days: 49
-  uptime_hours: 1197
-  uptime_seconds: 4310249
+  uptime: 62 days
+  uptime_days: 62
+  uptime_hours: 1510
+  uptime_seconds: 5438849
   uuid: 4c4c4544-0039-3710-8031-b2c04f545a32
   vcsrepo_svn_ver: 1.10.4
   virtual: physical
   clientcert: granet.internal.softwareheritage.org
   clientversion: 5.5.10
   clientnoop: false
-timestamp: '2022-06-24T12:09:07.686993753+00:00'
-expiration: '2022-06-24T12:39:07.688187942+00:00'
+timestamp: '2022-07-07T13:39:06.866160845+00:00'
+expiration: '2022-07-07T14:09:06.868291523+00:00'
