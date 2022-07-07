@@ -344,6 +344,16 @@ vms = {
     :box         => $global_debian11_box,
     :box_url     => $global_debian11_box_url,
   },
+  "thanos" => {
+    :hostname    => "thanos.internal.admin.swh.network",
+    :ip          => "10.168.50.90",
+    :type        => TYPE_AGENT,
+    :memory      => 4096,
+    :cpus        => 4,
+    :environment => ENV_PRODUCTION,
+    :box         => $global_debian11_box,
+    :box_url     => $global_debian11_box_url,
+  },
   "kelvingrove" => {
     :hostname    => "kelvingrove.internal.softwareheritage.org",
     :ip          => "10.168.100.106",
