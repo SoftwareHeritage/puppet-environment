@@ -2,24 +2,26 @@
 name: thyssen.internal.softwareheritage.org
 values:
   agent_specified_environment: production
-  apt_dist_updates: 3
+  apt_dist_updates: 4
   apt_has_dist_updates: true
   apt_has_updates: true
   apt_package_dist_updates:
   - icinga2
   - icinga2-bin
   - icinga2-common
+  - jenkins
   apt_package_security_dist_updates: []
   apt_package_security_updates: []
   apt_package_updates:
   - icinga2
   - icinga2-bin
   - icinga2-common
+  - jenkins
   apt_reboot_required: true
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1657537622
-  apt_updates: 3
+  apt_update_last_success: 1658153223
+  apt_updates: 4
   architecture: amd64
   augeas:
     version: 1.12.0
@@ -68,7 +70,7 @@ values:
     ContainersRunning: 4
     ContainersPaused: 0
     ContainersStopped: 0
-    Images: 97
+    Images: 98
     Driver: overlay2
     DriverStatus:
     - - Backing Filesystem
@@ -117,7 +119,7 @@ values:
     NFd: 59
     OomKillDisable: false
     NGoroutines: 159
-    SystemTime: '2022-07-11T12:06:05.772867801Z'
+    SystemTime: '2022-07-18T15:06:05.364619345Z'
     LoggingDriver: journald
     CgroupDriver: systemd
     CgroupVersion: '2'
@@ -173,9 +175,9 @@ values:
       Cluster:
         ID: 3m7l4agvq8j7ckqpxx7zs2wk6
         Version:
-          Index: 36124
+          Index: 37973
         CreatedAt: '2022-06-23T11:39:54.046183353Z'
-        UpdatedAt: '2022-07-11T00:29:09.196525134Z'
+        UpdatedAt: '2022-07-18T12:29:09.196781261Z'
         Spec:
           Name: default
           Labels: {}
@@ -261,7 +263,8 @@ values:
         Path: "/usr/libexec/docker/cli-plugins/docker-scan"
       Warnings: ''
     network:
-      managed_interfaces: {}
+      managed_interfaces:
+        br-cb4988e48b4d: docker_default
       bridge:
         Name: bridge
         Id: c471d27a5491318066ad048e788ef0d1684764a675325aee0e32f43ff0bc5681
@@ -314,6 +317,31 @@ values:
           com.docker.network.bridge.name: docker0
           com.docker.network.driver.mtu: '1500'
         Labels: {}
+      docker_default:
+        Name: docker_default
+        Id: cb4988e48b4dd0fd448c1cb8cf339cbee682bee393b8d963623e7c23a1dd2e81
+        Created: '2022-07-14T03:06:16.143215598Z'
+        Scope: local
+        Driver: bridge
+        EnableIPv6: false
+        IPAM:
+          Driver: default
+          Options: ''
+          Config:
+          - Subnet: 172.22.0.0/16
+            Gateway: 172.22.0.1
+        Internal: false
+        Attachable: true
+        Ingress: false
+        ConfigFrom:
+          Network: ''
+        ConfigOnly: false
+        Containers: {}
+        Options: {}
+        Labels:
+          com.docker.compose.network: default
+          com.docker.compose.project: docker
+          com.docker.compose.version: 1.29.2
       docker_gwbridge:
         Name: docker_gwbridge
         Id: 7ffd48ca2960fc0de7e52e74595412ed2032a089a9b064266175e99a6bdfff74
@@ -503,9 +531,10 @@ values:
     privileged: true
     uid: 0
     user: root
-  interfaces: docker0,docker_gwbridge,ens18,lo,veth3f59f3f,veth597e3d8,vetha03c2a4,vethab5e62f,vethd7e2bf8
+  interfaces: br-cb4988e48b4d,docker0,docker_gwbridge,ens18,lo,veth3f59f3f,veth597e3d8,vetha03c2a4,vethab5e62f,vethd7e2bf8
   ipaddress: 192.168.100.105
   ipaddress6: fe80::5054:ff:fe1a:85be
+  ipaddress6_br-cb4988e48b4d: fe80::42:88ff:fe4f:c32d
   ipaddress6_docker0: fe80::42:1fff:fe96:6b6d
   ipaddress6_docker_gwbridge: fe80::42:73ff:fefb:97b4
   ipaddress6_ens18: fe80::5054:ff:fe1a:85be
@@ -515,6 +544,7 @@ values:
   ipaddress6_vetha03c2a4: fe80::b8a7:c0ff:fea8:58e5
   ipaddress6_vethab5e62f: fe80::b827:deff:fea8:d8e7
   ipaddress6_vethd7e2bf8: fe80::807e:62ff:fe4e:7289
+  ipaddress_br-cb4988e48b4d: 172.22.0.1
   ipaddress_docker0: 172.17.0.1
   ipaddress_docker_gwbridge: 172.18.0.1
   ipaddress_ens18: 192.168.100.105
@@ -532,9 +562,9 @@ values:
   kernelversion: 5.10.0
   letsencrypt_directory: {}
   load_averages:
-    15m: 0.55
-    1m: 0.14
-    5m: 0.32
+    15m: 0.67
+    1m: 0.42
+    5m: 0.19
   location: sesi_rocquencourt
   lsbdistcodename: bullseye
   lsbdistdescription: Debian GNU/Linux 11 (bullseye)
@@ -543,6 +573,7 @@ values:
   lsbmajdistrelease: '11'
   lsbminordistrelease: '4'
   macaddress: 52:54:00:1a:85:be
+  macaddress_br-cb4988e48b4d: 02:42:88:4f:c3:2d
   macaddress_docker0: 02:42:1f:96:6b:6d
   macaddress_docker_gwbridge: 02:42:73:fb:97:b4
   macaddress_ens18: 52:54:00:1a:85:be
@@ -554,30 +585,30 @@ values:
   manufacturer: QEMU
   memory:
     swap:
-      available: 2.61 GiB
-      available_bytes: 2797461504
-      capacity: 31.73%
+      available: 2.76 GiB
+      available_bytes: 2959126528
+      capacity: 27.79%
       total: 3.82 GiB
       total_bytes: 4097830912
-      used: 1.21 GiB
-      used_bytes: 1300369408
+      used: 1.06 GiB
+      used_bytes: 1138704384
     system:
-      available: 18.27 GiB
-      available_bytes: 19617402880
-      capacity: 41.36%
+      available: 18.09 GiB
+      available_bytes: 19418714112
+      capacity: 41.95%
       total: 31.16 GiB
       total_bytes: 33453469696
-      used: 12.89 GiB
-      used_bytes: 13836066816
-  memoryfree: 18.27 GiB
-  memoryfree_mb: 18708.61328125
+      used: 13.07 GiB
+      used_bytes: 14034755584
+  memoryfree: 18.09 GiB
+  memoryfree_mb: 18519.12890625
   memorysize: 31.16 GiB
   memorysize_mb: 31903.71484375
   mountpoints:
     "/":
-      available: 66.97 GiB
-      available_bytes: 71910768640
-      capacity: 51.23%
+      available: 65.53 GiB
+      available_bytes: 70366953472
+      capacity: 52.27%
       device: "/dev/mapper/thyssen--vg-root"
       filesystem: ext4
       options:
@@ -586,8 +617,8 @@ values:
       - errors=remount-ro
       size: 143.63 GiB
       size_bytes: 154226327552
-      used: 70.34 GiB
-      used_bytes: 75530706944
+      used: 71.78 GiB
+      used_bytes: 77074522112
     "/dev":
       available: 23.56 GiB
       available_bytes: 25297858560
@@ -671,7 +702,7 @@ values:
       used_bytes: 0
     "/run":
       available: 4.71 GiB
-      available_bytes: 5062344704
+      available_bytes: 5062340608
       capacity: 0.02%
       device: tmpfs
       filesystem: tmpfs
@@ -686,8 +717,8 @@ values:
       - mode=755
       size: 4.72 GiB
       size_bytes: 5063335936
-      used: 968.00 KiB
-      used_bytes: 991232
+      used: 972.00 KiB
+      used_bytes: 995328
     "/run/docker/netns/1-q1x5neupfn":
       available: 0 bytes
       available_bytes: 0
@@ -812,9 +843,9 @@ values:
       used: 0 bytes
       used_bytes: 0
     "/var/lib/docker/overlay2/0cb67cb9724d6eeee857d2e73b441804aefb99ec5535890d362a2e4bacc16db7/merged":
-      available: 66.97 GiB
-      available_bytes: 71910768640
-      capacity: 51.23%
+      available: 65.53 GiB
+      available_bytes: 70366953472
+      capacity: 52.27%
       device: overlay
       filesystem: overlay
       options:
@@ -825,12 +856,12 @@ values:
       - workdir=/var/lib/docker/overlay2/0cb67cb9724d6eeee857d2e73b441804aefb99ec5535890d362a2e4bacc16db7/work
       size: 143.63 GiB
       size_bytes: 154226327552
-      used: 70.34 GiB
-      used_bytes: 75530706944
+      used: 71.78 GiB
+      used_bytes: 77074522112
     "/var/lib/docker/overlay2/90cadafc2a5507e5f8e048c0c796e2a983b452214fc59c522b0c4a81c3790b0a/merged":
-      available: 66.97 GiB
-      available_bytes: 71910768640
-      capacity: 51.23%
+      available: 65.53 GiB
+      available_bytes: 70366953472
+      capacity: 52.27%
       device: overlay
       filesystem: overlay
       options:
@@ -841,12 +872,12 @@ values:
       - workdir=/var/lib/docker/overlay2/90cadafc2a5507e5f8e048c0c796e2a983b452214fc59c522b0c4a81c3790b0a/work
       size: 143.63 GiB
       size_bytes: 154226327552
-      used: 70.34 GiB
-      used_bytes: 75530706944
+      used: 71.78 GiB
+      used_bytes: 77074522112
     "/var/lib/docker/overlay2/9c3c8e3fa53b63b1d4b94ba2e523a38d7b67512255ab0b11a77fe140277fa4a2/merged":
-      available: 66.97 GiB
-      available_bytes: 71910768640
-      capacity: 51.23%
+      available: 65.53 GiB
+      available_bytes: 70366953472
+      capacity: 52.27%
       device: overlay
       filesystem: overlay
       options:
@@ -857,12 +888,12 @@ values:
       - workdir=/var/lib/docker/overlay2/9c3c8e3fa53b63b1d4b94ba2e523a38d7b67512255ab0b11a77fe140277fa4a2/work
       size: 143.63 GiB
       size_bytes: 154226327552
-      used: 70.34 GiB
-      used_bytes: 75530706944
+      used: 71.78 GiB
+      used_bytes: 77074522112
     "/var/lib/docker/overlay2/b798fbb476665e07ae3658e1d1101d6d66937bb0fac8bb9d8d86a7639aa368af/merged":
-      available: 66.97 GiB
-      available_bytes: 71910768640
-      capacity: 51.23%
+      available: 65.53 GiB
+      available_bytes: 70366953472
+      capacity: 52.27%
       device: overlay
       filesystem: overlay
       options:
@@ -873,14 +904,15 @@ values:
       - workdir=/var/lib/docker/overlay2/b798fbb476665e07ae3658e1d1101d6d66937bb0fac8bb9d8d86a7639aa368af/work
       size: 143.63 GiB
       size_bytes: 154226327552
-      used: 70.34 GiB
-      used_bytes: 75530706944
+      used: 71.78 GiB
+      used_bytes: 77074522112
   mounts:
   - "/"
   - "/var/lib/docker/overlay2/b798fbb476665e07ae3658e1d1101d6d66937bb0fac8bb9d8d86a7639aa368af/merged"
   - "/var/lib/docker/overlay2/90cadafc2a5507e5f8e048c0c796e2a983b452214fc59c522b0c4a81c3790b0a/merged"
   - "/var/lib/docker/overlay2/0cb67cb9724d6eeee857d2e73b441804aefb99ec5535890d362a2e4bacc16db7/merged"
   - "/var/lib/docker/overlay2/9c3c8e3fa53b63b1d4b94ba2e523a38d7b67512255ab0b11a77fe140277fa4a2/merged"
+  mtu_br-cb4988e48b4d: 1500
   mtu_docker0: 1500
   mtu_docker_gwbridge: 1500
   mtu_ens18: 1500
@@ -893,6 +925,7 @@ values:
   mysql_server_id: 1780327
   netmask: 255.255.255.0
   netmask6: 'ffff:ffff:ffff:ffff::'
+  netmask6_br-cb4988e48b4d: 'ffff:ffff:ffff:ffff::'
   netmask6_docker0: 'ffff:ffff:ffff:ffff::'
   netmask6_docker_gwbridge: 'ffff:ffff:ffff:ffff::'
   netmask6_ens18: 'ffff:ffff:ffff:ffff::'
@@ -902,12 +935,14 @@ values:
   netmask6_vetha03c2a4: 'ffff:ffff:ffff:ffff::'
   netmask6_vethab5e62f: 'ffff:ffff:ffff:ffff::'
   netmask6_vethd7e2bf8: 'ffff:ffff:ffff:ffff::'
+  netmask_br-cb4988e48b4d: 255.255.0.0
   netmask_docker0: 255.255.0.0
   netmask_docker_gwbridge: 255.255.0.0
   netmask_ens18: 255.255.255.0
   netmask_lo: 255.0.0.0
   network: 192.168.100.0
   network6: 'fe80::'
+  network6_br-cb4988e48b4d: 'fe80::'
   network6_docker0: 'fe80::'
   network6_docker_gwbridge: 'fe80::'
   network6_ens18: 'fe80::'
@@ -917,6 +952,7 @@ values:
   network6_vetha03c2a4: 'fe80::'
   network6_vethab5e62f: 'fe80::'
   network6_vethd7e2bf8: 'fe80::'
+  network_br-cb4988e48b4d: 172.22.0.0
   network_docker0: 172.17.0.0
   network_docker_gwbridge: 172.18.0.0
   network_ens18: 192.168.100.0
@@ -926,6 +962,24 @@ values:
     fqdn: thyssen.internal.softwareheritage.org
     hostname: thyssen
     interfaces:
+      br-cb4988e48b4d:
+        bindings:
+        - address: 172.22.0.1
+          netmask: 255.255.0.0
+          network: 172.22.0.0
+        bindings6:
+        - address: fe80::42:88ff:fe4f:c32d
+          netmask: 'ffff:ffff:ffff:ffff::'
+          network: 'fe80::'
+        ip: 172.22.0.1
+        ip6: fe80::42:88ff:fe4f:c32d
+        mac: 02:42:88:4f:c3:2d
+        mtu: 1500
+        netmask: 255.255.0.0
+        netmask6: 'ffff:ffff:ffff:ffff::'
+        network: 172.22.0.0
+        network6: 'fe80::'
+        scope6: link
       docker0:
         bindings:
         - address: 172.17.0.1
@@ -1143,6 +1197,7 @@ values:
   rubysitedir: "/usr/local/lib/site_ruby/2.7.0"
   rubyversion: 2.7.4
   scope6: link
+  scope6_br-cb4988e48b4d: link
   scope6_docker0: link
   scope6_docker_gwbridge: link
   scope6_ens18: link
@@ -1192,8 +1247,8 @@ values:
   sshrsakey: AAAAB3NzaC1yc2EAAAADAQABAAABAQCtlruI83b5Q71bLilCn2dQMVZ5AUyJW7lzng1DCymIFGbZVVHOCnP/xSb3u6NV8XnXOuWvUZKGfBb0hiWLVhpGNPPvBWrUSmxWKWd38ZUn3nxb3isV8i9BchkmaUGAtE8KpzCw0K/6qXiPxPTM7KtFWwTKERBS9Z7soKTSmrEUsrkLBXz2PJPdsgSlf0GvIoO1x7cfKKtKMMoo9VC8w+TPt3efGFhlqUZKRoo+MVRpZO5l1U8sT05r/iag3umOUCWF0eAbVYpAQzMXnOyp2xruYRYIv72+nmXfiClsXpQZ0SypSeltbr4FDvwOQs/whYHK1RvPeq+KnBZGfAsJ1jsf
   subnet: sesi_rocquencourt
   sudoversion: 1.9.5p2
-  swapfree: 2.61 GiB
-  swapfree_mb: 2667.8671875
+  swapfree: 2.76 GiB
+  swapfree_mb: 2822.04296875
   swapsize: 3.82 GiB
   swapsize_mb: 3907.99609375
   swh_hostname:
@@ -1201,10 +1256,10 @@ values:
     short: thyssen
     internal_fqdn: thyssen.internal.softwareheritage.org
   system_uptime:
-    days: 114
-    hours: 2756
-    seconds: 9923622
-    uptime: 114 days
+    days: 121
+    hours: 2927
+    seconds: 10539221
+    uptime: 121 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -1218,15 +1273,15 @@ values:
     systemd-time-wait-sync.service: disabled
   systemd_version: '247'
   timezone: UTC
-  uptime: 114 days
-  uptime_days: 114
-  uptime_hours: 2756
-  uptime_seconds: 9923622
+  uptime: 121 days
+  uptime_days: 121
+  uptime_hours: 2927
+  uptime_seconds: 10539221
   uuid: f76b10b2-3dec-4d0a-8a3d-172d18877c1c
   vcsrepo_svn_ver: ''
   virtual: kvm
   clientcert: thyssen.internal.softwareheritage.org
   clientversion: 5.5.22
   clientnoop: false
-timestamp: '2022-07-11T12:06:07.025334929+00:00'
-expiration: '2022-07-11T12:36:07.026236582+00:00'
+timestamp: '2022-07-18T15:06:06.569428487+00:00'
+expiration: '2022-07-18T15:36:06.570815161+00:00'

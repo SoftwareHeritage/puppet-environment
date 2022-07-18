@@ -2,7 +2,7 @@
 name: worker3.internal.staging.swh.network
 values:
   agent_specified_environment: staging
-  apt_dist_updates: 6
+  apt_dist_updates: 9
   apt_has_dist_updates: true
   apt_has_updates: true
   apt_package_dist_updates:
@@ -10,7 +10,10 @@ values:
   - icinga2-bin
   - icinga2-common
   - icinga2-doc
+  - python3-swh.auth.django
   - python3-swh.core
+  - python3-swh.auth
+  - python3-swh.model
   - python3-swh.scheduler
   apt_package_security_dist_updates: []
   apt_package_security_updates: []
@@ -19,13 +22,16 @@ values:
   - icinga2-bin
   - icinga2-common
   - icinga2-doc
+  - python3-swh.auth.django
   - python3-swh.core
+  - python3-swh.auth
+  - python3-swh.model
   - python3-swh.scheduler
   apt_reboot_required: true
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1657540323
-  apt_updates: 6
+  apt_update_last_success: 1658155923
+  apt_updates: 9
   architecture: amd64
   bios_release_date: 04/01/2014
   bios_vendor: SeaBIOS
@@ -42,9 +48,9 @@ values:
   blockdevice_vdb_vendor: '0x1af4'
   blockdevices: vdb,sr0,vda,sr1
   cassandracmsheapnewsize: 400
-  cassandracmsmaxheapsize: 6027
+  cassandracmsmaxheapsize: 6002
   cassandraheapnewsize: 400
-  cassandramaxheapsize: 6027
+  cassandramaxheapsize: 6002
   chassistype: Other
   cloudinit_enabled: 'true'
   deployment: staging
@@ -124,9 +130,9 @@ values:
   kernelversion: 4.19.0
   letsencrypt_directory: {}
   load_averages:
-    15m: 1.43
-    1m: 1.38
-    5m: 1.44
+    15m: 1.31
+    1m: 1.31
+    5m: 1.31
   lsbdistcodename: buster
   lsbdistdescription: Debian GNU/Linux 10 (buster)
   lsbdistid: Debian
@@ -137,30 +143,30 @@ values:
   manufacturer: QEMU
   memory:
     swap:
-      available: 75.88 GiB
-      available_bytes: 81471414272
-      capacity: 5.15%
+      available: 77.54 GiB
+      available_bytes: 83253882880
+      capacity: 3.08%
       total: 80.00 GiB
       total_bytes: 85899341824
-      used: 4.12 GiB
-      used_bytes: 4427927552
+      used: 2.46 GiB
+      used_bytes: 2645458944
     system:
-      available: 14.60 GiB
-      available_bytes: 15681925120
-      capacity: 37.96%
-      total: 23.54 GiB
-      total_bytes: 25277186048
-      used: 8.94 GiB
-      used_bytes: 9595260928
-  memoryfree: 14.60 GiB
-  memoryfree_mb: 14955.44921875
-  memorysize: 23.54 GiB
-  memorysize_mb: 24106.203125
+      available: 20.79 GiB
+      available_bytes: 22318440448
+      capacity: 11.34%
+      total: 23.44 GiB
+      total_bytes: 25172328448
+      used: 2.66 GiB
+      used_bytes: 2853888000
+  memoryfree: 20.79 GiB
+  memoryfree_mb: 21284.5234375
+  memorysize: 23.44 GiB
+  memorysize_mb: 24006.203125
   mountpoints:
     "/":
-      available: 9.73 GiB
-      available_bytes: 10444034048
-      capacity: 40.66%
+      available: 9.78 GiB
+      available_bytes: 10497925120
+      capacity: 40.36%
       device: "/dev/mapper/base--template--vg-root"
       filesystem: ext4
       options:
@@ -169,11 +175,11 @@ values:
       - errors=remount-ro
       size: 16.39 GiB
       size_bytes: 17601216512
-      used: 6.67 GiB
-      used_bytes: 7157182464
+      used: 6.62 GiB
+      used_bytes: 7103291392
     "/dev/shm":
       available: 11.77 GiB
-      available_bytes: 12636921856
+      available_bytes: 12636971008
       capacity: 0.01%
       device: tmpfs
       filesystem: tmpfs
@@ -181,10 +187,12 @@ values:
       - rw
       - nosuid
       - nodev
+      - size=12342376k
+      - nr_inodes=3085594
       size: 11.77 GiB
       size_bytes: 12638593024
-      used: 1.59 MiB
-      used_bytes: 1671168
+      used: 1.55 MiB
+      used_bytes: 1622016
     "/run":
       available: 2.35 GiB
       available_bytes: 2527035392
@@ -197,6 +205,7 @@ values:
       - noexec
       - relatime
       - size=2468476k
+      - nr_inodes=3085594
       - mode=755
       size: 2.35 GiB
       size_bytes: 2527719424
@@ -215,6 +224,7 @@ values:
       - noexec
       - relatime
       - size=5120k
+      - nr_inodes=3085594
       size: 5.00 MiB
       size_bytes: 5242880
       used: 0 bytes
@@ -258,9 +268,9 @@ values:
       used: 0 bytes
       used_bytes: 0
     "/tmp":
-      available: 78.86 GiB
-      available_bytes: 84679528448
-      capacity: 1.42%
+      available: 79.13 GiB
+      available_bytes: 84960706560
+      capacity: 1.09%
       device: tmpfs
       filesystem: tmpfs
       options:
@@ -273,8 +283,8 @@ values:
       - nr_inodes=209715200
       size: 80.00 GiB
       size_bytes: 85899341824
-      used: 1.14 GiB
-      used_bytes: 1219813376
+      used: 895.15 MiB
+      used_bytes: 938635264
   mounts:
   - "/"
   mtu_eth0: 1500
@@ -469,8 +479,8 @@ values:
   sshrsakey: AAAAB3NzaC1yc2EAAAADAQABAAABAQDCRH2jeKO7P8y9c66YLT/KEnnacp/SDqxTEwPke6tVW4V21IlKWLi88U96E78QMCnds2rVz7rClqwwgZhI9xa+FvlCBElWd5LjUO6hM9Ha+5MASoAbiKp4WsTxr9aIACwBM9/qcoRBtGX1c40bQzvgb7kPUyBXkm1xmeNcJihOTni2P6U98IMM/bwSTfmtTrcakq15nZLWofbHn1UTusl/Apu++N4YM9pKJaGgr48WGvih1ulkOVnKURIQgN7BQZ7VT4+R05oBDrhY3X3bW60ij43Fo+d29HUDrU3xAzU1ERAt4tEMc2SSextC6ayt81D/cNXwpoznodPMWmeJ3AR3
   subnet: sesi_rocquencourt_staging
   sudoversion: 1.8.27
-  swapfree: 75.88 GiB
-  swapfree_mb: 77697.1953125
+  swapfree: 77.54 GiB
+  swapfree_mb: 79397.08984375
   swapsize: 80.00 GiB
   swapsize_mb: 81919.99609375
   swh_hostname:
@@ -478,10 +488,10 @@ values:
     short: worker3
     internal_fqdn: worker3.internal.staging.swh.network
   system_uptime:
-    days: 74
-    hours: 1799
-    seconds: 6478726
-    uptime: 74 days
+    days: 82
+    hours: 1970
+    seconds: 7094326
+    uptime: 82 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -496,15 +506,15 @@ values:
     systemd-timesyncd.service: enabled
   systemd_version: '247'
   timezone: UTC
-  uptime: 74 days
-  uptime_days: 74
-  uptime_hours: 1799
-  uptime_seconds: 6478726
+  uptime: 82 days
+  uptime_days: 82
+  uptime_hours: 1970
+  uptime_seconds: 7094326
   uuid: 36f63213-cc80-4001-a198-b49ad300df39
   vcsrepo_svn_ver: 1.10.4
   virtual: kvm
   clientcert: worker3.internal.staging.swh.network
   clientversion: 5.5.10
   clientnoop: false
-timestamp: '2022-07-11T12:23:10.552431854+00:00'
-expiration: '2022-07-11T12:53:10.553247638+00:00'
+timestamp: '2022-07-18T15:23:09.865325793+00:00'
+expiration: '2022-07-18T15:53:09.866175451+00:00'
