@@ -15,6 +15,8 @@ EOF
 export DEBIAN_FRONTEND=noninteractive
 
 apt-get update
+apt-get upgrade -y
+
 apt-get install -y man wget curl telnet net-tools dnsutils traceroute unbound gpg
 
 ####
