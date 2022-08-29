@@ -495,6 +495,14 @@ vms = {
     :box         => debian11_box,
     :box_url     => debian11_box_url,
   },
+  "prod-granet" => {
+    :hostname    => "granet.internal.softwareheritage.org",
+    :ip          => "10.168.100.51",
+    :type        => TYPE_AGENT,
+    :memory      => 1024,
+    :cpus        => 2,
+    :environment => ENV_PRODUCTION,
+  },
   "prod-webapp1" => {
     :hostname    => "webapp1.internal.softwareheritage.org",
     :ip          => "10.168.100.71",
