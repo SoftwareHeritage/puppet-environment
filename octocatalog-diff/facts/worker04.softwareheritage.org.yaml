@@ -2,7 +2,7 @@
 name: worker04.softwareheritage.org
 values:
   agent_specified_environment: production
-  apt_dist_updates: 17
+  apt_dist_updates: 24
   apt_has_dist_updates: true
   apt_has_updates: true
   apt_package_dist_updates:
@@ -11,7 +11,9 @@ values:
   - icinga2-common
   - linux-image-5.10.0-0.deb10.16-amd64
   - linux-image-amd64
+  - postgresql
   - python3-packaging
+  - python3-pg8000
   - python3-swh.auth.django
   - python3-swh.core
   - python3-swh.auth
@@ -20,8 +22,13 @@ values:
   - python3-swh.storage
   - python3-swh.journal
   - python3-swh.scheduler
+  - python3-testing.common.database
+  - python3-testing.postgresql
+  - python3-swh.lister
   - python3-swh.loader.core
+  - python3-swh.loader.bzr
   - python3-swh.loader.git
+  - python3-swh.loader.metadata
   - python3-swh.loader.svn
   apt_package_security_dist_updates: []
   apt_package_security_updates: []
@@ -37,13 +44,15 @@ values:
   - python3-swh.storage
   - python3-swh.journal
   - python3-swh.scheduler
+  - python3-swh.loader.bzr
   - python3-swh.loader.git
+  - python3-swh.loader.metadata
   - python3-swh.loader.svn
-  apt_reboot_required: false
+  apt_reboot_required: true
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1664179506
-  apt_updates: 13
+  apt_update_last_success: 1666094709
+  apt_updates: 15
   architecture: amd64
   augeas:
     version: 1.11.0
@@ -140,9 +149,9 @@ values:
   kernelversion: 5.10.0
   letsencrypt_directory: {}
   load_averages:
-    15m: 3.7
-    1m: 3.66
-    5m: 3.52
+    15m: 4.11
+    1m: 3.9
+    5m: 3.99
   location: sesi_rocquencourt
   lsbdistcodename: buster
   lsbdistdescription: Debian GNU/Linux 10 (buster)
@@ -155,30 +164,30 @@ values:
   manufacturer: QEMU
   memory:
     swap:
-      available: 73.43 GiB
-      available_bytes: 78843662336
-      capacity: 8.21%
+      available: 74.79 GiB
+      available_bytes: 80305496064
+      capacity: 6.51%
       total: 80.00 GiB
       total_bytes: 85899341824
-      used: 6.57 GiB
-      used_bytes: 7055679488
+      used: 5.21 GiB
+      used_bytes: 5593845760
     system:
-      available: 7.80 GiB
-      available_bytes: 8373465088
-      capacity: 33.47%
+      available: 3.92 GiB
+      available_bytes: 4204077056
+      capacity: 66.60%
       total: 11.72 GiB
       total_bytes: 12585607168
-      used: 3.92 GiB
-      used_bytes: 4212142080
-  memoryfree: 7.80 GiB
-  memoryfree_mb: 7985.55859375
+      used: 7.81 GiB
+      used_bytes: 8381530112
+  memoryfree: 3.92 GiB
+  memoryfree_mb: 4009.3203125
   memorysize: 11.72 GiB
   memorysize_mb: 12002.5703125
   mountpoints:
     "/":
-      available: 32.96 GiB
-      available_bytes: 35387379712
-      capacity: 16.02%
+      available: 32.55 GiB
+      available_bytes: 34955337728
+      capacity: 17.05%
       device: "/dev/mapper/worker04--vg-root"
       filesystem: ext4
       options:
@@ -187,11 +196,11 @@ values:
       - errors=remount-ro
       size: 39.25 GiB
       size_bytes: 42139877376
-      used: 6.29 GiB
-      used_bytes: 6752497664
+      used: 6.69 GiB
+      used_bytes: 7184539648
     "/dev/shm":
       available: 5.86 GiB
-      available_bytes: 6291746816
+      available_bytes: 6291648512
       capacity: 0.02%
       device: tmpfs
       filesystem: tmpfs
@@ -201,8 +210,8 @@ values:
       - nodev
       size: 5.86 GiB
       size_bytes: 6292803584
-      used: 1.01 MiB
-      used_bytes: 1056768
+      used: 1.10 MiB
+      used_bytes: 1155072
     "/run":
       available: 1.17 GiB
       available_bytes: 1257979904
@@ -256,9 +265,9 @@ values:
       used: 0 bytes
       used_bytes: 0
     "/tmp":
-      available: 74.39 GiB
-      available_bytes: 79871721472
-      capacity: 7.02%
+      available: 79.44 GiB
+      available_bytes: 85300215808
+      capacity: 0.70%
       device: tmpfs
       filesystem: tmpfs
       options:
@@ -271,8 +280,8 @@ values:
       - nr_inodes=209715200
       size: 80.00 GiB
       size_bytes: 85899341824
-      used: 5.61 GiB
-      used_bytes: 6027620352
+      used: 571.37 MiB
+      used_bytes: 599126016
   mounts:
   - "/"
   mtu_ens18: 1500
@@ -464,8 +473,8 @@ values:
   sshrsakey: AAAAB3NzaC1yc2EAAAADAQABAAABAQCsJL1z8fm1utr+CGyCDrAbbfTmR8iDh9PSbebXMSeHMATdpA0HJnOURRayxwiNJ3Q/AasEyWGgC3RoOvE+AkQekxk7RdXkMy5O/hpZ2PQ9MuUwTl/S2oOnOLYnysUTr+9rYdLy5hHBtXkSVs4y6CPjjThP04JpCgz2dlSdO9vc471KX9+XHvR7omC4QnEiHpooSFWR8moydu7wRSD/VtVuGCpES8+SNpLWOJC/2u23CKDnt0w7uo5LXY7P/A6tw9WwQKaY8K8vQgNAAVs4Uvwgis/Jx21+vR8XyVTz4LQBST/R77nXUOE9H4nyojFlZTJIZcPeZLhq4rnxNbp97snd
   subnet: sesi_rocquencourt
   sudoversion: 1.8.27
-  swapfree: 73.43 GiB
-  swapfree_mb: 75191.17578125
+  swapfree: 74.79 GiB
+  swapfree_mb: 76585.2890625
   swapsize: 80.00 GiB
   swapsize_mb: 81919.99609375
   swh_hostname:
@@ -473,10 +482,10 @@ values:
     short: worker04
     internal_fqdn: worker04.internal.softwareheritage.org
   system_uptime:
-    days: 39
-    hours: 954
-    seconds: 3436724
-    uptime: 39 days
+    days: 61
+    hours: 1486
+    seconds: 5351928
+    uptime: 61 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -491,15 +500,15 @@ values:
     systemd-timesyncd.service: enabled
   systemd_version: '247'
   timezone: UTC
-  uptime: 39 days
-  uptime_days: 39
-  uptime_hours: 954
-  uptime_seconds: 3436724
+  uptime: 61 days
+  uptime_days: 61
+  uptime_hours: 1486
+  uptime_seconds: 5351928
   uuid: 1cfacaaf-2718-4794-9cc5-88dfde58fb43
   vcsrepo_svn_ver: 1.10.4
   virtual: kvm
   clientcert: worker04.softwareheritage.org
   clientversion: 5.5.10
   clientnoop: false
-timestamp: '2022-09-26T09:04:11.697967222+00:00'
-expiration: '2022-09-26T09:34:11.698922585+00:00'
+timestamp: '2022-10-18T13:04:16.293180917+00:00'
+expiration: '2022-10-18T13:34:16.294100433+00:00'

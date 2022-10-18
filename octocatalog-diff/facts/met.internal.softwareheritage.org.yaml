@@ -2,7 +2,7 @@
 name: met.internal.softwareheritage.org
 values:
   agent_specified_environment: production
-  apt_dist_updates: 11
+  apt_dist_updates: 12
   apt_has_dist_updates: true
   apt_has_updates: true
   apt_package_dist_updates:
@@ -11,6 +11,7 @@ values:
   - docker-ce
   - docker-ce-rootless-extras
   - ifenslave
+  - python3-psycopg2
   - pg-activity
   - pgloader
   - postgresql
@@ -25,6 +26,7 @@ values:
   - docker-ce
   - docker-ce-rootless-extras
   - ifenslave
+  - python3-psycopg2
   - pg-activity
   - pgloader
   - postgresql
@@ -34,8 +36,8 @@ values:
   apt_reboot_required: true
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1662974762
-  apt_updates: 11
+  apt_update_last_success: 1665728762
+  apt_updates: 12
   architecture: amd64
   bios_release_date: 10/06/2021
   bios_vendor: Dell Inc.
@@ -226,7 +228,7 @@ values:
     NFd: 25
     OomKillDisable: false
     NGoroutines: 33
-    SystemTime: '2022-09-12T09:50:37.273626585Z'
+    SystemTime: '2022-10-14T07:15:16.241248073Z'
     LoggingDriver: journald
     CgroupDriver: systemd
     CgroupVersion: '2'
@@ -495,9 +497,9 @@ values:
   kernelversion: 5.10.0
   letsencrypt_directory: {}
   load_averages:
-    15m: 24.61
-    1m: 16.25
-    5m: 22.83
+    15m: 36.36
+    1m: 32.24
+    5m: 36.13
   lsbdistcodename: bullseye
   lsbdistdescription: Debian GNU/Linux 11 (bullseye)
   lsbdistid: Debian
@@ -515,30 +517,30 @@ values:
   manufacturer: Dell Inc.
   memory:
     swap:
-      available: 21.36 MiB
-      available_bytes: 22396928
-      capacity: 97.81%
+      available: 0 bytes
+      available_bytes: 0
+      capacity: 100%
       total: 976.00 MiB
       total_bytes: 1023406080
-      used: 954.64 MiB
-      used_bytes: 1001009152
+      used: 976.00 MiB
+      used_bytes: 1023406080
     system:
-      available: 172.21 GiB
-      available_bytes: 184913072128
-      capacity: 65.79%
+      available: 157.10 GiB
+      available_bytes: 168689991680
+      capacity: 68.79%
       total: 503.44 GiB
       total_bytes: 540568915968
-      used: 331.23 GiB
-      used_bytes: 355655843840
-  memoryfree: 172.21 GiB
-  memoryfree_mb: 176346.84765625
+      used: 346.34 GiB
+      used_bytes: 371878924288
+  memoryfree: 157.10 GiB
+  memoryfree_mb: 160875.3125
   memorysize: 503.44 GiB
   memorysize_mb: 515526.69140625
   mountpoints:
     "/":
-      available: 19.76 GiB
-      available_bytes: 21212061696
-      capacity: 54.10%
+      available: 19.73 GiB
+      available_bytes: 21187141632
+      capacity: 54.16%
       device: "/dev/mapper/met--vg-root"
       filesystem: ext4
       options:
@@ -547,8 +549,8 @@ values:
       - errors=remount-ro
       size: 45.27 GiB
       size_bytes: 48608047104
-      used: 23.29 GiB
-      used_bytes: 25004408832
+      used: 23.31 GiB
+      used_bytes: 25029328896
     "/boot":
       available: 304.11 MiB
       available_bytes: 318878720
@@ -663,9 +665,9 @@ values:
       used: 2.20 MiB
       used_bytes: 2306048
     "/home":
-      available: 49.87 TiB
-      available_bytes: 54836946927616
-      capacity: 0.51%
+      available: 40.14 TiB
+      available_bytes: 44130584363008
+      capacity: 0.63%
       device: data/home
       filesystem: zfs
       options:
@@ -673,13 +675,13 @@ values:
       - noatime
       - xattr
       - posixacl
-      size: 50.13 TiB
-      size_bytes: 55116936773632
+      size: 40.39 TiB
+      size_bytes: 44410574209024
       used: 260.76 GiB
       used_bytes: 279989846016
     "/run":
       available: 50.34 GiB
-      available_bytes: 54053363712
+      available_bytes: 54053380096
       capacity: 0.01%
       device: tmpfs
       filesystem: tmpfs
@@ -693,8 +695,8 @@ values:
       - mode=755
       size: 50.34 GiB
       size_bytes: 54056894464
-      used: 3.37 MiB
-      used_bytes: 3530752
+      used: 3.35 MiB
+      used_bytes: 3514368
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -725,6 +727,26 @@ values:
       size_bytes: 0
       used: 0 bytes
       used_bytes: 0
+    "/run/user/1001":
+      available: 50.34 GiB
+      available_bytes: 54056890368
+      capacity: 0%
+      device: tmpfs
+      filesystem: tmpfs
+      options:
+      - rw
+      - nosuid
+      - nodev
+      - relatime
+      - size=52789932k
+      - nr_inodes=13197483
+      - mode=700
+      - uid=1001
+      - gid=1001
+      size: 50.34 GiB
+      size_bytes: 54056890368
+      used: 0 bytes
+      used_bytes: 0
     "/run/user/1003":
       available: 50.34 GiB
       available_bytes: 54056890368
@@ -745,50 +767,10 @@ values:
       size_bytes: 54056890368
       used: 0 bytes
       used_bytes: 0
-    "/run/user/1020":
-      available: 50.34 GiB
-      available_bytes: 54056890368
-      capacity: 0%
-      device: tmpfs
-      filesystem: tmpfs
-      options:
-      - rw
-      - nosuid
-      - nodev
-      - relatime
-      - size=52789932k
-      - nr_inodes=13197483
-      - mode=700
-      - uid=1020
-      - gid=1020
-      size: 50.34 GiB
-      size_bytes: 54056890368
-      used: 0 bytes
-      used_bytes: 0
-    "/run/user/1025":
-      available: 50.34 GiB
-      available_bytes: 54056890368
-      capacity: 0%
-      device: tmpfs
-      filesystem: tmpfs
-      options:
-      - rw
-      - nosuid
-      - nodev
-      - relatime
-      - size=52789932k
-      - nr_inodes=13197483
-      - mode=700
-      - uid=1025
-      - gid=1025
-      size: 50.34 GiB
-      size_bytes: 54056890368
-      used: 0 bytes
-      used_bytes: 0
     "/srv/softwareheritage/postgres/13/archive":
-      available: 49.87 TiB
-      available_bytes: 54836946927616
-      capacity: 3.77%
+      available: 40.14 TiB
+      available_bytes: 44130584363008
+      capacity: 4.65%
       device: data/postgresql-swh-storage
       filesystem: zfs
       options:
@@ -796,14 +778,14 @@ values:
       - noatime
       - xattr
       - posixacl
-      size: 51.83 TiB
-      size_bytes: 56987616804864
+      size: 42.09 TiB
+      size_bytes: 46281254240256
       used: 1.96 TiB
       used_bytes: 2150669877248
     "/srv/softwareheritage/postgres/14/main":
-      available: 49.87 TiB
-      available_bytes: 54836946927616
-      capacity: 0.66%
+      available: 40.14 TiB
+      available_bytes: 44130584363008
+      capacity: 2.51%
       device: data/postgresql-main
       filesystem: zfs
       options:
@@ -811,13 +793,13 @@ values:
       - noatime
       - xattr
       - posixacl
-      size: 50.20 TiB
-      size_bytes: 55199150768128
-      used: 337.33 GiB
-      used_bytes: 362203840512
+      size: 41.17 TiB
+      size_bytes: 45265511776256
+      used: 1.03 TiB
+      used_bytes: 1134927413248
     "/srv/softwareheritage/postgres/14/main/pg_wal":
-      available: 49.87 TiB
-      available_bytes: 54836946927616
+      available: 40.14 TiB
+      available_bytes: 44130584363008
       capacity: 0.01%
       device: data/postgresql-wals
       filesystem: zfs
@@ -826,8 +808,8 @@ values:
       - noatime
       - xattr
       - posixacl
-      size: 49.88 TiB
-      size_bytes: 54842825900032
+      size: 40.14 TiB
+      size_bytes: 44136463335424
       used: 5.48 GiB
       used_bytes: 5878972416
   mounts:
@@ -1399,8 +1381,8 @@ values:
   sshrsakey: AAAAB3NzaC1yc2EAAAADAQABAAABgQC3c/BmlSfHmQ8HmlqsSgevgWDJ51Pn0KmldzerA/g3H0gCw5B0xg5rptg4QrNmy7+r+UZpASb7h6YedeauZIyWUHleLt+eZDNYXR1JreKqCJB1hWe/XN8fPhUabIKTvTMooWK/yvvrQDob5YkyUJFVRY82Z+Znms0lG/8E3+L+HalyVaaYd7ckyDMA+bjnLu00p3BV6lBbmQyheojiUJSAdiabBmdKbXoaOJw2qXdxoEReggzBOgYk0E8Jr6YeZeS4oA+bo50Jq650vGftlUQd4nhM9nsA/uOEkqOQUATtAlFMqFT6lywvHMenjK8jJxpFoy9OZN7LeLkJv7dAbUV4mhS4D5tI2dWcq5COHAhmgcXk2Y2TbiDqlWpTjdTHUotFhluccgHU1OJZmVRIH0wV7vht2PIQx5UuEHkxoJ+bRV8C7mtSmhjE5rykRj304oHHoZtBHgKu7UOZVvrMMs09v8TCWhEA6L7qHYsqIkrYEEx39foO9gJBcSzHsmiTYH0=
   subnet: sesi_rocquencourt
   sudoversion: 1.9.5p2
-  swapfree: 21.36 MiB
-  swapfree_mb: 21.359375
+  swapfree: 0 bytes
+  swapfree_mb: 0.0
   swapsize: 976.00 MiB
   swapsize_mb: 975.99609375
   swh_hostname:
@@ -1408,10 +1390,10 @@ values:
     short: met
     internal_fqdn: met.internal.softwareheritage.org
   system_uptime:
-    days: 31
-    hours: 744
-    seconds: 2679442
-    uptime: 31 days
+    days: 62
+    hours: 1509
+    seconds: 5434921
+    uptime: 62 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -1425,15 +1407,15 @@ values:
     systemd-time-wait-sync.service: disabled
   systemd_version: '247'
   timezone: UTC
-  uptime: 31 days
-  uptime_days: 31
-  uptime_hours: 744
-  uptime_seconds: 2679442
+  uptime: 62 days
+  uptime_days: 62
+  uptime_hours: 1509
+  uptime_seconds: 5434921
   uuid: 4c4c4544-0050-4210-8043-b7c04f534833
   vcsrepo_svn_ver: ''
   virtual: physical
   clientcert: met.internal.softwareheritage.org
   clientversion: 5.5.22
   clientnoop: true
-timestamp: '2022-09-12T09:50:40.708638970+00:00'
-expiration: '2022-09-12T10:20:40.709567083+00:00'
+timestamp: '2022-10-14T07:15:19.797133816+00:00'
+expiration: '2022-10-14T07:45:19.798456629+00:00'
