@@ -131,7 +131,7 @@ vms = {
     :hostname    => "storage1.internal.staging.swh.network",
     :ip          => "10.168.130.41",
     :type        => TYPE_AGENT,
-    :memory      => 512,
+    :memory      => 4096,
     :cpus        => 2,
     :environment => ENV_STAGING,
   },
