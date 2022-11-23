@@ -3,11 +3,22 @@ name: pergamon.softwareheritage.org
 values:
   agent_specified_environment: production
   apache_version: 2.4.38
-  apt_dist_updates: 16
+  apt_dist_updates: 28
   apt_has_dist_updates: true
   apt_has_updates: true
   apt_package_dist_updates:
   - icinga-php-library
+  - icinga2-ido-pgsql
+  - icinga2
+  - icinga2-bin
+  - icinga2-common
+  - icinga2-doc
+  - icingaweb2-module-monitoring
+  - icingaweb2-module-doc
+  - icingacli
+  - icingaweb2-common
+  - icingaweb2
+  - php-icinga
   - linux-image-5.10.0-0.deb10.16-amd64
   - linux-image-amd64
   - php7.3-mbstring
@@ -19,9 +30,10 @@ values:
   - python3-swh.auth
   - python3-swh.model
   - python3-swh.objstorage
+  - python3-swh.storage
+  - python3-swh.journal
   - python3-swh.scheduler
   - python3-swh.vault
-  - python3-swh.icingaplugins
   - grafana
   apt_package_security_dist_updates:
   - php7.3-mbstring
@@ -29,20 +41,32 @@ values:
   apt_package_security_updates: []
   apt_package_updates:
   - icinga-php-library
+  - icinga2-ido-pgsql
+  - icinga2
+  - icinga2-bin
+  - icinga2-common
+  - icinga2-doc
+  - icingaweb2-module-monitoring
+  - icingaweb2-module-doc
+  - icingacli
+  - icingaweb2-common
+  - icingaweb2
+  - php-icinga
   - python3-swh.auth.django
   - python3-swh.core
   - python3-swh.auth
   - python3-swh.model
   - python3-swh.objstorage
+  - python3-swh.storage
+  - python3-swh.journal
   - python3-swh.scheduler
   - python3-swh.vault
-  - python3-swh.icingaplugins
   - grafana
   apt_reboot_required: true
   apt_security_dist_updates: 2
   apt_security_updates: 0
-  apt_update_last_success: 1666094342
-  apt_updates: 10
+  apt_update_last_success: 1669222742
+  apt_updates: 22
   architecture: amd64
   bios_release_date: 04/01/2014
   bios_vendor: SeaBIOS
@@ -179,6 +203,7 @@ values:
     journal0.internal.staging.swh.network: "/etc/letsencrypt/live/journal0.internal.staging.swh.network"
     git.softwareheritage.org: "/etc/letsencrypt/live/git.softwareheritage.org"
     azure-billing.internal.admin.swh.network: "/etc/letsencrypt/live/azure-billing.internal.admin.swh.network"
+    minio.admin.swh.network: "/etc/letsencrypt/live/minio.admin.swh.network"
     debian.internal.softwareheritage.org: "/etc/letsencrypt/live/debian.softwareheritage.org"
     debian.softwareheritage.org: "/etc/letsencrypt/live/debian.softwareheritage.org"
     auth.softwareheritage.org: "/etc/letsencrypt/live/keycloak"
@@ -223,9 +248,9 @@ values:
     forge.softwareheritage.org: "/etc/letsencrypt/live/forge.softwareheritage.org"
     intranet.softwareheritage.org: "/etc/letsencrypt/live/intranet.softwareheritage.org"
   load_averages:
-    15m: 1.22
-    1m: 2.01
-    5m: 1.4
+    15m: 1.23
+    1m: 1.57
+    5m: 1.39
   location: sesi_rocquencourt
   lsbdistcodename: buster
   lsbdistdescription: Debian GNU/Linux 10 (buster)
@@ -238,30 +263,30 @@ values:
   manufacturer: QEMU
   memory:
     swap:
-      available: 3.64 GiB
-      available_bytes: 3908689920
-      capacity: 8.95%
+      available: 3.65 GiB
+      available_bytes: 3922931712
+      capacity: 8.62%
       total: 4.00 GiB
       total_bytes: 4292866048
-      used: 366.38 MiB
-      used_bytes: 384176128
+      used: 352.80 MiB
+      used_bytes: 369934336
     system:
-      available: 37.84 GiB
-      available_bytes: 40626286592
-      capacity: 19.60%
+      available: 35.83 GiB
+      available_bytes: 38476709888
+      capacity: 23.86%
       total: 47.06 GiB
       total_bytes: 50531258368
-      used: 9.22 GiB
-      used_bytes: 9904971776
-  memoryfree: 37.84 GiB
-  memoryfree_mb: 38744.24609375
+      used: 11.23 GiB
+      used_bytes: 12054548480
+  memoryfree: 35.83 GiB
+  memoryfree_mb: 36694.25
   memorysize: 47.06 GiB
   memorysize_mb: 48190.36328125
   mountpoints:
     "/":
-      available: 13.60 GiB
-      available_bytes: 14601424896
-      capacity: 72.28%
+      available: 12.67 GiB
+      available_bytes: 13605675008
+      capacity: 74.17%
       device: "/dev/vda1"
       filesystem: ext4
       options:
@@ -270,8 +295,8 @@ values:
       - errors=remount-ro
       size: 49.06 GiB
       size_bytes: 52675555328
-      used: 35.46 GiB
-      used_bytes: 38074130432
+      used: 36.39 GiB
+      used_bytes: 39069880320
     "/dev/shm":
       available: 23.58 GiB
       available_bytes: 25318039552
@@ -288,7 +313,7 @@ values:
       used_bytes: 16384
     "/run":
       available: 4.71 GiB
-      available_bytes: 5062619136
+      available_bytes: 5062610944
       capacity: 0.02%
       device: tmpfs
       filesystem: tmpfs
@@ -301,8 +326,8 @@ values:
       - mode=755
       size: 4.72 GiB
       size_bytes: 5063614464
-      used: 972.00 KiB
-      used_bytes: 995328
+      used: 980.00 KiB
+      used_bytes: 1003520
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -359,9 +384,9 @@ values:
       used: 0 bytes
       used_bytes: 0
     "/var/lib/prometheus":
-      available: 432.00 GiB
-      available_bytes: 463855226880
-      capacity: 12.03%
+      available: 432.99 GiB
+      available_bytes: 464917168128
+      capacity: 11.83%
       device: "/dev/vdc1"
       filesystem: ext4
       options:
@@ -370,8 +395,8 @@ values:
       - errors=remount-ro
       size: 491.08 GiB
       size_bytes: 527297679360
-      used: 59.09 GiB
-      used_bytes: 63442452480
+      used: 58.10 GiB
+      used_bytes: 62380511232
   mounts:
   - "/"
   - "/var/lib/prometheus"
@@ -604,8 +629,8 @@ values:
   sshrsakey: AAAAB3NzaC1yc2EAAAADAQABAAABAQCUVA+gg4Hyy2q7qiZ3Y3kvZmzAbtcG/HGKBb5CMOO65sPLZfw9WGChi829NoAKzHNR9CPX+AyLokZ5W4khLcQ3JbK9vr+iXxBIzIeE/DOuyXkQegOPFNyG7XoFb7v7e2IX1Lmgprm6obUszo403CD6/w1IsN9/I7nozPd8jxtWVdfYRRFqwZrEJfkkSDrR1QJJ6VI9xcDVssybKNzSGDUzaVfPnp9uLiD9rE9UwE5aHvwXoqXfr+hR8QMWWaEtlZVroWd7ZM6smgshWRJEOMIz7cK1zSG+Dj1SX+kZqWEPG9xiNO5ug8G/Zu+vkVQcmzLLgdOJEJuEgeoYzG32bG/v
   subnet: sesi_rocquencourt
   sudoversion: 1.8.27
-  swapfree: 3.64 GiB
-  swapfree_mb: 3727.6171875
+  swapfree: 3.65 GiB
+  swapfree_mb: 3741.19921875
   swapsize: 4.00 GiB
   swapsize_mb: 4093.99609375
   swh_hostname:
@@ -613,10 +638,10 @@ values:
     short: pergamon
     internal_fqdn: pergamon.internal.softwareheritage.org
   system_uptime:
-    days: 63
-    hours: 1527
-    seconds: 5499051
-    uptime: 63 days
+    days: 99
+    hours: 2396
+    seconds: 8627454
+    uptime: 99 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -631,15 +656,15 @@ values:
     systemd-timesyncd.service: enabled
   systemd_version: '247'
   timezone: UTC
-  uptime: 63 days
-  uptime_days: 63
-  uptime_hours: 1527
-  uptime_seconds: 5499051
+  uptime: 99 days
+  uptime_days: 99
+  uptime_hours: 2396
+  uptime_seconds: 8627454
   uuid: aa664c56-fc2f-45a2-98d5-476f11eea5bb
   vcsrepo_svn_ver: ''
   virtual: kvm
   clientcert: pergamon.softwareheritage.org
   clientversion: 5.5.10
   clientnoop: false
-timestamp: '2022-10-18T12:54:06.229963067+00:00'
-expiration: '2022-10-18T13:24:06.230457867+00:00'
+timestamp: '2022-11-23T17:54:08.670528332+00:00'
+expiration: '2022-11-23T18:24:08.671109042+00:00'

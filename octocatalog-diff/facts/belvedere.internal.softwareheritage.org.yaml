@@ -2,12 +2,13 @@
 name: belvedere.internal.softwareheritage.org
 values:
   agent_specified_environment: production
-  apt_dist_updates: 16
+  apt_dist_updates: 18
   apt_has_dist_updates: true
   apt_has_updates: true
   apt_package_dist_updates:
-  - postgresql-common
   - postgresql-client-common
+  - postgresql-common
+  - pgbouncer
   - barman-cli-cloud
   - libpq5
   - python3-psycopg2
@@ -22,11 +23,11 @@ values:
   - postgresql-11
   - postgresql-client-12
   - postgresql-12
+  - postgresql-12-repack
   apt_package_security_dist_updates: []
   apt_package_security_updates: []
   apt_package_updates:
-  - postgresql-common
-  - postgresql-client-common
+  - pgbouncer
   - barman-cli-cloud
   - libpq5
   - python3-psycopg2
@@ -41,10 +42,11 @@ values:
   - postgresql-11
   - postgresql-client-12
   - postgresql-12
+  - postgresql-12-repack
   apt_reboot_required: true
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1666096143
+  apt_update_last_success: 1669220944
   apt_updates: 16
   architecture: amd64
   bios_release_date: 04/09/2020
@@ -276,9 +278,9 @@ values:
   kernelversion: 5.10.0
   letsencrypt_directory: {}
   load_averages:
-    15m: 53.72
-    1m: 48.08
-    5m: 51.2
+    15m: 52.39
+    1m: 52.64
+    5m: 53.67
   location: sesi_rocquencourt
   lsbdistcodename: bullseye
   lsbdistdescription: Debian GNU/Linux 11 (bullseye)
@@ -296,22 +298,22 @@ values:
   manufacturer: Dell Inc.
   memory:
     system:
-      available: 172.68 GiB
-      available_bytes: 185408872448
-      capacity: 77.12%
+      available: 97.69 GiB
+      available_bytes: 104896966656
+      capacity: 87.05%
       total: 754.55 GiB
       total_bytes: 810191204352
-      used: 581.87 GiB
-      used_bytes: 624782331904
-  memoryfree: 172.68 GiB
-  memoryfree_mb: 176819.6796875
+      used: 656.86 GiB
+      used_bytes: 705294237696
+  memoryfree: 97.69 GiB
+  memoryfree_mb: 100037.54296875
   memorysize: 754.55 GiB
   memorysize_mb: 772658.54296875
   mountpoints:
     "/":
-      available: 195.47 GiB
-      available_bytes: 209889402880
-      capacity: 5.48%
+      available: 195.46 GiB
+      available_bytes: 209869611008
+      capacity: 5.49%
       device: "/dev/md0"
       filesystem: ext4
       options:
@@ -321,8 +323,8 @@ values:
       - stripe=256
       size: 217.95 GiB
       size_bytes: 234023702528
-      used: 11.34 GiB
-      used_bytes: 12175187968
+      used: 11.36 GiB
+      used_bytes: 12194979840
     "/boot/efi":
       available: 1018.56 MiB
       available_bytes: 1068036096
@@ -410,7 +412,7 @@ values:
       used_bytes: 0
     "/dev/shm":
       available: 377.27 GiB
-      available_bytes: 405093359616
+      available_bytes: 405093343232
       capacity: 0.00%
       device: tmpfs
       filesystem: tmpfs
@@ -420,11 +422,11 @@ values:
       - nodev
       size: 377.27 GiB
       size_bytes: 405095600128
-      used: 2.14 MiB
-      used_bytes: 2240512
+      used: 2.15 MiB
+      used_bytes: 2256896
     "/run":
       available: 75.45 GiB
-      available_bytes: 81016897536
+      available_bytes: 81016471552
       capacity: 0.00%
       device: tmpfs
       filesystem: tmpfs
@@ -438,8 +440,8 @@ values:
       - mode=755
       size: 75.45 GiB
       size_bytes: 81019121664
-      used: 2.12 MiB
-      used_bytes: 2224128
+      used: 2.53 MiB
+      used_bytes: 2650112
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -511,9 +513,9 @@ values:
       used: 0 bytes
       used_bytes: 0
     "/srv/remote-backups":
-      available: 377.81 TiB
-      available_bytes: 415408974479360
-      capacity: 0.14%
+      available: 347.75 TiB
+      available_bytes: 382353177264128
+      capacity: 0.15%
       device: saam:/srv/storage/space/postgres-backups/prado
       filesystem: nfs4
       options:
@@ -531,13 +533,13 @@ values:
       - clientaddr=192.168.100.210
       - local_lock=none
       - addr=192.168.100.109
-      size: 378.33 TiB
-      size_bytes: 415977563996160
-      used: 529.54 GiB
-      used_bytes: 568589516800
+      size: 348.27 TiB
+      size_bytes: 382921783836672
+      used: 529.56 GiB
+      used_bytes: 568606572544
     "/srv/softwareheritage/postgres":
-      available: 7.09 TiB
-      available_bytes: 7800318066688
+      available: 6.95 TiB
+      available_bytes: 7644726689792
       capacity: 0.00%
       device: data/postgres-misc
       filesystem: zfs
@@ -545,14 +547,14 @@ values:
       - rw
       - xattr
       - noacl
-      size: 7.09 TiB
-      size_bytes: 7800332615680
+      size: 6.95 TiB
+      size_bytes: 7644741238784
       used: 13.88 MiB
       used_bytes: 14548992
     "/srv/softwareheritage/postgres/11/indexer":
-      available: 7.09 TiB
-      available_bytes: 7800318132224
-      capacity: 22.30%
+      available: 6.95 TiB
+      available_bytes: 7644726738944
+      capacity: 22.70%
       device: data/postgres-indexer-11
       filesystem: zfs
       options:
@@ -560,14 +562,14 @@ values:
       - noatime
       - xattr
       - noacl
-      size: 9.13 TiB
-      size_bytes: 10039452647424
+      size: 8.99 TiB
+      size_bytes: 9889285242880
       used: 2.04 TiB
-      used_bytes: 2239134515200
+      used_bytes: 2244558503936
     "/srv/softwareheritage/postgres/12/main":
-      available: 7.09 TiB
-      available_bytes: 7800318066688
-      capacity: 54.65%
+      available: 6.95 TiB
+      available_bytes: 7644726689792
+      capacity: 55.53%
       device: data/postgres-main-12
       filesystem: zfs
       options:
@@ -575,14 +577,14 @@ values:
       - noatime
       - xattr
       - noacl
-      size: 15.64 TiB
-      size_bytes: 17200358621184
-      used: 8.55 TiB
-      used_bytes: 9400040554496
+      size: 15.63 TiB
+      size_bytes: 17190602407936
+      used: 8.68 TiB
+      used_bytes: 9545875718144
     "/srv/softwareheritage/postgres/12/secondary":
-      available: 7.09 TiB
-      available_bytes: 7800318066688
-      capacity: 7.43%
+      available: 6.95 TiB
+      available_bytes: 7644726689792
+      capacity: 7.62%
       device: data/postgres-secondary-12
       filesystem: zfs
       options:
@@ -590,10 +592,10 @@ values:
       - noatime
       - xattr
       - noacl
-      size: 7.66 TiB
-      size_bytes: 8426371678208
-      used: 583.06 GiB
-      used_bytes: 626053611520
+      size: 7.53 TiB
+      size_bytes: 8275249856512
+      used: 587.22 GiB
+      used_bytes: 630523166720
   mounts:
   - "/"
   - "/boot/efi"
@@ -1086,10 +1088,10 @@ values:
     short: belvedere
     internal_fqdn: belvedere.internal.softwareheritage.org
   system_uptime:
-    days: 301
-    hours: 7226
-    seconds: 26014328
-    uptime: 301 days
+    days: 337
+    hours: 8094
+    seconds: 29140928
+    uptime: 337 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -1103,15 +1105,15 @@ values:
     systemd-time-wait-sync.service: disabled
   systemd_version: '247'
   timezone: UTC
-  uptime: 301 days
-  uptime_days: 301
-  uptime_hours: 7226
-  uptime_seconds: 26014328
+  uptime: 337 days
+  uptime_days: 337
+  uptime_hours: 8094
+  uptime_seconds: 29140928
   uuid: 4c4c4544-0053-4c10-8043-b8c04f575732
   vcsrepo_svn_ver: ''
   virtual: physical
   clientcert: belvedere.internal.softwareheritage.org
   clientversion: 5.5.22
   clientnoop: false
-timestamp: '2022-10-18T12:58:07.427313123+00:00'
-expiration: '2022-10-18T13:28:07.428327831+00:00'
+timestamp: '2022-11-23T17:28:07.429445119+00:00'
+expiration: '2022-11-23T17:58:07.430394451+00:00'

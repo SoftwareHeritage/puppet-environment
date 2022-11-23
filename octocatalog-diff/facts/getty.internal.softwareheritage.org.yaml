@@ -2,19 +2,16 @@
 name: getty.internal.softwareheritage.org
 values:
   agent_specified_environment: production
-  apt_dist_updates: 14
+  apt_dist_updates: 11
   apt_has_dist_updates: true
   apt_has_updates: true
   apt_package_dist_updates:
-  - linux-image-5.10.0-0.deb10.16-amd64
-  - linux-image-amd64
-  - python3-isodate
-  - python3-rdflib
-  - python3-sparqlwrapper
+  - icinga2
+  - icinga2-bin
+  - icinga2-common
   - python3-swh.core
-  - python3-swh.model
-  - python3-swh.objstorage
-  - python3-swh.scheduler
+  - python3-swh.storage
+  - python3-swh.journal
   - python3-swh.indexer
   - python3-swh.indexer.storage
   - python3-swh.loader.core
@@ -23,18 +20,22 @@ values:
   apt_package_security_dist_updates: []
   apt_package_security_updates: []
   apt_package_updates:
+  - icinga2
+  - icinga2-bin
+  - icinga2-common
   - python3-swh.core
-  - python3-swh.model
-  - python3-swh.scheduler
-  - python3-swh.objstorage
+  - python3-swh.storage
+  - python3-swh.journal
+  - python3-swh.indexer
+  - python3-swh.indexer.storage
   - python3-swh.loader.core
   - python3-swh.loader.git
   - python3-swh.loader.svn
   apt_reboot_required: true
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1666096623
-  apt_updates: 7
+  apt_update_last_success: 1669225023
+  apt_updates: 11
   architecture: amd64
   augeas:
     version: 1.11.0
@@ -124,9 +125,9 @@ values:
   kernelversion: 5.10.0
   letsencrypt_directory: {}
   load_averages:
-    15m: 1.06
-    1m: 2.33
-    5m: 1.68
+    15m: 0.62
+    1m: 0.51
+    5m: 0.53
   location: sesi_rocquencourt
   lsbdistcodename: buster
   lsbdistdescription: Debian GNU/Linux 10 (buster)
@@ -138,30 +139,30 @@ values:
   manufacturer: QEMU
   memory:
     swap:
-      available: 4.00 GiB
-      available_bytes: 4293640192
-      capacity: 0.01%
+      available: 3.92 GiB
+      available_bytes: 4213956608
+      capacity: 1.86%
       total: 4.00 GiB
       total_bytes: 4293914624
-      used: 268.00 KiB
-      used_bytes: 274432
+      used: 76.25 MiB
+      used_bytes: 79958016
     system:
-      available: 5.58 GiB
-      available_bytes: 5996519424
-      capacity: 28.20%
+      available: 5.55 GiB
+      available_bytes: 5960642560
+      capacity: 28.63%
       total: 7.78 GiB
       total_bytes: 8351428608
-      used: 2.19 GiB
-      used_bytes: 2354909184
-  memoryfree: 5.58 GiB
-  memoryfree_mb: 5718.7265625
+      used: 2.23 GiB
+      used_bytes: 2390786048
+  memoryfree: 5.55 GiB
+  memoryfree_mb: 5684.51171875
   memorysize: 7.78 GiB
   memorysize_mb: 7964.54296875
   mountpoints:
     "/":
-      available: 5.89 GiB
-      available_bytes: 6322774016
-      capacity: 69.83%
+      available: 5.36 GiB
+      available_bytes: 5751533568
+      capacity: 72.55%
       device: "/dev/vda1"
       filesystem: ext4
       options:
@@ -170,8 +171,8 @@ values:
       - errors=remount-ro
       size: 19.52 GiB
       size_bytes: 20955484160
-      used: 13.63 GiB
-      used_bytes: 14632710144
+      used: 14.16 GiB
+      used_bytes: 15203950592
     "/dev/shm":
       available: 3.89 GiB
       available_bytes: 4175712256
@@ -187,8 +188,8 @@ values:
       used: 0 bytes
       used_bytes: 0
     "/run":
-      available: 795.86 MiB
-      available_bytes: 834514944
+      available: 795.85 MiB
+      available_bytes: 834506752
       capacity: 0.08%
       device: tmpfs
       filesystem: tmpfs
@@ -201,8 +202,8 @@ values:
       - mode=755
       size: 796.46 MiB
       size_bytes: 835145728
-      used: 616.00 KiB
-      used_bytes: 630784
+      used: 624.00 KiB
+      used_bytes: 638976
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -218,6 +219,26 @@ values:
       - size=5120k
       size: 5.00 MiB
       size_bytes: 5242880
+      used: 0 bytes
+      used_bytes: 0
+    "/run/user/1001":
+      available: 790.35 MiB
+      available_bytes: 828743680
+      capacity: 0%
+      device: tmpfs
+      filesystem: tmpfs
+      options:
+      - rw
+      - nosuid
+      - nodev
+      - relatime
+      - size=809320k
+      - nr_inodes=202330
+      - mode=700
+      - uid=1001
+      - gid=1001
+      size: 790.35 MiB
+      size_bytes: 828743680
       used: 0 bytes
       used_bytes: 0
     "/run/user/1003":
@@ -236,26 +257,6 @@ values:
       - mode=700
       - uid=1003
       - gid=1003
-      size: 790.35 MiB
-      size_bytes: 828743680
-      used: 0 bytes
-      used_bytes: 0
-    "/run/user/1021":
-      available: 790.35 MiB
-      available_bytes: 828743680
-      capacity: 0%
-      device: tmpfs
-      filesystem: tmpfs
-      options:
-      - rw
-      - nosuid
-      - nodev
-      - relatime
-      - size=809320k
-      - nr_inodes=202330
-      - mode=700
-      - uid=1021
-      - gid=1021
       size: 790.35 MiB
       size_bytes: 828743680
       used: 0 bytes
@@ -499,8 +500,8 @@ values:
   sshrsakey: AAAAB3NzaC1yc2EAAAADAQABAAABAQD4OL0iYM171r9DEY3mlZk4l2CXqfWEVBmnmN1erd3hdO18DfnTKrWYNGFRwRrQyArOlCvDFS/2QteYzdVyZ6xhAmrYK0Y0cQaQfTMS00KJJsIusMU9i6TWGYC+xQ/4c4X+ViWtlmUZHJtqYAW/VV0Yj8SKaBWhfrkLjhvSKZ1jcEEpOdSgltKhDI6pIAkfv1zQ4mqEji1Vy6N6r5ex0UNOhpnQupw3hxqW9n+Nv7i7EpolyhNrBp+zNhqiRoTcMks/olrxXheLogdlRafGV7CCAaeOEs1R/qhjMTVl6pANY6IAHsdOMkr4ZQWKv9OuCZJ10PQ/67CoDREFpMT8q/bX
   subnet: sesi_rocquencourt
   sudoversion: 1.8.27
-  swapfree: 4.00 GiB
-  swapfree_mb: 4094.734375
+  swapfree: 3.92 GiB
+  swapfree_mb: 4018.7421875
   swapsize: 4.00 GiB
   swapsize_mb: 4094.99609375
   swh_hostname:
@@ -508,10 +509,10 @@ values:
     short: getty
     internal_fqdn: getty.internal.softwareheritage.org
   system_uptime:
-    days: 62
-    hours: 1488
-    seconds: 5357965
-    uptime: 62 days
+    days: 98
+    hours: 2357
+    seconds: 8486364
+    uptime: 98 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -526,15 +527,15 @@ values:
     systemd-timesyncd.service: enabled
   systemd_version: '247'
   timezone: UTC
-  uptime: 62 days
-  uptime_days: 62
-  uptime_hours: 1488
-  uptime_seconds: 5357965
+  uptime: 98 days
+  uptime_days: 98
+  uptime_hours: 2357
+  uptime_seconds: 8486364
   uuid: 1cfacaaf-2718-4794-9cc5-88dfde58fb43
   vcsrepo_svn_ver: 1.10.4
   virtual: kvm
   clientcert: getty.internal.softwareheritage.org
   clientversion: 5.5.10
   clientnoop: false
-timestamp: '2022-10-18T12:50:11.009416413+00:00'
-expiration: '2022-10-18T13:20:11.010168184+00:00'
+timestamp: '2022-11-23T17:50:10.465502379+00:00'
+expiration: '2022-11-23T18:20:10.466174401+00:00'
