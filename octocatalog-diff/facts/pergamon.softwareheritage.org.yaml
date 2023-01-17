@@ -3,7 +3,7 @@ name: pergamon.softwareheritage.org
 values:
   agent_specified_environment: production
   apache_version: 2.4.38
-  apt_dist_updates: 28
+  apt_dist_updates: 29
   apt_has_dist_updates: true
   apt_has_updates: true
   apt_package_dist_updates:
@@ -19,6 +19,7 @@ values:
   - icingaweb2-common
   - icingaweb2
   - php-icinga
+  - icinga-php-thirdparty
   - linux-image-5.10.0-0.deb10.16-amd64
   - linux-image-amd64
   - php7.3-mbstring
@@ -52,6 +53,7 @@ values:
   - icingaweb2-common
   - icingaweb2
   - php-icinga
+  - icinga-php-thirdparty
   - python3-swh.auth.django
   - python3-swh.core
   - python3-swh.auth
@@ -62,15 +64,15 @@ values:
   - python3-swh.scheduler
   - python3-swh.vault
   - grafana
-  apt_reboot_required: true
+  apt_reboot_required: false
   apt_security_dist_updates: 2
   apt_security_updates: 0
-  apt_update_last_success: 1669222742
-  apt_updates: 22
+  apt_update_last_success: 1671620342
+  apt_updates: 23
   architecture: amd64
   bios_release_date: 04/01/2014
   bios_vendor: SeaBIOS
-  bios_version: rel-1.15.0-0-g2dd4b9b3f840-prebuilt.qemu.org
+  bios_version: rel-1.16.0-0-gd239552ce722-prebuilt.qemu.org
   blockdevice_sr0_model: QEMU DVD-ROM
   blockdevice_sr0_size: 1073741312
   blockdevice_sr0_vendor: QEMU
@@ -111,7 +113,7 @@ values:
     bios:
       release_date: 04/01/2014
       vendor: SeaBIOS
-      version: rel-1.15.0-0-g2dd4b9b3f840-prebuilt.qemu.org
+      version: rel-1.16.0-0-gd239552ce722-prebuilt.qemu.org
     chassis:
       type: Other
     manufacturer: QEMU
@@ -132,7 +134,7 @@ values:
       vardir: "/var/lib/puppet"
       server: pergamon.internal.softwareheritage.org
   facterversion: 3.11.0
-  filesystems: btrfs,ext2,ext3,ext4,hfs,hfsplus,jfs,minix,msdos,qnx4,ufs,vfat,xfs
+  filesystems: ext2,ext3,ext4
   fips_enabled: false
   fqdn: pergamon.softwareheritage.org
   gid: root
@@ -248,9 +250,9 @@ values:
     forge.softwareheritage.org: "/etc/letsencrypt/live/forge.softwareheritage.org"
     intranet.softwareheritage.org: "/etc/letsencrypt/live/intranet.softwareheritage.org"
   load_averages:
-    15m: 1.23
-    1m: 1.57
-    5m: 1.39
+    15m: 0.94
+    1m: 1.06
+    5m: 0.96
   location: sesi_rocquencourt
   lsbdistcodename: buster
   lsbdistdescription: Debian GNU/Linux 10 (buster)
@@ -263,30 +265,30 @@ values:
   manufacturer: QEMU
   memory:
     swap:
-      available: 3.65 GiB
-      available_bytes: 3922931712
-      capacity: 8.62%
+      available: 3.87 GiB
+      available_bytes: 4155891712
+      capacity: 3.19%
       total: 4.00 GiB
       total_bytes: 4292866048
-      used: 352.80 MiB
-      used_bytes: 369934336
+      used: 130.63 MiB
+      used_bytes: 136974336
     system:
-      available: 35.83 GiB
-      available_bytes: 38476709888
-      capacity: 23.86%
+      available: 36.40 GiB
+      available_bytes: 39081246720
+      capacity: 22.66%
       total: 47.06 GiB
       total_bytes: 50531258368
-      used: 11.23 GiB
-      used_bytes: 12054548480
-  memoryfree: 35.83 GiB
-  memoryfree_mb: 36694.25
+      used: 10.66 GiB
+      used_bytes: 11450011648
+  memoryfree: 36.40 GiB
+  memoryfree_mb: 37270.78125
   memorysize: 47.06 GiB
   memorysize_mb: 48190.36328125
   mountpoints:
     "/":
-      available: 12.67 GiB
-      available_bytes: 13605675008
-      capacity: 74.17%
+      available: 12.99 GiB
+      available_bytes: 13951193088
+      capacity: 73.51%
       device: "/dev/vda1"
       filesystem: ext4
       options:
@@ -295,8 +297,8 @@ values:
       - errors=remount-ro
       size: 49.06 GiB
       size_bytes: 52675555328
-      used: 36.39 GiB
-      used_bytes: 39069880320
+      used: 36.06 GiB
+      used_bytes: 38724362240
     "/dev/shm":
       available: 23.58 GiB
       available_bytes: 25318039552
@@ -313,7 +315,7 @@ values:
       used_bytes: 16384
     "/run":
       available: 4.71 GiB
-      available_bytes: 5062610944
+      available_bytes: 5062631424
       capacity: 0.02%
       device: tmpfs
       filesystem: tmpfs
@@ -326,8 +328,8 @@ values:
       - mode=755
       size: 4.72 GiB
       size_bytes: 5063614464
-      used: 980.00 KiB
-      used_bytes: 1003520
+      used: 960.00 KiB
+      used_bytes: 983040
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -346,8 +348,8 @@ values:
       used: 0 bytes
       used_bytes: 0
     "/run/user/1003":
-      available: 3.76 GiB
-      available_bytes: 4039778304
+      available: 4.46 GiB
+      available_bytes: 4783742976
       capacity: 0%
       device: tmpfs
       filesystem: tmpfs
@@ -356,13 +358,13 @@ values:
       - nosuid
       - nodev
       - relatime
-      - size=3945096k
-      - nr_inodes=986274
+      - size=4671624k
+      - nr_inodes=1167906
       - mode=700
       - uid=1003
       - gid=1003
-      size: 3.76 GiB
-      size_bytes: 4039778304
+      size: 4.46 GiB
+      size_bytes: 4783742976
       used: 0 bytes
       used_bytes: 0
     "/sys/fs/cgroup":
@@ -384,9 +386,9 @@ values:
       used: 0 bytes
       used_bytes: 0
     "/var/lib/prometheus":
-      available: 432.99 GiB
-      available_bytes: 464917168128
-      capacity: 11.83%
+      available: 426.61 GiB
+      available_bytes: 458067460096
+      capacity: 13.13%
       device: "/dev/vdc1"
       filesystem: ext4
       options:
@@ -395,8 +397,8 @@ values:
       - errors=remount-ro
       size: 491.08 GiB
       size_bytes: 527297679360
-      used: 58.10 GiB
-      used_bytes: 62380511232
+      used: 64.48 GiB
+      used_bytes: 69230219264
   mounts:
   - "/"
   - "/var/lib/prometheus"
@@ -530,7 +532,7 @@ values:
       size_bytes: 536869846528
       uuid: 0aedf89c-811f-4b5f-bd18-526a6e7cf479
   path: "/usr/bin:/bin:/usr/sbin:/sbin"
-  phpversion: 7.3.31-1~deb10u1
+  phpversion: 7.3.31-1~deb10u2
   physicalprocessorcount: 2
   processor0: Common KVM processor
   processor1: Common KVM processor
@@ -629,8 +631,8 @@ values:
   sshrsakey: AAAAB3NzaC1yc2EAAAADAQABAAABAQCUVA+gg4Hyy2q7qiZ3Y3kvZmzAbtcG/HGKBb5CMOO65sPLZfw9WGChi829NoAKzHNR9CPX+AyLokZ5W4khLcQ3JbK9vr+iXxBIzIeE/DOuyXkQegOPFNyG7XoFb7v7e2IX1Lmgprm6obUszo403CD6/w1IsN9/I7nozPd8jxtWVdfYRRFqwZrEJfkkSDrR1QJJ6VI9xcDVssybKNzSGDUzaVfPnp9uLiD9rE9UwE5aHvwXoqXfr+hR8QMWWaEtlZVroWd7ZM6smgshWRJEOMIz7cK1zSG+Dj1SX+kZqWEPG9xiNO5ug8G/Zu+vkVQcmzLLgdOJEJuEgeoYzG32bG/v
   subnet: sesi_rocquencourt
   sudoversion: 1.8.27
-  swapfree: 3.65 GiB
-  swapfree_mb: 3741.19921875
+  swapfree: 3.87 GiB
+  swapfree_mb: 3963.3671875
   swapsize: 4.00 GiB
   swapsize_mb: 4093.99609375
   swh_hostname:
@@ -638,10 +640,10 @@ values:
     short: pergamon
     internal_fqdn: pergamon.internal.softwareheritage.org
   system_uptime:
-    days: 99
-    hours: 2396
-    seconds: 8627454
-    uptime: 99 days
+    days: 12
+    hours: 290
+    seconds: 1046952
+    uptime: 12 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -656,15 +658,15 @@ values:
     systemd-timesyncd.service: enabled
   systemd_version: '247'
   timezone: UTC
-  uptime: 99 days
-  uptime_days: 99
-  uptime_hours: 2396
-  uptime_seconds: 8627454
+  uptime: 12 days
+  uptime_days: 12
+  uptime_hours: 290
+  uptime_seconds: 1046952
   uuid: aa664c56-fc2f-45a2-98d5-476f11eea5bb
   vcsrepo_svn_ver: ''
   virtual: kvm
   clientcert: pergamon.softwareheritage.org
   clientversion: 5.5.10
   clientnoop: false
-timestamp: '2022-11-23T17:54:08.670528332+00:00'
-expiration: '2022-11-23T18:24:08.671109042+00:00'
+timestamp: '2022-12-21T11:54:07.037253733+00:00'
+expiration: '2022-12-21T12:24:07.037769693+00:00'

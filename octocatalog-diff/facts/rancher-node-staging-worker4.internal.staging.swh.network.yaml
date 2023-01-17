@@ -2,10 +2,36 @@
 name: rancher-node-staging-worker4.internal.staging.swh.network
 values:
   agent_specified_environment: staging
-  apt_has_dist_updates: false
-  apt_has_updates: false
-  apt_reboot_required: false
-  apt_update_last_success: 1669224663
+  apt_dist_updates: 9
+  apt_has_dist_updates: true
+  apt_has_updates: true
+  apt_package_dist_updates:
+  - containerd.io
+  - docker-ce-cli
+  - docker-ce
+  - docker-ce-rootless-extras
+  - docker-scan-plugin
+  - icinga2
+  - icinga2-bin
+  - icinga2-common
+  - icinga2-doc
+  apt_package_security_dist_updates: []
+  apt_package_security_updates: []
+  apt_package_updates:
+  - containerd.io
+  - docker-ce-cli
+  - docker-ce
+  - docker-ce-rootless-extras
+  - docker-scan-plugin
+  - icinga2
+  - icinga2-bin
+  - icinga2-common
+  - icinga2-doc
+  apt_reboot_required: true
+  apt_security_dist_updates: 0
+  apt_security_updates: 0
+  apt_update_last_success: 1671622263
+  apt_updates: 9
   architecture: amd64
   bios_release_date: 04/01/2014
   bios_vendor: SeaBIOS
@@ -22,9 +48,9 @@ values:
   blockdevice_vdb_vendor: '0x1af4'
   blockdevices: vdb,sr0,vda,sr1
   cassandracmsheapnewsize: 800
-  cassandracmsmaxheapsize: 8003
+  cassandracmsmaxheapsize: 8028
   cassandraheapnewsize: 800
-  cassandramaxheapsize: 8003
+  cassandramaxheapsize: 8028
   chassistype: Other
   cloudinit_enabled: 'true'
   deployment: staging
@@ -60,11 +86,11 @@ values:
       uuid: b6c526d3-b034-4018-92aa-e2ce14a14698
   docker:
     ID: T2KB:5VRV:ZKMS:OFKV:JT4H:JKMZ:XBRO:NX4U:ZYFR:OVLJ:NG5M:LDIA
-    Containers: 64
-    ContainersRunning: 38
+    Containers: 60
+    ContainersRunning: 34
     ContainersPaused: 0
     ContainersStopped: 26
-    Images: 52
+    Images: 67
     Driver: zfs
     DriverStatus:
     - - Zpool
@@ -74,9 +100,9 @@ values:
     - - Parent Dataset
       - data/docker
     - - Space Used By Parent
-      - '6144266752'
+      - '6541362176'
     - - Space Available
-      - '5207757824'
+      - '11648394240'
     - - Parent Quota
       - 'no'
     - - Compression
@@ -116,10 +142,10 @@ values:
     BridgeNfIptables: true
     BridgeNfIp6tables: true
     Debug: false
-    NFd: 196
+    NFd: 224
     OomKillDisable: true
-    NGoroutines: 190
-    SystemTime: '2022-11-23T17:41:07.0386785Z'
+    NGoroutines: 205
+    SystemTime: '2022-12-21T11:41:09.39087274Z'
     LoggingDriver: journald
     CgroupDriver: cgroupfs
     CgroupVersion: '1'
@@ -143,7 +169,7 @@ values:
           Official: true
       Mirrors: []
     NCPU: 8
-    MemTotal: 33566990336
+    MemTotal: 33671847936
     GenericResources: ''
     DockerRootDir: "/var/lib/docker"
     HttpProxy: ''
@@ -212,8 +238,8 @@ values:
       managed_interfaces: {}
       bridge:
         Name: bridge
-        Id: d770514a382b096b1e84b58f866aaa73c5b78a84e5a07f002dcb19aa16b0805a
-        Created: '2022-11-23T16:20:55.653427795Z'
+        Id: '05900c6397ba390874464b1a3ad06d4c8c5a15fc550501977ea21b798ca1d921'
+        Created: '2022-11-28T15:05:10.900170319Z'
         Scope: local
         Driver: bridge
         EnableIPv6: false
@@ -256,39 +282,45 @@ values:
           Network: ''
         ConfigOnly: false
         Containers:
-          4a5b2698fd44e7c6c9f479db8e5428e87a2cc877e3fdf340419a74251fa79682:
-            Name: kubelet
-            EndpointID: ac199df7a28baa4a46e01cd616d5dbc0cf59e0f1cafe51d85362c543bfd55ee8
-            MacAddress: ''
-            IPv4Address: ''
-            IPv6Address: ''
-          6c5070d330cdacdc72481eb341aa16bdba52ae17eeeada085e5c30070f3eacd6:
-            Name: k8s_POD_cattle-node-agent-cst9h_cattle-system_f7df7a22-6060-40b5-90b9-f921b22074fd_6
-            EndpointID: 7237d033071b605c22206cc4ddb7561a6f5f12127ddfa2b06be185c8ba2015c9
-            MacAddress: ''
-            IPv4Address: ''
-            IPv6Address: ''
-          a9043eae53685ad335b7f608fd4c097b08582a9d4b96b3fd6ae5b4b339fa36cc:
-            Name: k8s_POD_rancher-monitoring-prometheus-node-exporter-cfcts_cattle-monitoring-system_5a75dc91-4f42-4f7b-9740-f64395ab07cd_6
-            EndpointID: a4fb1bf43928c9bb620b1666c4a349794657f05689892f5fa6adc2805ee80b5a
-            MacAddress: ''
-            IPv4Address: ''
-            IPv6Address: ''
-          adf80d57bc7557a0bb6d9773575295b38a4231ddaba1b6b85d657d701edc3138:
-            Name: kube-proxy
-            EndpointID: 5ce406c415a3729e9567436b4545593ca1f730d35dd30beff046d1475c801a8f
-            MacAddress: ''
-            IPv4Address: ''
-            IPv6Address: ''
-          be4d8e3934f8a39a9deceaa6739445605515881b784d9b2686c6c62513967ed2:
-            Name: k8s_POD_canal-g82s6_kube-system_11d96d2e-a5d6-462a-b3b4-b84faace8dcb_4
-            EndpointID: 6713223ead7f61d91eafbc3b30d132dd2fb13f24ab14d5daaefa48da5418ecb4
-            MacAddress: ''
-            IPv4Address: ''
-            IPv6Address: ''
-          f319631f77dcfa2cf9255391ce384c4c5174a33b8b35b62a1e247b518edac47e:
+          607eaa371d0893caf2f6ff8e78fc5cc74ed6e3973048a62a39662b9a4afcb96b:
             Name: nginx-proxy
-            EndpointID: 15da130bb829c681f8c8b20822064927188e8c66ff35e8bccd81f97303f0cbbf
+            EndpointID: 81540277eb656359cc374aebba81cc2b791f7a61cd372301868c07c0bc5ddae2
+            MacAddress: ''
+            IPv4Address: ''
+            IPv6Address: ''
+          97504a1671b9c7fb44eafb3fb1efced950b812c3a323d50d5a62babe4542b28a:
+            Name: kubelet
+            EndpointID: e3393acba544afcedca9ed0a0cd35e36c2f1ec902108cfa38a7608387bac2cea
+            MacAddress: ''
+            IPv4Address: ''
+            IPv6Address: ''
+          b6c0f2955d3c878e7be3e9cea0d09ec7307928fe981a47deb3e2b972adb7daf0:
+            Name: k8s_POD_cattle-node-agent-8kbng_cattle-system_032ccf19-6fb8-449c-b98e-43f8b05ef468_1
+            EndpointID: c1ee0d4d7e347e26582e46f65d8906d7403a506063bbc75d11e174f28f6302eb
+            MacAddress: ''
+            IPv4Address: ''
+            IPv6Address: ''
+          cec7c79d5b5904a8c4550e6049f0fb936724acca9568613805fa74717aa627f6:
+            Name: k8s_POD_rancher-monitoring-prometheus-node-exporter-cfcts_cattle-monitoring-system_5a75dc91-4f42-4f7b-9740-f64395ab07cd_7
+            EndpointID: e34d3661d10d73c2f89db41fa9a27c65b8afee36c38fe07068b6fe1e982a67c4
+            MacAddress: ''
+            IPv4Address: ''
+            IPv6Address: ''
+          d3a957eef59a3d3b6d28018c06f5ecf499532976d052f4fd93479e62a2688a2b:
+            Name: kube-proxy
+            EndpointID: e6f9306d392526e6cd9f3b21458a16ed17eaeae83b505487b63bb805952590b0
+            MacAddress: ''
+            IPv4Address: ''
+            IPv6Address: ''
+          faf2f72a7891b74da5306de21d05d0c6f639deebb779976baceb5fe4f299a9ab:
+            Name: k8s_POD_metallb-speaker-pfv4l_metallb_5f2226a7-35ae-4019-9c1c-8ac7ee01c579_0
+            EndpointID: 9657ba99dc96c888cf241f8fee54393ab634e6c95bac2f5d9573964a5a4ebbd7
+            MacAddress: ''
+            IPv4Address: ''
+            IPv6Address: ''
+          fe2f0aedc0e29387c8012906e7c043ecbc414637383ff9b630864cbbe0c7572f:
+            Name: k8s_POD_canal-7zxff_kube-system_55b2cc17-1387-4e90-9b16-b8fd264f2910_0
+            EndpointID: 71187b17450bba02ee76a494e5efb4b72ea3b714bcaee153b18bfff7dfe00346
             MacAddress: ''
             IPv4Address: ''
             IPv6Address: ''
@@ -312,87 +344,69 @@ values:
           Network: ''
         ConfigOnly: false
         Containers:
-          071fc2ee734b73ee9c1b235dfa1ff7abb2e636fac394d6f80cfd1e54446dca0c:
-            Name: k8s_POD_indexer-origin-intrinsic-7b845fb66b-z98vq_swh_54ba4cdb-5a76-4465-a7f7-d7845723b402_0
-            EndpointID: 36d776000023412d8ee100197c104356c89328a519e3270281248f4f37adfe39
+          25cc300d8be0fcbe3d70465c458432524c7b1fd5773adce66b006ccce39d0e6c:
+            Name: k8s_POD_indexer-content-mimetype-5896c575df-nrmbt_swh_bb1380cd-b4c2-4e07-9a4d-7eaa2145a155_0
+            EndpointID: 39516c1360c5e5efcfd42c4269a67392dfa09e5ce8395df322126ab143992505
             MacAddress: ''
             IPv4Address: ''
             IPv6Address: ''
-          0a6b5587c583b0e984ee70bd58d606074ccbc1826724d3748037e587c1d895ea:
-            Name: k8s_POD_indexer-content-mimetype-857fc7b45d-4w8kr_swh_a7b76579-0191-4281-9d7f-16997c7fdf8c_0
-            EndpointID: 66fce7077a1bb46590cf1f7d65103119cc7854ab7b62ce74af0bf62a4a85b33c
+          2e1fed0693a706b24926218517a28f49571100c2dc2cc36d2c896d2b340b8116:
+            Name: k8s_POD_loader-bzr-66566975c8-qtrmb_swh_a55e87c1-e875-46dc-bf7f-1b9b825f5fc0_0
+            EndpointID: 28fecdf54f39dbdad99fc3c2bacf7f4f55ecfb34e858ecccc22bd985c0c1b75c
             MacAddress: ''
             IPv4Address: ''
             IPv6Address: ''
-          2221a3717962f0a4f71dc14754edf6322266f767f70cb5a6cd5d03375ad0cd24:
-            Name: k8s_POD_indexer-origin-intrinsic-7b845fb66b-57lx2_swh_936baf7c-55f2-48fe-8fca-0a4e95b0d342_0
-            EndpointID: 9f8e781d853aa0478bbe0bae8044994c5ad927d56c0d57f650da689d25d8068e
+          3923d27090a723b7ec46d7dacc2f98bc7ea0236021e3fd6f18d165a2d2a5e4fe:
+            Name: k8s_POD_indexer-content-fossology-license-7895d55d6b-r6tv7_swh_0884a743-5a8f-40a7-af34-86db5cdaed35_0
+            EndpointID: c2d1f6cedf885579e5c0987f87e0ab99fdcf10fc3ff191db412926c7c550ac96
             MacAddress: ''
             IPv4Address: ''
             IPv6Address: ''
-          2361db68de0fd694be13d721c7653d33da5062001f62ff72d40cd666cbe7e657:
-            Name: k8s_POD_coredns-8578b6dbdd-qtdnb_kube-system_306ea555-b958-423e-8537-cd95ee1b15d3_0
-            EndpointID: f45c00952d929d0429cf4071ae834996b96610d66ede918c765372b007e92f33
+          54d20986de3401ebef509e8c8da38d4258b7f26e0ea5838b7e37bdb64a0eb131:
+            Name: k8s_POD_indexer-content-fossology-license-7895d55d6b-djznh_swh_0b0d44af-9eaa-4359-8e76-bd8039616971_0
+            EndpointID: c1ed4ad250bc4897dbb66d2026fb986dc4ea8f48ab8876d46bdb2872fd41de7b
             MacAddress: ''
             IPv4Address: ''
             IPv6Address: ''
-          387b8721f8d72c86338c22773c17c07b8c1aeae7e2bb1fcfcb0cfbaa306ed92d:
-            Name: k8s_POD_indexer-origin-extrinsic-85bc69f7d9-9p4qb_swh_84cdf3e9-9a3d-467d-9bf5-abb5639bdf2d_0
-            EndpointID: b81ff9aa1d6a104fb519947d63fa01054cfdf6c27533f9e05e9cf10e2a37bf3e
+          5871e70ce32eec6f0227a285d6dded746605597c3723603f923d5fcd15cca440:
+            Name: k8s_POD_loader-git-5f9c7bcd46-xv8nb_swh_6be9794d-d790-4677-8479-296e716a9404_0
+            EndpointID: cd26b5dd90b424288c58948b18088c33f438d117a1c3c0b37dc9f553305c8da1
             MacAddress: ''
             IPv4Address: ''
             IPv6Address: ''
-          392702fe82c4e848ad300d437384f66fec4a4ccb8d57200839066dac2e57a947:
-            Name: k8s_POD_indexer-content-fossology-license-8588f57c9-9hs6d_swh_7c64c833-76e1-4ba7-b97b-09cb449c2133_0
-            EndpointID: d007049f971f948c28507cde4ac8b619cd4062632d32e39c04f9fd4ef63cf17b
+          5bdadf84478bd12c4002625f706caa6d6f45b91aa254dad4f7c011dcb3ac9c90:
+            Name: k8s_POD_loader-golang-7d855595d9-7x9h5_swh_2905764a-a43c-4829-8ee7-6e8652138875_0
+            EndpointID: 54a7f7fb72069f8fdeab002e4bade1ef1f37cca39dac98b1e01b30ee68b5915e
             MacAddress: ''
             IPv4Address: ''
             IPv6Address: ''
-          5d57db094be4a49d4842fc598558c49c932052cdbb33fe1d6a16ec09a3fb8a68:
-            Name: k8s_POD_indexer-origin-intrinsic-7b845fb66b-pfm8d_swh_f58a7ebc-fa7a-4ec7-afa7-acd63f74a4cd_0
-            EndpointID: d37db405d7b46dbe6d0bc1b32ff13d38945b6d05882842ed2e6c4c1d0a295bcc
+          acc7f40e59a7e5e60be722f51b496ba9d9492fd8c8a6d5608b9888395413af12:
+            Name: k8s_POD_indexer-origin-extrinsic-9b58dccbb-pbqhd_swh_7fd95d49-5502-43c9-a2b0-ebe91427d4f0_0
+            EndpointID: ffa730b6c126a31a339deb32fa72324e2e6fc2ca99b10a7c44d17a74ba34f3a6
             MacAddress: ''
             IPv4Address: ''
             IPv6Address: ''
-          633483d42dd0e1ac3072209b9c33c125364a19f58705b802f064639c684e768b:
-            Name: k8s_POD_nginx-ingress-controller-hngtt_ingress-nginx_bd0838d6-6502-406e-a9d6-a099238090a4_14
-            EndpointID: b197fceec01411b7b3c1f82889cfdb95d97f2b2b256c3cf94ba3aa94e9e5b80f
+          aedfd56bde7c1ac879ccf5c9b00a0919b69df04f189afb0963c84a3542f1d79d:
+            Name: k8s_POD_indexer-content-mimetype-5896c575df-xgl6k_swh_91a8e1df-3ac3-4c31-963c-4ba95b79ed61_0
+            EndpointID: bfe8acc3a12d83e63486504bdbb2608e65486e6a230d88726f51e898292ef81b
             MacAddress: ''
             IPv4Address: ''
             IPv6Address: ''
-          8bf991eeb41736aa068bddaaf12716220c8272ac337486b09c1f674a5ed9bcb9:
-            Name: k8s_POD_indexer-origin-intrinsic-7b845fb66b-qbgth_swh_ec70d28a-61c7-451b-b28b-f71896fd3fe2_0
-            EndpointID: 6bafebec88e4aaccb5a95345726c817ee1245f1e2e257d3eab53f39887200875
+          d2daf76a741014c89b25fe70f9b229e31aecafacf23f8d258e64b2feb090eaad:
+            Name: k8s_POD_coredns-548ff45b67-z8gvk_kube-system_6cb6d95d-d569-4a7b-b877-4d0361cd9344_1
+            EndpointID: d2eb0d3eb082c81a70641a4834b36e4d8b9d3fa3191c800954a8f6dc98b7588c
             MacAddress: ''
             IPv4Address: ''
             IPv6Address: ''
-          c7390a0d554ae0a026c227bf519600741026a5140b51befd1eade24dd43f2892:
-            Name: k8s_POD_indexer-content-fossology-license-8588f57c9-qxt78_swh_dfecf071-445e-4041-988b-33d346198b57_0
-            EndpointID: 2007f17756573eb403f28f83f93eeb9dcd048d63633d207a6e96a8b70edcf6fd
+          db2403a0c7a824915d4359d779de3c045992db2c75dec5712d1d7362c308b221:
+            Name: k8s_POD_loader-git-5f9c7bcd46-w7v87_swh_cbfac5dc-7f09-443f-ae72-196583aba930_0
+            EndpointID: 71deccc4c6de43aad4ba0448001126eaf227f4e1006e15cf77af185ca61f8de9
             MacAddress: ''
             IPv4Address: ''
             IPv6Address: ''
-          d7a5acff318afbcebf73596ecba99748ce3f8c280e53a4a7091db53a4cecdc00:
-            Name: k8s_POD_lister-opam-99c55c4f7-5ll95_swh_f60fcd0d-4f0a-4756-9c5e-5786d98f4a33_0
-            EndpointID: c50535adc769f5d0d10e001cf5cee12dac553cfb0d33d4e87adcdf2220e9be5e
-            MacAddress: ''
-            IPv4Address: ''
-            IPv6Address: ''
-          d9440a3cd23f4241340c528973466adb5e64c168d799bb9ebc8c3e698cd6d1b7:
-            Name: k8s_POD_indexer-origin-intrinsic-7b845fb66b-bsp5q_swh_533b2787-fd24-4597-b9b1-b73a4169cc52_0
-            EndpointID: 9ecd48c44ea63a5501f4d3f865b7987b4af3891ef51cfd0688076ed2a1a17cef
-            MacAddress: ''
-            IPv4Address: ''
-            IPv6Address: ''
-          ea136ab47d2f3edea2029a3b752ae8b3be470c731d9f4aa97f714ccdee1b5b17:
-            Name: k8s_POD_indexer-origin-intrinsic-7b845fb66b-85tsg_swh_6ee64dae-66c2-41c6-a3b0-28100931b2cd_0
-            EndpointID: 62da9503373d7c15e92a17f21511b11bc99195325e55091ffd62f8b34b425e9f
-            MacAddress: ''
-            IPv4Address: ''
-            IPv6Address: ''
-          ebe69f9bfca0f8045700bd0a88f85c39c0d388b47c32d13bd598131859bab90c:
-            Name: k8s_POD_indexer-content-mimetype-857fc7b45d-bkb4b_swh_611b82bb-44e9-4e6c-be70-69f4291c5361_0
-            EndpointID: 24703f3d4b10c4b81d3338bbb3e2b3c0754d3dd1a3c4503fff3670a6b8ced52a
+          efdb06e75b19fc036c6e2998bd7f6d54ad2cbc5ec98c70f8977b3336209279b9:
+            Name: k8s_POD_indexer-origin-intrinsic-fb94cd847-l59k7_swh_406d8103-05a0-4a50-8a1a-28cde92fd611_0
+            EndpointID: 5bd7d2e1724d865a2d50d5c578c722da635508d489749ef5de76d4212216f43b
             MacAddress: ''
             IPv4Address: ''
             IPv6Address: ''
@@ -467,7 +481,7 @@ values:
       vardir: "/var/lib/puppet"
       server: pergamon.internal.softwareheritage.org
   facterversion: 3.14.12
-  filesystems: ext2,ext3,ext4,iso9660
+  filesystems: btrfs,ext2,ext3,ext4,hfs,hfsplus,iso9660,jfs,minix,msdos,qnx4,ufs,vfat,xfs
   fips_enabled: false
   fqdn: rancher-node-staging-worker4.internal.staging.swh.network
   gid: root
@@ -484,25 +498,22 @@ values:
     privileged: true
     uid: 0
     user: root
-  interfaces: cali01dcd1e3c2f,cali0795469e4ef,cali10cb4f7070a,cali150b52826e2,cali5ef3808560e,cali796e7f83d01,cali88435ec4922,calia4cbad74d0c,calia5361b10bef,calibd2bc41960f,calic38480150b5,calicb07aa7e07e,calid9b6c4ddb67,calieaf2753248e,docker0,eth0,flannel.1,lo
+  interfaces: cali13ffb6c0603,cali19cb5086f1c,cali23eb00c5b3b,cali4bcdf07da16,cali90b16adf92e,calia2598cdd731,calib1c69d8eb8b,calic9f4f891238,calicc034b7ce61,calidefe83d6054,calie4d96a42e3f,docker0,eth0,flannel.1,lo
   ipaddress: 192.168.130.134
   ipaddress6: fe80::98eb:6ff:fe03:318b
-  ipaddress6_cali01dcd1e3c2f: fe80::ecee:eeff:feee:eeee
-  ipaddress6_cali0795469e4ef: fe80::ecee:eeff:feee:eeee
-  ipaddress6_cali10cb4f7070a: fe80::ecee:eeff:feee:eeee
-  ipaddress6_cali150b52826e2: fe80::ecee:eeff:feee:eeee
-  ipaddress6_cali5ef3808560e: fe80::ecee:eeff:feee:eeee
-  ipaddress6_cali796e7f83d01: fe80::ecee:eeff:feee:eeee
-  ipaddress6_cali88435ec4922: fe80::ecee:eeff:feee:eeee
-  ipaddress6_calia4cbad74d0c: fe80::ecee:eeff:feee:eeee
-  ipaddress6_calia5361b10bef: fe80::ecee:eeff:feee:eeee
-  ipaddress6_calibd2bc41960f: fe80::ecee:eeff:feee:eeee
-  ipaddress6_calic38480150b5: fe80::ecee:eeff:feee:eeee
-  ipaddress6_calicb07aa7e07e: fe80::ecee:eeff:feee:eeee
-  ipaddress6_calid9b6c4ddb67: fe80::ecee:eeff:feee:eeee
-  ipaddress6_calieaf2753248e: fe80::ecee:eeff:feee:eeee
+  ipaddress6_cali13ffb6c0603: fe80::ecee:eeff:feee:eeee
+  ipaddress6_cali19cb5086f1c: fe80::ecee:eeff:feee:eeee
+  ipaddress6_cali23eb00c5b3b: fe80::ecee:eeff:feee:eeee
+  ipaddress6_cali4bcdf07da16: fe80::ecee:eeff:feee:eeee
+  ipaddress6_cali90b16adf92e: fe80::ecee:eeff:feee:eeee
+  ipaddress6_calia2598cdd731: fe80::ecee:eeff:feee:eeee
+  ipaddress6_calib1c69d8eb8b: fe80::ecee:eeff:feee:eeee
+  ipaddress6_calic9f4f891238: fe80::ecee:eeff:feee:eeee
+  ipaddress6_calicc034b7ce61: fe80::ecee:eeff:feee:eeee
+  ipaddress6_calidefe83d6054: fe80::ecee:eeff:feee:eeee
+  ipaddress6_calie4d96a42e3f: fe80::ecee:eeff:feee:eeee
   ipaddress6_eth0: fe80::98eb:6ff:fe03:318b
-  ipaddress6_flannel.1: fe80::fcdf:fdff:fedd:7b79
+  ipaddress6_flannel.1: fe80::8856:4cff:fe6a:1262
   ipaddress6_lo: "::1"
   ipaddress_docker0: 172.17.0.1
   ipaddress_eth0: 192.168.130.134
@@ -516,33 +527,30 @@ values:
   kernelversion: 5.10.0
   letsencrypt_directory: {}
   load_averages:
-    15m: 2.82
-    1m: 2.58
-    5m: 2.73
+    15m: 3.29
+    1m: 3.5
+    5m: 3.19
   lsbdistcodename: bullseye
   lsbdistdescription: Debian GNU/Linux 11 (bullseye)
   lsbdistid: Debian
-  lsbdistrelease: '11.5'
+  lsbdistrelease: '11.6'
   lsbmajdistrelease: '11'
-  lsbminordistrelease: '5'
+  lsbminordistrelease: '6'
   macaddress: 9a:eb:06:03:31:8b
-  macaddress_cali01dcd1e3c2f: ee:ee:ee:ee:ee:ee
-  macaddress_cali0795469e4ef: ee:ee:ee:ee:ee:ee
-  macaddress_cali10cb4f7070a: ee:ee:ee:ee:ee:ee
-  macaddress_cali150b52826e2: ee:ee:ee:ee:ee:ee
-  macaddress_cali5ef3808560e: ee:ee:ee:ee:ee:ee
-  macaddress_cali796e7f83d01: ee:ee:ee:ee:ee:ee
-  macaddress_cali88435ec4922: ee:ee:ee:ee:ee:ee
-  macaddress_calia4cbad74d0c: ee:ee:ee:ee:ee:ee
-  macaddress_calia5361b10bef: ee:ee:ee:ee:ee:ee
-  macaddress_calibd2bc41960f: ee:ee:ee:ee:ee:ee
-  macaddress_calic38480150b5: ee:ee:ee:ee:ee:ee
-  macaddress_calicb07aa7e07e: ee:ee:ee:ee:ee:ee
-  macaddress_calid9b6c4ddb67: ee:ee:ee:ee:ee:ee
-  macaddress_calieaf2753248e: ee:ee:ee:ee:ee:ee
-  macaddress_docker0: 02:42:68:00:b6:f3
+  macaddress_cali13ffb6c0603: ee:ee:ee:ee:ee:ee
+  macaddress_cali19cb5086f1c: ee:ee:ee:ee:ee:ee
+  macaddress_cali23eb00c5b3b: ee:ee:ee:ee:ee:ee
+  macaddress_cali4bcdf07da16: ee:ee:ee:ee:ee:ee
+  macaddress_cali90b16adf92e: ee:ee:ee:ee:ee:ee
+  macaddress_calia2598cdd731: ee:ee:ee:ee:ee:ee
+  macaddress_calib1c69d8eb8b: ee:ee:ee:ee:ee:ee
+  macaddress_calic9f4f891238: ee:ee:ee:ee:ee:ee
+  macaddress_calicc034b7ce61: ee:ee:ee:ee:ee:ee
+  macaddress_calidefe83d6054: ee:ee:ee:ee:ee:ee
+  macaddress_calie4d96a42e3f: ee:ee:ee:ee:ee:ee
+  macaddress_docker0: 02:42:11:af:52:d0
   macaddress_eth0: 9a:eb:06:03:31:8b
-  macaddress_flannel.1: fe:df:fd:dd:7b:79
+  macaddress_flannel.1: 8a:56:4c:6a:12:62
   manufacturer: QEMU
   memory:
     swap:
@@ -554,22 +562,22 @@ values:
       used: 0 bytes
       used_bytes: 0
     system:
-      available: 26.92 GiB
-      available_bytes: 28901949440
-      capacity: 13.90%
-      total: 31.26 GiB
-      total_bytes: 33566990336
-      used: 4.34 GiB
-      used_bytes: 4665040896
-  memoryfree: 26.92 GiB
-  memoryfree_mb: 27563.046875
-  memorysize: 31.26 GiB
-  memorysize_mb: 32011.9765625
+      available: 21.44 GiB
+      available_bytes: 23022563328
+      capacity: 31.63%
+      total: 31.36 GiB
+      total_bytes: 33671847936
+      used: 9.92 GiB
+      used_bytes: 10649284608
+  memoryfree: 21.44 GiB
+  memoryfree_mb: 21956.02734375
+  memorysize: 31.36 GiB
+  memorysize_mb: 32111.9765625
   mountpoints:
     "/":
-      available: 11.33 GiB
-      available_bytes: 12166057984
-      capacity: 26.11%
+      available: 11.55 GiB
+      available_bytes: 12401115136
+      capacity: 24.68%
       device: "/dev/mapper/base--template--vg-root"
       filesystem: ext4
       options:
@@ -578,11 +586,11 @@ values:
       - errors=remount-ro
       size: 16.18 GiB
       size_bytes: 17373634560
-      used: 4.00 GiB
-      used_bytes: 4299091968
+      used: 3.78 GiB
+      used_bytes: 4064034816
     "/boot":
-      available: 359.17 MiB
-      available_bytes: 376619008
+      available: 359.18 MiB
+      available_bytes: 376630272
       capacity: 19.29%
       device: "/dev/vda1"
       filesystem: ext2
@@ -591,11 +599,11 @@ values:
       - relatime
       size: 469.35 MiB
       size_bytes: 492152832
-      used: 85.83 MiB
-      used_bytes: 90001408
+      used: 85.82 MiB
+      used_bytes: 89990144
     "/data":
-      available: 11.24 GiB
-      available_bytes: 12073959424
+      available: 9.36 GiB
+      available_bytes: 10046668800
       capacity: 0.00%
       device: data
       filesystem: zfs
@@ -603,8 +611,8 @@ values:
       - rw
       - xattr
       - noacl
-      size: 11.24 GiB
-      size_bytes: 12074090496
+      size: 9.36 GiB
+      size_bytes: 10046799872
       used: 128.00 KiB
       used_bytes: 131072
     "/dev":
@@ -690,8 +698,8 @@ values:
       used_bytes: 0
     "/run":
       available: 3.13 GiB
-      available_bytes: 3364302848
-      capacity: 0.09%
+      available_bytes: 3364536320
+      capacity: 0.08%
       device: tmpfs
       filesystem: tmpfs
       options:
@@ -705,9 +713,9 @@ values:
       - mode=755
       size: 3.14 GiB
       size_bytes: 3367186432
-      used: 2.75 MiB
-      used_bytes: 2883584
-    "/run/docker/netns/0c762cf90ad7":
+      used: 2.53 MiB
+      used_bytes: 2650112
+    "/run/docker/netns/123e6a427eae":
       available: 0 bytes
       available_bytes: 0
       capacity: 100%
@@ -719,7 +727,7 @@ values:
       size_bytes: 0
       used: 0 bytes
       used_bytes: 0
-    "/run/docker/netns/1e1f435cdf47":
+    "/run/docker/netns/2742c78ee2e8":
       available: 0 bytes
       available_bytes: 0
       capacity: 100%
@@ -731,7 +739,7 @@ values:
       size_bytes: 0
       used: 0 bytes
       used_bytes: 0
-    "/run/docker/netns/24aa5b817af1":
+    "/run/docker/netns/3f18301dde72":
       available: 0 bytes
       available_bytes: 0
       capacity: 100%
@@ -743,7 +751,7 @@ values:
       size_bytes: 0
       used: 0 bytes
       used_bytes: 0
-    "/run/docker/netns/2ab851b32e5b":
+    "/run/docker/netns/5254904307a0":
       available: 0 bytes
       available_bytes: 0
       capacity: 100%
@@ -755,7 +763,7 @@ values:
       size_bytes: 0
       used: 0 bytes
       used_bytes: 0
-    "/run/docker/netns/4ab18f028b24":
+    "/run/docker/netns/537d5325db08":
       available: 0 bytes
       available_bytes: 0
       capacity: 100%
@@ -767,7 +775,7 @@ values:
       size_bytes: 0
       used: 0 bytes
       used_bytes: 0
-    "/run/docker/netns/5143210457fb":
+    "/run/docker/netns/5bbea0dfff05":
       available: 0 bytes
       available_bytes: 0
       capacity: 100%
@@ -779,7 +787,7 @@ values:
       size_bytes: 0
       used: 0 bytes
       used_bytes: 0
-    "/run/docker/netns/6074815cb6d9":
+    "/run/docker/netns/95142c832b50":
       available: 0 bytes
       available_bytes: 0
       capacity: 100%
@@ -791,7 +799,7 @@ values:
       size_bytes: 0
       used: 0 bytes
       used_bytes: 0
-    "/run/docker/netns/7208670e805f":
+    "/run/docker/netns/9768c1938b5a":
       available: 0 bytes
       available_bytes: 0
       capacity: 100%
@@ -803,7 +811,7 @@ values:
       size_bytes: 0
       used: 0 bytes
       used_bytes: 0
-    "/run/docker/netns/8ad04215a0d9":
+    "/run/docker/netns/a9955a07ba9a":
       available: 0 bytes
       available_bytes: 0
       capacity: 100%
@@ -815,31 +823,7 @@ values:
       size_bytes: 0
       used: 0 bytes
       used_bytes: 0
-    "/run/docker/netns/a342a1f58766":
-      available: 0 bytes
-      available_bytes: 0
-      capacity: 100%
-      device: nsfs
-      filesystem: nsfs
-      options:
-      - rw
-      size: 0 bytes
-      size_bytes: 0
-      used: 0 bytes
-      used_bytes: 0
-    "/run/docker/netns/bd9cf977be6a":
-      available: 0 bytes
-      available_bytes: 0
-      capacity: 100%
-      device: nsfs
-      filesystem: nsfs
-      options:
-      - rw
-      size: 0 bytes
-      size_bytes: 0
-      used: 0 bytes
-      used_bytes: 0
-    "/run/docker/netns/d5e6c4e3c5ae":
+    "/run/docker/netns/ab59278fa209":
       available: 0 bytes
       available_bytes: 0
       capacity: 100%
@@ -863,19 +847,7 @@ values:
       size_bytes: 0
       used: 0 bytes
       used_bytes: 0
-    "/run/docker/netns/e4f8bcc9ac16":
-      available: 0 bytes
-      available_bytes: 0
-      capacity: 100%
-      device: nsfs
-      filesystem: nsfs
-      options:
-      - rw
-      size: 0 bytes
-      size_bytes: 0
-      used: 0 bytes
-      used_bytes: 0
-    "/run/docker/netns/edaf6b8750b0":
+    "/run/docker/netns/f33603df90f7":
       available: 0 bytes
       available_bytes: 0
       capacity: 100%
@@ -918,26 +890,6 @@ values:
       size_bytes: 0
       used: 0 bytes
       used_bytes: 0
-    "/run/user/1025":
-      available: 3.13 GiB
-      available_bytes: 3356696576
-      capacity: 0%
-      device: tmpfs
-      filesystem: tmpfs
-      options:
-      - rw
-      - nosuid
-      - nodev
-      - relatime
-      - size=3278024k
-      - nr_inodes=819506
-      - mode=700
-      - uid=1025
-      - gid=1025
-      size: 3.13 GiB
-      size_bytes: 3356696576
-      used: 0 bytes
-      used_bytes: 0
     "/sys/fs/cgroup":
       available: 4.00 MiB
       available_bytes: 4194304
@@ -956,10 +908,28 @@ values:
       size_bytes: 4194304
       used: 0 bytes
       used_bytes: 0
+    "/tmp":
+      available: 29.75 GiB
+      available_bytes: 31949156352
+      capacity: 0.82%
+      device: tmpfs
+      filesystem: tmpfs
+      options:
+      - rw
+      - nosuid
+      - nodev
+      - noexec
+      - relatime
+      - size=31457276k
+      - nr_inodes=209715200
+      size: 30.00 GiB
+      size_bytes: 32212250624
+      used: 250.91 MiB
+      used_bytes: 263094272
     "/var/lib/docker":
-      available: 11.24 GiB
-      available_bytes: 12073959424
-      capacity: 1.09%
+      available: 9.36 GiB
+      available_bytes: 10046668800
+      capacity: 1.11%
       device: data/docker
       filesystem: zfs
       options:
@@ -967,29 +937,11 @@ values:
       - noatime
       - xattr
       - noacl
-      size: 11.37 GiB
-      size_bytes: 12206997504
-      used: 126.88 MiB
-      used_bytes: 133038080
-    "/var/lib/docker/containers/071fc2ee734b73ee9c1b235dfa1ff7abb2e636fac394d6f80cfd1e54446dca0c/mounts/shm":
-      available: 64.00 MiB
-      available_bytes: 67108864
-      capacity: 0%
-      device: shm
-      filesystem: tmpfs
-      options:
-      - rw
-      - nosuid
-      - nodev
-      - noexec
-      - relatime
-      - size=65536k
-      - nr_inodes=4103293
-      size: 64.00 MiB
-      size_bytes: 67108864
-      used: 0 bytes
-      used_bytes: 0
-    "/var/lib/docker/containers/0a6b5587c583b0e984ee70bd58d606074ccbc1826724d3748037e587c1d895ea/mounts/shm":
+      size: 9.46 GiB
+      size_bytes: 10159521792
+      used: 107.63 MiB
+      used_bytes: 112852992
+    "/var/lib/docker/containers/25cc300d8be0fcbe3d70465c458432524c7b1fd5773adce66b006ccce39d0e6c/mounts/shm":
       available: 64.00 MiB
       available_bytes: 67108864
       capacity: 0%
@@ -1006,196 +958,7 @@ values:
       size_bytes: 67108864
       used: 0 bytes
       used_bytes: 0
-    "/var/lib/docker/containers/2221a3717962f0a4f71dc14754edf6322266f767f70cb5a6cd5d03375ad0cd24/mounts/shm":
-      available: 64.00 MiB
-      available_bytes: 67108864
-      capacity: 0%
-      device: shm
-      filesystem: tmpfs
-      options:
-      - rw
-      - nosuid
-      - nodev
-      - noexec
-      - relatime
-      - size=65536k
-      - nr_inodes=4104317
-      size: 64.00 MiB
-      size_bytes: 67108864
-      used: 0 bytes
-      used_bytes: 0
-    "/var/lib/docker/containers/2361db68de0fd694be13d721c7653d33da5062001f62ff72d40cd666cbe7e657/mounts/shm":
-      available: 64.00 MiB
-      available_bytes: 67108864
-      capacity: 0%
-      device: shm
-      filesystem: tmpfs
-      options:
-      - rw
-      - nosuid
-      - nodev
-      - noexec
-      - relatime
-      - size=65536k
-      size: 64.00 MiB
-      size_bytes: 67108864
-      used: 0 bytes
-      used_bytes: 0
-    "/var/lib/docker/containers/387b8721f8d72c86338c22773c17c07b8c1aeae7e2bb1fcfcb0cfbaa306ed92d/mounts/shm":
-      available: 64.00 MiB
-      available_bytes: 67108864
-      capacity: 0%
-      device: shm
-      filesystem: tmpfs
-      options:
-      - rw
-      - nosuid
-      - nodev
-      - noexec
-      - relatime
-      - size=65536k
-      size: 64.00 MiB
-      size_bytes: 67108864
-      used: 0 bytes
-      used_bytes: 0
-    "/var/lib/docker/containers/392702fe82c4e848ad300d437384f66fec4a4ccb8d57200839066dac2e57a947/mounts/shm":
-      available: 64.00 MiB
-      available_bytes: 67108864
-      capacity: 0%
-      device: shm
-      filesystem: tmpfs
-      options:
-      - rw
-      - nosuid
-      - nodev
-      - noexec
-      - relatime
-      - size=65536k
-      size: 64.00 MiB
-      size_bytes: 67108864
-      used: 0 bytes
-      used_bytes: 0
-    "/var/lib/docker/containers/5d57db094be4a49d4842fc598558c49c932052cdbb33fe1d6a16ec09a3fb8a68/mounts/shm":
-      available: 64.00 MiB
-      available_bytes: 67108864
-      capacity: 0%
-      device: shm
-      filesystem: tmpfs
-      options:
-      - rw
-      - nosuid
-      - nodev
-      - noexec
-      - relatime
-      - size=65536k
-      size: 64.00 MiB
-      size_bytes: 67108864
-      used: 0 bytes
-      used_bytes: 0
-    "/var/lib/docker/containers/633483d42dd0e1ac3072209b9c33c125364a19f58705b802f064639c684e768b/mounts/shm":
-      available: 64.00 MiB
-      available_bytes: 67108864
-      capacity: 0%
-      device: shm
-      filesystem: tmpfs
-      options:
-      - rw
-      - nosuid
-      - nodev
-      - noexec
-      - relatime
-      - size=65536k
-      size: 64.00 MiB
-      size_bytes: 67108864
-      used: 0 bytes
-      used_bytes: 0
-    "/var/lib/docker/containers/6c5070d330cdacdc72481eb341aa16bdba52ae17eeeada085e5c30070f3eacd6/mounts/shm":
-      available: 64.00 MiB
-      available_bytes: 67108864
-      capacity: 0%
-      device: shm
-      filesystem: tmpfs
-      options:
-      - rw
-      - nosuid
-      - nodev
-      - noexec
-      - relatime
-      - size=65536k
-      - nr_inodes=4110333
-      size: 64.00 MiB
-      size_bytes: 67108864
-      used: 0 bytes
-      used_bytes: 0
-    "/var/lib/docker/containers/8bf991eeb41736aa068bddaaf12716220c8272ac337486b09c1f674a5ed9bcb9/mounts/shm":
-      available: 64.00 MiB
-      available_bytes: 67108864
-      capacity: 0%
-      device: shm
-      filesystem: tmpfs
-      options:
-      - rw
-      - nosuid
-      - nodev
-      - noexec
-      - relatime
-      - size=65536k
-      size: 64.00 MiB
-      size_bytes: 67108864
-      used: 0 bytes
-      used_bytes: 0
-    "/var/lib/docker/containers/a9043eae53685ad335b7f608fd4c097b08582a9d4b96b3fd6ae5b4b339fa36cc/mounts/shm":
-      available: 64.00 MiB
-      available_bytes: 67108864
-      capacity: 0%
-      device: shm
-      filesystem: tmpfs
-      options:
-      - rw
-      - nosuid
-      - nodev
-      - noexec
-      - relatime
-      - size=65536k
-      size: 64.00 MiB
-      size_bytes: 67108864
-      used: 0 bytes
-      used_bytes: 0
-    "/var/lib/docker/containers/be4d8e3934f8a39a9deceaa6739445605515881b784d9b2686c6c62513967ed2/mounts/shm":
-      available: 64.00 MiB
-      available_bytes: 67108864
-      capacity: 0%
-      device: shm
-      filesystem: tmpfs
-      options:
-      - rw
-      - nosuid
-      - nodev
-      - noexec
-      - relatime
-      - size=65536k
-      size: 64.00 MiB
-      size_bytes: 67108864
-      used: 0 bytes
-      used_bytes: 0
-    "/var/lib/docker/containers/c7390a0d554ae0a026c227bf519600741026a5140b51befd1eade24dd43f2892/mounts/shm":
-      available: 64.00 MiB
-      available_bytes: 67108864
-      capacity: 0%
-      device: shm
-      filesystem: tmpfs
-      options:
-      - rw
-      - nosuid
-      - nodev
-      - noexec
-      - relatime
-      - size=65536k
-      size: 64.00 MiB
-      size_bytes: 67108864
-      used: 0 bytes
-      used_bytes: 0
-    "/var/lib/docker/containers/d7a5acff318afbcebf73596ecba99748ce3f8c280e53a4a7091db53a4cecdc00/mounts/shm":
+    "/var/lib/docker/containers/2e1fed0693a706b24926218517a28f49571100c2dc2cc36d2c896d2b340b8116/mounts/shm":
       available: 63.95 MiB
       available_bytes: 67059712
       capacity: 0.07%
@@ -1213,7 +976,7 @@ values:
       size_bytes: 67108864
       used: 48.00 KiB
       used_bytes: 49152
-    "/var/lib/docker/containers/d9440a3cd23f4241340c528973466adb5e64c168d799bb9ebc8c3e698cd6d1b7/mounts/shm":
+    "/var/lib/docker/containers/3923d27090a723b7ec46d7dacc2f98bc7ea0236021e3fd6f18d165a2d2a5e4fe/mounts/shm":
       available: 64.00 MiB
       available_bytes: 67108864
       capacity: 0%
@@ -1230,7 +993,61 @@ values:
       size_bytes: 67108864
       used: 0 bytes
       used_bytes: 0
-    "/var/lib/docker/containers/ea136ab47d2f3edea2029a3b752ae8b3be470c731d9f4aa97f714ccdee1b5b17/mounts/shm":
+    "/var/lib/docker/containers/54d20986de3401ebef509e8c8da38d4258b7f26e0ea5838b7e37bdb64a0eb131/mounts/shm":
+      available: 64.00 MiB
+      available_bytes: 67108864
+      capacity: 0%
+      device: shm
+      filesystem: tmpfs
+      options:
+      - rw
+      - nosuid
+      - nodev
+      - noexec
+      - relatime
+      - size=65536k
+      - nr_inodes=4110333
+      size: 64.00 MiB
+      size_bytes: 67108864
+      used: 0 bytes
+      used_bytes: 0
+    "/var/lib/docker/containers/5871e70ce32eec6f0227a285d6dded746605597c3723603f923d5fcd15cca440/mounts/shm":
+      available: 63.95 MiB
+      available_bytes: 67059712
+      capacity: 0.07%
+      device: shm
+      filesystem: tmpfs
+      options:
+      - rw
+      - nosuid
+      - nodev
+      - noexec
+      - relatime
+      - size=65536k
+      - nr_inodes=4110333
+      size: 64.00 MiB
+      size_bytes: 67108864
+      used: 48.00 KiB
+      used_bytes: 49152
+    "/var/lib/docker/containers/5bdadf84478bd12c4002625f706caa6d6f45b91aa254dad4f7c011dcb3ac9c90/mounts/shm":
+      available: 63.95 MiB
+      available_bytes: 67059712
+      capacity: 0.07%
+      device: shm
+      filesystem: tmpfs
+      options:
+      - rw
+      - nosuid
+      - nodev
+      - noexec
+      - relatime
+      - size=65536k
+      - nr_inodes=4110333
+      size: 64.00 MiB
+      size_bytes: 67108864
+      used: 48.00 KiB
+      used_bytes: 49152
+    "/var/lib/docker/containers/acc7f40e59a7e5e60be722f51b496ba9d9492fd8c8a6d5608b9888395413af12/mounts/shm":
       available: 64.00 MiB
       available_bytes: 67108864
       capacity: 0%
@@ -1247,7 +1064,25 @@ values:
       size_bytes: 67108864
       used: 0 bytes
       used_bytes: 0
-    "/var/lib/docker/containers/ebe69f9bfca0f8045700bd0a88f85c39c0d388b47c32d13bd598131859bab90c/mounts/shm":
+    "/var/lib/docker/containers/aedfd56bde7c1ac879ccf5c9b00a0919b69df04f189afb0963c84a3542f1d79d/mounts/shm":
+      available: 64.00 MiB
+      available_bytes: 67108864
+      capacity: 0%
+      device: shm
+      filesystem: tmpfs
+      options:
+      - rw
+      - nosuid
+      - nodev
+      - noexec
+      - relatime
+      - size=65536k
+      - nr_inodes=4110333
+      size: 64.00 MiB
+      size_bytes: 67108864
+      used: 0 bytes
+      used_bytes: 0
+    "/var/lib/docker/containers/b6c0f2955d3c878e7be3e9cea0d09ec7307928fe981a47deb3e2b972adb7daf0/mounts/shm":
       available: 64.00 MiB
       available_bytes: 67108864
       capacity: 0%
@@ -1264,579 +1099,622 @@ values:
       size_bytes: 67108864
       used: 0 bytes
       used_bytes: 0
-    "/var/lib/docker/zfs/graph/03b02a11c8fdbb5bfab0ea9fc4ed8a4298d422d6c4995386b1f4f2489de13238":
-      available: 11.24 GiB
-      available_bytes: 12073959424
-      capacity: 0.65%
-      device: data/docker/03b02a11c8fdbb5bfab0ea9fc4ed8a4298d422d6c4995386b1f4f2489de13238
-      filesystem: zfs
+    "/var/lib/docker/containers/cec7c79d5b5904a8c4550e6049f0fb936724acca9568613805fa74717aa627f6/mounts/shm":
+      available: 64.00 MiB
+      available_bytes: 67108864
+      capacity: 0%
+      device: shm
+      filesystem: tmpfs
       options:
       - rw
+      - nosuid
+      - nodev
+      - noexec
       - relatime
-      - xattr
-      - noacl
-      size: 11.32 GiB
-      size_bytes: 12153520128
-      used: 75.88 MiB
-      used_bytes: 79560704
-    "/var/lib/docker/zfs/graph/03c4fb36ce7c553dd4991dcdcf2999ad1d62283b0c014410d006f0c7e68ab28a":
-      available: 11.24 GiB
-      available_bytes: 12073959424
-      capacity: 3.59%
-      device: data/docker/03c4fb36ce7c553dd4991dcdcf2999ad1d62283b0c014410d006f0c7e68ab28a
-      filesystem: zfs
+      - size=65536k
+      size: 64.00 MiB
+      size_bytes: 67108864
+      used: 0 bytes
+      used_bytes: 0
+    "/var/lib/docker/containers/d2daf76a741014c89b25fe70f9b229e31aecafacf23f8d258e64b2feb090eaad/mounts/shm":
+      available: 64.00 MiB
+      available_bytes: 67108864
+      capacity: 0%
+      device: shm
+      filesystem: tmpfs
       options:
       - rw
+      - nosuid
+      - nodev
+      - noexec
       - relatime
-      - xattr
-      - noacl
-      size: 11.66 GiB
-      size_bytes: 12524060672
-      used: 429.25 MiB
-      used_bytes: 450101248
-    "/var/lib/docker/zfs/graph/1414e27205169c4a9dc7ba9dd05762879cd1af731be94617302363e218c06f98":
-      available: 11.24 GiB
-      available_bytes: 12073959424
-      capacity: 3.59%
-      device: data/docker/1414e27205169c4a9dc7ba9dd05762879cd1af731be94617302363e218c06f98
-      filesystem: zfs
+      - size=65536k
+      size: 64.00 MiB
+      size_bytes: 67108864
+      used: 0 bytes
+      used_bytes: 0
+    "/var/lib/docker/containers/db2403a0c7a824915d4359d779de3c045992db2c75dec5712d1d7362c308b221/mounts/shm":
+      available: 63.95 MiB
+      available_bytes: 67059712
+      capacity: 0.07%
+      device: shm
+      filesystem: tmpfs
       options:
       - rw
+      - nosuid
+      - nodev
+      - noexec
       - relatime
-      - xattr
-      - noacl
-      size: 11.66 GiB
-      size_bytes: 12524060672
-      used: 429.25 MiB
-      used_bytes: 450101248
-    "/var/lib/docker/zfs/graph/1441059a76edc19a59f0f5254f86669c1110b8134d553bd28a919a58c38f4d3c":
-      available: 11.24 GiB
-      available_bytes: 12073959424
+      - size=65536k
+      size: 64.00 MiB
+      size_bytes: 67108864
+      used: 48.00 KiB
+      used_bytes: 49152
+    "/var/lib/docker/containers/efdb06e75b19fc036c6e2998bd7f6d54ad2cbc5ec98c70f8977b3336209279b9/mounts/shm":
+      available: 64.00 MiB
+      available_bytes: 67108864
+      capacity: 0%
+      device: shm
+      filesystem: tmpfs
+      options:
+      - rw
+      - nosuid
+      - nodev
+      - noexec
+      - relatime
+      - size=65536k
+      - nr_inodes=4110333
+      size: 64.00 MiB
+      size_bytes: 67108864
+      used: 0 bytes
+      used_bytes: 0
+    "/var/lib/docker/containers/faf2f72a7891b74da5306de21d05d0c6f639deebb779976baceb5fe4f299a9ab/mounts/shm":
+      available: 64.00 MiB
+      available_bytes: 67108864
+      capacity: 0%
+      device: shm
+      filesystem: tmpfs
+      options:
+      - rw
+      - nosuid
+      - nodev
+      - noexec
+      - relatime
+      - size=65536k
+      size: 64.00 MiB
+      size_bytes: 67108864
+      used: 0 bytes
+      used_bytes: 0
+    "/var/lib/docker/containers/fe2f0aedc0e29387c8012906e7c043ecbc414637383ff9b630864cbbe0c7572f/mounts/shm":
+      available: 64.00 MiB
+      available_bytes: 67108864
+      capacity: 0%
+      device: shm
+      filesystem: tmpfs
+      options:
+      - rw
+      - nosuid
+      - nodev
+      - noexec
+      - relatime
+      - size=65536k
+      size: 64.00 MiB
+      size_bytes: 67108864
+      used: 0 bytes
+      used_bytes: 0
+    "/var/lib/docker/zfs/graph/0b30fe7e065d8d29481c6670ba357ed7a9018cb6a99f95093d0b57e1387aa9dc":
+      available: 9.36 GiB
+      available_bytes: 10046668800
       capacity: 0.00%
-      device: data/docker/1441059a76edc19a59f0f5254f86669c1110b8134d553bd28a919a58c38f4d3c
+      device: data/docker/0b30fe7e065d8d29481c6670ba357ed7a9018cb6a99f95093d0b57e1387aa9dc
       filesystem: zfs
       options:
       - rw
       - relatime
       - xattr
       - noacl
-      size: 11.25 GiB
-      size_bytes: 12074352640
+      size: 9.36 GiB
+      size_bytes: 10047062016
       used: 384.00 KiB
       used_bytes: 393216
-    "/var/lib/docker/zfs/graph/145abb0ed78c8116cb1b03cb6940554045698ffa68dedf995038612f55823e61":
-      available: 11.24 GiB
-      available_bytes: 12073959424
-      capacity: 0.00%
-      device: data/docker/145abb0ed78c8116cb1b03cb6940554045698ffa68dedf995038612f55823e61
+    "/var/lib/docker/zfs/graph/0dce6ac5c7b4bcf571f26eb117d525be22f74a1bb0a869a8ebc3cdaf314d4da9":
+      available: 9.36 GiB
+      available_bytes: 10046668800
+      capacity: 0.21%
+      device: data/docker/0dce6ac5c7b4bcf571f26eb117d525be22f74a1bb0a869a8ebc3cdaf314d4da9
       filesystem: zfs
       options:
       - rw
       - relatime
       - xattr
       - noacl
-      size: 11.25 GiB
-      size_bytes: 12074352640
-      used: 384.00 KiB
-      used_bytes: 393216
-    "/var/lib/docker/zfs/graph/2c8e13b7966d789525f84985e71caf8ddd8e84c14841193e6aef3ab2783155a4":
-      available: 11.24 GiB
-      available_bytes: 12073959424
-      capacity: 3.59%
-      device: data/docker/2c8e13b7966d789525f84985e71caf8ddd8e84c14841193e6aef3ab2783155a4
-      filesystem: zfs
-      options:
-      - rw
-      - relatime
-      - xattr
-      - noacl
-      size: 11.66 GiB
-      size_bytes: 12524060672
-      used: 429.25 MiB
-      used_bytes: 450101248
-    "/var/lib/docker/zfs/graph/2cc2cd89217566cd63122b2d0ceee6cc39d0457617598081bf72a36df72b02dc":
-      available: 11.24 GiB
-      available_bytes: 12073959424
-      capacity: 3.59%
-      device: data/docker/2cc2cd89217566cd63122b2d0ceee6cc39d0457617598081bf72a36df72b02dc
-      filesystem: zfs
-      options:
-      - rw
-      - relatime
-      - xattr
-      - noacl
-      size: 11.66 GiB
-      size_bytes: 12524060672
-      used: 429.25 MiB
-      used_bytes: 450101248
-    "/var/lib/docker/zfs/graph/2f0551925d779ae9155ccd4877fd86f9f3a7ea959c666b0f785b2203a00b86bb":
-      available: 11.24 GiB
-      available_bytes: 12073959424
-      capacity: 4.63%
-      device: data/docker/2f0551925d779ae9155ccd4877fd86f9f3a7ea959c666b0f785b2203a00b86bb
-      filesystem: zfs
-      options:
-      - rw
-      - relatime
-      - xattr
-      - noacl
-      size: 11.79 GiB
-      size_bytes: 12660113408
-      used: 559.00 MiB
-      used_bytes: 586153984
-    "/var/lib/docker/zfs/graph/42a4017668ac88024ed42b2f1242d76256e39f47ceb94e4394504d49799dca51":
-      available: 11.24 GiB
-      available_bytes: 12073959424
-      capacity: 0.00%
-      device: data/docker/42a4017668ac88024ed42b2f1242d76256e39f47ceb94e4394504d49799dca51
-      filesystem: zfs
-      options:
-      - rw
-      - relatime
-      - xattr
-      - noacl
-      size: 11.25 GiB
-      size_bytes: 12074352640
-      used: 384.00 KiB
-      used_bytes: 393216
-    "/var/lib/docker/zfs/graph/46e906d3248518c55d6f74cedc41333bc0a45810ec3d8ba983b01c6b82cc1cf6":
-      available: 11.24 GiB
-      available_bytes: 12073959424
-      capacity: 3.59%
-      device: data/docker/46e906d3248518c55d6f74cedc41333bc0a45810ec3d8ba983b01c6b82cc1cf6
-      filesystem: zfs
-      options:
-      - rw
-      - relatime
-      - xattr
-      - noacl
-      size: 11.66 GiB
-      size_bytes: 12524060672
-      used: 429.25 MiB
-      used_bytes: 450101248
-    "/var/lib/docker/zfs/graph/5401aa4d1d64cb3b39aadc4d7ab7cb2fa6e9510e4e3fcb9f2589f8d0f0c0f8cc":
-      available: 11.24 GiB
-      available_bytes: 12073959424
-      capacity: 3.59%
-      device: data/docker/5401aa4d1d64cb3b39aadc4d7ab7cb2fa6e9510e4e3fcb9f2589f8d0f0c0f8cc
-      filesystem: zfs
-      options:
-      - rw
-      - relatime
-      - xattr
-      - noacl
-      size: 11.66 GiB
-      size_bytes: 12524060672
-      used: 429.25 MiB
-      used_bytes: 450101248
-    "/var/lib/docker/zfs/graph/5c329725efbfcbdc12589f4f1e29aeb23ffd30fff14d994d43eb45e753fc7b7d":
-      available: 11.24 GiB
-      available_bytes: 12073959424
-      capacity: 3.59%
-      device: data/docker/5c329725efbfcbdc12589f4f1e29aeb23ffd30fff14d994d43eb45e753fc7b7d
-      filesystem: zfs
-      options:
-      - rw
-      - relatime
-      - xattr
-      - noacl
-      size: 11.66 GiB
-      size_bytes: 12524060672
-      used: 429.25 MiB
-      used_bytes: 450101248
-    "/var/lib/docker/zfs/graph/6f3cabe6d351ca36e14da13bee74d68a883aea30e713b15c19c6810f646d2550":
-      available: 11.24 GiB
-      available_bytes: 12073959424
-      capacity: 3.98%
-      device: data/docker/6f3cabe6d351ca36e14da13bee74d68a883aea30e713b15c19c6810f646d2550
-      filesystem: zfs
-      options:
-      - rw
-      - relatime
-      - xattr
-      - noacl
-      size: 11.71 GiB
-      size_bytes: 12573999104
-      used: 476.88 MiB
-      used_bytes: 500039680
-    "/var/lib/docker/zfs/graph/701f852fa0660f0f8eaa3ebe51f4d46dad014e8872df8af9a199402609f1806b":
-      available: 11.24 GiB
-      available_bytes: 12073959424
-      capacity: 0.73%
-      device: data/docker/701f852fa0660f0f8eaa3ebe51f4d46dad014e8872df8af9a199402609f1806b
-      filesystem: zfs
-      options:
-      - rw
-      - relatime
-      - xattr
-      - noacl
-      size: 11.33 GiB
-      size_bytes: 12162826240
-      used: 84.75 MiB
-      used_bytes: 88866816
-    "/var/lib/docker/zfs/graph/792fe8787502627ac404d8589305eb578d05e568194f0c02d6b03e289a500731":
-      available: 11.24 GiB
-      available_bytes: 12073959424
-      capacity: 0.00%
-      device: data/docker/792fe8787502627ac404d8589305eb578d05e568194f0c02d6b03e289a500731
-      filesystem: zfs
-      options:
-      - rw
-      - relatime
-      - xattr
-      - noacl
-      size: 11.25 GiB
-      size_bytes: 12074352640
-      used: 384.00 KiB
-      used_bytes: 393216
-    "/var/lib/docker/zfs/graph/8386d4996ff0d228ab6437873c47b07191c0e481cbaeaf16281d8f2bde57afa5":
-      available: 11.24 GiB
-      available_bytes: 12073959424
-      capacity: 0.00%
-      device: data/docker/8386d4996ff0d228ab6437873c47b07191c0e481cbaeaf16281d8f2bde57afa5
-      filesystem: zfs
-      options:
-      - rw
-      - relatime
-      - xattr
-      - noacl
-      size: 11.25 GiB
-      size_bytes: 12074352640
-      used: 384.00 KiB
-      used_bytes: 393216
-    "/var/lib/docker/zfs/graph/88f3598cecfc4b75c906b4ee7bd32d7347175bb5358a5190a7f809ff51b1dfd6":
-      available: 11.24 GiB
-      available_bytes: 12073959424
-      capacity: 0.00%
-      device: data/docker/88f3598cecfc4b75c906b4ee7bd32d7347175bb5358a5190a7f809ff51b1dfd6
-      filesystem: zfs
-      options:
-      - rw
-      - relatime
-      - xattr
-      - noacl
-      size: 11.25 GiB
-      size_bytes: 12074352640
-      used: 384.00 KiB
-      used_bytes: 393216
-    "/var/lib/docker/zfs/graph/9bde3a6082d02ebb5e5b040e0179a97b68f521cf4420bfb65df21a33d5fa8265":
-      available: 11.24 GiB
-      available_bytes: 12073959424
-      capacity: 4.63%
-      device: data/docker/9bde3a6082d02ebb5e5b040e0179a97b68f521cf4420bfb65df21a33d5fa8265
-      filesystem: zfs
-      options:
-      - rw
-      - relatime
-      - xattr
-      - noacl
-      size: 11.79 GiB
-      size_bytes: 12660506624
-      used: 559.38 MiB
-      used_bytes: 586547200
-    "/var/lib/docker/zfs/graph/9c322739bcf941226269ddd50ffd7af6e9eb1b72b40305cd27c8f093da1cfe4e":
-      available: 11.24 GiB
-      available_bytes: 12073959424
-      capacity: 0.00%
-      device: data/docker/9c322739bcf941226269ddd50ffd7af6e9eb1b72b40305cd27c8f093da1cfe4e
-      filesystem: zfs
-      options:
-      - rw
-      - relatime
-      - xattr
-      - noacl
-      size: 11.25 GiB
-      size_bytes: 12074352640
-      used: 384.00 KiB
-      used_bytes: 393216
-    "/var/lib/docker/zfs/graph/9e6c639005248de62c6bd4119c67f45362d01d6fbe8214a3694966928284c701":
-      available: 11.24 GiB
-      available_bytes: 12073959424
-      capacity: 0.17%
-      device: data/docker/9e6c639005248de62c6bd4119c67f45362d01d6fbe8214a3694966928284c701
-      filesystem: zfs
-      options:
-      - rw
-      - relatime
-      - xattr
-      - noacl
-      size: 11.26 GiB
-      size_bytes: 12094799872
+      size: 9.38 GiB
+      size_bytes: 10067509248
       used: 19.88 MiB
       used_bytes: 20840448
-    "/var/lib/docker/zfs/graph/9f0adcb9f771615581b29014f5267005b91b1f8a8cd351b0f669aa70177a1be6":
-      available: 11.24 GiB
-      available_bytes: 12073959424
-      capacity: 3.59%
-      device: data/docker/9f0adcb9f771615581b29014f5267005b91b1f8a8cd351b0f669aa70177a1be6
+    "/var/lib/docker/zfs/graph/0fe1999b2fb980197ad2872a5e8869434ed0e7fdba42ffca62ce27be7bd14c9a":
+      available: 9.36 GiB
+      available_bytes: 10046668800
+      capacity: 0.00%
+      device: data/docker/0fe1999b2fb980197ad2872a5e8869434ed0e7fdba42ffca62ce27be7bd14c9a
       filesystem: zfs
       options:
       - rw
       - relatime
       - xattr
       - noacl
-      size: 11.66 GiB
-      size_bytes: 12524060672
+      size: 9.36 GiB
+      size_bytes: 10047062016
+      used: 384.00 KiB
+      used_bytes: 393216
+    "/var/lib/docker/zfs/graph/16a2e5aa4d7feea0876031c0a52acaa8ed9689c0fb5a559ebd93944428b50df7":
+      available: 9.36 GiB
+      available_bytes: 10046668800
+      capacity: 1.12%
+      device: data/docker/16a2e5aa4d7feea0876031c0a52acaa8ed9689c0fb5a559ebd93944428b50df7
+      filesystem: zfs
+      options:
+      - rw
+      - relatime
+      - xattr
+      - noacl
+      size: 9.46 GiB
+      size_bytes: 10160439296
+      used: 108.50 MiB
+      used_bytes: 113770496
+    "/var/lib/docker/zfs/graph/2b7359cc54acb2e09a56bbe6a22e292cd3059b8a2ad9b44cad57c294ecf668d2":
+      available: 9.36 GiB
+      available_bytes: 10046668800
+      capacity: 0.00%
+      device: data/docker/2b7359cc54acb2e09a56bbe6a22e292cd3059b8a2ad9b44cad57c294ecf668d2
+      filesystem: zfs
+      options:
+      - rw
+      - relatime
+      - xattr
+      - noacl
+      size: 9.36 GiB
+      size_bytes: 10047062016
+      used: 384.00 KiB
+      used_bytes: 393216
+    "/var/lib/docker/zfs/graph/3af125337a75e8e70b2245a54445319032f4c2467f7b92369fece778b74ede0f":
+      available: 9.36 GiB
+      available_bytes: 10046668800
+      capacity: 0.00%
+      device: data/docker/3af125337a75e8e70b2245a54445319032f4c2467f7b92369fece778b74ede0f
+      filesystem: zfs
+      options:
+      - rw
+      - relatime
+      - xattr
+      - noacl
+      size: 9.36 GiB
+      size_bytes: 10047062016
+      used: 384.00 KiB
+      used_bytes: 393216
+    "/var/lib/docker/zfs/graph/3b1d24eadcbd11561c896a9f1b86889ac28f2c2279415f06b4596840d72cf062":
+      available: 9.36 GiB
+      available_bytes: 10046668800
+      capacity: 4.29%
+      device: data/docker/3b1d24eadcbd11561c896a9f1b86889ac28f2c2279415f06b4596840d72cf062
+      filesystem: zfs
+      options:
+      - rw
+      - relatime
+      - xattr
+      - noacl
+      size: 9.78 GiB
+      size_bytes: 10496770048
       used: 429.25 MiB
       used_bytes: 450101248
-    "/var/lib/docker/zfs/graph/a1851195caebb4a59d727b33f32e42a61a9661fe77d1e9feb3263007b960a26f":
-      available: 11.24 GiB
-      available_bytes: 12073959424
-      capacity: 0.09%
-      device: data/docker/a1851195caebb4a59d727b33f32e42a61a9661fe77d1e9feb3263007b960a26f
+    "/var/lib/docker/zfs/graph/3f2594eae161b4e6e9e28939c234905b6e792bc5fe4f14a595b4b906f77b75a0":
+      available: 9.36 GiB
+      available_bytes: 10046668800
+      capacity: 0.00%
+      device: data/docker/3f2594eae161b4e6e9e28939c234905b6e792bc5fe4f14a595b4b906f77b75a0
       filesystem: zfs
       options:
       - rw
       - relatime
       - xattr
       - noacl
-      size: 11.26 GiB
-      size_bytes: 12085231616
+      size: 9.36 GiB
+      size_bytes: 10047062016
+      used: 384.00 KiB
+      used_bytes: 393216
+    "/var/lib/docker/zfs/graph/419a20e7887d10f6a7686e9b307048e35767d9e891eded1d469b7f386bab7ec5":
+      available: 9.36 GiB
+      available_bytes: 10046668800
+      capacity: 0.00%
+      device: data/docker/419a20e7887d10f6a7686e9b307048e35767d9e891eded1d469b7f386bab7ec5
+      filesystem: zfs
+      options:
+      - rw
+      - relatime
+      - xattr
+      - noacl
+      size: 9.36 GiB
+      size_bytes: 10047062016
+      used: 384.00 KiB
+      used_bytes: 393216
+    "/var/lib/docker/zfs/graph/51932a76b8c331fc702e5f9cd19a330ae84db0ab7093ab95ee86358ded1d6a6d":
+      available: 9.36 GiB
+      available_bytes: 10046668800
+      capacity: 0.00%
+      device: data/docker/51932a76b8c331fc702e5f9cd19a330ae84db0ab7093ab95ee86358ded1d6a6d
+      filesystem: zfs
+      options:
+      - rw
+      - relatime
+      - xattr
+      - noacl
+      size: 9.36 GiB
+      size_bytes: 10047062016
+      used: 384.00 KiB
+      used_bytes: 393216
+    "/var/lib/docker/zfs/graph/5888a9d33117ee3e4026d870a12af1ed1acb217d122e52e3536459a435e94726":
+      available: 9.36 GiB
+      available_bytes: 10046668800
+      capacity: 4.29%
+      device: data/docker/5888a9d33117ee3e4026d870a12af1ed1acb217d122e52e3536459a435e94726
+      filesystem: zfs
+      options:
+      - rw
+      - relatime
+      - xattr
+      - noacl
+      size: 9.78 GiB
+      size_bytes: 10496770048
+      used: 429.25 MiB
+      used_bytes: 450101248
+    "/var/lib/docker/zfs/graph/5a0a200c544d84fcf5fd2b6a362643044067241143eb94b6474420b99db37ab0":
+      available: 9.36 GiB
+      available_bytes: 10046668800
+      capacity: 4.29%
+      device: data/docker/5a0a200c544d84fcf5fd2b6a362643044067241143eb94b6474420b99db37ab0
+      filesystem: zfs
+      options:
+      - rw
+      - relatime
+      - xattr
+      - noacl
+      size: 9.78 GiB
+      size_bytes: 10496770048
+      used: 429.25 MiB
+      used_bytes: 450101248
+    "/var/lib/docker/zfs/graph/5e45e059456ad316f90272d9b7056aa8f9e57d457f991eb664e081a64a303aa0":
+      available: 9.36 GiB
+      available_bytes: 10046668800
+      capacity: 4.29%
+      device: data/docker/5e45e059456ad316f90272d9b7056aa8f9e57d457f991eb664e081a64a303aa0
+      filesystem: zfs
+      options:
+      - rw
+      - relatime
+      - xattr
+      - noacl
+      size: 9.78 GiB
+      size_bytes: 10496770048
+      used: 429.25 MiB
+      used_bytes: 450101248
+    "/var/lib/docker/zfs/graph/682e189a0acae2739a330fd7c8cc55901fd07c6e1829396326a343f5f53382bd":
+      available: 9.36 GiB
+      available_bytes: 10046668800
+      capacity: 0.11%
+      device: data/docker/682e189a0acae2739a330fd7c8cc55901fd07c6e1829396326a343f5f53382bd
+      filesystem: zfs
+      options:
+      - rw
+      - relatime
+      - xattr
+      - noacl
+      size: 9.37 GiB
+      size_bytes: 10057940992
       used: 10.75 MiB
       used_bytes: 11272192
-    "/var/lib/docker/zfs/graph/a2380dc8f8739bb3c82f6778589b67dac6cbe30b0cc040ddec9e557afaa7f82a":
-      available: 11.24 GiB
-      available_bytes: 12073959424
-      capacity: 0.00%
-      device: data/docker/a2380dc8f8739bb3c82f6778589b67dac6cbe30b0cc040ddec9e557afaa7f82a
+    "/var/lib/docker/zfs/graph/6ba4791564be10ff773a73529e31d47248ddebbae4f404a965e7ec5faff580f1":
+      available: 9.36 GiB
+      available_bytes: 10046668800
+      capacity: 0.78%
+      device: data/docker/6ba4791564be10ff773a73529e31d47248ddebbae4f404a965e7ec5faff580f1
       filesystem: zfs
       options:
       - rw
       - relatime
       - xattr
       - noacl
-      size: 11.25 GiB
-      size_bytes: 12074352640
+      size: 9.43 GiB
+      size_bytes: 10126098432
+      used: 75.75 MiB
+      used_bytes: 79429632
+    "/var/lib/docker/zfs/graph/703a4caf68fc0c55dfa140bf93d31740543ed204d2508b8de2932cb354ac9a14":
+      available: 9.36 GiB
+      available_bytes: 10046668800
+      capacity: 2.60%
+      device: data/docker/703a4caf68fc0c55dfa140bf93d31740543ed204d2508b8de2932cb354ac9a14
+      filesystem: zfs
+      options:
+      - rw
+      - relatime
+      - xattr
+      - noacl
+      size: 9.61 GiB
+      size_bytes: 10315104256
+      used: 256.00 MiB
+      used_bytes: 268435456
+    "/var/lib/docker/zfs/graph/732fbec7c4dfba83724bc069eaa9cb2a1ab1df267b2cd419023ddd1cc4a30f20":
+      available: 9.36 GiB
+      available_bytes: 10046668800
+      capacity: 0.00%
+      device: data/docker/732fbec7c4dfba83724bc069eaa9cb2a1ab1df267b2cd419023ddd1cc4a30f20
+      filesystem: zfs
+      options:
+      - rw
+      - relatime
+      - xattr
+      - noacl
+      size: 9.36 GiB
+      size_bytes: 10047062016
       used: 384.00 KiB
       used_bytes: 393216
-    "/var/lib/docker/zfs/graph/a36601ef64ea27cb99aab692d3bd0c6a95bbc6208def5445441d4996e6465e0a":
-      available: 11.24 GiB
-      available_bytes: 12073959424
-      capacity: 0.00%
-      device: data/docker/a36601ef64ea27cb99aab692d3bd0c6a95bbc6208def5445441d4996e6465e0a
+    "/var/lib/docker/zfs/graph/7baec2336d162a038ae6682650c2a1682830e89a5bbe1ce56a24e29770de7eaf":
+      available: 9.36 GiB
+      available_bytes: 10046668800
+      capacity: 0.14%
+      device: data/docker/7baec2336d162a038ae6682650c2a1682830e89a5bbe1ce56a24e29770de7eaf
       filesystem: zfs
       options:
       - rw
       - relatime
       - xattr
       - noacl
-      size: 11.25 GiB
-      size_bytes: 12074352640
-      used: 384.00 KiB
-      used_bytes: 393216
-    "/var/lib/docker/zfs/graph/a5bf1ef12a410a3356b914feb24bd50bcc4e5e20ac46cc1560828850f64dd8e9":
-      available: 11.24 GiB
-      available_bytes: 12073959424
-      capacity: 0.93%
-      device: data/docker/a5bf1ef12a410a3356b914feb24bd50bcc4e5e20ac46cc1560828850f64dd8e9
+      size: 9.37 GiB
+      size_bytes: 10060824576
+      used: 13.50 MiB
+      used_bytes: 14155776
+    "/var/lib/docker/zfs/graph/81e6c21a241f7e116ea88c1ccff5153b08e911735d8a3ff3e682734e6046583e":
+      available: 9.36 GiB
+      available_bytes: 10046668800
+      capacity: 4.29%
+      device: data/docker/81e6c21a241f7e116ea88c1ccff5153b08e911735d8a3ff3e682734e6046583e
       filesystem: zfs
       options:
       - rw
       - relatime
       - xattr
       - noacl
-      size: 11.35 GiB
-      size_bytes: 12187860992
-      used: 108.63 MiB
-      used_bytes: 113901568
-    "/var/lib/docker/zfs/graph/b45842ca217dbde71d475c9e518529c0e7f9985391c38bcb896358a7911dfbbb":
-      available: 11.24 GiB
-      available_bytes: 12073959424
-      capacity: 0.00%
-      device: data/docker/b45842ca217dbde71d475c9e518529c0e7f9985391c38bcb896358a7911dfbbb
-      filesystem: zfs
-      options:
-      - rw
-      - relatime
-      - xattr
-      - noacl
-      size: 11.25 GiB
-      size_bytes: 12074352640
-      used: 384.00 KiB
-      used_bytes: 393216
-    "/var/lib/docker/zfs/graph/bafd6163c31924176f87ddd3902d1528a70c76a1c13a0a5d8008c207bf33f6a8":
-      available: 11.24 GiB
-      available_bytes: 12073959424
-      capacity: 3.59%
-      device: data/docker/bafd6163c31924176f87ddd3902d1528a70c76a1c13a0a5d8008c207bf33f6a8
-      filesystem: zfs
-      options:
-      - rw
-      - relatime
-      - xattr
-      - noacl
-      size: 11.66 GiB
-      size_bytes: 12524060672
+      size: 9.78 GiB
+      size_bytes: 10496770048
       used: 429.25 MiB
       used_bytes: 450101248
-    "/var/lib/docker/zfs/graph/c637419883f154a8c7a8bcde42e39ec0b23b5b482dc919d2bd25825f59bc8c73":
-      available: 11.24 GiB
-      available_bytes: 12073959424
-      capacity: 3.59%
-      device: data/docker/c637419883f154a8c7a8bcde42e39ec0b23b5b482dc919d2bd25825f59bc8c73
+    "/var/lib/docker/zfs/graph/87622b4f3d9bd24a53eb86f4d997bfccc6370cf2d554937c6c1ff846ceb00e3f":
+      available: 9.36 GiB
+      available_bytes: 10046668800
+      capacity: 0.00%
+      device: data/docker/87622b4f3d9bd24a53eb86f4d997bfccc6370cf2d554937c6c1ff846ceb00e3f
       filesystem: zfs
       options:
       - rw
       - relatime
       - xattr
       - noacl
-      size: 11.66 GiB
-      size_bytes: 12524060672
+      size: 9.36 GiB
+      size_bytes: 10047062016
+      used: 384.00 KiB
+      used_bytes: 393216
+    "/var/lib/docker/zfs/graph/92688e08addb68352c54bebbce28f707a3e1b8b251fc37c6ec805412e81b071c":
+      available: 9.36 GiB
+      available_bytes: 10046668800
+      capacity: 5.68%
+      device: data/docker/92688e08addb68352c54bebbce28f707a3e1b8b251fc37c6ec805412e81b071c
+      filesystem: zfs
+      options:
+      - rw
+      - relatime
+      - xattr
+      - noacl
+      size: 9.92 GiB
+      size_bytes: 10652090368
+      used: 577.38 MiB
+      used_bytes: 605421568
+    "/var/lib/docker/zfs/graph/9dc9fa82e2363bd8e44f3ea201dda66be7a3982e40c342a3ae0d324c0b8b3ea6":
+      available: 9.36 GiB
+      available_bytes: 10046668800
+      capacity: 5.96%
+      device: data/docker/9dc9fa82e2363bd8e44f3ea201dda66be7a3982e40c342a3ae0d324c0b8b3ea6
+      filesystem: zfs
+      options:
+      - rw
+      - relatime
+      - xattr
+      - noacl
+      size: 9.95 GiB
+      size_bytes: 10682892288
+      used: 606.75 MiB
+      used_bytes: 636223488
+    "/var/lib/docker/zfs/graph/a32c7fa7a342f649f6734dd77c4136d23209b0adcf34a581ea6f6453d937a0b8":
+      available: 9.36 GiB
+      available_bytes: 10046668800
+      capacity: 4.29%
+      device: data/docker/a32c7fa7a342f649f6734dd77c4136d23209b0adcf34a581ea6f6453d937a0b8
+      filesystem: zfs
+      options:
+      - rw
+      - relatime
+      - xattr
+      - noacl
+      size: 9.78 GiB
+      size_bytes: 10496770048
       used: 429.25 MiB
       used_bytes: 450101248
-    "/var/lib/docker/zfs/graph/c847629198970cb6c78d64949b4e41c3b31ae755d424a9884bb88ca5c61d6b06":
-      available: 11.24 GiB
-      available_bytes: 12073959424
-      capacity: 3.59%
-      device: data/docker/c847629198970cb6c78d64949b4e41c3b31ae755d424a9884bb88ca5c61d6b06
-      filesystem: zfs
-      options:
-      - rw
-      - relatime
-      - xattr
-      - noacl
-      size: 11.66 GiB
-      size_bytes: 12524060672
-      used: 429.25 MiB
-      used_bytes: 450101248
-    "/var/lib/docker/zfs/graph/e6a2afc5f602d8db174f444fb7228bf7380edcd52ec3c52d8a0db7a50fa4009a":
-      available: 11.24 GiB
-      available_bytes: 12073959424
+    "/var/lib/docker/zfs/graph/a5429d6681dcd3cbdd5441c2799471ed6724de633e3d85701437dcf11a99413e":
+      available: 9.36 GiB
+      available_bytes: 10046668800
       capacity: 0.00%
-      device: data/docker/e6a2afc5f602d8db174f444fb7228bf7380edcd52ec3c52d8a0db7a50fa4009a
+      device: data/docker/a5429d6681dcd3cbdd5441c2799471ed6724de633e3d85701437dcf11a99413e
       filesystem: zfs
       options:
       - rw
       - relatime
       - xattr
       - noacl
-      size: 11.25 GiB
-      size_bytes: 12074352640
+      size: 9.36 GiB
+      size_bytes: 10047062016
       used: 384.00 KiB
       used_bytes: 393216
-    "/var/lib/docker/zfs/graph/ebd8c72c47b48dd4b10ca610effb0c4bce35b65a0a45b9a5e0227ace543c62ae":
-      available: 11.24 GiB
-      available_bytes: 12073959424
-      capacity: 0.00%
-      device: data/docker/ebd8c72c47b48dd4b10ca610effb0c4bce35b65a0a45b9a5e0227ace543c62ae
+    "/var/lib/docker/zfs/graph/a5bcc36ca28b6aef729d897e6dafaca07856fdf42454b1edb855d07b964abd76":
+      available: 9.36 GiB
+      available_bytes: 10046668800
+      capacity: 0.47%
+      device: data/docker/a5bcc36ca28b6aef729d897e6dafaca07856fdf42454b1edb855d07b964abd76
       filesystem: zfs
       options:
       - rw
       - relatime
       - xattr
       - noacl
-      size: 11.25 GiB
-      size_bytes: 12074352640
+      size: 9.40 GiB
+      size_bytes: 10094116864
+      used: 45.25 MiB
+      used_bytes: 47448064
+    "/var/lib/docker/zfs/graph/a8ec121e0312e2d8a640aa5e64523fb5abf3259d5cb85983c0c8fecf6cbc4131":
+      available: 9.36 GiB
+      available_bytes: 10046668800
+      capacity: 0.00%
+      device: data/docker/a8ec121e0312e2d8a640aa5e64523fb5abf3259d5cb85983c0c8fecf6cbc4131
+      filesystem: zfs
+      options:
+      - rw
+      - relatime
+      - xattr
+      - noacl
+      size: 9.36 GiB
+      size_bytes: 10047062016
       used: 384.00 KiB
       used_bytes: 393216
-    "/var/lib/docker/zfs/graph/ec85b04c4cea776cc4e9dbf40758c8ae5142aa3f3c22e0ab0458c9828eed5444":
-      available: 11.24 GiB
-      available_bytes: 12073959424
-      capacity: 0.00%
-      device: data/docker/ec85b04c4cea776cc4e9dbf40758c8ae5142aa3f3c22e0ab0458c9828eed5444
+    "/var/lib/docker/zfs/graph/adccaf06adb91b673124c3c117bf86a37003e52b84f70cc5ff5eac4a0597a99a":
+      available: 9.36 GiB
+      available_bytes: 10046668800
+      capacity: 5.68%
+      device: data/docker/adccaf06adb91b673124c3c117bf86a37003e52b84f70cc5ff5eac4a0597a99a
       filesystem: zfs
       options:
       - rw
       - relatime
       - xattr
       - noacl
-      size: 11.25 GiB
-      size_bytes: 12074352640
+      size: 9.92 GiB
+      size_bytes: 10652221440
+      used: 577.50 MiB
+      used_bytes: 605552640
+    "/var/lib/docker/zfs/graph/cf2dbf2cce6d205b10689dd56fe1ecb3435cabb6a33f390c497119e1bed03040":
+      available: 9.36 GiB
+      available_bytes: 10046668800
+      capacity: 4.46%
+      device: data/docker/cf2dbf2cce6d205b10689dd56fe1ecb3435cabb6a33f390c497119e1bed03040
+      filesystem: zfs
+      options:
+      - rw
+      - relatime
+      - xattr
+      - noacl
+      size: 9.79 GiB
+      size_bytes: 10516168704
+      used: 447.75 MiB
+      used_bytes: 469499904
+    "/var/lib/docker/zfs/graph/d71db589f617fd9633919be59832d175f4dca09ea86a5d07a9dd2831213b1474":
+      available: 9.36 GiB
+      available_bytes: 10046668800
+      capacity: 4.56%
+      device: data/docker/d71db589f617fd9633919be59832d175f4dca09ea86a5d07a9dd2831213b1474
+      filesystem: zfs
+      options:
+      - rw
+      - relatime
+      - xattr
+      - noacl
+      size: 9.80 GiB
+      size_bytes: 10526392320
+      used: 457.50 MiB
+      used_bytes: 479723520
+    "/var/lib/docker/zfs/graph/e1719bca5c35995445785551489b87c018e388aa67efcfe40288f277ea100d91":
+      available: 9.36 GiB
+      available_bytes: 10046668800
+      capacity: 0.00%
+      device: data/docker/e1719bca5c35995445785551489b87c018e388aa67efcfe40288f277ea100d91
+      filesystem: zfs
+      options:
+      - rw
+      - relatime
+      - xattr
+      - noacl
+      size: 9.36 GiB
+      size_bytes: 10047062016
       used: 384.00 KiB
       used_bytes: 393216
-    "/var/lib/docker/zfs/graph/efb18df7656471f02ae7ea0b2e33f5f75dde511dedd9fc6f6a2e9fe0dcc47b02":
-      available: 11.24 GiB
-      available_bytes: 12073959424
-      capacity: 0.00%
-      device: data/docker/efb18df7656471f02ae7ea0b2e33f5f75dde511dedd9fc6f6a2e9fe0dcc47b02
+    "/var/lib/docker/zfs/graph/e34243e26c024b41077fe3bed06cd17c2f5f7b3a4b4bfbb9a3af6a90aa34a931":
+      available: 9.36 GiB
+      available_bytes: 10046668800
+      capacity: 4.46%
+      device: data/docker/e34243e26c024b41077fe3bed06cd17c2f5f7b3a4b4bfbb9a3af6a90aa34a931
       filesystem: zfs
       options:
       - rw
       - relatime
       - xattr
       - noacl
-      size: 11.25 GiB
-      size_bytes: 12074352640
+      size: 9.79 GiB
+      size_bytes: 10516168704
+      used: 447.75 MiB
+      used_bytes: 469499904
+    "/var/lib/docker/zfs/graph/e81238fd4ba502eb9137066ba114f96d0bbd13105715af7704974bb0cb0a9487":
+      available: 9.36 GiB
+      available_bytes: 10046668800
+      capacity: 0.00%
+      device: data/docker/e81238fd4ba502eb9137066ba114f96d0bbd13105715af7704974bb0cb0a9487
+      filesystem: zfs
+      options:
+      - rw
+      - relatime
+      - xattr
+      - noacl
+      size: 9.36 GiB
+      size_bytes: 10047062016
       used: 384.00 KiB
       used_bytes: 393216
-    "/var/lib/docker/zfs/graph/f288d8fab22384174cd1adf4f83b31094b0c4e69c4925270a2a28865f2dc93ac":
-      available: 11.24 GiB
-      available_bytes: 12073959424
-      capacity: 7.97%
-      device: data/docker/f288d8fab22384174cd1adf4f83b31094b0c4e69c4925270a2a28865f2dc93ac
-      filesystem: zfs
-      options:
-      - rw
-      - relatime
-      - xattr
-      - noacl
-      size: 12.22 GiB
-      size_bytes: 13120045056
-      used: 997.63 MiB
-      used_bytes: 1046085632
-    "/var/lib/docker/zfs/graph/f3c12b1e836bbf1aa481734a749dc2ebdbff47cf3793c9fdfebe4391d8cf4d94":
-      available: 11.24 GiB
-      available_bytes: 12073959424
+    "/var/lib/docker/zfs/graph/ef885418f3a7dd07978dd18de297e260cd595d0323b7348adc7e4cc59d5ad3a0":
+      available: 9.36 GiB
+      available_bytes: 10046668800
       capacity: 0.00%
-      device: data/docker/f3c12b1e836bbf1aa481734a749dc2ebdbff47cf3793c9fdfebe4391d8cf4d94
+      device: data/docker/ef885418f3a7dd07978dd18de297e260cd595d0323b7348adc7e4cc59d5ad3a0
       filesystem: zfs
       options:
       - rw
       - relatime
       - xattr
       - noacl
-      size: 11.25 GiB
-      size_bytes: 12074352640
+      size: 9.36 GiB
+      size_bytes: 10047062016
       used: 384.00 KiB
       used_bytes: 393216
-    "/var/lib/docker/zfs/graph/f52d34d1b2e0e1a19479321f891a2a87df8722f857ae9520bc3cfdaecb6597d7":
-      available: 11.24 GiB
-      available_bytes: 12073959424
-      capacity: 0.11%
-      device: data/docker/f52d34d1b2e0e1a19479321f891a2a87df8722f857ae9520bc3cfdaecb6597d7
-      filesystem: zfs
-      options:
-      - rw
-      - relatime
-      - xattr
-      - noacl
-      size: 11.26 GiB
-      size_bytes: 12087590912
-      used: 13.00 MiB
-      used_bytes: 13631488
-    "/var/lib/docker/zfs/graph/f7be95324c1369b5496746eac2e5081151892ac6bcb44b999ad4cc8adb352985":
-      available: 11.24 GiB
-      available_bytes: 12073959424
+    "/var/lib/docker/zfs/graph/f0e1ae21570d7d9bea7c9dc8ece8b0b51d91db1bc9fef1d70fe00e9f5658c655":
+      available: 9.36 GiB
+      available_bytes: 10046668800
       capacity: 0.00%
-      device: data/docker/f7be95324c1369b5496746eac2e5081151892ac6bcb44b999ad4cc8adb352985
+      device: data/docker/f0e1ae21570d7d9bea7c9dc8ece8b0b51d91db1bc9fef1d70fe00e9f5658c655
       filesystem: zfs
       options:
       - rw
       - relatime
       - xattr
       - noacl
-      size: 11.25 GiB
-      size_bytes: 12074352640
-      used: 384.00 KiB
-      used_bytes: 393216
-    "/var/lib/docker/zfs/graph/fc4d52856c4ad21f1388f8e05c9e7cced790597b4b274533c7b03890413e2d94":
-      available: 11.24 GiB
-      available_bytes: 12073959424
-      capacity: 0.00%
-      device: data/docker/fc4d52856c4ad21f1388f8e05c9e7cced790597b4b274533c7b03890413e2d94
-      filesystem: zfs
-      options:
-      - rw
-      - relatime
-      - xattr
-      - noacl
-      size: 11.25 GiB
-      size_bytes: 12074352640
+      size: 9.36 GiB
+      size_bytes: 10047062016
       used: 384.00 KiB
       used_bytes: 393216
     "/var/lib/kubelet":
-      available: 11.24 GiB
-      available_bytes: 12073959424
+      available: 9.36 GiB
+      available_bytes: 10046668800
       capacity: 0.00%
       device: data/kubelet
       filesystem: zfs
@@ -1845,11 +1723,11 @@ values:
       - noatime
       - xattr
       - noacl
-      size: 11.25 GiB
-      size_bytes: 12074352640
+      size: 9.36 GiB
+      size_bytes: 10047062016
       used: 384.00 KiB
       used_bytes: 393216
-    "/var/lib/kubelet/pods/11d96d2e-a5d6-462a-b3b4-b84faace8dcb/volumes/kubernetes.io~projected/kube-api-access-2n6p8":
+    "/var/lib/kubelet/pods/032ccf19-6fb8-449c-b98e-43f8b05ef468/volumes/kubernetes.io~projected/kube-api-access-zxpq5":
       available: 31.26 GiB
       available_bytes: 33566978048
       capacity: 0.00%
@@ -1863,7 +1741,303 @@ values:
       size_bytes: 33566990336
       used: 12.00 KiB
       used_bytes: 12288
-    "/var/lib/kubelet/pods/306ea555-b958-423e-8537-cd95ee1b15d3/volumes/kubernetes.io~projected/kube-api-access-nbv69":
+    "/var/lib/kubelet/pods/032ccf19-6fb8-449c-b98e-43f8b05ef468/volumes/kubernetes.io~secret/cattle-credentials":
+      available: 31.26 GiB
+      available_bytes: 33566978048
+      capacity: 0.00%
+      device: tmpfs
+      filesystem: tmpfs
+      options:
+      - rw
+      - relatime
+      - size=32780264k
+      size: 31.26 GiB
+      size_bytes: 33566990336
+      used: 12.00 KiB
+      used_bytes: 12288
+    "/var/lib/kubelet/pods/0884a743-5a8f-40a7-af34-86db5cdaed35/volume-subpaths/configuration-template/prepare-configuration/0":
+      available: 9.36 GiB
+      available_bytes: 10046668800
+      capacity: 0.00%
+      device: data/kubelet
+      filesystem: zfs
+      options:
+      - rw
+      - noatime
+      - xattr
+      - noacl
+      size: 9.36 GiB
+      size_bytes: 10047062016
+      used: 384.00 KiB
+      used_bytes: 393216
+    "/var/lib/kubelet/pods/0884a743-5a8f-40a7-af34-86db5cdaed35/volume-subpaths/indexer-utils/indexers/0":
+      available: 9.36 GiB
+      available_bytes: 10046668800
+      capacity: 0.00%
+      device: data/kubelet
+      filesystem: zfs
+      options:
+      - rw
+      - noatime
+      - xattr
+      - noacl
+      size: 9.36 GiB
+      size_bytes: 10047062016
+      used: 384.00 KiB
+      used_bytes: 393216
+    "/var/lib/kubelet/pods/0884a743-5a8f-40a7-af34-86db5cdaed35/volumes/kubernetes.io~projected/kube-api-access-mscp2":
+      available: 31.16 GiB
+      available_bytes: 33462120448
+      capacity: 0.00%
+      device: tmpfs
+      filesystem: tmpfs
+      options:
+      - rw
+      - relatime
+      - size=32677864k
+      size: 31.16 GiB
+      size_bytes: 33462132736
+      used: 12.00 KiB
+      used_bytes: 12288
+    "/var/lib/kubelet/pods/0b0d44af-9eaa-4359-8e76-bd8039616971/volume-subpaths/configuration-template/prepare-configuration/0":
+      available: 9.36 GiB
+      available_bytes: 10046668800
+      capacity: 0.00%
+      device: data/kubelet
+      filesystem: zfs
+      options:
+      - rw
+      - noatime
+      - xattr
+      - noacl
+      size: 9.36 GiB
+      size_bytes: 10047062016
+      used: 384.00 KiB
+      used_bytes: 393216
+    "/var/lib/kubelet/pods/0b0d44af-9eaa-4359-8e76-bd8039616971/volume-subpaths/indexer-utils/indexers/0":
+      available: 9.36 GiB
+      available_bytes: 10046668800
+      capacity: 0.00%
+      device: data/kubelet
+      filesystem: zfs
+      options:
+      - rw
+      - noatime
+      - xattr
+      - noacl
+      size: 9.36 GiB
+      size_bytes: 10047062016
+      used: 384.00 KiB
+      used_bytes: 393216
+    "/var/lib/kubelet/pods/0b0d44af-9eaa-4359-8e76-bd8039616971/volumes/kubernetes.io~projected/kube-api-access-7z975":
+      available: 31.16 GiB
+      available_bytes: 33462120448
+      capacity: 0.00%
+      device: tmpfs
+      filesystem: tmpfs
+      options:
+      - rw
+      - relatime
+      - size=32677864k
+      - nr_inodes=4110333
+      size: 31.16 GiB
+      size_bytes: 33462132736
+      used: 12.00 KiB
+      used_bytes: 12288
+    "/var/lib/kubelet/pods/2905764a-a43c-4829-8ee7-6e8652138875/volume-subpaths/configuration-template/prepare-configuration/0":
+      available: 9.36 GiB
+      available_bytes: 10046668800
+      capacity: 0.00%
+      device: data/kubelet
+      filesystem: zfs
+      options:
+      - rw
+      - noatime
+      - xattr
+      - noacl
+      size: 9.36 GiB
+      size_bytes: 10047062016
+      used: 384.00 KiB
+      used_bytes: 393216
+    "/var/lib/kubelet/pods/2905764a-a43c-4829-8ee7-6e8652138875/volume-subpaths/loader-utils/loaders/0":
+      available: 9.36 GiB
+      available_bytes: 10046668800
+      capacity: 0.00%
+      device: data/kubelet
+      filesystem: zfs
+      options:
+      - rw
+      - noatime
+      - xattr
+      - noacl
+      size: 9.36 GiB
+      size_bytes: 10047062016
+      used: 384.00 KiB
+      used_bytes: 393216
+    "/var/lib/kubelet/pods/2905764a-a43c-4829-8ee7-6e8652138875/volumes/kubernetes.io~projected/kube-api-access-5drzs":
+      available: 31.16 GiB
+      available_bytes: 33462120448
+      capacity: 0.00%
+      device: tmpfs
+      filesystem: tmpfs
+      options:
+      - rw
+      - relatime
+      - size=32677864k
+      - nr_inodes=4110333
+      size: 31.16 GiB
+      size_bytes: 33462132736
+      used: 12.00 KiB
+      used_bytes: 12288
+    "/var/lib/kubelet/pods/2905764a-a43c-4829-8ee7-6e8652138875/volumes/kubernetes.io~secret/metadata-fetcher-credentials":
+      available: 31.16 GiB
+      available_bytes: 33462128640
+      capacity: 0.00%
+      device: tmpfs
+      filesystem: tmpfs
+      options:
+      - rw
+      - relatime
+      - size=32677864k
+      - nr_inodes=4110333
+      size: 31.16 GiB
+      size_bytes: 33462132736
+      used: 4.00 KiB
+      used_bytes: 4096
+    "/var/lib/kubelet/pods/406d8103-05a0-4a50-8a1a-28cde92fd611/volume-subpaths/configuration-template/prepare-configuration/0":
+      available: 9.36 GiB
+      available_bytes: 10046668800
+      capacity: 0.00%
+      device: data/kubelet
+      filesystem: zfs
+      options:
+      - rw
+      - noatime
+      - xattr
+      - noacl
+      size: 9.36 GiB
+      size_bytes: 10047062016
+      used: 384.00 KiB
+      used_bytes: 393216
+    "/var/lib/kubelet/pods/406d8103-05a0-4a50-8a1a-28cde92fd611/volume-subpaths/indexer-utils/indexers/0":
+      available: 9.36 GiB
+      available_bytes: 10046668800
+      capacity: 0.00%
+      device: data/kubelet
+      filesystem: zfs
+      options:
+      - rw
+      - noatime
+      - xattr
+      - noacl
+      size: 9.36 GiB
+      size_bytes: 10047062016
+      used: 384.00 KiB
+      used_bytes: 393216
+    "/var/lib/kubelet/pods/406d8103-05a0-4a50-8a1a-28cde92fd611/volumes/kubernetes.io~projected/kube-api-access-dv8wb":
+      available: 31.16 GiB
+      available_bytes: 33462120448
+      capacity: 0.00%
+      device: tmpfs
+      filesystem: tmpfs
+      options:
+      - rw
+      - relatime
+      - size=32677864k
+      - nr_inodes=4110333
+      size: 31.16 GiB
+      size_bytes: 33462132736
+      used: 12.00 KiB
+      used_bytes: 12288
+    "/var/lib/kubelet/pods/55b2cc17-1387-4e90-9b16-b8fd264f2910/volumes/kubernetes.io~projected/kube-api-access-nbk5g":
+      available: 31.26 GiB
+      available_bytes: 33566978048
+      capacity: 0.00%
+      device: tmpfs
+      filesystem: tmpfs
+      options:
+      - rw
+      - relatime
+      - size=32780264k
+      size: 31.26 GiB
+      size_bytes: 33566990336
+      used: 12.00 KiB
+      used_bytes: 12288
+    "/var/lib/kubelet/pods/5f2226a7-35ae-4019-9c1c-8ac7ee01c579/volumes/kubernetes.io~projected/kube-api-access-ftdbq":
+      available: 31.16 GiB
+      available_bytes: 33462120448
+      capacity: 0.00%
+      device: tmpfs
+      filesystem: tmpfs
+      options:
+      - rw
+      - relatime
+      - size=32677864k
+      size: 31.16 GiB
+      size_bytes: 33462132736
+      used: 12.00 KiB
+      used_bytes: 12288
+    "/var/lib/kubelet/pods/6be9794d-d790-4677-8479-296e716a9404/volume-subpaths/configuration-template/prepare-configuration/0":
+      available: 9.36 GiB
+      available_bytes: 10046668800
+      capacity: 0.00%
+      device: data/kubelet
+      filesystem: zfs
+      options:
+      - rw
+      - noatime
+      - xattr
+      - noacl
+      size: 9.36 GiB
+      size_bytes: 10047062016
+      used: 384.00 KiB
+      used_bytes: 393216
+    "/var/lib/kubelet/pods/6be9794d-d790-4677-8479-296e716a9404/volume-subpaths/loader-utils/loaders/0":
+      available: 9.36 GiB
+      available_bytes: 10046668800
+      capacity: 0.00%
+      device: data/kubelet
+      filesystem: zfs
+      options:
+      - rw
+      - noatime
+      - xattr
+      - noacl
+      size: 9.36 GiB
+      size_bytes: 10047062016
+      used: 384.00 KiB
+      used_bytes: 393216
+    "/var/lib/kubelet/pods/6be9794d-d790-4677-8479-296e716a9404/volumes/kubernetes.io~projected/kube-api-access-f7v4j":
+      available: 31.16 GiB
+      available_bytes: 33462120448
+      capacity: 0.00%
+      device: tmpfs
+      filesystem: tmpfs
+      options:
+      - rw
+      - relatime
+      - size=32677864k
+      - nr_inodes=4110333
+      size: 31.16 GiB
+      size_bytes: 33462132736
+      used: 12.00 KiB
+      used_bytes: 12288
+    "/var/lib/kubelet/pods/6be9794d-d790-4677-8479-296e716a9404/volumes/kubernetes.io~secret/metadata-fetcher-credentials":
+      available: 31.16 GiB
+      available_bytes: 33462128640
+      capacity: 0.00%
+      device: tmpfs
+      filesystem: tmpfs
+      options:
+      - rw
+      - relatime
+      - size=32677864k
+      - nr_inodes=4110333
+      size: 31.16 GiB
+      size_bytes: 33462132736
+      used: 4.00 KiB
+      used_bytes: 4096
+    "/var/lib/kubelet/pods/6cb6d95d-d569-4a7b-b877-4d0361cd9344/volumes/kubernetes.io~projected/kube-api-access-b6cwx":
       available: 169.99 MiB
       available_bytes: 178245632
       capacity: 0.01%
@@ -1877,9 +2051,9 @@ values:
       size_bytes: 178257920
       used: 12.00 KiB
       used_bytes: 12288
-    "/var/lib/kubelet/pods/533b2787-fd24-4597-b9b1-b73a4169cc52/volume-subpaths/configuration-template/prepare-configuration/0":
-      available: 11.24 GiB
-      available_bytes: 12073959424
+    "/var/lib/kubelet/pods/7fd95d49-5502-43c9-a2b0-ebe91427d4f0/volume-subpaths/configuration-template/prepare-configuration/0":
+      available: 9.36 GiB
+      available_bytes: 10046668800
       capacity: 0.00%
       device: data/kubelet
       filesystem: zfs
@@ -1888,13 +2062,13 @@ values:
       - noatime
       - xattr
       - noacl
-      size: 11.25 GiB
-      size_bytes: 12074352640
+      size: 9.36 GiB
+      size_bytes: 10047062016
       used: 384.00 KiB
       used_bytes: 393216
-    "/var/lib/kubelet/pods/533b2787-fd24-4597-b9b1-b73a4169cc52/volume-subpaths/indexer-utils/indexers/0":
-      available: 11.24 GiB
-      available_bytes: 12073959424
+    "/var/lib/kubelet/pods/7fd95d49-5502-43c9-a2b0-ebe91427d4f0/volume-subpaths/indexer-utils/indexers/0":
+      available: 9.36 GiB
+      available_bytes: 10046668800
       capacity: 0.00%
       device: data/kubelet
       filesystem: zfs
@@ -1903,27 +2077,27 @@ values:
       - noatime
       - xattr
       - noacl
-      size: 11.25 GiB
-      size_bytes: 12074352640
+      size: 9.36 GiB
+      size_bytes: 10047062016
       used: 384.00 KiB
       used_bytes: 393216
-    "/var/lib/kubelet/pods/533b2787-fd24-4597-b9b1-b73a4169cc52/volumes/kubernetes.io~projected/kube-api-access-xkrtt":
-      available: 31.26 GiB
-      available_bytes: 33566978048
+    "/var/lib/kubelet/pods/7fd95d49-5502-43c9-a2b0-ebe91427d4f0/volumes/kubernetes.io~projected/kube-api-access-6sq2w":
+      available: 31.16 GiB
+      available_bytes: 33462120448
       capacity: 0.00%
       device: tmpfs
       filesystem: tmpfs
       options:
       - rw
       - relatime
-      - size=32780264k
-      size: 31.26 GiB
-      size_bytes: 33566990336
+      - size=32677864k
+      size: 31.16 GiB
+      size_bytes: 33462132736
       used: 12.00 KiB
       used_bytes: 12288
-    "/var/lib/kubelet/pods/54ba4cdb-5a76-4465-a7f7-d7845723b402/volume-subpaths/configuration-template/prepare-configuration/0":
-      available: 11.24 GiB
-      available_bytes: 12073959424
+    "/var/lib/kubelet/pods/91a8e1df-3ac3-4c31-963c-4ba95b79ed61/volume-subpaths/configuration-template/prepare-configuration/0":
+      available: 9.36 GiB
+      available_bytes: 10046668800
       capacity: 0.00%
       device: data/kubelet
       filesystem: zfs
@@ -1932,13 +2106,13 @@ values:
       - noatime
       - xattr
       - noacl
-      size: 11.25 GiB
-      size_bytes: 12074352640
+      size: 9.36 GiB
+      size_bytes: 10047062016
       used: 384.00 KiB
       used_bytes: 393216
-    "/var/lib/kubelet/pods/54ba4cdb-5a76-4465-a7f7-d7845723b402/volume-subpaths/indexer-utils/indexers/0":
-      available: 11.24 GiB
-      available_bytes: 12073959424
+    "/var/lib/kubelet/pods/91a8e1df-3ac3-4c31-963c-4ba95b79ed61/volume-subpaths/indexer-utils/indexers/0":
+      available: 9.36 GiB
+      available_bytes: 10046668800
       capacity: 0.00%
       device: data/kubelet
       filesystem: zfs
@@ -1947,28 +2121,28 @@ values:
       - noatime
       - xattr
       - noacl
-      size: 11.25 GiB
-      size_bytes: 12074352640
+      size: 9.36 GiB
+      size_bytes: 10047062016
       used: 384.00 KiB
       used_bytes: 393216
-    "/var/lib/kubelet/pods/54ba4cdb-5a76-4465-a7f7-d7845723b402/volumes/kubernetes.io~projected/kube-api-access-wtffm":
-      available: 31.26 GiB
-      available_bytes: 33566978048
+    "/var/lib/kubelet/pods/91a8e1df-3ac3-4c31-963c-4ba95b79ed61/volumes/kubernetes.io~projected/kube-api-access-rt8nv":
+      available: 31.16 GiB
+      available_bytes: 33462120448
       capacity: 0.00%
       device: tmpfs
       filesystem: tmpfs
       options:
       - rw
       - relatime
-      - size=32780264k
+      - size=32677864k
       - nr_inodes=4110333
-      size: 31.26 GiB
-      size_bytes: 33566990336
+      size: 31.16 GiB
+      size_bytes: 33462132736
       used: 12.00 KiB
       used_bytes: 12288
-    "/var/lib/kubelet/pods/611b82bb-44e9-4e6c-be70-69f4291c5361/volume-subpaths/configuration-template/prepare-configuration/0":
-      available: 11.24 GiB
-      available_bytes: 12073959424
+    "/var/lib/kubelet/pods/a55e87c1-e875-46dc-bf7f-1b9b825f5fc0/volume-subpaths/configuration-template/prepare-configuration/0":
+      available: 9.36 GiB
+      available_bytes: 10046668800
       capacity: 0.00%
       device: data/kubelet
       filesystem: zfs
@@ -1977,13 +2151,13 @@ values:
       - noatime
       - xattr
       - noacl
-      size: 11.25 GiB
-      size_bytes: 12074352640
+      size: 9.36 GiB
+      size_bytes: 10047062016
       used: 384.00 KiB
       used_bytes: 393216
-    "/var/lib/kubelet/pods/611b82bb-44e9-4e6c-be70-69f4291c5361/volume-subpaths/indexer-utils/indexers/0":
-      available: 11.24 GiB
-      available_bytes: 12073959424
+    "/var/lib/kubelet/pods/a55e87c1-e875-46dc-bf7f-1b9b825f5fc0/volume-subpaths/loader-utils/loaders/0":
+      available: 9.36 GiB
+      available_bytes: 10046668800
       capacity: 0.00%
       device: data/kubelet
       filesystem: zfs
@@ -1992,205 +2166,43 @@ values:
       - noatime
       - xattr
       - noacl
-      size: 11.25 GiB
-      size_bytes: 12074352640
+      size: 9.36 GiB
+      size_bytes: 10047062016
       used: 384.00 KiB
       used_bytes: 393216
-    "/var/lib/kubelet/pods/611b82bb-44e9-4e6c-be70-69f4291c5361/volumes/kubernetes.io~projected/kube-api-access-8kpm4":
-      available: 31.26 GiB
-      available_bytes: 33566978048
+    "/var/lib/kubelet/pods/a55e87c1-e875-46dc-bf7f-1b9b825f5fc0/volumes/kubernetes.io~projected/kube-api-access-t26n6":
+      available: 31.16 GiB
+      available_bytes: 33462120448
       capacity: 0.00%
       device: tmpfs
       filesystem: tmpfs
       options:
       - rw
       - relatime
-      - size=32780264k
-      size: 31.26 GiB
-      size_bytes: 33566990336
-      used: 12.00 KiB
-      used_bytes: 12288
-    "/var/lib/kubelet/pods/6ee64dae-66c2-41c6-a3b0-28100931b2cd/volume-subpaths/configuration-template/prepare-configuration/0":
-      available: 11.24 GiB
-      available_bytes: 12073959424
-      capacity: 0.00%
-      device: data/kubelet
-      filesystem: zfs
-      options:
-      - rw
-      - noatime
-      - xattr
-      - noacl
-      size: 11.25 GiB
-      size_bytes: 12074352640
-      used: 384.00 KiB
-      used_bytes: 393216
-    "/var/lib/kubelet/pods/6ee64dae-66c2-41c6-a3b0-28100931b2cd/volume-subpaths/indexer-utils/indexers/0":
-      available: 11.24 GiB
-      available_bytes: 12073959424
-      capacity: 0.00%
-      device: data/kubelet
-      filesystem: zfs
-      options:
-      - rw
-      - noatime
-      - xattr
-      - noacl
-      size: 11.25 GiB
-      size_bytes: 12074352640
-      used: 384.00 KiB
-      used_bytes: 393216
-    "/var/lib/kubelet/pods/6ee64dae-66c2-41c6-a3b0-28100931b2cd/volumes/kubernetes.io~projected/kube-api-access-f8cd2":
-      available: 31.26 GiB
-      available_bytes: 33566978048
-      capacity: 0.00%
-      device: tmpfs
-      filesystem: tmpfs
-      options:
-      - rw
-      - relatime
-      - size=32780264k
-      size: 31.26 GiB
-      size_bytes: 33566990336
-      used: 12.00 KiB
-      used_bytes: 12288
-    "/var/lib/kubelet/pods/7c64c833-76e1-4ba7-b97b-09cb449c2133/volume-subpaths/configuration-template/prepare-configuration/0":
-      available: 11.24 GiB
-      available_bytes: 12073959424
-      capacity: 0.00%
-      device: data/kubelet
-      filesystem: zfs
-      options:
-      - rw
-      - noatime
-      - xattr
-      - noacl
-      size: 11.25 GiB
-      size_bytes: 12074352640
-      used: 384.00 KiB
-      used_bytes: 393216
-    "/var/lib/kubelet/pods/7c64c833-76e1-4ba7-b97b-09cb449c2133/volume-subpaths/indexer-utils/indexers/0":
-      available: 11.24 GiB
-      available_bytes: 12073959424
-      capacity: 0.00%
-      device: data/kubelet
-      filesystem: zfs
-      options:
-      - rw
-      - noatime
-      - xattr
-      - noacl
-      size: 11.25 GiB
-      size_bytes: 12074352640
-      used: 384.00 KiB
-      used_bytes: 393216
-    "/var/lib/kubelet/pods/7c64c833-76e1-4ba7-b97b-09cb449c2133/volumes/kubernetes.io~projected/kube-api-access-zj66p":
-      available: 31.26 GiB
-      available_bytes: 33566978048
-      capacity: 0.00%
-      device: tmpfs
-      filesystem: tmpfs
-      options:
-      - rw
-      - relatime
-      - size=32780264k
+      - size=32677864k
       - nr_inodes=4110333
-      size: 31.26 GiB
-      size_bytes: 33566990336
+      size: 31.16 GiB
+      size_bytes: 33462132736
       used: 12.00 KiB
       used_bytes: 12288
-    "/var/lib/kubelet/pods/84cdf3e9-9a3d-467d-9bf5-abb5639bdf2d/volume-subpaths/configuration-template/prepare-configuration/0":
-      available: 11.24 GiB
-      available_bytes: 12073959424
-      capacity: 0.00%
-      device: data/kubelet
-      filesystem: zfs
-      options:
-      - rw
-      - noatime
-      - xattr
-      - noacl
-      size: 11.25 GiB
-      size_bytes: 12074352640
-      used: 384.00 KiB
-      used_bytes: 393216
-    "/var/lib/kubelet/pods/84cdf3e9-9a3d-467d-9bf5-abb5639bdf2d/volume-subpaths/indexer-utils/indexers/0":
-      available: 11.24 GiB
-      available_bytes: 12073959424
-      capacity: 0.00%
-      device: data/kubelet
-      filesystem: zfs
-      options:
-      - rw
-      - noatime
-      - xattr
-      - noacl
-      size: 11.25 GiB
-      size_bytes: 12074352640
-      used: 384.00 KiB
-      used_bytes: 393216
-    "/var/lib/kubelet/pods/84cdf3e9-9a3d-467d-9bf5-abb5639bdf2d/volumes/kubernetes.io~projected/kube-api-access-jfzgx":
-      available: 31.26 GiB
-      available_bytes: 33566978048
+    "/var/lib/kubelet/pods/a55e87c1-e875-46dc-bf7f-1b9b825f5fc0/volumes/kubernetes.io~secret/metadata-fetcher-credentials":
+      available: 31.16 GiB
+      available_bytes: 33462128640
       capacity: 0.00%
       device: tmpfs
       filesystem: tmpfs
       options:
       - rw
       - relatime
-      - size=32780264k
-      size: 31.26 GiB
-      size_bytes: 33566990336
-      used: 12.00 KiB
-      used_bytes: 12288
-    "/var/lib/kubelet/pods/936baf7c-55f2-48fe-8fca-0a4e95b0d342/volume-subpaths/configuration-template/prepare-configuration/0":
-      available: 11.24 GiB
-      available_bytes: 12073959424
-      capacity: 0.00%
-      device: data/kubelet
-      filesystem: zfs
-      options:
-      - rw
-      - noatime
-      - xattr
-      - noacl
-      size: 11.25 GiB
-      size_bytes: 12074352640
-      used: 384.00 KiB
-      used_bytes: 393216
-    "/var/lib/kubelet/pods/936baf7c-55f2-48fe-8fca-0a4e95b0d342/volume-subpaths/indexer-utils/indexers/0":
-      available: 11.24 GiB
-      available_bytes: 12073959424
-      capacity: 0.00%
-      device: data/kubelet
-      filesystem: zfs
-      options:
-      - rw
-      - noatime
-      - xattr
-      - noacl
-      size: 11.25 GiB
-      size_bytes: 12074352640
-      used: 384.00 KiB
-      used_bytes: 393216
-    "/var/lib/kubelet/pods/936baf7c-55f2-48fe-8fca-0a4e95b0d342/volumes/kubernetes.io~projected/kube-api-access-m6z95":
-      available: 31.26 GiB
-      available_bytes: 33566978048
-      capacity: 0.00%
-      device: tmpfs
-      filesystem: tmpfs
-      options:
-      - rw
-      - relatime
-      - size=32780264k
+      - size=32677864k
       - nr_inodes=4110333
-      size: 31.26 GiB
-      size_bytes: 33566990336
-      used: 12.00 KiB
-      used_bytes: 12288
-    "/var/lib/kubelet/pods/a7b76579-0191-4281-9d7f-16997c7fdf8c/volume-subpaths/configuration-template/prepare-configuration/0":
-      available: 11.24 GiB
-      available_bytes: 12073959424
+      size: 31.16 GiB
+      size_bytes: 33462132736
+      used: 4.00 KiB
+      used_bytes: 4096
+    "/var/lib/kubelet/pods/bb1380cd-b4c2-4e07-9a4d-7eaa2145a155/volume-subpaths/configuration-template/prepare-configuration/0":
+      available: 9.36 GiB
+      available_bytes: 10046668800
       capacity: 0.00%
       device: data/kubelet
       filesystem: zfs
@@ -2199,13 +2211,13 @@ values:
       - noatime
       - xattr
       - noacl
-      size: 11.25 GiB
-      size_bytes: 12074352640
+      size: 9.36 GiB
+      size_bytes: 10047062016
       used: 384.00 KiB
       used_bytes: 393216
-    "/var/lib/kubelet/pods/a7b76579-0191-4281-9d7f-16997c7fdf8c/volume-subpaths/indexer-utils/indexers/0":
-      available: 11.24 GiB
-      available_bytes: 12073959424
+    "/var/lib/kubelet/pods/bb1380cd-b4c2-4e07-9a4d-7eaa2145a155/volume-subpaths/indexer-utils/indexers/0":
+      available: 9.36 GiB
+      available_bytes: 10046668800
       capacity: 0.00%
       device: data/kubelet
       filesystem: zfs
@@ -2214,57 +2226,27 @@ values:
       - noatime
       - xattr
       - noacl
-      size: 11.25 GiB
-      size_bytes: 12074352640
+      size: 9.36 GiB
+      size_bytes: 10047062016
       used: 384.00 KiB
       used_bytes: 393216
-    "/var/lib/kubelet/pods/a7b76579-0191-4281-9d7f-16997c7fdf8c/volumes/kubernetes.io~projected/kube-api-access-x7hr5":
-      available: 31.26 GiB
-      available_bytes: 33566978048
+    "/var/lib/kubelet/pods/bb1380cd-b4c2-4e07-9a4d-7eaa2145a155/volumes/kubernetes.io~projected/kube-api-access-vxdm7":
+      available: 31.16 GiB
+      available_bytes: 33462120448
       capacity: 0.00%
       device: tmpfs
       filesystem: tmpfs
       options:
       - rw
       - relatime
-      - size=32780264k
-      - nr_inodes=4105597
-      size: 31.26 GiB
-      size_bytes: 33566990336
+      - size=32677864k
+      size: 31.16 GiB
+      size_bytes: 33462132736
       used: 12.00 KiB
       used_bytes: 12288
-    "/var/lib/kubelet/pods/bd0838d6-6502-406e-a9d6-a099238090a4/volumes/kubernetes.io~projected/kube-api-access-r9s5b":
-      available: 31.26 GiB
-      available_bytes: 33566978048
-      capacity: 0.00%
-      device: tmpfs
-      filesystem: tmpfs
-      options:
-      - rw
-      - relatime
-      - size=32780264k
-      size: 31.26 GiB
-      size_bytes: 33566990336
-      used: 12.00 KiB
-      used_bytes: 12288
-    "/var/lib/kubelet/pods/bd0838d6-6502-406e-a9d6-a099238090a4/volumes/kubernetes.io~secret/webhook-cert":
-      available: 31.26 GiB
-      available_bytes: 33566978048
-      capacity: 0.00%
-      device: tmpfs
-      filesystem: tmpfs
-      options:
-      - rw
-      - relatime
-      - size=32780264k
-      - nr_inodes=4100477
-      size: 31.26 GiB
-      size_bytes: 33566990336
-      used: 12.00 KiB
-      used_bytes: 12288
-    "/var/lib/kubelet/pods/dfecf071-445e-4041-988b-33d346198b57/volume-subpaths/configuration-template/prepare-configuration/0":
-      available: 11.24 GiB
-      available_bytes: 12073959424
+    "/var/lib/kubelet/pods/cbfac5dc-7f09-443f-ae72-196583aba930/volume-subpaths/configuration-template/prepare-configuration/0":
+      available: 9.36 GiB
+      available_bytes: 10046668800
       capacity: 0.00%
       device: data/kubelet
       filesystem: zfs
@@ -2273,13 +2255,13 @@ values:
       - noatime
       - xattr
       - noacl
-      size: 11.25 GiB
-      size_bytes: 12074352640
+      size: 9.36 GiB
+      size_bytes: 10047062016
       used: 384.00 KiB
       used_bytes: 393216
-    "/var/lib/kubelet/pods/dfecf071-445e-4041-988b-33d346198b57/volume-subpaths/indexer-utils/indexers/0":
-      available: 11.24 GiB
-      available_bytes: 12073959424
+    "/var/lib/kubelet/pods/cbfac5dc-7f09-443f-ae72-196583aba930/volume-subpaths/loader-utils/loaders/0":
+      available: 9.36 GiB
+      available_bytes: 10046668800
       capacity: 0.00%
       device: data/kubelet
       filesystem: zfs
@@ -2288,11 +2270,11 @@ values:
       - noatime
       - xattr
       - noacl
-      size: 11.25 GiB
-      size_bytes: 12074352640
+      size: 9.36 GiB
+      size_bytes: 10047062016
       used: 384.00 KiB
       used_bytes: 393216
-    "/var/lib/kubelet/pods/dfecf071-445e-4041-988b-33d346198b57/volumes/kubernetes.io~projected/kube-api-access-jnrdz":
+    "/var/lib/kubelet/pods/cbfac5dc-7f09-443f-ae72-196583aba930/volumes/kubernetes.io~projected/kube-api-access-jx6c2":
       available: 31.26 GiB
       available_bytes: 33566978048
       capacity: 0.00%
@@ -2306,141 +2288,7 @@ values:
       size_bytes: 33566990336
       used: 12.00 KiB
       used_bytes: 12288
-    "/var/lib/kubelet/pods/ec70d28a-61c7-451b-b28b-f71896fd3fe2/volume-subpaths/configuration-template/prepare-configuration/0":
-      available: 11.24 GiB
-      available_bytes: 12073959424
-      capacity: 0.00%
-      device: data/kubelet
-      filesystem: zfs
-      options:
-      - rw
-      - noatime
-      - xattr
-      - noacl
-      size: 11.25 GiB
-      size_bytes: 12074352640
-      used: 384.00 KiB
-      used_bytes: 393216
-    "/var/lib/kubelet/pods/ec70d28a-61c7-451b-b28b-f71896fd3fe2/volume-subpaths/indexer-utils/indexers/0":
-      available: 11.24 GiB
-      available_bytes: 12073959424
-      capacity: 0.00%
-      device: data/kubelet
-      filesystem: zfs
-      options:
-      - rw
-      - noatime
-      - xattr
-      - noacl
-      size: 11.25 GiB
-      size_bytes: 12074352640
-      used: 384.00 KiB
-      used_bytes: 393216
-    "/var/lib/kubelet/pods/ec70d28a-61c7-451b-b28b-f71896fd3fe2/volumes/kubernetes.io~projected/kube-api-access-ccd9g":
-      available: 31.26 GiB
-      available_bytes: 33566978048
-      capacity: 0.00%
-      device: tmpfs
-      filesystem: tmpfs
-      options:
-      - rw
-      - relatime
-      - size=32780264k
-      size: 31.26 GiB
-      size_bytes: 33566990336
-      used: 12.00 KiB
-      used_bytes: 12288
-    "/var/lib/kubelet/pods/f58a7ebc-fa7a-4ec7-afa7-acd63f74a4cd/volume-subpaths/configuration-template/prepare-configuration/0":
-      available: 11.24 GiB
-      available_bytes: 12073959424
-      capacity: 0.00%
-      device: data/kubelet
-      filesystem: zfs
-      options:
-      - rw
-      - noatime
-      - xattr
-      - noacl
-      size: 11.25 GiB
-      size_bytes: 12074352640
-      used: 384.00 KiB
-      used_bytes: 393216
-    "/var/lib/kubelet/pods/f58a7ebc-fa7a-4ec7-afa7-acd63f74a4cd/volume-subpaths/indexer-utils/indexers/0":
-      available: 11.24 GiB
-      available_bytes: 12073959424
-      capacity: 0.00%
-      device: data/kubelet
-      filesystem: zfs
-      options:
-      - rw
-      - noatime
-      - xattr
-      - noacl
-      size: 11.25 GiB
-      size_bytes: 12074352640
-      used: 384.00 KiB
-      used_bytes: 393216
-    "/var/lib/kubelet/pods/f58a7ebc-fa7a-4ec7-afa7-acd63f74a4cd/volumes/kubernetes.io~projected/kube-api-access-zkm9g":
-      available: 31.26 GiB
-      available_bytes: 33566978048
-      capacity: 0.00%
-      device: tmpfs
-      filesystem: tmpfs
-      options:
-      - rw
-      - relatime
-      - size=32780264k
-      - nr_inodes=4110333
-      size: 31.26 GiB
-      size_bytes: 33566990336
-      used: 12.00 KiB
-      used_bytes: 12288
-    "/var/lib/kubelet/pods/f60fcd0d-4f0a-4756-9c5e-5786d98f4a33/volume-subpaths/configuration-template/prepare-configuration/0":
-      available: 11.24 GiB
-      available_bytes: 12073959424
-      capacity: 0.00%
-      device: data/kubelet
-      filesystem: zfs
-      options:
-      - rw
-      - noatime
-      - xattr
-      - noacl
-      size: 11.25 GiB
-      size_bytes: 12074352640
-      used: 384.00 KiB
-      used_bytes: 393216
-    "/var/lib/kubelet/pods/f60fcd0d-4f0a-4756-9c5e-5786d98f4a33/volume-subpaths/lister-utils/listers/0":
-      available: 11.24 GiB
-      available_bytes: 12073959424
-      capacity: 0.00%
-      device: data/kubelet
-      filesystem: zfs
-      options:
-      - rw
-      - noatime
-      - xattr
-      - noacl
-      size: 11.25 GiB
-      size_bytes: 12074352640
-      used: 384.00 KiB
-      used_bytes: 393216
-    "/var/lib/kubelet/pods/f60fcd0d-4f0a-4756-9c5e-5786d98f4a33/volumes/kubernetes.io~projected/kube-api-access-mshfw":
-      available: 31.26 GiB
-      available_bytes: 33566978048
-      capacity: 0.00%
-      device: tmpfs
-      filesystem: tmpfs
-      options:
-      - rw
-      - relatime
-      - size=32780264k
-      - nr_inodes=4110333
-      size: 31.26 GiB
-      size_bytes: 33566990336
-      used: 12.00 KiB
-      used_bytes: 12288
-    "/var/lib/kubelet/pods/f60fcd0d-4f0a-4756-9c5e-5786d98f4a33/volumes/kubernetes.io~secret/lister-credentials-secrets":
+    "/var/lib/kubelet/pods/cbfac5dc-7f09-443f-ae72-196583aba930/volumes/kubernetes.io~secret/metadata-fetcher-credentials":
       available: 31.26 GiB
       available_bytes: 33566986240
       capacity: 0.00%
@@ -2450,98 +2298,61 @@ values:
       - rw
       - relatime
       - size=32780264k
-      - nr_inodes=4110333
       size: 31.26 GiB
       size_bytes: 33566990336
       used: 4.00 KiB
       used_bytes: 4096
-    "/var/lib/kubelet/pods/f7df7a22-6060-40b5-90b9-f921b22074fd/volumes/kubernetes.io~projected/kube-api-access-nnvhg":
-      available: 31.26 GiB
-      available_bytes: 33566978048
-      capacity: 0.00%
-      device: tmpfs
-      filesystem: tmpfs
-      options:
-      - rw
-      - relatime
-      - size=32780264k
-      size: 31.26 GiB
-      size_bytes: 33566990336
-      used: 12.00 KiB
-      used_bytes: 12288
-    "/var/lib/kubelet/pods/f7df7a22-6060-40b5-90b9-f921b22074fd/volumes/kubernetes.io~secret/cattle-credentials":
-      available: 31.26 GiB
-      available_bytes: 33566978048
-      capacity: 0.00%
-      device: tmpfs
-      filesystem: tmpfs
-      options:
-      - rw
-      - relatime
-      - size=32780264k
-      - nr_inodes=4100605
-      size: 31.26 GiB
-      size_bytes: 33566990336
-      used: 12.00 KiB
-      used_bytes: 12288
   mounts:
   - "/"
   - "/boot"
-  - "/data"
   - "/var/lib/docker"
+  - "/data"
   - "/var/lib/kubelet"
-  - "/var/lib/docker/zfs/graph/a5bf1ef12a410a3356b914feb24bd50bcc4e5e20ac46cc1560828850f64dd8e9"
-  - "/var/lib/docker/zfs/graph/2f0551925d779ae9155ccd4877fd86f9f3a7ea959c666b0f785b2203a00b86bb"
-  - "/var/lib/docker/zfs/graph/9bde3a6082d02ebb5e5b040e0179a97b68f521cf4420bfb65df21a33d5fa8265"
-  - "/var/lib/docker/zfs/graph/a36601ef64ea27cb99aab692d3bd0c6a95bbc6208def5445441d4996e6465e0a"
-  - "/var/lib/docker/zfs/graph/9c322739bcf941226269ddd50ffd7af6e9eb1b72b40305cd27c8f093da1cfe4e"
-  - "/var/lib/docker/zfs/graph/a1851195caebb4a59d727b33f32e42a61a9661fe77d1e9feb3263007b960a26f"
-  - "/var/lib/docker/zfs/graph/efb18df7656471f02ae7ea0b2e33f5f75dde511dedd9fc6f6a2e9fe0dcc47b02"
-  - "/var/lib/docker/zfs/graph/701f852fa0660f0f8eaa3ebe51f4d46dad014e8872df8af9a199402609f1806b"
-  - "/var/lib/docker/zfs/graph/03b02a11c8fdbb5bfab0ea9fc4ed8a4298d422d6c4995386b1f4f2489de13238"
-  - "/var/lib/docker/zfs/graph/9e6c639005248de62c6bd4119c67f45362d01d6fbe8214a3694966928284c701"
-  - "/var/lib/docker/zfs/graph/b45842ca217dbde71d475c9e518529c0e7f9985391c38bcb896358a7911dfbbb"
-  - "/var/lib/docker/zfs/graph/6f3cabe6d351ca36e14da13bee74d68a883aea30e713b15c19c6810f646d2550"
-  - "/var/lib/docker/zfs/graph/e6a2afc5f602d8db174f444fb7228bf7380edcd52ec3c52d8a0db7a50fa4009a"
-  - "/var/lib/docker/zfs/graph/f52d34d1b2e0e1a19479321f891a2a87df8722f857ae9520bc3cfdaecb6597d7"
-  - "/var/lib/docker/zfs/graph/792fe8787502627ac404d8589305eb578d05e568194f0c02d6b03e289a500731"
-  - "/var/lib/docker/zfs/graph/f3c12b1e836bbf1aa481734a749dc2ebdbff47cf3793c9fdfebe4391d8cf4d94"
-  - "/var/lib/docker/zfs/graph/88f3598cecfc4b75c906b4ee7bd32d7347175bb5358a5190a7f809ff51b1dfd6"
-  - "/var/lib/docker/zfs/graph/42a4017668ac88024ed42b2f1242d76256e39f47ceb94e4394504d49799dca51"
-  - "/var/lib/docker/zfs/graph/1441059a76edc19a59f0f5254f86669c1110b8134d553bd28a919a58c38f4d3c"
-  - "/var/lib/docker/zfs/graph/a2380dc8f8739bb3c82f6778589b67dac6cbe30b0cc040ddec9e557afaa7f82a"
-  - "/var/lib/docker/zfs/graph/145abb0ed78c8116cb1b03cb6940554045698ffa68dedf995038612f55823e61"
-  - "/var/lib/docker/zfs/graph/f7be95324c1369b5496746eac2e5081151892ac6bcb44b999ad4cc8adb352985"
-  - "/var/lib/docker/zfs/graph/fc4d52856c4ad21f1388f8e05c9e7cced790597b4b274533c7b03890413e2d94"
-  - "/var/lib/docker/zfs/graph/ebd8c72c47b48dd4b10ca610effb0c4bce35b65a0a45b9a5e0227ace543c62ae"
-  - "/var/lib/docker/zfs/graph/9f0adcb9f771615581b29014f5267005b91b1f8a8cd351b0f669aa70177a1be6"
-  - "/var/lib/docker/zfs/graph/ec85b04c4cea776cc4e9dbf40758c8ae5142aa3f3c22e0ab0458c9828eed5444"
-  - "/var/lib/docker/zfs/graph/c637419883f154a8c7a8bcde42e39ec0b23b5b482dc919d2bd25825f59bc8c73"
-  - "/var/lib/docker/zfs/graph/c847629198970cb6c78d64949b4e41c3b31ae755d424a9884bb88ca5c61d6b06"
-  - "/var/lib/docker/zfs/graph/2cc2cd89217566cd63122b2d0ceee6cc39d0457617598081bf72a36df72b02dc"
-  - "/var/lib/docker/zfs/graph/1414e27205169c4a9dc7ba9dd05762879cd1af731be94617302363e218c06f98"
-  - "/var/lib/docker/zfs/graph/2c8e13b7966d789525f84985e71caf8ddd8e84c14841193e6aef3ab2783155a4"
-  - "/var/lib/docker/zfs/graph/5c329725efbfcbdc12589f4f1e29aeb23ffd30fff14d994d43eb45e753fc7b7d"
-  - "/var/lib/docker/zfs/graph/46e906d3248518c55d6f74cedc41333bc0a45810ec3d8ba983b01c6b82cc1cf6"
-  - "/var/lib/docker/zfs/graph/03c4fb36ce7c553dd4991dcdcf2999ad1d62283b0c014410d006f0c7e68ab28a"
-  - "/var/lib/docker/zfs/graph/bafd6163c31924176f87ddd3902d1528a70c76a1c13a0a5d8008c207bf33f6a8"
-  - "/var/lib/docker/zfs/graph/5401aa4d1d64cb3b39aadc4d7ab7cb2fa6e9510e4e3fcb9f2589f8d0f0c0f8cc"
-  - "/var/lib/docker/zfs/graph/8386d4996ff0d228ab6437873c47b07191c0e481cbaeaf16281d8f2bde57afa5"
-  - "/var/lib/docker/zfs/graph/f288d8fab22384174cd1adf4f83b31094b0c4e69c4925270a2a28865f2dc93ac"
-  mtu_cali01dcd1e3c2f: 1450
-  mtu_cali0795469e4ef: 1450
-  mtu_cali10cb4f7070a: 1450
-  mtu_cali150b52826e2: 1450
-  mtu_cali5ef3808560e: 1450
-  mtu_cali796e7f83d01: 1450
-  mtu_cali88435ec4922: 1450
-  mtu_calia4cbad74d0c: 1450
-  mtu_calia5361b10bef: 1450
-  mtu_calibd2bc41960f: 1450
-  mtu_calic38480150b5: 1450
-  mtu_calicb07aa7e07e: 1450
-  mtu_calid9b6c4ddb67: 1450
-  mtu_calieaf2753248e: 1450
+  - "/var/lib/docker/zfs/graph/a5429d6681dcd3cbdd5441c2799471ed6724de633e3d85701437dcf11a99413e"
+  - "/var/lib/docker/zfs/graph/703a4caf68fc0c55dfa140bf93d31740543ed204d2508b8de2932cb354ac9a14"
+  - "/var/lib/docker/zfs/graph/2b7359cc54acb2e09a56bbe6a22e292cd3059b8a2ad9b44cad57c294ecf668d2"
+  - "/var/lib/docker/zfs/graph/682e189a0acae2739a330fd7c8cc55901fd07c6e1829396326a343f5f53382bd"
+  - "/var/lib/docker/zfs/graph/e1719bca5c35995445785551489b87c018e388aa67efcfe40288f277ea100d91"
+  - "/var/lib/docker/zfs/graph/16a2e5aa4d7feea0876031c0a52acaa8ed9689c0fb5a559ebd93944428b50df7"
+  - "/var/lib/docker/zfs/graph/e81238fd4ba502eb9137066ba114f96d0bbd13105715af7704974bb0cb0a9487"
+  - "/var/lib/docker/zfs/graph/92688e08addb68352c54bebbce28f707a3e1b8b251fc37c6ec805412e81b071c"
+  - "/var/lib/docker/zfs/graph/adccaf06adb91b673124c3c117bf86a37003e52b84f70cc5ff5eac4a0597a99a"
+  - "/var/lib/docker/zfs/graph/6ba4791564be10ff773a73529e31d47248ddebbae4f404a965e7ec5faff580f1"
+  - "/var/lib/docker/zfs/graph/0dce6ac5c7b4bcf571f26eb117d525be22f74a1bb0a869a8ebc3cdaf314d4da9"
+  - "/var/lib/docker/zfs/graph/f0e1ae21570d7d9bea7c9dc8ece8b0b51d91db1bc9fef1d70fe00e9f5658c655"
+  - "/var/lib/docker/zfs/graph/7baec2336d162a038ae6682650c2a1682830e89a5bbe1ce56a24e29770de7eaf"
+  - "/var/lib/docker/zfs/graph/3f2594eae161b4e6e9e28939c234905b6e792bc5fe4f14a595b4b906f77b75a0"
+  - "/var/lib/docker/zfs/graph/cf2dbf2cce6d205b10689dd56fe1ecb3435cabb6a33f390c497119e1bed03040"
+  - "/var/lib/docker/zfs/graph/732fbec7c4dfba83724bc069eaa9cb2a1ab1df267b2cd419023ddd1cc4a30f20"
+  - "/var/lib/docker/zfs/graph/419a20e7887d10f6a7686e9b307048e35767d9e891eded1d469b7f386bab7ec5"
+  - "/var/lib/docker/zfs/graph/9dc9fa82e2363bd8e44f3ea201dda66be7a3982e40c342a3ae0d324c0b8b3ea6"
+  - "/var/lib/docker/zfs/graph/d71db589f617fd9633919be59832d175f4dca09ea86a5d07a9dd2831213b1474"
+  - "/var/lib/docker/zfs/graph/e34243e26c024b41077fe3bed06cd17c2f5f7b3a4b4bfbb9a3af6a90aa34a931"
+  - "/var/lib/docker/zfs/graph/87622b4f3d9bd24a53eb86f4d997bfccc6370cf2d554937c6c1ff846ceb00e3f"
+  - "/var/lib/docker/zfs/graph/51932a76b8c331fc702e5f9cd19a330ae84db0ab7093ab95ee86358ded1d6a6d"
+  - "/var/lib/docker/zfs/graph/0fe1999b2fb980197ad2872a5e8869434ed0e7fdba42ffca62ce27be7bd14c9a"
+  - "/var/lib/docker/zfs/graph/ef885418f3a7dd07978dd18de297e260cd595d0323b7348adc7e4cc59d5ad3a0"
+  - "/var/lib/docker/zfs/graph/a8ec121e0312e2d8a640aa5e64523fb5abf3259d5cb85983c0c8fecf6cbc4131"
+  - "/var/lib/docker/zfs/graph/0b30fe7e065d8d29481c6670ba357ed7a9018cb6a99f95093d0b57e1387aa9dc"
+  - "/var/lib/docker/zfs/graph/3b1d24eadcbd11561c896a9f1b86889ac28f2c2279415f06b4596840d72cf062"
+  - "/var/lib/docker/zfs/graph/3af125337a75e8e70b2245a54445319032f4c2467f7b92369fece778b74ede0f"
+  - "/var/lib/docker/zfs/graph/a5bcc36ca28b6aef729d897e6dafaca07856fdf42454b1edb855d07b964abd76"
+  - "/var/lib/docker/zfs/graph/81e6c21a241f7e116ea88c1ccff5153b08e911735d8a3ff3e682734e6046583e"
+  - "/var/lib/docker/zfs/graph/5e45e059456ad316f90272d9b7056aa8f9e57d457f991eb664e081a64a303aa0"
+  - "/var/lib/docker/zfs/graph/5888a9d33117ee3e4026d870a12af1ed1acb217d122e52e3536459a435e94726"
+  - "/var/lib/docker/zfs/graph/a32c7fa7a342f649f6734dd77c4136d23209b0adcf34a581ea6f6453d937a0b8"
+  - "/var/lib/docker/zfs/graph/5a0a200c544d84fcf5fd2b6a362643044067241143eb94b6474420b99db37ab0"
+  mtu_cali13ffb6c0603: 1450
+  mtu_cali19cb5086f1c: 1450
+  mtu_cali23eb00c5b3b: 1450
+  mtu_cali4bcdf07da16: 1450
+  mtu_cali90b16adf92e: 1450
+  mtu_calia2598cdd731: 1450
+  mtu_calib1c69d8eb8b: 1450
+  mtu_calic9f4f891238: 1450
+  mtu_calicc034b7ce61: 1450
+  mtu_calidefe83d6054: 1450
+  mtu_calie4d96a42e3f: 1450
   mtu_docker0: 1500
   mtu_eth0: 1500
   mtu_flannel.1: 1450
@@ -2549,20 +2360,17 @@ values:
   mysql_server_id: 100951906
   netmask: 255.255.255.0
   netmask6: 'ffff:ffff:ffff:ffff::'
-  netmask6_cali01dcd1e3c2f: 'ffff:ffff:ffff:ffff::'
-  netmask6_cali0795469e4ef: 'ffff:ffff:ffff:ffff::'
-  netmask6_cali10cb4f7070a: 'ffff:ffff:ffff:ffff::'
-  netmask6_cali150b52826e2: 'ffff:ffff:ffff:ffff::'
-  netmask6_cali5ef3808560e: 'ffff:ffff:ffff:ffff::'
-  netmask6_cali796e7f83d01: 'ffff:ffff:ffff:ffff::'
-  netmask6_cali88435ec4922: 'ffff:ffff:ffff:ffff::'
-  netmask6_calia4cbad74d0c: 'ffff:ffff:ffff:ffff::'
-  netmask6_calia5361b10bef: 'ffff:ffff:ffff:ffff::'
-  netmask6_calibd2bc41960f: 'ffff:ffff:ffff:ffff::'
-  netmask6_calic38480150b5: 'ffff:ffff:ffff:ffff::'
-  netmask6_calicb07aa7e07e: 'ffff:ffff:ffff:ffff::'
-  netmask6_calid9b6c4ddb67: 'ffff:ffff:ffff:ffff::'
-  netmask6_calieaf2753248e: 'ffff:ffff:ffff:ffff::'
+  netmask6_cali13ffb6c0603: 'ffff:ffff:ffff:ffff::'
+  netmask6_cali19cb5086f1c: 'ffff:ffff:ffff:ffff::'
+  netmask6_cali23eb00c5b3b: 'ffff:ffff:ffff:ffff::'
+  netmask6_cali4bcdf07da16: 'ffff:ffff:ffff:ffff::'
+  netmask6_cali90b16adf92e: 'ffff:ffff:ffff:ffff::'
+  netmask6_calia2598cdd731: 'ffff:ffff:ffff:ffff::'
+  netmask6_calib1c69d8eb8b: 'ffff:ffff:ffff:ffff::'
+  netmask6_calic9f4f891238: 'ffff:ffff:ffff:ffff::'
+  netmask6_calicc034b7ce61: 'ffff:ffff:ffff:ffff::'
+  netmask6_calidefe83d6054: 'ffff:ffff:ffff:ffff::'
+  netmask6_calie4d96a42e3f: 'ffff:ffff:ffff:ffff::'
   netmask6_eth0: 'ffff:ffff:ffff:ffff::'
   netmask6_flannel.1: 'ffff:ffff:ffff:ffff::'
   netmask6_lo: ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff
@@ -2572,20 +2380,17 @@ values:
   netmask_lo: 255.0.0.0
   network: 192.168.130.0
   network6: 'fe80::'
-  network6_cali01dcd1e3c2f: 'fe80::'
-  network6_cali0795469e4ef: 'fe80::'
-  network6_cali10cb4f7070a: 'fe80::'
-  network6_cali150b52826e2: 'fe80::'
-  network6_cali5ef3808560e: 'fe80::'
-  network6_cali796e7f83d01: 'fe80::'
-  network6_cali88435ec4922: 'fe80::'
-  network6_calia4cbad74d0c: 'fe80::'
-  network6_calia5361b10bef: 'fe80::'
-  network6_calibd2bc41960f: 'fe80::'
-  network6_calic38480150b5: 'fe80::'
-  network6_calicb07aa7e07e: 'fe80::'
-  network6_calid9b6c4ddb67: 'fe80::'
-  network6_calieaf2753248e: 'fe80::'
+  network6_cali13ffb6c0603: 'fe80::'
+  network6_cali19cb5086f1c: 'fe80::'
+  network6_cali23eb00c5b3b: 'fe80::'
+  network6_cali4bcdf07da16: 'fe80::'
+  network6_cali90b16adf92e: 'fe80::'
+  network6_calia2598cdd731: 'fe80::'
+  network6_calib1c69d8eb8b: 'fe80::'
+  network6_calic9f4f891238: 'fe80::'
+  network6_calicc034b7ce61: 'fe80::'
+  network6_calidefe83d6054: 'fe80::'
+  network6_calie4d96a42e3f: 'fe80::'
   network6_eth0: 'fe80::'
   network6_flannel.1: 'fe80::'
   network6_lo: "::1"
@@ -2598,7 +2403,7 @@ values:
     fqdn: rancher-node-staging-worker4.internal.staging.swh.network
     hostname: rancher-node-staging-worker4
     interfaces:
-      cali01dcd1e3c2f:
+      cali13ffb6c0603:
         bindings6:
         - address: fe80::ecee:eeff:feee:eeee
           netmask: 'ffff:ffff:ffff:ffff::'
@@ -2609,7 +2414,7 @@ values:
         netmask6: 'ffff:ffff:ffff:ffff::'
         network6: 'fe80::'
         scope6: link
-      cali0795469e4ef:
+      cali19cb5086f1c:
         bindings6:
         - address: fe80::ecee:eeff:feee:eeee
           netmask: 'ffff:ffff:ffff:ffff::'
@@ -2620,7 +2425,7 @@ values:
         netmask6: 'ffff:ffff:ffff:ffff::'
         network6: 'fe80::'
         scope6: link
-      cali10cb4f7070a:
+      cali23eb00c5b3b:
         bindings6:
         - address: fe80::ecee:eeff:feee:eeee
           netmask: 'ffff:ffff:ffff:ffff::'
@@ -2631,7 +2436,7 @@ values:
         netmask6: 'ffff:ffff:ffff:ffff::'
         network6: 'fe80::'
         scope6: link
-      cali150b52826e2:
+      cali4bcdf07da16:
         bindings6:
         - address: fe80::ecee:eeff:feee:eeee
           netmask: 'ffff:ffff:ffff:ffff::'
@@ -2642,7 +2447,7 @@ values:
         netmask6: 'ffff:ffff:ffff:ffff::'
         network6: 'fe80::'
         scope6: link
-      cali5ef3808560e:
+      cali90b16adf92e:
         bindings6:
         - address: fe80::ecee:eeff:feee:eeee
           netmask: 'ffff:ffff:ffff:ffff::'
@@ -2653,7 +2458,7 @@ values:
         netmask6: 'ffff:ffff:ffff:ffff::'
         network6: 'fe80::'
         scope6: link
-      cali796e7f83d01:
+      calia2598cdd731:
         bindings6:
         - address: fe80::ecee:eeff:feee:eeee
           netmask: 'ffff:ffff:ffff:ffff::'
@@ -2664,7 +2469,7 @@ values:
         netmask6: 'ffff:ffff:ffff:ffff::'
         network6: 'fe80::'
         scope6: link
-      cali88435ec4922:
+      calib1c69d8eb8b:
         bindings6:
         - address: fe80::ecee:eeff:feee:eeee
           netmask: 'ffff:ffff:ffff:ffff::'
@@ -2675,7 +2480,7 @@ values:
         netmask6: 'ffff:ffff:ffff:ffff::'
         network6: 'fe80::'
         scope6: link
-      calia4cbad74d0c:
+      calic9f4f891238:
         bindings6:
         - address: fe80::ecee:eeff:feee:eeee
           netmask: 'ffff:ffff:ffff:ffff::'
@@ -2686,7 +2491,7 @@ values:
         netmask6: 'ffff:ffff:ffff:ffff::'
         network6: 'fe80::'
         scope6: link
-      calia5361b10bef:
+      calicc034b7ce61:
         bindings6:
         - address: fe80::ecee:eeff:feee:eeee
           netmask: 'ffff:ffff:ffff:ffff::'
@@ -2697,7 +2502,7 @@ values:
         netmask6: 'ffff:ffff:ffff:ffff::'
         network6: 'fe80::'
         scope6: link
-      calibd2bc41960f:
+      calidefe83d6054:
         bindings6:
         - address: fe80::ecee:eeff:feee:eeee
           netmask: 'ffff:ffff:ffff:ffff::'
@@ -2708,40 +2513,7 @@ values:
         netmask6: 'ffff:ffff:ffff:ffff::'
         network6: 'fe80::'
         scope6: link
-      calic38480150b5:
-        bindings6:
-        - address: fe80::ecee:eeff:feee:eeee
-          netmask: 'ffff:ffff:ffff:ffff::'
-          network: 'fe80::'
-        ip6: fe80::ecee:eeff:feee:eeee
-        mac: ee:ee:ee:ee:ee:ee
-        mtu: 1450
-        netmask6: 'ffff:ffff:ffff:ffff::'
-        network6: 'fe80::'
-        scope6: link
-      calicb07aa7e07e:
-        bindings6:
-        - address: fe80::ecee:eeff:feee:eeee
-          netmask: 'ffff:ffff:ffff:ffff::'
-          network: 'fe80::'
-        ip6: fe80::ecee:eeff:feee:eeee
-        mac: ee:ee:ee:ee:ee:ee
-        mtu: 1450
-        netmask6: 'ffff:ffff:ffff:ffff::'
-        network6: 'fe80::'
-        scope6: link
-      calid9b6c4ddb67:
-        bindings6:
-        - address: fe80::ecee:eeff:feee:eeee
-          netmask: 'ffff:ffff:ffff:ffff::'
-          network: 'fe80::'
-        ip6: fe80::ecee:eeff:feee:eeee
-        mac: ee:ee:ee:ee:ee:ee
-        mtu: 1450
-        netmask6: 'ffff:ffff:ffff:ffff::'
-        network6: 'fe80::'
-        scope6: link
-      calieaf2753248e:
+      calie4d96a42e3f:
         bindings6:
         - address: fe80::ecee:eeff:feee:eeee
           netmask: 'ffff:ffff:ffff:ffff::'
@@ -2758,7 +2530,7 @@ values:
           netmask: 255.255.0.0
           network: 172.17.0.0
         ip: 172.17.0.1
-        mac: 02:42:68:00:b6:f3
+        mac: 02:42:11:af:52:d0
         mtu: 1500
         netmask: 255.255.0.0
         network: 172.17.0.0
@@ -2786,12 +2558,12 @@ values:
           netmask: 255.255.255.255
           network: 10.42.4.0
         bindings6:
-        - address: fe80::fcdf:fdff:fedd:7b79
+        - address: fe80::8856:4cff:fe6a:1262
           netmask: 'ffff:ffff:ffff:ffff::'
           network: 'fe80::'
         ip: 10.42.4.0
-        ip6: fe80::fcdf:fdff:fedd:7b79
-        mac: fe:df:fd:dd:7b:79
+        ip6: fe80::8856:4cff:fe6a:1262
+        mac: 8a:56:4c:6a:12:62
         mtu: 1450
         netmask: 255.255.255.255
         netmask6: 'ffff:ffff:ffff:ffff::'
@@ -2827,7 +2599,7 @@ values:
     scope6: link
   operatingsystem: Debian
   operatingsystemmajrelease: '11'
-  operatingsystemrelease: '11.5'
+  operatingsystemrelease: '11.6'
   os:
     architecture: amd64
     distro:
@@ -2835,16 +2607,16 @@ values:
       description: Debian GNU/Linux 11 (bullseye)
       id: Debian
       release:
-        full: '11.5'
+        full: '11.6'
         major: '11'
-        minor: '5'
+        minor: '6'
     family: Debian
     hardware: x86_64
     name: Debian
     release:
-      full: '11.5'
+      full: '11.6'
       major: '11'
-      minor: '5'
+      minor: '6'
     selinux:
       enabled: false
   osfamily: Debian
@@ -2923,20 +2695,17 @@ values:
   rubysitedir: "/usr/local/lib/site_ruby/2.7.0"
   rubyversion: 2.7.4
   scope6: link
-  scope6_cali01dcd1e3c2f: link
-  scope6_cali0795469e4ef: link
-  scope6_cali10cb4f7070a: link
-  scope6_cali150b52826e2: link
-  scope6_cali5ef3808560e: link
-  scope6_cali796e7f83d01: link
-  scope6_cali88435ec4922: link
-  scope6_calia4cbad74d0c: link
-  scope6_calia5361b10bef: link
-  scope6_calibd2bc41960f: link
-  scope6_calic38480150b5: link
-  scope6_calicb07aa7e07e: link
-  scope6_calid9b6c4ddb67: link
-  scope6_calieaf2753248e: link
+  scope6_cali13ffb6c0603: link
+  scope6_cali19cb5086f1c: link
+  scope6_cali23eb00c5b3b: link
+  scope6_cali4bcdf07da16: link
+  scope6_cali90b16adf92e: link
+  scope6_calia2598cdd731: link
+  scope6_calib1c69d8eb8b: link
+  scope6_calic9f4f891238: link
+  scope6_calicc034b7ce61: link
+  scope6_calidefe83d6054: link
+  scope6_calie4d96a42e3f: link
   scope6_eth0: link
   scope6_flannel.1: link
   scope6_lo: host
@@ -2999,10 +2768,10 @@ values:
     short: rancher-node-staging-worker4
     internal_fqdn: rancher-node-staging-worker4.internal.staging.swh.network
   system_uptime:
-    days: 0
-    hours: 1
-    seconds: 4860
-    uptime: 1:21 hours
+    days: 22
+    hours: 548
+    seconds: 1974974
+    uptime: 22 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -3016,15 +2785,15 @@ values:
     systemd-time-wait-sync.service: disabled
   systemd_version: '247'
   timezone: UTC
-  uptime: 1:21 hours
-  uptime_days: 0
-  uptime_hours: 1
-  uptime_seconds: 4860
+  uptime: 22 days
+  uptime_days: 22
+  uptime_hours: 548
+  uptime_seconds: 1974974
   uuid: b6c526d3-b034-4018-92aa-e2ce14a14698
   vcsrepo_svn_ver: ''
   virtual: kvm
   clientcert: rancher-node-staging-worker4.internal.staging.swh.network
   clientversion: 5.5.22
   clientnoop: false
-timestamp: '2022-11-23T17:41:08.795493842+00:00'
-expiration: '2022-11-23T18:11:08.800837261+00:00'
+timestamp: '2022-12-21T11:41:11.411611789+00:00'
+expiration: '2022-12-21T12:11:11.414722385+00:00'

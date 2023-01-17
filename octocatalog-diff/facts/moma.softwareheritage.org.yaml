@@ -3,7 +3,7 @@ name: moma.softwareheritage.org
 values:
   agent_specified_environment: production
   apache_version: 2.4.38
-  apt_dist_updates: 10
+  apt_dist_updates: 11
   apt_has_dist_updates: true
   apt_has_updates: true
   apt_package_dist_updates:
@@ -13,6 +13,7 @@ values:
   - python3-swh.core
   - python3-swh.model
   - python3-swh.storage
+  - python3-swh.scheduler
   - python3-swh.journal
   - python3-swh.indexer
   - python3-swh.indexer.storage
@@ -26,28 +27,29 @@ values:
   - python3-swh.core
   - python3-swh.model
   - python3-swh.storage
+  - python3-swh.scheduler
   - python3-swh.journal
   - python3-swh.indexer
   - python3-swh.indexer.storage
   - python3-swh.vault
-  apt_reboot_required: true
+  apt_reboot_required: false
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1669222743
-  apt_updates: 10
+  apt_update_last_success: 1671623942
+  apt_updates: 11
   architecture: amd64
   bios_release_date: 04/01/2014
   bios_vendor: SeaBIOS
-  bios_version: rel-1.15.0-0-g2dd4b9b3f840-prebuilt.qemu.org
+  bios_version: rel-1.16.0-0-gd239552ce722-prebuilt.qemu.org
   blockdevice_vda_size: 21474836480
   blockdevice_vda_vendor: '0x1af4'
   blockdevice_vdb_size: 4294967296
   blockdevice_vdb_vendor: '0x1af4'
   blockdevices: vdb,vda
   cassandracmsheapnewsize: 400
-  cassandracmsmaxheapsize: 8016
+  cassandracmsmaxheapsize: 8041
   cassandraheapnewsize: 400
-  cassandramaxheapsize: 8016
+  cassandramaxheapsize: 8041
   chassistype: Other
   deployment: production
   dhcp_servers:
@@ -67,7 +69,7 @@ values:
     bios:
       release_date: 04/01/2014
       vendor: SeaBIOS
-      version: rel-1.15.0-0-g2dd4b9b3f840-prebuilt.qemu.org
+      version: rel-1.16.0-0-gd239552ce722-prebuilt.qemu.org
     chassis:
       type: Other
     manufacturer: QEMU
@@ -88,7 +90,7 @@ values:
       vardir: "/var/lib/puppet"
       server: pergamon.internal.softwareheritage.org
   facterversion: 3.11.0
-  filesystems: btrfs,ext2,ext3,ext4,hfs,hfsplus,jfs,minix,msdos,qnx4,ufs,vfat,xfs
+  filesystems: ext2,ext3,ext4
   fips_enabled: false
   fqdn: moma.softwareheritage.org
   gid: root
@@ -118,13 +120,13 @@ values:
   is_virtual: true
   kernel: Linux
   kernelmajversion: '5.10'
-  kernelrelease: 5.10.0-0.bpo.12-amd64
+  kernelrelease: 5.10.0-0.deb10.16-amd64
   kernelversion: 5.10.0
   letsencrypt_directory: {}
   load_averages:
-    15m: 0.59
-    1m: 0.4
-    5m: 0.5
+    15m: 0.32
+    1m: 0.58
+    5m: 0.41
   location: sesi_rocquencourt
   lsbdistcodename: buster
   lsbdistdescription: Debian GNU/Linux 10 (buster)
@@ -137,30 +139,30 @@ values:
   manufacturer: QEMU
   memory:
     swap:
-      available: 3.99 GiB
-      available_bytes: 4284153856
-      capacity: 0.20%
+      available: 4.00 GiB
+      available_bytes: 4292866048
+      capacity: 0%
       total: 4.00 GiB
       total_bytes: 4292866048
-      used: 8.31 MiB
-      used_bytes: 8712192
+      used: 0 bytes
+      used_bytes: 0
     system:
-      available: 17.41 GiB
-      available_bytes: 18698780672
-      capacity: 44.38%
-      total: 31.31 GiB
-      total_bytes: 33619886080
-      used: 13.90 GiB
-      used_bytes: 14921105408
-  memoryfree: 17.41 GiB
-  memoryfree_mb: 17832.546875
-  memorysize: 31.31 GiB
-  memorysize_mb: 32062.421875
+      available: 18.54 GiB
+      available_bytes: 19906187264
+      capacity: 40.97%
+      total: 31.41 GiB
+      total_bytes: 33724760064
+      used: 12.87 GiB
+      used_bytes: 13818572800
+  memoryfree: 18.54 GiB
+  memoryfree_mb: 18984.01953125
+  memorysize: 31.41 GiB
+  memorysize_mb: 32162.4375
   mountpoints:
     "/":
-      available: 5.19 GiB
-      available_bytes: 5576073216
-      capacity: 73.45%
+      available: 5.31 GiB
+      available_bytes: 5702553600
+      capacity: 72.81%
       device: "/dev/vda1"
       filesystem: ext4
       options:
@@ -168,13 +170,13 @@ values:
       - relatime
       - errors=remount-ro
       - stripe=32742
-      size: 19.56 GiB
-      size_bytes: 21002579968
-      used: 14.37 GiB
-      used_bytes: 15426506752
+      size: 19.53 GiB
+      size_bytes: 20973834240
+      used: 14.22 GiB
+      used_bytes: 15271280640
     "/dev/shm":
       available: 15.70 GiB
-      available_bytes: 16862371840
+      available_bytes: 16862380032
       capacity: 0%
       device: tmpfs
       filesystem: tmpfs
@@ -182,15 +184,13 @@ values:
       - rw
       - nosuid
       - nodev
-      - size=16467160k
-      - nr_inodes=4116790
       size: 15.70 GiB
-      size_bytes: 16862371840
+      size_bytes: 16862380032
       used: 0 bytes
       used_bytes: 0
     "/run":
       available: 3.14 GiB
-      available_bytes: 3371843584
+      available_bytes: 3371880448
       capacity: 0.02%
       device: tmpfs
       filesystem: tmpfs
@@ -199,13 +199,12 @@ values:
       - nosuid
       - noexec
       - relatime
-      - size=3293432k
-      - nr_inodes=4116790
+      - size=3293436k
       - mode=755
       size: 3.14 GiB
-      size_bytes: 3372474368
-      used: 616.00 KiB
-      used_bytes: 630784
+      size_bytes: 3372478464
+      used: 584.00 KiB
+      used_bytes: 598016
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -219,29 +218,8 @@ values:
       - noexec
       - relatime
       - size=5120k
-      - nr_inodes=4116790
       size: 5.00 MiB
       size_bytes: 5242880
-      used: 0 bytes
-      used_bytes: 0
-    "/run/user/1003":
-      available: 3.13 GiB
-      available_bytes: 3357478912
-      capacity: 0%
-      device: tmpfs
-      filesystem: tmpfs
-      options:
-      - rw
-      - nosuid
-      - nodev
-      - relatime
-      - size=3278788k
-      - nr_inodes=819697
-      - mode=700
-      - uid=1003
-      - gid=1003
-      size: 3.13 GiB
-      size_bytes: 3357478912
       used: 0 bytes
       used_bytes: 0
     "/sys/fs/cgroup":
@@ -489,8 +467,8 @@ values:
   sshrsakey: AAAAB3NzaC1yc2EAAAADAQABAAABAQDQKinwK9kcSED+cNf0VvdbmF2R2+bQswFjcTlY0bieRIR1x/wwkNc6p17bZBlTuB2c328gD1+QaYXCrEJ7iVILRtpV/sTkTAVhpHc4NVCJIh1vss1MOx1oKZC72AS6GrSV8VFQHcdXHIulvEtk8O0UJlCJVuvKwGRymZ/uFe/CLpK83qHfjT/o/QIlgTkhBiEvkx1fTZseqYqVwp7M472uI3sHlCk37iwqi55dFbS6FEeb97v0chSrpzyB5xQtDRIFsdpdiXzM5wKfDWysAtp9M80FrOC5w30aSWtTBu1vGmtyLhcKpoYWwB2QE+x7XSaLNE+Lu2+AKACkp3OTRNpt
   subnet: sesi_rocquencourt
   sudoversion: 1.8.27
-  swapfree: 3.99 GiB
-  swapfree_mb: 4085.6875
+  swapfree: 4.00 GiB
+  swapfree_mb: 4093.99609375
   swapsize: 4.00 GiB
   swapsize_mb: 4093.99609375
   swh_hostname:
@@ -498,10 +476,10 @@ values:
     short: moma
     internal_fqdn: moma.internal.softwareheritage.org
   system_uptime:
-    days: 99
-    hours: 2396
-    seconds: 8626274
-    uptime: 99 days
+    days: 12
+    hours: 290
+    seconds: 1047561
+    uptime: 12 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -516,15 +494,15 @@ values:
     systemd-timesyncd.service: enabled
   systemd_version: '247'
   timezone: UTC
-  uptime: 99 days
-  uptime_days: 99
-  uptime_hours: 2396
-  uptime_seconds: 8626274
+  uptime: 12 days
+  uptime_days: 12
+  uptime_hours: 290
+  uptime_seconds: 1047561
   uuid: f9773017-6bf5-4aec-8531-f37668cd7203
   vcsrepo_svn_ver: ''
   virtual: kvm
   clientcert: moma.softwareheritage.org
   clientversion: 5.5.10
   clientnoop: false
-timestamp: '2022-11-23T17:35:07.169371395+00:00'
-expiration: '2022-11-23T18:05:07.169714770+00:00'
+timestamp: '2022-12-21T12:05:06.074682982+00:00'
+expiration: '2022-12-21T12:35:06.075095236+00:00'
