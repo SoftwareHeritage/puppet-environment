@@ -93,6 +93,20 @@ function template {
     sed -e "s#@PUPPET_ENV@#${PUPPET_ENV}#g" -e "s#@TMPDIR@#${TMPDIR}#g" $1 > $2
 }
 
+git clone -b ${FROM} ${PUPPET_ENV}/swh-site ${TMPDIR}/swh-site
+git -C ${TMPDIR}/swh-site checkout ${TO}
+
+PUPPET_VERSION="$(puppet -V)"
+PUPPET_MAJORVERSION=${PUPPET_VERSION/.*/}
+
+if [ $PUPPET_MAJORVERSION -ge 7 ]; then
+    git -C ${TMPDIR}/swh-site checkout mr/puppet-7-compat
+    for branch in ${FROM} ${TO}; do
+        git -C ${TMPDIR}/swh-site checkout $branch
+        git -C ${TMPDIR}/swh-site cherry-pick mr/puppet-7-compat
+    done
+fi
+
 # R10k config
 template $OCD_BASE/r10k.yaml $TMPDIR/r10k.yaml
 # override git configuration to clone from local repositories instead of the forge
