@@ -130,7 +130,7 @@ Example usage to pull the `elastic/elasticsearch` module
     git push
 
 Once the module is added, you need to register it in `swh-site/Puppetfile`.
-
+``````
 You should also check in the module metadata whether any dependencies need importing as
 well, which you should do using the same procedure.
 
@@ -309,7 +309,7 @@ bin/watch-vagrant-conf
 
 In another terminal:
 ```
-vagrant provision <vm-name>
+vagrant rsync <vm-name> && vagrant provision <vm-name>
 ```
 
 In this case, the configuration will always be up-to-date with the local directories.
