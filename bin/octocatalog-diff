@@ -79,6 +79,9 @@ if [ "$unknown_host" = "true" ]; then
     exit 1
 fi
 
+FROM_PUPPET_ENV="$(echo "${FROM}" | tr -- -/. _)"
+TO_PUPPET_ENV="$(echo "${TO}" | tr -- -/. _)"
+
 TMPDIR=$(mktemp -d /tmp/swh-ocd.XXXXXXXX)
 function cleanup {
     if [ "$CLEAN_TMPDIR" = "true" ]; then
@@ -115,17 +118,17 @@ template $OCD_BASE/gitconfig $TMPDIR/.gitconfig
 HOME=$TMPDIR r10k deploy environment -c $TMPDIR/r10k.yaml --puppetfile $R10K_ARGS $FROM $TO
 
 unknown_branch=false
-if [ ! -d $TMPDIR/environments/$FROM ]; then
+if [ ! -d $TMPDIR/environments/${FROM_PUPPET_ENV} ]; then
     echo "Unknown --from branch $FROM"
     unknown_branch=true
 else
-    git clone $PUPPET_ENV/private/swh-private-data-censored $TMPDIR/environments/$FROM/data/private
+    git clone $PUPPET_ENV/private/swh-private-data-censored $TMPDIR/environments/${FROM_PUPPET_ENV}/data/private
 fi
-if [ ! -d $TMPDIR/environments/$TO ]; then
+if [ ! -d $TMPDIR/environments/${TO_PUPPET_ENV} ]; then
     echo "Unknown --to branch $TO"
     unknown_branch=true
 else
-    git clone $PUPPET_ENV/private/swh-private-data-censored $TMPDIR/environments/$TO/data/private
+    git clone $PUPPET_ENV/private/swh-private-data-censored $TMPDIR/environments/${TO_PUPPET_ENV}/data/private
 fi
 
 if [ "${unknown_branch}" = "true" ]; then
@@ -139,8 +142,8 @@ function run-octocatalog-diff {
         OCTOCATALOG_DIFF_CONFIG_FILE=$OCD_BASE/octocatalog-diff.config.rb \
         IN_OCTOCATALOG_DIFF=yes \
         octocatalog-diff \
-        --bootstrapped-from-dir $TMPDIR/environments/$FROM \
-        --bootstrapped-to-dir $TMPDIR/environments/$TO \
+        --bootstrapped-from-dir $TMPDIR/environments/${FROM_PUPPET_ENV} \
+        --bootstrapped-to-dir $TMPDIR/environments/${TO_PUPPET_ENV} \
         -n $host \
         --display-detail-add \
         $OCTOCATALOG_DIFF_ARGS
