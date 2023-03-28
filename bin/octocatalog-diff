@@ -18,13 +18,13 @@ HOSTS=()
 OCTOCATALOG_DIFF_ARGS=
 R10K_ARGS=
 
-while (( "$#" )); do
+while (("$#")); do
     case "$1" in
-        -f|--from)
+        -f | --from)
             FROM=$2
             shift
             ;;
-        -t|--to)
+        -t | --to)
             TO=$2
             shift
             ;;
@@ -90,7 +90,7 @@ function cleanup {
 trap cleanup EXIT
 
 function template {
-    sed -e "s#@PUPPET_ENV@#${PUPPET_ENV}#g" -e "s#@TMPDIR@#${TMPDIR}#g" $1 > $2
+    sed -e "s#@PUPPET_ENV@#${PUPPET_ENV}#g" -e "s#@TMPDIR@#${TMPDIR}#g" $1 >$2
 }
 
 git clone -b ${FROM} ${PUPPET_ENV}/swh-site ${TMPDIR}/swh-site
@@ -135,15 +135,15 @@ fi
 function run-octocatalog-diff {
     host=$1
     env \
-      PUPPET_FACT_DIR=$FACTS_DIR \
-      OCTOCATALOG_DIFF_CONFIG_FILE=$OCD_BASE/octocatalog-diff.config.rb \
-      IN_OCTOCATALOG_DIFF=yes \
+        PUPPET_FACT_DIR=$FACTS_DIR \
+        OCTOCATALOG_DIFF_CONFIG_FILE=$OCD_BASE/octocatalog-diff.config.rb \
+        IN_OCTOCATALOG_DIFF=yes \
         octocatalog-diff \
-          --bootstrapped-from-dir $TMPDIR/environments/$FROM \
-          --bootstrapped-to-dir $TMPDIR/environments/$TO \
-          -n $host \
-          --display-detail-add \
-          $OCTOCATALOG_DIFF_ARGS
+        --bootstrapped-from-dir $TMPDIR/environments/$FROM \
+        --bootstrapped-to-dir $TMPDIR/environments/$TO \
+        -n $host \
+        --display-detail-add \
+        $OCTOCATALOG_DIFF_ARGS
 }
 
 failed=false
