@@ -20,7 +20,7 @@ values:
   apt_reboot_required: false
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1679061122
+  apt_update_last_success: 1679993523
   apt_updates: 4
   architecture: amd64
   bios_release_date: 04/01/2014
@@ -196,17 +196,35 @@ values:
         share_irqs: '1'
         skip_txen_test: '0'
       used_by: []
+    cryptd:
+      parameters: {}
+      used_by:
+      - crypto_simd
     shpchp:
       parameters:
         shpchp_poll_time: '0'
         shpchp_poll_mode: N
         shpchp_debug: N
       used_by: []
+    ecdh_generic:
+      parameters: {}
+      used_by:
+      - bluetooth
+    crypto_simd:
+      parameters: {}
+      used_by: []
+    nfnetlink:
+      parameters: {}
+      used_by: []
     srcutree:
       parameters:
         exp_holdoff: '25000'
         counter_wrap_check: '4611686018427387903'
       used_by: []
+    ecc:
+      parameters: {}
+      used_by:
+      - ecdh_generic
     rcupdate:
       parameters:
         rcu_task_ipi_delay: '0'
@@ -225,6 +243,9 @@ values:
         use_acpi_alarm: N
       used_by: []
     virtio_balloon:
+      parameters: {}
+      used_by: []
+    drbg:
       parameters: {}
       used_by: []
     drm_kms_helper:
@@ -303,6 +324,7 @@ values:
     crc16:
       parameters: {}
       used_by:
+      - bluetooth
       - ext4
     mousedev:
       parameters:
@@ -338,6 +360,17 @@ values:
         bufsiz: '4096'
       used_by: []
     qemu_fw_cfg:
+      parameters: {}
+      used_by: []
+    libaes:
+      parameters: {}
+      used_by:
+      - bluetooth
+      - aes_generic
+    ansi_cprng:
+      parameters: {}
+      used_by: []
+    glue_helper:
       parameters: {}
       used_by: []
     dynamic_debug:
@@ -445,6 +478,11 @@ values:
       parameters:
         policy: "[default] performance powersave powersupersave "
       used_by: []
+    rfkill:
+      parameters:
+        default_state: '1'
+      used_by:
+      - bluetooth
     joydev:
       parameters: {}
       used_by: []
@@ -481,7 +519,16 @@ values:
         tcp_slot_table_entries: '2'
         auth_max_cred_cachesize: '18446744073709551615'
       used_by: []
+    bluetooth:
+      parameters:
+        disable_ertm: N
+        disable_esco: N
+        enable_ecred: N
+      used_by: []
     hid_generic:
+      parameters: {}
+      used_by: []
+    jitterentropy_rng:
       parameters: {}
       used_by: []
     slab_common:
@@ -644,6 +691,9 @@ values:
     isofs:
       parameters: {}
       used_by: []
+    ctr:
+      parameters: {}
+      used_by: []
     i2c_piix4:
       parameters: {}
       used_by: []
@@ -697,6 +747,9 @@ values:
       parameters:
         queue_depth: '256'
       used_by: []
+    aes_generic:
+      parameters: {}
+      used_by: []
     virtio:
       parameters: {}
       used_by:
@@ -740,9 +793,9 @@ values:
       - ttm
   letsencrypt_directory: {}
   load_averages:
-    15m: 0.01
-    1m: 0.08
-    5m: 0.04
+    15m: 0.04
+    1m: 0.21
+    5m: 0.1
   lsbdistcodename: bullseye
   lsbdistdescription: Debian GNU/Linux 11 (bullseye)
   lsbdistid: Debian
@@ -763,21 +816,21 @@ values:
       used_bytes: 0
     system:
       available: 1.39 GiB
-      available_bytes: 1492770816
-      capacity: 28.20%
+      available_bytes: 1495879680
+      capacity: 28.05%
       total: 1.94 GiB
       total_bytes: 2079154176
-      used: 559.22 MiB
-      used_bytes: 586383360
+      used: 556.25 MiB
+      used_bytes: 583274496
   memoryfree: 1.39 GiB
-  memoryfree_mb: 1423.6171875
+  memoryfree_mb: 1426.58203125
   memorysize: 1.94 GiB
   memorysize_mb: 1982.8359375
   mountpoints:
     "/":
-      available: 12.37 GiB
-      available_bytes: 13281480704
-      capacity: 20.17%
+      available: 12.35 GiB
+      available_bytes: 13255720960
+      capacity: 20.33%
       device: "/dev/mapper/base--template--vg-root"
       filesystem: ext4
       options:
@@ -786,8 +839,8 @@ values:
       - errors=remount-ro
       size: 16.35 GiB
       size_bytes: 17555079168
-      used: 3.13 GiB
-      used_bytes: 3355885568
+      used: 3.15 GiB
+      used_bytes: 3381645312
     "/boot":
       available: 134.97 MiB
       available_bytes: 141521920
@@ -881,8 +934,8 @@ values:
       used: 0 bytes
       used_bytes: 0
     "/run":
-      available: 197.75 MiB
-      available_bytes: 207355904
+      available: 197.74 MiB
+      available_bytes: 207347712
       capacity: 0.27%
       device: tmpfs
       filesystem: tmpfs
@@ -896,8 +949,8 @@ values:
       - mode=755
       size: 198.29 MiB
       size_bytes: 207917056
-      used: 548.00 KiB
-      used_bytes: 561152
+      used: 556.00 KiB
+      used_bytes: 569344
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -1141,10 +1194,10 @@ values:
     short: rp0
     internal_fqdn: rp0.internal.staging.swh.network
   system_uptime:
-    days: 31
-    hours: 747
-    seconds: 2689313
-    uptime: 31 days
+    days: 41
+    hours: 1006
+    seconds: 3621716
+    uptime: 41 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -1158,15 +1211,15 @@ values:
     systemd-time-wait-sync.service: disabled
   systemd_version: '247'
   timezone: UTC
-  uptime: 31 days
-  uptime_days: 31
-  uptime_hours: 747
-  uptime_seconds: 2689313
+  uptime: 41 days
+  uptime_days: 41
+  uptime_hours: 1006
+  uptime_seconds: 3621716
   uuid: 7b545baa-c39a-4735-b6ea-6f74751ea0b9
   vcsrepo_svn_ver: ''
   virtual: kvm
   clientcert: rp0.internal.staging.swh.network
   clientversion: 5.5.22
   clientnoop: false
-timestamp: '2023-03-17T14:42:08.246581488+00:00'
-expiration: '2023-03-17T15:12:08.248042358+00:00'
+timestamp: '2023-03-28T09:42:11.152957248+00:00'
+expiration: '2023-03-28T10:12:11.155278393+00:00'

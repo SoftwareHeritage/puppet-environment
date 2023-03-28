@@ -20,7 +20,7 @@ values:
   apt_reboot_required: false
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1679063462
+  apt_update_last_success: 1679995862
   apt_updates: 4
   architecture: amd64
   bios_release_date: 06/17/2022
@@ -697,6 +697,9 @@ values:
       parameters:
         use_acpi_alarm: N
       used_by: []
+    tcp_diag:
+      parameters: {}
+      used_by: []
     jfs:
       parameters: {}
       used_by: []
@@ -711,6 +714,9 @@ values:
         dp_aux_i2c_speed_khz: '10'
       used_by:
       - mgag200
+    af_packet_diag:
+      parameters: {}
+      used_by: []
     dcdbas:
       parameters: {}
       used_by:
@@ -901,6 +907,9 @@ values:
       parameters:
         verbose: '0'
       used_by: []
+    raw_diag:
+      parameters: {}
+      used_by: []
     intel_rapl_msr:
       parameters: {}
       used_by: []
@@ -951,6 +960,9 @@ values:
     mgag200:
       parameters:
         modeset: "-1"
+      used_by: []
+    udp_diag:
+      parameters: {}
       used_by: []
     fb:
       parameters:
@@ -1114,10 +1126,16 @@ values:
         max_user_bgreq: '41973'
         max_user_congthresh: '41973'
       used_by: []
+    unix_diag:
+      parameters: {}
+      used_by: []
     zlua:
       parameters: {}
       used_by:
       - zfs
+    netlink_diag:
+      parameters: {}
+      used_by: []
     mei_me:
       parameters: {}
       used_by: []
@@ -1352,6 +1370,12 @@ values:
         def_reserved_size: '32768'
         allow_dio: '0'
       used_by: []
+    inet_diag:
+      parameters: {}
+      used_by:
+      - tcp_diag
+      - raw_diag
+      - udp_diag
     kvm_intel:
       parameters:
         enlightened_vmcs: N
@@ -1515,9 +1539,9 @@ values:
       - 8021q
   letsencrypt_directory: {}
   load_averages:
-    15m: 4.72
-    1m: 4.57
-    5m: 4.82
+    15m: 3.67
+    1m: 3.4
+    5m: 3.68
   location: sesi_rocquencourt
   lsbdistcodename: bullseye
   lsbdistdescription: Debian GNU/Linux 11 (bullseye)
@@ -1536,22 +1560,22 @@ values:
   manufacturer: Dell Inc.
   memory:
     system:
-      available: 42.35 GiB
-      available_bytes: 45471748096
-      capacity: 66.26%
+      available: 40.99 GiB
+      available_bytes: 44016566272
+      capacity: 67.34%
       total: 125.53 GiB
       total_bytes: 134787973120
-      used: 83.18 GiB
-      used_bytes: 89316225024
-  memoryfree: 42.35 GiB
-  memoryfree_mb: 43365.23828125
+      used: 84.54 GiB
+      used_bytes: 90771406848
+  memoryfree: 40.99 GiB
+  memoryfree_mb: 41977.46875
   memorysize: 125.53 GiB
   memorysize_mb: 128543.828125
   mountpoints:
     "/":
-      available: 36.90 GiB
-      available_bytes: 39616520192
-      capacity: 20.48%
+      available: 36.55 GiB
+      available_bytes: 39246176256
+      capacity: 21.22%
       device: "/dev/mapper/kafka1--vg-root"
       filesystem: ext4
       options:
@@ -1560,8 +1584,8 @@ values:
       - errors=remount-ro
       size: 48.91 GiB
       size_bytes: 52521566208
-      used: 9.50 GiB
-      used_bytes: 10203914240
+      used: 9.85 GiB
+      used_bytes: 10574258176
     "/boot/efi":
       available: 1018.56 MiB
       available_bytes: 1068036096
@@ -1663,7 +1687,7 @@ values:
       used_bytes: 0
     "/run":
       available: 12.55 GiB
-      available_bytes: 13476937728
+      available_bytes: 13476933632
       capacity: 0.01%
       device: tmpfs
       filesystem: tmpfs
@@ -1677,8 +1701,8 @@ values:
       - mode=755
       size: 12.55 GiB
       size_bytes: 13478797312
-      used: 1.77 MiB
-      used_bytes: 1859584
+      used: 1.78 MiB
+      used_bytes: 1863680
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -1709,7 +1733,7 @@ values:
       size_bytes: 0
       used: 0 bytes
       used_bytes: 0
-    "/run/user/1001":
+    "/run/user/1003":
       available: 12.55 GiB
       available_bytes: 13478797312
       capacity: 0%
@@ -1723,16 +1747,16 @@ values:
       - size=13162888k
       - nr_inodes=3290722
       - mode=700
-      - uid=1001
-      - gid=1001
+      - uid=1003
+      - gid=1003
       size: 12.55 GiB
       size_bytes: 13478797312
       used: 0 bytes
       used_bytes: 0
     "/srv/kafka":
-      available: 17.78 TiB
-      available_bytes: 19549959225344
-      capacity: 36.84%
+      available: 17.71 TiB
+      available_bytes: 19476732968960
+      capacity: 37.08%
       device: data/kafka
       filesystem: zfs
       options:
@@ -1741,9 +1765,9 @@ values:
       - xattr
       - posixacl
       size: 28.15 TiB
-      size_bytes: 30954323181568
-      used: 10.37 TiB
-      used_bytes: 11404363956224
+      size_bytes: 30954315841536
+      used: 10.44 TiB
+      used_bytes: 11477582872576
   mounts:
   - "/"
   - "/boot/efi"
@@ -2183,10 +2207,10 @@ values:
     short: kafka1
     internal_fqdn: kafka1.internal.softwareheritage.org
   system_uptime:
-    days: 49
-    hours: 1197
-    seconds: 4312478
-    uptime: 49 days
+    days: 60
+    hours: 1456
+    seconds: 5244878
+    uptime: 60 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -2200,15 +2224,15 @@ values:
     systemd-time-wait-sync.service: disabled
   systemd_version: '247'
   timezone: UTC
-  uptime: 49 days
-  uptime_days: 49
-  uptime_hours: 1197
-  uptime_seconds: 4312478
+  uptime: 60 days
+  uptime_days: 60
+  uptime_hours: 1456
+  uptime_seconds: 5244878
   uuid: 4c4c4544-0038-5910-8053-c6c04f563333
   vcsrepo_svn_ver: ''
   virtual: physical
   clientcert: kafka1.internal.softwareheritage.org
   clientversion: 5.5.22
   clientnoop: false
-timestamp: '2023-03-17T15:03:07.837347937+00:00'
-expiration: '2023-03-17T15:33:07.839316330+00:00'
+timestamp: '2023-03-28T10:03:07.810445561+00:00'
+expiration: '2023-03-28T10:33:07.812315331+00:00'

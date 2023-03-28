@@ -2,15 +2,16 @@
 name: pompidou.internal.softwareheritage.org
 values:
   agent_specified_environment: production
-  apt_dist_updates: 5
+  apt_dist_updates: 6
   apt_has_dist_updates: true
   apt_has_updates: true
   apt_package_dist_updates:
+  - proxmox-ve
+  - proxmox-kernel-helper
   - icinga2
   - icinga2-bin
   - icinga2-common
   - icinga2-doc
-  - pve-kernel-helper
   apt_package_security_dist_updates: []
   apt_package_security_updates: []
   apt_package_updates:
@@ -18,12 +19,11 @@ values:
   - icinga2-bin
   - icinga2-common
   - icinga2-doc
-  - pve-kernel-helper
   apt_reboot_required: true
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1679063162
-  apt_updates: 5
+  apt_update_last_success: 1679995563
+  apt_updates: 4
   architecture: amd64
   bios_release_date: 04/14/2017
   bios_vendor: American Megatrends Inc.
@@ -113,7 +113,7 @@ values:
     privileged: true
     uid: 0
     user: root
-  interfaces: bond0,eno1,eno2,lo,tap102i0,tap112i0,tap114i0,tap116i0,tap117i0,tap119i0,tap120i0,tap121i0,tap122i0,tap129i0,tap130i0,tap131i0,tap133i0,tap134i0,tap135i0,tap138i0,tap142i0,vlan1300,vlan210,vlan440,vlan442,vlan443,vmbr0,vmbr1,vmbr1300,vmbr442,vmbr443
+  interfaces: bond0,eno1,eno2,lo,tap102i0,tap112i0,tap114i0,tap116i0,tap119i0,tap120i0,tap121i0,tap122i0,tap129i0,tap130i0,tap131i0,tap133i0,tap134i0,tap135i0,tap138i0,tap142i0,vlan1300,vlan210,vlan440,vlan442,vlan443,vmbr0,vmbr1,vmbr1300,vmbr442,vmbr443
   ipaddress: 192.168.100.170
   ipaddress6: fe80::85b:d6ff:fe35:5d27
   ipaddress6_bond0: fe80::85b:d6ff:fe35:5d27
@@ -688,6 +688,9 @@ values:
         use_acpi_alarm: N
       used_by: []
     input_leds:
+      parameters: {}
+      used_by: []
+    tcp_diag:
       parameters: {}
       used_by: []
     ceph:
@@ -1511,6 +1514,10 @@ values:
         def_reserved_size: '32768'
         allow_dio: '0'
       used_by: []
+    inet_diag:
+      parameters: {}
+      used_by:
+      - tcp_diag
     kvm_intel:
       parameters:
         enlightened_vmcs: N
@@ -1693,7 +1700,7 @@ values:
         max_cache_size_bytes: '10818654208'
         max_age_seconds: '300'
         retain_bytes: '262144'
-        peak_allocated_bytes: '8683520'
+        peak_allocated_bytes: '39739392'
         allocated_get_free_pages_bytes: '565248'
       used_by:
       - dm_persistent_data
@@ -1738,9 +1745,9 @@ values:
       - 8021q
   letsencrypt_directory: {}
   load_averages:
-    15m: 9.19
-    1m: 8.73
-    5m: 8.81
+    15m: 26.83
+    1m: 26.78
+    5m: 26.37
   lsbdistcodename: bullseye
   lsbdistdescription: Debian GNU/Linux 11 (bullseye)
   lsbdistid: Debian
@@ -1755,7 +1762,6 @@ values:
   macaddress_tap112i0: 32:bc:a8:65:c2:61
   macaddress_tap114i0: 5a:2a:19:bb:bd:53
   macaddress_tap116i0: 6a:9b:87:72:12:a2
-  macaddress_tap117i0: 5e:9b:7e:ed:f4:de
   macaddress_tap119i0: 1e:aa:04:7b:a1:ff
   macaddress_tap120i0: 76:00:93:49:de:f7
   macaddress_tap121i0: 42:c3:10:c3:16:6b
@@ -1781,22 +1787,22 @@ values:
   manufacturer: Supermicro
   memory:
     system:
-      available: 306.33 GiB
-      available_bytes: 328919625728
-      capacity: 39.19%
+      available: 302.37 GiB
+      available_bytes: 324663508992
+      capacity: 39.98%
       total: 503.78 GiB
       total_bytes: 540932710400
-      used: 197.45 GiB
-      used_bytes: 212013084672
-  memoryfree: 306.33 GiB
-  memoryfree_mb: 313682.19921875
+      used: 201.42 GiB
+      used_bytes: 216269201408
+  memoryfree: 302.37 GiB
+  memoryfree_mb: 309623.25
   memorysize: 503.78 GiB
   memorysize_mb: 515873.6328125
   mountpoints:
     "/":
-      available: 12.19 GiB
-      available_bytes: 13084241920
-      capacity: 36.22%
+      available: 12.17 GiB
+      available_bytes: 13069959168
+      capacity: 36.29%
       device: "/dev/mapper/ssd-root"
       filesystem: ext4
       options:
@@ -1805,8 +1811,8 @@ values:
       - errors=remount-ro
       size: 20.13 GiB
       size_bytes: 21618008064
-      used: 6.92 GiB
-      used_bytes: 7431176192
+      used: 6.93 GiB
+      used_bytes: 7445458944
     "/boot/efi":
       available: 946.02 MiB
       available_bytes: 991977472
@@ -1894,7 +1900,7 @@ values:
       used_bytes: 0
     "/dev/shm":
       available: 251.83 GiB
-      available_bytes: 270400442368
+      available_bytes: 270403637248
       capacity: 0.02%
       device: tmpfs
       filesystem: tmpfs
@@ -1905,8 +1911,8 @@ values:
       - inode64
       size: 251.89 GiB
       size_bytes: 270466355200
-      used: 62.86 MiB
-      used_bytes: 65912832
+      used: 59.81 MiB
+      used_bytes: 62717952
     "/etc/pve":
       available: 127.68 MiB
       available_bytes: 133885952
@@ -1927,8 +1933,8 @@ values:
       used: 324.00 KiB
       used_bytes: 331776
     "/mnt/pve/proxmox-cephfs":
-      available: 3.30 TiB
-      available_bytes: 3631944302592
+      available: 3.31 TiB
+      available_bytes: 3637082324992
       capacity: 0.17%
       device: 192.168.100.108,192.168.100.32,192.168.100.33,192.168.100.34:/
       filesystem: ceph
@@ -1940,12 +1946,12 @@ values:
       - fsid=82307cfd-401a-4b58-8d29-7cbcd98f26fd
       - acl
       size: 3.31 TiB
-      size_bytes: 3638160261120
+      size_bytes: 3643302477824
       used: 5.79 GiB
-      used_bytes: 6215958528
+      used_bytes: 6220152832
     "/run":
       available: 50.38 GiB
-      available_bytes: 54091096064
+      available_bytes: 54091116544
       capacity: 0.00%
       device: tmpfs
       filesystem: tmpfs
@@ -1960,8 +1966,8 @@ values:
       - inode64
       size: 50.38 GiB
       size_bytes: 54093271040
-      used: 2.07 MiB
-      used_bytes: 2174976
+      used: 2.05 MiB
+      used_bytes: 2154496
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -2023,7 +2029,6 @@ values:
   mtu_tap112i0: 1500
   mtu_tap114i0: 1500
   mtu_tap116i0: 1500
-  mtu_tap117i0: 1500
   mtu_tap119i0: 1500
   mtu_tap120i0: 1500
   mtu_tap121i0: 1500
@@ -2119,9 +2124,6 @@ values:
         mtu: 1500
       tap116i0:
         mac: 6a:9b:87:72:12:a2
-        mtu: 1500
-      tap117i0:
-        mac: 5e:9b:7e:ed:f4:de
         mtu: 1500
       tap119i0:
         mac: 1e:aa:04:7b:a1:ff
@@ -2284,23 +2286,17 @@ values:
       size: 88.00 MiB
       size_bytes: 92274688
     "/dev/mapper/scratch-vm--114--disk--0":
-      size: 50.00 GiB
-      size_bytes: 53687091200
-    "/dev/mapper/scratch-vm--117--disk--0":
-      filesystem: swap
-      label: swap
-      size: 80.00 GiB
-      size_bytes: 85899345920
-      uuid: 3e19589b-864c-4d67-acee-697695dca0cb
+      size: 100.00 GiB
+      size_bytes: 107374182400
     "/dev/mapper/scratch-vm--133--disk--0":
-      size: 50.00 GiB
-      size_bytes: 53687091200
+      size: 100.00 GiB
+      size_bytes: 107374182400
     "/dev/mapper/scratch-vm--134--disk--0":
-      size: 50.00 GiB
-      size_bytes: 53687091200
+      size: 100.00 GiB
+      size_bytes: 107374182400
     "/dev/mapper/scratch-vm--135--disk--0":
-      size: 50.00 GiB
-      size_bytes: 53687091200
+      size: 100.00 GiB
+      size_bytes: 107374182400
     "/dev/mapper/ssd-root":
       filesystem: ext4
       mount: "/"
@@ -2506,10 +2502,10 @@ values:
     short: pompidou
     internal_fqdn: pompidou.internal.softwareheritage.org
   system_uptime:
-    days: 31
-    hours: 747
-    seconds: 2690347
-    uptime: 31 days
+    days: 41
+    hours: 1006
+    seconds: 3622750
+    uptime: 41 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -2523,15 +2519,15 @@ values:
     systemd-time-wait-sync.service: disabled
   systemd_version: '247'
   timezone: UTC
-  uptime: 31 days
-  uptime_days: 31
-  uptime_hours: 747
-  uptime_seconds: 2690347
+  uptime: 41 days
+  uptime_days: 41
+  uptime_hours: 1006
+  uptime_seconds: 3622750
   uuid: 00000000-0000-0000-0000-0cc47a4b18c0
   vcsrepo_svn_ver: ''
   virtual: physical
   clientcert: pompidou.internal.softwareheritage.org
   clientversion: 5.5.22
   clientnoop: false
-timestamp: '2023-03-17T14:57:07.048073946+00:00'
-expiration: '2023-03-17T15:27:07.050991883+00:00'
+timestamp: '2023-03-28T09:57:09.549947330+00:00'
+expiration: '2023-03-28T10:27:09.554262360+00:00'

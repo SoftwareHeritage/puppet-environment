@@ -7,9 +7,7 @@ values:
   apt_has_dist_updates: true
   apt_has_updates: true
   apt_package_dist_updates:
-  - imagemagick-6-common
-  - libmagickcore-6.q16-6
-  - libmagickwand-6.q16-6
+  - icinga-php-library
   - icingacli
   - icingaweb2-common
   - icingaweb2
@@ -18,31 +16,26 @@ values:
   - php-gettext
   - python3-aiohttp-utils
   - python3-swh.core
+  - python3-swh.objstorage
   - python3-swh.storage
   - python3-swh.journal
   - python3-swh.counters
-  apt_package_security_dist_updates:
-  - imagemagick-6-common
-  - libmagickcore-6.q16-6
-  - libmagickwand-6.q16-6
-  apt_package_security_updates:
-  - imagemagick-6-common
-  - libmagickcore-6.q16-6
-  - libmagickwand-6.q16-6
+  - python3-swh.scheduler
+  apt_package_security_dist_updates: []
+  apt_package_security_updates: []
   apt_package_updates:
-  - imagemagick-6-common
-  - libmagickcore-6.q16-6
-  - libmagickwand-6.q16-6
   - python3-aiohttp-utils
   - python3-swh.core
+  - python3-swh.objstorage
   - python3-swh.storage
   - python3-swh.journal
   - python3-swh.counters
+  - python3-swh.scheduler
   apt_reboot_required: false
-  apt_security_dist_updates: 3
-  apt_security_updates: 3
-  apt_update_last_success: 1679061542
-  apt_updates: 8
+  apt_security_dist_updates: 0
+  apt_security_updates: 0
+  apt_update_last_success: 1679993943
+  apt_updates: 7
   architecture: amd64
   bios_release_date: 04/01/2014
   bios_vendor: SeaBIOS
@@ -58,7 +51,7 @@ values:
   blockdevice_vdc_vendor: '0x1af4'
   blockdevices: vdb,sr0,vdc,vda
   cassandracmsheapnewsize: 400
-  cassandracmsmaxheapsize: 12073
+  cassandracmsmaxheapsize: 12048
   cassandraheapnewsize: 400
   cassandramaxheapsize: 8192
   chassistype: Other
@@ -874,6 +867,7 @@ values:
     kafka06.euwest.azure.internal.softwareheritage.org: "/etc/letsencrypt/live/kafka06.euwest.azure.internal.softwareheritage.org"
     kafka06.euwest.azure.softwareheritage.org: "/etc/letsencrypt/live/kafka06.euwest.azure.internal.softwareheritage.org"
     thanos.internal.admin.swh.network: "/etc/letsencrypt/live/thanos.internal.admin.swh.network"
+    software-stories.staging.swh.network: "/etc/letsencrypt/live/software-stories_staging"
     maven-exporter.internal.softwareheritage.org: "/etc/letsencrypt/live/maven-exporter.internal.softwareheritage.org"
     inventory-vagrant.internal.softwareheritage.org: "/etc/letsencrypt/live/netbox-vagrant"
     deposit-rp.internal.staging.swh.network: "/etc/letsencrypt/live/deposit_staging"
@@ -938,9 +932,9 @@ values:
     kafka1.internal.softwareheritage.org: "/etc/letsencrypt/live/kafka1.internal.softwareheritage.org"
     maven-exporter.internal.staging.swh.network: "/etc/letsencrypt/live/maven-exporter.internal.staging.swh.network"
   load_averages:
-    15m: 1.16
-    1m: 1.35
-    5m: 1.18
+    15m: 1.44
+    1m: 2.25
+    5m: 1.56
   location: sesi_rocquencourt
   lsbdistcodename: buster
   lsbdistdescription: Debian GNU/Linux 10 (buster)
@@ -953,30 +947,30 @@ values:
   manufacturer: QEMU
   memory:
     swap:
-      available: 3.74 GiB
-      available_bytes: 4012814336
-      capacity: 6.52%
+      available: 2.93 GiB
+      available_bytes: 3141668864
+      capacity: 26.82%
       total: 4.00 GiB
       total_bytes: 4292866048
-      used: 267.08 MiB
-      used_bytes: 280051712
+      used: 1.07 GiB
+      used_bytes: 1151197184
     system:
-      available: 35.67 GiB
-      available_bytes: 38305067008
-      capacity: 24.35%
-      total: 47.16 GiB
-      total_bytes: 50636136448
-      used: 11.48 GiB
-      used_bytes: 12331069440
-  memoryfree: 35.67 GiB
-  memoryfree_mb: 36530.55859375
-  memorysize: 47.16 GiB
-  memorysize_mb: 48290.3828125
+      available: 37.75 GiB
+      available_bytes: 40536891392
+      capacity: 19.78%
+      total: 47.06 GiB
+      total_bytes: 50531278848
+      used: 9.31 GiB
+      used_bytes: 9994387456
+  memoryfree: 37.75 GiB
+  memoryfree_mb: 38658.9921875
+  memorysize: 47.06 GiB
+  memorysize_mb: 48190.3828125
   mountpoints:
     "/":
-      available: 12.52 GiB
-      available_bytes: 13447974912
-      capacity: 74.47%
+      available: 11.14 GiB
+      available_bytes: 11965644800
+      capacity: 77.28%
       device: "/dev/vda1"
       filesystem: ext4
       options:
@@ -985,8 +979,8 @@ values:
       - errors=remount-ro
       size: 49.06 GiB
       size_bytes: 52675555328
-      used: 36.53 GiB
-      used_bytes: 39227580416
+      used: 37.91 GiB
+      used_bytes: 40709910528
     "/dev/shm":
       available: 23.58 GiB
       available_bytes: 25318051840
@@ -997,13 +991,15 @@ values:
       - rw
       - nosuid
       - nodev
+      - size=24724676k
+      - nr_inodes=6181169
       size: 23.58 GiB
       size_bytes: 25318068224
       used: 16.00 KiB
       used_bytes: 16384
     "/run":
       available: 4.71 GiB
-      available_bytes: 5062643712
+      available_bytes: 5062651904
       capacity: 0.02%
       device: tmpfs
       filesystem: tmpfs
@@ -1013,11 +1009,12 @@ values:
       - noexec
       - relatime
       - size=4944936k
+      - nr_inodes=6181169
       - mode=755
       size: 4.72 GiB
       size_bytes: 5063614464
-      used: 948.00 KiB
-      used_bytes: 970752
+      used: 940.00 KiB
+      used_bytes: 962560
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -1031,6 +1028,7 @@ values:
       - noexec
       - relatime
       - size=5120k
+      - nr_inodes=6181169
       size: 5.00 MiB
       size_bytes: 5242880
       used: 0 bytes
@@ -1055,26 +1053,6 @@ values:
       size_bytes: 4412657664
       used: 0 bytes
       used_bytes: 0
-    "/run/user/1021":
-      available: 4.11 GiB
-      available_bytes: 4412657664
-      capacity: 0%
-      device: tmpfs
-      filesystem: tmpfs
-      options:
-      - rw
-      - nosuid
-      - nodev
-      - relatime
-      - size=4309236k
-      - nr_inodes=1077309
-      - mode=700
-      - uid=1021
-      - gid=1021
-      size: 4.11 GiB
-      size_bytes: 4412657664
-      used: 0 bytes
-      used_bytes: 0
     "/sys/fs/cgroup":
       available: 4.00 MiB
       available_bytes: 4194304
@@ -1094,9 +1072,9 @@ values:
       used: 0 bytes
       used_bytes: 0
     "/var/lib/prometheus":
-      available: 425.35 GiB
-      available_bytes: 456712736768
-      capacity: 13.39%
+      available: 422.90 GiB
+      available_bytes: 454085443584
+      capacity: 13.88%
       device: "/dev/vdc1"
       filesystem: ext4
       options:
@@ -1105,8 +1083,8 @@ values:
       - errors=remount-ro
       size: 491.08 GiB
       size_bytes: 527297679360
-      used: 65.74 GiB
-      used_bytes: 70584942592
+      used: 68.18 GiB
+      used_bytes: 73212235776
   mounts:
   - "/"
   - "/var/lib/prometheus"
@@ -1339,8 +1317,8 @@ values:
   sshrsakey: AAAAB3NzaC1yc2EAAAADAQABAAABAQCUVA+gg4Hyy2q7qiZ3Y3kvZmzAbtcG/HGKBb5CMOO65sPLZfw9WGChi829NoAKzHNR9CPX+AyLokZ5W4khLcQ3JbK9vr+iXxBIzIeE/DOuyXkQegOPFNyG7XoFb7v7e2IX1Lmgprm6obUszo403CD6/w1IsN9/I7nozPd8jxtWVdfYRRFqwZrEJfkkSDrR1QJJ6VI9xcDVssybKNzSGDUzaVfPnp9uLiD9rE9UwE5aHvwXoqXfr+hR8QMWWaEtlZVroWd7ZM6smgshWRJEOMIz7cK1zSG+Dj1SX+kZqWEPG9xiNO5ug8G/Zu+vkVQcmzLLgdOJEJuEgeoYzG32bG/v
   subnet: sesi_rocquencourt
   sudoversion: 1.8.27
-  swapfree: 3.74 GiB
-  swapfree_mb: 3826.91796875
+  swapfree: 2.93 GiB
+  swapfree_mb: 2996.12890625
   swapsize: 4.00 GiB
   swapsize_mb: 4093.99609375
   swh_hostname:
@@ -1348,10 +1326,10 @@ values:
     short: pergamon
     internal_fqdn: pergamon.internal.softwareheritage.org
   system_uptime:
-    days: 50
-    hours: 1200
-    seconds: 4322736
-    uptime: 50 days
+    days: 60
+    hours: 1459
+    seconds: 5255136
+    uptime: 60 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -1366,15 +1344,15 @@ values:
     systemd-timesyncd.service: enabled
   systemd_version: '247'
   timezone: UTC
-  uptime: 50 days
-  uptime_days: 50
-  uptime_hours: 1200
-  uptime_seconds: 4322736
+  uptime: 60 days
+  uptime_days: 60
+  uptime_hours: 1459
+  uptime_seconds: 5255136
   uuid: aa664c56-fc2f-45a2-98d5-476f11eea5bb
   vcsrepo_svn_ver: ''
   virtual: kvm
   clientcert: pergamon.softwareheritage.org
   clientversion: 5.5.10
   clientnoop: false
-timestamp: '2023-03-17T14:54:06.881233105+00:00'
-expiration: '2023-03-17T15:24:06.882462184+00:00'
+timestamp: '2023-03-28T09:54:07.141176822+00:00'
+expiration: '2023-03-28T10:24:07.142350577+00:00'
