@@ -2,26 +2,46 @@
 name: scheduler0.internal.staging.swh.network
 values:
   agent_specified_environment: staging
-  apt_dist_updates: 5
+  apt_dist_updates: 15
   apt_has_dist_updates: true
   apt_has_updates: true
   apt_package_dist_updates:
   - postgresql-client-common
   - postgresql-common
+  - barman
+  - python3-barman
   - python3-swh.core
-  - python3-swh.lister
+  - python3-swh.model
   - python3-swh.objstorage
+  - python3-swh.storage
+  - python3-swh.scheduler
+  - python3-swh.journal
+  - python3-swh.indexer
+  - python3-swh.indexer.storage
+  - python3-swh.lister
+  - python3-swh.loader.bzr
+  - python3-swh.loader.git
   apt_package_security_dist_updates: []
   apt_package_security_updates: []
   apt_package_updates:
+  - barman
+  - python3-barman
   - python3-swh.core
-  - python3-swh.lister
+  - python3-swh.model
   - python3-swh.objstorage
-  apt_reboot_required: false
+  - python3-swh.storage
+  - python3-swh.scheduler
+  - python3-swh.journal
+  - python3-swh.indexer
+  - python3-swh.indexer.storage
+  - python3-swh.lister
+  - python3-swh.loader.bzr
+  - python3-swh.loader.git
+  apt_reboot_required: true
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1679995983
-  apt_updates: 3
+  apt_update_last_success: 1683631983
+  apt_updates: 13
   architecture: amd64
   bios_release_date: 04/01/2014
   bios_vendor: SeaBIOS
@@ -542,6 +562,17 @@ values:
       parameters:
         force_legacy: N
       used_by: []
+    dm_mod:
+      parameters:
+        use_blk_mq: Y
+        reserved_bio_based_ios: '16'
+        reserved_rq_based_ios: '256'
+        swap_bios: '2048'
+        dm_numa_node: "-1"
+        stats_current_allocated_bytes: '0'
+        dm_mq_nr_hw_queues: '1'
+        dm_mq_queue_depth: '2048'
+      used_by: []
     libata:
       parameters:
         atapi_passthru16: '1'
@@ -699,9 +730,9 @@ values:
       - ttm
   letsencrypt_directory: {}
   load_averages:
-    15m: 0.22
-    1m: 0.48
-    5m: 0.27
+    15m: 0.57
+    1m: 0.17
+    5m: 0.5
   location: sesi_rocquencourt_staging
   lsbdistcodename: buster
   lsbdistdescription: Debian GNU/Linux 10 (buster)
@@ -713,22 +744,22 @@ values:
   manufacturer: QEMU
   memory:
     system:
-      available: 6.04 GiB
-      available_bytes: 6489047040
-      capacity: 22.43%
+      available: 5.60 GiB
+      available_bytes: 6012469248
+      capacity: 28.13%
       total: 7.79 GiB
       total_bytes: 8365867008
-      used: 1.75 GiB
-      used_bytes: 1876819968
-  memoryfree: 6.04 GiB
-  memoryfree_mb: 6188.4375
+      used: 2.19 GiB
+      used_bytes: 2353397760
+  memoryfree: 5.60 GiB
+  memoryfree_mb: 5733.9375
   memorysize: 7.79 GiB
   memorysize_mb: 7978.3125
   mountpoints:
     "/":
-      available: 18.02 GiB
-      available_bytes: 19347628032
-      capacity: 42.71%
+      available: 18.36 GiB
+      available_bytes: 19716317184
+      capacity: 41.62%
       device: "/dev/vda1"
       filesystem: ext4
       options:
@@ -737,8 +768,8 @@ values:
       - errors=remount-ro
       size: 31.45 GiB
       size_bytes: 33773514752
-      used: 13.44 GiB
-      used_bytes: 14425886720
+      used: 13.09 GiB
+      used_bytes: 14057197568
     "/dev/shm":
       available: 3.89 GiB
       available_bytes: 4181856256
@@ -754,8 +785,8 @@ values:
       used: 1.03 MiB
       used_bytes: 1077248
     "/run":
-      available: 797.26 MiB
-      available_bytes: 835989504
+      available: 797.25 MiB
+      available_bytes: 835977216
       capacity: 0.07%
       device: tmpfs
       filesystem: tmpfs
@@ -768,8 +799,8 @@ values:
       - mode=755
       size: 797.83 MiB
       size_bytes: 836587520
-      used: 584.00 KiB
-      used_bytes: 598016
+      used: 596.00 KiB
+      used_bytes: 610304
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -1035,10 +1066,10 @@ values:
     short: scheduler0
     internal_fqdn: scheduler0.internal.staging.swh.network
   system_uptime:
-    days: 41
-    hours: 985
-    seconds: 3547494
-    uptime: 41 days
+    days: 83
+    hours: 1995
+    seconds: 7185291
+    uptime: 83 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -1053,15 +1084,15 @@ values:
     systemd-timesyncd.service: enabled
   systemd_version: '247'
   timezone: UTC
-  uptime: 41 days
-  uptime_days: 41
-  uptime_hours: 985
-  uptime_seconds: 3547494
+  uptime: 83 days
+  uptime_days: 83
+  uptime_hours: 1995
+  uptime_seconds: 7185291
   uuid: a918f8c6-beec-4772-a81f-421117193927
   vcsrepo_svn_ver: 1.10.4
   virtual: kvm
   clientcert: scheduler0.internal.staging.swh.network
   clientversion: 5.5.10
   clientnoop: false
-timestamp: '2023-03-28T09:57:13.495979463+00:00'
-expiration: '2023-03-28T10:27:13.497852666+00:00'
+timestamp: '2023-05-09T12:27:10.169272975+00:00'
+expiration: '2023-05-09T12:57:10.170648757+00:00'

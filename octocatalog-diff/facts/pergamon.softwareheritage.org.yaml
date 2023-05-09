@@ -3,7 +3,7 @@ name: pergamon.softwareheritage.org
 values:
   agent_specified_environment: production
   apache_version: 2.4.38
-  apt_dist_updates: 14
+  apt_dist_updates: 15
   apt_has_dist_updates: true
   apt_has_updates: true
   apt_package_dist_updates:
@@ -16,6 +16,7 @@ values:
   - php-gettext
   - python3-aiohttp-utils
   - python3-swh.core
+  - python3-swh.model
   - python3-swh.objstorage
   - python3-swh.storage
   - python3-swh.journal
@@ -26,6 +27,7 @@ values:
   apt_package_updates:
   - python3-aiohttp-utils
   - python3-swh.core
+  - python3-swh.model
   - python3-swh.objstorage
   - python3-swh.storage
   - python3-swh.journal
@@ -34,8 +36,8 @@ values:
   apt_reboot_required: false
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1679993943
-  apt_updates: 7
+  apt_update_last_success: 1683633542
+  apt_updates: 8
   architecture: amd64
   bios_release_date: 04/01/2014
   bios_vendor: SeaBIOS
@@ -51,7 +53,7 @@ values:
   blockdevice_vdc_vendor: '0x1af4'
   blockdevices: vdb,sr0,vdc,vda
   cassandracmsheapnewsize: 400
-  cassandracmsmaxheapsize: 12048
+  cassandracmsmaxheapsize: 12073
   cassandraheapnewsize: 400
   cassandramaxheapsize: 8192
   chassistype: Other
@@ -898,6 +900,7 @@ values:
     hedgedoc.softwareheritage.org: "/etc/letsencrypt/live/downtime"
     pergamon.internal.softwareheritage.org: "/etc/letsencrypt/live/pergamon.softwareheritage.org"
     inventory.internal.admin.swh.network: "/etc/letsencrypt/live/netbox"
+    stories.softwareheritage.org: "/etc/letsencrypt/live/software-stories_production"
     broker1.journal.staging.swh.network: "/etc/letsencrypt/live/storage1.internal.staging.swh.network"
     journal1.internal.staging.swh.network: "/etc/letsencrypt/live/storage1.internal.staging.swh.network"
     kafka04.euwest.azure.internal.softwareheritage.org: "/etc/letsencrypt/live/kafka04.euwest.azure.internal.softwareheritage.org"
@@ -926,15 +929,18 @@ values:
     tate.softwareheritage.org: "/etc/letsencrypt/live/downtime"
     wg.softwareheritage.org: "/etc/letsencrypt/live/wg.softwareheritage.org"
     inventory.internal.softwareheritage.org: "/etc/letsencrypt/live/inventory.internal.softwareheritage.org"
+    broker2.journal.staging.swh.network: "/etc/letsencrypt/live/kafka1.internal.staging.swh.network"
+    journal2.internal.staging.swh.network: "/etc/letsencrypt/live/kafka1.internal.staging.swh.network"
+    kafka1.internal.staging.swh.network: "/etc/letsencrypt/live/kafka1.internal.staging.swh.network"
     deposit.internal.softwareheritage.org: "/etc/letsencrypt/live/deposit_production"
     webapp1.internal.softwareheritage.org: "/etc/letsencrypt/live/archive_webapp1"
     broker1.journal.softwareheritage.org: "/etc/letsencrypt/live/kafka1.internal.softwareheritage.org"
     kafka1.internal.softwareheritage.org: "/etc/letsencrypt/live/kafka1.internal.softwareheritage.org"
     maven-exporter.internal.staging.swh.network: "/etc/letsencrypt/live/maven-exporter.internal.staging.swh.network"
   load_averages:
-    15m: 1.44
-    1m: 2.25
-    5m: 1.56
+    15m: 2.27
+    1m: 1.16
+    5m: 2.26
   location: sesi_rocquencourt
   lsbdistcodename: buster
   lsbdistdescription: Debian GNU/Linux 10 (buster)
@@ -947,30 +953,30 @@ values:
   manufacturer: QEMU
   memory:
     swap:
-      available: 2.93 GiB
-      available_bytes: 3141668864
-      capacity: 26.82%
+      available: 3.02 GiB
+      available_bytes: 3244441600
+      capacity: 24.42%
       total: 4.00 GiB
       total_bytes: 4292866048
-      used: 1.07 GiB
-      used_bytes: 1151197184
+      used: 999.86 MiB
+      used_bytes: 1048424448
     system:
-      available: 37.75 GiB
-      available_bytes: 40536891392
-      capacity: 19.78%
-      total: 47.06 GiB
-      total_bytes: 50531278848
-      used: 9.31 GiB
-      used_bytes: 9994387456
-  memoryfree: 37.75 GiB
-  memoryfree_mb: 38658.9921875
-  memorysize: 47.06 GiB
-  memorysize_mb: 48190.3828125
+      available: 30.63 GiB
+      available_bytes: 32889131008
+      capacity: 35.05%
+      total: 47.16 GiB
+      total_bytes: 50636136448
+      used: 16.53 GiB
+      used_bytes: 17747005440
+  memoryfree: 30.63 GiB
+  memoryfree_mb: 31365.51953125
+  memorysize: 47.16 GiB
+  memorysize_mb: 48290.3828125
   mountpoints:
     "/":
-      available: 11.14 GiB
-      available_bytes: 11965644800
-      capacity: 77.28%
+      available: 10.40 GiB
+      available_bytes: 11162365952
+      capacity: 78.81%
       device: "/dev/vda1"
       filesystem: ext4
       options:
@@ -979,8 +985,8 @@ values:
       - errors=remount-ro
       size: 49.06 GiB
       size_bytes: 52675555328
-      used: 37.91 GiB
-      used_bytes: 40709910528
+      used: 38.66 GiB
+      used_bytes: 41513189376
     "/dev/shm":
       available: 23.58 GiB
       available_bytes: 25318051840
@@ -991,15 +997,13 @@ values:
       - rw
       - nosuid
       - nodev
-      - size=24724676k
-      - nr_inodes=6181169
       size: 23.58 GiB
       size_bytes: 25318068224
       used: 16.00 KiB
       used_bytes: 16384
     "/run":
       available: 4.71 GiB
-      available_bytes: 5062651904
+      available_bytes: 5062656000
       capacity: 0.02%
       device: tmpfs
       filesystem: tmpfs
@@ -1009,12 +1013,11 @@ values:
       - noexec
       - relatime
       - size=4944936k
-      - nr_inodes=6181169
       - mode=755
       size: 4.72 GiB
       size_bytes: 5063614464
-      used: 940.00 KiB
-      used_bytes: 962560
+      used: 936.00 KiB
+      used_bytes: 958464
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -1028,7 +1031,6 @@ values:
       - noexec
       - relatime
       - size=5120k
-      - nr_inodes=6181169
       size: 5.00 MiB
       size_bytes: 5242880
       used: 0 bytes
@@ -1072,9 +1074,9 @@ values:
       used: 0 bytes
       used_bytes: 0
     "/var/lib/prometheus":
-      available: 422.90 GiB
-      available_bytes: 454085443584
-      capacity: 13.88%
+      available: 414.67 GiB
+      available_bytes: 445253492736
+      capacity: 15.56%
       device: "/dev/vdc1"
       filesystem: ext4
       options:
@@ -1083,8 +1085,8 @@ values:
       - errors=remount-ro
       size: 491.08 GiB
       size_bytes: 527297679360
-      used: 68.18 GiB
-      used_bytes: 73212235776
+      used: 76.41 GiB
+      used_bytes: 82044186624
   mounts:
   - "/"
   - "/var/lib/prometheus"
@@ -1317,8 +1319,8 @@ values:
   sshrsakey: AAAAB3NzaC1yc2EAAAADAQABAAABAQCUVA+gg4Hyy2q7qiZ3Y3kvZmzAbtcG/HGKBb5CMOO65sPLZfw9WGChi829NoAKzHNR9CPX+AyLokZ5W4khLcQ3JbK9vr+iXxBIzIeE/DOuyXkQegOPFNyG7XoFb7v7e2IX1Lmgprm6obUszo403CD6/w1IsN9/I7nozPd8jxtWVdfYRRFqwZrEJfkkSDrR1QJJ6VI9xcDVssybKNzSGDUzaVfPnp9uLiD9rE9UwE5aHvwXoqXfr+hR8QMWWaEtlZVroWd7ZM6smgshWRJEOMIz7cK1zSG+Dj1SX+kZqWEPG9xiNO5ug8G/Zu+vkVQcmzLLgdOJEJuEgeoYzG32bG/v
   subnet: sesi_rocquencourt
   sudoversion: 1.8.27
-  swapfree: 2.93 GiB
-  swapfree_mb: 2996.12890625
+  swapfree: 3.02 GiB
+  swapfree_mb: 3094.140625
   swapsize: 4.00 GiB
   swapsize_mb: 4093.99609375
   swh_hostname:
@@ -1326,10 +1328,10 @@ values:
     short: pergamon
     internal_fqdn: pergamon.internal.softwareheritage.org
   system_uptime:
-    days: 60
-    hours: 1459
-    seconds: 5255136
-    uptime: 60 days
+    days: 102
+    hours: 2470
+    seconds: 8892936
+    uptime: 102 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -1344,15 +1346,15 @@ values:
     systemd-timesyncd.service: enabled
   systemd_version: '247'
   timezone: UTC
-  uptime: 60 days
-  uptime_days: 60
-  uptime_hours: 1459
-  uptime_seconds: 5255136
+  uptime: 102 days
+  uptime_days: 102
+  uptime_hours: 2470
+  uptime_seconds: 8892936
   uuid: aa664c56-fc2f-45a2-98d5-476f11eea5bb
   vcsrepo_svn_ver: ''
   virtual: kvm
   clientcert: pergamon.softwareheritage.org
   clientversion: 5.5.10
   clientnoop: false
-timestamp: '2023-03-28T09:54:07.141176822+00:00'
-expiration: '2023-03-28T10:24:07.142350577+00:00'
+timestamp: '2023-05-09T12:24:06.992278797+00:00'
+expiration: '2023-05-09T12:54:06.993499451+00:00'

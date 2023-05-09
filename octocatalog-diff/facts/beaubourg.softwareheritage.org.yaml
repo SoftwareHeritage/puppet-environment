@@ -20,7 +20,7 @@ values:
   apt_reboot_required: true
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1679994783
+  apt_update_last_success: 1683630783
   apt_updates: 3
   architecture: amd64
   bios_release_date: 01/02/2020
@@ -329,6 +329,9 @@ values:
       used_by:
       - ib_iser
     ipmi_devintf:
+      parameters: {}
+      used_by: []
+    cpuid:
       parameters: {}
       used_by: []
     efivars:
@@ -675,7 +678,7 @@ values:
         zfs_trim_txg_batch: '32'
         zfs_arc_eviction_pct: '200'
         vdev_removal_max_span: '32768'
-        zfs_zevent_len_max: '512'
+        zfs_zevent_len_max: '67108864'
         zfs_scan_max_ext_gap: '2097152'
         zfs_scan_strict_mem_lim: '0'
         zfs_livelist_condense_zthr_pause: '0'
@@ -1133,6 +1136,9 @@ values:
     mgag200:
       parameters:
         modeset: "-1"
+      used_by: []
+    udp_diag:
+      parameters: {}
       used_by: []
     ledtrig_audio:
       parameters: {}
@@ -1666,6 +1672,7 @@ values:
       parameters: {}
       used_by:
       - tcp_diag
+      - udp_diag
     kvm_intel:
       parameters:
         enlightened_vmcs: N
@@ -1919,16 +1926,16 @@ values:
       - 8021q
   letsencrypt_directory: {}
   load_averages:
-    15m: 11.42
-    1m: 15.25
-    5m: 12.43
+    15m: 16.03
+    1m: 15.29
+    5m: 15.3
   location: sesi_rocquencourt
   lsbdistcodename: bullseye
   lsbdistdescription: Debian GNU/Linux 11 (bullseye)
   lsbdistid: Debian
-  lsbdistrelease: '11.6'
+  lsbdistrelease: '11.7'
   lsbmajdistrelease: '11'
-  lsbminordistrelease: '6'
+  lsbminordistrelease: '7'
   macaddress: 2a:75:ee:30:c9:bd
   macaddress_bond0: f8:f2:1e:0c:3f:38
   macaddress_enp12s0f0: f8:f2:1e:0c:3f:38
@@ -1956,22 +1963,22 @@ values:
   manufacturer: Dell Inc.
   memory:
     system:
-      available: 222.41 GiB
-      available_bytes: 238806597632
-      capacity: 55.85%
+      available: 408.75 GiB
+      available_bytes: 438895767552
+      capacity: 18.86%
       total: 503.79 GiB
       total_bytes: 540943421440
-      used: 281.39 GiB
-      used_bytes: 302136823808
-  memoryfree: 222.41 GiB
-  memoryfree_mb: 227743.71875
+      used: 95.04 GiB
+      used_bytes: 102047653888
+  memoryfree: 408.75 GiB
+  memoryfree_mb: 418563.62109375
   memorysize: 503.79 GiB
   memorysize_mb: 515883.84765625
   mountpoints:
     "/":
-      available: 16.21 GiB
-      available_bytes: 17401884672
-      capacity: 37.47%
+      available: 15.67 GiB
+      available_bytes: 16826974208
+      capacity: 39.54%
       device: "/dev/mapper/hdd-beaubourg--root"
       filesystem: ext4
       options:
@@ -1980,8 +1987,8 @@ values:
       - errors=remount-ro
       size: 27.33 GiB
       size_bytes: 29346582528
-      used: 9.71 GiB
-      used_bytes: 10428039168
+      used: 10.25 GiB
+      used_bytes: 11002949632
     "/dev":
       available: 251.87 GiB
       available_bytes: 270439731200
@@ -2064,9 +2071,9 @@ values:
       used: 65.91 MiB
       used_bytes: 69107712
     "/etc/pve":
-      available: 127.68 MiB
-      available_bytes: 133885952
-      capacity: 0.25%
+      available: 127.69 MiB
+      available_bytes: 133890048
+      capacity: 0.24%
       device: "/dev/fuse"
       filesystem: fuse
       options:
@@ -2080,11 +2087,11 @@ values:
       - allow_other
       size: 128.00 MiB
       size_bytes: 134217728
-      used: 324.00 KiB
-      used_bytes: 331776
+      used: 320.00 KiB
+      used_bytes: 327680
     "/mnt/pve/proxmox-cephfs":
-      available: 3.31 TiB
-      available_bytes: 3636205715456
+      available: 3.35 TiB
+      available_bytes: 3681273511936
       capacity: 0.17%
       device: 192.168.100.108,192.168.100.32,192.168.100.33,192.168.100.34:/
       filesystem: ceph
@@ -2095,13 +2102,13 @@ values:
       - secret=<hidden>
       - fsid=82307cfd-401a-4b58-8d29-7cbcd98f26fd
       - acl
-      size: 3.31 TiB
-      size_bytes: 3642425868288
+      size: 3.35 TiB
+      size_bytes: 3687489470464
       used: 5.79 GiB
-      used_bytes: 6220152832
+      used_bytes: 6215958528
     "/run":
       available: 50.38 GiB
-      available_bytes: 54091370496
+      available_bytes: 54091366400
       capacity: 0.01%
       device: tmpfs
       filesystem: tmpfs
@@ -2117,7 +2124,7 @@ values:
       size: 50.38 GiB
       size_bytes: 54094344192
       used: 2.84 MiB
-      used_bytes: 2973696
+      used_bytes: 2977792
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -2150,8 +2157,8 @@ values:
       used: 0 bytes
       used_bytes: 0
     "/srv/containers/somerset/postgres":
-      available: 3.51 TiB
-      available_bytes: 3854194966528
+      available: 3.22 TiB
+      available_bytes: 3537478352896
       capacity: 0.05%
       device: data/postgres-misc
       filesystem: zfs
@@ -2160,14 +2167,14 @@ values:
       - noatime
       - xattr
       - posixacl
-      size: 3.51 TiB
-      size_bytes: 3856041771008
+      size: 3.22 TiB
+      size_bytes: 3539325157376
       used: 1.72 GiB
       used_bytes: 1846804480
     "/srv/containers/somerset/postgres/13/replica":
-      available: 3.51 TiB
-      available_bytes: 3854194966528
-      capacity: 70.97%
+      available: 3.22 TiB
+      available_bytes: 3537478352896
+      capacity: 73.35%
       device: data/postgres-replica-13
       filesystem: zfs
       options:
@@ -2176,9 +2183,9 @@ values:
       - xattr
       - posixacl
       size: 12.07 TiB
-      size_bytes: 13276090466304
-      used: 8.57 TiB
-      used_bytes: 9421895499776
+      size_bytes: 13276229795840
+      used: 8.86 TiB
+      used_bytes: 9738751442944
     "/var/lib/ceph/osd/ceph-0":
       available: 251.90 GiB
       available_bytes: 270471680000
@@ -2453,7 +2460,7 @@ values:
     scope6: link
   operatingsystem: Debian
   operatingsystemmajrelease: '11'
-  operatingsystemrelease: '11.6'
+  operatingsystemrelease: '11.7'
   os:
     architecture: amd64
     distro:
@@ -2461,16 +2468,16 @@ values:
       description: Debian GNU/Linux 11 (bullseye)
       id: Debian
       release:
-        full: '11.6'
+        full: '11.7'
         major: '11'
-        minor: '6'
+        minor: '7'
     family: Debian
     hardware: x86_64
     name: Debian
     release:
-      full: '11.6'
+      full: '11.7'
       major: '11'
-      minor: '6'
+      minor: '7'
     selinux:
       enabled: false
   osfamily: Debian
@@ -2583,15 +2590,9 @@ values:
       size: 8.00 MiB
       size_bytes: 8388608
     "/dev/sdh1":
-      filesystem: zfs_member
-      label: data
-      partlabel: zfs-d0c17c3ad331f5c2
-      partuuid: e05319ef-99e9-a442-9417-d4e7f2f89d8a
       size: 1.46 TiB
       size_bytes: 1600311525376
-      uuid: '18253233146838703337'
     "/dev/sdh9":
-      partuuid: 9847be3b-169a-7140-8b81-b7e0ca5646eb
       size: 8.00 MiB
       size_bytes: 8388608
     "/dev/sdi1":
@@ -2783,10 +2784,10 @@ values:
     short: beaubourg
     internal_fqdn: beaubourg.internal.softwareheritage.org
   system_uptime:
-    days: 34
-    hours: 837
-    seconds: 3013688
-    uptime: 34 days
+    days: 76
+    hours: 1847
+    seconds: 6649688
+    uptime: 76 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -2800,15 +2801,15 @@ values:
     systemd-time-wait-sync.service: disabled
   systemd_version: '247'
   timezone: UTC
-  uptime: 34 days
-  uptime_days: 34
-  uptime_hours: 837
-  uptime_seconds: 3013688
+  uptime: 76 days
+  uptime_days: 76
+  uptime_hours: 1847
+  uptime_seconds: 6649688
   uuid: 4c4c4544-0030-4e10-8056-c4c04f4a4732
   vcsrepo_svn_ver: ''
   virtual: physical
   clientcert: beaubourg.softwareheritage.org
   clientversion: 5.5.22
   clientnoop: false
-timestamp: '2023-03-28T10:01:11.300444623+00:00'
-expiration: '2023-03-28T10:31:11.304609541+00:00'
+timestamp: '2023-05-09T12:01:11.073150863+00:00'
+expiration: '2023-05-09T12:31:11.077038712+00:00'

@@ -16,10 +16,10 @@ values:
   apt_package_security_updates: []
   apt_package_updates:
   - icinga2-doc
-  apt_reboot_required: false
+  apt_reboot_required: true
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1679997423
+  apt_update_last_success: 1683633422
   apt_updates: 1
   architecture: amd64
   bios_release_date: 04/01/2014
@@ -37,9 +37,9 @@ values:
   blockdevice_vdb_vendor: '0x1af4'
   blockdevices: vdb,sr0,vda,sr1
   cassandracmsheapnewsize: 400
-  cassandracmsmaxheapsize: 8028
+  cassandracmsmaxheapsize: 8003
   cassandraheapnewsize: 400
-  cassandramaxheapsize: 8028
+  cassandramaxheapsize: 8003
   chassistype: Other
   cloudinit_enabled: 'true'
   deployment: staging
@@ -88,7 +88,7 @@ values:
       vardir: "/var/lib/puppet"
       server: pergamon.internal.softwareheritage.org
   facterversion: 3.14.12
-  filesystems: ext2,ext3,ext4,iso9660
+  filesystems: btrfs,ext2,ext3,ext4,hfs,hfsplus,iso9660,jfs,minix,msdos,qnx4,ufs,vfat,xfs
   fips_enabled: false
   fqdn: search-esnode0.internal.staging.swh.network
   gid: root
@@ -119,6 +119,9 @@ values:
   kernelrelease: 5.10.0-21-amd64
   kernelversion: 5.10.0
   kmods:
+    msdos:
+      parameters: {}
+      used_by: []
     thermal:
       parameters:
         act: '0'
@@ -136,6 +139,10 @@ values:
         notests: N
         panic_on_fail: N
       used_by: []
+    xor:
+      parameters: {}
+      used_by:
+      - btrfs
     spurious:
       parameters:
         noirqdebug: N
@@ -169,6 +176,9 @@ values:
       parameters: {}
       used_by:
       - net_failover
+    minix:
+      parameters: {}
+      used_by: []
     tcp_cubic:
       parameters:
         hystart_detect: '3'
@@ -201,6 +211,9 @@ values:
         nr_uarts: '4'
         share_irqs: '1'
         skip_txen_test: '0'
+      used_by: []
+    hfsplus:
+      parameters: {}
       used_by: []
     shpchp:
       parameters:
@@ -519,6 +532,9 @@ values:
     virtio_balloon:
       parameters: {}
       used_by: []
+    jfs:
+      parameters: {}
+      used_by: []
     drm_kms_helper:
       parameters:
         drm_fbdev_overalloc: '100'
@@ -556,6 +572,8 @@ values:
     cdrom:
       parameters: {}
       used_by:
+      - hfsplus
+      - hfs
       - isofs
       - sr_mod
     processor:
@@ -648,6 +666,13 @@ values:
       used_by:
       - zfs
       - zcommon
+    blake2b_generic:
+      parameters: {}
+      used_by: []
+    raid6_pq:
+      parameters: {}
+      used_by:
+      - btrfs
     dynamic_debug:
       parameters:
         verbose: '0'
@@ -666,6 +691,11 @@ values:
         no_acpi: N
         use_acpi: N
       used_by: []
+    libcrc32c:
+      parameters: {}
+      used_by:
+      - btrfs
+      - xfs
     keyboard:
       parameters:
         brl_timeout: '300'
@@ -685,6 +715,9 @@ values:
         defx: '1024'
         modeset: "-1"
         defy: '768'
+      used_by: []
+    qnx4:
+      parameters: {}
       used_by: []
     serio_raw:
       parameters: {}
@@ -796,6 +829,12 @@ values:
         tcp_slot_table_entries: '2'
         auth_max_cred_cachesize: '18446744073709551615'
       used_by: []
+    btrfs:
+      parameters: {}
+      used_by: []
+    ufs:
+      parameters: {}
+      used_by: []
     hid_generic:
       parameters: {}
       used_by: []
@@ -873,6 +912,9 @@ values:
         qlowmark: '100'
         qovld: '20000'
       used_by: []
+    xfs:
+      parameters: {}
+      used_by: []
     drm_ttm_helper:
       parameters: {}
       used_by:
@@ -883,6 +925,9 @@ values:
         lid_report_interval: '500'
       used_by: []
     floppy:
+      parameters: {}
+      used_by: []
+    hfs:
       parameters: {}
       used_by: []
     block:
@@ -1047,6 +1092,9 @@ values:
       parameters: {}
       used_by:
       - zfs
+    vfat:
+      parameters: {}
+      used_by: []
     virtio_blk:
       parameters:
         queue_depth: '256'
@@ -1075,6 +1123,11 @@ values:
       parameters:
         xa_test: '0'
       used_by: []
+    fat:
+      parameters: {}
+      used_by:
+      - msdos
+      - vfat
     jbd2:
       parameters: {}
       used_by:
@@ -1094,44 +1147,44 @@ values:
       - ttm
   letsencrypt_directory: {}
   load_averages:
-    15m: 0.1
-    1m: 0.28
-    5m: 0.15
+    15m: 0.46
+    1m: 0.37
+    5m: 0.29
   lsbdistcodename: bullseye
   lsbdistdescription: Debian GNU/Linux 11 (bullseye)
   lsbdistid: Debian
-  lsbdistrelease: '11.6'
+  lsbdistrelease: '11.7'
   lsbmajdistrelease: '11'
-  lsbminordistrelease: '6'
+  lsbminordistrelease: '7'
   macaddress: 96:74:49:bd:b5:08
   macaddress_eth0: 96:74:49:bd:b5:08
   manufacturer: QEMU
   memory:
     swap:
-      available: 1020.00 MiB
-      available_bytes: 1069543424
-      capacity: 0%
+      available: 1019.23 MiB
+      available_bytes: 1068744704
+      capacity: 0.07%
       total: 1020.00 MiB
       total_bytes: 1069543424
-      used: 0 bytes
-      used_bytes: 0
+      used: 780.00 KiB
+      used_bytes: 798720
     system:
-      available: 3.22 GiB
-      available_bytes: 3459358720
-      capacity: 89.73%
-      total: 31.36 GiB
-      total_bytes: 33672744960
-      used: 28.14 GiB
-      used_bytes: 30213386240
-  memoryfree: 3.22 GiB
-  memoryfree_mb: 3299.1015625
-  memorysize: 31.36 GiB
-  memorysize_mb: 32112.83203125
+      available: 3.78 GiB
+      available_bytes: 4055371776
+      capacity: 87.92%
+      total: 31.26 GiB
+      total_bytes: 33567887360
+      used: 27.49 GiB
+      used_bytes: 29512515584
+  memoryfree: 3.78 GiB
+  memoryfree_mb: 3867.50390625
+  memorysize: 31.26 GiB
+  memorysize_mb: 32012.83203125
   mountpoints:
     "/":
-      available: 10.74 GiB
-      available_bytes: 11536547840
-      capacity: 30.66%
+      available: 10.67 GiB
+      available_bytes: 11453485056
+      capacity: 31.16%
       device: "/dev/mapper/base--template--vg-root"
       filesystem: ext4
       options:
@@ -1140,12 +1193,12 @@ values:
       - errors=remount-ro
       size: 16.35 GiB
       size_bytes: 17555079168
-      used: 4.75 GiB
-      used_bytes: 5100818432
+      used: 4.83 GiB
+      used_bytes: 5183881216
     "/boot":
-      available: 135.16 MiB
-      available_bytes: 141729792
-      capacity: 38.89%
+      available: 135.11 MiB
+      available_bytes: 141677568
+      capacity: 38.91%
       device: "/dev/vda1"
       filesystem: ext2
       options:
@@ -1153,8 +1206,8 @@ values:
       - relatime
       size: 233.32 MiB
       size_bytes: 244658176
-      used: 86.01 MiB
-      used_bytes: 90188800
+      used: 86.06 MiB
+      used_bytes: 90241024
     "/dev":
       available: 15.66 GiB
       available_bytes: 16816619520
@@ -1230,15 +1283,13 @@ values:
       - rw
       - nosuid
       - nodev
-      - size=16441768k
-      - nr_inodes=4110442
       size: 15.68 GiB
       size_bytes: 16836370432
       used: 0 bytes
       used_bytes: 0
     "/run":
       available: 3.14 GiB
-      available_bytes: 3366694912
+      available_bytes: 3366690816
       capacity: 0.02%
       device: tmpfs
       filesystem: tmpfs
@@ -1249,12 +1300,11 @@ values:
       - noexec
       - relatime
       - size=3288356k
-      - nr_inodes=4110442
       - mode=755
       size: 3.14 GiB
       size_bytes: 3367276544
-      used: 568.00 KiB
-      used_bytes: 581632
+      used: 572.00 KiB
+      used_bytes: 585728
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -1268,7 +1318,6 @@ values:
       - noexec
       - relatime
       - size=5120k
-      - nr_inodes=4110442
       size: 5.00 MiB
       size_bytes: 5242880
       used: 0 bytes
@@ -1287,9 +1336,9 @@ values:
       used: 0 bytes
       used_bytes: 0
     "/srv/elasticsearch":
-      available: 182.89 GiB
-      available_bytes: 196372987904
-      capacity: 5.26%
+      available: 181.50 GiB
+      available_bytes: 194884534272
+      capacity: 5.98%
       device: elasticsearch-volume
       filesystem: zfs
       options:
@@ -1297,10 +1346,10 @@ values:
       - relatime
       - xattr
       - noacl
-      size: 193.03 GiB
-      size_bytes: 207269396480
-      used: 10.15 GiB
-      used_bytes: 10896408576
+      size: 193.04 GiB
+      size_bytes: 207271362560
+      used: 11.54 GiB
+      used_bytes: 12386828288
   mounts:
   - "/"
   - "/boot"
@@ -1372,7 +1421,7 @@ values:
     scope6: link
   operatingsystem: Debian
   operatingsystemmajrelease: '11'
-  operatingsystemrelease: '11.6'
+  operatingsystemrelease: '11.7'
   os:
     architecture: amd64
     distro:
@@ -1380,16 +1429,16 @@ values:
       description: Debian GNU/Linux 11 (bullseye)
       id: Debian
       release:
-        full: '11.6'
+        full: '11.7'
         major: '11'
-        minor: '6'
+        minor: '7'
     family: Debian
     hardware: x86_64
     name: Debian
     release:
-      full: '11.6'
+      full: '11.7'
       major: '11'
-      minor: '6'
+      minor: '7'
     selinux:
       enabled: false
   osfamily: Debian
@@ -1517,8 +1566,8 @@ values:
   sshrsakey: AAAAB3NzaC1yc2EAAAADAQABAAABAQCVaxg6ZAGLhg95DP3I9YbCgHhKEU3LE90Mmg4+N4nYo7Fb4+Fjkm3SGqG32zgndfCf3G8pzLDGXmIVIkBfmYxICIZoMpcFaEDTkQB/DJoJjcvJdNKQSjQtSE960ofgD04sajBMmOfT1EtF3bTA2kR4EZFQss0sk6X14o4R2hFgpZWdNdjUsHJqieXRVKWrcIuOJXqyFEfUZ0Y+0xtXy+7zJgBo3tkAPJIAWdxs3CnorCNhQaczmDVmR1LCgqTEBfdxy+eF/CPErDrhKUvHgWiaN+LRzACbvHEhDhIMt+Z0GFfch9gcvvAjVHq1IF1WC0H/XbK0B9Xs+bwXhVsjeybD
   subnet: sesi_rocquencourt_staging
   sudoversion: 1.9.5p2
-  swapfree: 1020.00 MiB
-  swapfree_mb: 1019.99609375
+  swapfree: 1019.23 MiB
+  swapfree_mb: 1019.234375
   swapsize: 1020.00 MiB
   swapsize_mb: 1019.99609375
   swh_hostname:
@@ -1526,10 +1575,10 @@ values:
     short: search-esnode0
     internal_fqdn: search-esnode0.internal.staging.swh.network
   system_uptime:
-    days: 41
-    hours: 1006
-    seconds: 3622852
-    uptime: 41 days
+    days: 84
+    hours: 2016
+    seconds: 7258848
+    uptime: 84 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -1544,15 +1593,15 @@ values:
     systemd-timesyncd.service: enabled
   systemd_version: '247'
   timezone: UTC
-  uptime: 41 days
-  uptime_days: 41
-  uptime_hours: 1006
-  uptime_seconds: 3622852
+  uptime: 84 days
+  uptime_days: 84
+  uptime_hours: 2016
+  uptime_seconds: 7258848
   uuid: 1355d892-8f46-4b11-a5a8-78f6eaa90998
   vcsrepo_svn_ver: ''
   virtual: kvm
   clientcert: search-esnode0.internal.staging.swh.network
   clientversion: 5.5.22
   clientnoop: false
-timestamp: '2023-03-28T10:01:11.718340572+00:00'
-expiration: '2023-03-28T10:31:11.721518422+00:00'
+timestamp: '2023-05-09T12:01:08.246017184+00:00'
+expiration: '2023-05-09T12:31:08.247725367+00:00'

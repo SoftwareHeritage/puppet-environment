@@ -27,10 +27,10 @@ values:
   - icinga2-bin
   - icinga2-common
   - icinga2-doc
-  apt_reboot_required: false
+  apt_reboot_required: true
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1679993762
+  apt_update_last_success: 1683633362
   apt_updates: 7
   architecture: amd64
   bios_release_date: 04/01/2014
@@ -145,7 +145,7 @@ values:
     NFd: 25
     OomKillDisable: false
     NGoroutines: 33
-    SystemTime: '2023-03-28T09:54:06.526880628Z'
+    SystemTime: '2023-05-09T12:24:06.372176531Z'
     LoggingDriver: journald
     CgroupDriver: systemd
     CgroupVersion: '2'
@@ -374,7 +374,7 @@ values:
       vardir: "/var/lib/puppet"
       server: pergamon.internal.softwareheritage.org
   facterversion: 3.14.12
-  filesystems: ext2,ext3,ext4,iso9660
+  filesystems: btrfs,ext2,ext3,ext4,hfs,hfsplus,iso9660,jfs,minix,msdos,qnx4,ufs,vfat,xfs
   fips_enabled: false
   fqdn: maven-exporter.internal.softwareheritage.org
   gid: root
@@ -406,6 +406,9 @@ values:
   kernelrelease: 5.10.0-21-amd64
   kernelversion: 5.10.0
   kmods:
+    msdos:
+      parameters: {}
+      used_by: []
     thermal:
       parameters:
         act: '0'
@@ -423,6 +426,10 @@ values:
         notests: N
         panic_on_fail: N
       used_by: []
+    xor:
+      parameters: {}
+      used_by:
+      - btrfs
     spurious:
       parameters:
         noirqdebug: N
@@ -471,6 +478,9 @@ values:
       - nf_nat
       - nf_conntrack_netlink
       - xt_MASQUERADE
+    minix:
+      parameters: {}
+      used_by: []
     tcp_cubic:
       parameters:
         hystart_detect: '3'
@@ -503,6 +513,9 @@ values:
         nr_uarts: '4'
         share_irqs: '1'
         skip_txen_test: '0'
+      used_by: []
+    hfsplus:
+      parameters: {}
       used_by: []
     shpchp:
       parameters:
@@ -834,6 +847,9 @@ values:
     virtio_balloon:
       parameters: {}
       used_by: []
+    jfs:
+      parameters: {}
+      used_by: []
     nf_nat:
       parameters: {}
       used_by:
@@ -883,6 +899,8 @@ values:
     cdrom:
       parameters: {}
       used_by:
+      - hfsplus
+      - hfs
       - isofs
       - sr_mod
     overlay:
@@ -997,6 +1015,13 @@ values:
     xt_addrtype:
       parameters: {}
       used_by: []
+    blake2b_generic:
+      parameters: {}
+      used_by: []
+    raid6_pq:
+      parameters: {}
+      used_by:
+      - btrfs
     dynamic_debug:
       parameters:
         verbose: '0'
@@ -1024,7 +1049,9 @@ values:
       used_by:
       - nf_conntrack
       - nf_nat
+      - btrfs
       - nf_tables
+      - xfs
     keyboard:
       parameters:
         brl_timeout: '300'
@@ -1044,6 +1071,9 @@ values:
         defx: '1024'
         modeset: "-1"
         defy: '768'
+      used_by: []
+    qnx4:
+      parameters: {}
       used_by: []
     xfrm_algo:
       parameters: {}
@@ -1159,6 +1189,12 @@ values:
         tcp_slot_table_entries: '2'
         auth_max_cred_cachesize: '18446744073709551615'
       used_by: []
+    btrfs:
+      parameters: {}
+      used_by: []
+    ufs:
+      parameters: {}
+      used_by: []
     hid_generic:
       parameters: {}
       used_by: []
@@ -1249,6 +1285,9 @@ values:
         qlowmark: '100'
         qovld: '20000'
       used_by: []
+    xfs:
+      parameters: {}
+      used_by: []
     drm_ttm_helper:
       parameters: {}
       used_by:
@@ -1269,6 +1308,9 @@ values:
       used_by:
       - bridge
       - stp
+    hfs:
+      parameters: {}
+      used_by: []
     block:
       parameters:
         events_dfl_poll_msecs: '2000'
@@ -1444,6 +1486,9 @@ values:
       parameters: {}
       used_by:
       - zfs
+    vfat:
+      parameters: {}
+      used_by: []
     virtio_blk:
       parameters:
         queue_depth: '256'
@@ -1472,6 +1517,11 @@ values:
       parameters:
         xa_test: '0'
       used_by: []
+    fat:
+      parameters: {}
+      used_by:
+      - msdos
+      - vfat
     jbd2:
       parameters: {}
       used_by:
@@ -1491,15 +1541,15 @@ values:
       - ttm
   letsencrypt_directory: {}
   load_averages:
-    15m: 0.0
-    1m: 0.0
-    5m: 0.0
+    15m: 0.09
+    1m: 0.25
+    5m: 0.16
   lsbdistcodename: bullseye
   lsbdistdescription: Debian GNU/Linux 11 (bullseye)
   lsbdistid: Debian
-  lsbdistrelease: '11.6'
+  lsbdistrelease: '11.7'
   lsbmajdistrelease: '11'
-  lsbminordistrelease: '6'
+  lsbminordistrelease: '7'
   macaddress: d2:7e:0b:35:89:ff
   macaddress_docker0: 02:42:ea:fa:02:93
   macaddress_eth0: d2:7e:0b:35:89:ff
@@ -1514,22 +1564,22 @@ values:
       used: 0 bytes
       used_bytes: 0
     system:
-      available: 2.83 GiB
-      available_bytes: 3042918400
-      capacity: 26.18%
+      available: 2.69 GiB
+      available_bytes: 2883764224
+      capacity: 30.04%
       total: 3.84 GiB
       total_bytes: 4121894912
-      used: 1.00 GiB
-      used_bytes: 1078976512
-  memoryfree: 2.83 GiB
-  memoryfree_mb: 2901.953125
+      used: 1.15 GiB
+      used_bytes: 1238130688
+  memoryfree: 2.69 GiB
+  memoryfree_mb: 2750.171875
   memorysize: 3.84 GiB
   memorysize_mb: 3930.9453125
   mountpoints:
     "/":
-      available: 11.87 GiB
-      available_bytes: 12740308992
-      capacity: 22.62%
+      available: 11.81 GiB
+      available_bytes: 12678864896
+      capacity: 23.00%
       device: "/dev/mapper/base--template--vg-root"
       filesystem: ext4
       options:
@@ -1538,12 +1588,12 @@ values:
       - errors=remount-ro
       size: 16.18 GiB
       size_bytes: 17373634560
-      used: 3.47 GiB
-      used_bytes: 3724840960
+      used: 3.53 GiB
+      used_bytes: 3786285056
     "/boot":
-      available: 359.12 MiB
-      available_bytes: 376566784
-      capacity: 19.30%
+      available: 359.07 MiB
+      available_bytes: 376516608
+      capacity: 19.31%
       device: "/dev/vda1"
       filesystem: ext2
       options:
@@ -1551,11 +1601,11 @@ values:
       - relatime
       size: 469.35 MiB
       size_bytes: 492152832
-      used: 85.88 MiB
-      used_bytes: 90053632
+      used: 85.93 MiB
+      used_bytes: 90103808
     "/data":
       available: 30.00 GiB
-      available_bytes: 32211075072
+      available_bytes: 32211206144
       capacity: 0.00%
       device: data
       filesystem: zfs
@@ -1564,7 +1614,7 @@ values:
       - xattr
       - noacl
       size: 30.00 GiB
-      size_bytes: 32211206144
+      size_bytes: 32211337216
       used: 128.00 KiB
       used_bytes: 131072
     "/dev":
@@ -1648,7 +1698,7 @@ values:
       used_bytes: 0
     "/run":
       available: 392.51 MiB
-      available_bytes: 411578368
+      available_bytes: 411574272
       capacity: 0.15%
       device: tmpfs
       filesystem: tmpfs
@@ -1662,8 +1712,8 @@ values:
       - mode=755
       size: 393.10 MiB
       size_bytes: 412192768
-      used: 600.00 KiB
-      used_bytes: 614400
+      used: 604.00 KiB
+      used_bytes: 618496
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -1696,7 +1746,7 @@ values:
       used_bytes: 0
     "/srv/softwareheritage/maven-index-exporter":
       available: 30.00 GiB
-      available_bytes: 32211075072
+      available_bytes: 32211206144
       capacity: 32.24%
       device: data/mvn-idx-work
       filesystem: zfs
@@ -1706,12 +1756,12 @@ values:
       - xattr
       - noacl
       size: 44.27 GiB
-      size_bytes: 47538241536
+      size_bytes: 47538372608
       used: 14.27 GiB
       used_bytes: 15327166464
     "/var/lib/docker":
       available: 30.00 GiB
-      available_bytes: 32211075072
+      available_bytes: 32211206144
       capacity: 0.00%
       device: data/docker
       filesystem: zfs
@@ -1721,12 +1771,12 @@ values:
       - xattr
       - noacl
       size: 30.00 GiB
-      size_bytes: 32211992576
+      size_bytes: 32212123648
       used: 896.00 KiB
       used_bytes: 917504
     "/var/www/maven_index_exporter":
       available: 30.00 GiB
-      available_bytes: 32211075072
+      available_bytes: 32211206144
       capacity: 10.43%
       device: data/mvn-idx-publish
       filesystem: zfs
@@ -1736,7 +1786,7 @@ values:
       - xattr
       - noacl
       size: 33.49 GiB
-      size_bytes: 35961700352
+      size_bytes: 35961831424
       used: 3.49 GiB
       used_bytes: 3750625280
   mounts:
@@ -1826,7 +1876,7 @@ values:
     scope6: link
   operatingsystem: Debian
   operatingsystemmajrelease: '11'
-  operatingsystemrelease: '11.6'
+  operatingsystemrelease: '11.7'
   os:
     architecture: amd64
     distro:
@@ -1834,16 +1884,16 @@ values:
       description: Debian GNU/Linux 11 (bullseye)
       id: Debian
       release:
-        full: '11.6'
+        full: '11.7'
         major: '11'
-        minor: '6'
+        minor: '7'
     family: Debian
     hardware: x86_64
     name: Debian
     release:
-      full: '11.6'
+      full: '11.7'
       major: '11'
-      minor: '6'
+      minor: '7'
     selinux:
       enabled: false
   osfamily: Debian
@@ -1980,10 +2030,10 @@ values:
     short: maven-exporter
     internal_fqdn: maven-exporter.internal.softwareheritage.org
   system_uptime:
-    days: 41
-    hours: 1007
-    seconds: 3626499
-    uptime: 41 days
+    days: 84
+    hours: 2017
+    seconds: 7264298
+    uptime: 84 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -1997,15 +2047,15 @@ values:
     systemd-time-wait-sync.service: disabled
   systemd_version: '247'
   timezone: UTC
-  uptime: 41 days
-  uptime_days: 41
-  uptime_hours: 1007
-  uptime_seconds: 3626499
+  uptime: 84 days
+  uptime_days: 84
+  uptime_hours: 2017
+  uptime_seconds: 7264298
   uuid: db88b977-6223-4b08-8ac8-08b114da98db
   vcsrepo_svn_ver: ''
   virtual: kvm
   clientcert: maven-exporter.internal.softwareheritage.org
   clientversion: 5.5.22
   clientnoop: false
-timestamp: '2023-03-28T09:54:07.803735124+00:00'
-expiration: '2023-03-28T10:24:07.806294150+00:00'
+timestamp: '2023-05-09T12:24:07.662137853+00:00'
+expiration: '2023-05-09T12:54:07.664846406+00:00'

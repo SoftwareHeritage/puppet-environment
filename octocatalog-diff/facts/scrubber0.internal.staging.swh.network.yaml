@@ -2,48 +2,22 @@
 name: scrubber0.internal.staging.swh.network
 values:
   agent_specified_environment: staging
-  apt_dist_updates: 15
+  apt_dist_updates: 2
   apt_has_dist_updates: true
   apt_has_updates: true
   apt_package_dist_updates:
-  - icinga2
-  - icinga2-bin
-  - icinga2-common
-  - icinga2-doc
-  - python3-aiohttp-utils
-  - python3-swh.core
-  - python3-swh.model
-  - python3-swh.objstorage
-  - python3-swh.storage
   - python3-swh.journal
-  - python3-swh.counters
-  - python3-swh.scheduler
-  - python3-swh.loader.core
   - python3-swh.loader.git
-  - python3-swh.scrubber
   apt_package_security_dist_updates: []
   apt_package_security_updates: []
   apt_package_updates:
-  - icinga2
-  - icinga2-bin
-  - icinga2-common
-  - icinga2-doc
-  - python3-aiohttp-utils
-  - python3-swh.core
-  - python3-swh.model
-  - python3-swh.objstorage
-  - python3-swh.storage
   - python3-swh.journal
-  - python3-swh.counters
-  - python3-swh.scheduler
-  - python3-swh.loader.core
   - python3-swh.loader.git
-  - python3-swh.scrubber
-  apt_reboot_required: false
+  apt_reboot_required: true
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1679992323
-  apt_updates: 15
+  apt_update_last_success: 1683631923
+  apt_updates: 2
   architecture: amd64
   bios_release_date: 04/01/2014
   bios_vendor: SeaBIOS
@@ -104,7 +78,7 @@ values:
       vardir: "/var/lib/puppet"
       server: pergamon.internal.softwareheritage.org
   facterversion: 3.11.0
-  filesystems: ext2,ext3,ext4,iso9660
+  filesystems: btrfs,ext2,ext3,ext4,hfs,hfsplus,iso9660,jfs,minix,msdos,qnx4,ufs,vfat,xfs
   fips_enabled: false
   fqdn: scrubber0.internal.staging.swh.network
   gid: root
@@ -135,6 +109,9 @@ values:
   kernelrelease: 4.19.0-23-amd64
   kernelversion: 4.19.0
   kmods:
+    msdos:
+      parameters: {}
+      used_by: []
     cpuidle:
       parameters:
         'off': '0'
@@ -143,6 +120,10 @@ values:
       parameters:
         notests: N
       used_by: []
+    xor:
+      parameters: {}
+      used_by:
+      - btrfs
     spurious:
       parameters:
         noirqdebug: N
@@ -177,6 +158,9 @@ values:
       parameters: {}
       used_by:
       - net_failover
+    minix:
+      parameters: {}
+      used_by: []
     tcp_cubic:
       parameters:
         hystart_detect: '3'
@@ -210,6 +194,9 @@ values:
       parameters: {}
       used_by:
       - crypto_simd
+    hfsplus:
+      parameters: {}
+      used_by: []
     shpchp:
       parameters:
         shpchp_poll_time: '0'
@@ -229,6 +216,10 @@ values:
         rcu_cpu_stall_timeout: '21'
         rcu_cpu_stall_suppress: '0'
       used_by: []
+    zstd_compress:
+      parameters: {}
+      used_by:
+      - btrfs
     random:
       parameters:
         ratelimit_disable: '0'
@@ -238,6 +229,9 @@ values:
         use_acpi_alarm: N
       used_by: []
     virtio_balloon:
+      parameters: {}
+      used_by: []
+    jfs:
       parameters: {}
       used_by: []
     drm_kms_helper:
@@ -251,6 +245,11 @@ values:
         dp_aux_i2c_speed_khz: '10'
       used_by:
       - bochs_drm
+    xxhash:
+      parameters: {}
+      used_by:
+      - zstd_compress
+      - zstd_decompress
     pstore:
       parameters:
         update_ms: "-1"
@@ -344,6 +343,10 @@ values:
     qemu_fw_cfg:
       parameters: {}
       used_by: []
+    raid6_pq:
+      parameters: {}
+      used_by:
+      - btrfs
     glue_helper:
       parameters: {}
       used_by: []
@@ -358,6 +361,11 @@ values:
       parameters:
         max_cstate: '9'
       used_by: []
+    libcrc32c:
+      parameters: {}
+      used_by:
+      - btrfs
+      - xfs
     keyboard:
       parameters:
         brl_timeout: '300'
@@ -377,6 +385,9 @@ values:
         modeset: "-1"
         defy: '768'
         fbdev: Y
+      used_by: []
+    qnx4:
+      parameters: {}
       used_by: []
     serio_raw:
       parameters: {}
@@ -479,6 +490,12 @@ values:
         tcp_slot_table_entries: '2'
         auth_max_cred_cachesize: '18446744073709551615'
       used_by: []
+    btrfs:
+      parameters: {}
+      used_by: []
+    ufs:
+      parameters: {}
+      used_by: []
     hid_generic:
       parameters: {}
       used_by: []
@@ -519,6 +536,10 @@ values:
       parameters: {}
       used_by:
       - usbcore
+    zstd_decompress:
+      parameters: {}
+      used_by:
+      - btrfs
     x_tables:
       parameters: {}
       used_by:
@@ -540,12 +561,18 @@ values:
         rcu_fanout_exact: N
         qlowmark: '100'
       used_by: []
+    xfs:
+      parameters: {}
+      used_by: []
     button:
       parameters:
         lid_init_state: method
         lid_report_interval: '500'
       used_by: []
     floppy:
+      parameters: {}
+      used_by: []
+    hfs:
       parameters: {}
       used_by: []
     block:
@@ -677,6 +704,9 @@ values:
       parameters:
         ptr_size: '800,600'
       used_by: []
+    vfat:
+      parameters: {}
+      used_by: []
     virtio_blk:
       parameters:
         queue_depth: '256'
@@ -709,6 +739,11 @@ values:
       parameters:
         xa_test: '0'
       used_by: []
+    fat:
+      parameters: {}
+      used_by:
+      - msdos
+      - vfat
     jbd2:
       parameters: {}
       used_by:
@@ -726,9 +761,9 @@ values:
       - ttm
   letsencrypt_directory: {}
   load_averages:
-    15m: 1.46
-    1m: 1.28
-    5m: 1.36
+    15m: 0.3
+    1m: 0.19
+    5m: 0.18
   lsbdistcodename: buster
   lsbdistdescription: Debian GNU/Linux 10 (buster)
   lsbdistid: Debian
@@ -739,30 +774,30 @@ values:
   manufacturer: QEMU
   memory:
     swap:
-      available: 1015.83 MiB
-      available_bytes: 1065177088
-      capacity: 0.41%
+      available: 1017.33 MiB
+      available_bytes: 1066749952
+      capacity: 0.26%
       total: 1020.00 MiB
       total_bytes: 1069543424
-      used: 4.16 MiB
-      used_bytes: 4366336
+      used: 2.66 MiB
+      used_bytes: 2793472
     system:
-      available: 3.11 GiB
-      available_bytes: 3338166272
-      capacity: 19.33%
+      available: 2.94 GiB
+      available_bytes: 3161894912
+      capacity: 23.59%
       total: 3.85 GiB
       total_bytes: 4138020864
-      used: 762.80 MiB
-      used_bytes: 799854592
-  memoryfree: 3.11 GiB
-  memoryfree_mb: 3183.5234375
+      used: 930.91 MiB
+      used_bytes: 976125952
+  memoryfree: 2.94 GiB
+  memoryfree_mb: 3015.41796875
   memorysize: 3.85 GiB
   memorysize_mb: 3946.32421875
   mountpoints:
     "/":
-      available: 13.63 GiB
-      available_bytes: 14636228608
-      capacity: 16.63%
+      available: 13.89 GiB
+      available_bytes: 14918115328
+      capacity: 15.02%
       device: "/dev/mapper/base--template--vg-root"
       filesystem: ext4
       options:
@@ -771,12 +806,12 @@ values:
       - errors=remount-ro
       size: 16.35 GiB
       size_bytes: 17555079168
-      used: 2.72 GiB
-      used_bytes: 2918850560
+      used: 2.46 GiB
+      used_bytes: 2636963840
     "/boot":
-      available: 114.88 MiB
-      available_bytes: 120462336
-      capacity: 50.76%
+      available: 150.71 MiB
+      available_bytes: 158029824
+      capacity: 35.41%
       device: "/dev/vda1"
       filesystem: ext2
       options:
@@ -784,8 +819,8 @@ values:
       - relatime
       size: 233.32 MiB
       size_bytes: 244658176
-      used: 118.44 MiB
-      used_bytes: 124195840
+      used: 82.62 MiB
+      used_bytes: 86628352
     "/dev/shm":
       available: 1.93 GiB
       available_bytes: 2069008384
@@ -801,8 +836,8 @@ values:
       used: 0 bytes
       used_bytes: 0
     "/run":
-      available: 394.07 MiB
-      available_bytes: 413216768
+      available: 394.08 MiB
+      available_bytes: 413220864
       capacity: 0.14%
       device: tmpfs
       filesystem: tmpfs
@@ -815,8 +850,8 @@ values:
       - mode=755
       size: 394.63 MiB
       size_bytes: 413802496
-      used: 572.00 KiB
-      used_bytes: 585728
+      used: 568.00 KiB
+      used_bytes: 581632
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -1048,8 +1083,8 @@ values:
   sshrsakey: AAAAB3NzaC1yc2EAAAADAQABAAABAQDeOC1FWKuiLlSuPlwHmmbYTITefy4ueXGNXDlf1U3ev7WRtxtS3D+jga3dT7rdKXT4KcWgzewm2TkoPguowMqkTEnvaty4yLNi0/13BuPwl7bEbHlP/TI0CAN0i3XK6/Hx94K55lOalfwUM6MJSXuYvzeajs9lqkcZECgWY5qBCdYdK8c7VKva+4WZZNq+JttvQZGR8c5u05xYyHN/hCrUOlpbgUwmTzvIRNA968N18wn8v6nl+0G34BbADn/Vewa1t8D3hFmD9+i8tTKC/uateKrUA3DpNFJfHYnwEeFU5FeihgZGU/cyYYD2N8iOWIiLRjL1Cx8eMEqlg6CKs82f
   subnet: sesi_rocquencourt_staging
   sudoversion: 1.8.27
-  swapfree: 1015.83 MiB
-  swapfree_mb: 1015.83203125
+  swapfree: 1017.33 MiB
+  swapfree_mb: 1017.33203125
   swapsize: 1020.00 MiB
   swapsize_mb: 1019.99609375
   swh_hostname:
@@ -1057,10 +1092,10 @@ values:
     short: scrubber0
     internal_fqdn: scrubber0.internal.staging.swh.network
   system_uptime:
-    days: 41
-    hours: 1005
-    seconds: 3621022
-    uptime: 41 days
+    days: 84
+    hours: 2016
+    seconds: 7258819
+    uptime: 84 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -1075,15 +1110,15 @@ values:
     systemd-timesyncd.service: enabled
   systemd_version: '247'
   timezone: UTC
-  uptime: 41 days
-  uptime_days: 41
-  uptime_hours: 1005
-  uptime_seconds: 3621022
+  uptime: 84 days
+  uptime_days: 84
+  uptime_hours: 2016
+  uptime_seconds: 7258819
   uuid: 2c7922a3-b237-4a0a-b51e-e0031556bcdc
   vcsrepo_svn_ver: ''
   virtual: kvm
   clientcert: scrubber0.internal.staging.swh.network
   clientversion: 5.5.10
   clientnoop: false
-timestamp: '2023-03-28T09:31:10.138356980+00:00'
-expiration: '2023-03-28T10:01:10.139605878+00:00'
+timestamp: '2023-05-09T12:01:07.796485911+00:00'
+expiration: '2023-05-09T12:31:07.797592605+00:00'

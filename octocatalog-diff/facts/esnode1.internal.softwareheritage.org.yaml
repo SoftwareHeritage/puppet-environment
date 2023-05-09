@@ -15,10 +15,10 @@ values:
   - icinga2
   - icinga2-bin
   - icinga2-common
-  apt_reboot_required: false
+  apt_reboot_required: true
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1679993464
+  apt_update_last_success: 1683633063
   apt_updates: 3
   architecture: amd64
   bios_release_date: 01/31/2018
@@ -593,6 +593,10 @@ values:
         zfs_delay_scale: '500000'
         zfs_mg_fragmentation_threshold: '95'
       used_by: []
+    ecdh_generic:
+      parameters: {}
+      used_by:
+      - bluetooth
     crypto_simd:
       parameters: {}
       used_by:
@@ -602,11 +606,18 @@ values:
       used_by:
       - raid456
       - async_raid6_recov
+    nfnetlink:
+      parameters: {}
+      used_by: []
     srcutree:
       parameters:
         exp_holdoff: '25000'
         counter_wrap_check: '4611686018427387903'
       used_by: []
+    ecc:
+      parameters: {}
+      used_by:
+      - ecdh_generic
     rcupdate:
       parameters:
         rcu_task_ipi_delay: '0'
@@ -642,6 +653,9 @@ values:
       parameters: {}
       used_by: []
     intel_wmi_thunderbolt:
+      parameters: {}
+      used_by: []
+    drbg:
       parameters: {}
       used_by: []
     drm_kms_helper:
@@ -744,6 +758,7 @@ values:
     crc16:
       parameters: {}
       used_by:
+      - bluetooth
       - ext4
     mousedev:
       parameters:
@@ -809,6 +824,7 @@ values:
     libaes:
       parameters: {}
       used_by:
+      - bluetooth
       - aesni_intel
     mei:
       parameters: {}
@@ -819,6 +835,9 @@ values:
         force_cap_on: N
       used_by: []
     blake2b_generic:
+      parameters: {}
+      used_by: []
+    ansi_cprng:
       parameters: {}
       used_by: []
     raid6_pq:
@@ -963,6 +982,11 @@ values:
       parameters:
         policy: "[default] performance powersave powersupersave "
       used_by: []
+    rfkill:
+      parameters:
+        default_state: '1'
+      used_by:
+      - bluetooth
     intel_powerclamp:
       parameters:
         duration: '24'
@@ -1019,6 +1043,12 @@ values:
     btrfs:
       parameters: {}
       used_by: []
+    bluetooth:
+      parameters:
+        disable_ertm: N
+        disable_esco: N
+        enable_ecred: N
+      used_by: []
     ufs:
       parameters: {}
       used_by: []
@@ -1030,6 +1060,9 @@ values:
       parameters: {}
       used_by:
       - ptp
+    jitterentropy_rng:
+      parameters: {}
+      used_by: []
     slab_common:
       parameters:
         usercopy_fallback: N
@@ -1424,16 +1457,16 @@ values:
       - 8021q
   letsencrypt_directory: {}
   load_averages:
-    15m: 0.62
-    1m: 0.91
-    5m: 0.62
+    15m: 0.38
+    1m: 0.36
+    5m: 0.36
   location: sesi_rocquencourt
   lsbdistcodename: bullseye
   lsbdistdescription: Debian GNU/Linux 11 (bullseye)
   lsbdistid: Debian
-  lsbdistrelease: '11.6'
+  lsbdistrelease: '11.7'
   lsbmajdistrelease: '11'
-  lsbminordistrelease: '6'
+  lsbminordistrelease: '7'
   macaddress: b4:96:91:1c:6f:dc
   macaddress_bond0: b4:96:91:1c:6f:dc
   macaddress_eno1: 50:9a:4c:7c:56:a5
@@ -1444,30 +1477,30 @@ values:
   manufacturer: Dell Inc.
   memory:
     swap:
-      available: 27.71 GiB
-      available_bytes: 29752397824
-      capacity: 7.03%
+      available: 25.50 GiB
+      available_bytes: 27385397248
+      capacity: 14.42%
       total: 29.80 GiB
       total_bytes: 32000438272
-      used: 2.09 GiB
-      used_bytes: 2248040448
+      used: 4.30 GiB
+      used_bytes: 4615041024
     system:
-      available: 4.58 GiB
-      available_bytes: 4916060160
-      capacity: 85.38%
+      available: 4.62 GiB
+      available_bytes: 4964765696
+      capacity: 85.24%
       total: 31.32 GiB
       total_bytes: 33627787264
-      used: 26.74 GiB
-      used_bytes: 28711727104
-  memoryfree: 4.58 GiB
-  memoryfree_mb: 4688.3203125
+      used: 26.69 GiB
+      used_bytes: 28663021568
+  memoryfree: 4.62 GiB
+  memoryfree_mb: 4734.76953125
   memorysize: 31.32 GiB
   memorysize_mb: 32069.95703125
   mountpoints:
     "/":
-      available: 24.36 GiB
-      available_bytes: 26151383040
-      capacity: 29.39%
+      available: 24.48 GiB
+      available_bytes: 26284027904
+      capacity: 29.03%
       device: "/dev/sda2"
       filesystem: ext4
       options:
@@ -1476,12 +1509,12 @@ values:
       - errors=remount-ro
       size: 36.37 GiB
       size_bytes: 39052693504
-      used: 10.14 GiB
-      used_bytes: 10884534272
+      used: 10.01 GiB
+      used_bytes: 10751889408
     "/boot/efi":
-      available: 505.21 MiB
-      available_bytes: 529747968
-      capacity: 1.13%
+      available: 505.18 MiB
+      available_bytes: 529723392
+      capacity: 1.14%
       device: "/dev/sda1"
       filesystem: vfat
       options:
@@ -1496,8 +1529,8 @@ values:
       - errors=remount-ro
       size: 510.98 MiB
       size_bytes: 535805952
-      used: 5.78 MiB
-      used_bytes: 6057984
+      used: 5.80 MiB
+      used_bytes: 6082560
     "/dev":
       available: 15.64 GiB
       available_bytes: 16795267072
@@ -1579,7 +1612,7 @@ values:
       used_bytes: 0
     "/run":
       available: 3.13 GiB
-      available_bytes: 3362017280
+      available_bytes: 3362004992
       capacity: 0.02%
       device: tmpfs
       filesystem: tmpfs
@@ -1593,8 +1626,8 @@ values:
       - mode=755
       size: 3.13 GiB
       size_bytes: 3362779136
-      used: 744.00 KiB
-      used_bytes: 761856
+      used: 756.00 KiB
+      used_bytes: 774144
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -1646,9 +1679,9 @@ values:
       used: 0 bytes
       used_bytes: 0
     "/srv/elasticsearch/nodes":
-      available: 2.82 TiB
-      available_bytes: 3100590735360
-      capacity: 58.41%
+      available: 2.39 TiB
+      available_bytes: 2625059553280
+      capacity: 64.79%
       device: elasticsearch-data
       filesystem: zfs
       options:
@@ -1657,9 +1690,9 @@ values:
       - xattr
       - noacl
       size: 6.78 TiB
-      size_bytes: 7455784566784
-      used: 3.96 TiB
-      used_bytes: 4355193831424
+      size_bytes: 7455769886720
+      used: 4.39 TiB
+      used_bytes: 4830710333440
   mounts:
   - "/"
   - "/boot/efi"
@@ -1761,7 +1794,7 @@ values:
     scope6: link
   operatingsystem: Debian
   operatingsystemmajrelease: '11'
-  operatingsystemrelease: '11.6'
+  operatingsystemrelease: '11.7'
   os:
     architecture: amd64
     distro:
@@ -1769,16 +1802,16 @@ values:
       description: Debian GNU/Linux 11 (bullseye)
       id: Debian
       release:
-        full: '11.6'
+        full: '11.7'
         major: '11'
-        minor: '6'
+        minor: '7'
     family: Debian
     hardware: x86_64
     name: Debian
     release:
-      full: '11.6'
+      full: '11.7'
       major: '11'
-      minor: '6'
+      minor: '7'
     selinux:
       enabled: false
   osfamily: Debian
@@ -1952,8 +1985,8 @@ values:
   sshrsakey: AAAAB3NzaC1yc2EAAAADAQABAAABAQCxBTX01CFMatM1+iYoEyZXlNYSR9VWOlUJ85HjuZSAGwpW+8Zxq+21ypmsnIyIN+S2RdzW+UlFhfWEBTi6t6M1x5JQc9QUtQZj3VFDUYCrvLM+L9UQRKSVVQCfWhxL8RI88FiwQvT6ASX8FfEWQsLt+zycyPrsTVUCPhm3gAJSSixCwdnEXRySYiwuJeT+/EyQUSPhuIDJFaM4dmV6OZTyltVrapbninLJV7YjQLJ3YbVBn7rOQHxGJJglelu8svoj95rGrTvvUbyjQTGP5XJ4Om72hmBFZPhHCP1xseT01afRx1dNNSUqBvT/Wz+CfpHIQy9dgd8/xnY15t1+3mSD
   subnet: sesi_rocquencourt
   sudoversion: 1.9.5p2
-  swapfree: 27.71 GiB
-  swapfree_mb: 28374.09765625
+  swapfree: 25.50 GiB
+  swapfree_mb: 26116.75
   swapsize: 29.80 GiB
   swapsize_mb: 30517.99609375
   swh_hostname:
@@ -1961,10 +1994,10 @@ values:
     short: esnode1
     internal_fqdn: esnode1.internal.softwareheritage.org
   system_uptime:
-    days: 60
-    hours: 1455
-    seconds: 5240524
-    uptime: 60 days
+    days: 102
+    hours: 2466
+    seconds: 8878322
+    uptime: 102 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -1978,15 +2011,15 @@ values:
     systemd-time-wait-sync.service: disabled
   systemd_version: '247'
   timezone: UTC
-  uptime: 60 days
-  uptime_days: 60
-  uptime_hours: 1455
-  uptime_seconds: 5240524
+  uptime: 102 days
+  uptime_days: 102
+  uptime_hours: 2466
+  uptime_seconds: 8878322
   uuid: 4c4c4544-004c-5810-8046-cac04f514b32
   vcsrepo_svn_ver: ''
   virtual: physical
   clientcert: esnode1.internal.softwareheritage.org
   clientversion: 5.5.22
   clientnoop: false
-timestamp: '2023-03-28T09:41:12.894833434+00:00'
-expiration: '2023-03-28T10:11:12.899333110+00:00'
+timestamp: '2023-05-09T12:11:11.365415052+00:00'
+expiration: '2023-05-09T12:41:11.369989039+00:00'

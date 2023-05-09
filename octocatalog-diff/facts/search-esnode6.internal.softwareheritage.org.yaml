@@ -15,10 +15,10 @@ values:
   apt_package_security_updates: []
   apt_package_updates:
   - icinga2-doc
-  apt_reboot_required: false
+  apt_reboot_required: true
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1679996822
+  apt_update_last_success: 1683632822
   apt_updates: 1
   architecture: amd64
   bios_release_date: 04/09/2021
@@ -122,7 +122,7 @@ values:
       vardir: "/var/lib/puppet"
       server: pergamon.internal.softwareheritage.org
   facterversion: 3.14.12
-  filesystems: ext2,ext3,ext4,vfat
+  filesystems: btrfs,ext2,ext3,ext4,hfs,hfsplus,jfs,minix,msdos,qnx4,ufs,vfat,xfs
   fips_enabled: false
   fqdn: search-esnode6.internal.softwareheritage.org
   gid: root
@@ -154,6 +154,9 @@ values:
   kernelrelease: 5.10.0-21-amd64
   kernelversion: 5.10.0
   kmods:
+    msdos:
+      parameters: {}
+      used_by: []
     thermal:
       parameters:
         act: '0'
@@ -184,6 +187,10 @@ values:
         mrp_periodic_time: '1000'
       used_by:
       - 8021q
+    xor:
+      parameters: {}
+      used_by:
+      - btrfs
     spurious:
       parameters:
         noirqdebug: N
@@ -237,6 +244,9 @@ values:
         devslp_idle_timeout: '1000'
       used_by:
       - ahci
+    minix:
+      parameters: {}
+      used_by: []
     tcp_cubic:
       parameters:
         hystart_detect: '3'
@@ -281,6 +291,9 @@ values:
       used_by:
       - crypto_simd
       - ghash_clmulni_intel
+    hfsplus:
+      parameters: {}
+      used_by: []
     shpchp:
       parameters:
         shpchp_poll_time: '0'
@@ -599,6 +612,9 @@ values:
       parameters:
         use_acpi_alarm: N
       used_by: []
+    jfs:
+      parameters: {}
+      used_by: []
     drm_kms_helper:
       parameters:
         drm_fbdev_overalloc: '100'
@@ -636,6 +652,11 @@ values:
         reset_seq: ''
         sysrq_downtime_ms: '0'
       used_by: []
+    cdrom:
+      parameters: {}
+      used_by:
+      - hfsplus
+      - hfs
     acpi_cpufreq:
       parameters:
         acpi_pstate_strict: '0'
@@ -783,6 +804,13 @@ values:
       parameters:
         force_cap_on: N
       used_by: []
+    blake2b_generic:
+      parameters: {}
+      used_by: []
+    raid6_pq:
+      parameters: {}
+      used_by:
+      - btrfs
     efivarfs:
       parameters: {}
       used_by: []
@@ -801,6 +829,11 @@ values:
         no_acpi: N
         use_acpi: N
       used_by: []
+    libcrc32c:
+      parameters: {}
+      used_by:
+      - btrfs
+      - xfs
     8021q:
       parameters: {}
       used_by: []
@@ -817,6 +850,9 @@ values:
         compressor: lzo
         zpool: zbud
         accept_threshold_percent: '90'
+      used_by: []
+    qnx4:
+      parameters: {}
       used_by: []
     mgag200:
       parameters:
@@ -920,7 +956,13 @@ values:
         tcp_slot_table_entries: '2'
         auth_max_cred_cachesize: '18446744073709551615'
       used_by: []
+    btrfs:
+      parameters: {}
+      used_by: []
     bnxt_en:
+      parameters: {}
+      used_by: []
+    ufs:
       parameters: {}
       used_by: []
     pps_core:
@@ -1021,6 +1063,9 @@ values:
         qlowmark: '100'
         qovld: '20000'
       used_by: []
+    xfs:
+      parameters: {}
+      used_by: []
     button:
       parameters:
         lid_init_state: ignore open [method] disabled
@@ -1054,6 +1099,9 @@ values:
       - stp
       - garp
     aesni_intel:
+      parameters: {}
+      used_by: []
+    hfs:
       parameters: {}
       used_by: []
     block:
@@ -1285,6 +1333,7 @@ values:
     fat:
       parameters: {}
       used_by:
+      - msdos
       - vfat
     jbd2:
       parameters: {}
@@ -1307,15 +1356,15 @@ values:
       - 8021q
   letsencrypt_directory: {}
   load_averages:
-    15m: 0.66
-    1m: 0.67
-    5m: 0.9
+    15m: 1.03
+    1m: 0.4
+    5m: 0.6
   lsbdistcodename: bullseye
   lsbdistdescription: Debian GNU/Linux 11 (bullseye)
   lsbdistid: Debian
-  lsbdistrelease: '11.6'
+  lsbdistrelease: '11.7'
   lsbmajdistrelease: '11'
-  lsbminordistrelease: '6'
+  lsbminordistrelease: '7'
   macaddress: 2c:ea:7f:a5:3d:9f
   macaddress_bond0: 2c:ea:7f:a5:3d:9f
   macaddress_bond0.440: 2c:ea:7f:a5:3d:9f
@@ -1326,22 +1375,22 @@ values:
   manufacturer: Dell Inc.
   memory:
     system:
-      available: 10.65 GiB
-      available_bytes: 11434012672
-      capacity: 82.96%
+      available: 10.35 GiB
+      available_bytes: 11114676224
+      capacity: 83.43%
       total: 62.48 GiB
       total_bytes: 67091202048
-      used: 51.83 GiB
-      used_bytes: 55657189376
-  memoryfree: 10.65 GiB
-  memoryfree_mb: 10904.32421875
+      used: 52.13 GiB
+      used_bytes: 55976525824
+  memoryfree: 10.35 GiB
+  memoryfree_mb: 10599.78125
   memorysize: 62.48 GiB
   memorysize_mb: 63983.15625
   mountpoints:
     "/":
-      available: 123.47 GiB
-      available_bytes: 132571422720
-      capacity: 3.96%
+      available: 123.27 GiB
+      available_bytes: 132357496832
+      capacity: 4.11%
       device: "/dev/mapper/search--esnode6--vg-root"
       filesystem: ext4
       options:
@@ -1350,12 +1399,12 @@ values:
       - errors=remount-ro
       size: 135.51 GiB
       size_bytes: 145498533888
-      used: 5.09 GiB
-      used_bytes: 5461671936
+      used: 5.29 GiB
+      used_bytes: 5675597824
     "/boot":
-      available: 359.00 MiB
-      available_bytes: 376436736
-      capacity: 19.50%
+      available: 358.96 MiB
+      available_bytes: 376392704
+      capacity: 19.51%
       device: "/dev/sdg2"
       filesystem: ext2
       options:
@@ -1364,12 +1413,12 @@ values:
       - stripe=4
       size: 470.35 MiB
       size_bytes: 493201408
-      used: 86.96 MiB
-      used_bytes: 91180032
+      used: 87.00 MiB
+      used_bytes: 91224064
     "/boot/efi":
-      available: 507.56 MiB
-      available_bytes: 532213760
-      capacity: 0.67%
+      available: 505.18 MiB
+      available_bytes: 529723392
+      capacity: 1.14%
       device: "/dev/sdg1"
       filesystem: vfat
       options:
@@ -1384,8 +1433,8 @@ values:
       - errors=remount-ro
       size: 510.98 MiB
       size_bytes: 535805952
-      used: 3.43 MiB
-      used_bytes: 3592192
+      used: 5.80 MiB
+      used_bytes: 6082560
     "/dev":
       available: 31.19 GiB
       available_bytes: 33492094976
@@ -1467,7 +1516,7 @@ values:
       used_bytes: 0
     "/run":
       available: 6.25 GiB
-      available_bytes: 6706008064
+      available_bytes: 6706003968
       capacity: 0.05%
       device: tmpfs
       filesystem: tmpfs
@@ -1482,7 +1531,7 @@ values:
       size: 6.25 GiB
       size_bytes: 6709121024
       used: 2.97 MiB
-      used_bytes: 3112960
+      used_bytes: 3117056
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -1514,9 +1563,9 @@ values:
       used: 0 bytes
       used_bytes: 0
     "/srv/elasticsearch/nodes":
-      available: 6.34 TiB
-      available_bytes: 6973379051520
-      capacity: 5.63%
+      available: 6.31 TiB
+      available_bytes: 6940457959424
+      capacity: 6.07%
       device: data/elasticsearch
       filesystem: zfs
       options:
@@ -1525,9 +1574,9 @@ values:
       - xattr
       - noacl
       size: 6.72 TiB
-      size_bytes: 7389223321600
-      used: 387.29 GiB
-      used_bytes: 415844270080
+      size_bytes: 7389210345472
+      used: 417.93 GiB
+      used_bytes: 448752386048
   mounts:
   - "/"
   - "/boot"
@@ -1630,7 +1679,7 @@ values:
     scope6: link
   operatingsystem: Debian
   operatingsystemmajrelease: '11'
-  operatingsystemrelease: '11.6'
+  operatingsystemrelease: '11.7'
   os:
     architecture: amd64
     distro:
@@ -1638,16 +1687,16 @@ values:
       description: Debian GNU/Linux 11 (bullseye)
       id: Debian
       release:
-        full: '11.6'
+        full: '11.7'
         major: '11'
-        minor: '6'
+        minor: '7'
     family: Debian
     hardware: x86_64
     name: Debian
     release:
-      full: '11.6'
+      full: '11.7'
       major: '11'
-      minor: '6'
+      minor: '7'
     selinux:
       enabled: false
   osfamily: Debian
@@ -1851,10 +1900,10 @@ values:
     short: search-esnode6
     internal_fqdn: search-esnode6.internal.softwareheritage.org
   system_uptime:
-    days: 42
-    hours: 1009
-    seconds: 3633233
-    uptime: 42 days
+    days: 84
+    hours: 2019
+    seconds: 7269234
+    uptime: 84 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -1868,15 +1917,15 @@ values:
     systemd-time-wait-sync.service: disabled
   systemd_version: '247'
   timezone: UTC
-  uptime: 42 days
-  uptime_days: 42
-  uptime_hours: 1009
-  uptime_seconds: 3633233
+  uptime: 84 days
+  uptime_days: 84
+  uptime_hours: 2019
+  uptime_seconds: 7269234
   uuid: 4c4c4544-0053-5a10-8053-b3c04f514433
   vcsrepo_svn_ver: ''
   virtual: physical
   clientcert: search-esnode6.internal.softwareheritage.org
   clientversion: 5.5.22
   clientnoop: false
-timestamp: '2023-03-28T10:03:04.592884370+00:00'
-expiration: '2023-03-28T10:33:04.594395112+00:00'
+timestamp: '2023-05-09T12:03:04.902290596+00:00'
+expiration: '2023-05-09T12:33:04.903728382+00:00'

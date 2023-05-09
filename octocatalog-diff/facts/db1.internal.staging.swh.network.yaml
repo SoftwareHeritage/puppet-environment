@@ -35,10 +35,10 @@ values:
   - postgresql-client-12
   - postgresql-12
   - postgresql-client-14
-  apt_reboot_required: false
+  apt_reboot_required: true
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1679994842
+  apt_update_last_success: 1683630855
   apt_updates: 11
   architecture: amd64
   bios_release_date: 11/21/2019
@@ -207,7 +207,7 @@ values:
       vardir: "/var/lib/puppet"
       server: pergamon.internal.softwareheritage.org
   facterversion: 3.14.12
-  filesystems: ext2,ext3,ext4,vfat
+  filesystems: btrfs,ext2,ext3,ext4,hfs,hfsplus,jfs,minix,msdos,qnx4,ufs,vfat,xfs
   fips_enabled: false
   fqdn: db1.internal.staging.swh.network
   gid: root
@@ -243,6 +243,9 @@ values:
       parameters: {}
       used_by:
       - ixgbe
+    msdos:
+      parameters: {}
+      used_by: []
     thermal:
       parameters:
         act: '0'
@@ -281,6 +284,7 @@ values:
       parameters: {}
       used_by:
       - async_xor
+      - btrfs
     spurious:
       parameters:
         noirqdebug: N
@@ -321,6 +325,9 @@ values:
     ipmi_devintf:
       parameters: {}
       used_by: []
+    cpuid:
+      parameters: {}
+      used_by: []
     crct10dif_common:
       parameters: {}
       used_by:
@@ -335,6 +342,9 @@ values:
         devslp_idle_timeout: '1000'
       used_by:
       - ahci
+    minix:
+      parameters: {}
+      used_by: []
     tcp_cubic:
       parameters:
         hystart_detect: '3'
@@ -404,6 +414,9 @@ values:
       - linear
       - raid456
       - multipath
+    hfsplus:
+      parameters: {}
+      used_by: []
     shpchp:
       parameters:
         shpchp_poll_time: '0'
@@ -746,6 +759,9 @@ values:
       parameters:
         use_acpi_alarm: N
       used_by: []
+    jfs:
+      parameters: {}
+      used_by: []
     drbg:
       parameters: {}
       used_by: []
@@ -783,6 +799,11 @@ values:
         reset_seq: ''
         sysrq_downtime_ms: '0'
       used_by: []
+    cdrom:
+      parameters: {}
+      used_by:
+      - hfsplus
+      - hfs
     ehci_pci:
       parameters: {}
       used_by: []
@@ -950,6 +971,9 @@ values:
       parameters:
         force_cap_on: N
       used_by: []
+    blake2b_generic:
+      parameters: {}
+      used_by: []
     ansi_cprng:
       parameters: {}
       used_by: []
@@ -957,6 +981,7 @@ values:
       parameters: {}
       used_by:
       - async_pq
+      - btrfs
       - raid456
       - async_raid6_recov
     efivarfs:
@@ -994,6 +1019,8 @@ values:
     libcrc32c:
       parameters: {}
       used_by:
+      - btrfs
+      - xfs
       - raid456
     8021q:
       parameters: {}
@@ -1023,6 +1050,9 @@ values:
     raid10:
       parameters:
         max_queued_requests: '1024'
+      used_by: []
+    qnx4:
+      parameters: {}
       used_by: []
     intel_cstate:
       parameters: {}
@@ -1197,6 +1227,9 @@ values:
       parameters: {}
       used_by:
       - i2c_i801
+    btrfs:
+      parameters: {}
+      used_by: []
     bluetooth:
       parameters:
         disable_ertm: N
@@ -1210,6 +1243,9 @@ values:
         ioat_interrupt_style: msix
         ioat_pending_level: '7'
         ioat_dca_enabled: '1'
+      used_by: []
+    ufs:
+      parameters: {}
       used_by: []
     hid_generic:
       parameters: {}
@@ -1306,6 +1342,9 @@ values:
         qlowmark: '100'
         qovld: '20000'
       used_by: []
+    xfs:
+      parameters: {}
+      used_by: []
     drm_ttm_helper:
       parameters: {}
       used_by:
@@ -1350,6 +1389,9 @@ values:
       - stp
       - garp
     aesni_intel:
+      parameters: {}
+      used_by: []
+    hfs:
       parameters: {}
       used_by: []
     block:
@@ -1591,6 +1633,7 @@ values:
     fat:
       parameters: {}
       used_by:
+      - msdos
       - vfat
     mpt3sas:
       parameters:
@@ -1639,15 +1682,15 @@ values:
       - 8021q
   letsencrypt_directory: {}
   load_averages:
-    15m: 9.01
-    1m: 11.21
-    5m: 9.56
+    15m: 9.82
+    1m: 7.29
+    5m: 9.37
   lsbdistcodename: bullseye
   lsbdistdescription: Debian GNU/Linux 11 (bullseye)
   lsbdistid: Debian
-  lsbdistrelease: '11.6'
+  lsbdistrelease: '11.7'
   lsbmajdistrelease: '11'
-  lsbminordistrelease: '6'
+  lsbminordistrelease: '7'
   macaddress: ac:1f:6b:2d:6e:9c
   macaddress_bond0: ac:1f:6b:2d:6e:9c
   macaddress_eno1: ac:1f:6b:05:e5:96
@@ -1658,22 +1701,22 @@ values:
   manufacturer: Supermicro
   memory:
     system:
-      available: 36.39 GiB
-      available_bytes: 39077593088
-      capacity: 61.37%
+      available: 36.58 GiB
+      available_bytes: 39281344512
+      capacity: 61.17%
       total: 94.20 GiB
       total_bytes: 101151248384
-      used: 57.81 GiB
-      used_bytes: 62073655296
-  memoryfree: 36.39 GiB
-  memoryfree_mb: 37267.296875
+      used: 57.62 GiB
+      used_bytes: 61869903872
+  memoryfree: 36.58 GiB
+  memoryfree_mb: 37461.609375
   memorysize: 94.20 GiB
   memorysize_mb: 96465.34765625
   mountpoints:
     "/":
-      available: 14.23 GiB
-      available_bytes: 15283286016
-      capacity: 23.65%
+      available: 14.27 GiB
+      available_bytes: 15323631616
+      capacity: 23.45%
       device: "/dev/mapper/ssd-root"
       filesystem: ext2
       options:
@@ -1682,12 +1725,12 @@ values:
       - errors=remount-ro
       size: 19.64 GiB
       size_bytes: 21091799040
-      used: 4.41 GiB
-      used_bytes: 4734771200
+      used: 4.37 GiB
+      used_bytes: 4694425600
     "/boot/efi":
-      available: 482.62 MiB
-      available_bytes: 506060800
-      capacity: 0.70%
+      available: 480.24 MiB
+      available_bytes: 503570432
+      capacity: 1.19%
       device: "/dev/sda1"
       filesystem: vfat
       options:
@@ -1702,8 +1745,8 @@ values:
       - errors=remount-ro
       size: 486.03 MiB
       size_bytes: 509640704
-      used: 3.41 MiB
-      used_bytes: 3579904
+      used: 5.79 MiB
+      used_bytes: 6070272
     "/dev":
       available: 47.08 GiB
       available_bytes: 50552438784
@@ -1771,7 +1814,7 @@ values:
       used_bytes: 0
     "/dev/shm":
       available: 47.10 GiB
-      available_bytes: 50575167488
+      available_bytes: 50574565376
       capacity: 0.00%
       device: tmpfs
       filesystem: tmpfs
@@ -1781,11 +1824,11 @@ values:
       - nodev
       size: 47.10 GiB
       size_bytes: 50575622144
-      used: 444.00 KiB
-      used_bytes: 454656
+      used: 1.01 MiB
+      used_bytes: 1056768
     "/run":
       available: 9.42 GiB
-      available_bytes: 10113105920
+      available_bytes: 10113396736
       capacity: 0.02%
       device: tmpfs
       filesystem: tmpfs
@@ -1799,8 +1842,8 @@ values:
       - mode=755
       size: 9.42 GiB
       size_bytes: 10115125248
-      used: 1.93 MiB
-      used_bytes: 2019328
+      used: 1.65 MiB
+      used_bytes: 1728512
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -1869,29 +1912,9 @@ values:
       size_bytes: 10115121152
       used: 0 bytes
       used_bytes: 0
-    "/run/user/113":
-      available: 9.42 GiB
-      available_bytes: 10115121152
-      capacity: 0%
-      device: tmpfs
-      filesystem: tmpfs
-      options:
-      - rw
-      - nosuid
-      - nodev
-      - relatime
-      - size=9878048k
-      - nr_inodes=2469512
-      - mode=700
-      - uid=113
-      - gid=119
-      size: 9.42 GiB
-      size_bytes: 10115121152
-      used: 0 bytes
-      used_bytes: 0
     "/srv/softwareheritage/postgres":
-      available: 4.64 TiB
-      available_bytes: 5102231093248
+      available: 5.23 TiB
+      available_bytes: 5746839650304
       capacity: 0.00%
       device: data/postgres-misc
       filesystem: zfs
@@ -1900,13 +1923,13 @@ values:
       - relatime
       - xattr
       - posixacl
-      size: 4.64 TiB
-      size_bytes: 5102231224320
+      size: 5.23 TiB
+      size_bytes: 5746839781376
       used: 128.00 KiB
       used_bytes: 131072
     "/srv/softwareheritage/postgres/12/indexer":
-      available: 4.64 TiB
-      available_bytes: 5102231093248
+      available: 5.23 TiB
+      available_bytes: 5746839650304
       capacity: 0.00%
       device: data/postgres-indexer-12
       filesystem: zfs
@@ -1915,14 +1938,14 @@ values:
       - relatime
       - xattr
       - posixacl
-      size: 4.64 TiB
-      size_bytes: 5102231224320
+      size: 5.23 TiB
+      size_bytes: 5746839781376
       used: 128.00 KiB
       used_bytes: 131072
     "/srv/softwareheritage/postgres/12/main":
-      available: 4.64 TiB
-      available_bytes: 5102231093248
-      capacity: 18.35%
+      available: 5.23 TiB
+      available_bytes: 5746839650304
+      capacity: 16.79%
       device: data/postgres-main-12
       filesystem: zfs
       options:
@@ -1930,13 +1953,13 @@ values:
       - relatime
       - xattr
       - posixacl
-      size: 5.68 TiB
-      size_bytes: 6248935063552
-      used: 1.04 TiB
-      used_bytes: 1146703970304
+      size: 6.28 TiB
+      size_bytes: 6906795130880
+      used: 1.05 TiB
+      used_bytes: 1159955480576
     "/srv/softwareheritage/postgres/12/secondary":
-      available: 4.64 TiB
-      available_bytes: 5102231093248
+      available: 5.23 TiB
+      available_bytes: 5746839650304
       capacity: 0.00%
       device: data/postgres-secondary-12
       filesystem: zfs
@@ -1945,8 +1968,8 @@ values:
       - relatime
       - xattr
       - posixacl
-      size: 4.64 TiB
-      size_bytes: 5102231224320
+      size: 5.23 TiB
+      size_bytes: 5746839781376
       used: 128.00 KiB
       used_bytes: 131072
   mounts:
@@ -2053,7 +2076,7 @@ values:
     scope6: link
   operatingsystem: Debian
   operatingsystemmajrelease: '11'
-  operatingsystemrelease: '11.6'
+  operatingsystemrelease: '11.7'
   os:
     architecture: amd64
     distro:
@@ -2061,16 +2084,16 @@ values:
       description: Debian GNU/Linux 11 (bullseye)
       id: Debian
       release:
-        full: '11.6'
+        full: '11.7'
         major: '11'
-        minor: '6'
+        minor: '7'
     family: Debian
     hardware: x86_64
     name: Debian
     release:
-      full: '11.6'
+      full: '11.7'
       major: '11'
-      minor: '6'
+      minor: '7'
     selinux:
       enabled: false
   osfamily: Debian
@@ -2376,10 +2399,10 @@ values:
     short: db1
     internal_fqdn: db1.internal.staging.swh.network
   system_uptime:
-    days: 41
-    hours: 1006
-    seconds: 3621783
-    uptime: 41 days
+    days: 84
+    hours: 2016
+    seconds: 7259583
+    uptime: 84 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -2393,15 +2416,15 @@ values:
     systemd-time-wait-sync.service: disabled
   systemd_version: '247'
   timezone: UTC
-  uptime: 41 days
-  uptime_days: 41
-  uptime_hours: 1006
-  uptime_seconds: 3621783
+  uptime: 84 days
+  uptime_days: 84
+  uptime_hours: 2016
+  uptime_seconds: 7259583
   uuid: 00000000-0000-0000-0000-ac1f6b05e596
   vcsrepo_svn_ver: ''
   virtual: physical
   clientcert: db1.internal.staging.swh.network
   clientversion: 5.5.22
   clientnoop: false
-timestamp: '2023-03-28T09:41:13.718385937+00:00'
-expiration: '2023-03-28T10:11:13.721614990+00:00'
+timestamp: '2023-05-09T12:11:10.816480627+00:00'
+expiration: '2023-05-09T12:41:10.819207411+00:00'

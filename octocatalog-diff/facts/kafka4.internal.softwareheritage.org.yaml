@@ -17,10 +17,10 @@ values:
   - icinga2-bin
   - icinga2-common
   - icinga2-doc
-  apt_reboot_required: false
+  apt_reboot_required: true
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1679994663
+  apt_update_last_success: 1683634262
   apt_updates: 4
   architecture: amd64
   bios_release_date: 06/17/2022
@@ -163,7 +163,7 @@ values:
       vardir: "/var/lib/puppet"
       server: pergamon.internal.softwareheritage.org
   facterversion: 3.14.12
-  filesystems: ext2,ext3,ext4,vfat
+  filesystems: btrfs,ext2,ext3,ext4,hfs,hfsplus,jfs,minix,msdos,qnx4,ufs,vfat,xfs
   fips_enabled: false
   fqdn: kafka4.internal.softwareheritage.org
   gid: root
@@ -202,6 +202,9 @@ values:
   kernelrelease: 5.10.0-21-amd64
   kernelversion: 5.10.0
   kmods:
+    msdos:
+      parameters: {}
+      used_by: []
     thermal:
       parameters:
         act: '0'
@@ -240,6 +243,7 @@ values:
       parameters: {}
       used_by:
       - async_xor
+      - btrfs
     spurious:
       parameters:
         noirqdebug: N
@@ -276,6 +280,9 @@ values:
     ipmi_devintf:
       parameters: {}
       used_by: []
+    cpuid:
+      parameters: {}
+      used_by: []
     crct10dif_common:
       parameters: {}
       used_by:
@@ -290,6 +297,9 @@ values:
         devslp_idle_timeout: '1000'
       used_by:
       - ahci
+    minix:
+      parameters: {}
+      used_by: []
     tcp_cubic:
       parameters:
         hystart_detect: '3'
@@ -355,6 +365,9 @@ values:
       - linear
       - raid456
       - multipath
+    hfsplus:
+      parameters: {}
+      used_by: []
     shpchp:
       parameters:
         shpchp_poll_time: '0'
@@ -687,6 +700,12 @@ values:
       parameters:
         use_acpi_alarm: N
       used_by: []
+    tcp_diag:
+      parameters: {}
+      used_by: []
+    jfs:
+      parameters: {}
+      used_by: []
     drm_kms_helper:
       parameters:
         drm_fbdev_overalloc: '100'
@@ -724,6 +743,11 @@ values:
         reset_seq: ''
         sysrq_downtime_ms: '0'
       used_by: []
+    cdrom:
+      parameters: {}
+      used_by:
+      - hfsplus
+      - hfs
     libphy:
       parameters: {}
       used_by:
@@ -855,10 +879,14 @@ values:
       parameters:
         force_cap_on: N
       used_by: []
+    blake2b_generic:
+      parameters: {}
+      used_by: []
     raid6_pq:
       parameters: {}
       used_by:
       - async_pq
+      - btrfs
       - raid456
       - async_raid6_recov
     efivarfs:
@@ -892,6 +920,8 @@ values:
     libcrc32c:
       parameters: {}
       used_by:
+      - btrfs
+      - xfs
       - raid456
     8021q:
       parameters: {}
@@ -917,6 +947,9 @@ values:
     raid10:
       parameters:
         max_queued_requests: '1024'
+      used_by: []
+    qnx4:
+      parameters: {}
       used_by: []
     intel_cstate:
       parameters: {}
@@ -1050,7 +1083,13 @@ values:
       parameters: {}
       used_by:
       - i2c_i801
+    btrfs:
+      parameters: {}
+      used_by: []
     bnxt_en:
+      parameters: {}
+      used_by: []
+    ufs:
       parameters: {}
       used_by: []
     pps_core:
@@ -1154,6 +1193,9 @@ values:
         default_dsm_family: "-1"
       used_by:
       - skx_edac
+    xfs:
+      parameters: {}
+      used_by: []
     i2c_i801:
       parameters:
         disable_features: '0'
@@ -1194,6 +1236,9 @@ values:
       - stp
       - garp
     aesni_intel:
+      parameters: {}
+      used_by: []
+    hfs:
       parameters: {}
       used_by: []
     block:
@@ -1313,6 +1358,10 @@ values:
         def_reserved_size: '32768'
         allow_dio: '0'
       used_by: []
+    inet_diag:
+      parameters: {}
+      used_by:
+      - tcp_diag
     kvm_intel:
       parameters:
         enlightened_vmcs: N
@@ -1453,6 +1502,7 @@ values:
     fat:
       parameters: {}
       used_by:
+      - msdos
       - vfat
     jbd2:
       parameters: {}
@@ -1475,16 +1525,16 @@ values:
       - 8021q
   letsencrypt_directory: {}
   load_averages:
-    15m: 3.39
-    1m: 5.39
-    5m: 3.39
+    15m: 6.54
+    1m: 6.59
+    5m: 5.84
   location: sesi_rocquencourt
   lsbdistcodename: bullseye
   lsbdistdescription: Debian GNU/Linux 11 (bullseye)
   lsbdistid: Debian
-  lsbdistrelease: '11.6'
+  lsbdistrelease: '11.7'
   lsbmajdistrelease: '11'
-  lsbminordistrelease: '6'
+  lsbminordistrelease: '7'
   macaddress: 4c:d9:8f:c3:3d:92
   macaddress_bond0: 4c:d9:8f:c3:3d:92
   macaddress_eno1: 4c:d9:8f:c0:e9:f6
@@ -1496,22 +1546,22 @@ values:
   manufacturer: Dell Inc.
   memory:
     system:
-      available: 44.93 GiB
-      available_bytes: 48241434624
-      capacity: 64.21%
+      available: 44.11 GiB
+      available_bytes: 47360385024
+      capacity: 64.86%
       total: 125.53 GiB
       total_bytes: 134787973120
-      used: 80.60 GiB
-      used_bytes: 86546538496
-  memoryfree: 44.93 GiB
-  memoryfree_mb: 46006.6171875
+      used: 81.42 GiB
+      used_bytes: 87427588096
+  memoryfree: 44.11 GiB
+  memoryfree_mb: 45166.3828125
   memorysize: 125.53 GiB
   memorysize_mb: 128543.828125
   mountpoints:
     "/":
-      available: 37.09 GiB
-      available_bytes: 39823011840
-      capacity: 20.07%
+      available: 36.50 GiB
+      available_bytes: 39191367680
+      capacity: 21.33%
       device: "/dev/mapper/kafka4--vg-root"
       filesystem: ext4
       options:
@@ -1520,11 +1570,11 @@ values:
       - errors=remount-ro
       size: 48.91 GiB
       size_bytes: 52521566208
-      used: 9.31 GiB
-      used_bytes: 9997422592
+      used: 9.90 GiB
+      used_bytes: 10629066752
     "/boot/efi":
-      available: 1016.21 MiB
-      available_bytes: 1065570304
+      available: 1016.18 MiB
+      available_bytes: 1065545728
       capacity: 0.57%
       device: "/dev/sdg1"
       filesystem: vfat
@@ -1540,8 +1590,8 @@ values:
       - errors=remount-ro
       size: 1021.98 MiB
       size_bytes: 1071628288
-      used: 5.78 MiB
-      used_bytes: 6057984
+      used: 5.80 MiB
+      used_bytes: 6082560
     "/dev":
       available: 62.74 GiB
       available_bytes: 67370848256
@@ -1623,7 +1673,7 @@ values:
       used_bytes: 0
     "/run":
       available: 12.55 GiB
-      available_bytes: 13476962304
+      available_bytes: 13476954112
       capacity: 0.01%
       device: tmpfs
       filesystem: tmpfs
@@ -1637,8 +1687,8 @@ values:
       - mode=755
       size: 12.55 GiB
       size_bytes: 13478797312
-      used: 1.75 MiB
-      used_bytes: 1835008
+      used: 1.76 MiB
+      used_bytes: 1843200
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -1670,9 +1720,9 @@ values:
       used: 0 bytes
       used_bytes: 0
     "/srv/kafka":
-      available: 17.71 TiB
-      available_bytes: 19474724945920
-      capacity: 37.09%
+      available: 16.83 TiB
+      available_bytes: 18507089575936
+      capacity: 40.21%
       device: data/kafka
       filesystem: zfs
       options:
@@ -1681,9 +1731,9 @@ values:
       - xattr
       - posixacl
       size: 28.15 TiB
-      size_bytes: 30954342055936
-      used: 10.44 TiB
-      used_bytes: 11479617110016
+      size_bytes: 30954310598656
+      used: 11.32 TiB
+      used_bytes: 12447221022720
   mounts:
   - "/"
   - "/boot/efi"
@@ -1808,7 +1858,7 @@ values:
     scope6: link
   operatingsystem: Debian
   operatingsystemmajrelease: '11'
-  operatingsystemrelease: '11.6'
+  operatingsystemrelease: '11.7'
   os:
     architecture: amd64
     distro:
@@ -1816,16 +1866,16 @@ values:
       description: Debian GNU/Linux 11 (bullseye)
       id: Debian
       release:
-        full: '11.6'
+        full: '11.7'
         major: '11'
-        minor: '6'
+        minor: '7'
     family: Debian
     hardware: x86_64
     name: Debian
     release:
-      full: '11.6'
+      full: '11.7'
       major: '11'
-      minor: '6'
+      minor: '7'
     selinux:
       enabled: false
   osfamily: Debian
@@ -2117,10 +2167,10 @@ values:
     short: kafka4
     internal_fqdn: kafka4.internal.softwareheritage.org
   system_uptime:
-    days: 41
-    hours: 1007
-    seconds: 3628702
-    uptime: 41 days
+    days: 84
+    hours: 2018
+    seconds: 7266503
+    uptime: 84 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -2134,15 +2184,15 @@ values:
     systemd-time-wait-sync.service: disabled
   systemd_version: '247'
   timezone: UTC
-  uptime: 41 days
-  uptime_days: 41
-  uptime_hours: 1007
-  uptime_seconds: 3628702
+  uptime: 84 days
+  uptime_days: 84
+  uptime_hours: 2018
+  uptime_seconds: 7266503
   uuid: 4c4c4544-0038-5910-8053-c3c04f563333
   vcsrepo_svn_ver: ''
   virtual: physical
   clientcert: kafka4.internal.softwareheritage.org
   clientversion: 5.5.22
   clientnoop: false
-timestamp: '2023-03-28T09:52:08.265513716+00:00'
-expiration: '2023-03-28T10:22:08.268871452+00:00'
+timestamp: '2023-05-09T12:22:07.661485178+00:00'
+expiration: '2023-05-09T12:52:07.664792936+00:00'
