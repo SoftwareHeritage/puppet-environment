@@ -239,6 +239,37 @@ vms = {
     :cpus        => 2,
     :environment => ENV_STAGING,
   },
+  "staging-cassandra1" => {
+    :hostname    => "cassandra1.internal.staging.swh.network",
+    :ip          => "10.168.130.181",
+    :type        => TYPE_AGENT,
+    :memory      => 3092,
+    :cpus        => 2,
+    :environment => ENV_STAGING,
+    :box         => debian11_box,
+    :box_url     => debian11_box_url,
+  },
+  "staging-cassandra2" => {
+    :hostname    => "cassandra2.internal.staging.swh.network",
+    :ip          => "10.168.130.182",
+    :type        => TYPE_AGENT,
+    :memory      => 3092,
+    :cpus        => 2,
+    :environment => ENV_STAGING,
+    :box         => debian11_box,
+    :box_url     => debian11_box_url,
+  },
+  "staging-cassandra3" => {
+    :hostname    => "cassandra3.internal.staging.swh.network",
+    :ip          => "10.168.130.183",
+    :type        => TYPE_AGENT,
+    :memory      => 3092,
+    :cpus        => 2,
+    :environment => ENV_STAGING,
+    :box         => debian11_box,
+    :box_url     => debian11_box_url,
+  },
+
   ################
   # ADMIN
   ################
