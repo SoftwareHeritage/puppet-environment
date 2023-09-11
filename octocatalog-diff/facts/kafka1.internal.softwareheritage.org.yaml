@@ -20,7 +20,7 @@ values:
   apt_reboot_required: true
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1683631863
+  apt_update_last_success: 1694435462
   apt_updates: 4
   architecture: amd64
   bios_release_date: 06/17/2022
@@ -195,8 +195,8 @@ values:
   java_default_home: "/usr/lib/jvm/java-11-openjdk-amd64"
   java_libjvm_path: "/usr/lib/jvm/java-11-openjdk-amd64/lib/server"
   java_major_version: '11'
-  java_patch_level: '18'
-  java_version: 11.0.18
+  java_patch_level: '20'
+  java_version: 11.0.20
   kernel: Linux
   kernelmajversion: '5.10'
   kernelrelease: 5.10.0-21-amd64
@@ -661,6 +661,10 @@ values:
         zfs_delay_scale: '500000'
         zfs_mg_fragmentation_threshold: '95'
       used_by: []
+    ecdh_generic:
+      parameters: {}
+      used_by:
+      - bluetooth
     crypto_simd:
       parameters: {}
       used_by:
@@ -670,11 +674,18 @@ values:
       used_by:
       - raid456
       - async_raid6_recov
+    nfnetlink:
+      parameters: {}
+      used_by: []
     srcutree:
       parameters:
         exp_holdoff: '25000'
         counter_wrap_check: '4611686018427387903'
       used_by: []
+    ecc:
+      parameters: {}
+      used_by:
+      - ecdh_generic
     rcupdate:
       parameters:
         rcu_task_ipi_delay: '0'
@@ -704,6 +715,9 @@ values:
       parameters: {}
       used_by: []
     jfs:
+      parameters: {}
+      used_by: []
+    drbg:
       parameters: {}
       used_by: []
     drm_kms_helper:
@@ -812,6 +826,7 @@ values:
     crc16:
       parameters: {}
       used_by:
+      - bluetooth
       - ext4
     mousedev:
       parameters:
@@ -873,6 +888,7 @@ values:
     libaes:
       parameters: {}
       used_by:
+      - bluetooth
       - aesni_intel
     mei:
       parameters: {}
@@ -883,6 +899,9 @@ values:
         force_cap_on: N
       used_by: []
     blake2b_generic:
+      parameters: {}
+      used_by: []
+    ansi_cprng:
       parameters: {}
       used_by: []
     raid6_pq:
@@ -1039,6 +1058,11 @@ values:
         noblk: N
       used_by:
       - nfit
+    rfkill:
+      parameters:
+        default_state: '1'
+      used_by:
+      - bluetooth
     intel_powerclamp:
       parameters:
         duration: '24'
@@ -1095,6 +1119,12 @@ values:
     btrfs:
       parameters: {}
       used_by: []
+    bluetooth:
+      parameters:
+        disable_ertm: N
+        disable_esco: N
+        enable_ecred: N
+      used_by: []
     bnxt_en:
       parameters: {}
       used_by: []
@@ -1105,6 +1135,9 @@ values:
       parameters: {}
       used_by:
       - ptp
+    jitterentropy_rng:
+      parameters: {}
+      used_by: []
     slab_common:
       parameters:
         usercopy_fallback: N
@@ -1545,9 +1578,9 @@ values:
       - 8021q
   letsencrypt_directory: {}
   load_averages:
-    15m: 7.37
-    1m: 10.3
-    5m: 8.84
+    15m: 3.91
+    1m: 5.36
+    5m: 4.15
   location: sesi_rocquencourt
   lsbdistcodename: bullseye
   lsbdistdescription: Debian GNU/Linux 11 (bullseye)
@@ -1566,22 +1599,22 @@ values:
   manufacturer: Dell Inc.
   memory:
     system:
-      available: 43.00 GiB
-      available_bytes: 46175907840
-      capacity: 65.74%
+      available: 45.40 GiB
+      available_bytes: 48744632320
+      capacity: 63.84%
       total: 125.53 GiB
       total_bytes: 134787973120
-      used: 82.53 GiB
-      used_bytes: 88612065280
-  memoryfree: 43.00 GiB
-  memoryfree_mb: 44036.77734375
+      used: 80.13 GiB
+      used_bytes: 86043340800
+  memoryfree: 45.40 GiB
+  memoryfree_mb: 46486.50390625
   memorysize: 125.53 GiB
   memorysize_mb: 128543.828125
   mountpoints:
     "/":
-      available: 36.12 GiB
-      available_bytes: 38785409024
-      capacity: 22.15%
+      available: 35.27 GiB
+      available_bytes: 37875761152
+      capacity: 23.98%
       device: "/dev/mapper/kafka1--vg-root"
       filesystem: ext4
       options:
@@ -1590,8 +1623,8 @@ values:
       - errors=remount-ro
       size: 48.91 GiB
       size_bytes: 52521566208
-      used: 10.28 GiB
-      used_bytes: 11035025408
+      used: 11.12 GiB
+      used_bytes: 11944673280
     "/boot/efi":
       available: 1016.18 MiB
       available_bytes: 1065545728
@@ -1693,7 +1726,7 @@ values:
       used_bytes: 0
     "/run":
       available: 12.55 GiB
-      available_bytes: 13476925440
+      available_bytes: 13476913152
       capacity: 0.01%
       device: tmpfs
       filesystem: tmpfs
@@ -1707,8 +1740,8 @@ values:
       - mode=755
       size: 12.55 GiB
       size_bytes: 13478797312
-      used: 1.79 MiB
-      used_bytes: 1871872
+      used: 1.80 MiB
+      used_bytes: 1884160
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -1760,9 +1793,9 @@ values:
       used: 0 bytes
       used_bytes: 0
     "/srv/kafka":
-      available: 16.80 TiB
-      available_bytes: 18475138416640
-      capacity: 40.31%
+      available: 15.24 TiB
+      available_bytes: 16752261988352
+      capacity: 45.88%
       device: data/kafka
       filesystem: zfs
       options:
@@ -1771,9 +1804,9 @@ values:
       - xattr
       - posixacl
       size: 28.15 TiB
-      size_bytes: 30954301161472
-      used: 11.35 TiB
-      used_bytes: 12479162744832
+      size_bytes: 30954437476352
+      used: 12.92 TiB
+      used_bytes: 14202175488000
   mounts:
   - "/"
   - "/boot/efi"
@@ -2213,10 +2246,10 @@ values:
     short: kafka1
     internal_fqdn: kafka1.internal.softwareheritage.org
   system_uptime:
-    days: 102
-    hours: 2466
-    seconds: 8880879
-    uptime: 102 days
+    days: 227
+    hours: 5467
+    seconds: 19684478
+    uptime: 227 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -2230,15 +2263,15 @@ values:
     systemd-time-wait-sync.service: disabled
   systemd_version: '247'
   timezone: UTC
-  uptime: 102 days
-  uptime_days: 102
-  uptime_hours: 2466
-  uptime_seconds: 8880879
+  uptime: 227 days
+  uptime_days: 227
+  uptime_hours: 5467
+  uptime_seconds: 19684478
   uuid: 4c4c4544-0038-5910-8053-c6c04f563333
   vcsrepo_svn_ver: ''
   virtual: physical
   clientcert: kafka1.internal.softwareheritage.org
   clientversion: 5.5.22
   clientnoop: false
-timestamp: '2023-05-09T12:03:09.054937475+00:00'
-expiration: '2023-05-09T12:33:09.056730937+00:00'
+timestamp: '2023-09-11T13:03:07.231382766+00:00'
+expiration: '2023-09-11T13:33:07.233242571+00:00'

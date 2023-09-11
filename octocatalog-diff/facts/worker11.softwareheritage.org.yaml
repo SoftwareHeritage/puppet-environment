@@ -2,20 +2,22 @@
 name: worker11.softwareheritage.org
 values:
   agent_specified_environment: production
-  apt_dist_updates: 1
+  apt_dist_updates: 2
   apt_has_dist_updates: true
   apt_has_updates: true
   apt_package_dist_updates:
   - python3-swh.journal
+  - python3-swh.scheduler
   apt_package_security_dist_updates: []
   apt_package_security_updates: []
   apt_package_updates:
   - python3-swh.journal
+  - python3-swh.scheduler
   apt_reboot_required: false
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1683630362
-  apt_updates: 1
+  apt_update_last_success: 1693839962
+  apt_updates: 2
   architecture: amd64
   augeas:
     version: 1.11.0
@@ -764,9 +766,9 @@ values:
       - ttm
   letsencrypt_directory: {}
   load_averages:
-    15m: 1.25
-    1m: 1.17
-    5m: 1.2
+    15m: 0.95
+    1m: 1.07
+    5m: 0.98
   location: sesi_rocquencourt
   lsbdistcodename: buster
   lsbdistdescription: Debian GNU/Linux 10 (buster)
@@ -779,30 +781,30 @@ values:
   manufacturer: QEMU
   memory:
     swap:
-      available: 96.41 GiB
-      available_bytes: 103521931264
-      capacity: 3.59%
+      available: 99.35 GiB
+      available_bytes: 106680999936
+      capacity: 0.65%
       total: 100.00 GiB
       total_bytes: 107374178304
-      used: 3.59 GiB
-      used_bytes: 3852247040
+      used: 661.07 MiB
+      used_bytes: 693178368
     system:
-      available: 11.43 GiB
-      available_bytes: 12274335744
-      capacity: 27.00%
+      available: 12.26 GiB
+      available_bytes: 13162041344
+      capacity: 21.72%
       total: 15.66 GiB
       total_bytes: 16813404160
-      used: 4.23 GiB
-      used_bytes: 4539068416
-  memoryfree: 11.43 GiB
-  memoryfree_mb: 11705.71875
+      used: 3.40 GiB
+      used_bytes: 3651362816
+  memoryfree: 12.26 GiB
+  memoryfree_mb: 12552.30078125
   memorysize: 15.66 GiB
   memorysize_mb: 16034.51171875
   mountpoints:
     "/":
-      available: 31.41 GiB
-      available_bytes: 33728540672
-      capacity: 19.86%
+      available: 31.83 GiB
+      available_bytes: 34177040384
+      capacity: 18.80%
       device: "/dev/mapper/worker11--vg-root"
       filesystem: ext4
       options:
@@ -811,11 +813,11 @@ values:
       - errors=remount-ro
       size: 39.20 GiB
       size_bytes: 42089644032
-      used: 7.79 GiB
-      used_bytes: 8361103360
+      used: 7.37 GiB
+      used_bytes: 7912603648
     "/dev/shm":
       available: 7.83 GiB
-      available_bytes: 8405446656
+      available_bytes: 8405839872
       capacity: 0.01%
       device: tmpfs
       filesystem: tmpfs
@@ -825,12 +827,12 @@ values:
       - nodev
       size: 7.83 GiB
       size_bytes: 8406700032
-      used: 1.20 MiB
-      used_bytes: 1253376
+      used: 840.00 KiB
+      used_bytes: 860160
     "/run":
       available: 1.57 GiB
-      available_bytes: 1680732160
-      capacity: 0.04%
+      available_bytes: 1680760832
+      capacity: 0.03%
       device: tmpfs
       filesystem: tmpfs
       options:
@@ -842,8 +844,8 @@ values:
       - mode=755
       size: 1.57 GiB
       size_bytes: 1681342464
-      used: 596.00 KiB
-      used_bytes: 610304
+      used: 568.00 KiB
+      used_bytes: 581632
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -861,9 +863,9 @@ values:
       size_bytes: 5242880
       used: 0 bytes
       used_bytes: 0
-    "/run/user/1003":
-      available: 1.55 GiB
-      available_bytes: 1660366848
+    "/run/user/0":
+      available: 1.57 GiB
+      available_bytes: 1681338368
       capacity: 0%
       device: tmpfs
       filesystem: tmpfs
@@ -872,13 +874,11 @@ values:
       - nosuid
       - nodev
       - relatime
-      - size=1621452k
-      - nr_inodes=405363
+      - size=1641932k
+      - nr_inodes=410483
       - mode=700
-      - uid=1003
-      - gid=1003
-      size: 1.55 GiB
-      size_bytes: 1660366848
+      size: 1.57 GiB
+      size_bytes: 1681338368
       used: 0 bytes
       used_bytes: 0
     "/sys/fs/cgroup":
@@ -900,9 +900,9 @@ values:
       used: 0 bytes
       used_bytes: 0
     "/tmp":
-      available: 99.52 GiB
-      available_bytes: 106862747648
-      capacity: 0.48%
+      available: 99.05 GiB
+      available_bytes: 106353598464
+      capacity: 0.95%
       device: tmpfs
       filesystem: tmpfs
       options:
@@ -915,8 +915,8 @@ values:
       - nr_inodes=209715200
       size: 100.00 GiB
       size_bytes: 107374178304
-      used: 487.74 MiB
-      used_bytes: 511430656
+      used: 973.30 MiB
+      used_bytes: 1020579840
   mounts:
   - "/"
   mtu_ens18: 1500
@@ -1039,7 +1039,7 @@ values:
       size: 40.00 GiB
       size_bytes: 42948624384
       uuid: dC98ta-eS6C-reaJ-Hmy9-f4ej-4ePb-R12RSp
-  path: "/usr/bin:/bin:/usr/sbin:/sbin"
+  path: "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
   physicalprocessorcount: 2
   processor0: Common KVM processor
   processor1: Common KVM processor
@@ -1110,8 +1110,8 @@ values:
   sshrsakey: AAAAB3NzaC1yc2EAAAADAQABAAABAQDl1FTCUWJ9hyJPIKtsXkZbX03tPY2gvcfhGOhYkoJ79U5F5Fuly9yUrToIZ05D7nXv9327xWhIuvoTgvL3lafpQ9VlpCqk3SSm5EJdFyENStKkOqY/BwhhZv9K0xdtZaCARe/iQGxzonCVwmkFDHi56vpEC0PVsRmPtGBT4mtzd8/pBZ3iTzbirTcYlR4TWSlqa8Nqq6mdZ5ss2358E1DASxOlOFcFIqaEd9R7zmxuIK96o0wL2MtTO2Gpj37HozaUDHOlbaAFyHBhNMvNWA6mMxJl+ntGQPo582CIZMCTqtOdH70ge9VubqnumR3Lm6uypzmVMi953NfHjwCMyCZ9
   subnet: sesi_rocquencourt
   sudoversion: 1.8.27
-  swapfree: 96.41 GiB
-  swapfree_mb: 98726.20703125
+  swapfree: 99.35 GiB
+  swapfree_mb: 101738.9296875
   swapsize: 100.00 GiB
   swapsize_mb: 102399.99609375
   swh_hostname:
@@ -1119,10 +1119,10 @@ values:
     short: worker11
     internal_fqdn: worker11.internal.softwareheritage.org
   system_uptime:
-    days: 102
-    hours: 2449
-    seconds: 8816876
-    uptime: 102 days
+    days: 10
+    hours: 247
+    seconds: 890841
+    uptime: 10 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -1137,15 +1137,15 @@ values:
     systemd-timesyncd.service: enabled
   systemd_version: '247'
   timezone: UTC
-  uptime: 102 days
-  uptime_days: 102
-  uptime_hours: 2449
-  uptime_seconds: 8816876
+  uptime: 10 days
+  uptime_days: 10
+  uptime_hours: 247
+  uptime_seconds: 890841
   uuid: 342cf7c8-f926-48e2-b8c6-78a3311a65eb
   vcsrepo_svn_ver: 1.10.4
   virtual: kvm
   clientcert: worker11.softwareheritage.org
   clientversion: 5.5.10
   clientnoop: false
-timestamp: '2023-05-09T12:05:05.958465738+00:00'
-expiration: '2023-05-09T12:35:05.959340992+00:00'
+timestamp: '2023-09-04T15:52:48.462939135+00:00'
+expiration: '2023-09-04T16:22:48.463848713+00:00'

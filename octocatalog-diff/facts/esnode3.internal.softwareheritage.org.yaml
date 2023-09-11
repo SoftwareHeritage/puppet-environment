@@ -18,7 +18,7 @@ values:
   apt_reboot_required: true
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1683631982
+  apt_update_last_success: 1694435583
   apt_updates: 3
   architecture: amd64
   bios_release_date: 01/31/2018
@@ -588,6 +588,10 @@ values:
         zfs_delay_scale: '500000'
         zfs_mg_fragmentation_threshold: '95'
       used_by: []
+    ecdh_generic:
+      parameters: {}
+      used_by:
+      - bluetooth
     crypto_simd:
       parameters: {}
       used_by:
@@ -597,11 +601,18 @@ values:
       used_by:
       - raid456
       - async_raid6_recov
+    nfnetlink:
+      parameters: {}
+      used_by: []
     srcutree:
       parameters:
         exp_holdoff: '25000'
         counter_wrap_check: '4611686018427387903'
       used_by: []
+    ecc:
+      parameters: {}
+      used_by:
+      - ecdh_generic
     rcupdate:
       parameters:
         rcu_task_ipi_delay: '0'
@@ -634,6 +645,9 @@ values:
       parameters: {}
       used_by: []
     intel_wmi_thunderbolt:
+      parameters: {}
+      used_by: []
+    drbg:
       parameters: {}
       used_by: []
     drm_kms_helper:
@@ -736,6 +750,7 @@ values:
     crc16:
       parameters: {}
       used_by:
+      - bluetooth
       - ext4
     mousedev:
       parameters:
@@ -801,6 +816,7 @@ values:
     libaes:
       parameters: {}
       used_by:
+      - bluetooth
       - aesni_intel
     mei:
       parameters: {}
@@ -811,6 +827,9 @@ values:
         force_cap_on: N
       used_by: []
     blake2b_generic:
+      parameters: {}
+      used_by: []
+    ansi_cprng:
       parameters: {}
       used_by: []
     raid6_pq:
@@ -955,6 +974,11 @@ values:
       parameters:
         policy: "[default] performance powersave powersupersave "
       used_by: []
+    rfkill:
+      parameters:
+        default_state: '1'
+      used_by:
+      - bluetooth
     intel_powerclamp:
       parameters:
         duration: '24'
@@ -1011,6 +1035,12 @@ values:
     btrfs:
       parameters: {}
       used_by: []
+    bluetooth:
+      parameters:
+        disable_ertm: N
+        disable_esco: N
+        enable_ecred: N
+      used_by: []
     ufs:
       parameters: {}
       used_by: []
@@ -1022,6 +1052,9 @@ values:
       parameters: {}
       used_by:
       - ptp
+    jitterentropy_rng:
+      parameters: {}
+      used_by: []
     slab_common:
       parameters:
         usercopy_fallback: N
@@ -1413,8 +1446,8 @@ values:
   letsencrypt_directory: {}
   load_averages:
     15m: 0.74
-    1m: 1.05
-    5m: 0.77
+    1m: 1.51
+    5m: 0.92
   location: sesi_rocquencourt
   lsbdistcodename: bullseye
   lsbdistdescription: Debian GNU/Linux 11 (bullseye)
@@ -1432,30 +1465,30 @@ values:
   manufacturer: Dell Inc.
   memory:
     swap:
-      available: 26.99 GiB
-      available_bytes: 28983767040
-      capacity: 9.43%
+      available: 25.97 GiB
+      available_bytes: 27887632384
+      capacity: 12.85%
       total: 29.80 GiB
       total_bytes: 32000438272
-      used: 2.81 GiB
-      used_bytes: 3016671232
+      used: 3.83 GiB
+      used_bytes: 4112805888
     system:
-      available: 5.89 GiB
-      available_bytes: 6320164864
-      capacity: 81.21%
+      available: 3.89 GiB
+      available_bytes: 4178685952
+      capacity: 87.57%
       total: 31.32 GiB
       total_bytes: 33627787264
-      used: 25.43 GiB
-      used_bytes: 27307622400
-  memoryfree: 5.89 GiB
-  memoryfree_mb: 6027.37890625
+      used: 27.43 GiB
+      used_bytes: 29449101312
+  memoryfree: 3.89 GiB
+  memoryfree_mb: 3985.10546875
   memorysize: 31.32 GiB
   memorysize_mb: 32069.95703125
   mountpoints:
     "/":
-      available: 25.89 GiB
-      available_bytes: 27794604032
-      capacity: 24.95%
+      available: 25.43 GiB
+      available_bytes: 27306225664
+      capacity: 26.27%
       device: "/dev/sda2"
       filesystem: ext4
       options:
@@ -1464,8 +1497,8 @@ values:
       - errors=remount-ro
       size: 36.37 GiB
       size_bytes: 39052693504
-      used: 8.61 GiB
-      used_bytes: 9241313280
+      used: 9.06 GiB
+      used_bytes: 9729691648
     "/boot/efi":
       available: 505.18 MiB
       available_bytes: 529723392
@@ -1567,7 +1600,7 @@ values:
       used_bytes: 0
     "/run":
       available: 3.13 GiB
-      available_bytes: 3362025472
+      available_bytes: 3362021376
       capacity: 0.02%
       device: tmpfs
       filesystem: tmpfs
@@ -1581,8 +1614,8 @@ values:
       - mode=755
       size: 3.13 GiB
       size_bytes: 3362779136
-      used: 736.00 KiB
-      used_bytes: 753664
+      used: 740.00 KiB
+      used_bytes: 757760
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -1634,9 +1667,9 @@ values:
       used: 0 bytes
       used_bytes: 0
     "/srv/elasticsearch/nodes":
-      available: 2.30 TiB
-      available_bytes: 2523706556416
-      capacity: 66.15%
+      available: 1.66 TiB
+      available_bytes: 1824859226112
+      capacity: 75.52%
       device: elasticsearch-data
       filesystem: zfs
       options:
@@ -1645,9 +1678,9 @@ values:
       - xattr
       - noacl
       size: 6.78 TiB
-      size_bytes: 7455744458752
-      used: 4.49 TiB
-      used_bytes: 4932037902336
+      size_bytes: 7455764512768
+      used: 5.12 TiB
+      used_bytes: 5630905286656
   mounts:
   - "/"
   - "/boot/efi"
@@ -1940,8 +1973,8 @@ values:
   sshrsakey: AAAAB3NzaC1yc2EAAAADAQABAAABAQDTIsD3deL7D3M2d22igwXhl/yeFq9tTbPWABip9uqJi3Vxg1QnCeMfFp751/5KaNTXOZkWgNIZaF6gFa2PXGS8oeLT/IIRDtPtsAk7+75hVmmvHWIg8lPZoFWkcN9HIsOH/KcDA5RaDbKXMPUvbjUR7htVKieAjwQL9zMo+chtcCG6HjeZQk+BGlnfxOTNJHAKgLNFIKpkahoc6DCmR/Zoa7Q6kO0hekJaxy3TbxONpwzSx2l3UtT/bBhVNUJHmgiYTS3oEEVCFddVMffpUT9xiBOYomNTClnLUwbj/SadTuSxo+3eUV+/Wc7+tUWYIKb+eitq0qbsc23RbI7Bf3Vt
   subnet: sesi_rocquencourt
   sudoversion: 1.9.5p2
-  swapfree: 26.99 GiB
-  swapfree_mb: 27641.07421875
+  swapfree: 25.97 GiB
+  swapfree_mb: 26595.71875
   swapsize: 29.80 GiB
   swapsize_mb: 30517.99609375
   swh_hostname:
@@ -1949,10 +1982,10 @@ values:
     short: esnode3
     internal_fqdn: esnode3.internal.softwareheritage.org
   system_uptime:
-    days: 84
-    hours: 2019
-    seconds: 7270272
-    uptime: 84 days
+    days: 209
+    hours: 5020
+    seconds: 18073872
+    uptime: 209 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -1966,15 +1999,15 @@ values:
     systemd-time-wait-sync.service: disabled
   systemd_version: '247'
   timezone: UTC
-  uptime: 84 days
-  uptime_days: 84
-  uptime_hours: 2019
-  uptime_seconds: 7270272
+  uptime: 209 days
+  uptime_days: 209
+  uptime_hours: 5020
+  uptime_seconds: 18073872
   uuid: 4c4c4544-004c-5810-8046-cac04f5a4732
   vcsrepo_svn_ver: ''
   virtual: physical
   clientcert: esnode3.internal.softwareheritage.org
   clientversion: 5.5.22
   clientnoop: false
-timestamp: '2023-05-09T12:05:10.515246763+00:00'
-expiration: '2023-05-09T12:35:10.516419654+00:00'
+timestamp: '2023-09-11T13:05:09.482937943+00:00'
+expiration: '2023-09-11T13:35:09.484092843+00:00'

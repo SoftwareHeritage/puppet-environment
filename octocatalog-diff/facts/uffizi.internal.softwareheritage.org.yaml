@@ -2,16 +2,28 @@
 name: uffizi.internal.softwareheritage.org
 values:
   agent_specified_environment: production
-  apt_dist_updates: 2
+  apt_dist_updates: 6
   apt_has_dist_updates: true
-  apt_has_updates: false
+  apt_has_updates: true
   apt_package_dist_updates:
   - proxmox-ve
   - proxmox-kernel-helper
+  - icinga2
+  - icinga2-bin
+  - icinga2-common
+  - icinga2-doc
   apt_package_security_dist_updates: []
+  apt_package_security_updates: []
+  apt_package_updates:
+  - icinga2
+  - icinga2-bin
+  - icinga2-common
+  - icinga2-doc
   apt_reboot_required: true
   apt_security_dist_updates: 0
-  apt_update_last_success: 1683635103
+  apt_security_updates: 0
+  apt_update_last_success: 1694435104
+  apt_updates: 4
   architecture: amd64
   bios_release_date: 05/23/2018
   bios_vendor: Dell Inc.
@@ -147,7 +159,7 @@ values:
     privileged: true
     uid: 0
     user: root
-  interfaces: bond0,eno1,eno2,eno3,eno4,enp97s0f0,enp97s0f1,enp97s0f2,enp97s0f3,lo,vlan1300,vlan440,vlan442,vlan443,vmbr0,vmbr1300,vmbr442,vmbr443
+  interfaces: bond0,eno1,eno2,eno3,eno4,enp97s0f0,enp97s0f1,enp97s0f2,enp97s0f3,lo,tap117i0,tap141i0,tap143i0,tap146i0,tap147i0,vlan1300,vlan440,vlan442,vlan443,vmbr0,vmbr1300,vmbr442,vmbr443
   ipaddress: 192.168.100.101
   ipaddress6: fe80::f4e8:53ff:fe1a:1b47
   ipaddress6_bond0: fe80::faf2:1eff:fe0c:3c78
@@ -166,8 +178,8 @@ values:
   java_default_home: "/usr/lib/jvm/java-11-openjdk-amd64"
   java_libjvm_path: "/usr/lib/jvm/java-11-openjdk-amd64/lib/server"
   java_major_version: '11'
-  java_patch_level: '18'
-  java_version: 11.0.18
+  java_patch_level: '20'
+  java_version: 11.0.20
   kernel: Linux
   kernelmajversion: '5.15'
   kernelrelease: 5.15.85-1-pve
@@ -1730,13 +1742,13 @@ values:
     dm_bufio:
       parameters:
         allocated_vmalloc_bytes: '0'
-        current_allocated_bytes: '8192'
+        current_allocated_bytes: '839680'
         allocated_kmem_cache_bytes: '0'
         max_cache_size_bytes: '10819952640'
         max_age_seconds: '300'
         retain_bytes: '262144'
-        peak_allocated_bytes: '8192'
-        allocated_get_free_pages_bytes: '8192'
+        peak_allocated_bytes: '112558080'
+        allocated_get_free_pages_bytes: '839680'
       used_by:
       - dm_persistent_data
     workqueue:
@@ -1774,9 +1786,9 @@ values:
       - 8021q
   letsencrypt_directory: {}
   load_averages:
-    15m: 0.18
-    1m: 0.12
-    5m: 0.14
+    15m: 7.45
+    1m: 7.29
+    5m: 7.36
   location: sesi_rocquencourt
   lsbdistcodename: bullseye
   lsbdistdescription: Debian GNU/Linux 11 (bullseye)
@@ -1794,6 +1806,11 @@ values:
   macaddress_enp97s0f1: f8:f2:1e:0c:3c:7a
   macaddress_enp97s0f2: f8:f2:1e:0c:3c:7c
   macaddress_enp97s0f3: f8:f2:1e:0c:3c:7e
+  macaddress_tap117i0: 5e:c2:52:ee:cb:bc
+  macaddress_tap141i0: ea:af:62:b5:5b:44
+  macaddress_tap143i0: 36:43:8e:03:19:34
+  macaddress_tap146i0: 86:10:50:5f:96:ec
+  macaddress_tap147i0: 5a:6a:bd:19:24:74
   macaddress_vlan1300: f8:f2:1e:0c:3c:78
   macaddress_vlan440: f8:f2:1e:0c:3c:78
   macaddress_vlan442: f8:f2:1e:0c:3c:78
@@ -1813,22 +1830,22 @@ values:
       used: 0 bytes
       used_bytes: 0
     system:
-      available: 499.36 GiB
-      available_bytes: 536188784640
-      capacity: 0.89%
+      available: 395.96 GiB
+      available_bytes: 425161523200
+      capacity: 21.41%
       total: 503.84 GiB
       total_bytes: 540997640192
-      used: 4.48 GiB
-      used_bytes: 4808855552
-  memoryfree: 499.36 GiB
-  memoryfree_mb: 511349.47265625
+      used: 107.88 GiB
+      used_bytes: 115836116992
+  memoryfree: 395.96 GiB
+  memoryfree_mb: 405465.625
   memorysize: 503.84 GiB
   memorysize_mb: 515935.5546875
   mountpoints:
     "/":
-      available: 55.18 GiB
-      available_bytes: 59244851200
-      capacity: 26.56%
+      available: 55.08 GiB
+      available_bytes: 59144572928
+      capacity: 26.68%
       device: "/dev/mapper/vg--louvre-uffizi--root"
       filesystem: ext4
       options:
@@ -1838,8 +1855,8 @@ values:
       - stripe=256
       size: 78.57 GiB
       size_bytes: 84358758400
-      used: 19.95 GiB
-      used_bytes: 21424996352
+      used: 20.05 GiB
+      used_bytes: 21525274624
     "/dev":
       available: 251.89 GiB
       available_bytes: 270466564096
@@ -1922,9 +1939,9 @@ values:
       used: 59.81 MiB
       used_bytes: 62717952
     "/etc/pve":
-      available: 127.69 MiB
-      available_bytes: 133890048
-      capacity: 0.24%
+      available: 127.67 MiB
+      available_bytes: 133869568
+      capacity: 0.26%
       device: "/dev/fuse"
       filesystem: fuse
       options:
@@ -1938,12 +1955,12 @@ values:
       - allow_other
       size: 128.00 MiB
       size_bytes: 134217728
-      used: 320.00 KiB
-      used_bytes: 327680
+      used: 340.00 KiB
+      used_bytes: 348160
     "/mnt/pve/proxmox-cephfs":
-      available: 3.35 TiB
-      available_bytes: 3681680359424
-      capacity: 0.17%
+      available: 1.21 TiB
+      available_bytes: 1327383969792
+      capacity: 0.55%
       device: 192.168.100.108,192.168.100.32,192.168.100.33,192.168.100.34:/
       filesystem: ceph
       options:
@@ -1952,13 +1969,13 @@ values:
       - name=admin
       - secret=<hidden>
       - acl
-      size: 3.35 TiB
-      size_bytes: 3687900512256
-      used: 5.79 GiB
-      used_bytes: 6220152832
+      size: 1.21 TiB
+      size_bytes: 1334665281536
+      used: 6.78 GiB
+      used_bytes: 7281311744
     "/run":
       available: 50.38 GiB
-      available_bytes: 54095466496
+      available_bytes: 54094671872
       capacity: 0.01%
       device: tmpfs
       filesystem: tmpfs
@@ -1973,8 +1990,8 @@ values:
       - inode64
       size: 50.38 GiB
       size_bytes: 54099767296
-      used: 4.10 MiB
-      used_bytes: 4300800
+      used: 4.86 MiB
+      used_bytes: 5095424
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -2006,6 +2023,41 @@ values:
       size_bytes: 0
       used: 0 bytes
       used_bytes: 0
+    "/run/user/1025":
+      available: 50.38 GiB
+      available_bytes: 54099759104
+      capacity: 0.00%
+      device: tmpfs
+      filesystem: tmpfs
+      options:
+      - rw
+      - nosuid
+      - nodev
+      - relatime
+      - size=52831800k
+      - nr_inodes=13207950
+      - mode=700
+      - uid=1025
+      - gid=1025
+      - inode64
+      size: 50.38 GiB
+      size_bytes: 54099763200
+      used: 4.00 KiB
+      used_bytes: 4096
+    "/srv/storage/cassandra-temp":
+      available: 3.16 TiB
+      available_bytes: 3470376697856
+      capacity: 0.01%
+      device: cassandra-temp/cassandra-temp
+      filesystem: zfs
+      options:
+      - rw
+      - xattr
+      - noacl
+      size: 3.16 TiB
+      size_bytes: 3470866776064
+      used: 467.38 MiB
+      used_bytes: 490078208
     "/var/lib/lxcfs":
       available: 0 bytes
       available_bytes: 0
@@ -2044,16 +2096,22 @@ values:
   - "/"
   - "/var/lib/vz"
   - "/mnt/pve/proxmox-cephfs"
+  - "/srv/storage/cassandra-temp"
   mtu_bond0: 9000
   mtu_eno1: 1500
   mtu_eno2: 1500
   mtu_eno3: 1500
   mtu_eno4: 1500
   mtu_enp97s0f0: 9000
-  mtu_enp97s0f1: 1500
+  mtu_enp97s0f1: 9000
   mtu_enp97s0f2: 1500
-  mtu_enp97s0f3: 9000
+  mtu_enp97s0f3: 1500
   mtu_lo: 65536
+  mtu_tap117i0: 9000
+  mtu_tap141i0: 9000
+  mtu_tap143i0: 9000
+  mtu_tap146i0: 9000
+  mtu_tap147i0: 9000
   mtu_vlan1300: 9000
   mtu_vlan440: 9000
   mtu_vlan442: 9000
@@ -2143,13 +2201,13 @@ values:
         mtu: 9000
       enp97s0f1:
         mac: f8:f2:1e:0c:3c:7a
-        mtu: 1500
+        mtu: 9000
       enp97s0f2:
         mac: f8:f2:1e:0c:3c:7c
         mtu: 1500
       enp97s0f3:
         mac: f8:f2:1e:0c:3c:7e
-        mtu: 9000
+        mtu: 1500
       lo:
         bindings:
         - address: 127.0.0.1
@@ -2167,6 +2225,21 @@ values:
         network: 127.0.0.0
         network6: "::1"
         scope6: host
+      tap117i0:
+        mac: 5e:c2:52:ee:cb:bc
+        mtu: 9000
+      tap141i0:
+        mac: ea:af:62:b5:5b:44
+        mtu: 9000
+      tap143i0:
+        mac: 36:43:8e:03:19:34
+        mtu: 9000
+      tap146i0:
+        mac: 86:10:50:5f:96:ec
+        mtu: 9000
+      tap147i0:
+        mac: 5a:6a:bd:19:24:74
+        mtu: 9000
       vlan1300:
         mac: f8:f2:1e:0c:3c:78
         mtu: 9000
@@ -2265,6 +2338,30 @@ values:
   osfamily: Debian
   package_provider: apt
   partitions:
+    "/dev/mapper/scratch-data":
+      size: 894.25 GiB
+      size_bytes: 960193626112
+    "/dev/mapper/scratch-data-tpool":
+      size: 894.25 GiB
+      size_bytes: 960193626112
+    "/dev/mapper/scratch-data_tdata":
+      size: 894.25 GiB
+      size_bytes: 960193626112
+    "/dev/mapper/scratch-data_tmeta":
+      size: 112.00 MiB
+      size_bytes: 117440512
+    "/dev/mapper/scratch-vm--117--disk--0":
+      size: 100.00 GiB
+      size_bytes: 107374182400
+    "/dev/mapper/scratch-vm--141--disk--0":
+      size: 100.00 GiB
+      size_bytes: 107374182400
+    "/dev/mapper/scratch-vm--146--disk--0":
+      size: 100.00 GiB
+      size_bytes: 107374182400
+    "/dev/mapper/scratch-vm--147--disk--0":
+      size: 100.00 GiB
+      size_bytes: 107374182400
     "/dev/mapper/vg--louvre-louvre--root":
       filesystem: ext4
       size: 38.63 GiB
@@ -2305,6 +2402,78 @@ values:
       size: 558.37 GiB
       size_bytes: 599548493824
       uuid: 7zkeiV-Pedw-DYdf-w6hU-AqHw-ACn2-e6DiCF
+    "/dev/sdc1":
+      filesystem: zfs_member
+      label: cassandra-temp
+      partlabel: zfs-d7f1ca39c7800626
+      partuuid: d1536d91-de09-b34f-b519-525d276577e8
+      size: 1.09 TiB
+      size_bytes: 1200233644032
+      uuid: '1084050191338001434'
+    "/dev/sdc9":
+      partuuid: 73b40487-d895-f84e-8707-ec7b9f483dff
+      size: 8.00 MiB
+      size_bytes: 8388608
+    "/dev/sdd1":
+      filesystem: zfs_member
+      label: cassandra-temp
+      partlabel: zfs-ea5f47f2ab971770
+      partuuid: c5a8f383-6934-8b42-96fc-425464346d81
+      size: 1.09 TiB
+      size_bytes: 1200233644032
+      uuid: '1084050191338001434'
+    "/dev/sdd9":
+      partuuid: cfc6ba3a-cbdf-a242-a66f-c498c00f1999
+      size: 8.00 MiB
+      size_bytes: 8388608
+    "/dev/sde1":
+      filesystem: zfs_member
+      label: cassandra-temp
+      partlabel: zfs-4790e1f7f5068847
+      partuuid: 45cfb9f2-767f-1a47-b547-60ed93d57f70
+      size: 1.09 TiB
+      size_bytes: 1200233644032
+      uuid: '1084050191338001434'
+    "/dev/sde9":
+      partuuid: c1e42c31-9b53-414d-b40b-a7d84e90adb8
+      size: 8.00 MiB
+      size_bytes: 8388608
+    "/dev/sdf1":
+      filesystem: zfs_member
+      label: cassandra-temp
+      partlabel: zfs-1d0cda386b180c06
+      partuuid: 5ef8995c-d92e-9844-aac0-1c557fb7f633
+      size: 1.09 TiB
+      size_bytes: 1200233644032
+      uuid: '1084050191338001434'
+    "/dev/sdf9":
+      partuuid: c7c5a1b3-d1c5-ae4d-8d02-aa41988d2fd4
+      size: 8.00 MiB
+      size_bytes: 8388608
+    "/dev/sdg1":
+      filesystem: zfs_member
+      label: cassandra-temp
+      partlabel: zfs-55bedd70943e8773
+      partuuid: c72cfd47-2bb3-d847-a137-d42fbdd6ed2a
+      size: 1.09 TiB
+      size_bytes: 1200233644032
+      uuid: '1084050191338001434'
+    "/dev/sdg9":
+      partuuid: 8efedcf8-2962-9648-a454-292edc2b1d19
+      size: 8.00 MiB
+      size_bytes: 8388608
+    "/dev/sdh1":
+      filesystem: zfs_member
+      label: cassandra-temp
+      partlabel: zfs-48a352e95d6926b3
+      partuuid: 240b3feb-c62d-f640-9530-5a6ba75ac598
+      size: 1.09 TiB
+      size_bytes: 1200233644032
+      uuid: '1084050191338001434'
+    "/dev/sdh9":
+      partuuid: 7118cbb3-8c18-3949-8b1c-b42d43250c84
+      size: 8.00 MiB
+      size_bytes: 8388608
   path: "/usr/bin:/bin:/usr/sbin:/sbin"
   phpversion: 7.4.33
   physicalprocessorcount: 4
@@ -2547,10 +2716,10 @@ values:
     short: uffizi
     internal_fqdn: uffizi.internal.softwareheritage.org
   system_uptime:
-    days: 67
-    hours: 1608
-    seconds: 5791427
-    uptime: 67 days
+    days: 192
+    hours: 4609
+    seconds: 16593229
+    uptime: 192 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -2564,15 +2733,15 @@ values:
     systemd-time-wait-sync.service: disabled
   systemd_version: '247'
   timezone: UTC
-  uptime: 67 days
-  uptime_days: 67
-  uptime_hours: 1608
-  uptime_seconds: 5791427
+  uptime: 192 days
+  uptime_days: 192
+  uptime_hours: 4609
+  uptime_seconds: 16593229
   uuid: 4c4c4544-0054-5110-8052-b5c04f373632
   vcsrepo_svn_ver: 1.14.1
   virtual: physical
   clientcert: uffizi.internal.softwareheritage.org
   clientversion: 5.5.22
   clientnoop: false
-timestamp: '2023-05-09T12:28:10.736580660+00:00'
-expiration: '2023-05-09T12:58:10.740278811+00:00'
+timestamp: '2023-09-11T12:58:12.107037460+00:00'
+expiration: '2023-09-11T13:28:12.111089169+00:00'

@@ -2,7 +2,7 @@
 name: cassandra1.internal.staging.swh.network
 values:
   agent_specified_environment: production
-  apt_dist_updates: 6
+  apt_dist_updates: 10
   apt_has_dist_updates: true
   apt_has_updates: true
   apt_package_dist_updates:
@@ -12,6 +12,10 @@ values:
   - docker-ce
   - docker-ce-rootless-extras
   - docker-compose-plugin
+  - icinga2
+  - icinga2-bin
+  - icinga2-common
+  - icinga2-doc
   apt_package_security_dist_updates: []
   apt_package_security_updates: []
   apt_package_updates:
@@ -21,11 +25,15 @@ values:
   - docker-ce
   - docker-ce-rootless-extras
   - docker-compose-plugin
+  - icinga2
+  - icinga2-bin
+  - icinga2-common
+  - icinga2-doc
   apt_reboot_required: true
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1683630962
-  apt_updates: 6
+  apt_update_last_success: 1694434562
+  apt_updates: 10
   architecture: amd64
   bios_release_date: 06/09/2022
   bios_vendor: HPE
@@ -215,8 +223,8 @@ values:
   java_default_home: "/usr/lib/jvm/java-11-openjdk-amd64"
   java_libjvm_path: "/usr/lib/jvm/java-11-openjdk-amd64/lib/server"
   java_major_version: '11'
-  java_patch_level: '18'
-  java_version: 11.0.18
+  java_patch_level: '20'
+  java_version: 11.0.20
   kernel: Linux
   kernelmajversion: '5.10'
   kernelrelease: 5.10.0-21-amd64
@@ -1505,9 +1513,9 @@ values:
       - 8021q
   letsencrypt_directory: {}
   load_averages:
-    15m: 0.18
-    1m: 0.2
-    5m: 0.16
+    15m: 4.34
+    1m: 4.69
+    5m: 4.63
   lsbdistcodename: bullseye
   lsbdistdescription: Debian GNU/Linux 11 (bullseye)
   lsbdistid: Debian
@@ -1523,30 +1531,30 @@ values:
   manufacturer: HPE
   memory:
     swap:
-      available: 338.75 MiB
-      available_bytes: 355201024
-      capacity: 65.29%
+      available: 16.00 KiB
+      available_bytes: 16384
+      capacity: 99.99%
       total: 976.00 MiB
       total_bytes: 1023406080
-      used: 637.25 MiB
-      used_bytes: 668205056
+      used: 975.98 MiB
+      used_bytes: 1023389696
     system:
-      available: 42.51 GiB
-      available_bytes: 45641531392
-      capacity: 66.18%
+      available: 41.76 GiB
+      available_bytes: 44840071168
+      capacity: 66.78%
       total: 125.70 GiB
       total_bytes: 134967365632
-      used: 83.19 GiB
-      used_bytes: 89325834240
-  memoryfree: 42.51 GiB
-  memoryfree_mb: 43527.15625
+      used: 83.94 GiB
+      used_bytes: 90127294464
+  memoryfree: 41.76 GiB
+  memoryfree_mb: 42762.82421875
   memorysize: 125.70 GiB
   memorysize_mb: 128714.91015625
   mountpoints:
     "/":
-      available: 12.80 GiB
-      available_bytes: 13740982272
-      capacity: 21.07%
+      available: 12.36 GiB
+      available_bytes: 13271998464
+      capacity: 23.77%
       device: "/dev/mapper/cassandra1--vg-root"
       filesystem: ext4
       options:
@@ -1555,12 +1563,12 @@ values:
       - errors=remount-ro
       size: 17.11 GiB
       size_bytes: 18368774144
-      used: 3.42 GiB
-      used_bytes: 3668766720
+      used: 3.85 GiB
+      used_bytes: 4137750528
     "/boot":
-      available: 359.02 MiB
-      available_bytes: 376461312
-      capacity: 19.49%
+      available: 321.51 MiB
+      available_bytes: 337130496
+      capacity: 27.90%
       device: "/dev/nvme0n1p2"
       filesystem: ext2
       options:
@@ -1568,8 +1576,8 @@ values:
       - relatime
       size: 470.35 MiB
       size_bytes: 493201408
-      used: 86.93 MiB
-      used_bytes: 91155456
+      used: 124.44 MiB
+      used_bytes: 130486272
     "/boot/efi":
       available: 505.20 MiB
       available_bytes: 529735680
@@ -1670,9 +1678,9 @@ values:
       used: 0 bytes
       used_bytes: 0
     "/home":
-      available: 62.35 GiB
-      available_bytes: 66951372800
-      capacity: 0.01%
+      available: 61.65 GiB
+      available_bytes: 66195382272
+      capacity: 1.14%
       device: "/dev/mapper/cassandra1--vg-home"
       filesystem: ext4
       options:
@@ -1680,11 +1688,11 @@ values:
       - relatime
       size: 65.74 GiB
       size_bytes: 70591479808
-      used: 7.08 MiB
-      used_bytes: 7421952
+      used: 728.05 MiB
+      used_bytes: 763412480
     "/run":
       available: 12.57 GiB
-      available_bytes: 13494984704
+      available_bytes: 13494964224
       capacity: 0.01%
       device: tmpfs
       filesystem: tmpfs
@@ -1698,8 +1706,8 @@ values:
       - mode=755
       size: 12.57 GiB
       size_bytes: 13496737792
-      used: 1.67 MiB
-      used_bytes: 1753088
+      used: 1.69 MiB
+      used_bytes: 1773568
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -1750,10 +1758,30 @@ values:
       size_bytes: 13496733696
       used: 0 bytes
       used_bytes: 0
+    "/run/user/1025":
+      available: 12.57 GiB
+      available_bytes: 13496733696
+      capacity: 0%
+      device: tmpfs
+      filesystem: tmpfs
+      options:
+      - rw
+      - nosuid
+      - nodev
+      - relatime
+      - size=13180404k
+      - nr_inodes=3295101
+      - mode=700
+      - uid=1025
+      - gid=1025
+      size: 12.57 GiB
+      size_bytes: 13496733696
+      used: 0 bytes
+      used_bytes: 0
     "/srv/cassandra/instance1/commitlog":
-      available: 5.10 TiB
-      available_bytes: 5608645722112
-      capacity: 0.00%
+      available: 5.16 TiB
+      available_bytes: 5677332168704
+      capacity: 0.01%
       device: mixeduse/cassandra-instance1-commitlog
       filesystem: zfs
       options:
@@ -1761,14 +1789,14 @@ values:
       - noatime
       - xattr
       - noacl
-      size: 5.10 TiB
-      size_bytes: 5608910749696
-      used: 252.75 MiB
-      used_bytes: 265027584
+      size: 5.16 TiB
+      size_bytes: 5677838106624
+      used: 482.50 MiB
+      used_bytes: 505937920
     "/srv/cassandra/instance1/data":
-      available: 5.10 TiB
-      available_bytes: 5608645722112
-      capacity: 24.09%
+      available: 5.16 TiB
+      available_bytes: 5677332168704
+      capacity: 23.16%
       device: mixeduse/cassandra-instance1-data
       filesystem: zfs
       options:
@@ -1777,13 +1805,13 @@ values:
       - xattr
       - noacl
       size: 6.72 TiB
-      size_bytes: 7389006266368
-      used: 1.62 TiB
-      used_bytes: 1780360544256
+      size_bytes: 7388729835520
+      used: 1.56 TiB
+      used_bytes: 1711397666816
     "/tmp":
-      available: 1007.41 MiB
-      available_bytes: 1056342016
-      capacity: 0.31%
+      available: 1006.27 MiB
+      available_bytes: 1055150080
+      capacity: 0.43%
       device: "/dev/mapper/cassandra1--vg-tmp"
       filesystem: ext4
       options:
@@ -1791,12 +1819,12 @@ values:
       - relatime
       size: 1.06 GiB
       size_bytes: 1136009216
-      used: 3.18 MiB
-      used_bytes: 3334144
+      used: 4.32 MiB
+      used_bytes: 4526080
     "/var":
-      available: 4.68 GiB
-      available_bytes: 5027016704
-      capacity: 17.14%
+      available: 4.62 GiB
+      available_bytes: 4965916672
+      capacity: 18.15%
       device: "/dev/mapper/cassandra1--vg-var"
       filesystem: ext4
       options:
@@ -1804,8 +1832,8 @@ values:
       - relatime
       size: 5.97 GiB
       size_bytes: 6414352384
-      used: 991.67 MiB
-      used_bytes: 1039839232
+      used: 1.03 GiB
+      used_bytes: 1100939264
   mounts:
   - "/"
   - "/boot"
@@ -2222,8 +2250,8 @@ values:
   sshrsakey: AAAAB3NzaC1yc2EAAAADAQABAAABgQDHNYl0zbv1ekRLECp6GQG2bsDDJjC6TY/9wnhv4v2oKmYAG4tVPuaARqLPX9Jm9UC3T4CvuC4jPydOIC+tFHUTz4G43tNi2oV+OE9nJyAux2oCWjQko1G6bpV/RkyqeQIdb4KpPu+0egz8vEhh0LAa663ucwjEiCK87sFqt2ZV+jL8qNLJGYujHewSG2NvqJqEHHmZzUhRohyrtjj/J37DkhkpW55qtIAT/2MYvxYwZ2wA/9d90nfDTxhm66ugsDKjw9I86dbxlDzvdZggoRnq6xsKr3YE6hmZQujU4Yb7FEFDyqWiyEWufqc9pJUGBOFsLR92J8Kzv45hfjELW2pNgQHG8ltLOqIFUXTbFjXVA8+DiSNOTY3CEddGUCbZlSQtOafDVLFdMUerzpTbf7J+MSzZedfCkuqAouYWS9qPA4ZljVOWXZ7sIBS8dqdlPb14QGXe8YQc133t3wC0gFxzf10ZZnEYDWYhLFtzXnqiGuvFRDekCJDPiG15Wm9ZsR0=
   subnet: sesi_rocquencourt_staging
   sudoversion: 1.9.5p2
-  swapfree: 338.75 MiB
-  swapfree_mb: 338.74609375
+  swapfree: 16.00 KiB
+  swapfree_mb: 0.015625
   swapsize: 976.00 MiB
   swapsize_mb: 975.99609375
   swh_hostname:
@@ -2231,10 +2259,10 @@ values:
     short: cassandra1
     internal_fqdn: cassandra1.internal.staging.swh.network
   system_uptime:
-    days: 53
-    hours: 1294
-    seconds: 4658619
-    uptime: 53 days
+    days: 178
+    hours: 4295
+    seconds: 15462219
+    uptime: 178 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -2248,15 +2276,15 @@ values:
     systemd-time-wait-sync.service: disabled
   systemd_version: '247'
   timezone: UTC
-  uptime: 53 days
-  uptime_days: 53
-  uptime_hours: 1294
-  uptime_seconds: 4658619
+  uptime: 178 days
+  uptime_days: 178
+  uptime_hours: 4295
+  uptime_seconds: 15462219
   uuid: 35383350-3837-5a43-4a32-3336304e5a46
   vcsrepo_svn_ver: ''
   virtual: physical
   clientcert: cassandra1.internal.staging.swh.network
   clientversion: 5.5.22
   clientnoop: false
-timestamp: '2023-05-09T12:11:06.269985514+00:00'
-expiration: '2023-05-09T12:41:06.272043035+00:00'
+timestamp: '2023-09-11T13:11:05.943895454+00:00'
+expiration: '2023-09-11T13:41:05.945700474+00:00'

@@ -2,7 +2,7 @@
 name: indexer-worker05.euwest.azure.internal.softwareheritage.org
 values:
   agent_specified_environment: production
-  apt_dist_updates: 15
+  apt_dist_updates: 16
   apt_has_dist_updates: true
   apt_has_updates: true
   apt_package_dist_updates:
@@ -18,6 +18,7 @@ values:
   - python3-swh.storage
   - python3-swh.journal
   - python3-swh.counters
+  - python3-tabulate
   - python3-swh.scheduler
   - python3-swh.indexer
   - python3-swh.indexer.storage
@@ -36,14 +37,13 @@ values:
   - python3-swh.storage
   - python3-swh.journal
   - python3-swh.counters
-  - python3-swh.scheduler
   - python3-swh.indexer
   - python3-swh.indexer.storage
   apt_reboot_required: true
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1683632670
-  apt_updates: 15
+  apt_update_last_success: 1694436352
+  apt_updates: 14
   architecture: amd64
   bios_release_date: 12/07/2018
   bios_vendor: American Megatrends Inc.
@@ -54,10 +54,7 @@ values:
   blockdevice_sdb_model: Virtual Disk
   blockdevice_sdb_size: 17179869184
   blockdevice_sdb_vendor: Msft
-  blockdevice_sr0_model: Virtual CD/ROM
-  blockdevice_sr0_size: 1073741312
-  blockdevice_sr0_vendor: Msft
-  blockdevices: sdb,sr0,sda
+  blockdevices: sdb,sda
   boardmanufacturer: Microsoft Corporation
   boardproductname: Virtual Machine
   boardserialnumber: 0000-0010-9396-8630-0649-7879-29
@@ -83,11 +80,6 @@ values:
       model: Virtual Disk
       size: 16.00 GiB
       size_bytes: 17179869184
-      vendor: Msft
-    sr0:
-      model: Virtual CD/ROM
-      size: 1.00 GiB
-      size_bytes: 1073741312
       vendor: Msft
   dmi:
     bios:
@@ -137,7 +129,7 @@ values:
     privileged: true
     uid: 0
     user: root
-  interfaces: eth0,lo
+  interfaces: eth0,eth1,lo
   ipaddress: 192.168.200.10
   ipaddress6: fe80::6245:bdff:fe89:8b6d
   ipaddress6_eth0: fe80::6245:bdff:fe89:8b6d
@@ -148,7 +140,7 @@ values:
   is_virtual: true
   kernel: Linux
   kernelmajversion: '4.19'
-  kernelrelease: 4.19.0-22-cloud-amd64
+  kernelrelease: 4.19.0-24-cloud-amd64
   kernelversion: 4.19.0
   kmods:
     nls_ascii:
@@ -247,6 +239,10 @@ values:
         ring_size: '128'
         debug: "-1"
       used_by: []
+    devlink:
+      parameters: {}
+      used_by:
+      - mlx5_core
     pstore:
       parameters:
         update_ms: "-1"
@@ -258,10 +254,6 @@ values:
         reset_seq: ''
         sysrq_downtime_ms: '0'
       used_by: []
-    cdrom:
-      parameters: {}
-      used_by:
-      - sr_mod
     scsi_mod:
       parameters:
         use_blk_mq: Y
@@ -277,7 +269,6 @@ values:
       - scsi_transport_fc
       - libata
       - sg
-      - sr_mod
     kernel:
       parameters:
         pause_on_oops: '0'
@@ -306,9 +297,6 @@ values:
         tap_time: '200'
         xres: '1024'
       used_by: []
-    intel_rapl_perf:
-      parameters: {}
-      used_by: []
     hv_vmbus:
       parameters: {}
       used_by:
@@ -317,6 +305,7 @@ values:
       - hv_netvsc
       - hv_storvsc
       - hyperv_keyboard
+      - pci_hyperv
     pciehp:
       parameters:
         pciehp_debug: N
@@ -354,6 +343,10 @@ values:
         brl_timeout: '300'
         brl_nbchords: '1'
       used_by: []
+    mlxfw:
+      parameters: {}
+      used_by:
+      - mlx5_core
     hyperv_keyboard:
       parameters: {}
       used_by: []
@@ -471,6 +464,9 @@ values:
         rcu_fanout_exact: N
         qlowmark: '100'
       used_by: []
+    pci_hyperv:
+      parameters: {}
+      used_by: []
     button:
       parameters:
         lid_init_state: method
@@ -500,6 +496,7 @@ values:
       parameters: {}
       used_by:
       - hv_utils
+      - mlx5_core
     dm_mod:
       parameters:
         use_blk_mq: Y
@@ -584,12 +581,26 @@ values:
         always_kmsg_dump: N
         ignore_loglevel: N
       used_by: []
+    ib_core:
+      parameters:
+        send_queue_size: '128'
+        recv_queue_size: '512'
+      used_by:
+      - ib_uverbs
+      - mlx5_ib
     vfat:
       parameters: {}
       used_by: []
+    ib_uverbs:
+      parameters: {}
+      used_by:
+      - mlx5_ib
     watchdog:
       parameters:
         handle_boot_enabled: Y
+      used_by: []
+    mlx5_ib:
+      parameters: {}
       used_by: []
     workqueue:
       parameters:
@@ -597,10 +608,12 @@ values:
         debug_force_rr_cpu: N
         power_efficient: N
       used_by: []
-    sr_mod:
+    mlx5_core:
       parameters:
-        xa_test: '0'
-      used_by: []
+        debug_mask: '0'
+        prof_sel: '2'
+      used_by:
+      - mlx5_ib
     fat:
       parameters: {}
       used_by:
@@ -611,9 +624,9 @@ values:
       - ext4
   letsencrypt_directory: {}
   load_averages:
-    15m: 351.07
-    1m: 306.37
-    5m: 336.42
+    15m: 1108.25
+    1m: 1277.88
+    5m: 1198.95
   lsbdistcodename: buster
   lsbdistdescription: Debian GNU/Linux 10 (buster)
   lsbdistid: Debian
@@ -621,25 +634,26 @@ values:
   lsbmajdistrelease: '10'
   macaddress: 60:45:bd:89:8b:6d
   macaddress_eth0: 60:45:bd:89:8b:6d
+  macaddress_eth1: 60:45:bd:89:8b:6d
   manufacturer: Microsoft Corporation
   memory:
     system:
-      available: 5.70 GiB
-      available_bytes: 6116556800
-      capacity: 26.91%
+      available: 3.55 GiB
+      available_bytes: 3813392384
+      capacity: 54.44%
       total: 7.79 GiB
-      total_bytes: 8369004544
-      used: 2.10 GiB
-      used_bytes: 2252447744
-  memoryfree: 5.70 GiB
-  memoryfree_mb: 5833.203125
+      total_bytes: 8369127424
+      used: 4.24 GiB
+      used_bytes: 4555735040
+  memoryfree: 3.55 GiB
+  memoryfree_mb: 3636.734375
   memorysize: 7.79 GiB
-  memorysize_mb: 7981.3046875
+  memorysize_mb: 7981.421875
   mountpoints:
     "/":
       available: 26.82 GiB
-      available_bytes: 28793765888
-      capacity: 8.28%
+      available_bytes: 28792418304
+      capacity: 8.29%
       device: "/dev/sda1"
       filesystem: ext4
       options:
@@ -650,7 +664,7 @@ values:
       size: 29.24 GiB
       size_bytes: 31394258944
       used: 2.42 GiB
-      used_bytes: 2600493056
+      used_bytes: 2601840640
     "/boot/efi":
       available: 123.44 MiB
       available_bytes: 129433600
@@ -673,7 +687,7 @@ values:
       used_bytes: 284672
     "/dev/shm":
       available: 3.90 GiB
-      available_bytes: 4184502272
+      available_bytes: 4184563712
       capacity: 0%
       device: tmpfs
       filesystem: tmpfs
@@ -682,7 +696,7 @@ values:
       - nosuid
       - nodev
       size: 3.90 GiB
-      size_bytes: 4184502272
+      size_bytes: 4184563712
       used: 0 bytes
       used_bytes: 0
     "/mnt":
@@ -699,8 +713,8 @@ values:
       used: 24.00 KiB
       used_bytes: 24576
     "/run":
-      available: 797.59 MiB
-      available_bytes: 836337664
+      available: 797.57 MiB
+      available_bytes: 836317184
       capacity: 0.07%
       device: tmpfs
       filesystem: tmpfs
@@ -709,12 +723,12 @@ values:
       - nosuid
       - noexec
       - relatime
-      - size=817288k
+      - size=817300k
       - mode=755
-      size: 798.13 MiB
-      size_bytes: 836902912
-      used: 552.00 KiB
-      used_bytes: 565248
+      size: 798.14 MiB
+      size_bytes: 836915200
+      used: 584.00 KiB
+      used_bytes: 598016
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -730,6 +744,26 @@ values:
       - size=5120k
       size: 5.00 MiB
       size_bytes: 5242880
+      used: 0 bytes
+      used_bytes: 0
+    "/run/user/1025":
+      available: 798.14 MiB
+      available_bytes: 836911104
+      capacity: 0%
+      device: tmpfs
+      filesystem: tmpfs
+      options:
+      - rw
+      - nosuid
+      - nodev
+      - relatime
+      - size=817296k
+      - nr_inodes=204324
+      - mode=700
+      - uid=1025
+      - gid=1025
+      size: 798.14 MiB
+      size_bytes: 836911104
       used: 0 bytes
       used_bytes: 0
     "/sys/fs/cgroup":
@@ -752,7 +786,7 @@ values:
       used_bytes: 0
     "/tmp":
       available: 4.00 GiB
-      available_bytes: 4294942720
+      available_bytes: 4294963200
       capacity: 0.00%
       device: tmpfs
       filesystem: tmpfs
@@ -766,13 +800,14 @@ values:
       - nr_inodes=209715200
       size: 4.00 GiB
       size_bytes: 4294967296
-      used: 24.00 KiB
-      used_bytes: 24576
+      used: 4.00 KiB
+      used_bytes: 4096
   mounts:
   - "/"
   - "/boot/efi"
   - "/mnt"
   mtu_eth0: 1500
+  mtu_eth1: 1500
   mtu_lo: 65536
   mysql_server_id: 3179957240
   netmask: 255.255.252.0
@@ -811,6 +846,9 @@ values:
         netmask6: 'ffff:ffff:ffff:ffff::'
         network: 192.168.200.0
         network6: 'fe80::'
+      eth1:
+        mac: 60:45:bd:89:8b:6d
+        mtu: 1500
       lo:
         bindings:
         - address: 127.0.0.1
@@ -884,18 +922,18 @@ values:
       partuuid: bbe61e7b-01
       size: 16.00 GiB
       size_bytes: 17177772032
-      uuid: bb9dfd95-e240-44e5-80d3-6cdb2525dce7
+      uuid: 76589da8-a917-4403-9bfd-6890a780d3f0
   path: "/usr/bin:/bin:/usr/sbin:/sbin"
   physicalprocessorcount: 1
-  processor0: Intel(R) Xeon(R) Platinum 8171M CPU @ 2.60GHz
-  processor1: Intel(R) Xeon(R) Platinum 8171M CPU @ 2.60GHz
+  processor0: AMD EPYC 7763 64-Core Processor
+  processor1: AMD EPYC 7763 64-Core Processor
   processorcount: 2
   processors:
     count: 2
     isa: unknown
     models:
-    - Intel(R) Xeon(R) Platinum 8171M CPU @ 2.60GHz
-    - Intel(R) Xeon(R) Platinum 8171M CPU @ 2.60GHz
+    - AMD EPYC 7763 64-Core Processor
+    - AMD EPYC 7763 64-Core Processor
     physicalcount: 1
   productname: Virtual Machine
   public_ipaddresses: []
@@ -967,10 +1005,10 @@ values:
     short: indexer-worker05.euwest.azure
     internal_fqdn: indexer-worker05.euwest.azure.internal.softwareheritage.org
   system_uptime:
-    days: 175
-    hours: 4218
-    seconds: 15187790
-    uptime: 175 days
+    days: 118
+    hours: 2851
+    seconds: 10266580
+    uptime: 118 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -985,15 +1023,15 @@ values:
     systemd-timesyncd.service: enabled
   systemd_version: '247'
   timezone: UTC
-  uptime: 175 days
-  uptime_days: 175
-  uptime_hours: 4218
-  uptime_seconds: 15187790
+  uptime: 118 days
+  uptime_days: 118
+  uptime_hours: 2851
+  uptime_seconds: 10266580
   uuid: 7b1ee6bb-b32c-454a-97d1-92bac0701219
   vcsrepo_svn_ver: ''
   virtual: hyperv
   clientcert: indexer-worker05.euwest.azure.internal.softwareheritage.org
   clientversion: 5.5.10
   clientnoop: false
-timestamp: '2023-05-09T12:19:16.344768032+00:00'
-expiration: '2023-05-09T12:49:16.345683588+00:00'
+timestamp: '2023-09-11T12:54:23.083474472+00:00'
+expiration: '2023-09-11T13:24:23.089123573+00:00'

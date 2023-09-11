@@ -2,7 +2,7 @@
 name: cassandra07.internal.softwareheritage.org
 values:
   agent_specified_environment: production
-  apt_dist_updates: 6
+  apt_dist_updates: 10
   apt_has_dist_updates: true
   apt_has_updates: true
   apt_package_dist_updates:
@@ -12,6 +12,10 @@ values:
   - docker-ce
   - docker-ce-rootless-extras
   - docker-compose-plugin
+  - icinga2
+  - icinga2-bin
+  - icinga2-common
+  - icinga2-doc
   apt_package_security_dist_updates: []
   apt_package_security_updates: []
   apt_package_updates:
@@ -21,11 +25,15 @@ values:
   - docker-ce
   - docker-ce-rootless-extras
   - docker-compose-plugin
-  apt_reboot_required: true
+  - icinga2
+  - icinga2-bin
+  - icinga2-common
+  - icinga2-doc
+  apt_reboot_required: false
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1683633605
-  apt_updates: 6
+  apt_update_last_success: 1694437205
+  apt_updates: 10
   architecture: amd64
   bios_release_date: 02/06/2023
   bios_vendor: HPE
@@ -128,7 +136,7 @@ values:
           Experimental: 'false'
           GitCommit: bc3805a
           GoVersion: go1.19.5
-          KernelVersion: 5.10.0-21-amd64
+          KernelVersion: 5.10.0-25-amd64
           MinAPIVersion: '1.12'
           Os: linux
       - Name: containerd
@@ -150,7 +158,7 @@ values:
       GoVersion: go1.19.5
       Os: linux
       Arch: amd64
-      KernelVersion: 5.10.0-21-amd64
+      KernelVersion: 5.10.0-25-amd64
       BuildTime: '2023-02-09T19:46:54.000000000+00:00'
   docker_worker_join_token: ''
   domain: internal.softwareheritage.org
@@ -197,11 +205,11 @@ values:
   java_default_home: "/usr/lib/jvm/java-11-openjdk-amd64"
   java_libjvm_path: "/usr/lib/jvm/java-11-openjdk-amd64/lib/server"
   java_major_version: '11'
-  java_patch_level: '18'
-  java_version: 11.0.18
+  java_patch_level: '20'
+  java_version: 11.0.20
   kernel: Linux
   kernelmajversion: '5.10'
-  kernelrelease: 5.10.0-21-amd64
+  kernelrelease: 5.10.0-25-amd64
   kernelversion: 5.10.0
   kmods:
     msdos:
@@ -517,7 +525,7 @@ values:
         zfs_scan_legacy: '0'
         zfs_dbgmsg_enable: '1'
         zfs_scan_vdev_limit: '4194304'
-        zfs_vdev_raidz_impl: 'cycle [fastest] original scalar sse2 ssse3 avx2 '
+        zfs_vdev_raidz_impl: 'cycle [fastest] original scalar sse2 ssse3 '
         l2arc_mfuonly: '0'
         zvol_threads: '32'
         zfs_vdev_async_write_min_active: '2'
@@ -592,7 +600,7 @@ values:
         zfs_vdev_async_read_max_active: '3'
         l2arc_feed_secs: '1'
         zfs_commit_timeout_pct: '5'
-        zfs_arc_max: '67567314944'
+        zfs_arc_max: '67567312896'
         spa_load_verify_shift: '4'
         zfs_unflushed_log_block_min: '1000'
         zfs_vdev_nia_credit: '5'
@@ -679,9 +687,6 @@ values:
       parameters:
         use_acpi_alarm: N
       used_by: []
-    tcp_diag:
-      parameters: {}
-      used_by: []
     jfs:
       parameters: {}
       used_by: []
@@ -701,9 +706,6 @@ values:
         dp_aux_i2c_speed_khz: '10'
       used_by:
       - mgag200
-    af_packet_diag:
-      parameters: {}
-      used_by: []
     bridge:
       parameters: {}
       used_by:
@@ -712,7 +714,7 @@ values:
       parameters:
         icp_gcm_avx_chunk_size: '32736'
         icp_aes_impl: 'cycle [fastest] generic x86_64 aesni '
-        icp_gcm_impl: 'cycle [fastest] avx generic pclmulqdq '
+        icp_gcm_impl: 'cycle [fastest] generic pclmulqdq '
       used_by:
       - zfs
     nft_compat:
@@ -835,14 +837,6 @@ values:
       parameters: {}
       used_by:
       - nf_conntrack
-    usbhid:
-      parameters:
-        mousepoll: '0'
-        jspoll: '0'
-        kbpoll: '0'
-        ignoreled: '0'
-        quirks: "(null),(null),(null),(null)"
-      used_by: []
     pciehp:
       parameters:
         pciehp_poll_time: '0'
@@ -929,9 +923,6 @@ values:
       parameters: {}
       used_by:
       - nf_conntrack
-    raw_diag:
-      parameters: {}
-      used_by: []
     intel_idle:
       parameters:
         max_cstate: '9'
@@ -979,9 +970,6 @@ values:
       parameters:
         modeset: "-1"
       used_by: []
-    udp_diag:
-      parameters: {}
-      used_by: []
     fb:
       parameters:
         lockless_register_fb: N
@@ -994,13 +982,6 @@ values:
       parameters:
         force: N
       used_by: []
-    hid:
-      parameters:
-        ignore_special_drivers: '0'
-        debug: '0'
-      used_by:
-      - usbhid
-      - hid_generic
     netpoll:
       parameters:
         carrier_timeout: '4'
@@ -1021,8 +1002,7 @@ values:
       used_by: []
     zcommon:
       parameters:
-        zfs_fletcher_4_impl: "[fastest] scalar superscalar superscalar4 sse2 ssse3
-          avx2 "
+        zfs_fletcher_4_impl: "[fastest] scalar superscalar superscalar4 sse2 ssse3 "
         zfs_max_dataset_nesting: '50'
       used_by:
       - zfs
@@ -1043,7 +1023,6 @@ values:
       used_by:
       - xhci_hcd
       - ehci_pci
-      - usbhid
       - ehci_hcd
       - xhci_pci
     evdev:
@@ -1074,9 +1053,6 @@ values:
     pcie_aspm:
       parameters:
         policy: "[default] performance powersave powersupersave "
-      used_by: []
-    joydev:
-      parameters: {}
       used_by: []
     syscall:
       parameters:
@@ -1122,9 +1098,6 @@ values:
     ufs:
       parameters: {}
       used_by: []
-    hid_generic:
-      parameters: {}
-      used_by: []
     pps_core:
       parameters: {}
       used_by:
@@ -1153,16 +1126,10 @@ values:
         max_user_bgreq: '65535'
         max_user_congthresh: '65535'
       used_by: []
-    unix_diag:
-      parameters: {}
-      used_by: []
     zlua:
       parameters: {}
       used_by:
       - zfs
-    netlink_diag:
-      parameters: {}
-      used_by: []
     acpiphp:
       parameters:
         disable: N
@@ -1359,12 +1326,6 @@ values:
       parameters:
         force: N
       used_by: []
-    inet_diag:
-      parameters: {}
-      used_by:
-      - tcp_diag
-      - raw_diag
-      - udp_diag
     acpi_ipmi:
       parameters: {}
       used_by: []
@@ -1525,9 +1486,9 @@ values:
       - 8021q
   letsencrypt_directory: {}
   load_averages:
-    15m: 9.05
-    1m: 9.29
-    5m: 9.57
+    15m: 4.86
+    1m: 3.97
+    5m: 4.78
   lsbdistcodename: bullseye
   lsbdistdescription: Debian GNU/Linux 11 (bullseye)
   lsbdistid: Debian
@@ -1536,37 +1497,37 @@ values:
   lsbminordistrelease: '7'
   macaddress: 92:98:97:51:71:e4
   macaddress_bond0: 92:98:97:51:71:e4
-  macaddress_docker0: 02:42:99:cf:76:64
+  macaddress_docker0: 02:42:ea:d0:c2:11
   macaddress_ens10f0np0: 88:e9:a4:83:4d:74
   macaddress_ens10f1np1: 88:e9:a4:83:4d:75
   macaddress_vlan440: 92:98:97:51:71:e4
   manufacturer: HPE
   memory:
     swap:
-      available: 8.00 KiB
-      available_bytes: 8192
-      capacity: 99.99%
+      available: 704.00 KiB
+      available_bytes: 720896
+      capacity: 99.93%
       total: 976.00 MiB
       total_bytes: 1023406080
-      used: 975.99 MiB
-      used_bytes: 1023397888
+      used: 975.31 MiB
+      used_bytes: 1022685184
     system:
-      available: 107.68 GiB
-      available_bytes: 115619794944
-      capacity: 57.22%
-      total: 251.71 GiB
-      total_bytes: 270269251584
-      used: 144.03 GiB
-      used_bytes: 154649456640
-  memoryfree: 107.68 GiB
-  memoryfree_mb: 110263.62890625
-  memorysize: 251.71 GiB
-  memorysize_mb: 257748.84375
+      available: 106.62 GiB
+      available_bytes: 114483085312
+      capacity: 57.64%
+      total: 251.70 GiB
+      total_bytes: 270256680960
+      used: 145.08 GiB
+      used_bytes: 155773595648
+  memoryfree: 106.62 GiB
+  memoryfree_mb: 109179.578125
+  memorysize: 251.70 GiB
+  memorysize_mb: 257736.85546875
   mountpoints:
     "/":
-      available: 12.83 GiB
-      available_bytes: 13773983744
-      capacity: 20.88%
+      available: 12.72 GiB
+      available_bytes: 13657882624
+      capacity: 21.55%
       device: "/dev/mapper/cassandra07--vg-root"
       filesystem: ext4
       options:
@@ -1575,11 +1536,11 @@ values:
       - errors=remount-ro
       size: 17.11 GiB
       size_bytes: 18368774144
-      used: 3.39 GiB
-      used_bytes: 3635765248
+      used: 3.49 GiB
+      used_bytes: 3751866368
     "/boot":
-      available: 359.09 MiB
-      available_bytes: 376530944
+      available: 359.08 MiB
+      available_bytes: 376517632
       capacity: 19.48%
       device: "/dev/nvme0n1p2"
       filesystem: ext2
@@ -1588,8 +1549,8 @@ values:
       - relatime
       size: 470.35 MiB
       size_bytes: 493201408
-      used: 86.87 MiB
-      used_bytes: 91085824
+      used: 86.88 MiB
+      used_bytes: 91099136
     "/boot/efi":
       available: 505.20 MiB
       available_bytes: 529735680
@@ -1612,7 +1573,7 @@ values:
       used_bytes: 6070272
     "/dev":
       available: 125.80 GiB
-      available_bytes: 135081123840
+      available_bytes: 135074873344
       capacity: 0%
       device: udev
       filesystem: devtmpfs
@@ -1620,11 +1581,11 @@ values:
       - rw
       - nosuid
       - relatime
-      - size=131915160k
-      - nr_inodes=32978790
+      - size=131909056k
+      - nr_inodes=32977264
       - mode=755
       size: 125.80 GiB
-      size_bytes: 135081123840
+      size_bytes: 135074873344
       used: 0 bytes
       used_bytes: 0
     "/dev/hugepages":
@@ -1677,7 +1638,7 @@ values:
       used_bytes: 0
     "/dev/shm":
       available: 125.85 GiB
-      available_bytes: 135134625792
+      available_bytes: 135128338432
       capacity: 0%
       device: tmpfs
       filesystem: tmpfs
@@ -1686,13 +1647,13 @@ values:
       - nosuid
       - nodev
       size: 125.85 GiB
-      size_bytes: 135134625792
+      size_bytes: 135128338432
       used: 0 bytes
       used_bytes: 0
     "/home":
-      available: 62.28 GiB
-      available_bytes: 66877906944
-      capacity: 0.12%
+      available: 62.00 GiB
+      available_bytes: 66573111296
+      capacity: 0.58%
       device: "/dev/mapper/cassandra07--vg-home"
       filesystem: ext4
       options:
@@ -1700,11 +1661,11 @@ values:
       - relatime
       size: 65.74 GiB
       size_bytes: 70591479808
-      used: 77.14 MiB
-      used_bytes: 80887808
+      used: 367.82 MiB
+      used_bytes: 385683456
     "/run":
       available: 25.17 GiB
-      available_bytes: 27025285120
+      available_bytes: 27024080896
       capacity: 0.01%
       device: tmpfs
       filesystem: tmpfs
@@ -1714,12 +1675,12 @@ values:
       - nodev
       - noexec
       - relatime
-      - size=26393484k
+      - size=26392256k
       - mode=755
       size: 25.17 GiB
-      size_bytes: 27026927616
-      used: 1.57 MiB
-      used_bytes: 1642496
+      size_bytes: 27025670144
+      used: 1.52 MiB
+      used_bytes: 1589248
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -1750,29 +1711,9 @@ values:
       size_bytes: 0
       used: 0 bytes
       used_bytes: 0
-    "/run/user/1003":
-      available: 25.17 GiB
-      available_bytes: 27026923520
-      capacity: 0%
-      device: tmpfs
-      filesystem: tmpfs
-      options:
-      - rw
-      - nosuid
-      - nodev
-      - relatime
-      - size=26393480k
-      - nr_inodes=6598370
-      - mode=700
-      - uid=1003
-      - gid=1003
-      size: 25.17 GiB
-      size_bytes: 27026923520
-      used: 0 bytes
-      used_bytes: 0
     "/run/user/1025":
       available: 25.17 GiB
-      available_bytes: 27026923520
+      available_bytes: 27025666048
       capacity: 0%
       device: tmpfs
       filesystem: tmpfs
@@ -1781,19 +1722,19 @@ values:
       - nosuid
       - nodev
       - relatime
-      - size=26393480k
-      - nr_inodes=6598370
+      - size=26392252k
+      - nr_inodes=6598063
       - mode=700
       - uid=1025
       - gid=1025
       size: 25.17 GiB
-      size_bytes: 27026923520
+      size_bytes: 27025666048
       used: 0 bytes
       used_bytes: 0
     "/srv/cassandra/instance1/commitlog":
-      available: 656.44 GiB
-      available_bytes: 704843481088
-      capacity: 2.63%
+      available: 660.24 GiB
+      available_bytes: 708931878912
+      capacity: 2.07%
       device: writeintensive/cassandra-instance1-commitlog
       filesystem: zfs
       options:
@@ -1801,14 +1742,14 @@ values:
       - noatime
       - xattr
       - noacl
-      size: 674.16 GiB
-      size_bytes: 723868712960
-      used: 17.72 GiB
-      used_bytes: 19025231872
+      size: 674.17 GiB
+      size_bytes: 723882606592
+      used: 13.92 GiB
+      used_bytes: 14950727680
     "/srv/cassandra/instance1/data":
-      available: 485.02 GiB
-      available_bytes: 520783134720
-      capacity: 95.79%
+      available: 1.19 TiB
+      available_bytes: 1308067758080
+      capacity: 89.44%
       device: mixeduse/cassandra-instance1-data
       filesystem: zfs
       options:
@@ -1817,13 +1758,13 @@ values:
       - xattr
       - noacl
       size: 11.26 TiB
-      size_bytes: 12381958832128
-      used: 10.79 TiB
-      used_bytes: 11861175697408
+      size_bytes: 12381922525184
+      used: 10.07 TiB
+      used_bytes: 11073854767104
     "/tmp":
-      available: 1007.37 MiB
-      available_bytes: 1056301056
-      capacity: 0.32%
+      available: 1006.28 MiB
+      available_bytes: 1055162368
+      capacity: 0.43%
       device: "/dev/mapper/cassandra07--vg-tmp"
       filesystem: ext4
       options:
@@ -1831,12 +1772,12 @@ values:
       - relatime
       size: 1.06 GiB
       size_bytes: 1136009216
-      used: 3.22 MiB
-      used_bytes: 3375104
+      used: 4.30 MiB
+      used_bytes: 4513792
     "/var":
-      available: 4.09 GiB
-      available_bytes: 4387028992
-      capacity: 27.69%
+      available: 3.98 GiB
+      available_bytes: 4274315264
+      capacity: 29.55%
       device: "/dev/mapper/cassandra07--vg-var"
       filesystem: ext4
       options:
@@ -1844,8 +1785,8 @@ values:
       - relatime
       size: 5.97 GiB
       size_bytes: 6414352384
-      used: 1.56 GiB
-      used_bytes: 1679826944
+      used: 1.67 GiB
+      used_bytes: 1792540672
   mounts:
   - "/"
   - "/home"
@@ -1853,8 +1794,8 @@ values:
   - "/tmp"
   - "/boot"
   - "/boot/efi"
-  - "/srv/cassandra/instance1/data"
   - "/srv/cassandra/instance1/commitlog"
+  - "/srv/cassandra/instance1/data"
   mtu_bond0: 1500
   mtu_docker0: 1500
   mtu_ens10f0np0: 1500
@@ -1890,7 +1831,7 @@ values:
           netmask: 255.255.0.0
           network: 172.17.0.0
         ip: 172.17.0.1
-        mac: 02:42:99:cf:76:64
+        mac: 02:42:ea:d0:c2:11
         mtu: 1500
         netmask: 255.255.0.0
         network: 172.17.0.0
@@ -2186,8 +2127,8 @@ values:
   sshrsakey: AAAAB3NzaC1yc2EAAAADAQABAAABgQDNAAyAeUeoa7x35dzrkO6smP7wdjXiSnp/y41APg5XWGJiJ+dumxA54lUt3Z04b6S0uA4TGzucgFU0zayLjXbm9XLiNrhfUhcNS5iQ6+TiZkxHVAQfJrhEM1LS62QgHGSZXlhi8yMKMsENKnnWZaNKEzgXvc18Udt4qG6VExpgnoEmzE+/8GG1xocGtI4v+IP9yDptyhNCAiaRsHfNH5s8oDHjnWZ+ZjfvuNr5pUr85g7FeaSTwplZIFUYSta64AS1pz5HreZSO+CFkj+Z5NuJb4qd1JSey+qRkHX2QjwqCGZBJgl/nLVqUV878SLuNiGCbPKdLufrGhKCs+t6MltKVWzKpaiGHmzZ9xiJ0Df1nD7sqbLpaXrlvOLeJksNKuqHKtH6qwW7ibaYnMLKTQ9+BSGjboa9kL+0J6faQGmV54qVYgY/XV6rGLd6NTaZbvhQoy0whRcxjcW8lQx+vxpwo9r1I9DtoUoS63Jmlx+j+kkPx1FZSoknM2JZkG6i6ns=
   subnet: sesi_rocquencourt
   sudoversion: 1.9.5p2
-  swapfree: 8.00 KiB
-  swapfree_mb: 0.0078125
+  swapfree: 704.00 KiB
+  swapfree_mb: 0.6875
   swapsize: 976.00 MiB
   swapsize_mb: 975.99609375
   swh_hostname:
@@ -2195,10 +2136,10 @@ values:
     short: cassandra07
     internal_fqdn: cassandra07.internal.softwareheritage.org
   system_uptime:
-    days: 60
-    hours: 1461
-    seconds: 5260930
-    uptime: 60 days
+    days: 8
+    hours: 204
+    seconds: 736881
+    uptime: 8 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -2212,15 +2153,15 @@ values:
     systemd-time-wait-sync.service: disabled
   systemd_version: '247'
   timezone: UTC
-  uptime: 60 days
-  uptime_days: 60
-  uptime_hours: 1461
-  uptime_seconds: 5260930
+  uptime: 8 days
+  uptime_days: 8
+  uptime_hours: 204
+  uptime_seconds: 736881
   uuid: 35383350-3837-5a43-4a32-343232313439
   vcsrepo_svn_ver: ''
   virtual: physical
   clientcert: cassandra07.internal.softwareheritage.org
   clientversion: 5.5.22
   clientnoop: false
-timestamp: '2023-05-09T12:10:07.397564326+00:00'
-expiration: '2023-05-09T12:40:07.399918757+00:00'
+timestamp: '2023-09-11T13:10:08.961517276+00:00'
+expiration: '2023-09-11T13:40:08.964365180+00:00'

@@ -2,7 +2,7 @@
 name: search0.internal.staging.swh.network
 values:
   agent_specified_environment: staging
-  apt_dist_updates: 15
+  apt_dist_updates: 16
   apt_has_dist_updates: true
   apt_has_updates: true
   apt_package_dist_updates:
@@ -17,6 +17,7 @@ values:
   - python3-swh.storage
   - python3-swh.journal
   - python3-swh.counters
+  - python3-tabulate
   - python3-swh.scheduler
   - python3-swh.indexer
   - python3-swh.indexer.storage
@@ -35,19 +36,18 @@ values:
   - python3-swh.storage
   - python3-swh.journal
   - python3-swh.counters
-  - python3-swh.scheduler
   - python3-swh.indexer
   - python3-swh.indexer.storage
   - python3-tree-sitter
   apt_reboot_required: true
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1683631563
-  apt_updates: 15
+  apt_update_last_success: 1694435162
+  apt_updates: 14
   architecture: amd64
   bios_release_date: 04/01/2014
   bios_vendor: SeaBIOS
-  bios_version: rel-1.16.0-0-gd239552ce722-prebuilt.qemu.org
+  bios_version: rel-1.16.1-0-g3208b098f51a-prebuilt.qemu.org
   blockdevice_sr0_model: QEMU DVD-ROM
   blockdevice_sr0_size: 1073741312
   blockdevice_sr0_vendor: QEMU
@@ -83,7 +83,7 @@ values:
     bios:
       release_date: 04/01/2014
       vendor: SeaBIOS
-      version: rel-1.16.0-0-gd239552ce722-prebuilt.qemu.org
+      version: rel-1.16.1-0-g3208b098f51a-prebuilt.qemu.org
     chassis:
       type: Other
     manufacturer: QEMU
@@ -132,7 +132,7 @@ values:
   is_virtual: true
   kernel: Linux
   kernelmajversion: '4.19'
-  kernelrelease: 4.19.0-23-amd64
+  kernelrelease: 4.19.0-24-amd64
   kernelversion: 4.19.0
   kmods:
     msdos:
@@ -787,9 +787,9 @@ values:
       - ttm
   letsencrypt_directory: {}
   load_averages:
-    15m: 0.35
-    1m: 0.55
-    5m: 0.65
+    15m: 0.01
+    1m: 0.08
+    5m: 0.03
   lsbdistcodename: buster
   lsbdistdescription: Debian GNU/Linux 10 (buster)
   lsbdistid: Debian
@@ -808,22 +808,22 @@ values:
       used: 0 bytes
       used_bytes: 0
     system:
-      available: 3.12 GiB
-      available_bytes: 3351523328
-      capacity: 19.02%
+      available: 3.22 GiB
+      available_bytes: 3457277952
+      capacity: 16.46%
       total: 3.85 GiB
-      total_bytes: 4138455040
-      used: 750.48 MiB
-      used_bytes: 786931712
-  memoryfree: 3.12 GiB
-  memoryfree_mb: 3196.26171875
+      total_bytes: 4138557440
+      used: 649.72 MiB
+      used_bytes: 681279488
+  memoryfree: 3.22 GiB
+  memoryfree_mb: 3297.1171875
   memorysize: 3.85 GiB
-  memorysize_mb: 3946.73828125
+  memorysize_mb: 3946.8359375
   mountpoints:
     "/":
-      available: 13.47 GiB
-      available_bytes: 14464679936
-      capacity: 17.60%
+      available: 13.57 GiB
+      available_bytes: 14574075904
+      capacity: 16.98%
       device: "/dev/mapper/base--template--vg-root"
       filesystem: ext4
       options:
@@ -832,12 +832,12 @@ values:
       - errors=remount-ro
       size: 16.35 GiB
       size_bytes: 17555079168
-      used: 2.88 GiB
-      used_bytes: 3090399232
+      used: 2.78 GiB
+      used_bytes: 2981003264
     "/boot":
-      available: 150.56 MiB
-      available_bytes: 157878272
-      capacity: 35.47%
+      available: 150.63 MiB
+      available_bytes: 157941760
+      capacity: 35.44%
       device: "/dev/vda1"
       filesystem: ext2
       options:
@@ -845,11 +845,11 @@ values:
       - relatime
       size: 233.32 MiB
       size_bytes: 244658176
-      used: 82.76 MiB
-      used_bytes: 86779904
+      used: 82.70 MiB
+      used_bytes: 86716416
     "/dev/shm":
       available: 1.93 GiB
-      available_bytes: 2069225472
+      available_bytes: 2069278720
       capacity: 0%
       device: tmpfs
       filesystem: tmpfs
@@ -858,12 +858,12 @@ values:
       - nosuid
       - nodev
       size: 1.93 GiB
-      size_bytes: 2069225472
+      size_bytes: 2069278720
       used: 0 bytes
       used_bytes: 0
     "/run":
-      available: 394.13 MiB
-      available_bytes: 413274112
+      available: 394.14 MiB
+      available_bytes: 413286400
       capacity: 0.14%
       device: tmpfs
       filesystem: tmpfs
@@ -872,12 +872,12 @@ values:
       - nosuid
       - noexec
       - relatime
-      - size=404148k
+      - size=404156k
       - mode=755
       size: 394.68 MiB
-      size_bytes: 413847552
-      used: 560.00 KiB
-      used_bytes: 573440
+      size_bytes: 413855744
+      used: 556.00 KiB
+      used_bytes: 569344
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -1120,10 +1120,10 @@ values:
     short: search0
     internal_fqdn: search0.internal.staging.swh.network
   system_uptime:
-    days: 84
-    hours: 2016
-    seconds: 7260104
-    uptime: 84 days
+    days: 45
+    hours: 1101
+    seconds: 3965509
+    uptime: 45 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -1138,15 +1138,15 @@ values:
     systemd-timesyncd.service: enabled
   systemd_version: '247'
   timezone: UTC
-  uptime: 84 days
-  uptime_days: 84
-  uptime_hours: 2016
-  uptime_seconds: 7260104
+  uptime: 45 days
+  uptime_days: 45
+  uptime_hours: 1101
+  uptime_seconds: 3965509
   uuid: 40bc94dc-9df5-42d5-bb69-553345bae5a9
   vcsrepo_svn_ver: ''
   virtual: kvm
   clientcert: search0.internal.staging.swh.network
   clientversion: 5.5.10
   clientnoop: false
-timestamp: '2023-05-09T12:22:07.526603968+00:00'
-expiration: '2023-05-09T12:52:07.527897158+00:00'
+timestamp: '2023-09-11T12:52:08.230198886+00:00'
+expiration: '2023-09-11T13:22:08.231484204+00:00'

@@ -3,20 +3,24 @@ name: giverny.softwareheritage.org
 values:
   agent_specified_environment: production
   apache_version: 2.4.56
-  apt_dist_updates: 1
+  apt_dist_updates: 3
   apt_has_dist_updates: true
   apt_has_updates: true
   apt_package_dist_updates:
+  - barman
+  - python3-barman
   - elasticsearch
   apt_package_security_dist_updates: []
   apt_package_security_updates: []
   apt_package_updates:
+  - barman
+  - python3-barman
   - elasticsearch
   apt_reboot_required: true
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1683633304
-  apt_updates: 1
+  apt_update_last_success: 1694436903
+  apt_updates: 3
   architecture: amd64
   bios_release_date: 05/08/2017
   bios_vendor: Dell Inc.
@@ -45,11 +49,7 @@ values:
   cassandracmsheapnewsize: 3200
   cassandracmsmaxheapsize: 14336
   cassandraheapnewsize: 2048
-  cassandramajorversion: 4
   cassandramaxheapsize: 8192
-  cassandraminorversion: 0
-  cassandrapatchversion: 5
-  cassandrarelease: 4.0.5
   chassistype: Tower
   deployment: production
   dhcp_servers:
@@ -136,25 +136,27 @@ values:
     privileged: true
     uid: 0
     user: root
-  interfaces: enp0s25,lo,tun0
+  interfaces: enp0s25,lo,tun0,virbr0,virbr1
   ipaddress: 128.93.73.175
   ipaddress6: fe80::4a4d:7eff:fefb:87ac
   ipaddress6_enp0s25: fe80::4a4d:7eff:fefb:87ac
   ipaddress6_lo: "::1"
-  ipaddress6_tun0: fe80::3be1:3ffc:77d8:6271
+  ipaddress6_tun0: fe80::33c3:d86c:e994:5441
   ipaddress_enp0s25: 128.93.73.175
   ipaddress_lo: 127.0.0.1
   ipaddress_tun0: 192.168.101.118
+  ipaddress_virbr0: 192.168.122.1
+  ipaddress_virbr1: 192.168.39.1
   is_pe: false
   is_virtual: false
   java_default_home: "/usr/lib/jvm/java-11-openjdk-amd64"
   java_libjvm_path: "/usr/lib/jvm/java-11-openjdk-amd64/lib/server"
   java_major_version: '11'
-  java_patch_level: '18'
-  java_version: 11.0.18
+  java_patch_level: '20'
+  java_version: 11.0.20
   kernel: Linux
   kernelmajversion: '5.10'
-  kernelrelease: 5.10.0-21-amd64
+  kernelrelease: 5.10.0-22-amd64
   kernelversion: 5.10.0
   kmods:
     parport_pc:
@@ -214,6 +216,9 @@ values:
         edac_pci_panic_on_pe: '0'
         check_pci_errors: '0'
       used_by: []
+    xt_conntrack:
+      parameters: {}
+      used_by: []
     raid1:
       parameters:
         max_queued_requests: '1024'
@@ -233,6 +238,17 @@ values:
     iTCO_wdt:
       parameters: {}
       used_by: []
+    nf_conntrack:
+      parameters:
+        nf_conntrack_helper: N
+        expect_hashsize: '512'
+        acct: N
+        hashsize: '65536'
+        tstamp: N
+      used_by:
+      - xt_conntrack
+      - nf_nat
+      - xt_MASQUERADE
     crct10dif_common:
       parameters: {}
       used_by:
@@ -338,6 +354,292 @@ values:
         shpchp_poll_mode: N
         shpchp_debug: N
       used_by: []
+    zfs:
+      parameters:
+        zfs_arc_p_min_shift: '0'
+        zvol_request_sync: '0'
+        vdev_validate_skip: '0'
+        zfs_object_mutex_size: '64'
+        spa_slop_shift: '5'
+        zfs_max_async_dedup_frees: '100000'
+        zfs_sync_taskq_batch_pct: '75'
+        metaslab_unload_delay_ms: '600000'
+        zfs_vdev_async_write_max_active: '10'
+        zfs_multilist_num_sublists: '0'
+        zil_nocacheflush: '0'
+        zfs_trim_metaslab_skip: '0'
+        zfs_trim_extent_bytes_min: '32768'
+        zfs_checksum_events_per_second: '20'
+        zfs_no_scrub_prefetch: '0'
+        zfs_vdev_sync_read_min_active: '10'
+        zfs_dmu_offset_next_sync: '0'
+        zfs_rebuild_max_segment: '1048576'
+        metaslab_debug_load: '0'
+        zio_deadman_log_all: '0'
+        zfs_max_nvlist_src_size: '0'
+        zfs_livelist_condense_sync_cancel: '0'
+        zfs_vdev_mirror_rotating_seek_inc: '5'
+        vdev_file_logical_ashift: '9'
+        zfs_vdev_mirror_non_rotating_inc: '0'
+        zfs_read_history: '0'
+        zfs_multihost_history: '0'
+        zfs_metaslab_switch_threshold: '2'
+        metaslab_fragmentation_factor_enabled: '1'
+        zfs_admin_snapshot: '0'
+        zfs_delete_blocks: '20480'
+        zfs_arc_meta_prune: '10000'
+        zfs_free_min_time_ms: '1000'
+        zfs_removal_suspend_progress: '0'
+        zfs_scrub_min_time_ms: '1000'
+        zfs_vdev_default_ms_count: '200'
+        zfs_dedup_prefetch: '0'
+        zfs_txg_history: '100'
+        zfs_vdev_max_active: '1000'
+        zfs_vdev_sync_write_min_active: '10'
+        spa_load_verify_data: '1'
+        zfs_async_block_max_blocks: '18446744073709551615'
+        zfs_dirty_data_max_max: '4294967296'
+        dbuf_cache_shift: '5'
+        zfs_send_corrupt_data: '0'
+        dbuf_cache_lowater_pct: '10'
+        zfs_send_queue_length: '16777216'
+        zfs_lua_max_instrlimit: '100000000'
+        zfs_scan_fill_weight: '3'
+        dmu_object_alloc_chunk_shift: '7'
+        zfs_arc_shrink_shift: '0'
+        zfs_resilver_min_time_ms: '3000'
+        zfs_history_output_max: '1048576'
+        zfs_trim_extent_bytes_max: '134217728'
+        zfs_free_bpobj_enabled: '1'
+        zfs_vdev_mirror_non_rotating_seek_inc: '1'
+        zfs_vdev_cache_max: '16384'
+        zfs_condense_min_mapping_bytes: '131072'
+        ignore_hole_birth: '1'
+        zfs_fallocate_reserve_percent: '110'
+        zfs_multihost_fail_intervals: '10'
+        zfs_allow_redacted_dataset_mount: '0'
+        zfs_arc_min_prefetch_ms: '0'
+        zfs_unflushed_max_mem_amt: '1073741824'
+        zfs_arc_sys_free: '0'
+        metaslab_df_use_largest_segment: '0'
+        zfs_sync_pass_dont_compress: '8'
+        zio_taskq_batch_pct: '75'
+        zfs_unflushed_max_mem_ppm: '1000'
+        zfs_remove_max_segment: '16777216'
+        zfs_arc_meta_limit_percent: '75'
+        zfs_arc_p_dampener_disable: '1'
+        spa_load_verify_metadata: '1'
+        dbuf_cache_hiwater_pct: '10'
+        zfs_livelist_min_percent_shared: '75'
+        zfs_send_no_prefetch_queue_length: '1048576'
+        zfs_arc_shrinker_limit: '10000'
+        zfs_arc_grow_retry: '0'
+        zfs_vdev_trim_min_active: '1'
+        metaslab_aliquot: '524288'
+        zfs_vdev_async_read_min_active: '1'
+        zfs_vdev_cache_bshift: '16'
+        metaslab_preload_enabled: '1'
+        zfs_zevent_retain_max: '2000'
+        zfs_livelist_condense_sync_pause: '0'
+        zfs_deadman_failmode: wait
+        l2arc_feed_min_ms: '200'
+        zfs_vdev_min_auto_ashift: '9'
+        zfs_read_history_hits: '0'
+        zfetch_max_distance: '8388608'
+        send_holes_without_birth_time: '1'
+        zfs_livelist_condense_new_alloc: '0'
+        l2arc_trim_ahead: '0'
+        zfs_max_recordsize: '1048576'
+        zfs_dbuf_state_index: '0'
+        zio_slow_io_ms: '30000'
+        dbuf_cache_max_bytes: '18446744073709551615'
+        zfs_zevent_cols: '80'
+        zfs_scan_mem_lim_soft_fact: '20'
+        zfs_no_scrub_io: '0'
+        zil_slog_bulk: '786432'
+        spa_asize_inflation: '24'
+        zfs_arc_evict_batch_limit: '10'
+        l2arc_write_boost: '8388608'
+        zfs_abd_scatter_min_size: '1536'
+        zfs_initialize_chunk_size: '1048576'
+        zfs_arc_meta_limit: '0'
+        zfs_deadman_enabled: '1'
+        vdev_file_physical_ashift: '9'
+        zfs_min_metaslabs_to_flush: '1'
+        zfs_abd_scatter_enabled: '1'
+        zfs_arc_min_prescient_prefetch_ms: '0'
+        zfs_vdev_async_write_active_min_dirty_percent: '30'
+        zfs_free_leak_on_eio: '0'
+        zfs_vdev_cache_size: '0'
+        zfs_vdev_write_gap_limit: '4096'
+        zfs_scan_issue_strategy: '0'
+        zfs_max_missing_tvds: '0'
+        zfs_recv_queue_ff: '20'
+        l2arc_headroom: '2'
+        zfs_per_txg_dirty_frees_percent: '5'
+        zfs_compressed_arc_enabled: '1'
+        dbuf_metadata_cache_max_bytes: '18446744073709551615'
+        zfs_scan_ignore_errors: '0'
+        zfs_vdev_removal_max_active: '2'
+        zfs_vdev_max_auto_ashift: '16'
+        zfs_condense_indirect_commit_entry_delay_ms: '0'
+        zfs_metaslab_segment_weight_enabled: '1'
+        zfs_dirty_data_max_max_percent: '25'
+        metaslab_force_ganging: '16777217'
+        zio_dva_throttle_enabled: '1'
+        zfs_vdev_scrub_min_active: '1'
+        zfs_arc_average_blocksize: '8192'
+        zfs_scan_suspend_progress: '0'
+        zfs_vdev_queue_depth_pct: '1000'
+        zfs_multihost_interval: '1000'
+        zfs_vdev_aggregate_trim: '0'
+        zfs_condense_indirect_vdevs_enable: '1'
+        zio_requeue_io_start_cut_in_line: '1'
+        zfs_send_queue_ff: '20'
+        zfetch_max_streams: '8'
+        zfs_multihost_import_intervals: '20'
+        zfs_ddt_data_is_special: '1'
+        zfs_vdev_rebuild_min_active: '1'
+        zfs_zevent_console: '0'
+        zfs_zil_clean_taskq_minalloc: '1024'
+        zfs_sync_pass_deferred_free: '2'
+        zfs_vdev_initializing_min_active: '1'
+        zfetch_max_idistance: '67108864'
+        zfs_nocacheflush: '0'
+        zfs_arc_dnode_limit: '0'
+        zfs_scan_legacy: '0'
+        zfs_dbgmsg_enable: '1'
+        zfs_scan_vdev_limit: '4194304'
+        zfs_vdev_raidz_impl: 'cycle [fastest] original scalar sse2 ssse3 avx2 '
+        l2arc_mfuonly: '0'
+        zvol_threads: '32'
+        zfs_vdev_async_write_min_active: '2'
+        zfs_removal_ignore_errors: '0'
+        zfs_vdev_sync_read_max_active: '10'
+        l2arc_headroom_boost: '200'
+        zfs_reconstruct_indirect_combinations_max: '4096'
+        zfs_sync_pass_rewrite: '2'
+        spa_config_path: "/etc/zfs/zpool.cache"
+        zfs_pd_bytes_max: '52428800'
+        metaslab_df_max_search: '16777216'
+        zfs_flags: '0'
+        zfs_deadman_checktime_ms: '60000'
+        zap_iterate_prefetch: '1'
+        spa_load_print_vdev_tree: '0'
+        zfs_dirty_data_max_percent: '10'
+        zfs_user_indirect_is_special: '1'
+        zfs_send_no_prefetch_queue_ff: '20'
+        zfs_scan_checkpoint_intval: '7200'
+        dbuf_metadata_cache_shift: '6'
+        zfetch_min_sec_reap: '2'
+        zfs_zil_clean_taskq_nthr_pct: '100'
+        zfs_key_max_salt_uses: '400000000'
+        zfs_mg_noalloc_threshold: '0'
+        zfs_deadman_ziotime_ms: '300000'
+        zfs_special_class_metadata_reserve_pct: '25'
+        zfs_arc_meta_min: '0'
+        zvol_prefetch_bytes: '131072'
+        zfs_deadman_synctime_ms: '600000'
+        zfs_send_unmodified_spill_blocks: '1'
+        zfs_max_logsm_summary_length: '10'
+        zfs_autoimport_disable: '1'
+        zfs_recv_write_batch_size: '1048576'
+        zfs_arc_min: '0'
+        zfs_trim_queue_limit: '10'
+        l2arc_noprefetch: '1'
+        zfs_nopwrite_enabled: '1'
+        l2arc_feed_again: '1'
+        zfs_zevent_retain_expire_secs: '900'
+        zfs_vdev_sync_write_max_active: '10'
+        zfs_prefetch_disable: '0'
+        zfetch_array_rd_sz: '1048576'
+        zfs_metaslab_fragmentation_threshold: '70'
+        l2arc_write_max: '8388608'
+        zfs_scan_mem_lim_fact: '20'
+        zfs_dbgmsg_maxsize: '4194304'
+        zfs_livelist_condense_zthr_cancel: '0'
+        zfs_override_estimate_recordsize: '0'
+        zfs_vdev_read_gap_limit: '32768'
+        zfs_vdev_nia_delay: '5'
+        zfs_dirty_data_sync_percent: '20'
+        l2arc_rebuild_enabled: '1'
+        zfs_delay_min_dirty_percent: '60'
+        zfs_keep_log_spacemaps_at_export: '0'
+        zfs_recv_queue_length: '16777216'
+        zfs_vdev_async_write_active_max_dirty_percent: '60'
+        zfs_disable_ivset_guid_check: '0'
+        zfs_arc_lotsfree_percent: '10'
+        zfs_immediate_write_sz: '32768'
+        zil_replay_disable: '0'
+        zil_maxblocksize: '131072'
+        zfs_vdev_mirror_rotating_inc: '0'
+        zvol_volmode: '1'
+        zfs_unlink_suspend_progress: '0'
+        zfs_arc_meta_strategy: '1'
+        zfs_obsolete_min_time_ms: '500'
+        zfs_vdev_default_ms_shift: '29'
+        zfs_livelist_max_entries: '500000'
+        zfs_vdev_trim_max_active: '2'
+        zfs_resilver_disable_defer: '0'
+        metaslab_bias_enabled: '1'
+        zfs_vdev_async_read_max_active: '3'
+        l2arc_feed_secs: '1'
+        zfs_commit_timeout_pct: '5'
+        zfs_arc_max: '42227896320'
+        spa_load_verify_shift: '4'
+        zfs_unflushed_log_block_min: '1000'
+        zfs_vdev_nia_credit: '5'
+        zfs_trim_txg_batch: '32'
+        zfs_arc_eviction_pct: '200'
+        vdev_removal_max_span: '32768'
+        zfs_zevent_len_max: '512'
+        zfs_scan_max_ext_gap: '2097152'
+        zfs_scan_strict_mem_lim: '0'
+        zfs_livelist_condense_zthr_pause: '0'
+        zfs_vdev_aggregation_limit_non_rotating: '131072'
+        zfs_arc_meta_adjust_restarts: '4096'
+        l2arc_norw: '0'
+        zfs_recover: '0'
+        zvol_inhibit_dev: '0'
+        zfs_max_log_walking: '5'
+        zfs_vdev_aggregation_limit: '1048576'
+        l2arc_meta_percent: '33'
+        zfs_condense_max_obsolete_bytes: '1073741824'
+        dmu_prefetch_max: '134217728'
+        zvol_major: '230'
+        metaslab_debug_unload: '0'
+        zfs_slow_io_events_per_second: '20'
+        zfs_lua_max_memlimit: '104857600'
+        metaslab_lba_weighting_enabled: '1'
+        zfs_zil_clean_taskq_maxalloc: '1048576'
+        zfs_txg_timeout: '5'
+        zfs_metaslab_mem_limit: '75'
+        metaslab_unload_delay: '32'
+        zfs_vdev_removal_min_active: '1'
+        zfs_vdev_min_ms_count: '16'
+        zfs_unflushed_log_block_max: '262144'
+        zfs_metaslab_max_size_cache_sec: '3600'
+        zfs_vdev_scrub_max_active: '3'
+        zfs_vdev_mirror_rotating_seek_offset: '1048576'
+        zfs_arc_pc_percent: '0'
+        zfs_vdev_scheduler: unused
+        zvol_max_discard_blocks: '16384'
+        zfs_arc_dnode_reduce_percent: '10'
+        zfs_unflushed_log_block_pct: '400'
+        zfs_vdev_ms_count_limit: '131072'
+        zfs_dirty_data_max: '4294967296'
+        zfs_vnops_read_chunk_size: '1048576'
+        l2arc_rebuild_blocks_min_l2size: '1073741824'
+        zfs_vdev_rebuild_max_active: '3'
+        zfs_abd_scatter_max_order: '10'
+        zfs_spa_discard_memory_limit: '16777216'
+        zfs_initialize_value: '16045690984833335022'
+        zfs_expire_snapshot: '300'
+        zfs_vdev_initializing_max_active: '1'
+        zfs_arc_dnode_limit_percent: '10'
+        zfs_delay_scale: '500000'
+        zfs_mg_fragmentation_threshold: '95'
+      used_by: []
     crypto_simd:
       parameters: {}
       used_by:
@@ -347,6 +649,11 @@ values:
       used_by:
       - raid456
       - async_raid6_recov
+    nfnetlink:
+      parameters: {}
+      used_by:
+      - nft_compat
+      - nf_tables
     soundcore:
       parameters:
         preclaim_oss: '0'
@@ -380,7 +687,10 @@ values:
       used_by: []
     rtc_cmos:
       parameters:
-        use_acpi_alarm: N
+        use_acpi_alarm: Y
+      used_by: []
+    tcp_diag:
+      parameters: {}
       used_by: []
     jfs:
       parameters: {}
@@ -398,6 +708,11 @@ values:
       parameters: {}
       used_by:
       - snd_hda_codec
+    nf_nat:
+      parameters: {}
+      used_by:
+      - nft_chain_nat
+      - xt_MASQUERADE
     drm_kms_helper:
       parameters:
         drm_fbdev_overalloc: '100'
@@ -413,6 +728,19 @@ values:
       parameters: {}
       used_by:
       - dell_smbios
+    bridge:
+      parameters: {}
+      used_by: []
+    icp:
+      parameters:
+        icp_gcm_avx_chunk_size: '32736'
+        icp_aes_impl: 'cycle [fastest] generic x86_64 aesni '
+        icp_gcm_impl: 'cycle [fastest] avx generic pclmulqdq '
+      used_by:
+      - zfs
+    nft_compat:
+      parameters: {}
+      used_by: []
     device_hmem:
       parameters:
         disable: N
@@ -507,6 +835,10 @@ values:
       - ext4
     tun:
       parameters: {}
+      used_by:
+      - vhost_net
+    xt_tcpudp:
+      parameters: {}
       used_by: []
     mousedev:
       parameters:
@@ -517,14 +849,10 @@ values:
     mei_wdt:
       parameters: {}
       used_by: []
-    usbhid:
-      parameters:
-        mousepoll: '0'
-        jspoll: '0'
-        kbpoll: '0'
-        ignoreled: '0'
-        quirks: "(null),(null),(null),(null)"
-      used_by: []
+    nf_defrag_ipv6:
+      parameters: {}
+      used_by:
+      - nf_conntrack
     ahci:
       parameters:
         marvell_enable: '0'
@@ -557,6 +885,10 @@ values:
         bit_test: '0'
       used_by:
       - nouveau
+    zzstd:
+      parameters: {}
+      used_by:
+      - zfs
     nvme:
       parameters:
         poll_queues: '0'
@@ -567,6 +899,11 @@ values:
         io_queue_depth: '1024'
         use_cmb_sqes: Y
       used_by: []
+    znvpair:
+      parameters: {}
+      used_by:
+      - zfs
+      - zcommon
     libaes:
       parameters: {}
       used_by:
@@ -576,6 +913,9 @@ values:
       used_by:
       - mei_wdt
       - mei_me
+    xt_CHECKSUM:
+      parameters: {}
+      used_by: []
     blake2b_generic:
       parameters: {}
       used_by: []
@@ -621,6 +961,10 @@ values:
       parameters:
         verbose: '0'
       used_by: []
+    nf_defrag_ipv4:
+      parameters: {}
+      used_by:
+      - nf_conntrack
     intel_rapl_msr:
       parameters: {}
       used_by: []
@@ -637,7 +981,10 @@ values:
     libcrc32c:
       parameters: {}
       used_by:
+      - nf_conntrack
+      - nf_nat
       - btrfs
+      - nf_tables
       - xfs
       - raid456
     parport:
@@ -659,6 +1006,10 @@ values:
         compressor: lzo
         zpool: zbud
         accept_threshold_percent: '90'
+      used_by: []
+    vhost_net:
+      parameters:
+        experimental_zcopytx: '0'
       used_by: []
     ppdev:
       parameters: {}
@@ -691,13 +1042,6 @@ values:
       parameters:
         lockless_register_fb: N
       used_by: []
-    hid:
-      parameters:
-        ignore_special_drivers: '0'
-        debug: '0'
-      used_by:
-      - usbhid
-      - hid_generic
     netpoll:
       parameters:
         carrier_timeout: '4'
@@ -716,6 +1060,14 @@ values:
         audit: normal
         path_max: '8192'
       used_by: []
+    zcommon:
+      parameters:
+        zfs_fletcher_4_impl: "[fastest] scalar superscalar superscalar4 sse2 ssse3
+          avx2 "
+        zfs_max_dataset_nesting: '50'
+      used_by:
+      - zfs
+      - icp
     usbcore:
       parameters:
         usbfs_memory_mb: '16'
@@ -732,13 +1084,16 @@ values:
       used_by:
       - xhci_hcd
       - ehci_pci
-      - usbhid
       - ehci_hcd
       - xhci_pci
     iTCO_vendor_support:
       parameters: {}
       used_by:
       - iTCO_wdt
+    vhost_iotlb:
+      parameters: {}
+      used_by:
+      - vhost
     evdev:
       parameters: {}
       used_by: []
@@ -777,9 +1132,10 @@ values:
       parameters:
         default_state: '1'
       used_by: []
-    joydev:
+    nf_reject_ipv4:
       parameters: {}
-      used_by: []
+      used_by:
+      - ipt_REJECT
     intel_powerclamp:
       parameters:
         duration: '24'
@@ -851,9 +1207,6 @@ values:
     ufs:
       parameters: {}
       used_by: []
-    hid_generic:
-      parameters: {}
-      used_by: []
     pps_core:
       parameters: {}
       used_by:
@@ -879,9 +1232,13 @@ values:
       - t10_pi
     fuse:
       parameters:
-        max_user_bgreq: '52603'
-        max_user_congthresh: '52603'
+        max_user_bgreq: '52599'
+        max_user_congthresh: '52599'
       used_by: []
+    zlua:
+      parameters: {}
+      used_by:
+      - zfs
     mei_me:
       parameters: {}
       used_by: []
@@ -889,6 +1246,12 @@ values:
       parameters:
         disable: N
       used_by: []
+    nf_tables:
+      parameters: {}
+      used_by:
+      - nft_compat
+      - nft_counter
+      - nft_chain_nat
     configfs:
       parameters: {}
       used_by: []
@@ -900,6 +1263,10 @@ values:
       parameters: {}
       used_by:
       - soundwire_intel
+    zunicode:
+      parameters: {}
+      used_by:
+      - zfs
     cec:
       parameters:
         debug_phys_addr: N
@@ -922,7 +1289,13 @@ values:
     x_tables:
       parameters: {}
       used_by:
+      - xt_conntrack
+      - nft_compat
+      - xt_tcpudp
+      - xt_CHECKSUM
+      - ipt_REJECT
       - ip_tables
+      - xt_MASQUERADE
     xhci_pci:
       parameters: {}
       used_by: []
@@ -950,6 +1323,13 @@ values:
         qlowmark: '100'
         qovld: '20000'
       used_by: []
+    ipt_REJECT:
+      parameters: {}
+      used_by: []
+    tap:
+      parameters: {}
+      used_by:
+      - vhost_net
     xfs:
       parameters: {}
       used_by: []
@@ -966,6 +1346,9 @@ values:
         disable_features: '0'
       used_by: []
     linear:
+      parameters: {}
+      used_by: []
+    nft_counter:
       parameters: {}
       used_by: []
     button:
@@ -996,6 +1379,11 @@ values:
         lapic_timer_advance_ns: "-1"
       used_by:
       - kvm_intel
+    llc:
+      parameters: {}
+      used_by:
+      - bridge
+      - stp
     dell_smm_hwmon:
       parameters:
         power_status: N
@@ -1010,6 +1398,12 @@ values:
       parameters:
         events_dfl_poll_msecs: '2000'
       used_by: []
+    vhost:
+      parameters:
+        max_iotlb_entries: '2048'
+        max_mem_regions: '64'
+      used_by:
+      - vhost_net
     crct10dif_pclmul:
       parameters: {}
       used_by: []
@@ -1032,6 +1426,9 @@ values:
     xz_dec:
       parameters: {}
       used_by: []
+    nft_chain_nat:
+      parameters: {}
+      used_by: []
     soundwire_bus:
       parameters: {}
       used_by:
@@ -1041,6 +1438,33 @@ values:
     rapl:
       parameters: {}
       used_by: []
+    spl:
+      parameters:
+        spl_kmem_cache_max_size: '32'
+        spl_taskq_thread_priority: '1'
+        spl_taskq_thread_bind: '0'
+        spl_taskq_thread_dynamic: '1'
+        spl_kmem_cache_slab_limit: '16384'
+        spl_kmem_alloc_max: '1048576'
+        spl_panic_halt: '0'
+        spl_hostid: '0'
+        spl_taskq_thread_sequential: '4'
+        spl_kmem_cache_magazine_size: '0'
+        spl_max_show_tasks: '512'
+        spl_kmem_cache_reclaim: '0'
+        spl_kmem_cache_obj_per_slab: '8'
+        spl_taskq_kick: '0'
+        spl_kmem_cache_kmem_threads: '4'
+        spl_kmem_alloc_warn: '65536'
+        spl_hostid_path: "/etc/hostid"
+        spl_schedule_hrtimeout_slack_us: '0'
+      used_by:
+      - zfs
+      - icp
+      - zzstd
+      - znvpair
+      - zcommon
+      - zavl
     raid456:
       parameters:
         devices_handle_discard_safely: N
@@ -1115,6 +1539,10 @@ values:
         def_reserved_size: '32768'
         allow_dio: '0'
       used_by: []
+    inet_diag:
+      parameters: {}
+      used_by:
+      - tcp_diag
     kvm_intel:
       parameters:
         enlightened_vmcs: N
@@ -1189,6 +1617,9 @@ values:
       - dell_wmi_descriptor
       - mxm_wmi
       - nouveau
+    xt_MASQUERADE:
+      parameters: {}
+      used_by: []
     acpi:
       parameters:
         aml_debug_output: '0'
@@ -1220,6 +1651,10 @@ values:
       parameters: {}
       used_by:
       - nouveau
+    stp:
+      parameters: {}
+      used_by:
+      - bridge
     crc32_pclmul:
       parameters: {}
       used_by: []
@@ -1237,6 +1672,10 @@ values:
       parameters:
         ptr_size: '800,600'
       used_by: []
+    zavl:
+      parameters: {}
+      used_by:
+      - zfs
     vfat:
       parameters: {}
       used_by: []
@@ -1301,8 +1740,8 @@ values:
       - nouveau
   letsencrypt_directory: {}
   load_averages:
-    15m: 0.02
-    1m: 0.22
+    15m: 0.05
+    1m: 0.17
     5m: 0.08
   location: inria_paris
   lsbdistcodename: bullseye
@@ -1313,33 +1752,35 @@ values:
   lsbminordistrelease: '7'
   macaddress: 48:4d:7e:fb:87:ac
   macaddress_enp0s25: 48:4d:7e:fb:87:ac
+  macaddress_virbr0: 52:54:00:a1:ac:02
+  macaddress_virbr1: 52:54:00:f7:d6:54
   manufacturer: Dell Inc.
   memory:
     swap:
-      available: 29.80 GiB
-      available_bytes: 31998341120
-      capacity: 0%
+      available: 29.72 GiB
+      available_bytes: 31907901440
+      capacity: 0.28%
       total: 29.80 GiB
       total_bytes: 31998341120
-      used: 0 bytes
-      used_bytes: 0
+      used: 86.25 MiB
+      used_bytes: 90439680
     system:
-      available: 114.05 GiB
-      available_bytes: 122456543232
-      capacity: 27.51%
-      total: 157.32 GiB
-      total_bytes: 168923922432
-      used: 43.28 GiB
-      used_bytes: 46467379200
-  memoryfree: 114.05 GiB
-  memoryfree_mb: 116783.66015625
-  memorysize: 157.32 GiB
-  memorysize_mb: 161098.40625
+      available: 115.63 GiB
+      available_bytes: 124157935616
+      capacity: 26.50%
+      total: 157.31 GiB
+      total_bytes: 168911585280
+      used: 41.68 GiB
+      used_bytes: 44753649664
+  memoryfree: 115.63 GiB
+  memoryfree_mb: 118406.234375
+  memorysize: 157.31 GiB
+  memorysize_mb: 161086.640625
   mountpoints:
     "/":
-      available: 27.09 GiB
-      available_bytes: 29091057664
-      capacity: 21.45%
+      available: 25.88 GiB
+      available_bytes: 27790688256
+      capacity: 24.96%
       device: "/dev/mapper/giverny--vg-root"
       filesystem: ext4
       options:
@@ -1348,12 +1789,12 @@ values:
       - errors=remount-ro
       size: 36.37 GiB
       size_bytes: 39050428416
-      used: 7.40 GiB
-      used_bytes: 7942750208
+      used: 8.61 GiB
+      used_bytes: 9243119616
     "/boot":
-      available: 331.41 MiB
-      available_bytes: 347508736
-      capacity: 25.69%
+      available: 280.02 MiB
+      available_bytes: 293620736
+      capacity: 37.21%
       device: "/dev/nvme3n1p2"
       filesystem: ext2
       options:
@@ -1361,8 +1802,8 @@ values:
       - relatime
       size: 470.35 MiB
       size_bytes: 493201408
-      used: 114.54 MiB
-      used_bytes: 120108032
+      used: 165.94 MiB
+      used_bytes: 173996032
     "/boot/efi":
       available: 500.23 MiB
       available_bytes: 524533760
@@ -1384,8 +1825,8 @@ values:
       used: 10.75 MiB
       used_bytes: 11272192
     "/dev":
-      available: 78.64 GiB
-      available_bytes: 84435013632
+      available: 78.63 GiB
+      available_bytes: 84428836864
       capacity: 0%
       device: udev
       filesystem: devtmpfs
@@ -1393,11 +1834,11 @@ values:
       - rw
       - nosuid
       - relatime
-      - size=82456068k
-      - nr_inodes=20614017
+      - size=82450036k
+      - nr_inodes=20612509
       - mode=755
-      size: 78.64 GiB
-      size_bytes: 84435013632
+      size: 78.63 GiB
+      size_bytes: 84428836864
       used: 0 bytes
       used_bytes: 0
     "/dev/hugepages":
@@ -1449,8 +1890,8 @@ values:
       used: 0 bytes
       used_bytes: 0
     "/dev/shm":
-      available: 78.66 GiB
-      available_bytes: 84460867584
+      available: 78.65 GiB
+      available_bytes: 84454699008
       capacity: 0.00%
       device: tmpfs
       filesystem: tmpfs
@@ -1459,13 +1900,13 @@ values:
       - nosuid
       - nodev
       size: 78.66 GiB
-      size_bytes: 84461961216
+      size_bytes: 84455792640
       used: 1.04 MiB
       used_bytes: 1093632
     "/home":
-      available: 67.97 GiB
-      available_bytes: 72984797184
-      capacity: 1.55%
+      available: 66.22 GiB
+      available_bytes: 71099047936
+      capacity: 4.09%
       device: "/dev/mapper/giverny--vg-home"
       filesystem: ext4
       options:
@@ -1473,11 +1914,11 @@ values:
       - relatime
       size: 72.78 GiB
       size_bytes: 78149087232
-      used: 1.07 GiB
-      used_bytes: 1147617280
+      used: 2.83 GiB
+      used_bytes: 3033366528
     "/run":
       available: 15.73 GiB
-      available_bytes: 16889335808
+      available_bytes: 16887922688
       capacity: 0.02%
       device: tmpfs
       filesystem: tmpfs
@@ -1487,12 +1928,12 @@ values:
       - nodev
       - noexec
       - relatime
-      - size=16496480k
+      - size=16495272k
       - mode=755
       size: 15.73 GiB
-      size_bytes: 16892395520
-      used: 2.92 MiB
-      used_bytes: 3059712
+      size_bytes: 16891158528
+      used: 3.09 MiB
+      used_bytes: 3235840
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -1523,9 +1964,9 @@ values:
       size_bytes: 0
       used: 0 bytes
       used_bytes: 0
-    "/run/user/1033":
+    "/run/user/1008":
       available: 15.73 GiB
-      available_bytes: 16892329984
+      available_bytes: 16891097088
       capacity: 0.00%
       device: tmpfs
       filesystem: tmpfs
@@ -1534,16 +1975,33 @@ values:
       - nosuid
       - nodev
       - relatime
-      - size=16496476k
-      - nr_inodes=4124119
+      - size=16495272k
+      - nr_inodes=4123818
       - mode=700
-      - uid=1033
-      - gid=1033
+      - uid=1008
+      - gid=42001
       size: 15.73 GiB
-      size_bytes: 16892391424
+      size_bytes: 16891158528
       used: 60.00 KiB
       used_bytes: 61440
-    "/run/user/1033/gvfs":
+    "/run/user/1008/doc":
+      available: 0 bytes
+      available_bytes: 0
+      capacity: 100%
+      device: portal
+      filesystem: fuse.portal
+      options:
+      - rw
+      - nosuid
+      - nodev
+      - relatime
+      - user_id=1008
+      - group_id=42001
+      size: 0 bytes
+      size_bytes: 0
+      used: 0 bytes
+      used_bytes: 0
+    "/run/user/1008/gvfs":
       available: 0 bytes
       available_bytes: 0
       capacity: 100%
@@ -1554,15 +2012,15 @@ values:
       - nosuid
       - nodev
       - relatime
-      - user_id=1033
-      - group_id=1033
+      - user_id=1008
+      - group_id=42001
       size: 0 bytes
       size_bytes: 0
       used: 0 bytes
       used_bytes: 0
     "/run/user/125":
       available: 15.73 GiB
-      available_bytes: 16892313600
+      available_bytes: 16891088896
       capacity: 0.00%
       device: tmpfs
       filesystem: tmpfs
@@ -1571,15 +2029,15 @@ values:
       - nosuid
       - nodev
       - relatime
-      - size=16496476k
-      - nr_inodes=4124119
+      - size=16495272k
+      - nr_inodes=4123818
       - mode=700
       - uid=125
       - gid=131
       size: 15.73 GiB
-      size_bytes: 16892391424
-      used: 76.00 KiB
-      used_bytes: 77824
+      size_bytes: 16891158528
+      used: 68.00 KiB
+      used_bytes: 69632
     "/run/user/125/gvfs":
       available: 0 bytes
       available_bytes: 0
@@ -1599,7 +2057,7 @@ values:
       used_bytes: 0
     "/run/user/130":
       available: 15.73 GiB
-      available_bytes: 16892334080
+      available_bytes: 16891101184
       capacity: 0.00%
       device: tmpfs
       filesystem: tmpfs
@@ -1608,13 +2066,13 @@ values:
       - nosuid
       - nodev
       - relatime
-      - size=16496476k
-      - nr_inodes=4124119
+      - size=16495272k
+      - nr_inodes=4123818
       - mode=700
       - uid=130
       - gid=137
       size: 15.73 GiB
-      size_bytes: 16892391424
+      size_bytes: 16891158528
       used: 56.00 KiB
       used_bytes: 57344
     "/run/user/130/gvfs":
@@ -1634,10 +2092,277 @@ values:
       size_bytes: 0
       used: 0 bytes
       used_bytes: 0
+    "/srv/slow-storage":
+      available: 3.51 TiB
+      available_bytes: 3861173633024
+      capacity: 0.00%
+      device: slow-storage
+      filesystem: zfs
+      options:
+      - rw
+      - xattr
+      - noacl
+      size: 3.51 TiB
+      size_bytes: 3861173895168
+      used: 256.00 KiB
+      used_bytes: 262144
+    "/srv/slow-storage/anlambert":
+      available: 3.51 TiB
+      available_bytes: 3861173633024
+      capacity: 0.00%
+      device: slow-storage/anlambert
+      filesystem: zfs
+      options:
+      - rw
+      - xattr
+      - noacl
+      size: 3.51 TiB
+      size_bytes: 3861173764096
+      used: 128.00 KiB
+      used_bytes: 131072
+    "/srv/slow-storage/ddouard":
+      available: 3.51 TiB
+      available_bytes: 3861173633024
+      capacity: 0.00%
+      device: slow-storage/ddouard
+      filesystem: zfs
+      options:
+      - rw
+      - xattr
+      - noacl
+      size: 3.51 TiB
+      size_bytes: 3861173764096
+      used: 128.00 KiB
+      used_bytes: 131072
+    "/srv/slow-storage/jayesh":
+      available: 3.51 TiB
+      available_bytes: 3861173633024
+      capacity: 0.00%
+      device: slow-storage/jayesh
+      filesystem: zfs
+      options:
+      - rw
+      - xattr
+      - noacl
+      size: 3.51 TiB
+      size_bytes: 3861173764096
+      used: 128.00 KiB
+      used_bytes: 131072
+    "/srv/slow-storage/lunar":
+      available: 3.51 TiB
+      available_bytes: 3861173633024
+      capacity: 0.00%
+      device: slow-storage/lunar
+      filesystem: zfs
+      options:
+      - rw
+      - xattr
+      - noacl
+      size: 3.51 TiB
+      size_bytes: 3861173764096
+      used: 128.00 KiB
+      used_bytes: 131072
+    "/srv/slow-storage/morane":
+      available: 3.51 TiB
+      available_bytes: 3861173633024
+      capacity: 0.00%
+      device: slow-storage/morane
+      filesystem: zfs
+      options:
+      - rw
+      - xattr
+      - noacl
+      size: 3.51 TiB
+      size_bytes: 3861173764096
+      used: 128.00 KiB
+      used_bytes: 131072
+    "/srv/slow-storage/rdicosmo":
+      available: 3.51 TiB
+      available_bytes: 3861173633024
+      capacity: 0.00%
+      device: slow-storage/rdicosmo
+      filesystem: zfs
+      options:
+      - rw
+      - xattr
+      - noacl
+      size: 3.51 TiB
+      size_bytes: 3861173764096
+      used: 128.00 KiB
+      used_bytes: 131072
+    "/srv/slow-storage/vlorentz":
+      available: 3.51 TiB
+      available_bytes: 3861173633024
+      capacity: 0.00%
+      device: slow-storage/vlorentz
+      filesystem: zfs
+      options:
+      - rw
+      - xattr
+      - noacl
+      size: 3.51 TiB
+      size_bytes: 3861173764096
+      used: 128.00 KiB
+      used_bytes: 131072
+    "/srv/slow-storage/zack":
+      available: 3.51 TiB
+      available_bytes: 3861173633024
+      capacity: 0.00%
+      device: slow-storage/zack
+      filesystem: zfs
+      options:
+      - rw
+      - xattr
+      - noacl
+      size: 3.51 TiB
+      size_bytes: 3861173764096
+      used: 128.00 KiB
+      used_bytes: 131072
+    "/srv/storage":
+      available: 4.43 TiB
+      available_bytes: 4875269177344
+      capacity: 0.00%
+      device: storage
+      filesystem: zfs
+      options:
+      - rw
+      - xattr
+      - noacl
+      size: 4.43 TiB
+      size_bytes: 4875269308416
+      used: 128.00 KiB
+      used_bytes: 131072
+    "/srv/storage/anlambert":
+      available: 4.43 TiB
+      available_bytes: 4875269177344
+      capacity: 0.00%
+      device: storage/anlambert
+      filesystem: zfs
+      options:
+      - rw
+      - xattr
+      - noacl
+      size: 4.43 TiB
+      size_bytes: 4875269308416
+      used: 128.00 KiB
+      used_bytes: 131072
+    "/srv/storage/ddouard":
+      available: 4.43 TiB
+      available_bytes: 4875269177344
+      capacity: 0.00%
+      device: storage/ddouard
+      filesystem: zfs
+      options:
+      - rw
+      - xattr
+      - noacl
+      size: 4.43 TiB
+      size_bytes: 4875269308416
+      used: 128.00 KiB
+      used_bytes: 131072
+    "/srv/storage/jayesh":
+      available: 4.43 TiB
+      available_bytes: 4875269177344
+      capacity: 0.00%
+      device: storage/jayesh
+      filesystem: zfs
+      options:
+      - rw
+      - xattr
+      - noacl
+      size: 4.43 TiB
+      size_bytes: 4875269308416
+      used: 128.00 KiB
+      used_bytes: 131072
+    "/srv/storage/lunar":
+      available: 4.43 TiB
+      available_bytes: 4875269177344
+      capacity: 0.00%
+      device: storage/lunar
+      filesystem: zfs
+      options:
+      - rw
+      - xattr
+      - noacl
+      size: 4.43 TiB
+      size_bytes: 4875269308416
+      used: 128.00 KiB
+      used_bytes: 131072
+    "/srv/storage/morane":
+      available: 4.43 TiB
+      available_bytes: 4875269177344
+      capacity: 0.00%
+      device: storage/morane
+      filesystem: zfs
+      options:
+      - rw
+      - xattr
+      - noacl
+      size: 4.43 TiB
+      size_bytes: 4875269308416
+      used: 128.00 KiB
+      used_bytes: 131072
+    "/srv/storage/rdicosmo":
+      available: 4.43 TiB
+      available_bytes: 4875269177344
+      capacity: 17.80%
+      device: storage/rdicosmo
+      filesystem: zfs
+      options:
+      - rw
+      - xattr
+      - noacl
+      size: 5.39 TiB
+      size_bytes: 5931095556096
+      used: 983.31 GiB
+      used_bytes: 1055826378752
+    "/srv/storage/vlorentz":
+      available: 4.43 TiB
+      available_bytes: 4875269177344
+      capacity: 0.00%
+      device: storage/vlorentz
+      filesystem: zfs
+      options:
+      - rw
+      - xattr
+      - noacl
+      size: 4.43 TiB
+      size_bytes: 4875269308416
+      used: 128.00 KiB
+      used_bytes: 131072
+    "/srv/storage/vsellier":
+      available: 4.43 TiB
+      available_bytes: 4875269177344
+      capacity: 0.21%
+      device: storage/vsellier
+      filesystem: zfs
+      options:
+      - rw
+      - noatime
+      - xattr
+      - noacl
+      size: 4.44 TiB
+      size_bytes: 4885704474624
+      used: 9.72 GiB
+      used_bytes: 10435297280
+    "/srv/storage/zack":
+      available: 4.43 TiB
+      available_bytes: 4875269177344
+      capacity: 0.00%
+      device: storage/zack
+      filesystem: zfs
+      options:
+      - rw
+      - xattr
+      - noacl
+      size: 4.43 TiB
+      size_bytes: 4875269308416
+      used: 128.00 KiB
+      used_bytes: 131072
     "/tmp":
-      available: 4.17 GiB
-      available_bytes: 4478963712
-      capacity: 1.94%
+      available: 1.76 GiB
+      available_bytes: 1889079296
+      capacity: 58.64%
       device: "/dev/mapper/giverny--vg-tmp"
       filesystem: ext4
       options:
@@ -1645,12 +2370,12 @@ values:
       - relatime
       size: 4.50 GiB
       size_bytes: 4834492416
-      used: 84.66 MiB
-      used_bytes: 88772608
+      used: 2.49 GiB
+      used_bytes: 2678657024
     "/var":
-      available: 32.37 GiB
-      available_bytes: 34752266240
-      capacity: 6.16%
+      available: 32.24 GiB
+      available_bytes: 34621325312
+      capacity: 6.51%
       device: "/dev/mapper/giverny--vg-var"
       filesystem: ext4
       options:
@@ -1658,17 +2383,39 @@ values:
       - relatime
       size: 36.37 GiB
       size_bytes: 39050428416
-      used: 2.12 GiB
-      used_bytes: 2281541632
+      used: 2.25 GiB
+      used_bytes: 2412482560
   mounts:
   - "/"
   - "/boot"
-  - "/boot/efi"
   - "/tmp"
   - "/var"
   - "/home"
+  - "/boot/efi"
+  - "/srv/storage"
+  - "/srv/storage/morane"
+  - "/srv/storage/zack"
+  - "/srv/storage/lunar"
+  - "/srv/storage/rdicosmo"
+  - "/srv/storage/ddouard"
+  - "/srv/storage/vlorentz"
+  - "/srv/storage/jayesh"
+  - "/srv/storage/anlambert"
+  - "/srv/slow-storage"
+  - "/srv/slow-storage/anlambert"
+  - "/srv/slow-storage/vlorentz"
+  - "/srv/slow-storage/ddouard"
+  - "/srv/slow-storage/lunar"
+  - "/srv/slow-storage/morane"
+  - "/srv/slow-storage/rdicosmo"
+  - "/srv/slow-storage/zack"
+  - "/srv/slow-storage/jayesh"
+  - "/run/user/1008/doc"
+  - "/srv/storage/vsellier"
   mtu_enp0s25: 1500
   mtu_lo: 65536
+  mtu_virbr0: 1500
+  mtu_virbr1: 1500
   mysql_server_id: 2130450503
   netmask: 255.255.255.224
   netmask6: 'ffff:ffff:ffff:ffff::'
@@ -1678,6 +2425,8 @@ values:
   netmask_enp0s25: 255.255.255.224
   netmask_lo: 255.0.0.0
   netmask_tun0: 255.255.255.0
+  netmask_virbr0: 255.255.255.0
+  netmask_virbr1: 255.255.255.0
   network: 128.93.73.160
   network6: 'fe80::'
   network6_enp0s25: 'fe80::'
@@ -1686,6 +2435,8 @@ values:
   network_enp0s25: 128.93.73.160
   network_lo: 127.0.0.0
   network_tun0: 192.168.101.0
+  network_virbr0: 192.168.122.0
+  network_virbr1: 192.168.39.0
   networking:
     dhcp: 128.93.77.231
     domain: softwareheritage.org
@@ -1734,16 +2485,36 @@ values:
           netmask: 255.255.255.0
           network: 192.168.101.0
         bindings6:
-        - address: fe80::3be1:3ffc:77d8:6271
+        - address: fe80::33c3:d86c:e994:5441
           netmask: 'ffff:ffff:ffff:ffff::'
           network: 'fe80::'
         ip: 192.168.101.118
-        ip6: fe80::3be1:3ffc:77d8:6271
+        ip6: fe80::33c3:d86c:e994:5441
         netmask: 255.255.255.0
         netmask6: 'ffff:ffff:ffff:ffff::'
         network: 192.168.101.0
         network6: 'fe80::'
         scope6: link
+      virbr0:
+        bindings:
+        - address: 192.168.122.1
+          netmask: 255.255.255.0
+          network: 192.168.122.0
+        ip: 192.168.122.1
+        mac: 52:54:00:a1:ac:02
+        mtu: 1500
+        netmask: 255.255.255.0
+        network: 192.168.122.0
+      virbr1:
+        bindings:
+        - address: 192.168.39.1
+          netmask: 255.255.255.0
+          network: 192.168.39.0
+        ip: 192.168.39.1
+        mac: 52:54:00:f7:d6:54
+        mtu: 1500
+        netmask: 255.255.255.0
+        network: 192.168.39.0
     ip: 128.93.73.175
     ip6: fe80::4a4d:7eff:fefb:87ac
     mac: 48:4d:7e:fb:87:ac
@@ -1808,6 +2579,42 @@ values:
       size: 37.25 GiB
       size_bytes: 39996882944
       uuid: 561442b5-3b85-4c48-8b1f-0fcc084a774e
+    "/dev/nvme0n1p1":
+      filesystem: zfs_member
+      label: storage
+      partlabel: zfs-8cbb305561f90987
+      partuuid: 721e61ee-eb2f-9241-a031-c479facdd692
+      size: 1.86 TiB
+      size_bytes: 2048398458880
+      uuid: '9689746109783367917'
+    "/dev/nvme0n1p9":
+      partuuid: 66e2e1bb-5abb-8c40-851e-22a133d7bb0c
+      size: 8.00 MiB
+      size_bytes: 8388608
+    "/dev/nvme1n1p1":
+      filesystem: zfs_member
+      label: storage
+      partlabel: zfs-3120cf8651ca4adf
+      partuuid: e2e44298-4613-0e47-9724-f08880bcdbdc
+      size: 1.86 TiB
+      size_bytes: 2048398458880
+      uuid: '9689746109783367917'
+    "/dev/nvme1n1p9":
+      partuuid: '07088857-3912-f649-a0de-b8a706a312b1'
+      size: 8.00 MiB
+      size_bytes: 8388608
+    "/dev/nvme2n1p1":
+      filesystem: zfs_member
+      label: storage
+      partlabel: zfs-34dc84253dbe4ede
+      partuuid: df5a6243-52d7-4a40-be3b-062b6548fa9b
+      size: 1.86 TiB
+      size_bytes: 2048398458880
+      uuid: '9689746109783367917'
+    "/dev/nvme2n1p9":
+      partuuid: 00fd2d3e-5e81-0242-879c-6097b623c957
+      size: 8.00 MiB
+      size_bytes: 8388608
     "/dev/nvme3n1p1":
       filesystem: vfat
       mount: "/boot/efi"
@@ -1828,6 +2635,30 @@ values:
       size: 952.89 GiB
       size_bytes: 1023159566336
       uuid: qWblt7-8YII-xCJx-zScZ-9DOd-SFK2-m6Kidz
+    "/dev/sda1":
+      filesystem: zfs_member
+      label: slow-storage
+      partlabel: zfs-82bfbe51fe4e36ed
+      partuuid: b76daeb7-53b4-f942-a612-8b2d22b8a049
+      size: 1.82 TiB
+      size_bytes: 2000389406720
+      uuid: '14342550938769859495'
+    "/dev/sda9":
+      partuuid: 5b142445-4115-3844-a284-d5818249e37e
+      size: 8.00 MiB
+      size_bytes: 8388608
+    "/dev/sdb1":
+      filesystem: zfs_member
+      label: slow-storage
+      partlabel: zfs-c69c44b0a8c79524
+      partuuid: 74e9343c-b78d-334a-bb0f-e6a56791972e
+      size: 1.82 TiB
+      size_bytes: 2000389406720
+      uuid: '14342550938769859495'
+    "/dev/sdb9":
+      partuuid: a8793288-a157-f143-ae06-7c93612e66cf
+      size: 8.00 MiB
+      size_bytes: 8388608
   path: "/usr/bin:/bin:/usr/sbin:/sbin"
   phpversion: 7.4.33
   physicalprocessorcount: 2
@@ -1910,11 +2741,6 @@ values:
   puppet_server: pergamon.internal.softwareheritage.org
   puppet_vardir: "/var/lib/puppet"
   puppetversion: 5.5.22
-  rabbitmq_clustername: rabbit@giverny.softwareheritage.org
-  rabbitmq_nodename: rabbit@giverny
-  rabbitmq_plugins_dirs:
-  - "/usr/lib/rabbitmq/plugins"
-  - "/usr/lib/rabbitmq/lib/rabbitmq_server-3.8.9/plugins"
   rabbitmq_version: 3.8.9
   root_home: "/root"
   ruby:
@@ -1969,8 +2795,8 @@ values:
   sshrsakey: AAAAB3NzaC1yc2EAAAADAQABAAABgQDeW1E90Fy/A8d09uhhGHwQQkP98qQq0QZCjOj9QKQ0iZMMicDshMD3xELb5KYvWDvZSc++/R1cYcko4V8vuGnwEGnkIdoxMqkAusIbXpPmBI+AJylh8pNYlwjDPe3IMYT27Wo22u2WrqzUvdiDmgk6y3pkSEp3s/UHcFugUxKJo7JDsztczpNu3/S8+YJH4jEJcM2T7tvmunN5X46IbzJ7pPBlHHnSr5Xs5XwzltqAYF4wRIRN7DnG+ocaWLBigXUED1tFXl0sBs8lmyzBRcqP98l3XeZtua6lkWsDaQvjhNB2UZ8vgiEs83QT+97UFKheHlDEaa5OpocT/SutFZQjLW8j2i0ibvPkGfFobyNoOFzCpMrJGSZtHzLbV9khwICOr00O7PZwbTB0drHaVgLsB6M9Xw67fu4MoKmnE0fBOEJ+uJwwWAki6uPDRZ1GtC+0hD/kTlGpKGLKNI+67kqBTcs4m6XqcxKn/7KHwm0STJRFxhUXJFZxmMPD3pkCufM=
   subnet: inria_paris
   sudoversion: 1.9.5p2
-  swapfree: 29.80 GiB
-  swapfree_mb: 30515.99609375
+  swapfree: 29.72 GiB
+  swapfree_mb: 30429.74609375
   swapsize: 29.80 GiB
   swapsize_mb: 30515.99609375
   swh_hostname:
@@ -1978,10 +2804,10 @@ values:
     short: giverny
     internal_fqdn: giverny.internal.softwareheritage.org
   system_uptime:
-    days: 11
-    hours: 268
-    seconds: 966544
-    uptime: 11 days
+    days: 124
+    hours: 2999
+    seconds: 10797846
+    uptime: 124 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -1989,21 +2815,22 @@ values:
     systemd-network-generator.service: disabled
     systemd-networkd-wait-online.service: disabled
     systemd-networkd.service: disabled
+    systemd-nspawn@.service: disabled
     systemd-pstore.service: enabled
     systemd-remount-fs.service: enabled-runtime
     systemd-resolved.service: disabled
     systemd-time-wait-sync.service: disabled
   systemd_version: '247'
   timezone: CEST
-  uptime: 11 days
-  uptime_days: 11
-  uptime_hours: 268
-  uptime_seconds: 966544
+  uptime: 124 days
+  uptime_days: 124
+  uptime_hours: 2999
+  uptime_seconds: 10797846
   uuid: 4c4c4544-0058-5110-8033-b9c04f4e4b32
   vcsrepo_svn_ver: ''
   virtual: physical
   clientcert: giverny.softwareheritage.org
   clientversion: 5.5.22
   clientnoop: false
-timestamp: '2023-05-09T14:15:14.535124044+02:00'
-expiration: '2023-05-09T14:45:14.539146966+02:00'
+timestamp: '2023-09-11T15:15:10.402345687+02:00'
+expiration: '2023-09-11T15:45:10.405696528+02:00'
