@@ -2,7 +2,7 @@
 name: banco.softwareheritage.org
 values:
   agent_specified_environment: production
-  apt_dist_updates: 20
+  apt_dist_updates: 22
   apt_has_dist_updates: true
   apt_has_updates: true
   apt_package_dist_updates:
@@ -12,11 +12,13 @@ values:
   - icinga2-bin
   - icinga2-common
   - libpq5
+  - pgbackrest
   - postgresql-client-11
   - postgresql-11
-  - postgresql-client-15
+  - postgresql-client-16
   - postgresql-client
   - postgresql-client-12
+  - postgresql-client-15
   - python3-aiohttp-utils
   - python3-swh.core
   - python3-swh.model
@@ -35,11 +37,11 @@ values:
   - icinga2-bin
   - icinga2-common
   - libpq5
+  - pgbackrest
   - postgresql-client-11
   - postgresql-11
-  - postgresql-client-15
-  - postgresql-client
   - postgresql-client-12
+  - postgresql-client-15
   - python3-aiohttp-utils
   - python3-swh.core
   - python3-swh.model
@@ -52,7 +54,7 @@ values:
   apt_reboot_required: true
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1694435884
+  apt_update_last_success: 1697009884
   apt_updates: 20
   architecture: amd64
   bios_release_date: 12/11/2017
@@ -1215,9 +1217,9 @@ values:
       - 8021q
   letsencrypt_directory: {}
   load_averages:
-    15m: 1.17
-    1m: 0.91
-    5m: 1.08
+    15m: 0.89
+    1m: 0.97
+    5m: 0.9
   location: sesi_rocquencourt
   lsbdistcodename: buster
   lsbdistdescription: Debian GNU/Linux 10 (buster)
@@ -1234,30 +1236,30 @@ values:
   manufacturer: Dell Inc.
   memory:
     swap:
-      available: 6.38 GiB
-      available_bytes: 6845349888
-      capacity: 14.42%
+      available: 6.46 GiB
+      available_bytes: 6931230720
+      capacity: 13.34%
       total: 7.45 GiB
       total_bytes: 7998533632
-      used: 1.07 GiB
-      used_bytes: 1153183744
+      used: 1017.86 MiB
+      used_bytes: 1067302912
     system:
-      available: 36.29 GiB
-      available_bytes: 38967042048
-      capacity: 22.89%
+      available: 39.07 GiB
+      available_bytes: 41951297536
+      capacity: 16.99%
       total: 47.07 GiB
       total_bytes: 50536919040
-      used: 10.78 GiB
-      used_bytes: 11569876992
-  memoryfree: 36.29 GiB
-  memoryfree_mb: 37161.8671875
+      used: 8.00 GiB
+      used_bytes: 8585621504
+  memoryfree: 39.07 GiB
+  memoryfree_mb: 40007.875
   memorysize: 47.07 GiB
   memorysize_mb: 48195.76171875
   mountpoints:
     "/":
-      available: 52.40 GiB
-      available_bytes: 56265592832
-      capacity: 22.28%
+      available: 52.56 GiB
+      available_bytes: 56434167808
+      capacity: 22.05%
       device: "/dev/mapper/vg--banco-root"
       filesystem: ext4
       options:
@@ -1266,8 +1268,8 @@ values:
       - errors=remount-ro
       size: 67.42 GiB
       size_bytes: 72395161600
-      used: 15.02 GiB
-      used_bytes: 16129568768
+      used: 14.86 GiB
+      used_bytes: 15960993792
     "/boot":
       available: 736.78 MiB
       available_bytes: 772571136
@@ -1297,7 +1299,7 @@ values:
       used_bytes: 0
     "/run":
       available: 4.70 GiB
-      available_bytes: 5050265600
+      available_bytes: 5050241024
       capacity: 0.07%
       device: tmpfs
       filesystem: tmpfs
@@ -1310,8 +1312,8 @@ values:
       - mode=755
       size: 4.71 GiB
       size_bytes: 5053693952
-      used: 3.27 MiB
-      used_bytes: 3428352
+      used: 3.29 MiB
+      used_bytes: 3452928
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -1389,10 +1391,30 @@ values:
       size_bytes: 5053689856
       used: 4.00 KiB
       used_bytes: 4096
+    "/run/user/997":
+      available: 4.71 GiB
+      available_bytes: 5053685760
+      capacity: 0.00%
+      device: tmpfs
+      filesystem: tmpfs
+      options:
+      - rw
+      - nosuid
+      - nodev
+      - relatime
+      - size=4935244k
+      - nr_inodes=1233811
+      - mode=700
+      - uid=997
+      - gid=997
+      size: 4.71 GiB
+      size_bytes: 5053689856
+      used: 4.00 KiB
+      used_bytes: 4096
     "/srv/backups":
-      available: 35.72 TiB
-      available_bytes: 39279867232256
-      capacity: 25.41%
+      available: 35.34 TiB
+      available_bytes: 38860061077504
+      capacity: 26.20%
       device: "/dev/mapper/vg--swhbackup-postgres"
       filesystem: ext4
       options:
@@ -1401,12 +1423,12 @@ values:
       - stripe=384
       size: 47.89 TiB
       size_bytes: 52659124707328
-      used: 12.17 TiB
-      used_bytes: 13379257475072
+      used: 12.55 TiB
+      used_bytes: 13799063629824
     "/srv/borg":
-      available: 1.90 TiB
-      available_bytes: 2091260841984
-      capacity: 46.88%
+      available: 1.92 TiB
+      available_bytes: 2109660143616
+      capacity: 46.41%
       device: "/dev/md1"
       filesystem: ext4
       options:
@@ -1414,8 +1436,8 @@ values:
       - relatime
       size: 3.58 TiB
       size_bytes: 3936778969088
-      used: 1.68 TiB
-      used_bytes: 1845518127104
+      used: 1.66 TiB
+      used_bytes: 1827118825472
     "/srv/softwareheritage/objects/00":
       available: 1.55 TiB
       available_bytes: 1707207516160
@@ -6314,7 +6336,7 @@ values:
       used_bytes: 8446804127744
     "/srv/storage/space":
       available: 21.87 TiB
-      available_bytes: 24049030807552
+      available_bytes: 24049028431872
       capacity: 68.75%
       device: "/dev/mapper/vg--swhbackup-space"
       filesystem: xfs
@@ -6331,7 +6353,7 @@ values:
       size: 70.00 TiB
       size_bytes: 76963676946432
       used: 48.13 TiB
-      used_bytes: 52914646138880
+      used_bytes: 52914648514560
   mounts:
   - "/"
   - "/srv/borg"
@@ -6840,8 +6862,8 @@ values:
   sshrsakey: AAAAB3NzaC1yc2EAAAADAQABAAABAQC5GCtpYY70M7BuFR2Feu4xwDCSlArqXygFG4rbvs6HB0oRX7ucDq0nCsgAT+dNpIls/LvJlIpWMdZvxMxePCW09GR7VsjyAfKruLRW3QJNQElVMlwG9MeTHcGL8LU6n4jQgQ08oWWIbT0DAhltgJ5OZH35wycsmbySahbx6Z9gTikQn4/HEz6lp2bI+Y39FNnCmmoQq6Fm2V/iIkg1SSJYOhAqjdHIokXNbQF9ZQWMV9eiq/J0yvDWa9S7ifH5mk0mq1IeUhG0stcCnC0GrIHXxMUVxua5emWhlJYkIVWcVJ9DDdTLydqr5/x95U7AS5Jut8TsmA0mirzfk9S2o7sB
   subnet: sesi_rocquencourt
   sudoversion: 1.8.27
-  swapfree: 6.38 GiB
-  swapfree_mb: 6528.234375
+  swapfree: 6.46 GiB
+  swapfree_mb: 6610.13671875
   swapsize: 7.45 GiB
   swapsize_mb: 7627.99609375
   swh_hostname:
@@ -6849,10 +6871,10 @@ values:
     short: banco
     internal_fqdn: banco.internal.softwareheritage.org
   system_uptime:
-    days: 838
-    hours: 20115
-    seconds: 72415887
-    uptime: 838 days
+    days: 867
+    hours: 20831
+    seconds: 74991687
+    uptime: 867 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -6867,15 +6889,15 @@ values:
     systemd-timesyncd.service: enabled
   systemd_version: '247'
   timezone: UTC
-  uptime: 838 days
-  uptime_days: 838
-  uptime_hours: 20115
-  uptime_seconds: 72415887
+  uptime: 867 days
+  uptime_days: 867
+  uptime_hours: 20831
+  uptime_seconds: 74991687
   uuid: 4c4c4544-0039-5010-8031-b6c04f4a3832
   vcsrepo_svn_ver: ''
   virtual: physical
   clientcert: banco.softwareheritage.org
   clientversion: 5.5.10
   clientnoop: false
-timestamp: '2023-09-11T13:02:09.613803389+00:00'
-expiration: '2023-09-11T13:32:09.624686893+00:00'
+timestamp: '2023-10-11T08:32:09.715846974+00:00'
+expiration: '2023-10-11T09:02:09.724278537+00:00'

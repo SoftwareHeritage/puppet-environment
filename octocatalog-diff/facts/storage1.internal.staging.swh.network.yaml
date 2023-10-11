@@ -2,22 +2,20 @@
 name: storage1.internal.staging.swh.network
 values:
   agent_specified_environment: staging
-  apt_dist_updates: 2
+  apt_dist_updates: 1
   apt_has_dist_updates: true
   apt_has_updates: true
   apt_package_dist_updates:
-  - python3-swh.journal
   - python3-swh.scheduler
   apt_package_security_dist_updates: []
   apt_package_security_updates: []
   apt_package_updates:
-  - python3-swh.journal
   - python3-swh.scheduler
   apt_reboot_required: false
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1694433542
-  apt_updates: 2
+  apt_update_last_success: 1697011143
+  apt_updates: 1
   architecture: amd64
   bios_release_date: 11/21/2019
   bios_vendor: American Megatrends Inc.
@@ -185,7 +183,7 @@ values:
       vardir: "/var/lib/puppet"
       server: pergamon.internal.softwareheritage.org
   facterversion: 3.11.0
-  filesystems: ext2,ext3,ext4,vfat
+  filesystems: btrfs,ext2,ext3,ext4,hfs,hfsplus,jfs,minix,msdos,qnx4,ufs,vfat,xfs
   fips_enabled: false
   fqdn: storage1.internal.staging.swh.network
   gid: root
@@ -215,8 +213,8 @@ values:
   java_default_home: "/usr/lib/jvm/java-11-openjdk-amd64"
   java_libjvm_path: "/usr/lib/jvm/java-11-openjdk-amd64/lib/server"
   java_major_version: '11'
-  java_patch_level: '18'
-  java_version: 11.0.18
+  java_patch_level: '20'
+  java_version: 11.0.20
   kernel: Linux
   kernelmajversion: '5.10'
   kernelrelease: 5.10.0-0.deb10.16-amd64
@@ -226,6 +224,9 @@ values:
       parameters: {}
       used_by:
       - ixgbe
+    msdos:
+      parameters: {}
+      used_by: []
     thermal:
       parameters:
         act: '0'
@@ -264,6 +265,7 @@ values:
       parameters: {}
       used_by:
       - async_xor
+      - btrfs
     spurious:
       parameters:
         noirqdebug: N
@@ -324,6 +326,9 @@ values:
         devslp_idle_timeout: '1000'
       used_by:
       - ahci
+    minix:
+      parameters: {}
+      used_by: []
     tcp_cubic:
       parameters:
         hystart_detect: '3'
@@ -393,6 +398,9 @@ values:
       - linear
       - raid456
       - multipath
+    hfsplus:
+      parameters: {}
+      used_by: []
     shpchp:
       parameters:
         shpchp_poll_time: '0'
@@ -741,6 +749,9 @@ values:
     tcp_diag:
       parameters: {}
       used_by: []
+    jfs:
+      parameters: {}
+      used_by: []
     drbg:
       parameters: {}
       used_by: []
@@ -778,6 +789,11 @@ values:
         reset_seq: ''
         sysrq_downtime_ms: '0'
       used_by: []
+    cdrom:
+      parameters: {}
+      used_by:
+      - hfsplus
+      - hfs
     ehci_pci:
       parameters: {}
       used_by: []
@@ -945,6 +961,9 @@ values:
       parameters:
         force_cap_on: N
       used_by: []
+    blake2b_generic:
+      parameters: {}
+      used_by: []
     ansi_cprng:
       parameters: {}
       used_by: []
@@ -952,6 +971,7 @@ values:
       parameters: {}
       used_by:
       - async_pq
+      - btrfs
       - raid456
       - async_raid6_recov
     efivarfs:
@@ -989,7 +1009,9 @@ values:
     libcrc32c:
       parameters: {}
       used_by:
+      - btrfs
       - nf_tables
+      - xfs
       - raid456
     8021q:
       parameters: {}
@@ -1019,6 +1041,9 @@ values:
     raid10:
       parameters:
         max_queued_requests: '1024'
+      used_by: []
+    qnx4:
+      parameters: {}
       used_by: []
     intel_cstate:
       parameters: {}
@@ -1196,6 +1221,9 @@ values:
       parameters: {}
       used_by:
       - i2c_i801
+    btrfs:
+      parameters: {}
+      used_by: []
     bluetooth:
       parameters:
         disable_ertm: N
@@ -1209,6 +1237,9 @@ values:
         ioat_interrupt_style: msix
         ioat_pending_level: '7'
         ioat_dca_enabled: '1'
+      used_by: []
+    ufs:
+      parameters: {}
       used_by: []
     hid_generic:
       parameters: {}
@@ -1308,6 +1339,9 @@ values:
         qlowmark: '100'
         qovld: '20000'
       used_by: []
+    xfs:
+      parameters: {}
+      used_by: []
     binfmt_misc:
       parameters: {}
       used_by: []
@@ -1355,6 +1389,9 @@ values:
       - stp
       - garp
     aesni_intel:
+      parameters: {}
+      used_by: []
+    hfs:
       parameters: {}
       used_by: []
     block:
@@ -1604,6 +1641,7 @@ values:
     fat:
       parameters: {}
       used_by:
+      - msdos
       - vfat
     mpt3sas:
       parameters:
@@ -1652,9 +1690,9 @@ values:
       - 8021q
   letsencrypt_directory: {}
   load_averages:
-    15m: 5.47
-    1m: 5.63
-    5m: 5.47
+    15m: 5.66
+    1m: 5.73
+    5m: 5.55
   lsbdistcodename: buster
   lsbdistdescription: Debian GNU/Linux 10 (buster)
   lsbdistid: Debian
@@ -1678,22 +1716,22 @@ values:
       used: 0 bytes
       used_bytes: 0
     system:
-      available: 21.71 GiB
-      available_bytes: 23316033536
-      capacity: 76.95%
+      available: 25.73 GiB
+      available_bytes: 27629043712
+      capacity: 72.69%
       total: 94.21 GiB
       total_bytes: 101153333248
-      used: 72.49 GiB
-      used_bytes: 77837299712
-  memoryfree: 21.71 GiB
-  memoryfree_mb: 22235.90234375
+      used: 68.47 GiB
+      used_bytes: 73524289536
+  memoryfree: 25.73 GiB
+  memoryfree_mb: 26349.109375
   memorysize: 94.21 GiB
   memorysize_mb: 96467.3359375
   mountpoints:
     "/":
-      available: 13.44 GiB
-      available_bytes: 14433976320
-      capacity: 41.77%
+      available: 13.23 GiB
+      available_bytes: 14202281984
+      capacity: 42.71%
       device: "/dev/mapper/storage1-root"
       filesystem: ext4
       options:
@@ -1702,8 +1740,8 @@ values:
       - errors=remount-ro
       size: 23.09 GiB
       size_bytes: 24788705280
-      used: 9.64 GiB
-      used_bytes: 10354728960
+      used: 9.86 GiB
+      used_bytes: 10586423296
     "/boot/efi":
       available: 480.25 MiB
       available_bytes: 503582720
@@ -1740,8 +1778,8 @@ values:
       used_bytes: 0
     "/run":
       available: 9.42 GiB
-      available_bytes: 10113957888
-      capacity: 0.01%
+      available_bytes: 10113130496
+      capacity: 0.02%
       device: tmpfs
       filesystem: tmpfs
       options:
@@ -1753,8 +1791,8 @@ values:
       - mode=755
       size: 9.42 GiB
       size_bytes: 10115334144
-      used: 1.31 MiB
-      used_bytes: 1376256
+      used: 2.10 MiB
+      used_bytes: 2203648
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -2231,10 +2269,10 @@ values:
     short: storage1
     internal_fqdn: storage1.internal.staging.swh.network
   system_uptime:
-    days: 209
-    hours: 5016
-    seconds: 18057930
-    uptime: 209 days
+    days: 238
+    hours: 5731
+    seconds: 20633730
+    uptime: 238 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -2249,15 +2287,15 @@ values:
     systemd-timesyncd.service: enabled
   systemd_version: '247'
   timezone: UTC
-  uptime: 209 days
-  uptime_days: 209
-  uptime_hours: 5016
-  uptime_seconds: 18057930
+  uptime: 238 days
+  uptime_days: 238
+  uptime_hours: 5731
+  uptime_seconds: 20633730
   uuid: 00000000-0000-0000-0000-ac1f6b407898
   vcsrepo_svn_ver: ''
   virtual: physical
   clientcert: storage1.internal.staging.swh.network
   clientversion: 5.5.10
   clientnoop: false
-timestamp: '2023-09-11T12:57:18.590070426+00:00'
-expiration: '2023-09-11T13:27:18.592327788+00:00'
+timestamp: '2023-10-11T08:27:16.378637967+00:00'
+expiration: '2023-10-11T08:57:16.380999230+00:00'

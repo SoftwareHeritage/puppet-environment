@@ -2,7 +2,7 @@
 name: met.internal.softwareheritage.org
 values:
   agent_specified_environment: production
-  apt_dist_updates: 25
+  apt_dist_updates: 30
   apt_has_dist_updates: true
   apt_has_updates: true
   apt_package_dist_updates:
@@ -10,6 +10,8 @@ values:
   - postgresql-client-common
   - pgbouncer
   - containerd.io
+  - curl
+  - libcurl4
   - docker-buildx-plugin
   - docker-ce-cli
   - docker-ce
@@ -19,48 +21,58 @@ values:
   - icinga2-bin
   - icinga2-common
   - icinga2-doc
+  - libcurl3-gnutls
   - libpq-dev
   - libpq5
   - python3-psycopg2
   - pg-activity
-  - postgresql-client-15
-  - postgresql-15
+  - postgresql-client-16
+  - postgresql-16
   - postgresql
   - postgresql-client-13
   - postgresql-13
   - postgresql-client-14
   - postgresql-14
+  - postgresql-client-15
+  - postgresql-15
   - postgresql-client
-  apt_package_security_dist_updates: []
-  apt_package_security_updates: []
+  apt_package_security_dist_updates:
+  - curl
+  - libcurl4
+  - libcurl3-gnutls
+  apt_package_security_updates:
+  - curl
+  - libcurl4
+  - libcurl3-gnutls
   apt_package_updates:
   - postgresql-common
   - postgresql-client-common
   - pgbouncer
   - containerd.io
+  - curl
+  - libcurl4
   - docker-ce
   - docker-ce-rootless-extras
   - icinga2
   - icinga2-bin
   - icinga2-common
   - icinga2-doc
+  - libcurl3-gnutls
   - libpq-dev
   - libpq5
   - python3-psycopg2
   - pg-activity
-  - postgresql-client-15
-  - postgresql-15
-  - postgresql
   - postgresql-client-13
   - postgresql-13
   - postgresql-client-14
   - postgresql-14
-  - postgresql-client
+  - postgresql-client-15
+  - postgresql-15
   apt_reboot_required: true
-  apt_security_dist_updates: 0
-  apt_security_updates: 0
-  apt_update_last_success: 1694435162
-  apt_updates: 22
+  apt_security_dist_updates: 3
+  apt_security_updates: 3
+  apt_update_last_success: 1697009163
+  apt_updates: 23
   architecture: amd64
   bios_release_date: 10/06/2021
   bios_vendor: Dell Inc.
@@ -251,7 +263,7 @@ values:
     NFd: 25
     OomKillDisable: false
     NGoroutines: 33
-    SystemTime: '2023-09-11T12:53:05.129911497Z'
+    SystemTime: '2023-10-11T08:23:04.444353592Z'
     LoggingDriver: journald
     CgroupDriver: systemd
     CgroupVersion: '2'
@@ -1930,15 +1942,15 @@ values:
       - 8021q
   letsencrypt_directory: {}
   load_averages:
-    15m: 3.62
-    1m: 3.37
-    5m: 3.34
+    15m: 4.35
+    1m: 3.86
+    5m: 4.43
   lsbdistcodename: bullseye
   lsbdistdescription: Debian GNU/Linux 11 (bullseye)
   lsbdistid: Debian
-  lsbdistrelease: '11.7'
+  lsbdistrelease: '11.8'
   lsbmajdistrelease: '11'
-  lsbminordistrelease: '7'
+  lsbminordistrelease: '8'
   macaddress: e4:3d:1a:6e:3b:b0
   macaddress_bond0: e4:3d:1a:6e:3b:b0
   macaddress_bond0.440: e4:3d:1a:6e:3b:b0
@@ -1958,22 +1970,22 @@ values:
       used: 976.00 MiB
       used_bytes: 1023406080
     system:
-      available: 193.99 GiB
-      available_bytes: 208298717184
-      capacity: 61.47%
+      available: 213.65 GiB
+      available_bytes: 229405679616
+      capacity: 57.56%
       total: 503.44 GiB
       total_bytes: 540567187456
-      used: 309.45 GiB
-      used_bytes: 332268470272
-  memoryfree: 193.99 GiB
-  memoryfree_mb: 198649.13671875
+      used: 289.79 GiB
+      used_bytes: 311161507840
+  memoryfree: 213.65 GiB
+  memoryfree_mb: 218778.3046875
   memorysize: 503.44 GiB
   memorysize_mb: 515525.04296875
   mountpoints:
     "/":
-      available: 17.93 GiB
-      available_bytes: 19252207616
-      capacity: 58.34%
+      available: 18.07 GiB
+      available_bytes: 19398389760
+      capacity: 58.03%
       device: "/dev/mapper/met--vg-root"
       filesystem: ext4
       options:
@@ -1982,11 +1994,11 @@ values:
       - errors=remount-ro
       size: 45.27 GiB
       size_bytes: 48608047104
-      used: 25.11 GiB
-      used_bytes: 26964262912
+      used: 24.98 GiB
+      used_bytes: 26818080768
     "/boot":
       available: 296.92 MiB
-      available_bytes: 311346176
+      available_bytes: 311344128
       capacity: 33.42%
       device: "/dev/sda2"
       filesystem: ext2
@@ -1997,7 +2009,7 @@ values:
       size: 470.35 MiB
       size_bytes: 493201408
       used: 149.03 MiB
-      used_bytes: 156270592
+      used_bytes: 156272640
     "/boot/efi":
       available: 505.18 MiB
       available_bytes: 529719296
@@ -2099,7 +2111,7 @@ values:
       used_bytes: 3776512
     "/home":
       available: 22.00 TiB
-      available_bytes: 24194689400832
+      available_bytes: 24194700804096
       capacity: 4.47%
       device: data/home
       filesystem: zfs
@@ -2109,12 +2121,12 @@ values:
       - xattr
       - posixacl
       size: 23.04 TiB
-      size_bytes: 25327571959808
+      size_bytes: 25327583232000
       used: 1.03 TiB
-      used_bytes: 1132882558976
+      used_bytes: 1132882427904
     "/run":
       available: 50.34 GiB
-      available_bytes: 54053175296
+      available_bytes: 54053294080
       capacity: 0.01%
       device: tmpfs
       filesystem: tmpfs
@@ -2128,8 +2140,8 @@ values:
       - mode=755
       size: 50.34 GiB
       size_bytes: 54056722432
-      used: 3.38 MiB
-      used_bytes: 3547136
+      used: 3.27 MiB
+      used_bytes: 3428352
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -2222,7 +2234,7 @@ values:
       used_bytes: 0
     "/srv/softwareheritage/postgres/13/archive":
       available: 22.00 TiB
-      available_bytes: 24194689400832
+      available_bytes: 24194700804096
       capacity: 8.16%
       device: data/postgresql-swh-storage
       filesystem: zfs
@@ -2232,12 +2244,12 @@ values:
       - xattr
       - posixacl
       size: 23.96 TiB
-      size_bytes: 26345340403712
+      size_bytes: 26345346957312
       used: 1.96 TiB
-      used_bytes: 2150651002880
+      used_bytes: 2150646153216
     "/srv/softwareheritage/postgres/14/main":
       available: 22.00 TiB
-      available_bytes: 24194689400832
+      available_bytes: 24194700804096
       capacity: 10.46%
       device: data/postgresql-main
       filesystem: zfs
@@ -2247,12 +2259,12 @@ values:
       - xattr
       - posixacl
       size: 24.58 TiB
-      size_bytes: 27020839747584
+      size_bytes: 27020851150848
       used: 2.57 TiB
       used_bytes: 2826150346752
     "/srv/softwareheritage/postgres/14/main/pg_wal":
       available: 22.00 TiB
-      available_bytes: 24194689400832
+      available_bytes: 24194700804096
       capacity: 0.02%
       device: data/postgresql-wals
       filesystem: zfs
@@ -2262,12 +2274,12 @@ values:
       - xattr
       - posixacl
       size: 22.01 TiB
-      size_bytes: 24199863074816
+      size_bytes: 24199874478080
       used: 4.82 GiB
       used_bytes: 5173673984
     "/srv/softwareheritage/postgres/15/revision_layer":
       available: 22.00 TiB
-      available_bytes: 24194689400832
+      available_bytes: 24194700804096
       capacity: 43.72%
       device: data/postgresql-revision-layer
       filesystem: zfs
@@ -2277,12 +2289,12 @@ values:
       - xattr
       - posixacl
       size: 39.10 TiB
-      size_bytes: 42987322998784
+      size_bytes: 42987334402048
       used: 17.09 TiB
       used_bytes: 18792633597952
     "/srv/softwareheritage/postgres/15/revision_layer/pg_wal":
       available: 22.00 TiB
-      available_bytes: 24194689400832
+      available_bytes: 24194700804096
       capacity: 0.00%
       device: data/postgresql-revision-layer-wals
       filesystem: zfs
@@ -2292,12 +2304,12 @@ values:
       - xattr
       - posixacl
       size: 22.01 TiB
-      size_bytes: 24194913140736
-      used: 213.38 MiB
-      used_bytes: 223739904
+      size_bytes: 24194930704384
+      used: 219.25 MiB
+      used_bytes: 229900288
     "/srv/softwareheritage/postgres/15/revision_layer_from_releases":
       available: 22.00 TiB
-      available_bytes: 24194689400832
+      available_bytes: 24194700804096
       capacity: 1.11%
       device: data/postgresql-revision-layer-from-releases
       filesystem: zfs
@@ -2307,12 +2319,12 @@ values:
       - xattr
       - posixacl
       size: 22.25 TiB
-      size_bytes: 24465602510848
+      size_bytes: 24465613914112
       used: 252.31 GiB
       used_bytes: 270913110016
     "/srv/softwareheritage/postgres/15/revision_layer_from_releases_wals":
       available: 22.00 TiB
-      available_bytes: 24194689400832
+      available_bytes: 24194700804096
       capacity: 0.00%
       device: data/postgresql-revision-layer-from-releases-wals
       filesystem: zfs
@@ -2322,7 +2334,7 @@ values:
       - xattr
       - posixacl
       size: 22.00 TiB
-      size_bytes: 24194689531904
+      size_bytes: 24194700935168
       used: 128.00 KiB
       used_bytes: 131072
   mounts:
@@ -2447,7 +2459,7 @@ values:
     scope6: link
   operatingsystem: Debian
   operatingsystemmajrelease: '11'
-  operatingsystemrelease: '11.7'
+  operatingsystemrelease: '11.8'
   os:
     architecture: amd64
     distro:
@@ -2455,16 +2467,16 @@ values:
       description: Debian GNU/Linux 11 (bullseye)
       id: Debian
       release:
-        full: '11.7'
+        full: '11.8'
         major: '11'
-        minor: '7'
+        minor: '8'
     family: Debian
     hardware: x86_64
     name: Debian
     release:
-      full: '11.7'
+      full: '11.8'
       major: '11'
-      minor: '7'
+      minor: '8'
     selinux:
       enabled: false
   osfamily: Debian
@@ -2908,10 +2920,10 @@ values:
     short: met
     internal_fqdn: met.internal.softwareheritage.org
   system_uptime:
-    days: 227
-    hours: 5466
-    seconds: 19677875
-    uptime: 227 days
+    days: 257
+    hours: 6181
+    seconds: 22253673
+    uptime: 257 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -2925,15 +2937,15 @@ values:
     systemd-time-wait-sync.service: disabled
   systemd_version: '247'
   timezone: UTC
-  uptime: 227 days
-  uptime_days: 227
-  uptime_hours: 5466
-  uptime_seconds: 19677875
+  uptime: 257 days
+  uptime_days: 257
+  uptime_hours: 6181
+  uptime_seconds: 22253673
   uuid: 4c4c4544-0050-4210-8043-b7c04f534833
   vcsrepo_svn_ver: ''
   virtual: physical
   clientcert: met.internal.softwareheritage.org
   clientversion: 5.5.22
   clientnoop: false
-timestamp: '2023-09-11T12:53:08.731497411+00:00'
-expiration: '2023-09-11T13:23:08.733175533+00:00'
+timestamp: '2023-10-11T08:23:07.415279832+00:00'
+expiration: '2023-10-11T08:53:07.417292911+00:00'

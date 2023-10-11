@@ -48,7 +48,7 @@ values:
   apt_reboot_required: false
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1694435823
+  apt_update_last_success: 1697013423
   apt_updates: 17
   architecture: amd64
   augeas:
@@ -102,7 +102,7 @@ values:
       vardir: "/var/lib/puppet"
       server: pergamon.internal.softwareheritage.org
   facterversion: 3.11.0
-  filesystems: ext2,ext3,ext4
+  filesystems: btrfs,ext2,ext3,ext4,hfs,hfsplus,jfs,minix,msdos,qnx4,ufs,vfat,xfs
   fips_enabled: false
   fqdn: getty.internal.softwareheritage.org
   gid: root
@@ -131,13 +131,16 @@ values:
   java_default_home: "/usr/lib/jvm/java-11-openjdk-amd64"
   java_libjvm_path: "/usr/lib/jvm/java-11-openjdk-amd64/lib/server"
   java_major_version: '11'
-  java_patch_level: '18'
-  java_version: 11.0.18
+  java_patch_level: '20'
+  java_version: 11.0.20
   kernel: Linux
   kernelmajversion: '5.10'
   kernelrelease: 5.10.0-0.deb10.16-amd64
   kernelversion: 5.10.0
   kmods:
+    msdos:
+      parameters: {}
+      used_by: []
     thermal:
       parameters:
         act: '0'
@@ -155,6 +158,10 @@ values:
         notests: N
         panic_on_fail: N
       used_by: []
+    xor:
+      parameters: {}
+      used_by:
+      - btrfs
     virtio_rng:
       parameters: {}
       used_by: []
@@ -194,6 +201,9 @@ values:
     efivars:
       parameters: {}
       used_by: []
+    minix:
+      parameters: {}
+      used_by: []
     tcp_cubic:
       parameters:
         hystart_detect: '3'
@@ -226,6 +236,9 @@ values:
         nr_uarts: '4'
         share_irqs: '1'
         skip_txen_test: '0'
+      used_by: []
+    hfsplus:
+      parameters: {}
       used_by: []
     shpchp:
       parameters:
@@ -261,6 +274,9 @@ values:
     virtio_balloon:
       parameters: {}
       used_by: []
+    jfs:
+      parameters: {}
+      used_by: []
     drm_kms_helper:
       parameters:
         drm_fbdev_overalloc: '100'
@@ -288,6 +304,11 @@ values:
         reset_seq: ''
         sysrq_downtime_ms: '0'
       used_by: []
+    cdrom:
+      parameters: {}
+      used_by:
+      - hfsplus
+      - hfs
     processor:
       parameters:
         ignore_tpc: '0'
@@ -367,6 +388,13 @@ values:
     qemu_fw_cfg:
       parameters: {}
       used_by: []
+    blake2b_generic:
+      parameters: {}
+      used_by: []
+    raid6_pq:
+      parameters: {}
+      used_by:
+      - btrfs
     dynamic_debug:
       parameters:
         verbose: '0'
@@ -385,6 +413,11 @@ values:
         no_acpi: N
         use_acpi: N
       used_by: []
+    libcrc32c:
+      parameters: {}
+      used_by:
+      - btrfs
+      - xfs
     keyboard:
       parameters:
         brl_timeout: '300'
@@ -404,6 +437,9 @@ values:
         defx: '1024'
         modeset: "-1"
         defy: '768'
+      used_by: []
+    qnx4:
+      parameters: {}
       used_by: []
     udp_diag:
       parameters: {}
@@ -512,6 +548,12 @@ values:
         tcp_slot_table_entries: '2'
         auth_max_cred_cachesize: '18446744073709551615'
       used_by: []
+    btrfs:
+      parameters: {}
+      used_by: []
+    ufs:
+      parameters: {}
+      used_by: []
     hid_generic:
       parameters: {}
       used_by: []
@@ -581,6 +623,9 @@ values:
         qlowmark: '100'
         qovld: '20000'
       used_by: []
+    xfs:
+      parameters: {}
+      used_by: []
     drm_ttm_helper:
       parameters: {}
       used_by:
@@ -593,6 +638,9 @@ values:
     floppy:
       parameters: {}
       used_by: []
+    hfs:
+      parameters: {}
+      used_by: []
     block:
       parameters:
         events_dfl_poll_msecs: '2000'
@@ -603,6 +651,18 @@ values:
     virtio_pci:
       parameters:
         force_legacy: N
+      used_by: []
+    dm_mod:
+      parameters:
+        use_blk_mq: Y
+        reserved_bio_based_ios: '16'
+        reserved_rq_based_ios: '256'
+        swap_bios: '2048'
+        dm_numa_node: "-1"
+        stats_current_allocated_bytes: '0'
+        kcopyd_subjob_size_kb: '512'
+        dm_mq_nr_hw_queues: '1'
+        dm_mq_queue_depth: '2048'
       used_by: []
     cpuidle_haltpoll:
       parameters:
@@ -714,6 +774,9 @@ values:
       parameters:
         ptr_size: '800,600'
       used_by: []
+    vfat:
+      parameters: {}
+      used_by: []
     virtio_blk:
       parameters:
         queue_depth: '256'
@@ -739,6 +802,11 @@ values:
         debug_force_rr_cpu: N
         power_efficient: N
       used_by: []
+    fat:
+      parameters: {}
+      used_by:
+      - msdos
+      - vfat
     jbd2:
       parameters: {}
       used_by:
@@ -758,9 +826,9 @@ values:
       - ttm
   letsencrypt_directory: {}
   load_averages:
-    15m: 0.57
-    1m: 0.57
-    5m: 0.48
+    15m: 0.44
+    1m: 0.71
+    5m: 0.6
   location: sesi_rocquencourt
   lsbdistcodename: buster
   lsbdistdescription: Debian GNU/Linux 10 (buster)
@@ -772,30 +840,30 @@ values:
   manufacturer: QEMU
   memory:
     swap:
-      available: 3.98 GiB
-      available_bytes: 4270710784
-      capacity: 0.54%
+      available: 3.97 GiB
+      available_bytes: 4259364864
+      capacity: 0.80%
       total: 4.00 GiB
       total_bytes: 4293914624
-      used: 22.13 MiB
-      used_bytes: 23203840
+      used: 32.95 MiB
+      used_bytes: 34549760
     system:
-      available: 4.46 GiB
-      available_bytes: 4783992832
-      capacity: 42.72%
+      available: 4.42 GiB
+      available_bytes: 4747968512
+      capacity: 43.15%
       total: 7.78 GiB
       total_bytes: 8351432704
-      used: 3.32 GiB
-      used_bytes: 3567439872
-  memoryfree: 4.46 GiB
-  memoryfree_mb: 4562.37109375
+      used: 3.36 GiB
+      used_bytes: 3603464192
+  memoryfree: 4.42 GiB
+  memoryfree_mb: 4528.015625
   memorysize: 7.78 GiB
   memorysize_mb: 7964.546875
   mountpoints:
     "/":
-      available: 8.98 GiB
-      available_bytes: 9636843520
-      capacity: 54.01%
+      available: 9.23 GiB
+      available_bytes: 9905762304
+      capacity: 52.73%
       device: "/dev/vda1"
       filesystem: ext4
       options:
@@ -804,8 +872,8 @@ values:
       - errors=remount-ro
       size: 19.52 GiB
       size_bytes: 20955484160
-      used: 10.54 GiB
-      used_bytes: 11318640640
+      used: 10.29 GiB
+      used_bytes: 11049721856
     "/dev/shm":
       available: 3.89 GiB
       available_bytes: 4175716352
@@ -1113,8 +1181,8 @@ values:
   sshrsakey: AAAAB3NzaC1yc2EAAAADAQABAAABAQD4OL0iYM171r9DEY3mlZk4l2CXqfWEVBmnmN1erd3hdO18DfnTKrWYNGFRwRrQyArOlCvDFS/2QteYzdVyZ6xhAmrYK0Y0cQaQfTMS00KJJsIusMU9i6TWGYC+xQ/4c4X+ViWtlmUZHJtqYAW/VV0Yj8SKaBWhfrkLjhvSKZ1jcEEpOdSgltKhDI6pIAkfv1zQ4mqEji1Vy6N6r5ex0UNOhpnQupw3hxqW9n+Nv7i7EpolyhNrBp+zNhqiRoTcMks/olrxXheLogdlRafGV7CCAaeOEs1R/qhjMTVl6pANY6IAHsdOMkr4ZQWKv9OuCZJ10PQ/67CoDREFpMT8q/bX
   subnet: sesi_rocquencourt
   sudoversion: 1.8.27
-  swapfree: 3.98 GiB
-  swapfree_mb: 4072.8671875
+  swapfree: 3.97 GiB
+  swapfree_mb: 4062.046875
   swapsize: 4.00 GiB
   swapsize_mb: 4094.99609375
   swh_hostname:
@@ -1122,10 +1190,10 @@ values:
     short: getty
     internal_fqdn: getty.internal.softwareheritage.org
   system_uptime:
-    days: 227
-    hours: 5471
-    seconds: 19696292
-    uptime: 227 days
+    days: 257
+    hours: 6186
+    seconds: 22272090
+    uptime: 257 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -1140,15 +1208,15 @@ values:
     systemd-timesyncd.service: enabled
   systemd_version: '247'
   timezone: UTC
-  uptime: 227 days
-  uptime_days: 227
-  uptime_hours: 5471
-  uptime_seconds: 19696292
+  uptime: 257 days
+  uptime_days: 257
+  uptime_hours: 6186
+  uptime_seconds: 22272090
   uuid: 1cfacaaf-2718-4794-9cc5-88dfde58fb43
   vcsrepo_svn_ver: 1.10.4
   virtual: kvm
   clientcert: getty.internal.softwareheritage.org
   clientversion: 5.5.10
   clientnoop: false
-timestamp: '2023-09-11T13:20:09.841377693+00:00'
-expiration: '2023-09-11T13:50:09.844419811+00:00'
+timestamp: '2023-10-11T08:50:08.229741946+00:00'
+expiration: '2023-10-11T09:20:08.231067317+00:00'
