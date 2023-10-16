@@ -2,7 +2,7 @@
 name: search0.internal.staging.swh.network
 values:
   agent_specified_environment: staging
-  apt_dist_updates: 16
+  apt_dist_updates: 17
   apt_has_dist_updates: true
   apt_has_updates: true
   apt_package_dist_updates:
@@ -10,6 +10,7 @@ values:
   - icinga2-bin
   - icinga2-common
   - icinga2-doc
+  - libnghttp2-14
   - python3-aiohttp-utils
   - python3-swh.core
   - python3-swh.model
@@ -22,13 +23,16 @@ values:
   - python3-swh.indexer
   - python3-swh.indexer.storage
   - python3-tree-sitter
-  apt_package_security_dist_updates: []
-  apt_package_security_updates: []
+  apt_package_security_dist_updates:
+  - libnghttp2-14
+  apt_package_security_updates:
+  - libnghttp2-14
   apt_package_updates:
   - icinga2
   - icinga2-bin
   - icinga2-common
   - icinga2-doc
+  - libnghttp2-14
   - python3-aiohttp-utils
   - python3-swh.core
   - python3-swh.model
@@ -40,10 +44,10 @@ values:
   - python3-swh.indexer.storage
   - python3-tree-sitter
   apt_reboot_required: true
-  apt_security_dist_updates: 0
-  apt_security_updates: 0
-  apt_update_last_success: 1697009163
-  apt_updates: 14
+  apt_security_dist_updates: 1
+  apt_security_updates: 1
+  apt_update_last_success: 1697469962
+  apt_updates: 15
   architecture: amd64
   bios_release_date: 04/01/2014
   bios_vendor: SeaBIOS
@@ -254,6 +258,9 @@ values:
       parameters:
         use_acpi_alarm: N
       used_by: []
+    tcp_diag:
+      parameters: {}
+      used_by: []
     virtio_balloon:
       parameters: {}
       used_by: []
@@ -380,6 +387,9 @@ values:
       parameters:
         verbose: '0'
       used_by: []
+    raw_diag:
+      parameters: {}
+      used_by: []
     ata_generic:
       parameters: {}
       used_by: []
@@ -413,6 +423,9 @@ values:
         fbdev: Y
       used_by: []
     qnx4:
+      parameters: {}
+      used_by: []
+    udp_diag:
       parameters: {}
       used_by: []
     serio_raw:
@@ -541,6 +554,9 @@ values:
         max_user_bgreq: '1262'
         max_user_congthresh: '1262'
       used_by: []
+    unix_diag:
+      parameters: {}
+      used_by: []
     acpiphp:
       parameters:
         disable: N
@@ -649,6 +665,12 @@ values:
         def_reserved_size: '32768'
         allow_dio: '0'
       used_by: []
+    inet_diag:
+      parameters: {}
+      used_by:
+      - tcp_diag
+      - raw_diag
+      - udp_diag
     psmouse:
       parameters:
         resetafter: '5'
@@ -787,9 +809,9 @@ values:
       - ttm
   letsencrypt_directory: {}
   load_averages:
-    15m: 0.04
-    1m: 0.09
-    5m: 0.09
+    15m: 0.01
+    1m: 0.08
+    5m: 0.02
   lsbdistcodename: buster
   lsbdistdescription: Debian GNU/Linux 10 (buster)
   lsbdistid: Debian
@@ -808,22 +830,22 @@ values:
       used: 0 bytes
       used_bytes: 0
     system:
-      available: 3.18 GiB
-      available_bytes: 3417563136
-      capacity: 17.42%
+      available: 3.16 GiB
+      available_bytes: 3394084864
+      capacity: 17.99%
       total: 3.85 GiB
       total_bytes: 4138557440
-      used: 687.59 MiB
-      used_bytes: 720994304
-  memoryfree: 3.18 GiB
-  memoryfree_mb: 3259.2421875
+      used: 709.98 MiB
+      used_bytes: 744472576
+  memoryfree: 3.16 GiB
+  memoryfree_mb: 3236.8515625
   memorysize: 3.85 GiB
   memorysize_mb: 3946.8359375
   mountpoints:
     "/":
-      available: 13.21 GiB
-      available_bytes: 14184046592
-      capacity: 19.20%
+      available: 13.06 GiB
+      available_bytes: 14022144000
+      capacity: 20.12%
       device: "/dev/mapper/base--template--vg-root"
       filesystem: ext4
       options:
@@ -832,8 +854,8 @@ values:
       - errors=remount-ro
       size: 16.35 GiB
       size_bytes: 17555079168
-      used: 3.14 GiB
-      used_bytes: 3371032576
+      used: 3.29 GiB
+      used_bytes: 3532935168
     "/boot":
       available: 150.62 MiB
       available_bytes: 157940736
@@ -862,8 +884,8 @@ values:
       used: 0 bytes
       used_bytes: 0
     "/run":
-      available: 394.14 MiB
-      available_bytes: 413282304
+      available: 394.12 MiB
+      available_bytes: 413261824
       capacity: 0.14%
       device: tmpfs
       filesystem: tmpfs
@@ -876,8 +898,8 @@ values:
       - mode=755
       size: 394.68 MiB
       size_bytes: 413855744
-      used: 560.00 KiB
-      used_bytes: 573440
+      used: 580.00 KiB
+      used_bytes: 593920
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -893,6 +915,26 @@ values:
       - size=5120k
       size: 5.00 MiB
       size_bytes: 5242880
+      used: 0 bytes
+      used_bytes: 0
+    "/run/user/1003":
+      available: 87.48 MiB
+      available_bytes: 91729920
+      capacity: 0%
+      device: tmpfs
+      filesystem: tmpfs
+      options:
+      - rw
+      - nosuid
+      - nodev
+      - relatime
+      - size=89580k
+      - nr_inodes=22395
+      - mode=700
+      - uid=1003
+      - gid=1003
+      size: 87.48 MiB
+      size_bytes: 91729920
       used: 0 bytes
       used_bytes: 0
     "/sys/fs/cgroup":
@@ -1120,10 +1162,10 @@ values:
     short: search0
     internal_fqdn: search0.internal.staging.swh.network
   system_uptime:
-    days: 75
-    hours: 1817
-    seconds: 6541309
-    uptime: 75 days
+    days: 81
+    hours: 1944
+    seconds: 7000309
+    uptime: 81 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -1138,15 +1180,15 @@ values:
     systemd-timesyncd.service: enabled
   systemd_version: '247'
   timezone: UTC
-  uptime: 75 days
-  uptime_days: 75
-  uptime_hours: 1817
-  uptime_seconds: 6541309
+  uptime: 81 days
+  uptime_days: 81
+  uptime_hours: 1944
+  uptime_seconds: 7000309
   uuid: 40bc94dc-9df5-42d5-bb69-553345bae5a9
   vcsrepo_svn_ver: ''
   virtual: kvm
   clientcert: search0.internal.staging.swh.network
   clientversion: 5.5.10
   clientnoop: false
-timestamp: '2023-10-11T08:22:08.193172516+00:00'
-expiration: '2023-10-11T08:52:08.195151643+00:00'
+timestamp: '2023-10-16T15:52:08.177838188+00:00'
+expiration: '2023-10-16T16:22:08.179160293+00:00'
