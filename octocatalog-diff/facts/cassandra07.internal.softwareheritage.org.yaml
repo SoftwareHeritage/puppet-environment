@@ -17,10 +17,10 @@ values:
   - icinga2-bin
   - icinga2-common
   - icinga2-doc
-  apt_reboot_required: true
+  apt_reboot_required: false
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1697472006
+  apt_update_last_success: 1698667204
   apt_updates: 4
   architecture: amd64
   bios_release_date: 02/06/2023
@@ -109,7 +109,7 @@ values:
       vardir: "/var/lib/puppet"
       server: pergamon.internal.softwareheritage.org
   facterversion: 3.14.12
-  filesystems: btrfs,ext2,ext3,ext4,hfs,hfsplus,jfs,minix,msdos,qnx4,ufs,vfat,xfs
+  filesystems: ext2,ext3,ext4,vfat
   fips_enabled: false
   fqdn: cassandra07.internal.softwareheritage.org
   gid: root
@@ -138,16 +138,13 @@ values:
   java_default_home: "/usr/lib/jvm/java-11-openjdk-amd64"
   java_libjvm_path: "/usr/lib/jvm/java-11-openjdk-amd64/lib/server"
   java_major_version: '11'
-  java_patch_level: '20'
-  java_version: 11.0.20
+  java_patch_level: '21'
+  java_version: 11.0.21
   kernel: Linux
   kernelmajversion: '5.10'
-  kernelrelease: 5.10.0-25-amd64
+  kernelrelease: 5.10.0-26-amd64
   kernelversion: 5.10.0
   kmods:
-    msdos:
-      parameters: {}
-      used_by: []
     thermal:
       parameters:
         act: '0'
@@ -178,10 +175,6 @@ values:
         mrp_periodic_time: '1000'
       used_by:
       - 8021q
-    xor:
-      parameters: {}
-      used_by:
-      - btrfs
     spurious:
       parameters:
         noirqdebug: N
@@ -206,9 +199,6 @@ values:
         edac_pci_panic_on_pe: '0'
         check_pci_errors: '0'
       used_by: []
-    xt_conntrack:
-      parameters: {}
-      used_by: []
     vt:
       parameters:
         underline: '3'
@@ -224,27 +214,12 @@ values:
     ipmi_devintf:
       parameters: {}
       used_by: []
-    nf_conntrack:
-      parameters:
-        nf_conntrack_helper: N
-        expect_hashsize: '512'
-        acct: N
-        hashsize: '65536'
-        tstamp: N
-      used_by:
-      - xt_conntrack
-      - nf_nat
-      - nf_conntrack_netlink
-      - xt_MASQUERADE
     crct10dif_common:
       parameters: {}
       used_by:
       - crct10dif_generic
       - crc_t10dif
       - crct10dif_pclmul
-    minix:
-      parameters: {}
-      used_by: []
     tcp_cubic:
       parameters:
         hystart_detect: '3'
@@ -293,9 +268,6 @@ values:
       used_by:
       - crypto_simd
       - ghash_clmulni_intel
-    hfsplus:
-      parameters: {}
-      used_by: []
     shpchp:
       parameters:
         shpchp_poll_time: '0'
@@ -458,7 +430,7 @@ values:
         zfs_scan_legacy: '0'
         zfs_dbgmsg_enable: '1'
         zfs_scan_vdev_limit: '4194304'
-        zfs_vdev_raidz_impl: 'cycle [fastest] original scalar sse2 ssse3 '
+        zfs_vdev_raidz_impl: 'cycle [fastest] original scalar sse2 ssse3 avx2 '
         l2arc_mfuonly: '0'
         zvol_threads: '32'
         zfs_vdev_async_write_min_active: '2'
@@ -533,7 +505,7 @@ values:
         zfs_vdev_async_read_max_active: '3'
         l2arc_feed_secs: '1'
         zfs_commit_timeout_pct: '5'
-        zfs_arc_max: '67567312896'
+        zfs_arc_max: '67564170240'
         spa_load_verify_shift: '4'
         zfs_unflushed_log_block_min: '1000'
         zfs_vdev_nia_credit: '5'
@@ -592,12 +564,6 @@ values:
       parameters: {}
       used_by:
       - aesni_intel
-    nfnetlink:
-      parameters: {}
-      used_by:
-      - nft_compat
-      - nf_conntrack_netlink
-      - nf_tables
     srcutree:
       parameters:
         exp_holdoff: '25000'
@@ -620,14 +586,6 @@ values:
       parameters:
         use_acpi_alarm: N
       used_by: []
-    jfs:
-      parameters: {}
-      used_by: []
-    nf_nat:
-      parameters: {}
-      used_by:
-      - nft_chain_nat
-      - xt_MASQUERADE
     drm_kms_helper:
       parameters:
         drm_fbdev_overalloc: '100'
@@ -639,20 +597,13 @@ values:
         dp_aux_i2c_speed_khz: '10'
       used_by:
       - mgag200
-    bridge:
-      parameters: {}
-      used_by:
-      - br_netfilter
     icp:
       parameters:
         icp_gcm_avx_chunk_size: '32736'
         icp_aes_impl: 'cycle [fastest] generic x86_64 aesni '
-        icp_gcm_impl: 'cycle [fastest] generic pclmulqdq '
+        icp_gcm_impl: 'cycle [fastest] avx generic pclmulqdq '
       used_by:
       - zfs
-    nft_compat:
-      parameters: {}
-      used_by: []
     device_hmem:
       parameters:
         disable: N
@@ -668,11 +619,6 @@ values:
         reset_seq: ''
         sysrq_downtime_ms: '0'
       used_by: []
-    cdrom:
-      parameters: {}
-      used_by:
-      - hfsplus
-      - hfs
     pci_hyperv_intf:
       parameters: {}
       used_by:
@@ -683,18 +629,6 @@ values:
     acpi_cpufreq:
       parameters:
         acpi_pstate_strict: '0'
-      used_by: []
-    overlay:
-      parameters:
-        redirect_always_follow: Y
-        nfs_export: N
-        xino_auto: N
-        check_copy_up: N
-        index: N
-        permit_mounts_in_userns: N
-        redirect_dir: N
-        redirect_max: '256'
-        metacopy: N
       used_by: []
     ipmi_msghandler:
       parameters:
@@ -763,13 +697,6 @@ values:
         pause_filter_count: '3000'
         avic: '0'
       used_by: []
-    br_netfilter:
-      parameters: {}
-      used_by: []
-    nf_defrag_ipv6:
-      parameters: {}
-      used_by:
-      - nf_conntrack
     pciehp:
       parameters:
         pciehp_poll_time: '0'
@@ -827,20 +754,10 @@ values:
       parameters: {}
       used_by:
       - aesni_intel
-    xt_addrtype:
-      parameters: {}
-      used_by: []
     acpi_power_meter:
       parameters:
         force_cap_on: N
       used_by: []
-    blake2b_generic:
-      parameters: {}
-      used_by: []
-    raid6_pq:
-      parameters: {}
-      used_by:
-      - btrfs
     efivarfs:
       parameters: {}
       used_by: []
@@ -852,10 +769,6 @@ values:
       parameters:
         verbose: '0'
       used_by: []
-    nf_defrag_ipv4:
-      parameters: {}
-      used_by:
-      - nf_conntrack
     intel_idle:
       parameters:
         max_cstate: '9'
@@ -863,14 +776,6 @@ values:
         no_acpi: N
         use_acpi: N
       used_by: []
-    libcrc32c:
-      parameters: {}
-      used_by:
-      - nf_conntrack
-      - nf_nat
-      - btrfs
-      - nf_tables
-      - xfs
     8021q:
       parameters: {}
       used_by: []
@@ -892,13 +797,6 @@ values:
         zpool: zbud
         accept_threshold_percent: '90'
       used_by: []
-    qnx4:
-      parameters: {}
-      used_by: []
-    xfrm_algo:
-      parameters: {}
-      used_by:
-      - xfrm_user
     mgag200:
       parameters:
         modeset: "-1"
@@ -935,7 +833,8 @@ values:
       used_by: []
     zcommon:
       parameters:
-        zfs_fletcher_4_impl: "[fastest] scalar superscalar superscalar4 sse2 ssse3 "
+        zfs_fletcher_4_impl: "[fastest] scalar superscalar superscalar4 sse2 ssse3
+          avx2 "
         zfs_max_dataset_nesting: '50'
       used_by:
       - zfs
@@ -1025,12 +924,6 @@ values:
         tcp_slot_table_entries: '2'
         auth_max_cred_cachesize: '18446744073709551615'
       used_by: []
-    btrfs:
-      parameters: {}
-      used_by: []
-    ufs:
-      parameters: {}
-      used_by: []
     pps_core:
       parameters: {}
       used_by:
@@ -1067,15 +960,6 @@ values:
       parameters:
         disable: N
       used_by: []
-    nf_conntrack_netlink:
-      parameters: {}
-      used_by: []
-    nf_tables:
-      parameters: {}
-      used_by:
-      - nft_compat
-      - nft_counter
-      - nft_chain_nat
     configfs:
       parameters: {}
       used_by: []
@@ -1104,11 +988,7 @@ values:
     x_tables:
       parameters: {}
       used_by:
-      - xt_conntrack
-      - nft_compat
-      - xt_addrtype
       - ip_tables
-      - xt_MASQUERADE
     edac_mce_amd:
       parameters: {}
       used_by:
@@ -1140,12 +1020,6 @@ values:
         qlowmark: '100'
         qovld: '20000'
       used_by: []
-    xfs:
-      parameters: {}
-      used_by: []
-    nft_counter:
-      parameters: {}
-      used_by: []
     button:
       parameters:
         lid_init_state: ignore open [method] disabled
@@ -1176,13 +1050,9 @@ values:
     llc:
       parameters: {}
       used_by:
-      - bridge
       - stp
       - garp
     aesni_intel:
-      parameters: {}
-      used_by: []
-    hfs:
       parameters: {}
       used_by: []
     block:
@@ -1201,9 +1071,6 @@ values:
       parameters: {}
       used_by: []
     xz_dec:
-      parameters: {}
-      used_by: []
-    nft_chain_nat:
       parameters: {}
       used_by: []
     rapl:
@@ -1281,16 +1148,10 @@ values:
       parameters:
         path: ''
       used_by: []
-    xfrm_user:
-      parameters: {}
-      used_by: []
     wmi:
       parameters:
         debug_event: N
         debug_dump_wdg: N
-      used_by: []
-    xt_MASQUERADE:
-      parameters: {}
       used_by: []
     acpi:
       parameters:
@@ -1329,7 +1190,6 @@ values:
     stp:
       parameters: {}
       used_by:
-      - bridge
       - garp
     ipmi_ssif:
       parameters: {}
@@ -1396,7 +1256,6 @@ values:
     fat:
       parameters: {}
       used_by:
-      - msdos
       - vfat
     jbd2:
       parameters: {}
@@ -1419,9 +1278,9 @@ values:
       - 8021q
   letsencrypt_directory: {}
   load_averages:
-    15m: 1.57
-    1m: 3.09
-    5m: 1.93
+    15m: 3.02
+    1m: 3.74
+    5m: 3.33
   lsbdistcodename: bullseye
   lsbdistdescription: Debian GNU/Linux 11 (bullseye)
   lsbdistid: Debian
@@ -1436,30 +1295,30 @@ values:
   manufacturer: HPE
   memory:
     swap:
-      available: 195.07 MiB
-      available_bytes: 204541952
-      capacity: 80.01%
+      available: 115.40 MiB
+      available_bytes: 121004032
+      capacity: 88.18%
       total: 976.00 MiB
       total_bytes: 1023406080
-      used: 780.93 MiB
-      used_bytes: 818864128
+      used: 860.60 MiB
+      used_bytes: 902402048
     system:
-      available: 107.90 GiB
-      available_bytes: 115855851520
-      capacity: 57.13%
+      available: 113.22 GiB
+      available_bytes: 121574244352
+      capacity: 55.02%
       total: 251.70 GiB
       total_bytes: 270256680960
-      used: 143.80 GiB
-      used_bytes: 154400829440
-  memoryfree: 107.90 GiB
-  memoryfree_mb: 110488.75
+      used: 138.47 GiB
+      used_bytes: 148682436608
+  memoryfree: 113.22 GiB
+  memoryfree_mb: 115942.234375
   memorysize: 251.70 GiB
   memorysize_mb: 257736.85546875
   mountpoints:
     "/":
-      available: 13.08 GiB
-      available_bytes: 14042206208
-      capacity: 19.34%
+      available: 12.94 GiB
+      available_bytes: 13888942080
+      capacity: 20.22%
       device: "/dev/mapper/cassandra07--vg-root"
       filesystem: ext4
       options:
@@ -1468,8 +1327,8 @@ values:
       - errors=remount-ro
       size: 17.11 GiB
       size_bytes: 18368774144
-      used: 3.14 GiB
-      used_bytes: 3367542784
+      used: 3.28 GiB
+      used_bytes: 3520806912
     "/boot":
       available: 359.07 MiB
       available_bytes: 376511488
@@ -1584,7 +1443,7 @@ values:
       used_bytes: 0
     "/home":
       available: 61.97 GiB
-      available_bytes: 66543800320
+      available_bytes: 66543001600
       capacity: 0.62%
       device: "/dev/mapper/cassandra07--vg-home"
       filesystem: ext4
@@ -1593,11 +1452,11 @@ values:
       - relatime
       size: 65.74 GiB
       size_bytes: 70591479808
-      used: 395.77 MiB
-      used_bytes: 414994432
+      used: 396.53 MiB
+      used_bytes: 415793152
     "/run":
       available: 25.17 GiB
-      available_bytes: 27024105472
+      available_bytes: 27024109568
       capacity: 0.01%
       device: tmpfs
       filesystem: tmpfs
@@ -1612,7 +1471,7 @@ values:
       size: 25.17 GiB
       size_bytes: 27025670144
       used: 1.49 MiB
-      used_bytes: 1564672
+      used_bytes: 1560576
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -1644,9 +1503,9 @@ values:
       used: 0 bytes
       used_bytes: 0
     "/srv/cassandra/instance1/commitlog":
-      available: 659.46 GiB
-      available_bytes: 708095115264
-      capacity: 2.18%
+      available: 665.73 GiB
+      available_bytes: 714825793536
+      capacity: 1.25%
       device: writeintensive/cassandra-instance1-commitlog
       filesystem: zfs
       options:
@@ -1655,13 +1514,13 @@ values:
       - xattr
       - noacl
       size: 674.16 GiB
-      size_bytes: 723874873344
-      used: 14.70 GiB
-      used_bytes: 15779758080
+      size_bytes: 723871465472
+      used: 8.42 GiB
+      used_bytes: 9045671936
     "/srv/cassandra/instance1/data":
-      available: 3.16 TiB
-      available_bytes: 3474387107840
-      capacity: 71.94%
+      available: 3.09 TiB
+      available_bytes: 3399378534400
+      capacity: 72.55%
       device: mixeduse/cassandra-instance1-data
       filesystem: zfs
       options:
@@ -1670,12 +1529,12 @@ values:
       - xattr
       - noacl
       size: 11.26 TiB
-      size_bytes: 12381805477888
-      used: 8.10 TiB
-      used_bytes: 8907418370048
+      size_bytes: 12381806395392
+      used: 8.17 TiB
+      used_bytes: 8982427860992
     "/tmp":
-      available: 1006.27 MiB
-      available_bytes: 1055154176
+      available: 1006.28 MiB
+      available_bytes: 1055162368
       capacity: 0.43%
       device: "/dev/mapper/cassandra07--vg-tmp"
       filesystem: ext4
@@ -1684,12 +1543,12 @@ values:
       - relatime
       size: 1.06 GiB
       size_bytes: 1136009216
-      used: 4.31 MiB
-      used_bytes: 4521984
+      used: 4.30 MiB
+      used_bytes: 4513792
     "/var":
-      available: 4.47 GiB
-      available_bytes: 4800389120
-      capacity: 20.88%
+      available: 3.94 GiB
+      available_bytes: 4230356992
+      capacity: 30.27%
       device: "/dev/mapper/cassandra07--vg-var"
       filesystem: ext4
       options:
@@ -1697,14 +1556,14 @@ values:
       - relatime
       size: 5.97 GiB
       size_bytes: 6414352384
-      used: 1.18 GiB
-      used_bytes: 1266466816
+      used: 1.71 GiB
+      used_bytes: 1836498944
   mounts:
   - "/"
-  - "/home"
-  - "/var"
   - "/tmp"
+  - "/home"
   - "/boot"
+  - "/var"
   - "/boot/efi"
   - "/srv/cassandra/instance1/commitlog"
   - "/srv/cassandra/instance1/data"
@@ -2026,8 +1885,8 @@ values:
   sshrsakey: AAAAB3NzaC1yc2EAAAADAQABAAABgQDNAAyAeUeoa7x35dzrkO6smP7wdjXiSnp/y41APg5XWGJiJ+dumxA54lUt3Z04b6S0uA4TGzucgFU0zayLjXbm9XLiNrhfUhcNS5iQ6+TiZkxHVAQfJrhEM1LS62QgHGSZXlhi8yMKMsENKnnWZaNKEzgXvc18Udt4qG6VExpgnoEmzE+/8GG1xocGtI4v+IP9yDptyhNCAiaRsHfNH5s8oDHjnWZ+ZjfvuNr5pUr85g7FeaSTwplZIFUYSta64AS1pz5HreZSO+CFkj+Z5NuJb4qd1JSey+qRkHX2QjwqCGZBJgl/nLVqUV878SLuNiGCbPKdLufrGhKCs+t6MltKVWzKpaiGHmzZ9xiJ0Df1nD7sqbLpaXrlvOLeJksNKuqHKtH6qwW7ibaYnMLKTQ9+BSGjboa9kL+0J6faQGmV54qVYgY/XV6rGLd6NTaZbvhQoy0whRcxjcW8lQx+vxpwo9r1I9DtoUoS63Jmlx+j+kkPx1FZSoknM2JZkG6i6ns=
   subnet: sesi_rocquencourt
   sudoversion: 1.9.5p2
-  swapfree: 195.07 MiB
-  swapfree_mb: 195.06640625
+  swapfree: 115.40 MiB
+  swapfree_mb: 115.3984375
   swapsize: 976.00 MiB
   swapsize_mb: 975.99609375
   swh_hostname:
@@ -2035,10 +1894,10 @@ values:
     short: cassandra07
     internal_fqdn: cassandra07.internal.softwareheritage.org
   system_uptime:
-    days: 43
-    hours: 1047
-    seconds: 3771680
-    uptime: 43 days
+    days: 5
+    hours: 126
+    seconds: 454582
+    uptime: 5 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -2052,15 +1911,15 @@ values:
     systemd-time-wait-sync.service: disabled
   systemd_version: '247'
   timezone: UTC
-  uptime: 43 days
-  uptime_days: 43
-  uptime_hours: 1047
-  uptime_seconds: 3771680
+  uptime: 5 days
+  uptime_days: 5
+  uptime_hours: 126
+  uptime_seconds: 454582
   uuid: 35383350-3837-5a43-4a32-343232313439
   vcsrepo_svn_ver: ''
   virtual: physical
   clientcert: cassandra07.internal.softwareheritage.org
   clientversion: 5.5.22
   clientnoop: false
-timestamp: '2023-10-16T16:10:08.067236314+00:00'
-expiration: '2023-10-16T16:40:08.070016472+00:00'
+timestamp: '2023-10-30T12:40:06.989133960+00:00'
+expiration: '2023-10-30T13:10:06.991860384+00:00'
