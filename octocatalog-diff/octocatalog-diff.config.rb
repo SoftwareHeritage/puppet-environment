@@ -1,3 +1,5 @@
+require 'socket'
+
 # This is a configuration file for octocatalog-diff (https://github.com/github/octocatalog-diff).
 #
 # When octocatalog-diff runs, it will look for configuration files in the following locations:
@@ -74,63 +76,83 @@ module OctocatalogDiff
       # If you want to use the 'strip' method described above, this may work.
       # settings[:hiera_path_strip] = '/etc/puppetlabs/code'
 
-      ##############################################################################################
-      # puppetdb_url
-      #   URL, including protocol and port number, to your PuppetDB instance. This is used for
-      #   octocatalog-diff to connect and retrieve facts (and possibly compiled catalogs).
-      #   Example: https://puppetdb.yourcompany.com:8081
-      #   More: https://github.com/github/octocatalog-diff/blob/master/doc/configuration-puppetdb.md
-      ##############################################################################################
+      # Prepare arrays for fact overrides
+      settings[:from_fact_override] ||= []
+      settings[:to_fact_override] ||= []
+      settings[:command_line] ||= []
 
-      # settings[:puppetdb_url] = 'https://puppetdb.yourcompany.com:8081'
+      # Check whether the puppetdb config is available
+      if ["ca.pem", "crl.pem", "client.key", "client.pem"].all? { |f| File.exist?("#{ENV['OCD_BASE']}/ssl/#{f}") }
 
-      ##############################################################################################
-      # puppetdb_ssl_ca
-      #   CA certificate (public cert) that signed the PuppetDB certificate. Provide this if you
-      #   want octocatalog-diff to verify the PuppetDB certificate when it connects. You should be
-      #   doing this. You can specify an absolute path starting with `/`, or a relative path.
-      #   If you don't specify this, SSL will still work, but the tool won't verify the certificate
-      #   of the puppetdb server it's connecting to.
-      #   More: https://github.com/github/octocatalog-diff/blob/master/doc/configuration-puppetdb.md
-      ##############################################################################################
+        ##############################################################################################
+        # puppetdb_url
+        #   URL, including protocol and port number, to your PuppetDB instance. This is used for
+        #   octocatalog-diff to connect and retrieve facts (and possibly compiled catalogs).
+        #   Example: https://puppetdb.yourcompany.com:8081
+        #   More: https://github.com/github/octocatalog-diff/blob/master/doc/configuration-puppetdb.md
+        ##############################################################################################
 
-      # settings[:puppetdb_ssl_ca] = '/etc/puppetlabs/puppet/ssl/certs/ca.pem'
+        settings[:puppetdb_url] = 'https://pergamon.internal.softwareheritage.org:8081'
 
-      ##############################################################################################
-      # puppetdb_ssl_client_key
-      # puppetdb_ssl_client_password
-      # puppetdb_ssl_client_cert
-      # puppetdb_ssl_client_pem
-      #
-      #   This sets up SSL authentication for PuppetDB.
-      #
-      #   For SSL authentication, the key and certificate used for SSL client authentication.
-      #   Don't set these if your PuppetDB is unauthenticated. The provided example may work if you
-      #   run octocatalog-diff on a machine managed by Puppet, and your PuppetDB authenticates
-      #   clients with that same CA. Otherwise, fill in the actual path to the key and the
-      #   certificate in the relevant settings. If the key is password protected, set
-      #   :puppetdb_ssl_client_password to the text of the password.
-      #
-      #   You can configure this in one of two ways:
-      #     1. Set `puppetdb_ssl_client_key` and `puppetdb_ssl_client_cert` individually.
-      #     2. Set `puppetdb_ssl_client_pem` to the concatenation of the key and the certificate.
-      #
-      #   VERY IMPORTANT: settings[:puppetdb_ssl_client_key], settings[:puppetdb_ssl_client_cert], and
-      #     settings[:puppetdb_ssl_client_pem] need to be set to the TEXT OF THE CERTIFICATE/KEY, not
-      #     just the file name of the certificate. You'll probably need to use something like this:
-      #        settings[:puppetdb_ssl_client_WHATEVER] = File.read("...")
-      #
-      #   More: https://github.com/github/octocatalog-diff/blob/master/doc/configuration-puppetdb.md
-      ##############################################################################################
+        ##############################################################################################
+        # puppetdb_ssl_ca
+        #   CA certificate (public cert) that signed the PuppetDB certificate. Provide this if you
+        #   want octocatalog-diff to verify the PuppetDB certificate when it connects. You should be
+        #   doing this. You can specify an absolute path starting with `/`, or a relative path.
+        #   If you don't specify this, SSL will still work, but the tool won't verify the certificate
+        #   of the puppetdb server it's connecting to.
+        #   More: https://github.com/github/octocatalog-diff/blob/master/doc/configuration-puppetdb.md
+        ##############################################################################################
 
-      # require 'socket'
-      # fqdn = Socket.gethostbyname(Socket.gethostname).first
-      # settings[:puppetdb_ssl_client_key] = File.read("/etc/puppetlabs/puppet/ssl/private_keys/#{fqdn}.pem")
-      # settings[:puppetdb_ssl_client_cert] = File.read("/etc/puppetlabs/puppet/ssl/certs/#{fqdn}.pem")
+        settings[:puppetdb_ssl_ca] = "#{ENV['OCD_BASE']}/ssl/ca.pem"
+        settings[:puppetdb_ssl_crl] = "#{ENV['OCD_BASE']}/ssl/crl.pem"
 
-      # For keys generated by Puppet, passwords are not needed so the next setting can be left commented.
-      # If you generated your own key outside of Puppet and it has a password, specify it here.
-      # settings[:puppetdb_ssl_client_password] = 'your-password-here'
+        ##############################################################################################
+        # puppetdb_ssl_client_key
+        # puppetdb_ssl_client_password
+        # puppetdb_ssl_client_cert
+        # puppetdb_ssl_client_pem
+        #
+        #   This sets up SSL authentication for PuppetDB.
+        #
+        #   For SSL authentication, the key and certificate used for SSL client authentication.
+        #   Don't set these if your PuppetDB is unauthenticated. The provided example may work if you
+        #   run octocatalog-diff on a machine managed by Puppet, and your PuppetDB authenticates
+        #   clients with that same CA. Otherwise, fill in the actual path to the key and the
+        #   certificate in the relevant settings. If the key is password protected, set
+        #   :puppetdb_ssl_client_password to the text of the password.
+        #
+        #   You can configure this in one of two ways:
+        #     1. Set `puppetdb_ssl_client_key` and `puppetdb_ssl_client_cert` individually.
+        #     2. Set `puppetdb_ssl_client_pem` to the concatenation of the key and the certificate.
+        #
+        #   VERY IMPORTANT: settings[:puppetdb_ssl_client_key], settings[:puppetdb_ssl_client_cert], and
+        #     settings[:puppetdb_ssl_client_pem] need to be set to the TEXT OF THE CERTIFICATE/KEY, not
+        #     just the file name of the certificate. You'll probably need to use something like this:
+        #        settings[:puppetdb_ssl_client_WHATEVER] = File.read("...")
+        #
+        #   More: https://github.com/github/octocatalog-diff/blob/master/doc/configuration-puppetdb.md
+        ##############################################################################################
+
+        # require 'socket'
+        # fqdn = Socket.gethostbyname(Socket.gethostname).first
+        settings[:puppetdb_ssl_client_key] = File.read("#{ENV['OCD_BASE']}/ssl/client.key")
+        settings[:puppetdb_ssl_client_cert] = File.read("#{ENV['OCD_BASE']}/ssl/client.pem")
+
+        # For keys generated by Puppet, passwords are not needed so the next setting can be left commented.
+        # If you generated your own key outside of Puppet and it has a password, specify it here.
+        # settings[:puppetdb_ssl_client_password] = 'your-password-here'
+
+        settings[:from_fact_override].push OctocatalogDiff::API::V1::Override.create_from_input('has_puppetdb=(boolean)false')
+        settings[:to_fact_override].push OctocatalogDiff::API::V1::Override.create_from_input('has_puppetdb=(boolean)false')
+
+        settings[:command_line].push "--certname=#{Socket.gethostname}"
+
+      else
+        settings[:from_fact_override].push OctocatalogDiff::API::V1::Override.create_from_input('has_puppetdb=(boolean)false')
+        settings[:to_fact_override].push OctocatalogDiff::API::V1::Override.create_from_input('has_puppetdb=(boolean)false')
+      end
+
 
       ##############################################################################################
       # enc
@@ -197,8 +219,6 @@ module OctocatalogDiff
 
       # settings[:puppet_binary] = '/usr/bin/puppet'
       # settings[:puppet_binary] = '/opt/puppetlabs/puppet/bin/puppet'
-
-      settings[:command_line] = []
 
       ##############################################################################################
       # from_env

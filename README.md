@@ -74,7 +74,7 @@ developing complex puppet manifests. Dependencies
 
 You need the following packages installed on your machine:
 
-    r10k octocatalog-diff puppet
+    r10k octocatalog-diff puppet puppet-terminus-puppetdb
 
 ### Running
 
@@ -90,6 +90,28 @@ Limitations
 
 Our setup for octocatalog-diff doesn't support exported resources, so you won't see your
 fancy icinga checks there.
+
+### Access to puppetdb
+
+To access puppetdb for queries run by manifests (via the puppetdb_query
+function), on Debian systems, you need to set up a certificate on the puppet
+server. Please give it a recognizable name:
+
+    sudo puppet cert generate octocatalog-diff-olasd
+    
+You need to copy the following files to the `octocatalog-diff/ssl/` directory:
+
+ - /var/lib/puppet/ssl/crl.pem
+ - /var/lib/puppet/ssl/certs/ca.pem
+ - /var/lib/puppet/ssl/certs/octocatalog-diff-olasd.pem as client.pem
+ - /var/lib/puppet/ssl/private_keys/octocatalog-diff-olasd.pem client.key
+
+Finally, if you're using Puppet 7, you need octocatalog-diff to have the
+puppetdb_ssl_crl option available (unreleased as of yet):
+https://github.com/github/octocatalog-diff/commit/d73b92dba8730923fc550663ccbdd15b7374f7e6.patch
+
+Once that's done, running octocatalog-diff should populate the has_puppetdb fact
+and puppetdb queries should work.
 
 Integration of third party puppet modules
 -----------------------------------------
