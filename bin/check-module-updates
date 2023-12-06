@@ -8,8 +8,9 @@ pf = R10K::Puppetfile.new('.', nil, PUPPETFILE)
 pf.load
 
 pf.modules.each do |mod|
+  filtered_yaml = mod.to_yaml.gsub(/!ruby\/object:.*$/, '').gsub(/[&*]\d+/, '')
   # horrible hack to be able to access the private attributes here, notably the remote
-  mod = YAML.load(mod.to_yaml.gsub(/!ruby\/object:R10K.*$/, ''))
+  mod = YAML.load(filtered_yaml)
   directory = mod['remote'].split('/').last.gsub(/^puppet-/, '').gsub(/.git$/, '')
   name = mod['name']
   if [:control_branch, "master"].include? mod['desired_ref']
