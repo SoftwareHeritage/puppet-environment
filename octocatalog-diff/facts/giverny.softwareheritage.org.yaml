@@ -10,15 +10,15 @@ values:
   - postgresql-doc-15
   - postgresql-common
   - postgresql-client-common
+  - elasticsearch
   - libpq-dev
   - libpq5
-  - python3-psycopg2
-  - barman
-  - python3-barman
-  - elasticsearch
   - postgresql-client-16
   - postgresql-16
   - postgresql
+  - postgresql-plpython3-11
+  - postgresql-client-11
+  - postgresql-11
   - postgresql-client-15
   - postgresql-15
   - postgresql-client
@@ -31,19 +31,26 @@ values:
   - postgresql-doc-15
   - postgresql-common
   - postgresql-client-common
+  - elasticsearch
   - libpq-dev
   - libpq5
-  - python3-psycopg2
-  - barman
-  - python3-barman
-  - elasticsearch
+  - postgresql-client-16
+  - postgresql-16
+  - postgresql
+  - postgresql-plpython3-11
+  - postgresql-client-11
+  - postgresql-11
   - postgresql-client-15
   - postgresql-15
+  - postgresql-client
+  - postgresql-contrib
+  - postgresql-doc-16
+  - postgresql-doc
   apt_reboot_required: true
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1698666903
-  apt_updates: 11
+  apt_update_last_success: 1701875230
+  apt_updates: 18
   architecture: amd64
   bios_release_date: 05/08/2017
   bios_vendor: Dell Inc.
@@ -152,6 +159,7 @@ values:
   icinga2_puppet_hostcert: "/var/lib/puppet/ssl/certs/giverny.softwareheritage.org.pem"
   icinga2_puppet_hostprivkey: "/var/lib/puppet/ssl/private_keys/giverny.softwareheritage.org.pem"
   icinga2_puppet_localcacert: "/var/lib/puppet/ssl/certs/ca.pem"
+  icinga2_version: 2.14.0
   id: root
   identity:
     gid: 0
@@ -164,7 +172,7 @@ values:
   ipaddress6: fe80::4a4d:7eff:fefb:87ac
   ipaddress6_enp0s25: fe80::4a4d:7eff:fefb:87ac
   ipaddress6_lo: "::1"
-  ipaddress6_tun0: fe80::5a9d:deab:8440:7283
+  ipaddress6_tun0: fe80::cf08:40d8:86ec:4ba6
   ipaddress_enp0s25: 128.93.73.175
   ipaddress_lo: 127.0.0.1
   ipaddress_tun0: 192.168.101.118
@@ -1785,9 +1793,9 @@ values:
       - nouveau
   letsencrypt_directory: {}
   load_averages:
-    15m: 0.02
-    1m: 0.28
-    5m: 0.08
+    15m: 0.01
+    1m: 0.15
+    5m: 0.04
   location: inria_paris
   lsbdistcodename: bullseye
   lsbdistdescription: Debian GNU/Linux 11 (bullseye)
@@ -1810,22 +1818,22 @@ values:
       used: 86.00 MiB
       used_bytes: 90177536
     system:
-      available: 115.43 GiB
-      available_bytes: 123941302272
-      capacity: 26.62%
+      available: 115.38 GiB
+      available_bytes: 123891736576
+      capacity: 26.65%
       total: 157.31 GiB
       total_bytes: 168911585280
-      used: 41.88 GiB
-      used_bytes: 44970283008
-  memoryfree: 115.43 GiB
-  memoryfree_mb: 118199.63671875
+      used: 41.93 GiB
+      used_bytes: 45019848704
+  memoryfree: 115.38 GiB
+  memoryfree_mb: 118152.3671875
   memorysize: 157.31 GiB
   memorysize_mb: 161086.640625
   mountpoints:
     "/":
-      available: 25.78 GiB
-      available_bytes: 27676295168
-      capacity: 25.27%
+      available: 25.68 GiB
+      available_bytes: 27577368576
+      capacity: 25.53%
       device: "/dev/mapper/giverny--vg-root"
       filesystem: ext4
       options:
@@ -1834,8 +1842,8 @@ values:
       - errors=remount-ro
       size: 36.37 GiB
       size_bytes: 39050428416
-      used: 8.71 GiB
-      used_bytes: 9357512704
+      used: 8.81 GiB
+      used_bytes: 9456439296
     "/boot":
       available: 280.02 MiB
       available_bytes: 293621760
@@ -1936,7 +1944,7 @@ values:
       used_bytes: 0
     "/dev/shm":
       available: 78.65 GiB
-      available_bytes: 84454699008
+      available_bytes: 84453621760
       capacity: 0.00%
       device: tmpfs
       filesystem: tmpfs
@@ -1946,11 +1954,11 @@ values:
       - nodev
       size: 78.66 GiB
       size_bytes: 84455792640
-      used: 1.04 MiB
-      used_bytes: 1093632
+      used: 2.07 MiB
+      used_bytes: 2170880
     "/home":
       available: 66.22 GiB
-      available_bytes: 71098265600
+      available_bytes: 71098257408
       capacity: 4.09%
       device: "/dev/mapper/giverny--vg-home"
       filesystem: ext4
@@ -1960,10 +1968,10 @@ values:
       size: 72.78 GiB
       size_bytes: 78149087232
       used: 2.83 GiB
-      used_bytes: 3034148864
+      used_bytes: 3034157056
     "/run":
       available: 15.73 GiB
-      available_bytes: 16887906304
+      available_bytes: 16887898112
       capacity: 0.02%
       device: tmpfs
       filesystem: tmpfs
@@ -1977,8 +1985,8 @@ values:
       - mode=755
       size: 15.73 GiB
       size_bytes: 16891158528
-      used: 3.10 MiB
-      used_bytes: 3252224
+      used: 3.11 MiB
+      used_bytes: 3260416
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -2265,7 +2273,7 @@ values:
       used_bytes: 131072
     "/srv/storage":
       available: 4.43 TiB
-      available_bytes: 4875269439488
+      available_bytes: 4875269177344
       capacity: 0.00%
       device: storage
       filesystem: zfs
@@ -2274,12 +2282,12 @@ values:
       - xattr
       - noacl
       size: 4.43 TiB
-      size_bytes: 4875269570560
+      size_bytes: 4875269308416
       used: 128.00 KiB
       used_bytes: 131072
     "/srv/storage/anlambert":
       available: 4.43 TiB
-      available_bytes: 4875269439488
+      available_bytes: 4875269177344
       capacity: 0.00%
       device: storage/anlambert
       filesystem: zfs
@@ -2288,12 +2296,12 @@ values:
       - xattr
       - noacl
       size: 4.43 TiB
-      size_bytes: 4875269570560
+      size_bytes: 4875269308416
       used: 128.00 KiB
       used_bytes: 131072
     "/srv/storage/ddouard":
       available: 4.43 TiB
-      available_bytes: 4875269439488
+      available_bytes: 4875269177344
       capacity: 0.00%
       device: storage/ddouard
       filesystem: zfs
@@ -2302,12 +2310,12 @@ values:
       - xattr
       - noacl
       size: 4.43 TiB
-      size_bytes: 4875269570560
+      size_bytes: 4875269308416
       used: 128.00 KiB
       used_bytes: 131072
     "/srv/storage/jayesh":
       available: 4.43 TiB
-      available_bytes: 4875269439488
+      available_bytes: 4875269177344
       capacity: 0.00%
       device: storage/jayesh
       filesystem: zfs
@@ -2316,12 +2324,12 @@ values:
       - xattr
       - noacl
       size: 4.43 TiB
-      size_bytes: 4875269570560
+      size_bytes: 4875269308416
       used: 128.00 KiB
       used_bytes: 131072
     "/srv/storage/lunar":
       available: 4.43 TiB
-      available_bytes: 4875269439488
+      available_bytes: 4875269177344
       capacity: 0.00%
       device: storage/lunar
       filesystem: zfs
@@ -2330,12 +2338,12 @@ values:
       - xattr
       - noacl
       size: 4.43 TiB
-      size_bytes: 4875269570560
+      size_bytes: 4875269308416
       used: 128.00 KiB
       used_bytes: 131072
     "/srv/storage/morane":
       available: 4.43 TiB
-      available_bytes: 4875269439488
+      available_bytes: 4875269177344
       capacity: 0.00%
       device: storage/morane
       filesystem: zfs
@@ -2344,12 +2352,12 @@ values:
       - xattr
       - noacl
       size: 4.43 TiB
-      size_bytes: 4875269570560
+      size_bytes: 4875269308416
       used: 128.00 KiB
       used_bytes: 131072
     "/srv/storage/rdicosmo":
       available: 4.43 TiB
-      available_bytes: 4875269439488
+      available_bytes: 4875269177344
       capacity: 17.80%
       device: storage/rdicosmo
       filesystem: zfs
@@ -2358,12 +2366,12 @@ values:
       - xattr
       - noacl
       size: 5.39 TiB
-      size_bytes: 5931095818240
+      size_bytes: 5931095556096
       used: 983.31 GiB
       used_bytes: 1055826378752
     "/srv/storage/vlorentz":
       available: 4.43 TiB
-      available_bytes: 4875269439488
+      available_bytes: 4875269177344
       capacity: 0.00%
       device: storage/vlorentz
       filesystem: zfs
@@ -2372,12 +2380,12 @@ values:
       - xattr
       - noacl
       size: 4.43 TiB
-      size_bytes: 4875269570560
+      size_bytes: 4875269308416
       used: 128.00 KiB
       used_bytes: 131072
     "/srv/storage/vsellier":
       available: 4.43 TiB
-      available_bytes: 4875269439488
+      available_bytes: 4875269177344
       capacity: 0.21%
       device: storage/vsellier
       filesystem: zfs
@@ -2387,12 +2395,12 @@ values:
       - xattr
       - noacl
       size: 4.44 TiB
-      size_bytes: 4885704736768
+      size_bytes: 4885704474624
       used: 9.72 GiB
       used_bytes: 10435297280
     "/srv/storage/zack":
       available: 4.43 TiB
-      available_bytes: 4875269439488
+      available_bytes: 4875269177344
       capacity: 0.00%
       device: storage/zack
       filesystem: zfs
@@ -2401,7 +2409,7 @@ values:
       - xattr
       - noacl
       size: 4.43 TiB
-      size_bytes: 4875269570560
+      size_bytes: 4875269308416
       used: 128.00 KiB
       used_bytes: 131072
     "/tmp":
@@ -2418,9 +2426,9 @@ values:
       used: 2.49 GiB
       used_bytes: 2678665216
     "/var":
-      available: 31.89 GiB
-      available_bytes: 34236887040
-      capacity: 7.55%
+      available: 31.85 GiB
+      available_bytes: 34202603520
+      capacity: 7.64%
       device: "/dev/mapper/giverny--vg-var"
       filesystem: ext4
       options:
@@ -2428,8 +2436,8 @@ values:
       - relatime
       size: 36.37 GiB
       size_bytes: 39050428416
-      used: 2.60 GiB
-      used_bytes: 2796920832
+      used: 2.64 GiB
+      used_bytes: 2831204352
   mounts:
   - "/"
   - "/boot"
@@ -2530,11 +2538,11 @@ values:
           netmask: 255.255.255.0
           network: 192.168.101.0
         bindings6:
-        - address: fe80::5a9d:deab:8440:7283
+        - address: fe80::cf08:40d8:86ec:4ba6
           netmask: 'ffff:ffff:ffff:ffff::'
           network: 'fe80::'
         ip: 192.168.101.118
-        ip6: fe80::5a9d:deab:8440:7283
+        ip6: fe80::cf08:40d8:86ec:4ba6
         netmask: 255.255.255.0
         netmask6: 'ffff:ffff:ffff:ffff::'
         network: 192.168.101.0
@@ -2849,10 +2857,10 @@ values:
     short: giverny
     internal_fqdn: giverny.internal.softwareheritage.org
   system_uptime:
-    days: 173
-    hours: 4174
-    seconds: 15029645
-    uptime: 173 days
+    days: 211
+    hours: 5065
+    seconds: 18237245
+    uptime: 211 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -2867,15 +2875,15 @@ values:
     systemd-time-wait-sync.service: disabled
   systemd_version: '247'
   timezone: CET
-  uptime: 173 days
-  uptime_days: 173
-  uptime_hours: 4174
-  uptime_seconds: 15029645
+  uptime: 211 days
+  uptime_days: 211
+  uptime_hours: 5065
+  uptime_seconds: 18237245
   uuid: 4c4c4544-0058-5110-8033-b9c04f4e4b32
   vcsrepo_svn_ver: ''
   virtual: physical
   clientcert: giverny.softwareheritage.org
   clientversion: 5.5.22
   clientnoop: false
-timestamp: '2023-10-30T13:45:09.995319412+01:00'
-expiration: '2023-10-30T14:15:09.998764220+01:00'
+timestamp: '2023-12-06T16:45:09.848993814+01:00'
+expiration: '2023-12-06T17:15:09.852057306+01:00'

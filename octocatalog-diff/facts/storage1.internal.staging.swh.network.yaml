@@ -2,28 +2,10 @@
 name: storage1.internal.staging.swh.network
 values:
   agent_specified_environment: staging
-  apt_dist_updates: 3
-  apt_has_dist_updates: true
-  apt_has_updates: true
-  apt_package_dist_updates:
-  - distro-info-data
-  - python3-distro-info
-  - python3-swh.scheduler
-  apt_package_security_dist_updates:
-  - distro-info-data
-  - python3-distro-info
-  apt_package_security_updates:
-  - distro-info-data
-  - python3-distro-info
-  apt_package_updates:
-  - distro-info-data
-  - python3-distro-info
-  - python3-swh.scheduler
+  apt_has_dist_updates: false
+  apt_has_updates: false
   apt_reboot_required: true
-  apt_security_dist_updates: 2
-  apt_security_updates: 2
-  apt_update_last_success: 1698667143
-  apt_updates: 3
+  apt_update_last_success: 1701874742
   architecture: amd64
   bios_release_date: 11/21/2019
   bios_vendor: American Megatrends Inc.
@@ -201,6 +183,7 @@ values:
   icinga2_puppet_hostcert: "/var/lib/puppet/ssl/certs/storage1.internal.staging.swh.network.pem"
   icinga2_puppet_hostprivkey: "/var/lib/puppet/ssl/private_keys/storage1.internal.staging.swh.network.pem"
   icinga2_puppet_localcacert: "/var/lib/puppet/ssl/certs/ca.pem"
+  icinga2_version: 2.14.0
   id: root
   identity:
     gid: 0
@@ -208,14 +191,23 @@ values:
     privileged: true
     uid: 0
     user: root
-  interfaces: bond0,eno1,enp2s0f0,enp2s0f1,enp5s0f1,lo,vlan443
+  interfaces: bond0,cali2c3011d77b6,cali33f202c0644,cali5f84070f002,cali7764a1b1002,cali79d19b63e19,calicf9779f0b1f,calif8fdb274711,eno1,enp2s0f0,enp2s0f1,enp5s0f1,lo,vlan443,vxlan.calico
   ipaddress: 192.168.130.41
   ipaddress6: fe80::6:18ff:fef4:87eb
   ipaddress6_bond0: fe80::6:18ff:fef4:87eb
+  ipaddress6_cali2c3011d77b6: fe80::ecee:eeff:feee:eeee
+  ipaddress6_cali33f202c0644: fe80::ecee:eeff:feee:eeee
+  ipaddress6_cali5f84070f002: fe80::ecee:eeff:feee:eeee
+  ipaddress6_cali7764a1b1002: fe80::ecee:eeff:feee:eeee
+  ipaddress6_cali79d19b63e19: fe80::ecee:eeff:feee:eeee
+  ipaddress6_calicf9779f0b1f: fe80::ecee:eeff:feee:eeee
+  ipaddress6_calif8fdb274711: fe80::ecee:eeff:feee:eeee
   ipaddress6_lo: "::1"
   ipaddress6_vlan443: fe80::6:18ff:fef4:87eb
+  ipaddress6_vxlan.calico: fe80::64ed:6dff:fe4d:9d3a
   ipaddress_lo: 127.0.0.1
   ipaddress_vlan443: 192.168.130.41
+  ipaddress_vxlan.calico: 10.42.199.192
   is_pe: false
   is_virtual: false
   java_default_home: "/usr/lib/jvm/java-11-openjdk-amd64"
@@ -291,6 +283,9 @@ values:
     nfnetlink_queue:
       parameters: {}
       used_by: []
+    xt_conntrack:
+      parameters: {}
+      used_by: []
     mdio_devres:
       parameters: {}
       used_by:
@@ -311,6 +306,10 @@ values:
         global_cursor_default: '1'
         italic: '2'
       used_by: []
+    poly1305_x86_64:
+      parameters: {}
+      used_by:
+      - libchacha20poly1305
     iTCO_wdt:
       parameters: {}
       used_by: []
@@ -318,6 +317,22 @@ values:
       parameters: {}
       used_by: []
     efivars:
+      parameters: {}
+      used_by: []
+    nf_conntrack:
+      parameters:
+        nf_conntrack_helper: N
+        expect_hashsize: '512'
+        acct: N
+        hashsize: '65536'
+        tstamp: N
+      used_by:
+      - xt_conntrack
+      - nf_nat
+      - xt_nat
+      - nf_conntrack_netlink
+      - xt_MASQUERADE
+    xt_statistic:
       parameters: {}
       used_by: []
     crct10dif_common:
@@ -334,6 +349,10 @@ values:
         devslp_idle_timeout: '1000'
       used_by:
       - ahci
+    chacha_x86_64:
+      parameters: {}
+      used_by:
+      - libchacha20poly1305
     minix:
       parameters: {}
       used_by: []
@@ -380,6 +399,11 @@ values:
         share_irqs: '1'
         skip_txen_test: '0'
       used_by: []
+    ip6_udp_tunnel:
+      parameters: {}
+      used_by:
+      - wireguard
+      - vxlan
     async_pq:
       parameters: {}
       used_by:
@@ -421,7 +445,7 @@ values:
         zvol_request_sync: '0'
         vdev_validate_skip: '0'
         zfs_object_mutex_size: '64'
-        spa_slop_shift: '5'
+        spa_slop_shift: '10'
         zfs_max_async_dedup_frees: '100000'
         zfs_sync_taskq_batch_pct: '75'
         metaslab_unload_delay_ms: '600000'
@@ -646,7 +670,7 @@ values:
         zfs_vdev_async_read_max_active: '3'
         l2arc_feed_secs: '1'
         zfs_commit_timeout_pct: '5'
-        zfs_arc_max: '0'
+        zfs_arc_max: '32212254720'
         spa_load_verify_shift: '4'
         zfs_unflushed_log_block_min: '1000'
         zfs_vdev_nia_credit: '5'
@@ -714,11 +738,17 @@ values:
       used_by:
       - raid456
       - async_raid6_recov
+    iptable_filter:
+      parameters: {}
+      used_by: []
     nfnetlink:
       parameters: {}
       used_by:
       - nfnetlink_queue
+      - nft_compat
+      - nf_conntrack_netlink
       - nf_tables
+      - ip_set
       - nfnetlink_log
     srcutree:
       parameters:
@@ -746,6 +776,10 @@ values:
       - async_xor
       - raid456
       - async_raid6_recov
+    libchacha20poly1305:
+      parameters: {}
+      used_by:
+      - wireguard
     random:
       parameters:
         ratelimit_disable: '0'
@@ -763,6 +797,13 @@ values:
     drbg:
       parameters: {}
       used_by: []
+    nf_nat:
+      parameters: {}
+      used_by:
+      - xt_nat
+      - nft_chain_nat
+      - iptable_nat
+      - xt_MASQUERADE
     drm_kms_helper:
       parameters:
         drm_fbdev_overalloc: '100'
@@ -775,6 +816,10 @@ values:
       used_by:
       - drm_vram_helper
       - ast
+    bridge:
+      parameters: {}
+      used_by:
+      - br_netfilter
     icp:
       parameters:
         icp_gcm_avx_chunk_size: '32736'
@@ -782,6 +827,9 @@ values:
         icp_gcm_impl: 'cycle [fastest] avx generic pclmulqdq '
       used_by:
       - zfs
+    nft_compat:
+      parameters: {}
+      used_by: []
     device_hmem:
       parameters:
         disable: N
@@ -797,6 +845,10 @@ values:
         reset_seq: ''
         sysrq_downtime_ms: '0'
       used_by: []
+    libchacha:
+      parameters: {}
+      used_by:
+      - chacha_x86_64
     cdrom:
       parameters: {}
       used_by:
@@ -804,6 +856,18 @@ values:
       - hfs
     ehci_pci:
       parameters: {}
+      used_by: []
+    overlay:
+      parameters:
+        redirect_always_follow: Y
+        nfs_export: N
+        xino_auto: N
+        check_copy_up: N
+        index: N
+        permit_mounts_in_userns: N
+        redirect_dir: N
+        redirect_max: '256'
+        metacopy: N
       used_by: []
     libphy:
       parameters: {}
@@ -828,6 +892,9 @@ values:
         latency_factor: '2'
         ignore_ppc: '0'
       used_by: []
+    xt_multiport:
+      parameters: {}
+      used_by: []
     scsi_mod:
       parameters:
         max_luns: '512'
@@ -849,7 +916,7 @@ values:
         pause_on_oops: '0'
         consoleblank: '0'
         module_blacklist: "(null)"
-        panic: '0'
+        panic: '10'
         panic_on_warn: '0'
         ignore_rlimit_data: N
         panic_print: '0'
@@ -875,12 +942,22 @@ values:
       used_by:
       - bluetooth
       - ext4
+    xt_tcpudp:
+      parameters: {}
+      used_by: []
     mousedev:
       parameters:
         yres: '768'
         tap_time: '200'
         xres: '1024'
       used_by: []
+    br_netfilter:
+      parameters: {}
+      used_by: []
+    nf_defrag_ipv6:
+      parameters: {}
+      used_by:
+      - nf_conntrack
     usbhid:
       parameters:
         mousepoll: '0'
@@ -899,6 +976,9 @@ values:
       used_by:
       - ses
       - mpt3sas
+    veth:
+      parameters: {}
+      used_by: []
     pciehp:
       parameters:
         pciehp_poll_time: '0'
@@ -961,10 +1041,16 @@ values:
       used_by:
       - bluetooth
       - aesni_intel
+    ip_set_hash_ip:
+      parameters: {}
+      used_by: []
     mei:
       parameters: {}
       used_by:
       - mei_me
+    xt_addrtype:
+      parameters: {}
+      used_by: []
     acpi_power_meter:
       parameters:
         force_cap_on: N
@@ -1004,6 +1090,10 @@ values:
       parameters: {}
       used_by:
       - ast
+    nf_defrag_ipv4:
+      parameters: {}
+      used_by:
+      - nf_conntrack
     intel_rapl_msr:
       parameters: {}
       used_by: []
@@ -1017,10 +1107,15 @@ values:
     libcrc32c:
       parameters: {}
       used_by:
+      - nf_conntrack
+      - nf_nat
       - btrfs
       - nf_tables
       - xfs
       - raid456
+    xt_nat:
+      parameters: {}
+      used_by: []
     8021q:
       parameters: {}
       used_by: []
@@ -1059,8 +1154,12 @@ values:
     xfrm_algo:
       parameters: {}
       used_by:
+      - xfrm_user
       - ixgbe
     udp_diag:
+      parameters: {}
+      used_by: []
+    xt_comment:
       parameters: {}
       used_by: []
     fb:
@@ -1168,6 +1267,10 @@ values:
     joydev:
       parameters: {}
       used_by: []
+    nf_reject_ipv4:
+      parameters: {}
+      used_by:
+      - ipt_REJECT
     intel_powerclamp:
       parameters:
         duration: '24'
@@ -1185,6 +1288,9 @@ values:
     raid0:
       parameters:
         default_layout: '0'
+      used_by: []
+    xt_set:
+      parameters: {}
       used_by: []
     lpc_ich:
       parameters: {}
@@ -1291,12 +1397,23 @@ values:
       parameters:
         disable: N
       used_by: []
-    nf_tables:
+    nf_conntrack_netlink:
       parameters: {}
       used_by: []
+    nf_tables:
+      parameters: {}
+      used_by:
+      - nft_compat
+      - nft_counter
+      - nft_chain_nat
     configfs:
       parameters: {}
       used_by: []
+    libcurve25519_generic:
+      parameters: {}
+      used_by:
+      - curve25519_x86_64
+      - wireguard
     zunicode:
       parameters: {}
       used_by:
@@ -1319,7 +1436,24 @@ values:
     x_tables:
       parameters: {}
       used_by:
+      - xt_conntrack
+      - xt_statistic
+      - iptable_filter
+      - nft_compat
+      - xt_multiport
+      - xt_tcpudp
+      - xt_addrtype
+      - xt_nat
+      - xt_comment
+      - xt_set
+      - ipt_REJECT
+      - ipt_rpfilter
       - ip_tables
+      - xt_MASQUERADE
+      - xt_mark
+    ip_set_hash_net:
+      parameters: {}
+      used_by: []
     xhci_pci:
       parameters: {}
       used_by: []
@@ -1347,6 +1481,14 @@ values:
         qlowmark: '100'
         qovld: '20000'
       used_by: []
+    ipt_REJECT:
+      parameters: {}
+      used_by: []
+    udp_tunnel:
+      parameters: {}
+      used_by:
+      - wireguard
+      - vxlan
     xfs:
       parameters: {}
       used_by: []
@@ -1362,6 +1504,16 @@ values:
         disable_features: '0'
       used_by: []
     linear:
+      parameters: {}
+      used_by: []
+    ip_set:
+      parameters:
+        max_sets: '0'
+      used_by:
+      - ip_set_hash_ip
+      - xt_set
+      - ip_set_hash_net
+    nft_counter:
       parameters: {}
       used_by: []
     button:
@@ -1394,8 +1546,16 @@ values:
     llc:
       parameters: {}
       used_by:
+      - bridge
       - stp
       - garp
+    curve25519_x86_64:
+      parameters: {}
+      used_by:
+      - wireguard
+    ipt_rpfilter:
+      parameters: {}
+      used_by: []
     aesni_intel:
       parameters: {}
       used_by: []
@@ -1416,6 +1576,9 @@ values:
       parameters: {}
       used_by: []
     xz_dec:
+      parameters: {}
+      used_by: []
+    nft_chain_nat:
       parameters: {}
       used_by: []
     rapl:
@@ -1467,6 +1630,9 @@ values:
         kcopyd_subjob_size_kb: '512'
         dm_mq_nr_hw_queues: '1'
         dm_mq_queue_depth: '2048'
+      used_by: []
+    wireguard:
+      parameters: {}
       used_by: []
     crc32c_intel:
       parameters: {}
@@ -1535,11 +1701,16 @@ values:
       used_by: []
     ip_tables:
       parameters: {}
-      used_by: []
+      used_by:
+      - iptable_filter
+      - iptable_nat
     i8042:
       parameters:
         unmask_kbd_data: N
         debug: N
+      used_by: []
+    iptable_nat:
+      parameters: {}
       used_by: []
     ttm:
       parameters: {}
@@ -1558,12 +1729,18 @@ values:
       parameters:
         path: ''
       used_by: []
+    xfrm_user:
+      parameters: {}
+      used_by: []
     wmi:
       parameters:
         debug_event: N
         debug_dump_wdg: N
       used_by:
       - mxm_wmi
+    xt_MASQUERADE:
+      parameters: {}
+      used_by: []
     acpi:
       parameters:
         aml_debug_output: '0'
@@ -1602,6 +1779,7 @@ values:
     stp:
       parameters: {}
       used_by:
+      - bridge
       - garp
     ipmi_ssif:
       parameters: {}
@@ -1627,6 +1805,11 @@ values:
       parameters: {}
       used_by:
       - zfs
+    vxlan:
+      parameters:
+        log_ecn_error: Y
+        udp_port: '8472'
+      used_by: []
     vfat:
       parameters: {}
       used_by: []
@@ -1645,6 +1828,9 @@ values:
         disable_numa: N
         debug_force_rr_cpu: N
         power_efficient: N
+      used_by: []
+    xt_mark:
+      parameters: {}
       used_by: []
     fat:
       parameters: {}
@@ -1698,9 +1884,9 @@ values:
       - 8021q
   letsencrypt_directory: {}
   load_averages:
-    15m: 2.66
-    1m: 4.86
-    5m: 2.92
+    15m: 2.15
+    1m: 1.91
+    5m: 1.95
   lsbdistcodename: buster
   lsbdistdescription: Debian GNU/Linux 10 (buster)
   lsbdistid: Debian
@@ -1708,11 +1894,19 @@ values:
   lsbmajdistrelease: '10'
   macaddress: 02:06:18:f4:87:eb
   macaddress_bond0: 02:06:18:f4:87:eb
+  macaddress_cali2c3011d77b6: ee:ee:ee:ee:ee:ee
+  macaddress_cali33f202c0644: ee:ee:ee:ee:ee:ee
+  macaddress_cali5f84070f002: ee:ee:ee:ee:ee:ee
+  macaddress_cali7764a1b1002: ee:ee:ee:ee:ee:ee
+  macaddress_cali79d19b63e19: ee:ee:ee:ee:ee:ee
+  macaddress_calicf9779f0b1f: ee:ee:ee:ee:ee:ee
+  macaddress_calif8fdb274711: ee:ee:ee:ee:ee:ee
   macaddress_eno1: ac:1f:6b:40:78:98
   macaddress_enp2s0f0: ac:1f:6b:2d:61:cc
   macaddress_enp2s0f1: ac:1f:6b:2d:61:cd
   macaddress_enp5s0f1: ac:1f:6b:40:78:99
   macaddress_vlan443: 02:06:18:f4:87:eb
+  macaddress_vxlan.calico: 66:ed:6d:4d:9d:3a
   manufacturer: Supermicro
   memory:
     swap:
@@ -1724,22 +1918,22 @@ values:
       used: 0 bytes
       used_bytes: 0
     system:
-      available: 20.91 GiB
-      available_bytes: 22453882880
-      capacity: 77.80%
+      available: 47.99 GiB
+      available_bytes: 51526086656
+      capacity: 49.06%
       total: 94.21 GiB
       total_bytes: 101153333248
-      used: 73.29 GiB
-      used_bytes: 78699450368
-  memoryfree: 20.91 GiB
-  memoryfree_mb: 21413.69140625
+      used: 46.22 GiB
+      used_bytes: 49627246592
+  memoryfree: 47.99 GiB
+  memoryfree_mb: 49139.10546875
   memorysize: 94.21 GiB
   memorysize_mb: 96467.3359375
   mountpoints:
     "/":
-      available: 12.90 GiB
-      available_bytes: 13854048256
-      capacity: 44.11%
+      available: 12.44 GiB
+      available_bytes: 13360570368
+      capacity: 46.10%
       device: "/dev/mapper/storage1-root"
       filesystem: ext4
       options:
@@ -1748,8 +1942,8 @@ values:
       - errors=remount-ro
       size: 23.09 GiB
       size_bytes: 24788705280
-      used: 10.18 GiB
-      used_bytes: 10934657024
+      used: 10.64 GiB
+      used_bytes: 11428134912
     "/boot/efi":
       available: 480.25 MiB
       available_bytes: 503582720
@@ -1772,8 +1966,8 @@ values:
       used_bytes: 6057984
     "/dev/shm":
       available: 47.10 GiB
-      available_bytes: 50576666624
-      capacity: 0%
+      available_bytes: 50575589376
+      capacity: 0.00%
       device: tmpfs
       filesystem: tmpfs
       options:
@@ -1782,12 +1976,12 @@ values:
       - nodev
       size: 47.10 GiB
       size_bytes: 50576666624
-      used: 0 bytes
-      used_bytes: 0
+      used: 1.03 MiB
+      used_bytes: 1077248
     "/run":
-      available: 9.40 GiB
-      available_bytes: 10092429312
-      capacity: 0.23%
+      available: 9.42 GiB
+      available_bytes: 10112004096
+      capacity: 0.03%
       device: tmpfs
       filesystem: tmpfs
       options:
@@ -1799,8 +1993,195 @@ values:
       - mode=755
       size: 9.42 GiB
       size_bytes: 10115334144
-      used: 21.84 MiB
-      used_bytes: 22904832
+      used: 3.18 MiB
+      used_bytes: 3330048
+    "/run/k3s/containerd/io.containerd.grpc.v1.cri/sandboxes/27a303287b2188e85882841e310e09cc0ca4093cf3b7a835373a6971ce0258fb/shm":
+      available: 64.00 MiB
+      available_bytes: 67108864
+      capacity: 0%
+      device: shm
+      filesystem: tmpfs
+      options:
+      - rw
+      - nosuid
+      - nodev
+      - noexec
+      - relatime
+      - size=65536k
+      size: 64.00 MiB
+      size_bytes: 67108864
+      used: 0 bytes
+      used_bytes: 0
+    "/run/k3s/containerd/io.containerd.grpc.v1.cri/sandboxes/2fc6aa02273461bbb8144223531d5f0c07c0c75f588ab836a0d996b9feddfcdf/shm":
+      available: 64.00 MiB
+      available_bytes: 67108864
+      capacity: 0%
+      device: shm
+      filesystem: tmpfs
+      options:
+      - rw
+      - nosuid
+      - nodev
+      - noexec
+      - relatime
+      - size=65536k
+      size: 64.00 MiB
+      size_bytes: 67108864
+      used: 0 bytes
+      used_bytes: 0
+    "/run/k3s/containerd/io.containerd.grpc.v1.cri/sandboxes/3e0b3210bdb8de046c5524e1520ef16d524b6a0fca7e6c62b24b134eaec7a152/shm":
+      available: 64.00 MiB
+      available_bytes: 67108864
+      capacity: 0%
+      device: shm
+      filesystem: tmpfs
+      options:
+      - rw
+      - nosuid
+      - nodev
+      - noexec
+      - relatime
+      - size=65536k
+      size: 64.00 MiB
+      size_bytes: 67108864
+      used: 0 bytes
+      used_bytes: 0
+    "/run/k3s/containerd/io.containerd.grpc.v1.cri/sandboxes/55d674c2e7cfb18270878e62c240d283073fddc8ae7146304dfd8b915045df08/shm":
+      available: 64.00 MiB
+      available_bytes: 67108864
+      capacity: 0%
+      device: shm
+      filesystem: tmpfs
+      options:
+      - rw
+      - nosuid
+      - nodev
+      - noexec
+      - relatime
+      - size=65536k
+      size: 64.00 MiB
+      size_bytes: 67108864
+      used: 0 bytes
+      used_bytes: 0
+    "/run/k3s/containerd/io.containerd.grpc.v1.cri/sandboxes/62a3825d808dced6c2240aa292f0a2ef9f8322afa3a8f05da2d0b0cc28b88cc3/shm":
+      available: 64.00 MiB
+      available_bytes: 67108864
+      capacity: 0%
+      device: shm
+      filesystem: tmpfs
+      options:
+      - rw
+      - nosuid
+      - nodev
+      - noexec
+      - relatime
+      - size=65536k
+      size: 64.00 MiB
+      size_bytes: 67108864
+      used: 0 bytes
+      used_bytes: 0
+    "/run/k3s/containerd/io.containerd.grpc.v1.cri/sandboxes/718b82354888893757d3f4bfa48b44c618bf53580d19e0cc477c3a76675e24c4/shm":
+      available: 64.00 MiB
+      available_bytes: 67108864
+      capacity: 0%
+      device: shm
+      filesystem: tmpfs
+      options:
+      - rw
+      - nosuid
+      - nodev
+      - noexec
+      - relatime
+      - size=65536k
+      size: 64.00 MiB
+      size_bytes: 67108864
+      used: 0 bytes
+      used_bytes: 0
+    "/run/k3s/containerd/io.containerd.grpc.v1.cri/sandboxes/a7556bb0e13e8ec213949d5f319647f415eacdbcd4a703c04d06f2ce0291115a/shm":
+      available: 64.00 MiB
+      available_bytes: 67108864
+      capacity: 0%
+      device: shm
+      filesystem: tmpfs
+      options:
+      - rw
+      - nosuid
+      - nodev
+      - noexec
+      - relatime
+      - size=65536k
+      size: 64.00 MiB
+      size_bytes: 67108864
+      used: 0 bytes
+      used_bytes: 0
+    "/run/k3s/containerd/io.containerd.grpc.v1.cri/sandboxes/ad9186f78c397bb1d5e97f2a911bfb1c2550f16364ce78857124dd3a7a6c518b/shm":
+      available: 64.00 MiB
+      available_bytes: 67108864
+      capacity: 0%
+      device: shm
+      filesystem: tmpfs
+      options:
+      - rw
+      - nosuid
+      - nodev
+      - noexec
+      - relatime
+      - size=65536k
+      size: 64.00 MiB
+      size_bytes: 67108864
+      used: 0 bytes
+      used_bytes: 0
+    "/run/k3s/containerd/io.containerd.grpc.v1.cri/sandboxes/b89e81682125448f674bb1babaed2eb734a0951f147dacc59634a7b19f52e45f/shm":
+      available: 64.00 MiB
+      available_bytes: 67108864
+      capacity: 0%
+      device: shm
+      filesystem: tmpfs
+      options:
+      - rw
+      - nosuid
+      - nodev
+      - noexec
+      - relatime
+      - size=65536k
+      size: 64.00 MiB
+      size_bytes: 67108864
+      used: 0 bytes
+      used_bytes: 0
+    "/run/k3s/containerd/io.containerd.grpc.v1.cri/sandboxes/bb4294df0abb386b49cb7a2cb91269b30d31737c9ae0af6757cbc3bdc3944004/shm":
+      available: 64.00 MiB
+      available_bytes: 67108864
+      capacity: 0%
+      device: shm
+      filesystem: tmpfs
+      options:
+      - rw
+      - nosuid
+      - nodev
+      - noexec
+      - relatime
+      - size=65536k
+      size: 64.00 MiB
+      size_bytes: 67108864
+      used: 0 bytes
+      used_bytes: 0
+    "/run/k3s/containerd/io.containerd.grpc.v1.cri/sandboxes/ffe804c72dea4f5fdc8feb19b766a21ff0e1e96a35afd1ee6fcd1de1c272e6ed/shm":
+      available: 64.00 MiB
+      available_bytes: 67108864
+      capacity: 0%
+      device: shm
+      filesystem: tmpfs
+      options:
+      - rw
+      - nosuid
+      - nodev
+      - noexec
+      - relatime
+      - size=65536k
+      size: 64.00 MiB
+      size_bytes: 67108864
+      used: 0 bytes
+      used_bytes: 0
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -1838,6 +2219,26 @@ values:
       size_bytes: 10115330048
       used: 0 bytes
       used_bytes: 0
+    "/run/user/1025":
+      available: 9.42 GiB
+      available_bytes: 10115330048
+      capacity: 0%
+      device: tmpfs
+      filesystem: tmpfs
+      options:
+      - rw
+      - nosuid
+      - nodev
+      - relatime
+      - size=9878252k
+      - nr_inodes=2469563
+      - mode=700
+      - uid=1025
+      - gid=1025
+      size: 9.42 GiB
+      size_bytes: 10115330048
+      used: 0 bytes
+      used_bytes: 0
     "/sys/fs/cgroup":
       available: 4.00 MiB
       available_bytes: 4194304
@@ -1856,34 +2257,235 @@ values:
       size_bytes: 4194304
       used: 0 bytes
       used_bytes: 0
+    "/tmp":
+      available: 14.36 GiB
+      available_bytes: 15415844864
+      capacity: 3.63%
+      device: tmpfs
+      filesystem: tmpfs
+      options:
+      - rw
+      - nosuid
+      - nodev
+      - noexec
+      - relatime
+      - size=15622140k
+      - nr_inodes=209715200
+      size: 14.90 GiB
+      size_bytes: 15997071360
+      used: 554.30 MiB
+      used_bytes: 581226496
+    "/var/lib/kubelet/pods/1146a9ad-423c-43c1-84cc-1d52faf7a4c0/volumes/kubernetes.io~projected/kube-api-access-c2pkq":
+      available: 94.21 GiB
+      available_bytes: 101153320960
+      capacity: 0.00%
+      device: tmpfs
+      filesystem: tmpfs
+      options:
+      - rw
+      - relatime
+      - size=98782552k
+      size: 94.21 GiB
+      size_bytes: 101153333248
+      used: 12.00 KiB
+      used_bytes: 12288
+    "/var/lib/kubelet/pods/2664a2d0-59d0-47be-9da7-5a84c045da8b/volumes/kubernetes.io~projected/kube-api-access-2skqz":
+      available: 94.21 GiB
+      available_bytes: 101153320960
+      capacity: 0.00%
+      device: tmpfs
+      filesystem: tmpfs
+      options:
+      - rw
+      - relatime
+      - size=98782552k
+      size: 94.21 GiB
+      size_bytes: 101153333248
+      used: 12.00 KiB
+      used_bytes: 12288
+    "/var/lib/kubelet/pods/3deeb51d-ce38-434a-af00-96f3ff478837/volumes/kubernetes.io~projected/kube-api-access-pkrhq":
+      available: 94.21 GiB
+      available_bytes: 101153320960
+      capacity: 0.00%
+      device: tmpfs
+      filesystem: tmpfs
+      options:
+      - rw
+      - relatime
+      - size=98782552k
+      size: 94.21 GiB
+      size_bytes: 101153333248
+      used: 12.00 KiB
+      used_bytes: 12288
+    "/var/lib/kubelet/pods/3deeb51d-ce38-434a-af00-96f3ff478837/volumes/kubernetes.io~secret/node-certs":
+      available: 94.21 GiB
+      available_bytes: 101153325056
+      capacity: 0.00%
+      device: tmpfs
+      filesystem: tmpfs
+      options:
+      - rw
+      - relatime
+      - size=98782552k
+      size: 94.21 GiB
+      size_bytes: 101153333248
+      used: 8.00 KiB
+      used_bytes: 8192
+    "/var/lib/kubelet/pods/6afd0f54-6c1d-4e08-bedb-b0d994afea5e/volumes/kubernetes.io~projected/kube-api-access-s6czk":
+      available: 94.21 GiB
+      available_bytes: 101153320960
+      capacity: 0.00%
+      device: tmpfs
+      filesystem: tmpfs
+      options:
+      - rw
+      - relatime
+      - size=98782552k
+      size: 94.21 GiB
+      size_bytes: 101153333248
+      used: 12.00 KiB
+      used_bytes: 12288
+    "/var/lib/kubelet/pods/98e137ae-0daa-45ad-acdc-bd65bf4e5779/volumes/kubernetes.io~projected/kube-api-access-vqzp2":
+      available: 94.21 GiB
+      available_bytes: 101153320960
+      capacity: 0.00%
+      device: tmpfs
+      filesystem: tmpfs
+      options:
+      - rw
+      - relatime
+      - size=98782552k
+      size: 94.21 GiB
+      size_bytes: 101153333248
+      used: 12.00 KiB
+      used_bytes: 12288
+    "/var/lib/kubelet/pods/a7e6108f-50d1-4be1-9aa6-0f359c0af952/volumes/kubernetes.io~projected/kube-api-access-89lqr":
+      available: 94.21 GiB
+      available_bytes: 101153320960
+      capacity: 0.00%
+      device: tmpfs
+      filesystem: tmpfs
+      options:
+      - rw
+      - relatime
+      - size=98782552k
+      size: 94.21 GiB
+      size_bytes: 101153333248
+      used: 12.00 KiB
+      used_bytes: 12288
+    "/var/lib/kubelet/pods/a7e6108f-50d1-4be1-9aa6-0f359c0af952/volumes/kubernetes.io~secret/webhook-cert":
+      available: 94.21 GiB
+      available_bytes: 101153320960
+      capacity: 0.00%
+      device: tmpfs
+      filesystem: tmpfs
+      options:
+      - rw
+      - relatime
+      - size=98782552k
+      size: 94.21 GiB
+      size_bytes: 101153333248
+      used: 12.00 KiB
+      used_bytes: 12288
+    "/var/lib/kubelet/pods/ae1d1e10-438b-440e-adf4-ef394b2e8e6c/volumes/kubernetes.io~projected/kube-api-access-h6l77":
+      available: 94.21 GiB
+      available_bytes: 101153320960
+      capacity: 0.00%
+      device: tmpfs
+      filesystem: tmpfs
+      options:
+      - rw
+      - relatime
+      - size=98782552k
+      size: 94.21 GiB
+      size_bytes: 101153333248
+      used: 12.00 KiB
+      used_bytes: 12288
+    "/var/lib/kubelet/pods/c9bfc752-d087-4022-b74b-ff38a3e88e8e/volumes/kubernetes.io~projected/kube-api-access-4rvtj":
+      available: 94.21 GiB
+      available_bytes: 101153320960
+      capacity: 0.00%
+      device: tmpfs
+      filesystem: tmpfs
+      options:
+      - rw
+      - relatime
+      - size=98782552k
+      size: 94.21 GiB
+      size_bytes: 101153333248
+      used: 12.00 KiB
+      used_bytes: 12288
+    "/var/lib/kubelet/pods/dbbb8c04-803d-48f9-9419-29ed7fac063e/volumes/kubernetes.io~projected/kube-api-access-5j6rq":
+      available: 127.99 MiB
+      available_bytes: 134205440
+      capacity: 0.01%
+      device: tmpfs
+      filesystem: tmpfs
+      options:
+      - rw
+      - relatime
+      - size=131072k
+      size: 128.00 MiB
+      size_bytes: 134217728
+      used: 12.00 KiB
+      used_bytes: 12288
   mounts:
   - "/"
   - "/boot/efi"
   - "/srv/softwareheritage/objects"
   - "/srv/kafka"
   - "/srv/remote-backups"
+  - "/var/lib/kubelet"
+  - "/var/lib/rancher"
+  - "/srv/kubernetes/volumes"
   mtu_bond0: 9000
+  mtu_cali2c3011d77b6: 1450
+  mtu_cali33f202c0644: 1450
+  mtu_cali5f84070f002: 1450
+  mtu_cali7764a1b1002: 1450
+  mtu_cali79d19b63e19: 1450
+  mtu_calicf9779f0b1f: 1450
+  mtu_calif8fdb274711: 1450
   mtu_eno1: 1500
   mtu_enp2s0f0: 9000
   mtu_enp2s0f1: 9000
   mtu_enp5s0f1: 1500
   mtu_lo: 65536
   mtu_vlan443: 9000
+  mtu_vxlan.calico: 1450
   mysql_server_id: 418679800
   netmask: 255.255.255.0
   netmask6: 'ffff:ffff:ffff:ffff::'
   netmask6_bond0: 'ffff:ffff:ffff:ffff::'
+  netmask6_cali2c3011d77b6: 'ffff:ffff:ffff:ffff::'
+  netmask6_cali33f202c0644: 'ffff:ffff:ffff:ffff::'
+  netmask6_cali5f84070f002: 'ffff:ffff:ffff:ffff::'
+  netmask6_cali7764a1b1002: 'ffff:ffff:ffff:ffff::'
+  netmask6_cali79d19b63e19: 'ffff:ffff:ffff:ffff::'
+  netmask6_calicf9779f0b1f: 'ffff:ffff:ffff:ffff::'
+  netmask6_calif8fdb274711: 'ffff:ffff:ffff:ffff::'
   netmask6_lo: ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff
   netmask6_vlan443: 'ffff:ffff:ffff:ffff::'
+  netmask6_vxlan.calico: 'ffff:ffff:ffff:ffff::'
   netmask_lo: 255.0.0.0
   netmask_vlan443: 255.255.255.0
+  netmask_vxlan.calico: 255.255.255.255
   network: 192.168.130.0
   network6: 'fe80::'
   network6_bond0: 'fe80::'
+  network6_cali2c3011d77b6: 'fe80::'
+  network6_cali33f202c0644: 'fe80::'
+  network6_cali5f84070f002: 'fe80::'
+  network6_cali7764a1b1002: 'fe80::'
+  network6_cali79d19b63e19: 'fe80::'
+  network6_calicf9779f0b1f: 'fe80::'
+  network6_calif8fdb274711: 'fe80::'
   network6_lo: "::1"
   network6_vlan443: 'fe80::'
+  network6_vxlan.calico: 'fe80::'
   network_lo: 127.0.0.0
   network_vlan443: 192.168.130.0
+  network_vxlan.calico: 10.42.199.192
   networking:
     domain: internal.staging.swh.network
     fqdn: storage1.internal.staging.swh.network
@@ -1897,6 +2499,76 @@ values:
         ip6: fe80::6:18ff:fef4:87eb
         mac: 02:06:18:f4:87:eb
         mtu: 9000
+        netmask6: 'ffff:ffff:ffff:ffff::'
+        network6: 'fe80::'
+      cali2c3011d77b6:
+        bindings6:
+        - address: fe80::ecee:eeff:feee:eeee
+          netmask: 'ffff:ffff:ffff:ffff::'
+          network: 'fe80::'
+        ip6: fe80::ecee:eeff:feee:eeee
+        mac: ee:ee:ee:ee:ee:ee
+        mtu: 1450
+        netmask6: 'ffff:ffff:ffff:ffff::'
+        network6: 'fe80::'
+      cali33f202c0644:
+        bindings6:
+        - address: fe80::ecee:eeff:feee:eeee
+          netmask: 'ffff:ffff:ffff:ffff::'
+          network: 'fe80::'
+        ip6: fe80::ecee:eeff:feee:eeee
+        mac: ee:ee:ee:ee:ee:ee
+        mtu: 1450
+        netmask6: 'ffff:ffff:ffff:ffff::'
+        network6: 'fe80::'
+      cali5f84070f002:
+        bindings6:
+        - address: fe80::ecee:eeff:feee:eeee
+          netmask: 'ffff:ffff:ffff:ffff::'
+          network: 'fe80::'
+        ip6: fe80::ecee:eeff:feee:eeee
+        mac: ee:ee:ee:ee:ee:ee
+        mtu: 1450
+        netmask6: 'ffff:ffff:ffff:ffff::'
+        network6: 'fe80::'
+      cali7764a1b1002:
+        bindings6:
+        - address: fe80::ecee:eeff:feee:eeee
+          netmask: 'ffff:ffff:ffff:ffff::'
+          network: 'fe80::'
+        ip6: fe80::ecee:eeff:feee:eeee
+        mac: ee:ee:ee:ee:ee:ee
+        mtu: 1450
+        netmask6: 'ffff:ffff:ffff:ffff::'
+        network6: 'fe80::'
+      cali79d19b63e19:
+        bindings6:
+        - address: fe80::ecee:eeff:feee:eeee
+          netmask: 'ffff:ffff:ffff:ffff::'
+          network: 'fe80::'
+        ip6: fe80::ecee:eeff:feee:eeee
+        mac: ee:ee:ee:ee:ee:ee
+        mtu: 1450
+        netmask6: 'ffff:ffff:ffff:ffff::'
+        network6: 'fe80::'
+      calicf9779f0b1f:
+        bindings6:
+        - address: fe80::ecee:eeff:feee:eeee
+          netmask: 'ffff:ffff:ffff:ffff::'
+          network: 'fe80::'
+        ip6: fe80::ecee:eeff:feee:eeee
+        mac: ee:ee:ee:ee:ee:ee
+        mtu: 1450
+        netmask6: 'ffff:ffff:ffff:ffff::'
+        network6: 'fe80::'
+      calif8fdb274711:
+        bindings6:
+        - address: fe80::ecee:eeff:feee:eeee
+          netmask: 'ffff:ffff:ffff:ffff::'
+          network: 'fe80::'
+        ip6: fe80::ecee:eeff:feee:eeee
+        mac: ee:ee:ee:ee:ee:ee
+        mtu: 1450
         netmask6: 'ffff:ffff:ffff:ffff::'
         network6: 'fe80::'
       eno1:
@@ -1944,6 +2616,23 @@ values:
         netmask6: 'ffff:ffff:ffff:ffff::'
         network: 192.168.130.0
         network6: 'fe80::'
+      vxlan.calico:
+        bindings:
+        - address: 10.42.199.192
+          netmask: 255.255.255.255
+          network: 10.42.199.192
+        bindings6:
+        - address: fe80::64ed:6dff:fe4d:9d3a
+          netmask: 'ffff:ffff:ffff:ffff::'
+          network: 'fe80::'
+        ip: 10.42.199.192
+        ip6: fe80::64ed:6dff:fe4d:9d3a
+        mac: 66:ed:6d:4d:9d:3a
+        mtu: 1450
+        netmask: 255.255.255.255
+        netmask6: 'ffff:ffff:ffff:ffff::'
+        network: 10.42.199.192
+        network6: 'fe80::'
     ip: 192.168.130.41
     ip6: fe80::6:18ff:fef4:87eb
     mac: 02:06:18:f4:87:eb
@@ -1990,12 +2679,15 @@ values:
       size_bytes: 15997075456
       uuid: d377a893-1831-46b3-a28e-d5da450d989f
     "/dev/nvme0n1p1":
-      partlabel: zfs-50804dca7fb89fb2
-      partuuid: 1388770f-8ef0-5b4e-8376-7cc57741b6bd
+      filesystem: zfs_member
+      label: data
+      partlabel: zfs-5ac89d89ae4f6ddd
+      partuuid: 17386e0f-1cff-a742-9038-4ef784222c4f
       size: 349.31 GiB
       size_bytes: 375073538048
+      uuid: '17386961492666999696'
     "/dev/nvme0n1p9":
-      partuuid: cc2493fd-f48b-0e49-8f86-c8c291737d23
+      partuuid: aed9585b-1dd5-2348-b2c6-1b34f189f043
       size: 8.00 MiB
       size_bytes: 8388608
     "/dev/sda1":
@@ -2277,10 +2969,10 @@ values:
     short: storage1
     internal_fqdn: storage1.internal.staging.swh.network
   system_uptime:
-    days: 257
-    hours: 6191
-    seconds: 22289730
-    uptime: 257 days
+    days: 295
+    hours: 7082
+    seconds: 25497329
+    uptime: 295 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -2295,15 +2987,15 @@ values:
     systemd-timesyncd.service: enabled
   systemd_version: '247'
   timezone: UTC
-  uptime: 257 days
-  uptime_days: 257
-  uptime_hours: 6191
-  uptime_seconds: 22289730
+  uptime: 295 days
+  uptime_days: 295
+  uptime_hours: 7082
+  uptime_seconds: 25497329
   uuid: 00000000-0000-0000-0000-ac1f6b407898
   vcsrepo_svn_ver: ''
   virtual: physical
   clientcert: storage1.internal.staging.swh.network
   clientversion: 5.5.10
   clientnoop: false
-timestamp: '2023-10-30T12:27:19.163763563+00:00'
-expiration: '2023-10-30T12:57:19.166307841+00:00'
+timestamp: '2023-12-06T15:27:06.860848364+00:00'
+expiration: '2023-12-06T15:57:06.863651992+00:00'

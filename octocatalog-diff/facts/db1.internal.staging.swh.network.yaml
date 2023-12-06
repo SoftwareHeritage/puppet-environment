@@ -2,22 +2,34 @@
 name: db1.internal.staging.swh.network
 values:
   agent_specified_environment: staging
-  apt_dist_updates: 3
+  apt_dist_updates: 9
   apt_has_dist_updates: true
   apt_has_updates: true
   apt_package_dist_updates:
   - postgresql-client-common
   - postgresql-common
   - pgbouncer
+  - libpq5
+  - pgbackrest
+  - postgresql-client-12
+  - postgresql-12
+  - postgresql-client-16
+  - postgresql-client
   apt_package_security_dist_updates: []
   apt_package_security_updates: []
   apt_package_updates:
   - pgbouncer
+  - libpq5
+  - pgbackrest
+  - postgresql-client-12
+  - postgresql-12
+  - postgresql-client-16
+  - postgresql-client
   apt_reboot_required: true
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1698668042
-  apt_updates: 1
+  apt_update_last_success: 1701875642
+  apt_updates: 7
   architecture: amd64
   bios_release_date: 11/21/2019
   bios_vendor: American Megatrends Inc.
@@ -195,6 +207,7 @@ values:
   icinga2_puppet_hostcert: "/var/lib/puppet/ssl/certs/db1.internal.staging.swh.network.pem"
   icinga2_puppet_hostprivkey: "/var/lib/puppet/ssl/private_keys/db1.internal.staging.swh.network.pem"
   icinga2_puppet_localcacert: "/var/lib/puppet/ssl/certs/ca.pem"
+  icinga2_version: 2.14.0
   id: root
   identity:
     gid: 0
@@ -736,6 +749,9 @@ values:
     rtc_cmos:
       parameters:
         use_acpi_alarm: N
+      used_by: []
+    tcp_diag:
+      parameters: {}
       used_by: []
     jfs:
       parameters: {}
@@ -1471,6 +1487,7 @@ values:
     inet_diag:
       parameters: {}
       used_by:
+      - tcp_diag
       - udp_diag
     kvm_intel:
       parameters:
@@ -1667,9 +1684,9 @@ values:
       - 8021q
   letsencrypt_directory: {}
   load_averages:
-    15m: 2.86
-    1m: 5.71
-    5m: 3.7
+    15m: 18.27
+    1m: 20.87
+    5m: 17.29
   lsbdistcodename: bullseye
   lsbdistdescription: Debian GNU/Linux 11 (bullseye)
   lsbdistid: Debian
@@ -1686,22 +1703,22 @@ values:
   manufacturer: Supermicro
   memory:
     system:
-      available: 46.06 GiB
-      available_bytes: 49451307008
-      capacity: 51.11%
+      available: 41.75 GiB
+      available_bytes: 44834033664
+      capacity: 55.68%
       total: 94.20 GiB
       total_bytes: 101151248384
-      used: 48.15 GiB
-      used_bytes: 51699941376
-  memoryfree: 46.06 GiB
-  memoryfree_mb: 47160.44140625
+      used: 52.45 GiB
+      used_bytes: 56317214720
+  memoryfree: 41.75 GiB
+  memoryfree_mb: 42757.06640625
   memorysize: 94.20 GiB
   memorysize_mb: 96465.34765625
   mountpoints:
     "/":
-      available: 13.73 GiB
-      available_bytes: 14741454848
-      capacity: 26.36%
+      available: 13.67 GiB
+      available_bytes: 14679433216
+      capacity: 26.67%
       device: "/dev/mapper/ssd-root"
       filesystem: ext2
       options:
@@ -1710,8 +1727,8 @@ values:
       - errors=remount-ro
       size: 19.64 GiB
       size_bytes: 21091799040
-      used: 4.91 GiB
-      used_bytes: 5276602368
+      used: 4.97 GiB
+      used_bytes: 5338624000
     "/boot/efi":
       available: 480.24 MiB
       available_bytes: 503570432
@@ -1798,9 +1815,9 @@ values:
       used: 0 bytes
       used_bytes: 0
     "/dev/shm":
-      available: 47.10 GiB
-      available_bytes: 50574766080
-      capacity: 0.00%
+      available: 47.09 GiB
+      available_bytes: 50567434240
+      capacity: 0.02%
       device: tmpfs
       filesystem: tmpfs
       options:
@@ -1809,11 +1826,11 @@ values:
       - nodev
       size: 47.10 GiB
       size_bytes: 50575622144
-      used: 836.00 KiB
-      used_bytes: 856064
+      used: 7.81 MiB
+      used_bytes: 8187904
     "/run":
       available: 9.42 GiB
-      available_bytes: 10113368064
+      available_bytes: 10113261568
       capacity: 0.02%
       device: tmpfs
       filesystem: tmpfs
@@ -1827,8 +1844,8 @@ values:
       - mode=755
       size: 9.42 GiB
       size_bytes: 10115125248
-      used: 1.68 MiB
-      used_bytes: 1757184
+      used: 1.78 MiB
+      used_bytes: 1863680
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -1917,25 +1934,50 @@ values:
       size_bytes: 10115121152
       used: 0 bytes
       used_bytes: 0
-    "/srv/remote-backups":
-      available: 441.37 GiB
-      available_bytes: 473912180736
-      capacity: 85.15%
-      device: data/remote-backups
-      filesystem: zfs
+    "/run/user/1025":
+      available: 9.42 GiB
+      available_bytes: 10115121152
+      capacity: 0%
+      device: tmpfs
+      filesystem: tmpfs
       options:
       - rw
-      - noatime
-      - xattr
-      - posixacl
-      size: 2.90 TiB
-      size_bytes: 3192145313792
-      used: 2.47 TiB
-      used_bytes: 2718233133056
+      - nosuid
+      - nodev
+      - relatime
+      - size=9878048k
+      - nr_inodes=2469512
+      - mode=700
+      - uid=1025
+      - gid=1025
+      size: 9.42 GiB
+      size_bytes: 10115121152
+      used: 0 bytes
+      used_bytes: 0
+    "/run/user/1033":
+      available: 9.42 GiB
+      available_bytes: 10115121152
+      capacity: 0%
+      device: tmpfs
+      filesystem: tmpfs
+      options:
+      - rw
+      - nosuid
+      - nodev
+      - relatime
+      - size=9878048k
+      - nr_inodes=2469512
+      - mode=700
+      - uid=1033
+      - gid=1033
+      size: 9.42 GiB
+      size_bytes: 10115121152
+      used: 0 bytes
+      used_bytes: 0
     "/srv/softwareheritage/postgres":
-      available: 441.37 GiB
-      available_bytes: 473912180736
-      capacity: 0.06%
+      available: 2.08 TiB
+      available_bytes: 2291233325056
+      capacity: 0.01%
       device: data/postgres-misc
       filesystem: zfs
       options:
@@ -1943,13 +1985,13 @@ values:
       - relatime
       - xattr
       - posixacl
-      size: 441.62 GiB
-      size_bytes: 474190315520
+      size: 2.08 TiB
+      size_bytes: 2291511459840
       used: 265.25 MiB
       used_bytes: 278134784
     "/srv/softwareheritage/postgres/12/indexer":
-      available: 441.37 GiB
-      available_bytes: 473912180736
+      available: 2.08 TiB
+      available_bytes: 2291233325056
       capacity: 0.00%
       device: data/postgres-indexer-12
       filesystem: zfs
@@ -1958,14 +2000,14 @@ values:
       - relatime
       - xattr
       - posixacl
-      size: 441.37 GiB
-      size_bytes: 473912311808
+      size: 2.08 TiB
+      size_bytes: 2291233456128
       used: 128.00 KiB
       used_bytes: 131072
     "/srv/softwareheritage/postgres/12/main":
-      available: 441.37 GiB
-      available_bytes: 473912180736
-      capacity: 73.77%
+      available: 2.08 TiB
+      available_bytes: 2291233325056
+      capacity: 44.85%
       device: data/postgres-main-12
       filesystem: zfs
       options:
@@ -1973,13 +2015,13 @@ values:
       - relatime
       - xattr
       - posixacl
-      size: 1.64 TiB
-      size_bytes: 1806793834496
-      used: 1.21 TiB
-      used_bytes: 1332881653760
+      size: 3.78 TiB
+      size_bytes: 4154427834368
+      used: 1.69 TiB
+      used_bytes: 1863194509312
     "/srv/softwareheritage/postgres/12/secondary":
-      available: 441.37 GiB
-      available_bytes: 473912180736
+      available: 2.08 TiB
+      available_bytes: 2291233325056
       capacity: 0.00%
       device: data/postgres-secondary-12
       filesystem: zfs
@@ -1988,8 +2030,8 @@ values:
       - relatime
       - xattr
       - posixacl
-      size: 441.37 GiB
-      size_bytes: 473912311808
+      size: 2.08 TiB
+      size_bytes: 2291233456128
       used: 128.00 KiB
       used_bytes: 131072
   mounts:
@@ -1999,7 +2041,6 @@ values:
   - "/srv/softwareheritage/postgres/12/indexer"
   - "/srv/softwareheritage/postgres/12/main"
   - "/srv/softwareheritage/postgres/12/secondary"
-  - "/srv/remote-backups"
   mtu_bond0: 9000
   mtu_eno1: 1500
   mtu_enp2s0f0: 9000
@@ -2420,10 +2461,10 @@ values:
     short: db1
     internal_fqdn: db1.internal.staging.swh.network
   system_uptime:
-    days: 258
-    hours: 6193
-    seconds: 22294980
-    uptime: 258 days
+    days: 295
+    hours: 7084
+    seconds: 25502582
+    uptime: 295 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -2437,15 +2478,15 @@ values:
     systemd-time-wait-sync.service: disabled
   systemd_version: '247'
   timezone: UTC
-  uptime: 258 days
-  uptime_days: 258
-  uptime_hours: 6193
-  uptime_seconds: 22294980
+  uptime: 295 days
+  uptime_days: 295
+  uptime_hours: 7084
+  uptime_seconds: 25502582
   uuid: 00000000-0000-0000-0000-ac1f6b05e596
   vcsrepo_svn_ver: ''
   virtual: physical
   clientcert: db1.internal.staging.swh.network
   clientversion: 5.5.22
   clientnoop: false
-timestamp: '2023-10-30T12:41:07.885836611+00:00'
-expiration: '2023-10-30T13:11:07.888694138+00:00'
+timestamp: '2023-12-06T15:41:13.265624575+00:00'
+expiration: '2023-12-06T16:11:13.268559572+00:00'

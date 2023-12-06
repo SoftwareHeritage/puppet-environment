@@ -2,7 +2,7 @@
 name: mucem.internal.softwareheritage.org
 values:
   agent_specified_environment: production
-  apt_dist_updates: 6
+  apt_dist_updates: 5
   apt_has_dist_updates: true
   apt_has_updates: true
   apt_package_dist_updates:
@@ -11,19 +11,17 @@ values:
   - icinga2
   - icinga2-bin
   - icinga2-common
-  - icinga2-doc
   apt_package_security_dist_updates: []
   apt_package_security_updates: []
   apt_package_updates:
   - icinga2
   - icinga2-bin
   - icinga2-common
-  - icinga2-doc
-  apt_reboot_required: true
+  apt_reboot_required: false
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1698669483
-  apt_updates: 4
+  apt_update_last_success: 1701877082
+  apt_updates: 3
   architecture: amd64
   bios_release_date: 06/09/2022
   bios_vendor: HPE
@@ -139,6 +137,7 @@ values:
   icinga2_puppet_hostcert: "/var/lib/puppet/ssl/certs/mucem.internal.softwareheritage.org.pem"
   icinga2_puppet_hostprivkey: "/var/lib/puppet/ssl/private_keys/mucem.internal.softwareheritage.org.pem"
   icinga2_puppet_localcacert: "/var/lib/puppet/ssl/certs/ca.pem"
+  icinga2_version: 2.13.6
   id: root
   identity:
     gid: 0
@@ -146,7 +145,7 @@ values:
     privileged: true
     uid: 0
     user: root
-  interfaces: bond0,ens10f0np0,ens10f1np1,lo,tap126i0,tap150i0,tap151i0,tap152i0,tap178i0,vlan1300,vlan210,vlan440,vlan442,vlan443,vmbr0,vmbr1,vmbr1300,vmbr442,vmbr443
+  interfaces: bond0,ens10f0np0,ens10f1np1,lo,tap124i0,tap126i0,tap144i0,tap150i0,tap151i0,tap178i0,vlan1300,vlan210,vlan440,vlan442,vlan443,vmbr0,vmbr1,vmbr1300,vmbr442,vmbr443
   ipaddress: 192.168.100.33
   ipaddress6: fe80::ac65:73ff:feb2:e9d
   ipaddress6_bond0: fe80::ac65:73ff:feb2:e9d
@@ -162,8 +161,8 @@ values:
   is_virtual: false
   kernel: Linux
   kernelmajversion: '5.15'
-  kernelrelease: 5.15.85-1-pve
-  kernelversion: 5.15.85
+  kernelrelease: 5.15.131-1-pve
+  kernelversion: 5.15.131
   kmods:
     thermal:
       parameters:
@@ -372,8 +371,10 @@ values:
         zfs_multihost_history: '0'
         zfs_metaslab_switch_threshold: '2'
         metaslab_fragmentation_factor_enabled: '1'
+        zil_min_commit_timeout: '5000'
         zfs_admin_snapshot: '0'
         zfs_delete_blocks: '20480'
+        zfs_default_ibs: '17'
         zfs_arc_meta_prune: '10000'
         zfs_free_min_time_ms: '1000'
         zfs_removal_suspend_progress: '0'
@@ -468,6 +469,7 @@ values:
         dbuf_metadata_cache_max_bytes: '18446744073709551615'
         zfs_scan_ignore_errors: '0'
         zfs_vdev_removal_max_active: '2'
+        zfs_default_bs: '9'
         zfs_vdev_max_auto_ashift: '14'
         zfs_condense_indirect_commit_entry_delay_ms: '0'
         zfs_metaslab_segment_weight_enabled: '1'
@@ -645,10 +647,6 @@ values:
       parameters:
         kgdboc: ''
       used_by: []
-    ecdh_generic:
-      parameters: {}
-      used_by:
-      - bluetooth
     ip6table_raw:
       parameters: {}
       used_by: []
@@ -670,10 +668,6 @@ values:
         exp_holdoff: '25000'
         counter_wrap_check: '4611686018427387903'
       used_by: []
-    ecc:
-      parameters: {}
-      used_by:
-      - ecdh_generic
     rcupdate:
       parameters:
         rcu_task_ipi_delay: '0'
@@ -700,9 +694,6 @@ values:
         use_acpi_alarm: N
       used_by: []
     input_leds:
-      parameters: {}
-      used_by: []
-    tcp_diag:
       parameters: {}
       used_by: []
     ceph:
@@ -952,6 +943,7 @@ values:
       used_by: []
     intel_idle:
       parameters:
+        preferred_cstates: '0'
         max_cstate: '9'
         states_off: '0'
         no_acpi: N
@@ -1177,12 +1169,6 @@ values:
         tcp_slot_table_entries: '2'
         auth_max_cred_cachesize: '18446744073709551615'
       used_by: []
-    bluetooth:
-      parameters:
-        disable_ertm: N
-        disable_esco: N
-        enable_ecred: N
-      used_by: []
     hid_generic:
       parameters: {}
       used_by: []
@@ -1237,7 +1223,7 @@ values:
       - zfs
     loop:
       parameters:
-        max_loop: '0'
+        max_loop: '8'
         max_part: '0'
       used_by: []
     cec:
@@ -1359,10 +1345,11 @@ values:
         nx_huge_pages_recovery_ratio: '60'
         tsc_tolerance_ppm: '250'
         min_timer_period_us: '200'
-        tdp_mmu: Y
+        tdp_mmu: N
         vector_hashing: Y
         mmio_caching: Y
         halt_poll_ns_grow: '0'
+        mitigate_smt_rsb: N
         pi_inject_timer: '0'
         nx_huge_pages: N
         lapic_timer_advance_ns: "-1"
@@ -1481,10 +1468,6 @@ values:
         def_reserved_size: '32768'
         allow_dio: '0'
       used_by: []
-    inet_diag:
-      parameters: {}
-      used_by:
-      - tcp_diag
     acpi_ipmi:
       parameters: {}
       used_by: []
@@ -1637,13 +1620,13 @@ values:
     dm_bufio:
       parameters:
         allocated_vmalloc_bytes: '0'
-        current_allocated_bytes: '1662976'
+        current_allocated_bytes: '262144'
         allocated_kmem_cache_bytes: '0'
-        max_cache_size_bytes: '10815066112'
+        max_cache_size_bytes: '10814791680'
         max_age_seconds: '300'
         retain_bytes: '262144'
-        peak_allocated_bytes: '60809216'
-        allocated_get_free_pages_bytes: '1662976'
+        peak_allocated_bytes: '9928704'
+        allocated_get_free_pages_bytes: '262144'
       used_by:
       - dm_persistent_data
     workqueue:
@@ -1690,9 +1673,9 @@ values:
       - 8021q
   letsencrypt_directory: {}
   load_averages:
-    15m: 2.97
-    1m: 2.81
-    5m: 2.89
+    15m: 2.74
+    1m: 2.02
+    5m: 2.38
   lsbdistcodename: bullseye
   lsbdistdescription: Debian GNU/Linux 11 (bullseye)
   lsbdistid: Debian
@@ -1703,10 +1686,11 @@ values:
   macaddress_bond0: ae:65:73:b2:0e:9d
   macaddress_ens10f0np0: 88:e9:a4:50:95:30
   macaddress_ens10f1np1: 88:e9:a4:50:95:31
+  macaddress_tap124i0: c6:a5:1b:b0:7f:de
   macaddress_tap126i0: 4e:f2:a7:aa:ab:fe
+  macaddress_tap144i0: 5e:69:57:71:39:58
   macaddress_tap150i0: c2:c2:2b:7c:78:20
   macaddress_tap151i0: 82:7e:31:86:31:eb
-  macaddress_tap152i0: 82:35:93:c7:b0:14
   macaddress_tap178i0: e6:86:16:23:0f:bd
   macaddress_vlan1300: ae:65:73:b2:0e:9d
   macaddress_vlan210: ae:65:73:b2:0e:9d
@@ -1721,30 +1705,30 @@ values:
   manufacturer: HPE
   memory:
     swap:
-      available: 563.43 MiB
-      available_bytes: 590794752
-      capacity: 42.27%
+      available: 231.75 MiB
+      available_bytes: 243003392
+      capacity: 76.26%
       total: 976.00 MiB
       total_bytes: 1023406080
-      used: 412.57 MiB
-      used_bytes: 432611328
+      used: 744.25 MiB
+      used_bytes: 780402688
     system:
-      available: 425.92 GiB
-      available_bytes: 457325363200
-      capacity: 15.43%
-      total: 503.62 GiB
-      total_bytes: 540753403904
-      used: 77.70 GiB
-      used_bytes: 83428040704
-  memoryfree: 425.92 GiB
-  memoryfree_mb: 436139.453125
-  memorysize: 503.62 GiB
-  memorysize_mb: 515702.6328125
+      available: 418.26 GiB
+      available_bytes: 449108353024
+      capacity: 16.95%
+      total: 503.60 GiB
+      total_bytes: 540739612672
+      used: 85.34 GiB
+      used_bytes: 91631259648
+  memoryfree: 418.26 GiB
+  memoryfree_mb: 428303.1015625
+  memorysize: 503.60 GiB
+  memorysize_mb: 515689.48046875
   mountpoints:
     "/":
-      available: 11.13 GiB
-      available_bytes: 11951517696
-      capacity: 31.35%
+      available: 11.22 GiB
+      available_bytes: 12042358784
+      capacity: 30.83%
       device: "/dev/mapper/mucem--vg-root"
       filesystem: ext4
       options:
@@ -1753,11 +1737,11 @@ values:
       - errors=remount-ro
       size: 17.11 GiB
       size_bytes: 18368774144
-      used: 5.08 GiB
-      used_bytes: 5458231296
+      used: 5.00 GiB
+      used_bytes: 5367390208
     "/boot":
       available: 194.16 MiB
-      available_bytes: 203592704
+      available_bytes: 203587584
       capacity: 56.46%
       device: "/dev/nvme0n1p2"
       filesystem: ext2
@@ -1766,8 +1750,8 @@ values:
       - relatime
       size: 470.35 MiB
       size_bytes: 493201408
-      used: 251.79 MiB
-      used_bytes: 264024064
+      used: 251.80 MiB
+      used_bytes: 264029184
     "/boot/efi":
       available: 505.22 MiB
       available_bytes: 529760256
@@ -1789,7 +1773,7 @@ values:
       used_bytes: 6045696
     "/dev":
       available: 251.78 GiB
-      available_bytes: 270347550720
+      available_bytes: 270345183232
       capacity: 0%
       device: udev
       filesystem: devtmpfs
@@ -1797,12 +1781,12 @@ values:
       - rw
       - nosuid
       - relatime
-      - size=264011280k
-      - nr_inodes=66002820
+      - size=264008968k
+      - nr_inodes=66002242
       - mode=755
       - inode64
       size: 251.78 GiB
-      size_bytes: 270347550720
+      size_bytes: 270345183232
       used: 0 bytes
       used_bytes: 0
     "/dev/hugepages":
@@ -1854,9 +1838,9 @@ values:
       used: 0 bytes
       used_bytes: 0
     "/dev/shm":
-      available: 251.75 GiB
-      available_bytes: 270313984000
-      capacity: 0.02%
+      available: 251.74 GiB
+      available_bytes: 270300696576
+      capacity: 0.03%
       device: tmpfs
       filesystem: tmpfs
       options:
@@ -1864,14 +1848,14 @@ values:
       - nosuid
       - nodev
       - inode64
-      size: 251.81 GiB
-      size_bytes: 270376701952
-      used: 59.81 MiB
-      used_bytes: 62717952
+      size: 251.80 GiB
+      size_bytes: 270369804288
+      used: 65.91 MiB
+      used_bytes: 69107712
     "/etc/pve":
-      available: 127.68 MiB
-      available_bytes: 133877760
-      capacity: 0.25%
+      available: 127.69 MiB
+      available_bytes: 133890048
+      capacity: 0.24%
       device: "/dev/fuse"
       filesystem: fuse
       options:
@@ -1885,8 +1869,8 @@ values:
       - allow_other
       size: 128.00 MiB
       size_bytes: 134217728
-      used: 332.00 KiB
-      used_bytes: 339968
+      used: 320.00 KiB
+      used_bytes: 327680
     "/home":
       available: 62.35 GiB
       available_bytes: 66951442432
@@ -1901,10 +1885,10 @@ values:
       used: 7.01 MiB
       used_bytes: 7352320
     "/mnt/pve/proxmox-cephfs":
-      available: 1.13 TiB
-      available_bytes: 1246614257664
-      capacity: 0.58%
-      device: 192.168.100.108,192.168.100.32,192.168.100.33,192.168.100.34:/
+      available: 1.08 TiB
+      available_bytes: 1190955843584
+      capacity: 0.61%
+      device: 192.168.100.108,192.168.100.33,192.168.100.34:/
       filesystem: ceph
       options:
       - rw
@@ -1913,13 +1897,13 @@ values:
       - secret=<hidden>
       - fsid=82307cfd-401a-4b58-8d29-7cbcd98f26fd
       - acl
-      size: 1.14 TiB
-      size_bytes: 1253895569408
-      used: 6.78 GiB
-      used_bytes: 7281311744
+      size: 1.09 TiB
+      size_bytes: 1198241349632
+      used: 6.79 GiB
+      used_bytes: 7285506048
     "/run":
       available: 50.36 GiB
-      available_bytes: 54072991744
+      available_bytes: 54071631872
       capacity: 0.00%
       device: tmpfs
       filesystem: tmpfs
@@ -1929,13 +1913,13 @@ values:
       - nodev
       - noexec
       - relatime
-      - size=52807952k
+      - size=52806604k
       - mode=755
       - inode64
       size: 50.36 GiB
-      size_bytes: 54075342848
-      used: 2.24 MiB
-      used_bytes: 2351104
+      size_bytes: 54073962496
+      used: 2.22 MiB
+      used_bytes: 2330624
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -1967,31 +1951,10 @@ values:
       size_bytes: 0
       used: 0 bytes
       used_bytes: 0
-    "/run/user/1001":
-      available: 50.36 GiB
-      available_bytes: 54075338752
-      capacity: 0%
-      device: tmpfs
-      filesystem: tmpfs
-      options:
-      - rw
-      - nosuid
-      - nodev
-      - relatime
-      - size=52807948k
-      - nr_inodes=13201987
-      - mode=700
-      - uid=1001
-      - gid=1001
-      - inode64
-      size: 50.36 GiB
-      size_bytes: 54075338752
-      used: 0 bytes
-      used_bytes: 0
     "/tmp":
-      available: 1010.43 MiB
-      available_bytes: 1059516416
-      capacity: 0.02%
+      available: 1010.47 MiB
+      available_bytes: 1059557376
+      capacity: 0.01%
       device: "/dev/mapper/mucem--vg-tmp"
       filesystem: ext4
       options:
@@ -1999,12 +1962,12 @@ values:
       - relatime
       size: 1.06 GiB
       size_bytes: 1136009216
-      used: 156.00 KiB
-      used_bytes: 159744
+      used: 116.00 KiB
+      used_bytes: 118784
     "/var":
-      available: 4.19 GiB
-      available_bytes: 4496310272
-      capacity: 25.89%
+      available: 4.20 GiB
+      available_bytes: 4504666112
+      capacity: 25.75%
       device: "/dev/mapper/mucem--vg-var"
       filesystem: ext4
       options:
@@ -2012,11 +1975,11 @@ values:
       - relatime
       size: 5.97 GiB
       size_bytes: 6414352384
-      used: 1.46 GiB
-      used_bytes: 1570545664
+      used: 1.45 GiB
+      used_bytes: 1562189824
     "/var/lib/ceph/osd/ceph-11":
-      available: 251.81 GiB
-      available_bytes: 270376673280
+      available: 251.80 GiB
+      available_bytes: 270369775616
       capacity: 0.00%
       device: tmpfs
       filesystem: tmpfs
@@ -2024,13 +1987,13 @@ values:
       - rw
       - relatime
       - inode64
-      size: 251.81 GiB
-      size_bytes: 270376701952
+      size: 251.80 GiB
+      size_bytes: 270369804288
       used: 28.00 KiB
       used_bytes: 28672
     "/var/lib/ceph/osd/ceph-15":
-      available: 251.81 GiB
-      available_bytes: 270376673280
+      available: 251.80 GiB
+      available_bytes: 270369775616
       capacity: 0.00%
       device: tmpfs
       filesystem: tmpfs
@@ -2038,13 +2001,13 @@ values:
       - rw
       - relatime
       - inode64
-      size: 251.81 GiB
-      size_bytes: 270376701952
+      size: 251.80 GiB
+      size_bytes: 270369804288
       used: 28.00 KiB
       used_bytes: 28672
     "/var/lib/ceph/osd/ceph-16":
-      available: 251.81 GiB
-      available_bytes: 270376673280
+      available: 251.80 GiB
+      available_bytes: 270369775616
       capacity: 0.00%
       device: tmpfs
       filesystem: tmpfs
@@ -2052,8 +2015,8 @@ values:
       - rw
       - relatime
       - inode64
-      size: 251.81 GiB
-      size_bytes: 270376701952
+      size: 251.80 GiB
+      size_bytes: 270369804288
       used: 28.00 KiB
       used_bytes: 28672
     "/var/lib/lxcfs":
@@ -2077,20 +2040,21 @@ values:
   mounts:
   - "/"
   - "/boot"
-  - "/home"
   - "/tmp"
   - "/var"
+  - "/home"
   - "/boot/efi"
   - "/mnt/pve/proxmox-cephfs"
   mtu_bond0: 9000
   mtu_ens10f0np0: 9000
   mtu_ens10f1np1: 9000
   mtu_lo: 65536
+  mtu_tap124i0: 9000
   mtu_tap126i0: 1500
+  mtu_tap144i0: 9000
   mtu_tap150i0: 1500
   mtu_tap151i0: 1500
-  mtu_tap152i0: 1500
-  mtu_tap178i0: 1500
+  mtu_tap178i0: 9000
   mtu_vlan1300: 9000
   mtu_vlan210: 9000
   mtu_vlan440: 9000
@@ -2098,8 +2062,8 @@ values:
   mtu_vlan443: 9000
   mtu_vmbr0: 1500
   mtu_vmbr1: 1500
-  mtu_vmbr1300: 1500
-  mtu_vmbr442: 1500
+  mtu_vmbr1300: 9000
+  mtu_vmbr442: 9000
   mtu_vmbr443: 9000
   mysql_server_id: 1941138280
   netmask: 255.255.255.0
@@ -2163,21 +2127,24 @@ values:
         network: 127.0.0.0
         network6: "::1"
         scope6: host
+      tap124i0:
+        mac: c6:a5:1b:b0:7f:de
+        mtu: 9000
       tap126i0:
         mac: 4e:f2:a7:aa:ab:fe
         mtu: 1500
+      tap144i0:
+        mac: 5e:69:57:71:39:58
+        mtu: 9000
       tap150i0:
         mac: c2:c2:2b:7c:78:20
         mtu: 1500
       tap151i0:
         mac: 82:7e:31:86:31:eb
         mtu: 1500
-      tap152i0:
-        mac: 82:35:93:c7:b0:14
-        mtu: 1500
       tap178i0:
         mac: e6:86:16:23:0f:bd
-        mtu: 1500
+        mtu: 9000
       vlan1300:
         mac: ae:65:73:b2:0e:9d
         mtu: 9000
@@ -2229,7 +2196,7 @@ values:
           network: 'fe80::'
         ip6: fe80::ac65:73ff:feb2:e9d
         mac: ae:65:73:b2:0e:9d
-        mtu: 1500
+        mtu: 9000
         netmask6: 'ffff:ffff:ffff:ffff::'
         network6: 'fe80::'
         scope6: link
@@ -2240,7 +2207,7 @@ values:
           network: 'fe80::'
         ip6: fe80::ac65:73ff:feb2:e9d
         mac: ae:65:73:b2:0e:9d
-        mtu: 1500
+        mtu: 9000
         netmask6: 'ffff:ffff:ffff:ffff::'
         network6: 'fe80::'
         scope6: link
@@ -2344,9 +2311,6 @@ values:
       size: 92.00 MiB
       size_bytes: 96468992
     "/dev/mapper/scratch-vm--151--disk--0":
-      size: 200.00 GiB
-      size_bytes: 214748364800
-    "/dev/mapper/scratch-vm--152--disk--0":
       size: 200.00 GiB
       size_bytes: 214748364800
     "/dev/mapper/scratch-vm--178--disk--0":
@@ -2701,8 +2665,8 @@ values:
   sshrsakey: AAAAB3NzaC1yc2EAAAADAQABAAABgQDR9UaYe+nw02N/VJ+Bf1ygh2KPtwjJXbsF3wjsTBZcpplKmGF/rrMUlVXKmvWxz9f+ZBsrD/ey9tWd4S7Zix4Ny1S2kk8MtDVvwFS8Nec+DTUQAdw4Dp1wp98+mtvAyB0+HmKuQXN6WenAyeOM886FRW5DwTnCT30ZYmSNc+nFSa6xHDKDwjGxSFyfBnnk8klRodW+0G63o1ZlPx7cyYjGt2nnZLFJ0SEfvtfbX+r18hOAvHRjGZf8fpFpO4zKWe+B5bI2SjFahD8aOeIe8xqv38HYw6iAR3gXyLX6I15ceIRW5IGVs6OhZZldxo1+RP0MnGEQdltuaJVvqV4+dM1PAB3ZU+Hs7KnSocjqiWwk9KNRzo5Z2H96Wlj0l6LuwgBArVbH0wjPIHEGws4aoVR2TMN5L2NoqLXEalK8Y3J0ye6HwIO/10MMvl6nAgTSzTHcBr/apD1c4xC35f0ByKwOp03DyDt7XGRUuVJwidPViOvhuakdQKoHQYOdei2GCX0=
   subnet: sesi_rocquencourt
   sudoversion: 1.9.5p2
-  swapfree: 563.43 MiB
-  swapfree_mb: 563.42578125
+  swapfree: 231.75 MiB
+  swapfree_mb: 231.74609375
   swapsize: 976.00 MiB
   swapsize_mb: 975.99609375
   swh_hostname:
@@ -2710,10 +2674,10 @@ values:
     short: mucem
     internal_fqdn: mucem.internal.softwareheritage.org
   system_uptime:
-    days: 258
-    hours: 6194
-    seconds: 22298789
-    uptime: 258 days
+    days: 16
+    hours: 384
+    seconds: 1383666
+    uptime: 16 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -2727,15 +2691,15 @@ values:
     systemd-time-wait-sync.service: disabled
   systemd_version: '247'
   timezone: UTC
-  uptime: 258 days
-  uptime_days: 258
-  uptime_hours: 6194
-  uptime_seconds: 22298789
+  uptime: 16 days
+  uptime_days: 16
+  uptime_hours: 384
+  uptime_seconds: 1383666
   uuid: 35383350-3837-5a43-4a32-333530543642
   vcsrepo_svn_ver: ''
   virtual: physical
   clientcert: mucem.internal.softwareheritage.org
   clientversion: 5.5.22
   clientnoop: false
-timestamp: '2023-10-30T12:38:07.395775633+00:00'
-expiration: '2023-10-30T13:08:07.397933954+00:00'
+timestamp: '2023-12-06T15:38:06.488832487+00:00'
+expiration: '2023-12-06T16:08:06.491257004+00:00'

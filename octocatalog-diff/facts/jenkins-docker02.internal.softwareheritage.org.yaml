@@ -2,24 +2,26 @@
 name: jenkins-docker02.internal.softwareheritage.org
 values:
   agent_specified_environment: production
-  apt_dist_updates: 3
+  apt_dist_updates: 4
   apt_has_dist_updates: true
   apt_has_updates: true
   apt_package_dist_updates:
+  - containerd.io
   - docker-ce-cli
   - docker-ce
   - docker-ce-rootless-extras
   apt_package_security_dist_updates: []
   apt_package_security_updates: []
   apt_package_updates:
+  - containerd.io
   - docker-ce-cli
   - docker-ce
   - docker-ce-rootless-extras
   apt_reboot_required: false
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1698666002
-  apt_updates: 3
+  apt_update_last_success: 1701873602
+  apt_updates: 4
   architecture: amd64
   bios_release_date: 04/01/2014
   bios_vendor: SeaBIOS
@@ -150,6 +152,7 @@ values:
   icinga2_puppet_hostcert: "/var/lib/puppet/ssl/certs/jenkins-docker02.internal.softwareheritage.org.pem"
   icinga2_puppet_hostprivkey: "/var/lib/puppet/ssl/private_keys/jenkins-docker02.internal.softwareheritage.org.pem"
   icinga2_puppet_localcacert: "/var/lib/puppet/ssl/certs/ca.pem"
+  icinga2_version: 2.14.0
   id: root
   identity:
     gid: 0
@@ -160,6 +163,7 @@ values:
   interfaces: docker0,eth0,lo
   ipaddress: 192.168.100.152
   ipaddress6: fe80::c4b9:79ff:fe73:d23
+  ipaddress6_docker0: fe80::42:33ff:fe6b:19a6
   ipaddress6_eth0: fe80::c4b9:79ff:fe73:d23
   ipaddress6_lo: "::1"
   ipaddress_docker0: 172.17.0.1
@@ -250,6 +254,7 @@ values:
       used_by:
       - xt_conntrack
       - nf_nat
+      - xt_nat
       - nf_conntrack_netlink
       - xt_MASQUERADE
     crct10dif_common:
@@ -309,7 +314,7 @@ values:
         zfs_arc_p_min_shift: '0'
         zvol_request_sync: '0'
         vdev_validate_skip: '0'
-        zfs_wrlog_data_max: '3354594508'
+        zfs_wrlog_data_max: '3311185100'
         zfs_object_mutex_size: '64'
         spa_slop_shift: '5'
         zfs_max_async_dedup_frees: '100000'
@@ -351,7 +356,7 @@ values:
         zfs_vdev_sync_write_min_active: '10'
         spa_load_verify_data: '1'
         zfs_async_block_max_blocks: '18446744073709551615'
-        zfs_dirty_data_max_max: '4193243136'
+        zfs_dirty_data_max_max: '4138981376'
         dbuf_cache_shift: '5'
         zfs_send_corrupt_data: '0'
         dbuf_cache_lowater_pct: '10'
@@ -594,7 +599,7 @@ values:
         zfs_arc_dnode_reduce_percent: '10'
         zfs_unflushed_log_block_pct: '400'
         zfs_vdev_ms_count_limit: '131072'
-        zfs_dirty_data_max: '1677297254'
+        zfs_dirty_data_max: '1655592550'
         zfs_rebuild_scrub_enabled: '1'
         zfs_vnops_read_chunk_size: '1048576'
         l2arc_rebuild_blocks_min_l2size: '1073741824'
@@ -646,6 +651,7 @@ values:
     nf_nat:
       parameters: {}
       used_by:
+      - xt_nat
       - nft_chain_nat
       - xt_MASQUERADE
     drm_kms_helper:
@@ -751,6 +757,9 @@ values:
       parameters: {}
       used_by:
       - ext4
+    xt_tcpudp:
+      parameters: {}
+      used_by: []
     mousedev:
       parameters:
         yres: '768'
@@ -787,6 +796,9 @@ values:
         kbpoll: '0'
         ignoreled: '0'
         quirks: "(null),(null),(null),(null)"
+      used_by: []
+    veth:
+      parameters: {}
       used_by: []
     pciehp:
       parameters:
@@ -858,6 +870,9 @@ values:
       - nf_conntrack
       - nf_nat
       - nf_tables
+    xt_nat:
+      parameters: {}
+      used_by: []
     keyboard:
       parameters:
         brl_timeout: '300'
@@ -1003,6 +1018,9 @@ values:
       parameters:
         usercopy_fallback: N
       used_by: []
+    amd_energy:
+      parameters: {}
+      used_by: []
     suspend:
       parameters:
         pm_test_delay: '5'
@@ -1059,7 +1077,9 @@ values:
       used_by:
       - xt_conntrack
       - nft_compat
+      - xt_tcpudp
       - xt_addrtype
+      - xt_nat
       - ip_tables
       - xt_MASQUERADE
     rcutree:
@@ -1370,7 +1390,7 @@ values:
   load_averages:
     15m: 0.01
     1m: 0.08
-    5m: 0.02
+    5m: 0.03
   lsbdistcodename: bullseye
   lsbdistdescription: Debian GNU/Linux 11 (bullseye)
   lsbdistid: Debian
@@ -1378,35 +1398,35 @@ values:
   lsbmajdistrelease: '11'
   lsbminordistrelease: '8'
   macaddress: c6:b9:79:73:0d:23
-  macaddress_docker0: 02:42:1f:52:15:50
+  macaddress_docker0: 02:42:33:6b:19:a6
   macaddress_eth0: c6:b9:79:73:0d:23
   manufacturer: QEMU
   memory:
     swap:
-      available: 976.00 MiB
-      available_bytes: 1023406080
-      capacity: 0%
+      available: 970.84 MiB
+      available_bytes: 1018003456
+      capacity: 0.53%
       total: 976.00 MiB
       total_bytes: 1023406080
-      used: 0 bytes
-      used_bytes: 0
+      used: 5.15 MiB
+      used_bytes: 5402624
     system:
-      available: 14.80 GiB
-      available_bytes: 15886528512
-      capacity: 5.28%
+      available: 12.04 GiB
+      available_bytes: 12924743680
+      capacity: 22.94%
       total: 15.62 GiB
-      total_bytes: 16772972544
-      used: 845.38 MiB
-      used_bytes: 886444032
-  memoryfree: 14.80 GiB
-  memoryfree_mb: 15150.57421875
+      total_bytes: 16772980736
+      used: 3.58 GiB
+      used_bytes: 3848237056
+  memoryfree: 12.04 GiB
+  memoryfree_mb: 12325.99609375
   memorysize: 15.62 GiB
-  memorysize_mb: 15995.953125
+  memorysize_mb: 15995.9609375
   mountpoints:
     "/":
-      available: 11.60 GiB
-      available_bytes: 12451852288
-      capacity: 24.37%
+      available: 9.72 GiB
+      available_bytes: 10439311360
+      capacity: 36.60%
       device: "/dev/mapper/base--template--vg-root"
       filesystem: ext4
       options:
@@ -1415,8 +1435,8 @@ values:
       - errors=remount-ro
       size: 16.18 GiB
       size_bytes: 17373634560
-      used: 3.74 GiB
-      used_bytes: 4013297664
+      used: 5.61 GiB
+      used_bytes: 6025838592
     "/boot":
       available: 358.92 MiB
       available_bytes: 376352768
@@ -1432,7 +1452,7 @@ values:
       used_bytes: 90267648
     "/dev":
       available: 7.79 GiB
-      available_bytes: 8366731264
+      available_bytes: 8366735360
       capacity: 0%
       device: udev
       filesystem: devtmpfs
@@ -1440,11 +1460,11 @@ values:
       - rw
       - nosuid
       - relatime
-      - size=8170636k
-      - nr_inodes=2042659
+      - size=8170640k
+      - nr_inodes=2042660
       - mode=755
       size: 7.79 GiB
-      size_bytes: 8366731264
+      size_bytes: 8366735360
       used: 0 bytes
       used_bytes: 0
     "/dev/hugepages":
@@ -1497,7 +1517,7 @@ values:
       used_bytes: 0
     "/dev/shm":
       available: 7.81 GiB
-      available_bytes: 8386486272
+      available_bytes: 8386490368
       capacity: 0%
       device: tmpfs
       filesystem: tmpfs
@@ -1506,12 +1526,12 @@ values:
       - nosuid
       - nodev
       size: 7.81 GiB
-      size_bytes: 8386486272
+      size_bytes: 8386490368
       used: 0 bytes
       used_bytes: 0
     "/run":
       available: 1.56 GiB
-      available_bytes: 1676673024
+      available_bytes: 1676677120
       capacity: 0.04%
       device: tmpfs
       filesystem: tmpfs
@@ -1525,8 +1545,8 @@ values:
       - mode=755
       size: 1.56 GiB
       size_bytes: 1677299712
-      used: 612.00 KiB
-      used_bytes: 626688
+      used: 608.00 KiB
+      used_bytes: 622592
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -1558,9 +1578,9 @@ values:
       used: 0 bytes
       used_bytes: 0
     "/var/lib/docker":
-      available: 192.80 GiB
-      available_bytes: 207013937152
-      capacity: 0.00%
+      available: 174.53 GiB
+      available_bytes: 187398356992
+      capacity: 4.03%
       device: data/docker
       filesystem: zfs
       options:
@@ -1568,14 +1588,14 @@ values:
       - noatime
       - xattr
       - noacl
-      size: 192.80 GiB
-      size_bytes: 207014068224
-      used: 128.00 KiB
-      used_bytes: 131072
+      size: 181.85 GiB
+      size_bytes: 195257696256
+      used: 7.32 GiB
+      used_bytes: 7859339264
     "/var/lib/jenkins":
-      available: 192.80 GiB
-      available_bytes: 207013937152
-      capacity: 0.01%
+      available: 174.53 GiB
+      available_bytes: 187398356992
+      capacity: 0.11%
       device: data/jenkins
       filesystem: zfs
       options:
@@ -1583,21 +1603,22 @@ values:
       - noatime
       - xattr
       - noacl
-      size: 192.81 GiB
-      size_bytes: 207030452224
-      used: 15.75 MiB
-      used_bytes: 16515072
+      size: 174.72 GiB
+      size_bytes: 187602436096
+      used: 194.63 MiB
+      used_bytes: 204079104
   mounts:
   - "/"
   - "/boot"
-  - "/var/lib/jenkins"
   - "/var/lib/docker"
+  - "/var/lib/jenkins"
   mtu_docker0: 1500
   mtu_eth0: 1500
   mtu_lo: 65536
   mysql_server_id: 2037684886
   netmask: 255.255.255.0
   netmask6: 'ffff:ffff:ffff:ffff::'
+  netmask6_docker0: 'ffff:ffff:ffff:ffff::'
   netmask6_eth0: 'ffff:ffff:ffff:ffff::'
   netmask6_lo: ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff
   netmask_docker0: 255.255.0.0
@@ -1605,6 +1626,7 @@ values:
   netmask_lo: 255.0.0.0
   network: 192.168.100.0
   network6: 'fe80::'
+  network6_docker0: 'fe80::'
   network6_eth0: 'fe80::'
   network6_lo: "::1"
   network_docker0: 172.17.0.0
@@ -1620,11 +1642,19 @@ values:
         - address: 172.17.0.1
           netmask: 255.255.0.0
           network: 172.17.0.0
+        bindings6:
+        - address: fe80::42:33ff:fe6b:19a6
+          netmask: 'ffff:ffff:ffff:ffff::'
+          network: 'fe80::'
         ip: 172.17.0.1
-        mac: 02:42:1f:52:15:50
+        ip6: fe80::42:33ff:fe6b:19a6
+        mac: 02:42:33:6b:19:a6
         mtu: 1500
         netmask: 255.255.0.0
+        netmask6: 'ffff:ffff:ffff:ffff::'
         network: 172.17.0.0
+        network6: 'fe80::'
+        scope6: link
       eth0:
         bindings:
         - address: 192.168.100.152
@@ -1737,27 +1767,27 @@ values:
       size_bytes: 8388608
   path: "/usr/bin:/bin:/usr/sbin:/sbin"
   physicalprocessorcount: 2
-  processor0: AMD EPYC 7453 28-Core Processor
-  processor1: AMD EPYC 7453 28-Core Processor
-  processor2: AMD EPYC 7453 28-Core Processor
-  processor3: AMD EPYC 7453 28-Core Processor
-  processor4: AMD EPYC 7453 28-Core Processor
-  processor5: AMD EPYC 7453 28-Core Processor
-  processor6: AMD EPYC 7453 28-Core Processor
-  processor7: AMD EPYC 7453 28-Core Processor
+  processor0: AMD EPYC 7402 24-Core Processor
+  processor1: AMD EPYC 7402 24-Core Processor
+  processor2: AMD EPYC 7402 24-Core Processor
+  processor3: AMD EPYC 7402 24-Core Processor
+  processor4: AMD EPYC 7402 24-Core Processor
+  processor5: AMD EPYC 7402 24-Core Processor
+  processor6: AMD EPYC 7402 24-Core Processor
+  processor7: AMD EPYC 7402 24-Core Processor
   processorcount: 8
   processors:
     count: 8
     isa: unknown
     models:
-    - AMD EPYC 7453 28-Core Processor
-    - AMD EPYC 7453 28-Core Processor
-    - AMD EPYC 7453 28-Core Processor
-    - AMD EPYC 7453 28-Core Processor
-    - AMD EPYC 7453 28-Core Processor
-    - AMD EPYC 7453 28-Core Processor
-    - AMD EPYC 7453 28-Core Processor
-    - AMD EPYC 7453 28-Core Processor
+    - AMD EPYC 7402 24-Core Processor
+    - AMD EPYC 7402 24-Core Processor
+    - AMD EPYC 7402 24-Core Processor
+    - AMD EPYC 7402 24-Core Processor
+    - AMD EPYC 7402 24-Core Processor
+    - AMD EPYC 7402 24-Core Processor
+    - AMD EPYC 7402 24-Core Processor
+    - AMD EPYC 7402 24-Core Processor
     physicalcount: 2
   productname: Standard PC (i440FX + PIIX, 1996)
   public_ipaddresses: []
@@ -1774,6 +1804,7 @@ values:
   rubysitedir: "/usr/local/lib/site_ruby/2.7.0"
   rubyversion: 2.7.4
   scope6: link
+  scope6_docker0: link
   scope6_eth0: link
   scope6_lo: host
   selinux: false
@@ -1826,8 +1857,8 @@ values:
   sshrsakey: AAAAB3NzaC1yc2EAAAADAQABAAABgQCpAlJHSvg7scNRJqIFut6U2cJioD6WmvzthWpP308SBKD27dhuCtdMe1AOIomdOqsmf1AvOh/Lqs263xeyEqC6VkLeW4Y56r7Ge4cU4EX+iN1O33S0h+Zp7HeqzTi+i87MTFOH+R83MuTpcqukm3rQ/LacQx9ESnY6HEhd3uxMyVTGnzfqyyApAfmqfZ0OpQJ2HKs8ZQ+oRSLseRyEq/9jn2/vamT1j3A7XjadrM5q9l/WdSL01nhMxStRrQvsQRbcN7ToQ2f9lZf2ThvxwZr1VekEz4OGDGxaEIAutuCupyrbuYoHu4K3rJF5l1V1Ogt2AnhHofGSkIgTNNxGenLHOVj/XgU0kH2K6Swj9wdWqZNh0kVddx+wpY5oSu7sux9lZk4NdrlVwRmiu5j68RVpZWO7cYV1e4BzFy4MzwM+vZtQv5TW6UjBPc6IUftvvBwK8mFLSVWIdhwT3KNOWkg0kN0FrZyP0VqcfEp/iXJ/QVMqVG8xOMJLHDAvCcaUwis=
   subnet: sesi_rocquencourt
   sudoversion: 1.9.5p2
-  swapfree: 976.00 MiB
-  swapfree_mb: 975.99609375
+  swapfree: 970.84 MiB
+  swapfree_mb: 970.84375
   swapsize: 976.00 MiB
   swapsize_mb: 975.99609375
   swh_hostname:
@@ -1835,10 +1866,10 @@ values:
     short: jenkins-docker02
     internal_fqdn: jenkins-docker02.internal.softwareheritage.org
   system_uptime:
-    days: 11
-    hours: 286
-    seconds: 1030587
-    uptime: 11 days
+    days: 16
+    hours: 386
+    seconds: 1390180
+    uptime: 16 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -1852,15 +1883,15 @@ values:
     systemd-time-wait-sync.service: disabled
   systemd_version: '247'
   timezone: UTC
-  uptime: 11 days
-  uptime_days: 11
-  uptime_hours: 286
-  uptime_seconds: 1030587
+  uptime: 16 days
+  uptime_days: 16
+  uptime_hours: 386
+  uptime_seconds: 1390180
   uuid: fc07ca6e-16f1-49d5-ab3b-f16a4f7864fb
   vcsrepo_svn_ver: ''
   virtual: kvm
   clientcert: jenkins-docker02.internal.softwareheritage.org
   clientversion: 5.5.22
   clientnoop: false
-timestamp: '2023-10-30T12:36:07.623567053+00:00'
-expiration: '2023-10-30T13:06:07.626107846+00:00'
+timestamp: '2023-12-06T15:36:05.874401333+00:00'
+expiration: '2023-12-06T16:06:05.875990018+00:00'
