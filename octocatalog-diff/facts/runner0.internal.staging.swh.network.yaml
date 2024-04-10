@@ -2,26 +2,30 @@
 name: runner0.internal.staging.swh.network
 values:
   agent_specified_environment: staging
-  apt_dist_updates: 4
+  apt_dist_updates: 6
   apt_has_dist_updates: true
   apt_has_updates: true
   apt_package_dist_updates:
   - containerd.io
+  - docker-buildx-plugin
   - docker-ce-cli
   - docker-ce
   - docker-ce-rootless-extras
+  - docker-compose-plugin
   apt_package_security_dist_updates: []
   apt_package_security_updates: []
   apt_package_updates:
   - containerd.io
+  - docker-buildx-plugin
   - docker-ce-cli
   - docker-ce
   - docker-ce-rootless-extras
-  apt_reboot_required: false
+  - docker-compose-plugin
+  apt_reboot_required: true
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1701877623
-  apt_updates: 4
+  apt_update_last_success: 1712753222
+  apt_updates: 6
   architecture: amd64
   bios_release_date: 04/01/2014
   bios_vendor: SeaBIOS
@@ -103,7 +107,7 @@ values:
           Experimental: 'false'
           GitCommit: 1a79695
           GoVersion: go1.20.7
-          KernelVersion: 5.10.0-26-amd64
+          KernelVersion: 5.10.0-27-amd64
           MinAPIVersion: '1.12'
           Os: linux
       - Name: containerd
@@ -125,7 +129,7 @@ values:
       GoVersion: go1.20.7
       Os: linux
       Arch: amd64
-      KernelVersion: 5.10.0-26-amd64
+      KernelVersion: 5.10.0-27-amd64
       BuildTime: '2023-09-04T12:32:16.000000000+00:00'
   docker_worker_join_token: ''
   domain: internal.staging.swh.network
@@ -142,7 +146,7 @@ values:
       vardir: "/var/lib/puppet"
       server: pergamon.internal.softwareheritage.org
   facterversion: 3.14.12
-  filesystems: ext2,ext3,ext4,iso9660
+  filesystems: btrfs,ext2,ext3,ext4,hfs,hfsplus,iso9660,jfs,minix,msdos,qnx4,ufs,vfat,xfs
   fips_enabled: false
   fqdn: runner0.internal.staging.swh.network
   gid: root
@@ -152,7 +156,7 @@ values:
   icinga2_puppet_hostcert: "/var/lib/puppet/ssl/certs/runner0.internal.staging.swh.network.pem"
   icinga2_puppet_hostprivkey: "/var/lib/puppet/ssl/private_keys/runner0.internal.staging.swh.network.pem"
   icinga2_puppet_localcacert: "/var/lib/puppet/ssl/certs/ca.pem"
-  icinga2_version: 2.14.0
+  icinga2_version: 2.14.2
   id: root
   identity:
     gid: 0
@@ -160,19 +164,15 @@ values:
     privileged: true
     uid: 0
     user: root
-  interfaces: br-671f1a6f797e,docker0,eth0,lo,veth13ac13d,veth146342e,veth46e5042,veth76f6607,vethb54d2a2
+  interfaces: br-4e28466e8d8e,docker0,eth0,lo,veth08c1425
   ipaddress: 192.168.130.221
   ipaddress6: fe80::184b:96ff:fe85:164
-  ipaddress6_br-671f1a6f797e: fe80::42:e9ff:fe14:19e1
-  ipaddress6_docker0: fe80::42:c7ff:fe9b:b2
+  ipaddress6_br-4e28466e8d8e: fe80::42:2cff:fe39:364d
+  ipaddress6_docker0: fe80::42:f1ff:fe7a:7ad2
   ipaddress6_eth0: fe80::184b:96ff:fe85:164
   ipaddress6_lo: "::1"
-  ipaddress6_veth13ac13d: fe80::98ea:6bff:fe7e:f128
-  ipaddress6_veth146342e: fe80::50de:8bff:feda:c84f
-  ipaddress6_veth46e5042: fe80::aca1:beff:fe90:f4e6
-  ipaddress6_veth76f6607: fe80::3cd6:c8ff:fe77:cf7e
-  ipaddress6_vethb54d2a2: fe80::b444:edff:fe89:c505
-  ipaddress_br-671f1a6f797e: 172.20.0.1
+  ipaddress6_veth08c1425: fe80::2c1e:4cff:fe00:8df0
+  ipaddress_br-4e28466e8d8e: 172.23.0.1
   ipaddress_docker0: 172.17.0.1
   ipaddress_eth0: 192.168.130.221
   ipaddress_lo: 127.0.0.1
@@ -180,9 +180,12 @@ values:
   is_virtual: true
   kernel: Linux
   kernelmajversion: '5.10'
-  kernelrelease: 5.10.0-26-amd64
+  kernelrelease: 5.10.0-27-amd64
   kernelversion: 5.10.0
   kmods:
+    msdos:
+      parameters: {}
+      used_by: []
     thermal:
       parameters:
         act: '0'
@@ -200,6 +203,10 @@ values:
         notests: N
         panic_on_fail: N
       used_by: []
+    xor:
+      parameters: {}
+      used_by:
+      - btrfs
     spurious:
       parameters:
         noirqdebug: N
@@ -249,6 +256,9 @@ values:
       - xt_nat
       - nf_conntrack_netlink
       - xt_MASQUERADE
+    minix:
+      parameters: {}
+      used_by: []
     tcp_cubic:
       parameters:
         hystart_detect: '3'
@@ -282,6 +292,9 @@ values:
         share_irqs: '1'
         skip_txen_test: '0'
       used_by: []
+    hfsplus:
+      parameters: {}
+      used_by: []
     shpchp:
       parameters:
         shpchp_poll_time: '0'
@@ -293,7 +306,7 @@ values:
         zfs_arc_p_min_shift: '0'
         zvol_request_sync: '0'
         vdev_validate_skip: '0'
-        zfs_wrlog_data_max: '821861580'
+        zfs_wrlog_data_max: '777400320'
         zfs_object_mutex_size: '64'
         spa_slop_shift: '5'
         zfs_max_async_dedup_frees: '100000'
@@ -335,7 +348,7 @@ values:
         zfs_vdev_sync_write_min_active: '10'
         spa_load_verify_data: '1'
         zfs_async_block_max_blocks: '18446744073709551615'
-        zfs_dirty_data_max_max: '1027326976'
+        zfs_dirty_data_max_max: '971750400'
         dbuf_cache_shift: '5'
         zfs_send_corrupt_data: '0'
         dbuf_cache_lowater_pct: '10'
@@ -578,7 +591,7 @@ values:
         zfs_arc_dnode_reduce_percent: '10'
         zfs_unflushed_log_block_pct: '400'
         zfs_vdev_ms_count_limit: '131072'
-        zfs_dirty_data_max: '410930790'
+        zfs_dirty_data_max: '388700160'
         zfs_rebuild_scrub_enabled: '1'
         zfs_vnops_read_chunk_size: '1048576'
         l2arc_rebuild_blocks_min_l2size: '1073741824'
@@ -621,6 +634,9 @@ values:
         use_acpi_alarm: N
       used_by: []
     virtio_balloon:
+      parameters: {}
+      used_by: []
+    jfs:
       parameters: {}
       used_by: []
     nf_nat:
@@ -673,8 +689,13 @@ values:
     cdrom:
       parameters: {}
       used_by:
+      - hfsplus
+      - hfs
       - isofs
       - sr_mod
+    ehci_pci:
+      parameters: {}
+      used_by: []
     overlay:
       parameters:
         redirect_always_follow: Y
@@ -793,6 +814,13 @@ values:
     xt_addrtype:
       parameters: {}
       used_by: []
+    blake2b_generic:
+      parameters: {}
+      used_by: []
+    raid6_pq:
+      parameters: {}
+      used_by:
+      - btrfs
     dynamic_debug:
       parameters:
         verbose: '0'
@@ -820,7 +848,9 @@ values:
       used_by:
       - nf_conntrack
       - nf_nat
+      - btrfs
       - nf_tables
+      - xfs
     xt_nat:
       parameters: {}
       used_by: []
@@ -843,6 +873,9 @@ values:
         defx: '1024'
         modeset: "-1"
         defy: '768'
+      used_by: []
+    qnx4:
+      parameters: {}
       used_by: []
     xfrm_algo:
       parameters: {}
@@ -901,6 +934,7 @@ values:
         autosuspend: '2'
         quirks: ''
       used_by:
+      - ehci_pci
       - usbhid
       - ehci_hcd
       - uhci_hcd
@@ -939,7 +973,8 @@ values:
         park: '0'
         ignore_oc: N
         log2_irq_thresh: '0'
-      used_by: []
+      used_by:
+      - ehci_pci
     ipv6:
       parameters:
         disable: '0'
@@ -957,6 +992,12 @@ values:
         tcp_max_slot_table_entries: '65536'
         tcp_slot_table_entries: '2'
         auth_max_cred_cachesize: '18446744073709551615'
+      used_by: []
+    btrfs:
+      parameters: {}
+      used_by: []
+    ufs:
+      parameters: {}
       used_by: []
     hid_generic:
       parameters: {}
@@ -1050,6 +1091,9 @@ values:
         qlowmark: '100'
         qovld: '20000'
       used_by: []
+    xfs:
+      parameters: {}
+      used_by: []
     drm_ttm_helper:
       parameters: {}
       used_by:
@@ -1070,6 +1114,9 @@ values:
       used_by:
       - bridge
       - stp
+    hfs:
+      parameters: {}
+      used_by: []
     block:
       parameters:
         events_dfl_poll_msecs: '2000'
@@ -1245,6 +1292,9 @@ values:
       parameters: {}
       used_by:
       - zfs
+    vfat:
+      parameters: {}
+      used_by: []
     virtio_blk:
       parameters:
         queue_depth: '256'
@@ -1273,6 +1323,11 @@ values:
       parameters:
         xa_test: '0'
       used_by: []
+    fat:
+      parameters: {}
+      used_by:
+      - msdos
+      - vfat
     jbd2:
       parameters: {}
       used_by:
@@ -1294,49 +1349,45 @@ values:
   load_averages:
     15m: 0.01
     1m: 0.15
-    5m: 0.06
+    5m: 0.04
   lsbdistcodename: bullseye
   lsbdistdescription: Debian GNU/Linux 11 (bullseye)
   lsbdistid: Debian
-  lsbdistrelease: '11.8'
+  lsbdistrelease: '11.9'
   lsbmajdistrelease: '11'
-  lsbminordistrelease: '8'
+  lsbminordistrelease: '9'
   macaddress: 1a:4b:96:85:01:64
-  macaddress_br-671f1a6f797e: 02:42:e9:14:19:e1
-  macaddress_docker0: 02:42:c7:9b:00:b2
+  macaddress_br-4e28466e8d8e: 02:42:2c:39:36:4d
+  macaddress_docker0: 02:42:f1:7a:7a:d2
   macaddress_eth0: 1a:4b:96:85:01:64
-  macaddress_veth13ac13d: 9a:ea:6b:7e:f1:28
-  macaddress_veth146342e: 52:de:8b:da:c8:4f
-  macaddress_veth46e5042: ae:a1:be:90:f4:e6
-  macaddress_veth76f6607: 3e:d6:c8:77:cf:7e
-  macaddress_vethb54d2a2: b6:44:ed:89:c5:05
+  macaddress_veth08c1425: 2e:1e:4c:00:8d:f0
   manufacturer: QEMU
   memory:
     swap:
-      available: 976.00 MiB
-      available_bytes: 1023406080
-      capacity: 0%
+      available: 975.23 MiB
+      available_bytes: 1022607360
+      capacity: 0.08%
       total: 976.00 MiB
       total_bytes: 1023406080
-      used: 0 bytes
-      used_bytes: 0
+      used: 780.00 KiB
+      used_bytes: 798720
     system:
-      available: 2.31 GiB
-      available_bytes: 2475909120
-      capacity: 39.75%
+      available: 2.26 GiB
+      available_bytes: 2431143936
+      capacity: 40.84%
       total: 3.83 GiB
-      total_bytes: 4109307904
-      used: 1.52 GiB
-      used_bytes: 1633398784
-  memoryfree: 2.31 GiB
-  memoryfree_mb: 2361.2109375
+      total_bytes: 4109299712
+      used: 1.56 GiB
+      used_bytes: 1678155776
+  memoryfree: 2.26 GiB
+  memoryfree_mb: 2318.51953125
   memorysize: 3.83 GiB
-  memorysize_mb: 3918.94140625
+  memorysize_mb: 3918.93359375
   mountpoints:
     "/":
-      available: 11.84 GiB
-      available_bytes: 12708204544
-      capacity: 22.82%
+      available: 11.89 GiB
+      available_bytes: 12770185216
+      capacity: 22.44%
       device: "/dev/mapper/base--template--vg-root"
       filesystem: ext4
       options:
@@ -1345,12 +1396,12 @@ values:
       - errors=remount-ro
       size: 16.18 GiB
       size_bytes: 17373634560
-      used: 3.50 GiB
-      used_bytes: 3756945408
+      used: 3.44 GiB
+      used_bytes: 3694964736
     "/boot":
-      available: 358.92 MiB
-      available_bytes: 376352768
-      capacity: 19.34%
+      available: 359.04 MiB
+      available_bytes: 376481792
+      capacity: 19.32%
       device: "/dev/vda1"
       filesystem: ext2
       options:
@@ -1358,11 +1409,11 @@ values:
       - relatime
       size: 469.35 MiB
       size_bytes: 492152832
-      used: 86.09 MiB
-      used_bytes: 90267648
+      used: 85.96 MiB
+      used_bytes: 90138624
     "/data":
-      available: 27.68 GiB
-      available_bytes: 29716381696
+      available: 27.88 GiB
+      available_bytes: 29936058368
       capacity: 0.00%
       device: data
       filesystem: zfs
@@ -1370,13 +1421,13 @@ values:
       - rw
       - xattr
       - noacl
-      size: 27.68 GiB
-      size_bytes: 29716512768
+      size: 27.88 GiB
+      size_bytes: 29936189440
       used: 128.00 KiB
       used_bytes: 131072
     "/dev":
       available: 1.90 GiB
-      available_bytes: 2034900992
+      available_bytes: 2034933760
       capacity: 0%
       device: udev
       filesystem: devtmpfs
@@ -1384,11 +1435,11 @@ values:
       - rw
       - nosuid
       - relatime
-      - size=1987208k
-      - nr_inodes=496802
+      - size=1987240k
+      - nr_inodes=496810
       - mode=755
       size: 1.90 GiB
-      size_bytes: 2034900992
+      size_bytes: 2034933760
       used: 0 bytes
       used_bytes: 0
     "/dev/hugepages":
@@ -1441,7 +1492,7 @@ values:
       used_bytes: 0
     "/dev/shm":
       available: 1.91 GiB
-      available_bytes: 2054651904
+      available_bytes: 2054647808
       capacity: 0%
       device: tmpfs
       filesystem: tmpfs
@@ -1450,13 +1501,13 @@ values:
       - nosuid
       - nodev
       size: 1.91 GiB
-      size_bytes: 2054651904
+      size_bytes: 2054647808
       used: 0 bytes
       used_bytes: 0
     "/run":
-      available: 390.90 MiB
-      available_bytes: 409886720
-      capacity: 0.25%
+      available: 391.24 MiB
+      available_bytes: 410243072
+      capacity: 0.17%
       device: tmpfs
       filesystem: tmpfs
       options:
@@ -1469,57 +1520,9 @@ values:
       - mode=755
       size: 391.89 MiB
       size_bytes: 410931200
-      used: 1020.00 KiB
-      used_bytes: 1044480
-    "/run/docker/netns/15e1a517956d":
-      available: 0 bytes
-      available_bytes: 0
-      capacity: 100%
-      device: nsfs
-      filesystem: nsfs
-      options:
-      - rw
-      size: 0 bytes
-      size_bytes: 0
-      used: 0 bytes
-      used_bytes: 0
-    "/run/docker/netns/37efe105897b":
-      available: 0 bytes
-      available_bytes: 0
-      capacity: 100%
-      device: nsfs
-      filesystem: nsfs
-      options:
-      - rw
-      size: 0 bytes
-      size_bytes: 0
-      used: 0 bytes
-      used_bytes: 0
-    "/run/docker/netns/ce4fd8195656":
-      available: 0 bytes
-      available_bytes: 0
-      capacity: 100%
-      device: nsfs
-      filesystem: nsfs
-      options:
-      - rw
-      size: 0 bytes
-      size_bytes: 0
-      used: 0 bytes
-      used_bytes: 0
-    "/run/docker/netns/d181b5d32820":
-      available: 0 bytes
-      available_bytes: 0
-      capacity: 100%
-      device: nsfs
-      filesystem: nsfs
-      options:
-      - rw
-      size: 0 bytes
-      size_bytes: 0
-      used: 0 bytes
-      used_bytes: 0
-    "/run/docker/netns/ed121e32addb":
+      used: 672.00 KiB
+      used_bytes: 688128
+    "/run/docker/netns/b9c2cadfc8c1":
       available: 0 bytes
       available_bytes: 0
       capacity: 100%
@@ -1562,9 +1565,9 @@ values:
       used: 0 bytes
       used_bytes: 0
     "/var/lib/docker":
-      available: 27.68 GiB
-      available_bytes: 29716381696
-      capacity: 0.02%
+      available: 27.88 GiB
+      available_bytes: 29936058368
+      capacity: 0.06%
       device: data/docker
       filesystem: zfs
       options:
@@ -1572,132 +1575,56 @@ values:
       - noatime
       - xattr
       - noacl
-      size: 27.68 GiB
-      size_bytes: 29722673152
-      used: 6.00 MiB
-      used_bytes: 6291456
-    "/var/lib/docker/zfs/graph/6869e4810a9b71501e606c018e9460990306f359146183b8ccd36274e7e755a8":
-      available: 27.68 GiB
-      available_bytes: 29716381696
-      capacity: 1.59%
-      device: data/docker/6869e4810a9b71501e606c018e9460990306f359146183b8ccd36274e7e755a8
-      filesystem: zfs
-      options:
-      - rw
-      - relatime
-      - xattr
-      - noacl
-      size: 28.12 GiB
-      size_bytes: 30197547008
-      used: 458.88 MiB
-      used_bytes: 481165312
-    "/var/lib/docker/zfs/graph/71a9c0b800d1fea6a5d15d4ab5dd09dc3fffa1e26cfc3914bd3cb85df647a6d9":
-      available: 27.68 GiB
-      available_bytes: 29716381696
+      size: 27.90 GiB
+      size_bytes: 29953622016
+      used: 16.75 MiB
+      used_bytes: 17563648
+    "/var/lib/docker/zfs/graph/c2fe31a39632e19e9b5c0d4c15212bd43b641569064109ee96082feac01b3fab":
+      available: 27.88 GiB
+      available_bytes: 29936058368
       capacity: 0.36%
-      device: data/docker/71a9c0b800d1fea6a5d15d4ab5dd09dc3fffa1e26cfc3914bd3cb85df647a6d9
+      device: data/docker/c2fe31a39632e19e9b5c0d4c15212bd43b641569064109ee96082feac01b3fab
       filesystem: zfs
       options:
       - rw
       - relatime
       - xattr
       - noacl
-      size: 27.78 GiB
-      size_bytes: 29825171456
+      size: 27.98 GiB
+      size_bytes: 30044848128
       used: 103.75 MiB
       used_bytes: 108789760
-    "/var/lib/docker/zfs/graph/7f152699662da713f2f3bf1aad7d21a6e86fc421e4c8534e0140bf2e0b7a97da":
-      available: 27.68 GiB
-      available_bytes: 29716381696
-      capacity: 1.59%
-      device: data/docker/7f152699662da713f2f3bf1aad7d21a6e86fc421e4c8534e0140bf2e0b7a97da
-      filesystem: zfs
-      options:
-      - rw
-      - relatime
-      - xattr
-      - noacl
-      size: 28.12 GiB
-      size_bytes: 30197547008
-      used: 458.88 MiB
-      used_bytes: 481165312
-    "/var/lib/docker/zfs/graph/b8a598da8297519738cbee0ad576acce3b843cb421bb4e73def74a146b408505":
-      available: 27.68 GiB
-      available_bytes: 29716381696
-      capacity: 1.59%
-      device: data/docker/b8a598da8297519738cbee0ad576acce3b843cb421bb4e73def74a146b408505
-      filesystem: zfs
-      options:
-      - rw
-      - relatime
-      - xattr
-      - noacl
-      size: 28.12 GiB
-      size_bytes: 30197547008
-      used: 458.88 MiB
-      used_bytes: 481165312
-    "/var/lib/docker/zfs/graph/ca0a9addea878e2ca1d42a0c56fa5c7ce10f385d5957d8d469e03267f814d7b3":
-      available: 27.68 GiB
-      available_bytes: 29716381696
-      capacity: 1.59%
-      device: data/docker/ca0a9addea878e2ca1d42a0c56fa5c7ce10f385d5957d8d469e03267f814d7b3
-      filesystem: zfs
-      options:
-      - rw
-      - relatime
-      - xattr
-      - noacl
-      size: 28.12 GiB
-      size_bytes: 30197547008
-      used: 458.88 MiB
-      used_bytes: 481165312
   mounts:
   - "/"
   - "/boot"
   - "/var/lib/docker"
   - "/data"
-  - "/var/lib/docker/zfs/graph/71a9c0b800d1fea6a5d15d4ab5dd09dc3fffa1e26cfc3914bd3cb85df647a6d9"
-  - "/var/lib/docker/zfs/graph/ca0a9addea878e2ca1d42a0c56fa5c7ce10f385d5957d8d469e03267f814d7b3"
-  - "/var/lib/docker/zfs/graph/6869e4810a9b71501e606c018e9460990306f359146183b8ccd36274e7e755a8"
-  - "/var/lib/docker/zfs/graph/7f152699662da713f2f3bf1aad7d21a6e86fc421e4c8534e0140bf2e0b7a97da"
-  - "/var/lib/docker/zfs/graph/b8a598da8297519738cbee0ad576acce3b843cb421bb4e73def74a146b408505"
-  mtu_br-671f1a6f797e: 1500
+  - "/var/lib/docker/zfs/graph/c2fe31a39632e19e9b5c0d4c15212bd43b641569064109ee96082feac01b3fab"
+  mtu_br-4e28466e8d8e: 1500
   mtu_docker0: 1500
   mtu_eth0: 1500
   mtu_lo: 65536
-  mtu_veth13ac13d: 1500
-  mtu_veth146342e: 1500
-  mtu_veth46e5042: 1500
-  mtu_veth76f6607: 1500
-  mtu_vethb54d2a2: 1500
+  mtu_veth08c1425: 1500
   mysql_server_id: 2525312507
   netmask: 255.255.255.0
   netmask6: 'ffff:ffff:ffff:ffff::'
-  netmask6_br-671f1a6f797e: 'ffff:ffff:ffff:ffff::'
+  netmask6_br-4e28466e8d8e: 'ffff:ffff:ffff:ffff::'
   netmask6_docker0: 'ffff:ffff:ffff:ffff::'
   netmask6_eth0: 'ffff:ffff:ffff:ffff::'
   netmask6_lo: ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff
-  netmask6_veth13ac13d: 'ffff:ffff:ffff:ffff::'
-  netmask6_veth146342e: 'ffff:ffff:ffff:ffff::'
-  netmask6_veth46e5042: 'ffff:ffff:ffff:ffff::'
-  netmask6_veth76f6607: 'ffff:ffff:ffff:ffff::'
-  netmask6_vethb54d2a2: 'ffff:ffff:ffff:ffff::'
-  netmask_br-671f1a6f797e: 255.255.0.0
+  netmask6_veth08c1425: 'ffff:ffff:ffff:ffff::'
+  netmask_br-4e28466e8d8e: 255.255.0.0
   netmask_docker0: 255.255.0.0
   netmask_eth0: 255.255.255.0
   netmask_lo: 255.0.0.0
   network: 192.168.130.0
   network6: 'fe80::'
-  network6_br-671f1a6f797e: 'fe80::'
+  network6_br-4e28466e8d8e: 'fe80::'
   network6_docker0: 'fe80::'
   network6_eth0: 'fe80::'
   network6_lo: "::1"
-  network6_veth13ac13d: 'fe80::'
-  network6_veth146342e: 'fe80::'
-  network6_veth46e5042: 'fe80::'
-  network6_veth76f6607: 'fe80::'
-  network6_vethb54d2a2: 'fe80::'
-  network_br-671f1a6f797e: 172.20.0.0
+  network6_veth08c1425: 'fe80::'
+  network_br-4e28466e8d8e: 172.23.0.0
   network_docker0: 172.17.0.0
   network_eth0: 192.168.130.0
   network_lo: 127.0.0.0
@@ -1706,22 +1633,22 @@ values:
     fqdn: runner0.internal.staging.swh.network
     hostname: runner0
     interfaces:
-      br-671f1a6f797e:
+      br-4e28466e8d8e:
         bindings:
-        - address: 172.20.0.1
+        - address: 172.23.0.1
           netmask: 255.255.0.0
-          network: 172.20.0.0
+          network: 172.23.0.0
         bindings6:
-        - address: fe80::42:e9ff:fe14:19e1
+        - address: fe80::42:2cff:fe39:364d
           netmask: 'ffff:ffff:ffff:ffff::'
           network: 'fe80::'
-        ip: 172.20.0.1
-        ip6: fe80::42:e9ff:fe14:19e1
-        mac: 02:42:e9:14:19:e1
+        ip: 172.23.0.1
+        ip6: fe80::42:2cff:fe39:364d
+        mac: 02:42:2c:39:36:4d
         mtu: 1500
         netmask: 255.255.0.0
         netmask6: 'ffff:ffff:ffff:ffff::'
-        network: 172.20.0.0
+        network: 172.23.0.0
         network6: 'fe80::'
         scope6: link
       docker0:
@@ -1730,12 +1657,12 @@ values:
           netmask: 255.255.0.0
           network: 172.17.0.0
         bindings6:
-        - address: fe80::42:c7ff:fe9b:b2
+        - address: fe80::42:f1ff:fe7a:7ad2
           netmask: 'ffff:ffff:ffff:ffff::'
           network: 'fe80::'
         ip: 172.17.0.1
-        ip6: fe80::42:c7ff:fe9b:b2
-        mac: 02:42:c7:9b:00:b2
+        ip6: fe80::42:f1ff:fe7a:7ad2
+        mac: 02:42:f1:7a:7a:d2
         mtu: 1500
         netmask: 255.255.0.0
         netmask6: 'ffff:ffff:ffff:ffff::'
@@ -1777,57 +1704,13 @@ values:
         network: 127.0.0.0
         network6: "::1"
         scope6: host
-      veth13ac13d:
+      veth08c1425:
         bindings6:
-        - address: fe80::98ea:6bff:fe7e:f128
+        - address: fe80::2c1e:4cff:fe00:8df0
           netmask: 'ffff:ffff:ffff:ffff::'
           network: 'fe80::'
-        ip6: fe80::98ea:6bff:fe7e:f128
-        mac: 9a:ea:6b:7e:f1:28
-        mtu: 1500
-        netmask6: 'ffff:ffff:ffff:ffff::'
-        network6: 'fe80::'
-        scope6: link
-      veth146342e:
-        bindings6:
-        - address: fe80::50de:8bff:feda:c84f
-          netmask: 'ffff:ffff:ffff:ffff::'
-          network: 'fe80::'
-        ip6: fe80::50de:8bff:feda:c84f
-        mac: 52:de:8b:da:c8:4f
-        mtu: 1500
-        netmask6: 'ffff:ffff:ffff:ffff::'
-        network6: 'fe80::'
-        scope6: link
-      veth46e5042:
-        bindings6:
-        - address: fe80::aca1:beff:fe90:f4e6
-          netmask: 'ffff:ffff:ffff:ffff::'
-          network: 'fe80::'
-        ip6: fe80::aca1:beff:fe90:f4e6
-        mac: ae:a1:be:90:f4:e6
-        mtu: 1500
-        netmask6: 'ffff:ffff:ffff:ffff::'
-        network6: 'fe80::'
-        scope6: link
-      veth76f6607:
-        bindings6:
-        - address: fe80::3cd6:c8ff:fe77:cf7e
-          netmask: 'ffff:ffff:ffff:ffff::'
-          network: 'fe80::'
-        ip6: fe80::3cd6:c8ff:fe77:cf7e
-        mac: 3e:d6:c8:77:cf:7e
-        mtu: 1500
-        netmask6: 'ffff:ffff:ffff:ffff::'
-        network6: 'fe80::'
-        scope6: link
-      vethb54d2a2:
-        bindings6:
-        - address: fe80::b444:edff:fe89:c505
-          netmask: 'ffff:ffff:ffff:ffff::'
-          network: 'fe80::'
-        ip6: fe80::b444:edff:fe89:c505
-        mac: b6:44:ed:89:c5:05
+        ip6: fe80::2c1e:4cff:fe00:8df0
+        mac: 2e:1e:4c:00:8d:f0
         mtu: 1500
         netmask6: 'ffff:ffff:ffff:ffff::'
         network6: 'fe80::'
@@ -1844,7 +1727,7 @@ values:
     scope6: link
   operatingsystem: Debian
   operatingsystemmajrelease: '11'
-  operatingsystemrelease: '11.8'
+  operatingsystemrelease: '11.9'
   os:
     architecture: amd64
     distro:
@@ -1852,16 +1735,16 @@ values:
       description: Debian GNU/Linux 11 (bullseye)
       id: Debian
       release:
-        full: '11.8'
+        full: '11.9'
         major: '11'
-        minor: '8'
+        minor: '9'
     family: Debian
     hardware: x86_64
     name: Debian
     release:
-      full: '11.8'
+      full: '11.9'
       major: '11'
-      minor: '8'
+      minor: '9'
     selinux:
       enabled: false
   osfamily: Debian
@@ -1938,15 +1821,11 @@ values:
   rubysitedir: "/usr/local/lib/site_ruby/2.7.0"
   rubyversion: 2.7.4
   scope6: link
-  scope6_br-671f1a6f797e: link
+  scope6_br-4e28466e8d8e: link
   scope6_docker0: link
   scope6_eth0: link
   scope6_lo: host
-  scope6_veth13ac13d: link
-  scope6_veth146342e: link
-  scope6_veth46e5042: link
-  scope6_veth76f6607: link
-  scope6_vethb54d2a2: link
+  scope6_veth08c1425: link
   selinux: false
   service_provider: systemd
   ssh:
@@ -1997,8 +1876,8 @@ values:
   sshrsakey: AAAAB3NzaC1yc2EAAAADAQABAAABgQDhXWjo+EcQ2rN+/WN9+VK55xYP0mWjybR4IJ7xozZtEJOtSopbNC4lw2xEt8zBXv3Cq45hrHRuFEjlCtl6kpLHpfkp53KLhrEBRkw5Yp3yqkt1gqgDi1FZxyoBOfSzD722uqr6SLQipK6/oNc3MVPlRcSogPRmL1DDz/MQccd7Cw69LrVw55vLZhJOIkJ728QA7X4FyCmzpHw4oMKRx2+gygY8hyeC9y8hxCLBrxQ0ss7qwIvutMlQZRdzBQPI6elQ5kJHWgPgj9f2eV6pWiyaFGUb3UmoNj7SHW9vja5lZ4yYeQixkHkC8cWcaQUhYm21V3Ygr/fFnE+Hgeten00uIOtQLHZx9uXIa/i3HiFk/pw6we7gfJ2dezDvLEjwgvnB56haXV+v/BSaUJmHYCA1FZb6Gx1Jec+mukxwsUaMH/y8eqGaDyeAzQ5MzPt3XlMBjodoYzVaPqLUouKIrMNd6fLSwnQB0EVLvo1l9f8Adzf2nV9IZEhef4syR8uJ+Rs=
   subnet: sesi_rocquencourt_staging
   sudoversion: 1.9.5p2
-  swapfree: 976.00 MiB
-  swapfree_mb: 975.99609375
+  swapfree: 975.23 MiB
+  swapfree_mb: 975.234375
   swapsize: 976.00 MiB
   swapsize_mb: 975.99609375
   swh_hostname:
@@ -2006,10 +1885,10 @@ values:
     short: runner0
     internal_fqdn: runner0.internal.staging.swh.network
   system_uptime:
-    days: 49
-    hours: 1176
-    seconds: 4237165
-    uptime: 49 days
+    days: 67
+    hours: 1609
+    seconds: 5793655
+    uptime: 67 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -2023,15 +1902,15 @@ values:
     systemd-time-wait-sync.service: disabled
   systemd_version: '247'
   timezone: UTC
-  uptime: 49 days
-  uptime_days: 49
-  uptime_hours: 1176
-  uptime_seconds: 4237165
+  uptime: 67 days
+  uptime_days: 67
+  uptime_hours: 1609
+  uptime_seconds: 5793655
   uuid: 8503f456-81a0-42ba-a47d-2834980fd793
   vcsrepo_svn_ver: ''
   virtual: kvm
   clientcert: runner0.internal.staging.swh.network
   clientversion: 5.5.22
   clientnoop: false
-timestamp: '2023-12-06T15:55:11.087897143+00:00'
-expiration: '2023-12-06T16:25:11.091772511+00:00'
+timestamp: '2024-04-10T12:55:11.596581641+00:00'
+expiration: '2024-04-10T13:25:11.598701704+00:00'

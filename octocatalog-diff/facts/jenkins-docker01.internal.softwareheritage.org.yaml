@@ -2,11 +2,12 @@
 name: jenkins-docker01.internal.softwareheritage.org
 values:
   agent_specified_environment: production
-  apt_dist_updates: 4
+  apt_dist_updates: 5
   apt_has_dist_updates: true
   apt_has_updates: true
   apt_package_dist_updates:
   - containerd.io
+  - docker-buildx-plugin
   - docker-ce-cli
   - docker-ce
   - docker-ce-rootless-extras
@@ -14,14 +15,15 @@ values:
   apt_package_security_updates: []
   apt_package_updates:
   - containerd.io
+  - docker-buildx-plugin
   - docker-ce-cli
   - docker-ce
   - docker-ce-rootless-extras
   apt_reboot_required: false
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1701876962
-  apt_updates: 4
+  apt_update_last_success: 1712752563
+  apt_updates: 5
   architecture: amd64
   bios_release_date: 04/01/2014
   bios_vendor: SeaBIOS
@@ -38,9 +40,9 @@ values:
   blockdevice_vdb_vendor: '0x1af4'
   blockdevices: vdb,sr0,vda,sr1
   cassandracmsheapnewsize: 800
-  cassandracmsmaxheapsize: 3999
+  cassandracmsmaxheapsize: 8025
   cassandraheapnewsize: 800
-  cassandramaxheapsize: 3999
+  cassandramaxheapsize: 8025
   chassistype: Other
   cloudinit_enabled: 'true'
   deployment: production
@@ -103,7 +105,7 @@ values:
           Experimental: 'false'
           GitCommit: 1a79695
           GoVersion: go1.20.7
-          KernelVersion: 5.10.0-26-amd64
+          KernelVersion: 5.10.0-28-amd64
           MinAPIVersion: '1.12'
           Os: linux
       - Name: containerd
@@ -125,7 +127,7 @@ values:
       GoVersion: go1.20.7
       Os: linux
       Arch: amd64
-      KernelVersion: 5.10.0-26-amd64
+      KernelVersion: 5.10.0-28-amd64
       BuildTime: '2023-09-04T12:32:16.000000000+00:00'
   docker_worker_join_token: ''
   domain: internal.softwareheritage.org
@@ -142,7 +144,7 @@ values:
       vardir: "/var/lib/puppet"
       server: pergamon.internal.softwareheritage.org
   facterversion: 3.14.12
-  filesystems: ext2,ext3,ext4,iso9660
+  filesystems: btrfs,ext2,ext3,ext4,hfs,hfsplus,iso9660,jfs,minix,msdos,qnx4,ufs,vfat,xfs
   fips_enabled: false
   fqdn: jenkins-docker01.internal.softwareheritage.org
   gid: root
@@ -152,7 +154,7 @@ values:
   icinga2_puppet_hostcert: "/var/lib/puppet/ssl/certs/jenkins-docker01.internal.softwareheritage.org.pem"
   icinga2_puppet_hostprivkey: "/var/lib/puppet/ssl/private_keys/jenkins-docker01.internal.softwareheritage.org.pem"
   icinga2_puppet_localcacert: "/var/lib/puppet/ssl/certs/ca.pem"
-  icinga2_version: 2.14.0
+  icinga2_version: 2.14.2
   id: root
   identity:
     gid: 0
@@ -163,7 +165,7 @@ values:
   interfaces: docker0,eth0,lo
   ipaddress: 192.168.100.151
   ipaddress6: fe80::d81c:7dff:fec6:310e
-  ipaddress6_docker0: fe80::42:8bff:fe30:59e0
+  ipaddress6_docker0: fe80::42:fbff:fe0f:9737
   ipaddress6_eth0: fe80::d81c:7dff:fec6:310e
   ipaddress6_lo: "::1"
   ipaddress_docker0: 172.17.0.1
@@ -174,13 +176,16 @@ values:
   java_default_home: "/usr/lib/jvm/java-11-openjdk-amd64"
   java_libjvm_path: "/usr/lib/jvm/java-11-openjdk-amd64/lib/server"
   java_major_version: '11'
-  java_patch_level: '21'
-  java_version: 11.0.21
+  java_patch_level: '22'
+  java_version: 11.0.22
   kernel: Linux
   kernelmajversion: '5.10'
-  kernelrelease: 5.10.0-26-amd64
+  kernelrelease: 5.10.0-28-amd64
   kernelversion: 5.10.0
   kmods:
+    msdos:
+      parameters: {}
+      used_by: []
     thermal:
       parameters:
         act: '0'
@@ -198,6 +203,10 @@ values:
         notests: N
         panic_on_fail: N
       used_by: []
+    xor:
+      parameters: {}
+      used_by:
+      - btrfs
     spurious:
       parameters:
         noirqdebug: N
@@ -254,13 +263,19 @@ values:
       used_by:
       - xt_conntrack
       - nf_nat
+      - xt_state
       - xt_nat
       - nf_conntrack_netlink
       - xt_MASQUERADE
+      - ip_vs
+      - xt_REDIRECT
     crct10dif_common:
       parameters: {}
       used_by:
       - crct10dif_pclmul
+    minix:
+      parameters: {}
+      used_by: []
     tcp_cubic:
       parameters:
         hystart_detect: '3'
@@ -298,11 +313,18 @@ values:
         share_irqs: '1'
         skip_txen_test: '0'
       used_by: []
+    ip6_udp_tunnel:
+      parameters: {}
+      used_by:
+      - vxlan
     cryptd:
       parameters: {}
       used_by:
       - crypto_simd
       - ghash_clmulni_intel
+    hfsplus:
+      parameters: {}
+      used_by: []
     shpchp:
       parameters:
         shpchp_poll_time: '0'
@@ -314,7 +336,7 @@ values:
         zfs_arc_p_min_shift: '0'
         zvol_request_sync: '0'
         vdev_validate_skip: '0'
-        zfs_wrlog_data_max: '3333624626'
+        zfs_wrlog_data_max: '6653412966'
         zfs_object_mutex_size: '64'
         spa_slop_shift: '5'
         zfs_max_async_dedup_frees: '100000'
@@ -356,7 +378,7 @@ values:
         zfs_vdev_sync_write_min_active: '10'
         spa_load_verify_data: '1'
         zfs_async_block_max_blocks: '18446744073709551615'
-        zfs_dirty_data_max_max: '4167030784'
+        zfs_dirty_data_max_max: '4294967296'
         dbuf_cache_shift: '5'
         zfs_send_corrupt_data: '0'
         dbuf_cache_lowater_pct: '10'
@@ -554,7 +576,7 @@ values:
         zfs_vdev_async_read_max_active: '3'
         l2arc_feed_secs: '1'
         zfs_commit_timeout_pct: '5'
-        zfs_arc_max: '0'
+        zfs_arc_max: '8414810112'
         spa_load_verify_shift: '4'
         zfs_unflushed_log_block_min: '1000'
         zfs_vdev_nia_credit: '5'
@@ -599,7 +621,7 @@ values:
         zfs_arc_dnode_reduce_percent: '10'
         zfs_unflushed_log_block_pct: '400'
         zfs_vdev_ms_count_limit: '131072'
-        zfs_dirty_data_max: '1666812313'
+        zfs_dirty_data_max: '3326706483'
         zfs_rebuild_scrub_enabled: '1'
         zfs_vnops_read_chunk_size: '1048576'
         l2arc_rebuild_blocks_min_l2size: '1073741824'
@@ -641,11 +663,17 @@ values:
       parameters:
         ratelimit_disable: '0'
       used_by: []
+    ip_vs_rr:
+      parameters: {}
+      used_by: []
     rtc_cmos:
       parameters:
         use_acpi_alarm: N
       used_by: []
     virtio_balloon:
+      parameters: {}
+      used_by: []
+    jfs:
       parameters: {}
       used_by: []
     nf_nat:
@@ -654,6 +682,7 @@ values:
       - xt_nat
       - nft_chain_nat
       - xt_MASQUERADE
+      - xt_REDIRECT
     drm_kms_helper:
       parameters:
         drm_fbdev_overalloc: '100'
@@ -698,8 +727,13 @@ values:
     cdrom:
       parameters: {}
       used_by:
+      - hfsplus
+      - hfs
       - isofs
       - sr_mod
+    ehci_pci:
+      parameters: {}
+      used_by: []
     overlay:
       parameters:
         redirect_always_follow: Y
@@ -750,6 +784,9 @@ values:
       parameters:
         shuffle: N
       used_by: []
+    xt_state:
+      parameters: {}
+      used_by: []
     crc32c_generic:
       parameters: {}
       used_by: []
@@ -789,6 +826,7 @@ values:
       parameters: {}
       used_by:
       - nf_conntrack
+      - ip_vs
     usbhid:
       parameters:
         mousepoll: '0'
@@ -831,6 +869,9 @@ values:
       used_by:
       - zfs
       - zcommon
+    xt_bpf:
+      parameters: {}
+      used_by: []
     libaes:
       parameters: {}
       used_by:
@@ -838,6 +879,13 @@ values:
     xt_addrtype:
       parameters: {}
       used_by: []
+    blake2b_generic:
+      parameters: {}
+      used_by: []
+    raid6_pq:
+      parameters: {}
+      used_by:
+      - btrfs
     glue_helper:
       parameters: {}
       used_by:
@@ -869,7 +917,10 @@ values:
       used_by:
       - nf_conntrack
       - nf_nat
+      - btrfs
       - nf_tables
+      - xfs
+      - ip_vs
     xt_nat:
       parameters: {}
       used_by: []
@@ -892,6 +943,12 @@ values:
         defx: '1024'
         modeset: "-1"
         defy: '768'
+      used_by: []
+    qnx4:
+      parameters: {}
+      used_by: []
+    xt_ipvs:
+      parameters: {}
       used_by: []
     xfrm_algo:
       parameters: {}
@@ -951,6 +1008,7 @@ values:
         autosuspend: '2'
         quirks: ''
       used_by:
+      - ehci_pci
       - usbhid
       - ehci_hcd
       - uhci_hcd
@@ -987,12 +1045,16 @@ values:
         default_governor: schedutil
         'off': '0'
       used_by: []
+    xt_policy:
+      parameters: {}
+      used_by: []
     ehci_hcd:
       parameters:
         park: '0'
         ignore_oc: N
         log2_irq_thresh: '0'
-      used_by: []
+      used_by:
+      - ehci_pci
     ipv6:
       parameters:
         disable: '0'
@@ -1011,6 +1073,12 @@ values:
         tcp_slot_table_entries: '2'
         auth_max_cred_cachesize: '18446744073709551615'
       used_by: []
+    btrfs:
+      parameters: {}
+      used_by: []
+    ufs:
+      parameters: {}
+      used_by: []
     hid_generic:
       parameters: {}
       used_by: []
@@ -1027,8 +1095,8 @@ values:
       used_by: []
     fuse:
       parameters:
-        max_user_bgreq: '5223'
-        max_user_congthresh: '5223'
+        max_user_bgreq: '10481'
+        max_user_congthresh: '10481'
       used_by: []
     zlua:
       parameters: {}
@@ -1074,11 +1142,17 @@ values:
       used_by:
       - xt_conntrack
       - nft_compat
+      - xt_state
       - xt_tcpudp
+      - xt_bpf
       - xt_addrtype
       - xt_nat
+      - xt_ipvs
+      - xt_policy
       - ip_tables
       - xt_MASQUERADE
+      - xt_REDIRECT
+      - xt_mark
     rcutree:
       parameters:
         gp_preinit_delay: '0'
@@ -1102,6 +1176,13 @@ values:
         rcu_fanout_exact: N
         qlowmark: '100'
         qovld: '20000'
+      used_by: []
+    udp_tunnel:
+      parameters: {}
+      used_by:
+      - vxlan
+    xfs:
+      parameters: {}
       used_by: []
     drm_ttm_helper:
       parameters: {}
@@ -1146,6 +1227,9 @@ values:
       - bridge
       - stp
     aesni_intel:
+      parameters: {}
+      used_by: []
+    hfs:
       parameters: {}
       used_by: []
     block:
@@ -1338,9 +1422,26 @@ values:
       parameters: {}
       used_by:
       - zfs
+    vxlan:
+      parameters:
+        log_ecn_error: Y
+        udp_port: '8472'
+      used_by: []
+    vfat:
+      parameters: {}
+      used_by: []
     virtio_blk:
       parameters:
         queue_depth: '256'
+      used_by: []
+    ip_vs:
+      parameters:
+        conn_tab_bits: '12'
+      used_by:
+      - ip_vs_rr
+      - xt_ipvs
+    xt_REDIRECT:
+      parameters: {}
       used_by: []
     virtio:
       parameters: {}
@@ -1362,10 +1463,18 @@ values:
         debug_force_rr_cpu: N
         power_efficient: N
       used_by: []
+    xt_mark:
+      parameters: {}
+      used_by: []
     sr_mod:
       parameters:
         xa_test: '0'
       used_by: []
+    fat:
+      parameters: {}
+      used_by:
+      - msdos
+      - vfat
     jbd2:
       parameters: {}
       used_by:
@@ -1385,45 +1494,45 @@ values:
       - ttm
   letsencrypt_directory: {}
   load_averages:
-    15m: 0.01
-    1m: 0.08
-    5m: 0.02
+    15m: 4.05
+    1m: 0.14
+    5m: 1.38
   lsbdistcodename: bullseye
   lsbdistdescription: Debian GNU/Linux 11 (bullseye)
   lsbdistid: Debian
-  lsbdistrelease: '11.8'
+  lsbdistrelease: '11.9'
   lsbmajdistrelease: '11'
-  lsbminordistrelease: '8'
+  lsbminordistrelease: '9'
   macaddress: da:1c:7d:c6:31:0e
-  macaddress_docker0: 02:42:8b:30:59:e0
+  macaddress_docker0: 02:42:fb:0f:97:37
   macaddress_eth0: da:1c:7d:c6:31:0e
   manufacturer: QEMU
   memory:
     swap:
-      available: 768.87 MiB
-      available_bytes: 806219776
-      capacity: 21.22%
+      available: 764.68 MiB
+      available_bytes: 801824768
+      capacity: 21.65%
       total: 976.00 MiB
       total_bytes: 1023406080
-      used: 207.13 MiB
-      used_bytes: 217186304
+      used: 211.32 MiB
+      used_bytes: 221581312
     system:
-      available: 11.65 GiB
-      available_bytes: 12513673216
-      capacity: 25.39%
-      total: 15.62 GiB
-      total_bytes: 16772980736
-      used: 3.97 GiB
-      used_bytes: 4259307520
-  memoryfree: 11.65 GiB
-  memoryfree_mb: 11933.96875
-  memorysize: 15.62 GiB
-  memorysize_mb: 15995.9609375
+      available: 22.70 GiB
+      available_bytes: 24371544064
+      capacity: 27.59%
+      total: 31.35 GiB
+      total_bytes: 33659232256
+      used: 8.65 GiB
+      used_bytes: 9287688192
+  memoryfree: 22.70 GiB
+  memoryfree_mb: 23242.515625
+  memorysize: 31.35 GiB
+  memorysize_mb: 32099.9453125
   mountpoints:
     "/":
-      available: 11.73 GiB
-      available_bytes: 12599513088
-      capacity: 23.48%
+      available: 10.12 GiB
+      available_bytes: 10865614848
+      capacity: 34.01%
       device: "/dev/mapper/base--template--vg-root"
       filesystem: ext4
       options:
@@ -1432,12 +1541,12 @@ values:
       - errors=remount-ro
       size: 16.18 GiB
       size_bytes: 17373634560
-      used: 3.60 GiB
-      used_bytes: 3865636864
+      used: 5.21 GiB
+      used_bytes: 5599535104
     "/boot":
-      available: 358.92 MiB
-      available_bytes: 376351744
-      capacity: 19.35%
+      available: 359.04 MiB
+      available_bytes: 376480768
+      capacity: 19.32%
       device: "/dev/vda1"
       filesystem: ext2
       options:
@@ -1445,11 +1554,11 @@ values:
       - relatime
       size: 469.35 MiB
       size_bytes: 492152832
-      used: 86.09 MiB
-      used_bytes: 90268672
+      used: 85.96 MiB
+      used_bytes: 90139648
     "/dev":
-      available: 7.79 GiB
-      available_bytes: 8366735360
+      available: 15.66 GiB
+      available_bytes: 16809897984
       capacity: 0%
       device: udev
       filesystem: devtmpfs
@@ -1457,11 +1566,11 @@ values:
       - rw
       - nosuid
       - relatime
-      - size=8170640k
-      - nr_inodes=2042660
+      - size=16415916k
+      - nr_inodes=4103979
       - mode=755
-      size: 7.79 GiB
-      size_bytes: 8366735360
+      size: 15.66 GiB
+      size_bytes: 16809897984
       used: 0 bytes
       used_bytes: 0
     "/dev/hugepages":
@@ -1513,8 +1622,8 @@ values:
       used: 0 bytes
       used_bytes: 0
     "/dev/shm":
-      available: 7.81 GiB
-      available_bytes: 8386490368
+      available: 15.67 GiB
+      available_bytes: 16829616128
       capacity: 0%
       device: tmpfs
       filesystem: tmpfs
@@ -1522,14 +1631,14 @@ values:
       - rw
       - nosuid
       - nodev
-      size: 7.81 GiB
-      size_bytes: 8386490368
+      size: 15.67 GiB
+      size_bytes: 16829616128
       used: 0 bytes
       used_bytes: 0
     "/run":
-      available: 1.56 GiB
-      available_bytes: 1676681216
-      capacity: 0.04%
+      available: 3.13 GiB
+      available_bytes: 3365302272
+      capacity: 0.02%
       device: tmpfs
       filesystem: tmpfs
       options:
@@ -1538,12 +1647,12 @@ values:
       - nodev
       - noexec
       - relatime
-      - size=1637988k
+      - size=3287036k
       - mode=755
-      size: 1.56 GiB
-      size_bytes: 1677299712
-      used: 604.00 KiB
-      used_bytes: 618496
+      size: 3.13 GiB
+      size_bytes: 3365924864
+      used: 608.00 KiB
+      used_bytes: 622592
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -1575,9 +1684,9 @@ values:
       used: 0 bytes
       used_bytes: 0
     "/var/lib/docker":
-      available: 172.50 GiB
-      available_bytes: 185222823936
-      capacity: 7.05%
+      available: 160.01 GiB
+      available_bytes: 171808915456
+      capacity: 0.91%
       device: data/docker
       filesystem: zfs
       options:
@@ -1585,14 +1694,14 @@ values:
       - noatime
       - xattr
       - noacl
-      size: 185.58 GiB
-      size_bytes: 199268630528
-      used: 13.08 GiB
-      used_bytes: 14045806592
+      size: 161.48 GiB
+      size_bytes: 173391478784
+      used: 1.47 GiB
+      used_bytes: 1582563328
     "/var/lib/jenkins":
-      available: 172.50 GiB
-      available_bytes: 185222823936
-      capacity: 0.19%
+      available: 160.01 GiB
+      available_bytes: 171808915456
+      capacity: 0.20%
       device: data/jenkins
       filesystem: zfs
       options:
@@ -1600,10 +1709,10 @@ values:
       - noatime
       - xattr
       - noacl
-      size: 172.82 GiB
-      size_bytes: 185566363648
-      used: 327.63 MiB
-      used_bytes: 343539712
+      size: 160.34 GiB
+      size_bytes: 172159926272
+      used: 334.75 MiB
+      used_bytes: 351010816
   mounts:
   - "/"
   - "/boot"
@@ -1640,12 +1749,12 @@ values:
           netmask: 255.255.0.0
           network: 172.17.0.0
         bindings6:
-        - address: fe80::42:8bff:fe30:59e0
+        - address: fe80::42:fbff:fe0f:9737
           netmask: 'ffff:ffff:ffff:ffff::'
           network: 'fe80::'
         ip: 172.17.0.1
-        ip6: fe80::42:8bff:fe30:59e0
-        mac: 02:42:8b:30:59:e0
+        ip6: fe80::42:fbff:fe0f:9737
+        mac: 02:42:fb:0f:97:37
         mtu: 1500
         netmask: 255.255.0.0
         netmask6: 'ffff:ffff:ffff:ffff::'
@@ -1699,7 +1808,7 @@ values:
     scope6: link
   operatingsystem: Debian
   operatingsystemmajrelease: '11'
-  operatingsystemrelease: '11.8'
+  operatingsystemrelease: '11.9'
   os:
     architecture: amd64
     distro:
@@ -1707,16 +1816,16 @@ values:
       description: Debian GNU/Linux 11 (bullseye)
       id: Debian
       release:
-        full: '11.8'
+        full: '11.9'
         major: '11'
-        minor: '8'
+        minor: '9'
     family: Debian
     hardware: x86_64
     name: Debian
     release:
-      full: '11.8'
+      full: '11.9'
       major: '11'
-      minor: '8'
+      minor: '9'
     selinux:
       enabled: false
   osfamily: Debian
@@ -1764,27 +1873,27 @@ values:
       size_bytes: 8388608
   path: "/usr/bin:/bin:/usr/sbin:/sbin"
   physicalprocessorcount: 2
-  processor0: AMD EPYC 7301 16-Core Processor
-  processor1: AMD EPYC 7301 16-Core Processor
-  processor2: AMD EPYC 7301 16-Core Processor
-  processor3: AMD EPYC 7301 16-Core Processor
-  processor4: AMD EPYC 7301 16-Core Processor
-  processor5: AMD EPYC 7301 16-Core Processor
-  processor6: AMD EPYC 7301 16-Core Processor
-  processor7: AMD EPYC 7301 16-Core Processor
+  processor0: AMD EPYC 7453 28-Core Processor
+  processor1: AMD EPYC 7453 28-Core Processor
+  processor2: AMD EPYC 7453 28-Core Processor
+  processor3: AMD EPYC 7453 28-Core Processor
+  processor4: AMD EPYC 7453 28-Core Processor
+  processor5: AMD EPYC 7453 28-Core Processor
+  processor6: AMD EPYC 7453 28-Core Processor
+  processor7: AMD EPYC 7453 28-Core Processor
   processorcount: 8
   processors:
     count: 8
     isa: unknown
     models:
-    - AMD EPYC 7301 16-Core Processor
-    - AMD EPYC 7301 16-Core Processor
-    - AMD EPYC 7301 16-Core Processor
-    - AMD EPYC 7301 16-Core Processor
-    - AMD EPYC 7301 16-Core Processor
-    - AMD EPYC 7301 16-Core Processor
-    - AMD EPYC 7301 16-Core Processor
-    - AMD EPYC 7301 16-Core Processor
+    - AMD EPYC 7453 28-Core Processor
+    - AMD EPYC 7453 28-Core Processor
+    - AMD EPYC 7453 28-Core Processor
+    - AMD EPYC 7453 28-Core Processor
+    - AMD EPYC 7453 28-Core Processor
+    - AMD EPYC 7453 28-Core Processor
+    - AMD EPYC 7453 28-Core Processor
+    - AMD EPYC 7453 28-Core Processor
     physicalcount: 2
   productname: Standard PC (i440FX + PIIX, 1996)
   public_ipaddresses: []
@@ -1854,8 +1963,8 @@ values:
   sshrsakey: AAAAB3NzaC1yc2EAAAADAQABAAABgQCpxfV7zbDvlmqr+l+D1BhhA8rjXf+zaioabpAxQORWDXqsEk4Zdk98y13rOlhBvuDlL8oiUASsFda0epMTFxYcB/Y3Elz1qsljIHvvo1duEV66xnqaJiO/FEA/Som5f9Sv8mzcljFWik+HBUTptlZ+8qCuYX2hPhVO0PWjVdOv0QyDNFTkUzoiU9WIJtSt7GdMdk1A55tF2mO7hyOmVDd8G3FRCcgbpzy6AUlJiAm5U8ER6Jmcv/gzkhotbHcV3+APlaaZEGnSGDm85iqtsKD46m9sNsqESc8Btx7KvjvZLk2jT0cILPjJD1kWJw0J/OiqBI8i9lz3umoAk4Rw3miiggQRJ5Gh8iczLF6F99+MM4HPJALcKZNZvN9cp0gRZSLgRnV4duddF+9RJ2oaq3I/jl7X250gC6MS5sxuoJ6aAnC1y8noHM8h7BDmxiKu2qWK0kZpfcSUNuobi8hsa9OIp4kUtl7ts50bDfItRrf7eBKAmqHrXKmssA+81cX/Lkk=
   subnet: sesi_rocquencourt
   sudoversion: 1.9.5p2
-  swapfree: 768.87 MiB
-  swapfree_mb: 768.87109375
+  swapfree: 764.68 MiB
+  swapfree_mb: 764.6796875
   swapsize: 976.00 MiB
   swapsize_mb: 975.99609375
   swh_hostname:
@@ -1863,10 +1972,10 @@ values:
     short: jenkins-docker01
     internal_fqdn: jenkins-docker01.internal.softwareheritage.org
   system_uptime:
-    days: 16
-    hours: 385
-    seconds: 1389248
-    uptime: 16 days
+    days: 32
+    hours: 790
+    seconds: 2844031
+    uptime: 32 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -1880,15 +1989,15 @@ values:
     systemd-time-wait-sync.service: disabled
   systemd_version: '247'
   timezone: UTC
-  uptime: 16 days
-  uptime_days: 16
-  uptime_hours: 385
-  uptime_seconds: 1389248
+  uptime: 32 days
+  uptime_days: 32
+  uptime_hours: 790
+  uptime_seconds: 2844031
   uuid: c64ea2e3-897d-4802-bd1e-0f48f791bebe
   vcsrepo_svn_ver: ''
   virtual: kvm
   clientcert: jenkins-docker01.internal.softwareheritage.org
   clientversion: 5.5.22
   clientnoop: false
-timestamp: '2023-12-06T15:53:07.241532204+00:00'
-expiration: '2023-12-06T16:23:07.243384043+00:00'
+timestamp: '2024-04-10T12:53:06.821778563+00:00'
+expiration: '2024-04-10T13:23:06.823569140+00:00'

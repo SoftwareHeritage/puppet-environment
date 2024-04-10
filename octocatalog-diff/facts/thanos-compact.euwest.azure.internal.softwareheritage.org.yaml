@@ -1,10 +1,11 @@
 --- !ruby/object:Puppet::Node::Facts
 name: thanos-compact.euwest.azure.internal.softwareheritage.org
 values:
+  agent_specified_environment: production
   apt_has_dist_updates: false
   apt_has_updates: false
-  apt_reboot_required: false
-  apt_update_last_success: -1
+  apt_reboot_required: true
+  apt_update_last_success: 1712727902
   architecture: amd64
   bios_release_date: 12/07/2018
   bios_vendor: American Megatrends Inc.
@@ -12,10 +13,13 @@ values:
   blockdevice_sda_model: Virtual Disk
   blockdevice_sda_size: 34359738368
   blockdevice_sda_vendor: Msft
+  blockdevice_sdb_model: Virtual Disk
+  blockdevice_sdb_size: 274877906944
+  blockdevice_sdb_vendor: Msft
   blockdevice_sr0_model: Virtual CD/ROM
   blockdevice_sr0_size: 643072
   blockdevice_sr0_vendor: Msft
-  blockdevices: sr0,sda
+  blockdevices: sdb,sr0,sda
   boardmanufacturer: Microsoft Corporation
   boardproductname: Virtual Machine
   boardserialnumber: 0000-0011-6696-3181-0021-6239-84
@@ -36,6 +40,11 @@ values:
       model: Virtual Disk
       size: 32.00 GiB
       size_bytes: 34359738368
+      vendor: Msft
+    sdb:
+      model: Virtual Disk
+      size: 256.00 GiB
+      size_bytes: 274877906944
       vendor: Msft
     sr0:
       model: Virtual CD/ROM
@@ -83,6 +92,7 @@ values:
   icinga2_puppet_hostcert: "/var/lib/puppet/ssl/certs/thanos-compact.euwest.azure.internal.softwareheritage.org.pem"
   icinga2_puppet_hostprivkey: "/var/lib/puppet/ssl/private_keys/thanos-compact.euwest.azure.internal.softwareheritage.org.pem"
   icinga2_puppet_localcacert: "/var/lib/puppet/ssl/certs/ca.pem"
+  icinga2_version: 2.14.2
   id: root
   identity:
     gid: 0
@@ -655,37 +665,37 @@ values:
       - vfat
   letsencrypt_directory: {}
   load_averages:
-    15m: 0.11
-    1m: 0.7
-    5m: 0.28
+    15m: 0.05
+    1m: 0.1
+    5m: 0.06
   lsbdistcodename: bullseye
   lsbdistdescription: Debian GNU/Linux 11 (bullseye)
   lsbdistid: Debian
-  lsbdistrelease: '11.8'
+  lsbdistrelease: '11.9'
   lsbmajdistrelease: '11'
-  lsbminordistrelease: '8'
+  lsbminordistrelease: '9'
   macaddress: 00:0d:3a:a9:d9:27
   macaddress_enP24769s1: 00:0d:3a:a9:d9:27
   macaddress_eth0: 00:0d:3a:a9:d9:27
   manufacturer: Microsoft Corporation
   memory:
     system:
-      available: 7.53 GiB
-      available_bytes: 8080052224
-      capacity: 3.19%
+      available: 6.57 GiB
+      available_bytes: 7055900672
+      capacity: 15.46%
       total: 7.77 GiB
       total_bytes: 8346619904
-      used: 254.22 MiB
-      used_bytes: 266567680
-  memoryfree: 7.53 GiB
-  memoryfree_mb: 7705.73828125
+      used: 1.20 GiB
+      used_bytes: 1290719232
+  memoryfree: 6.57 GiB
+  memoryfree_mb: 6729.03125
   memorysize: 7.77 GiB
   memorysize_mb: 7959.95703125
   mountpoints:
     "/":
-      available: 28.71 GiB
-      available_bytes: 30823817216
-      capacity: 3.06%
+      available: 27.04 GiB
+      available_bytes: 29037629440
+      capacity: 8.68%
       device: "/dev/sda1"
       filesystem: ext4
       options:
@@ -695,8 +705,8 @@ values:
       - errors=remount-ro
       size: 31.20 GiB
       size_bytes: 33503842304
-      used: 928.41 MiB
-      used_bytes: 973508608
+      used: 2.57 GiB
+      used_bytes: 2759696384
     "/boot/efi":
       available: 113.06 MiB
       available_bytes: 118556672
@@ -797,9 +807,9 @@ values:
       used: 0 bytes
       used_bytes: 0
     "/run":
-      available: 795.47 MiB
-      available_bytes: 834109440
-      capacity: 0.07%
+      available: 795.39 MiB
+      available_bytes: 834023424
+      capacity: 0.08%
       device: tmpfs
       filesystem: tmpfs
       options:
@@ -812,8 +822,8 @@ values:
       - mode=755
       size: 796.00 MiB
       size_bytes: 834662400
-      used: 540.00 KiB
-      used_bytes: 552960
+      used: 624.00 KiB
+      used_bytes: 638976
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -831,47 +841,24 @@ values:
       size_bytes: 5242880
       used: 0 bytes
       used_bytes: 0
-    "/run/user/0":
-      available: 795.99 MiB
-      available_bytes: 834658304
-      capacity: 0%
-      device: tmpfs
-      filesystem: tmpfs
+    "/var/cache/thanos/scratch":
+      available: 218.58 GiB
+      available_bytes: 234703003648
+      capacity: 8.20%
+      device: "/dev/mapper/data-thanos"
+      filesystem: ext4
       options:
       - rw
-      - nosuid
-      - nodev
       - relatime
-      - size=815096k
-      - nr_inodes=203774
-      - mode=700
-      size: 795.99 MiB
-      size_bytes: 834658304
-      used: 0 bytes
-      used_bytes: 0
-    "/run/user/1000":
-      available: 795.99 MiB
-      available_bytes: 834658304
-      capacity: 0%
-      device: tmpfs
-      filesystem: tmpfs
-      options:
-      - rw
-      - nosuid
-      - nodev
-      - relatime
-      - size=815096k
-      - nr_inodes=203774
-      - mode=700
-      - uid=1000
-      - gid=1000
-      size: 795.99 MiB
-      size_bytes: 834658304
-      used: 0 bytes
-      used_bytes: 0
+      - discard
+      size: 250.92 GiB
+      size_bytes: 269423284224
+      used: 19.52 GiB
+      used_bytes: 20959817728
   mounts:
   - "/"
   - "/boot/efi"
+  - "/var/cache/thanos/scratch"
   mtu_enP24769s1: 1500
   mtu_eth0: 1500
   mtu_lo: 65536
@@ -945,7 +932,7 @@ values:
     scope6: link
   operatingsystem: Debian
   operatingsystemmajrelease: '11'
-  operatingsystemrelease: '11.8'
+  operatingsystemrelease: '11.9'
   os:
     architecture: amd64
     distro:
@@ -953,21 +940,27 @@ values:
       description: Debian GNU/Linux 11 (bullseye)
       id: Debian
       release:
-        full: '11.8'
+        full: '11.9'
         major: '11'
-        minor: '8'
+        minor: '9'
     family: Debian
     hardware: x86_64
     name: Debian
     release:
-      full: '11.8'
+      full: '11.9'
       major: '11'
-      minor: '8'
+      minor: '9'
     selinux:
       enabled: false
   osfamily: Debian
   package_provider: apt
   partitions:
+    "/dev/mapper/data-thanos":
+      filesystem: ext4
+      mount: "/var/cache/thanos/scratch"
+      size: 256.00 GiB
+      size_bytes: 274873712640
+      uuid: d4a31120-8185-4319-9978-237f82386411
     "/dev/sda1":
       filesystem: ext4
       mount: "/"
@@ -986,7 +979,13 @@ values:
       size: 124.00 MiB
       size_bytes: 130023424
       uuid: 5D92-027D
-  path: "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+    "/dev/sdb1":
+      filesystem: LVM2_member
+      partuuid: 8126e762-a0e2-c247-a77b-8911d91b69a9
+      size: 256.00 GiB
+      size_bytes: 274876841472
+      uuid: Th1oJw-iea5-hTNp-r6Lm-refB-L3gc-pyuz51
+  path: "/usr/bin:/bin:/usr/sbin:/sbin"
   physicalprocessorcount: 1
   processor0: Intel(R) Xeon(R) Platinum 8370C CPU @ 2.80GHz
   processor1: Intel(R) Xeon(R) Platinum 8370C CPU @ 2.80GHz
@@ -1071,10 +1070,10 @@ values:
     short: thanos-compact.euwest.azure
     internal_fqdn: thanos-compact.euwest.azure.internal.softwareheritage.org
   system_uptime:
-    days: 0
-    hours: 0
-    seconds: 382
-    uptime: 0:06 hours
+    days: 125
+    hours: 3021
+    seconds: 10876980
+    uptime: 125 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -1088,15 +1087,15 @@ values:
     systemd-time-wait-sync.service: disabled
   systemd_version: '247'
   timezone: UTC
-  uptime: 0:06 hours
-  uptime_days: 0
-  uptime_hours: 0
-  uptime_seconds: 382
+  uptime: 125 days
+  uptime_days: 125
+  uptime_hours: 3021
+  uptime_seconds: 10876980
   uuid: aef5922c-e645-7f40-a1f2-dc4d87f008b0
   vcsrepo_svn_ver: ''
   virtual: hyperv
   clientcert: thanos-compact.euwest.azure.internal.softwareheritage.org
   clientversion: 5.5.22
   clientnoop: false
-timestamp: '2023-12-06T15:45:25.935623144+00:00'
-expiration: '2023-12-06T16:15:25.936273784+00:00'
+timestamp: '2024-04-10T13:02:03.911086825+00:00'
+expiration: '2024-04-10T13:32:03.911758519+00:00'

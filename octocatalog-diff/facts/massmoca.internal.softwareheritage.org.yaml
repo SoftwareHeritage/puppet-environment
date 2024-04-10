@@ -2,10 +2,34 @@
 name: massmoca.internal.softwareheritage.org
 values:
   agent_specified_environment: production
-  apt_has_dist_updates: false
-  apt_has_updates: false
-  apt_reboot_required: true
-  apt_update_last_success: 1701876123
+  apt_dist_updates: 9
+  apt_has_dist_updates: true
+  apt_has_updates: true
+  apt_package_dist_updates:
+  - postgresql-common
+  - postgresql-client-common
+  - pgbouncer
+  - libllvm13
+  - libpq-dev
+  - libpq5
+  - postgresql-client-15
+  - postgresql-15
+  - python3-psycopg2
+  apt_package_security_dist_updates: []
+  apt_package_security_updates: []
+  apt_package_updates:
+  - postgresql-common
+  - postgresql-client-common
+  - pgbouncer
+  - libpq-dev
+  - libpq5
+  - postgresql-client-15
+  - python3-psycopg2
+  apt_reboot_required: false
+  apt_security_dist_updates: 0
+  apt_security_updates: 0
+  apt_update_last_success: 1712751724
+  apt_updates: 7
   architecture: amd64
   bios_release_date: 02/06/2023
   bios_vendor: HPE
@@ -169,7 +193,7 @@ values:
   icinga2_puppet_hostcert: "/var/lib/puppet/ssl/certs/massmoca.internal.softwareheritage.org.pem"
   icinga2_puppet_hostprivkey: "/var/lib/puppet/ssl/private_keys/massmoca.internal.softwareheritage.org.pem"
   icinga2_puppet_localcacert: "/var/lib/puppet/ssl/certs/ca.pem"
-  icinga2_version: 2.14.0
+  icinga2_version: 2.14.2
   id: root
   identity:
     gid: 0
@@ -188,7 +212,7 @@ values:
   is_virtual: false
   kernel: Linux
   kernelmajversion: '5.10'
-  kernelrelease: 5.10.0-25-amd64
+  kernelrelease: 5.10.0-28-amd64
   kernelversion: 5.10.0
   kmods:
     msdos:
@@ -489,7 +513,7 @@ values:
         zfs_scan_legacy: '0'
         zfs_dbgmsg_enable: '1'
         zfs_scan_vdev_limit: '4194304'
-        zfs_vdev_raidz_impl: 'cycle [fastest] original scalar sse2 ssse3 '
+        zfs_vdev_raidz_impl: 'cycle [fastest] original scalar sse2 ssse3 avx2 '
         l2arc_mfuonly: '0'
         zvol_threads: '32'
         zfs_vdev_async_write_min_active: '2'
@@ -564,7 +588,7 @@ values:
         zfs_vdev_async_read_max_active: '3'
         l2arc_feed_secs: '1'
         zfs_commit_timeout_pct: '5'
-        zfs_arc_max: '67564950528'
+        zfs_arc_max: '67561805824'
         spa_load_verify_shift: '4'
         zfs_unflushed_log_block_min: '1000'
         zfs_vdev_nia_credit: '5'
@@ -663,7 +687,7 @@ values:
       parameters:
         icp_gcm_avx_chunk_size: '32736'
         icp_aes_impl: 'cycle [fastest] generic x86_64 aesni '
-        icp_gcm_impl: 'cycle [fastest] generic pclmulqdq '
+        icp_gcm_impl: 'cycle [fastest] avx generic pclmulqdq '
       used_by:
       - zfs
     device_hmem:
@@ -907,7 +931,8 @@ values:
       used_by: []
     zcommon:
       parameters:
-        zfs_fletcher_4_impl: "[fastest] scalar superscalar superscalar4 sse2 ssse3 "
+        zfs_fletcher_4_impl: "[fastest] scalar superscalar superscalar4 sse2 ssse3
+          avx2 "
         zfs_max_dataset_nesting: '50'
       used_by:
       - zfs
@@ -1338,15 +1363,15 @@ values:
       - 8021q
   letsencrypt_directory: {}
   load_averages:
-    15m: 19.42
-    1m: 21.04
-    5m: 18.84
+    15m: 13.68
+    1m: 13.27
+    5m: 14.24
   lsbdistcodename: bullseye
   lsbdistdescription: Debian GNU/Linux 11 (bullseye)
   lsbdistid: Debian
-  lsbdistrelease: '11.8'
+  lsbdistrelease: '11.9'
   lsbmajdistrelease: '11'
-  lsbminordistrelease: '8'
+  lsbminordistrelease: '9'
   macaddress: d2:18:bd:31:0b:8a
   macaddress_bond0: d2:18:bd:31:0b:8a
   macaddress_ens10f0np0: 84:16:0c:2c:27:ba
@@ -1355,30 +1380,30 @@ values:
   manufacturer: HPE
   memory:
     swap:
-      available: 976.00 MiB
-      available_bytes: 1023406080
-      capacity: 0%
+      available: 831.00 MiB
+      available_bytes: 871362560
+      capacity: 14.86%
       total: 976.00 MiB
       total_bytes: 1023406080
-      used: 0 bytes
-      used_bytes: 0
+      used: 145.00 MiB
+      used_bytes: 152043520
     system:
-      available: 172.27 GiB
-      available_bytes: 184971763712
-      capacity: 31.55%
+      available: 175.73 GiB
+      available_bytes: 188691091456
+      capacity: 30.18%
       total: 251.69 GiB
       total_bytes: 270247223296
-      used: 79.42 GiB
-      used_bytes: 85275459584
-  memoryfree: 172.27 GiB
-  memoryfree_mb: 176402.8203125
+      used: 75.96 GiB
+      used_bytes: 81556131840
+  memoryfree: 175.73 GiB
+  memoryfree_mb: 179949.84765625
   memorysize: 251.69 GiB
   memorysize_mb: 257727.8359375
   mountpoints:
     "/":
-      available: 13.72 GiB
-      available_bytes: 14735712256
-      capacity: 15.36%
+      available: 13.71 GiB
+      available_bytes: 14715826176
+      capacity: 15.47%
       device: "/dev/mapper/massmoca--vg-root"
       filesystem: ext4
       options:
@@ -1387,11 +1412,11 @@ values:
       - errors=remount-ro
       size: 17.11 GiB
       size_bytes: 18368774144
-      used: 2.49 GiB
-      used_bytes: 2674036736
+      used: 2.51 GiB
+      used_bytes: 2693922816
     "/boot":
-      available: 358.74 MiB
-      available_bytes: 376167424
+      available: 358.72 MiB
+      available_bytes: 376144896
       capacity: 19.56%
       device: "/dev/nvme8n1p2"
       filesystem: ext2
@@ -1400,8 +1425,8 @@ values:
       - relatime
       size: 470.35 MiB
       size_bytes: 493201408
-      used: 87.21 MiB
-      used_bytes: 91449344
+      used: 87.23 MiB
+      used_bytes: 91471872
     "/boot/efi":
       available: 505.20 MiB
       available_bytes: 529735680
@@ -1424,7 +1449,7 @@ values:
       used_bytes: 6070272
     "/dev":
       available: 125.79 GiB
-      available_bytes: 135070060544
+      available_bytes: 135070056448
       capacity: 0%
       device: udev
       filesystem: devtmpfs
@@ -1432,11 +1457,11 @@ values:
       - rw
       - nosuid
       - relatime
-      - size=131904356k
-      - nr_inodes=32976089
+      - size=131904352k
+      - nr_inodes=32976088
       - mode=755
       size: 125.79 GiB
-      size_bytes: 135070060544
+      size_bytes: 135070056448
       used: 0 bytes
       used_bytes: 0
     "/dev/hugepages":
@@ -1502,9 +1527,9 @@ values:
       used: 1.21 MiB
       used_bytes: 1269760
     "/home":
-      available: 62.17 GiB
-      available_bytes: 66753314816
-      capacity: 0.31%
+      available: 62.14 GiB
+      available_bytes: 66727534592
+      capacity: 0.35%
       device: "/dev/mapper/massmoca--vg-home"
       filesystem: ext4
       options:
@@ -1512,11 +1537,11 @@ values:
       - relatime
       size: 65.74 GiB
       size_bytes: 70591479808
-      used: 195.96 MiB
-      used_bytes: 205479936
+      used: 220.55 MiB
+      used_bytes: 231260160
     "/run":
       available: 25.17 GiB
-      available_bytes: 27022868480
+      available_bytes: 27022909440
       capacity: 0.01%
       device: tmpfs
       filesystem: tmpfs
@@ -1530,8 +1555,8 @@ values:
       - mode=755
       size: 25.17 GiB
       size_bytes: 27024723968
-      used: 1.77 MiB
-      used_bytes: 1855488
+      used: 1.73 MiB
+      used_bytes: 1814528
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -1562,30 +1587,10 @@ values:
       size_bytes: 0
       used: 0 bytes
       used_bytes: 0
-    "/run/user/1003":
-      available: 25.17 GiB
-      available_bytes: 27024719872
-      capacity: 0%
-      device: tmpfs
-      filesystem: tmpfs
-      options:
-      - rw
-      - nosuid
-      - nodev
-      - relatime
-      - size=26391328k
-      - nr_inodes=6597832
-      - mode=700
-      - uid=1003
-      - gid=1003
-      size: 25.17 GiB
-      size_bytes: 27024719872
-      used: 0 bytes
-      used_bytes: 0
     "/srv/softwareheritage/raw/postgresql-replica":
-      available: 4.96 TiB
-      available_bytes: 5449503473664
-      capacity: 63.28%
+      available: 4.10 TiB
+      available_bytes: 4507302363136
+      capacity: 69.17%
       device: data/postgresql-replica
       filesystem: zfs
       options:
@@ -1593,13 +1598,13 @@ values:
       - noatime
       - xattr
       - noacl
-      size: 13.50 TiB
-      size_bytes: 14842115260416
-      used: 8.54 TiB
-      used_bytes: 9392611786752
+      size: 13.30 TiB
+      size_bytes: 14621174005760
+      used: 9.20 TiB
+      used_bytes: 10113871642624
     "/srv/softwareheritage/raw/postgresql-replica-wals":
-      available: 4.96 TiB
-      available_bytes: 5449503473664
+      available: 4.10 TiB
+      available_bytes: 4507302363136
       capacity: 0.00%
       device: data/postgresql-replica-wals
       filesystem: zfs
@@ -1608,13 +1613,28 @@ values:
       - noatime
       - xattr
       - noacl
-      size: 4.96 TiB
-      size_bytes: 5449598107648
-      used: 90.25 MiB
-      used_bytes: 94633984
+      size: 4.10 TiB
+      size_bytes: 4507368292352
+      used: 62.88 MiB
+      used_bytes: 65929216
+    "/srv/softwareheritage/scratch":
+      available: 4.10 TiB
+      available_bytes: 4507302363136
+      capacity: 4.68%
+      device: data/scratch
+      filesystem: zfs
+      options:
+      - rw
+      - noatime
+      - xattr
+      - noacl
+      size: 4.30 TiB
+      size_bytes: 4728794382336
+      used: 206.28 GiB
+      used_bytes: 221492019200
     "/tmp":
-      available: 1010.53 MiB
-      available_bytes: 1059614720
+      available: 1010.54 MiB
+      available_bytes: 1059622912
       capacity: 0.01%
       device: "/dev/mapper/massmoca--vg-tmp"
       filesystem: ext4
@@ -1623,12 +1643,12 @@ values:
       - relatime
       size: 1.06 GiB
       size_bytes: 1136009216
-      used: 60.00 KiB
-      used_bytes: 61440
+      used: 52.00 KiB
+      used_bytes: 53248
     "/var":
-      available: 4.95 GiB
-      available_bytes: 5320028160
-      capacity: 12.31%
+      available: 4.90 GiB
+      available_bytes: 5261336576
+      capacity: 13.28%
       device: "/dev/mapper/massmoca--vg-var"
       filesystem: ext4
       options:
@@ -1636,8 +1656,8 @@ values:
       - relatime
       size: 5.97 GiB
       size_bytes: 6414352384
-      used: 712.23 MiB
-      used_bytes: 746827776
+      used: 768.20 MiB
+      used_bytes: 805519360
   mounts:
   - "/"
   - "/tmp"
@@ -1646,6 +1666,7 @@ values:
   - "/boot/efi"
   - "/home"
   - "/srv/softwareheritage/raw/postgresql-replica"
+  - "/srv/softwareheritage/scratch"
   - "/srv/softwareheritage/raw/postgresql-replica-wals"
   mtu_bond0: 1500
   mtu_ens10f0np0: 1500
@@ -1726,7 +1747,7 @@ values:
     scope6: link
   operatingsystem: Debian
   operatingsystemmajrelease: '11'
-  operatingsystemrelease: '11.8'
+  operatingsystemrelease: '11.9'
   os:
     architecture: amd64
     distro:
@@ -1734,16 +1755,16 @@ values:
       description: Debian GNU/Linux 11 (bullseye)
       id: Debian
       release:
-        full: '11.8'
+        full: '11.9'
         major: '11'
-        minor: '8'
+        minor: '9'
     family: Debian
     hardware: x86_64
     name: Debian
     release:
-      full: '11.8'
+      full: '11.9'
       major: '11'
-      minor: '8'
+      minor: '9'
     selinux:
       enabled: false
   osfamily: Debian
@@ -2094,8 +2115,8 @@ values:
   sshrsakey: AAAAB3NzaC1yc2EAAAADAQABAAABgQC6F0AFa03Q4M8KAEQtkCYrPhaQEL96//a81niwjB8eYedIz6qXbkTzn3qPUWzGE4wF49lJS7H0OkZVaWOoyHdsiIpZ9tgkM36mVeNXfL+Y9P1Am82sJ8kPhXOyLD2i9DAyfbmkecOO7XsmaxIydqdAMPtryVI63r7Uf936+wK6z1zFsb0roc6R9FZz4V2WR+7hUEUIIfXmsTr3SpKbfEOsE3otH1gFthiV8SGngQOpUty6/l1ekoePFkIHi4nbva3nTM/5a1jggozj99h/++4fqigSKc32aB0pGsdGCnVlt9jT4h8fFSKnjytrE/stmIT7mRKdzp6Enuti6paWQF8lydww29rc9dDBnEMzznooEkd+wosXEitIjmYWGrgniiGo7haZV5fwyrMYRaKKra+0ZVNUKvqhio3kexAMt7dUDSc/2qkiBLv30eRR/Ugfxf2KcpPT2kp5DlMV2eVhYIJCdETvKwBERvFPgAPf4cDlXogvP+rmHBneGD1Ch4UdQ9k=
   subnet: sesi_rocquencourt
   sudoversion: 1.9.5p2
-  swapfree: 976.00 MiB
-  swapfree_mb: 975.99609375
+  swapfree: 831.00 MiB
+  swapfree_mb: 830.99609375
   swapsize: 976.00 MiB
   swapsize_mb: 975.99609375
   swh_hostname:
@@ -2103,10 +2124,10 @@ values:
     short: massmoca
     internal_fqdn: massmoca.internal.softwareheritage.org
   system_uptime:
-    days: 94
-    hours: 2271
-    seconds: 8176758
-    uptime: 94 days
+    days: 3
+    hours: 84
+    seconds: 303435
+    uptime: 3 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -2120,15 +2141,15 @@ values:
     systemd-time-wait-sync.service: disabled
   systemd_version: '247'
   timezone: UTC
-  uptime: 94 days
-  uptime_days: 94
-  uptime_hours: 2271
-  uptime_seconds: 8176758
+  uptime: 3 days
+  uptime_days: 3
+  uptime_hours: 84
+  uptime_seconds: 303435
   uuid: 32343150-3837-5a43-3232-333630465437
   vcsrepo_svn_ver: ''
   virtual: physical
   clientcert: massmoca.internal.softwareheritage.org
   clientversion: 5.5.22
   clientnoop: false
-timestamp: '2023-12-06T15:50:07.503399827+00:00'
-expiration: '2023-12-06T16:20:07.506098340+00:00'
+timestamp: '2024-04-10T12:50:07.712381932+00:00'
+expiration: '2024-04-10T13:20:07.715366586+00:00'

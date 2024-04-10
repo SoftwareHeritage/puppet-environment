@@ -1,7 +1,7 @@
 --- !ruby/object:Puppet::Node::Facts
 name: kafka1.internal.staging.swh.network
 values:
-  agent_specified_environment: production
+  agent_specified_environment: staging
   apt_dist_updates: 3
   apt_has_dist_updates: true
   apt_has_updates: true
@@ -18,7 +18,7 @@ values:
   apt_reboot_required: true
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1701876123
+  apt_update_last_success: 1712751722
   apt_updates: 3
   architecture: amd64
   bios_release_date: 06/09/2022
@@ -123,8 +123,8 @@ values:
   java_default_home: "/usr/lib/jvm/java-11-openjdk-amd64"
   java_libjvm_path: "/usr/lib/jvm/java-11-openjdk-amd64/lib/server"
   java_major_version: '11'
-  java_patch_level: '21'
-  java_version: 11.0.21
+  java_patch_level: '22'
+  java_version: 11.0.22
   kernel: Linux
   kernelmajversion: '5.10'
   kernelrelease: 5.10.0-21-amd64
@@ -605,6 +605,9 @@ values:
         dp_aux_i2c_speed_khz: '10'
       used_by:
       - mgag200
+    af_packet_diag:
+      parameters: {}
+      used_by: []
     icp:
       parameters:
         icp_gcm_avx_chunk_size: '32736'
@@ -813,6 +816,9 @@ values:
       parameters:
         verbose: '0'
       used_by: []
+    raw_diag:
+      parameters: {}
+      used_by: []
     intel_idle:
       parameters:
         max_cstate: '9'
@@ -1011,10 +1017,16 @@ values:
         max_user_bgreq: '20936'
         max_user_congthresh: '20936'
       used_by: []
+    unix_diag:
+      parameters: {}
+      used_by: []
     zlua:
       parameters: {}
       used_by:
       - zfs
+    netlink_diag:
+      parameters: {}
+      used_by: []
     acpiphp:
       parameters:
         disable: N
@@ -1218,6 +1230,7 @@ values:
       parameters: {}
       used_by:
       - tcp_diag
+      - raw_diag
       - udp_diag
     acpi_ipmi:
       parameters: {}
@@ -1372,15 +1385,15 @@ values:
       - 8021q
   letsencrypt_directory: {}
   load_averages:
-    15m: 0.94
-    1m: 0.92
-    5m: 0.87
+    15m: 1.07
+    1m: 1.25
+    5m: 1.19
   lsbdistcodename: bullseye
   lsbdistdescription: Debian GNU/Linux 11 (bullseye)
   lsbdistid: Debian
-  lsbdistrelease: '11.8'
+  lsbdistrelease: '11.9'
   lsbmajdistrelease: '11'
-  lsbminordistrelease: '8'
+  lsbminordistrelease: '9'
   macaddress: a2:9d:99:d0:45:38
   macaddress_bond0: a2:9d:99:d0:45:38
   macaddress_ens2f0np0: 88:e9:a4:6a:bc:38
@@ -1397,22 +1410,22 @@ values:
       used: 0 bytes
       used_bytes: 0
     system:
-      available: 22.50 GiB
-      available_bytes: 24156573696
-      capacity: 64.07%
+      available: 21.14 GiB
+      available_bytes: 22698172416
+      capacity: 66.24%
       total: 62.62 GiB
       total_bytes: 67232739328
-      used: 40.12 GiB
-      used_bytes: 43076165632
-  memoryfree: 22.50 GiB
-  memoryfree_mb: 23037.50390625
+      used: 41.48 GiB
+      used_bytes: 44534566912
+  memoryfree: 21.14 GiB
+  memoryfree_mb: 21646.6640625
   memorysize: 62.62 GiB
   memorysize_mb: 64118.13671875
   mountpoints:
     "/":
-      available: 12.93 GiB
-      available_bytes: 13881237504
-      capacity: 20.27%
+      available: 12.69 GiB
+      available_bytes: 13624770560
+      capacity: 21.74%
       device: "/dev/mapper/kafka1--vg-root"
       filesystem: ext4
       options:
@@ -1421,11 +1434,11 @@ values:
       - errors=remount-ro
       size: 17.11 GiB
       size_bytes: 18368774144
-      used: 3.29 GiB
-      used_bytes: 3528511488
+      used: 3.53 GiB
+      used_bytes: 3784978432
     "/boot":
-      available: 321.20 MiB
-      available_bytes: 336800768
+      available: 321.18 MiB
+      available_bytes: 336781312
       capacity: 27.98%
       device: "/dev/nvme0n1p2"
       filesystem: ext2
@@ -1434,8 +1447,8 @@ values:
       - relatime
       size: 470.35 MiB
       size_bytes: 493201408
-      used: 124.76 MiB
-      used_bytes: 130816000
+      used: 124.77 MiB
+      used_bytes: 130835456
     "/boot/efi":
       available: 505.20 MiB
       available_bytes: 529735680
@@ -1537,7 +1550,7 @@ values:
       used_bytes: 0
     "/home":
       available: 62.35 GiB
-      available_bytes: 66951180288
+      available_bytes: 66951069696
       capacity: 0.01%
       device: "/dev/mapper/kafka1--vg-home"
       filesystem: ext4
@@ -1546,11 +1559,11 @@ values:
       - relatime
       size: 65.74 GiB
       size_bytes: 70591479808
-      used: 7.26 MiB
-      used_bytes: 7614464
+      used: 7.37 MiB
+      used_bytes: 7725056
     "/run":
       available: 6.26 GiB
-      available_bytes: 6721994752
+      available_bytes: 6721990656
       capacity: 0.02%
       device: tmpfs
       filesystem: tmpfs
@@ -1564,8 +1577,8 @@ values:
       - mode=755
       size: 6.26 GiB
       size_bytes: 6723276800
-      used: 1.22 MiB
-      used_bytes: 1282048
+      used: 1.23 MiB
+      used_bytes: 1286144
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -1617,9 +1630,9 @@ values:
       used: 0 bytes
       used_bytes: 0
     "/srv/kafka":
-      available: 562.60 GiB
-      available_bytes: 604082143232
-      capacity: 67.30%
+      available: 408.52 GiB
+      available_bytes: 438645161984
+      capacity: 76.25%
       device: data/kafka
       filesystem: zfs
       options:
@@ -1628,13 +1641,13 @@ values:
       - xattr
       - noacl
       size: 1.68 TiB
-      size_bytes: 1847285907456
-      used: 1.13 TiB
-      used_bytes: 1243203764224
+      size_bytes: 1847288528896
+      used: 1.28 TiB
+      used_bytes: 1408643366912
     "/tmp":
-      available: 1009.37 MiB
-      available_bytes: 1058398208
-      capacity: 0.12%
+      available: 1009.49 MiB
+      available_bytes: 1058525184
+      capacity: 0.11%
       device: "/dev/mapper/kafka1--vg-tmp"
       filesystem: ext4
       options:
@@ -1642,12 +1655,12 @@ values:
       - relatime
       size: 1.06 GiB
       size_bytes: 1136009216
-      used: 1.22 MiB
-      used_bytes: 1277952
+      used: 1.10 MiB
+      used_bytes: 1150976
     "/var":
-      available: 3.70 GiB
-      available_bytes: 3974598656
-      capacity: 34.49%
+      available: 3.03 GiB
+      available_bytes: 3256893440
+      capacity: 46.32%
       device: "/dev/mapper/kafka1--vg-var"
       filesystem: ext4
       options:
@@ -1655,8 +1668,8 @@ values:
       - relatime
       size: 5.97 GiB
       size_bytes: 6414352384
-      used: 1.95 GiB
-      used_bytes: 2092257280
+      used: 2.62 GiB
+      used_bytes: 2809962496
   mounts:
   - "/"
   - "/tmp"
@@ -1744,7 +1757,7 @@ values:
     scope6: link
   operatingsystem: Debian
   operatingsystemmajrelease: '11'
-  operatingsystemrelease: '11.8'
+  operatingsystemrelease: '11.9'
   os:
     architecture: amd64
     distro:
@@ -1752,16 +1765,16 @@ values:
       description: Debian GNU/Linux 11 (bullseye)
       id: Debian
       release:
-        full: '11.8'
+        full: '11.9'
         major: '11'
-        minor: '8'
+        minor: '9'
     family: Debian
     hardware: x86_64
     name: Debian
     release:
-      full: '11.8'
+      full: '11.9'
       major: '11'
-      minor: '8'
+      minor: '9'
     selinux:
       enabled: false
   osfamily: Debian
@@ -1953,7 +1966,12 @@ values:
       key: AAAAB3NzaC1yc2EAAAADAQABAAABgQCo7Xmwv5iz6zwGfdUiJ4glJ/HyOYK8DIiWN7V/F35/neWzPGXKQL5FZYa5SDc02troFCTRRn016bZJ3VBFE4g0A7mreRprnPY63d85bSuC+Xm9sPM91mGpjvGmUUCB4Wvtym+Ce9Q0X/CvqwORWn9d5LpC99ABl5v898DbZoltIEdFE71gqn5KG4qMnuJBeJwMUF6nmM+96TDfM2KAsYXTLMbYW/xI0kmrSqYoiQtlPSQ/7BlH1qz8LYoZffThXyMykdC4atLkXXnpLQTPtpgwRa3zXvMEYi2VqxUcRpkTNMPzbHtQ2N5S7sPDRMjtqGOgeANe3LascLAHpl4UiFRfgsOe6TqUkODlnOSRzdjayDeDjnl8H4Boy1yZ+ipGFSI3IMm6hP4NvLFOkVqKYZgvLJojGOMM6kKDH/+m3ZRYahCM/92NJpXTzuGBFvPtFWmE/qVRuwyZcrx11eUwiHYz/W2sC1ydg+TsC9xmeRpM+YciuJrzg+ZJWFZ0pyf8Zt0=
       type: ssh-rsa
   ssh_client_version_full: 8.4p1
-  ssh_keys_users: {}
+  ssh_keys_users:
+    root:
+      id_ed25519.pub:
+        type: ed25519
+        key: AAAAC3NzaC1lZDI1NTE5AAAAINYKKg2UN9h8474iZxllhj3xrW+W5QEYJ652Us2R2nSG
+        comment: root@kafka1
   ssh_server_version_full: 8.4p1
   ssh_server_version_major: '8'
   ssh_server_version_release: '8.4'
@@ -1980,10 +1998,10 @@ values:
     short: kafka1
     internal_fqdn: kafka1.internal.staging.swh.network
   system_uptime:
-    days: 252
-    hours: 6054
-    seconds: 21795799
-    uptime: 252 days
+    days: 378
+    hours: 9075
+    seconds: 32673199
+    uptime: 378 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -1997,15 +2015,15 @@ values:
     systemd-time-wait-sync.service: disabled
   systemd_version: '247'
   timezone: UTC
-  uptime: 252 days
-  uptime_days: 252
-  uptime_hours: 6054
-  uptime_seconds: 21795799
+  uptime: 378 days
+  uptime_days: 378
+  uptime_hours: 9075
+  uptime_seconds: 32673199
   uuid: 34383350-3137-5a43-4a32-333330473133
   vcsrepo_svn_ver: ''
   virtual: physical
   clientcert: kafka1.internal.staging.swh.network
   clientversion: 5.5.22
   clientnoop: false
-timestamp: '2023-12-06T15:26:06.410171347+00:00'
-expiration: '2023-12-06T15:56:06.411995465+00:00'
+timestamp: '2024-04-10T12:56:06.235491593+00:00'
+expiration: '2024-04-10T13:26:06.237058373+00:00'

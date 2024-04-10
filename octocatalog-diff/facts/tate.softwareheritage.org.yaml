@@ -5,8 +5,8 @@ values:
   apache_version: 2.4.38
   apt_has_dist_updates: false
   apt_has_updates: false
-  apt_reboot_required: true
-  apt_update_last_success: 1701876483
+  apt_reboot_required: false
+  apt_update_last_success: 1712752082
   architecture: amd64
   augeas:
     version: 1.11.0
@@ -69,7 +69,7 @@ values:
       vardir: "/var/lib/puppet"
       server: pergamon.internal.softwareheritage.org
   facterversion: 3.11.0
-  filesystems: btrfs,ext2,ext3,ext4,hfs,hfsplus,jfs,minix,msdos,qnx4,ufs,vfat,xfs
+  filesystems: ext2,ext3,ext4
   fips_enabled: false
   fqdn: tate.softwareheritage.org
   gid: root
@@ -79,7 +79,7 @@ values:
   icinga2_puppet_hostcert: "/var/lib/puppet/ssl/certs/tate.softwareheritage.org.pem"
   icinga2_puppet_hostprivkey: "/var/lib/puppet/ssl/private_keys/tate.softwareheritage.org.pem"
   icinga2_puppet_localcacert: "/var/lib/puppet/ssl/certs/ca.pem"
-  icinga2_version: 2.14.0
+  icinga2_version: 2.14.2
   id: root
   identity:
     gid: 0
@@ -103,9 +103,6 @@ values:
   kernelrelease: 5.10.0-0.deb10.16-amd64
   kernelversion: 5.10.0
   kmods:
-    msdos:
-      parameters: {}
-      used_by: []
     thermal:
       parameters:
         act: '0'
@@ -123,10 +120,6 @@ values:
         notests: N
         panic_on_fail: N
       used_by: []
-    xor:
-      parameters: {}
-      used_by:
-      - btrfs
     virtio_rng:
       parameters: {}
       used_by: []
@@ -166,9 +159,6 @@ values:
     efivars:
       parameters: {}
       used_by: []
-    minix:
-      parameters: {}
-      used_by: []
     tcp_cubic:
       parameters:
         hystart_detect: '3'
@@ -202,9 +192,6 @@ values:
         share_irqs: '1'
         skip_txen_test: '0'
       used_by: []
-    hfsplus:
-      parameters: {}
-      used_by: []
     shpchp:
       parameters:
         shpchp_poll_time: '0'
@@ -234,9 +221,6 @@ values:
         use_acpi_alarm: N
       used_by: []
     virtio_balloon:
-      parameters: {}
-      used_by: []
-    jfs:
       parameters: {}
       used_by: []
     drm_kms_helper:
@@ -269,8 +253,6 @@ values:
     cdrom:
       parameters: {}
       used_by:
-      - hfsplus
-      - hfs
       - sr_mod
     processor:
       parameters:
@@ -353,13 +335,6 @@ values:
     qemu_fw_cfg:
       parameters: {}
       used_by: []
-    blake2b_generic:
-      parameters: {}
-      used_by: []
-    raid6_pq:
-      parameters: {}
-      used_by:
-      - btrfs
     dynamic_debug:
       parameters:
         verbose: '0'
@@ -378,11 +353,6 @@ values:
         no_acpi: N
         use_acpi: N
       used_by: []
-    libcrc32c:
-      parameters: {}
-      used_by:
-      - btrfs
-      - xfs
     keyboard:
       parameters:
         brl_timeout: '300'
@@ -402,9 +372,6 @@ values:
         defx: '1024'
         modeset: "-1"
         defy: '768'
-      used_by: []
-    qnx4:
-      parameters: {}
       used_by: []
     serio_raw:
       parameters: {}
@@ -510,12 +477,6 @@ values:
         tcp_slot_table_entries: '2'
         auth_max_cred_cachesize: '18446744073709551615'
       used_by: []
-    btrfs:
-      parameters: {}
-      used_by: []
-    ufs:
-      parameters: {}
-      used_by: []
     hid_generic:
       parameters: {}
       used_by: []
@@ -585,12 +546,6 @@ values:
         qlowmark: '100'
         qovld: '20000'
       used_by: []
-    xfs:
-      parameters: {}
-      used_by: []
-    binfmt_misc:
-      parameters: {}
-      used_by: []
     drm_ttm_helper:
       parameters: {}
       used_by:
@@ -603,9 +558,6 @@ values:
     floppy:
       parameters: {}
       used_by: []
-    hfs:
-      parameters: {}
-      used_by: []
     block:
       parameters:
         events_dfl_poll_msecs: '2000'
@@ -616,18 +568,6 @@ values:
     virtio_pci:
       parameters:
         force_legacy: N
-      used_by: []
-    dm_mod:
-      parameters:
-        use_blk_mq: Y
-        reserved_bio_based_ios: '16'
-        reserved_rq_based_ios: '256'
-        swap_bios: '2048'
-        dm_numa_node: "-1"
-        stats_current_allocated_bytes: '0'
-        kcopyd_subjob_size_kb: '512'
-        dm_mq_nr_hw_queues: '1'
-        dm_mq_queue_depth: '2048'
       used_by: []
     cpuidle_haltpoll:
       parameters:
@@ -740,9 +680,6 @@ values:
       parameters:
         ptr_size: '800,600'
       used_by: []
-    vfat:
-      parameters: {}
-      used_by: []
     virtio_blk:
       parameters:
         queue_depth: '256'
@@ -772,11 +709,6 @@ values:
       parameters:
         xa_test: '0'
       used_by: []
-    fat:
-      parameters: {}
-      used_by:
-      - msdos
-      - vfat
     jbd2:
       parameters: {}
       used_by:
@@ -796,9 +728,9 @@ values:
       - ttm
   letsencrypt_directory: {}
   load_averages:
-    15m: 0.37
-    1m: 0.12
-    5m: 0.23
+    15m: 0.11
+    1m: 0.48
+    5m: 0.16
   location: sesi_rocquencourt
   lsbdistcodename: buster
   lsbdistdescription: Debian GNU/Linux 10 (buster)
@@ -811,30 +743,30 @@ values:
   manufacturer: QEMU
   memory:
     swap:
-      available: 3.94 GiB
-      available_bytes: 4227923968
-      capacity: 1.54%
+      available: 3.77 GiB
+      available_bytes: 4052742144
+      capacity: 5.62%
       total: 4.00 GiB
       total_bytes: 4293914624
-      used: 62.93 MiB
-      used_bytes: 65990656
+      used: 230.00 MiB
+      used_bytes: 241172480
     system:
-      available: 4.32 GiB
-      available_bytes: 4638609408
-      capacity: 63.07%
+      available: 4.53 GiB
+      available_bytes: 4862316544
+      capacity: 61.29%
       total: 11.70 GiB
-      total_bytes: 12560572416
-      used: 7.38 GiB
-      used_bytes: 7921963008
-  memoryfree: 4.32 GiB
-  memoryfree_mb: 4423.72265625
+      total_bytes: 12560588800
+      used: 7.17 GiB
+      used_bytes: 7698272256
+  memoryfree: 4.53 GiB
+  memoryfree_mb: 4637.06640625
   memorysize: 11.70 GiB
-  memorysize_mb: 11978.6953125
+  memorysize_mb: 11978.7109375
   mountpoints:
     "/":
-      available: 15.59 GiB
-      available_bytes: 16734597120
-      capacity: 84.14%
+      available: 12.39 GiB
+      available_bytes: 13305155584
+      capacity: 87.39%
       device: "/dev/vda1"
       filesystem: ext4
       options:
@@ -843,11 +775,11 @@ values:
       - errors=remount-ro
       size: 98.27 GiB
       size_bytes: 105515257856
-      used: 82.68 GiB
-      used_bytes: 88780660736
+      used: 85.88 GiB
+      used_bytes: 92210102272
     "/dev/shm":
       available: 5.85 GiB
-      available_bytes: 6280286208
+      available_bytes: 6280294400
       capacity: 0%
       device: tmpfs
       filesystem: tmpfs
@@ -856,12 +788,12 @@ values:
       - nosuid
       - nodev
       size: 5.85 GiB
-      size_bytes: 6280286208
+      size_bytes: 6280294400
       used: 0 bytes
       used_bytes: 0
     "/run":
       available: 1.17 GiB
-      available_bytes: 1255518208
+      available_bytes: 1255534592
       capacity: 0.04%
       device: tmpfs
       filesystem: tmpfs
@@ -874,8 +806,8 @@ values:
       - mode=755
       size: 1.17 GiB
       size_bytes: 1256058880
-      used: 528.00 KiB
-      used_bytes: 540672
+      used: 512.00 KiB
+      used_bytes: 524288
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -918,7 +850,7 @@ values:
   mtu_lo: 65536
   mysql_server_id: 2018953476
   mysql_version: 10.3.39
-  mysqld_version: "/usr/sbin/mysqld  Ver 10.3.39-MariaDB-0+deb10u1 for debian-linux-gnu
+  mysqld_version: "/usr/sbin/mysqld  Ver 10.3.39-MariaDB-0+deb10u2 for debian-linux-gnu
     on x86_64 (Debian 10)"
   netmask: 255.255.255.192
   netmask6: 'ffff:ffff:ffff:ffff::'
@@ -1125,8 +1057,8 @@ values:
   sshrsakey: AAAAB3NzaC1yc2EAAAADAQABAAABAQDIEv052pq1mvCDxaP+IBjYSEiAAjUwX+rLl1Tc4ZJ8ck7+/JuR9uSiBspeF4E8M6YE0JFczGqpJdMeU5uf/rUqeMLp53g7Q9BWdIzHBOGLSW80NZ9SYLoPZdhiLd+W3nHu6tze79txvwSqbVpw91NRiaQT8MmI3f7gcRYKClmtODO9Sz8hIUIwGtty7/SJEpZC8httIbsY6jjGM/IUbh6FWsfN3G7jxoq8OvwErSZ+zkfJ6IpPdkTrPRCbGNaO8DDQOBdhGu1z1DXkXeaa6jD7t2SiTpJ1B6BgjwuefimczGNohUisLdtUFarAByb7iklpeMvbiS9N/TsxV88D8qMD
   subnet: sesi_rocquencourt
   sudoversion: 1.8.27
-  swapfree: 3.94 GiB
-  swapfree_mb: 4032.0625
+  swapfree: 3.77 GiB
+  swapfree_mb: 3864.99609375
   swapsize: 4.00 GiB
   swapsize_mb: 4094.99609375
   swh_hostname:
@@ -1134,10 +1066,10 @@ values:
     short: tate
     internal_fqdn: tate.internal.softwareheritage.org
   system_uptime:
-    days: 99
-    hours: 2382
-    seconds: 8577793
-    uptime: 99 days
+    days: 32
+    hours: 790
+    seconds: 2844439
+    uptime: 32 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -1152,15 +1084,15 @@ values:
     systemd-timesyncd.service: enabled
   systemd_version: '247'
   timezone: UTC
-  uptime: 99 days
-  uptime_days: 99
-  uptime_hours: 2382
-  uptime_seconds: 8577793
+  uptime: 32 days
+  uptime_days: 32
+  uptime_hours: 790
+  uptime_seconds: 2844439
   uuid: 1cfacaaf-2718-4794-9cc5-88dfde58fb43
   vcsrepo_svn_ver: ''
   virtual: kvm
   clientcert: tate.softwareheritage.org
   clientversion: 5.5.10
   clientnoop: false
-timestamp: '2023-12-06T15:54:07.606318881+00:00'
-expiration: '2023-12-06T16:24:07.607599295+00:00'
+timestamp: '2024-04-10T12:54:04.933399245+00:00'
+expiration: '2024-04-10T13:24:04.934230374+00:00'
