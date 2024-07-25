@@ -3,10 +3,41 @@ name: pergamon.softwareheritage.org
 values:
   agent_specified_environment: production
   apache_version: 2.4.38
-  apt_has_dist_updates: false
-  apt_has_updates: false
-  apt_reboot_required: true
-  apt_update_last_success: 1712750342
+  apt_dist_updates: 15
+  apt_has_dist_updates: true
+  apt_has_updates: true
+  apt_package_dist_updates:
+  - icinga-php-library
+  - icingacli
+  - icingaweb2-common
+  - icingaweb2
+  - icingaweb2-module-monitoring
+  - php-icinga
+  - php-gettext
+  - python3-aiohttp-utils
+  - python3-swh.core
+  - python3-swh.model
+  - python3-swh.objstorage
+  - python3-swh.storage
+  - python3-swh.journal
+  - python3-swh.counters
+  - python3-swh.scheduler
+  apt_package_security_dist_updates: []
+  apt_package_security_updates: []
+  apt_package_updates:
+  - python3-aiohttp-utils
+  - python3-swh.core
+  - python3-swh.model
+  - python3-swh.objstorage
+  - python3-swh.storage
+  - python3-swh.journal
+  - python3-swh.counters
+  - python3-swh.scheduler
+  apt_reboot_required: false
+  apt_security_dist_updates: 0
+  apt_security_updates: 0
+  apt_update_last_success: 1683633542
+  apt_updates: 8
   architecture: amd64
   bios_release_date: 04/01/2014
   bios_vendor: SeaBIOS
@@ -72,7 +103,7 @@ values:
       vardir: "/var/lib/puppet"
       server: pergamon.internal.softwareheritage.org
   facterversion: 3.11.0
-  filesystems: btrfs,ext2,ext3,ext4,hfs,hfsplus,jfs,minix,msdos,qnx4,ufs,vfat,xfs
+  filesystems: ext2,ext3,ext4
   fips_enabled: false
   fqdn: pergamon.softwareheritage.org
   gid: root
@@ -82,7 +113,6 @@ values:
   icinga2_puppet_hostcert: "/var/lib/puppet/ssl/certs/pergamon.softwareheritage.org.pem"
   icinga2_puppet_hostprivkey: "/var/lib/puppet/ssl/private_keys/pergamon.softwareheritage.org.pem"
   icinga2_puppet_localcacert: "/var/lib/puppet/ssl/certs/ca.pem"
-  icinga2_version: 2.14.2
   id: root
   identity:
     gid: 0
@@ -104,16 +134,13 @@ values:
   java_default_home: "/usr/lib/jvm/java-11-openjdk-amd64"
   java_libjvm_path: "/usr/lib/jvm/java-11-openjdk-amd64/lib/server"
   java_major_version: '11'
-  java_patch_level: '22'
-  java_version: 11.0.22
+  java_patch_level: '18'
+  java_version: 11.0.18
   kernel: Linux
   kernelmajversion: '5.10'
   kernelrelease: 5.10.0-0.deb10.16-amd64
   kernelversion: 5.10.0
   kmods:
-    msdos:
-      parameters: {}
-      used_by: []
     thermal:
       parameters:
         act: '0'
@@ -131,10 +158,6 @@ values:
         notests: N
         panic_on_fail: N
       used_by: []
-    xor:
-      parameters: {}
-      used_by:
-      - btrfs
     virtio_rng:
       parameters: {}
       used_by: []
@@ -179,9 +202,6 @@ values:
     efivars:
       parameters: {}
       used_by: []
-    minix:
-      parameters: {}
-      used_by: []
     tcp_cubic:
       parameters:
         hystart_detect: '3'
@@ -214,9 +234,6 @@ values:
         nr_uarts: '4'
         share_irqs: '1'
         skip_txen_test: '0'
-      used_by: []
-    hfsplus:
-      parameters: {}
       used_by: []
     shpchp:
       parameters:
@@ -253,13 +270,7 @@ values:
       parameters:
         use_acpi_alarm: N
       used_by: []
-    tcp_diag:
-      parameters: {}
-      used_by: []
     virtio_balloon:
-      parameters: {}
-      used_by: []
-    jfs:
       parameters: {}
       used_by: []
     nfs_ssc:
@@ -279,9 +290,6 @@ values:
       used_by:
       - drm_vram_helper
       - bochs_drm
-    af_packet_diag:
-      parameters: {}
-      used_by: []
     device_hmem:
       parameters:
         disable: N
@@ -300,8 +308,6 @@ values:
     cdrom:
       parameters: {}
       used_by:
-      - hfsplus
-      - hfs
       - sr_mod
     processor:
       parameters:
@@ -393,13 +399,6 @@ values:
         delegation_watermark: '5000'
         layoutstats_timer: '0'
       used_by: []
-    blake2b_generic:
-      parameters: {}
-      used_by: []
-    raid6_pq:
-      parameters: {}
-      used_by:
-      - btrfs
     auth_rpcgss:
       parameters:
         expired_cred_retry_delay: '5'
@@ -414,9 +413,6 @@ values:
       parameters: {}
       used_by:
       - bochs_drm
-    raw_diag:
-      parameters: {}
-      used_by: []
     ata_generic:
       parameters: {}
       used_by: []
@@ -430,9 +426,7 @@ values:
     libcrc32c:
       parameters: {}
       used_by:
-      - btrfs
       - nf_tables
-      - xfs
     keyboard:
       parameters:
         brl_timeout: '300'
@@ -452,12 +446,6 @@ values:
         defx: '1024'
         modeset: "-1"
         defy: '768'
-      used_by: []
-    qnx4:
-      parameters: {}
-      used_by: []
-    udp_diag:
-      parameters: {}
       used_by: []
     serio_raw:
       parameters: {}
@@ -579,12 +567,6 @@ values:
       - lockd
       - rpcsec_gss_krb5
       - nfs
-    btrfs:
-      parameters: {}
-      used_by: []
-    ufs:
-      parameters: {}
-      used_by: []
     hid_generic:
       parameters: {}
       used_by: []
@@ -603,12 +585,6 @@ values:
       parameters:
         max_user_bgreq: '15768'
         max_user_congthresh: '15768'
-      used_by: []
-    unix_diag:
-      parameters: {}
-      used_by: []
-    netlink_diag:
-      parameters: {}
       used_by: []
     acpiphp:
       parameters:
@@ -663,9 +639,6 @@ values:
         qlowmark: '100'
         qovld: '20000'
       used_by: []
-    xfs:
-      parameters: {}
-      used_by: []
     binfmt_misc:
       parameters: {}
       used_by: []
@@ -679,9 +652,6 @@ values:
         lid_report_interval: '500'
       used_by: []
     floppy:
-      parameters: {}
-      used_by: []
-    hfs:
       parameters: {}
       used_by: []
     block:
@@ -703,18 +673,6 @@ values:
       used_by:
       - nfsv4
       - nfs
-    dm_mod:
-      parameters:
-        use_blk_mq: Y
-        reserved_bio_based_ios: '16'
-        reserved_rq_based_ios: '256'
-        swap_bios: '2048'
-        dm_numa_node: "-1"
-        stats_current_allocated_bytes: '0'
-        kcopyd_subjob_size_kb: '512'
-        dm_mq_nr_hw_queues: '1'
-        dm_mq_queue_depth: '2048'
-      used_by: []
     cpuidle_haltpoll:
       parameters:
         force: N
@@ -742,12 +700,6 @@ values:
         def_reserved_size: '32768'
         allow_dio: '0'
       used_by: []
-    inet_diag:
-      parameters: {}
-      used_by:
-      - tcp_diag
-      - raw_diag
-      - udp_diag
     psmouse:
       parameters:
         resetafter: '5'
@@ -835,9 +787,6 @@ values:
       parameters:
         ptr_size: '800,600'
       used_by: []
-    vfat:
-      parameters: {}
-      used_by: []
     virtio_blk:
       parameters:
         queue_depth: '256'
@@ -884,11 +833,6 @@ values:
       parameters:
         xa_test: '0'
       used_by: []
-    fat:
-      parameters: {}
-      used_by:
-      - msdos
-      - vfat
     jbd2:
       parameters: {}
       used_by:
@@ -922,8 +866,6 @@ values:
     archive.internal.softwareheritage.org: "/etc/letsencrypt/live/archive_production"
     archive.softwareheritage.org: "/etc/letsencrypt/live/downtime"
     base.softwareheritage.org: "/etc/letsencrypt/live/archive_production"
-    scheduler.internal.staging.swh.network: "/etc/letsencrypt/live/scheduler_staging"
-    scheduler.staging.swh.network: "/etc/letsencrypt/live/scheduler_staging"
     kafka06.euwest.azure.internal.softwareheritage.org: "/etc/letsencrypt/live/kafka06.euwest.azure.internal.softwareheritage.org"
     kafka06.euwest.azure.softwareheritage.org: "/etc/letsencrypt/live/kafka06.euwest.azure.internal.softwareheritage.org"
     thanos.internal.admin.swh.network: "/etc/letsencrypt/live/thanos.internal.admin.swh.network"
@@ -943,7 +885,6 @@ values:
     journal0.internal.staging.swh.network: "/etc/letsencrypt/live/journal0.internal.staging.swh.network"
     git.softwareheritage.org: "/etc/letsencrypt/live/downtime"
     azure-billing.internal.admin.swh.network: "/etc/letsencrypt/live/azure-billing.internal.admin.swh.network"
-    storage-cassandra-ro.softwareheritage.org: "/etc/letsencrypt/live/storage_cassandra_ro"
     minio.admin.swh.network: "/etc/letsencrypt/live/minio.admin.swh.network"
     debian.internal.softwareheritage.org: "/etc/letsencrypt/live/debian.softwareheritage.org"
     debian.softwareheritage.org: "/etc/letsencrypt/live/downtime"
@@ -995,13 +936,11 @@ values:
     webapp1.internal.softwareheritage.org: "/etc/letsencrypt/live/archive_webapp1"
     broker1.journal.softwareheritage.org: "/etc/letsencrypt/live/kafka1.internal.softwareheritage.org"
     kafka1.internal.softwareheritage.org: "/etc/letsencrypt/live/kafka1.internal.softwareheritage.org"
-    alertmanager-irc-relay.admin.swh.network: "/etc/letsencrypt/live/alertmanager-irc-relay.admin.swh.network"
     maven-exporter.internal.staging.swh.network: "/etc/letsencrypt/live/maven-exporter.internal.staging.swh.network"
-    provenance-export.softwareheritage.org: "/etc/letsencrypt/live/provenance_export"
   load_averages:
-    15m: 1.04
-    1m: 1.1
-    5m: 1.05
+    15m: 2.27
+    1m: 1.16
+    5m: 2.26
   location: sesi_rocquencourt
   lsbdistcodename: buster
   lsbdistdescription: Debian GNU/Linux 10 (buster)
@@ -1014,30 +953,30 @@ values:
   manufacturer: QEMU
   memory:
     swap:
-      available: 3.72 GiB
-      available_bytes: 3995947008
-      capacity: 6.92%
+      available: 3.02 GiB
+      available_bytes: 3244441600
+      capacity: 24.42%
       total: 4.00 GiB
       total_bytes: 4292866048
-      used: 283.16 MiB
-      used_bytes: 296919040
+      used: 999.86 MiB
+      used_bytes: 1048424448
     system:
-      available: 35.89 GiB
-      available_bytes: 38540161024
-      capacity: 23.89%
+      available: 30.63 GiB
+      available_bytes: 32889131008
+      capacity: 35.05%
       total: 47.16 GiB
       total_bytes: 50636136448
-      used: 11.27 GiB
-      used_bytes: 12095975424
-  memoryfree: 35.89 GiB
-  memoryfree_mb: 36754.76171875
+      used: 16.53 GiB
+      used_bytes: 17747005440
+  memoryfree: 30.63 GiB
+  memoryfree_mb: 31365.51953125
   memorysize: 47.16 GiB
   memorysize_mb: 48290.3828125
   mountpoints:
     "/":
-      available: 11.39 GiB
-      available_bytes: 12234903552
-      capacity: 76.77%
+      available: 10.40 GiB
+      available_bytes: 11162365952
+      capacity: 78.81%
       device: "/dev/vda1"
       filesystem: ext4
       options:
@@ -1046,8 +985,8 @@ values:
       - errors=remount-ro
       size: 49.06 GiB
       size_bytes: 52675555328
-      used: 37.66 GiB
-      used_bytes: 40440651776
+      used: 38.66 GiB
+      used_bytes: 41513189376
     "/dev/shm":
       available: 23.58 GiB
       available_bytes: 25318051840
@@ -1064,7 +1003,7 @@ values:
       used_bytes: 16384
     "/run":
       available: 4.71 GiB
-      available_bytes: 5062582272
+      available_bytes: 5062656000
       capacity: 0.02%
       device: tmpfs
       filesystem: tmpfs
@@ -1077,8 +1016,8 @@ values:
       - mode=755
       size: 4.72 GiB
       size_bytes: 5063614464
-      used: 1008.00 KiB
-      used_bytes: 1032192
+      used: 936.00 KiB
+      used_bytes: 958464
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -1094,26 +1033,6 @@ values:
       - size=5120k
       size: 5.00 MiB
       size_bytes: 5242880
-      used: 0 bytes
-      used_bytes: 0
-    "/run/user/1001":
-      available: 4.11 GiB
-      available_bytes: 4412657664
-      capacity: 0%
-      device: tmpfs
-      filesystem: tmpfs
-      options:
-      - rw
-      - nosuid
-      - nodev
-      - relatime
-      - size=4309236k
-      - nr_inodes=1077309
-      - mode=700
-      - uid=1001
-      - gid=1001
-      size: 4.11 GiB
-      size_bytes: 4412657664
       used: 0 bytes
       used_bytes: 0
     "/run/user/1003":
@@ -1132,26 +1051,6 @@ values:
       - mode=700
       - uid=1003
       - gid=1003
-      size: 4.11 GiB
-      size_bytes: 4412657664
-      used: 0 bytes
-      used_bytes: 0
-    "/run/user/1025":
-      available: 4.11 GiB
-      available_bytes: 4412657664
-      capacity: 0%
-      device: tmpfs
-      filesystem: tmpfs
-      options:
-      - rw
-      - nosuid
-      - nodev
-      - relatime
-      - size=4309236k
-      - nr_inodes=1077309
-      - mode=700
-      - uid=1025
-      - gid=1025
       size: 4.11 GiB
       size_bytes: 4412657664
       used: 0 bytes
@@ -1175,9 +1074,9 @@ values:
       used: 0 bytes
       used_bytes: 0
     "/var/lib/prometheus":
-      available: 405.51 GiB
-      available_bytes: 435417272320
-      capacity: 17.42%
+      available: 414.67 GiB
+      available_bytes: 445253492736
+      capacity: 15.56%
       device: "/dev/vdc1"
       filesystem: ext4
       options:
@@ -1186,8 +1085,8 @@ values:
       - errors=remount-ro
       size: 491.08 GiB
       size_bytes: 527297679360
-      used: 85.57 GiB
-      used_bytes: 91880407040
+      used: 76.41 GiB
+      used_bytes: 82044186624
   mounts:
   - "/"
   - "/var/lib/prometheus"
@@ -1321,7 +1220,7 @@ values:
       size_bytes: 536869846528
       uuid: 0aedf89c-811f-4b5f-bd18-526a6e7cf479
   path: "/usr/bin:/bin:/usr/sbin:/sbin"
-  phpversion: 7.3.31-1~deb10u5
+  phpversion: 7.3.31-1~deb10u3
   physicalprocessorcount: 2
   processor0: Common KVM processor
   processor1: Common KVM processor
@@ -1420,8 +1319,8 @@ values:
   sshrsakey: AAAAB3NzaC1yc2EAAAADAQABAAABAQCUVA+gg4Hyy2q7qiZ3Y3kvZmzAbtcG/HGKBb5CMOO65sPLZfw9WGChi829NoAKzHNR9CPX+AyLokZ5W4khLcQ3JbK9vr+iXxBIzIeE/DOuyXkQegOPFNyG7XoFb7v7e2IX1Lmgprm6obUszo403CD6/w1IsN9/I7nozPd8jxtWVdfYRRFqwZrEJfkkSDrR1QJJ6VI9xcDVssybKNzSGDUzaVfPnp9uLiD9rE9UwE5aHvwXoqXfr+hR8QMWWaEtlZVroWd7ZM6smgshWRJEOMIz7cK1zSG+Dj1SX+kZqWEPG9xiNO5ug8G/Zu+vkVQcmzLLgdOJEJuEgeoYzG32bG/v
   subnet: sesi_rocquencourt
   sudoversion: 1.8.27
-  swapfree: 3.72 GiB
-  swapfree_mb: 3810.83203125
+  swapfree: 3.02 GiB
+  swapfree_mb: 3094.140625
   swapsize: 4.00 GiB
   swapsize_mb: 4093.99609375
   swh_hostname:
@@ -1429,10 +1328,10 @@ values:
     short: pergamon
     internal_fqdn: pergamon.internal.softwareheritage.org
   system_uptime:
-    days: 439
-    hours: 10558
-    seconds: 38011535
-    uptime: 439 days
+    days: 102
+    hours: 2470
+    seconds: 8892936
+    uptime: 102 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -1447,15 +1346,15 @@ values:
     systemd-timesyncd.service: enabled
   systemd_version: '247'
   timezone: UTC
-  uptime: 439 days
-  uptime_days: 439
-  uptime_hours: 10558
-  uptime_seconds: 38011535
+  uptime: 102 days
+  uptime_days: 102
+  uptime_hours: 2470
+  uptime_seconds: 8892936
   uuid: aa664c56-fc2f-45a2-98d5-476f11eea5bb
   vcsrepo_svn_ver: ''
   virtual: kvm
   clientcert: pergamon.softwareheritage.org
   clientversion: 5.5.10
   clientnoop: false
-timestamp: '2024-04-10T12:54:07.152186390+00:00'
-expiration: '2024-04-10T13:24:07.153644206+00:00'
+timestamp: '2023-05-09T12:24:06.992278797+00:00'
+expiration: '2023-05-09T12:54:06.993499451+00:00'

@@ -2,14 +2,30 @@
 name: thanos.internal.admin.swh.network
 values:
   agent_specified_environment: production
-  apt_has_dist_updates: false
-  apt_has_updates: false
-  apt_reboot_required: false
-  apt_update_last_success: 1712751242
+  apt_dist_updates: 4
+  apt_has_dist_updates: true
+  apt_has_updates: true
+  apt_package_dist_updates:
+  - icinga2
+  - icinga2-bin
+  - icinga2-common
+  - icinga2-doc
+  apt_package_security_dist_updates: []
+  apt_package_security_updates: []
+  apt_package_updates:
+  - icinga2
+  - icinga2-bin
+  - icinga2-common
+  - icinga2-doc
+  apt_reboot_required: true
+  apt_security_dist_updates: 0
+  apt_security_updates: 0
+  apt_update_last_success: 1683630842
+  apt_updates: 4
   architecture: amd64
   bios_release_date: 04/01/2014
   bios_vendor: SeaBIOS
-  bios_version: rel-1.16.1-0-g3208b098f51a-prebuilt.qemu.org
+  bios_version: rel-1.16.0-0-gd239552ce722-prebuilt.qemu.org
   blockdevice_sr0_model: QEMU DVD-ROM
   blockdevice_sr0_size: 1073741312
   blockdevice_sr0_vendor: QEMU
@@ -18,11 +34,13 @@ values:
   blockdevice_sr1_vendor: QEMU
   blockdevice_vda_size: 34359738368
   blockdevice_vda_vendor: '0x1af4'
-  blockdevices: sr0,vda,sr1
+  blockdevice_vdb_size: 274877906944
+  blockdevice_vdb_vendor: '0x1af4'
+  blockdevices: vdb,sr0,vda,sr1
   cassandracmsheapnewsize: 400
-  cassandracmsmaxheapsize: 1986
+  cassandracmsmaxheapsize: 1989
   cassandraheapnewsize: 400
-  cassandramaxheapsize: 1986
+  cassandramaxheapsize: 1989
   chassistype: Other
   cloudinit_enabled: 'true'
   deployment: admin
@@ -41,11 +59,15 @@ values:
       size: 32.00 GiB
       size_bytes: 34359738368
       vendor: '0x1af4'
+    vdb:
+      size: 256.00 GiB
+      size_bytes: 274877906944
+      vendor: '0x1af4'
   dmi:
     bios:
       release_date: 04/01/2014
       vendor: SeaBIOS
-      version: rel-1.16.1-0-g3208b098f51a-prebuilt.qemu.org
+      version: rel-1.16.0-0-gd239552ce722-prebuilt.qemu.org
     chassis:
       type: Other
     manufacturer: QEMU
@@ -76,7 +98,6 @@ values:
   icinga2_puppet_hostcert: "/var/lib/puppet/ssl/certs/thanos.internal.admin.swh.network.pem"
   icinga2_puppet_hostprivkey: "/var/lib/puppet/ssl/private_keys/thanos.internal.admin.swh.network.pem"
   icinga2_puppet_localcacert: "/var/lib/puppet/ssl/certs/ca.pem"
-  icinga2_version: 2.14.2
   id: root
   identity:
     gid: 0
@@ -95,7 +116,7 @@ values:
   is_virtual: true
   kernel: Linux
   kernelmajversion: '5.10'
-  kernelrelease: 5.10.0-28-amd64
+  kernelrelease: 5.10.0-21-amd64
   kernelversion: 5.10.0
   kmods:
     msdos:
@@ -521,8 +542,8 @@ values:
       used_by: []
     fuse:
       parameters:
-        max_user_bgreq: '2594'
-        max_user_congthresh: '2594'
+        max_user_bgreq: '2598'
+        max_user_congthresh: '2598'
       used_by: []
     acpiphp:
       parameters:
@@ -778,50 +799,58 @@ values:
       - ttm
   letsencrypt_directory: {}
   load_averages:
-    15m: 0.08
-    1m: 0.16
-    5m: 0.08
+    15m: 0.47
+    1m: 0.12
+    5m: 0.48
   lsbdistcodename: bullseye
   lsbdistdescription: Debian GNU/Linux 11 (bullseye)
   lsbdistid: Debian
-  lsbdistrelease: '11.9'
+  lsbdistrelease: '11.7'
   lsbmajdistrelease: '11'
-  lsbminordistrelease: '9'
+  lsbminordistrelease: '7'
   macaddress: 16:3c:72:26:70:34
   macaddress_eth0: 16:3c:72:26:70:34
   manufacturer: QEMU
   memory:
+    swap:
+      available: 3.09 GiB
+      available_bytes: 3318624256
+      capacity: 22.71%
+      total: 4.00 GiB
+      total_bytes: 4293914624
+      used: 930.11 MiB
+      used_bytes: 975290368
     system:
-      available: 4.60 GiB
-      available_bytes: 4941283328
-      capacity: 40.69%
-      total: 7.76 GiB
-      total_bytes: 8330870784
-      used: 3.16 GiB
-      used_bytes: 3389587456
-  memoryfree: 4.60 GiB
-  memoryfree_mb: 4712.375
-  memorysize: 7.76 GiB
-  memorysize_mb: 7944.9375
+      available: 5.59 GiB
+      available_bytes: 6006726656
+      capacity: 28.01%
+      total: 7.77 GiB
+      total_bytes: 8343453696
+      used: 2.18 GiB
+      used_bytes: 2336727040
+  memoryfree: 5.59 GiB
+  memoryfree_mb: 5728.4609375
+  memorysize: 7.77 GiB
+  memorysize_mb: 7956.9375
   mountpoints:
     "/":
-      available: 2.89 GiB
-      available_bytes: 3097878528
-      capacity: 83.16%
+      available: 9.27 GiB
+      available_bytes: 9955209216
+      capacity: 39.54%
       device: "/dev/mapper/base--template--vg-root"
       filesystem: ext4
       options:
       - rw
       - relatime
       - errors=remount-ro
-      size: 18.05 GiB
-      size_bytes: 19378380800
-      used: 14.24 GiB
-      used_bytes: 15293001728
+      size: 16.18 GiB
+      size_bytes: 17373634560
+      used: 6.06 GiB
+      used_bytes: 6509940736
     "/boot":
-      available: 358.70 MiB
-      available_bytes: 376123392
-      capacity: 19.39%
+      available: 358.75 MiB
+      available_bytes: 376174592
+      capacity: 19.38%
       device: "/dev/vda1"
       filesystem: ext2
       options:
@@ -829,11 +858,11 @@ values:
       - relatime
       size: 469.35 MiB
       size_bytes: 492152832
-      used: 86.30 MiB
-      used_bytes: 90497024
+      used: 86.26 MiB
+      used_bytes: 90445824
     "/dev":
-      available: 3.86 GiB
-      available_bytes: 4145631232
+      available: 3.87 GiB
+      available_bytes: 4151922688
       capacity: 0%
       device: udev
       filesystem: devtmpfs
@@ -841,11 +870,11 @@ values:
       - rw
       - nosuid
       - relatime
-      - size=4048468k
-      - nr_inodes=1012117
+      - size=4054612k
+      - nr_inodes=1013653
       - mode=755
-      size: 3.86 GiB
-      size_bytes: 4145631232
+      size: 3.87 GiB
+      size_bytes: 4151922688
       used: 0 bytes
       used_bytes: 0
     "/dev/hugepages":
@@ -897,8 +926,8 @@ values:
       used: 0 bytes
       used_bytes: 0
     "/dev/shm":
-      available: 3.88 GiB
-      available_bytes: 4165435392
+      available: 3.89 GiB
+      available_bytes: 4171726848
       capacity: 0%
       device: tmpfs
       filesystem: tmpfs
@@ -906,14 +935,14 @@ values:
       - rw
       - nosuid
       - nodev
-      size: 3.88 GiB
-      size_bytes: 4165435392
+      size: 3.89 GiB
+      size_bytes: 4171726848
       used: 0 bytes
       used_bytes: 0
     "/run":
-      available: 793.91 MiB
-      available_bytes: 832479232
-      capacity: 0.07%
+      available: 795.03 MiB
+      available_bytes: 833646592
+      capacity: 0.08%
       device: tmpfs
       filesystem: tmpfs
       options:
@@ -922,12 +951,12 @@ values:
       - nodev
       - noexec
       - relatime
-      - size=813564k
+      - size=814792k
       - mode=755
-      size: 794.50 MiB
-      size_bytes: 833089536
-      used: 596.00 KiB
-      used_bytes: 610304
+      size: 795.70 MiB
+      size_bytes: 834347008
+      used: 684.00 KiB
+      used_bytes: 700416
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -958,8 +987,63 @@ values:
       size_bytes: 0
       used: 0 bytes
       used_bytes: 0
+    "/run/user/1003":
+      available: 386.09 MiB
+      available_bytes: 404848640
+      capacity: 0%
+      device: tmpfs
+      filesystem: tmpfs
+      options:
+      - rw
+      - nosuid
+      - nodev
+      - relatime
+      - size=395360k
+      - nr_inodes=98840
+      - mode=700
+      - uid=1003
+      - gid=1003
+      size: 386.09 MiB
+      size_bytes: 404848640
+      used: 0 bytes
+      used_bytes: 0
+    "/run/user/1025":
+      available: 386.09 MiB
+      available_bytes: 404848640
+      capacity: 0%
+      device: tmpfs
+      filesystem: tmpfs
+      options:
+      - rw
+      - nosuid
+      - nodev
+      - relatime
+      - size=395360k
+      - nr_inodes=98840
+      - mode=700
+      - uid=1025
+      - gid=1025
+      size: 386.09 MiB
+      size_bytes: 404848640
+      used: 0 bytes
+      used_bytes: 0
+    "/var/cache/thanos/scratch":
+      available: 234.37 GiB
+      available_bytes: 251652874240
+      capacity: 0.00%
+      device: "/dev/vdb2"
+      filesystem: ext4
+      options:
+      - rw
+      - relatime
+      - errors=remount-ro
+      size: 246.99 GiB
+      size_bytes: 265198813184
+      used: 68.00 KiB
+      used_bytes: 69632
   mounts:
   - "/"
+  - "/var/cache/thanos/scratch"
   - "/boot"
   mtu_eth0: 1500
   mtu_lo: 65536
@@ -1028,7 +1112,7 @@ values:
     scope6: link
   operatingsystem: Debian
   operatingsystemmajrelease: '11'
-  operatingsystemrelease: '11.9'
+  operatingsystemrelease: '11.7'
   os:
     architecture: amd64
     distro:
@@ -1036,16 +1120,16 @@ values:
       description: Debian GNU/Linux 11 (bullseye)
       id: Debian
       release:
-        full: '11.9'
+        full: '11.7'
         major: '11'
-        minor: '9'
+        minor: '7'
     family: Debian
     hardware: x86_64
     name: Debian
     release:
-      full: '11.9'
+      full: '11.7'
       major: '11'
-      minor: '9'
+      minor: '7'
     selinux:
       enabled: false
   osfamily: Debian
@@ -1054,8 +1138,8 @@ values:
     "/dev/mapper/base--template--vg-root":
       filesystem: ext4
       mount: "/"
-      size: 18.51 GiB
-      size_bytes: 19872612352
+      size: 16.61 GiB
+      size_bytes: 17834180608
       uuid: 3b51385d-17c0-4263-a366-ae979ff7000a
     "/dev/mapper/base--template--vg-swap_1":
       filesystem: swap
@@ -1078,6 +1162,19 @@ values:
       size: 19.52 GiB
       size_bytes: 20961034240
       uuid: bMDm05-EdAf-O224-reV9-S7LA-hHHK-wiJHT2
+    "/dev/vdb1":
+      filesystem: swap
+      partuuid: 46913745-9af5-4532-9903-16d2d2358175
+      size: 4.00 GiB
+      size_bytes: 4293919232
+      uuid: a19bd20b-6867-4456-b2a0-2d78c2eda9a7
+    "/dev/vdb2":
+      filesystem: ext4
+      mount: "/var/cache/thanos/scratch"
+      partuuid: b59238f0-dd09-c24c-8d96-f853d5235ded
+      size: 252.00 GiB
+      size_bytes: 270581874176
+      uuid: 3c2ed4e2-d8b6-403c-915d-f6b1956f4dbb
   path: "/usr/bin:/bin:/usr/sbin:/sbin"
   physicalprocessorcount: 1
   processor0: Common KVM processor
@@ -1166,15 +1263,19 @@ values:
   sshrsakey: AAAAB3NzaC1yc2EAAAADAQABAAABgQCvMssxNL6rCV62NM2Z38BYMDtNAAsLZKbtiNp0E1sOrM9QG77BGQ8t1qlvTmf627nXTNG4pI6ZhGhbkyG+ZMWkiXGmUMWeifBIUqQFRk6E5HD9AdXNsI5Jpk7sq61758MjYYpyUco7PrkJ6LcFqkl2IJuzEIIFdsnuxm1Z0SW8efQOeO90Z+3i3rQ5G8iRBCpHH0JI73keF3ng9EzhJELkB1z5APW4k6LVyVBNMn4ePVL8/Ra0a2iaW7qxTCH8fV+HGUX/iRbRPtdJoXSHYZQEcLHtvtpQ9FM/EtNRGR9RmZmv6CrB0qAhfHy67LQD4kZpfd5aG4C3uVCVnNCNp/n7JRoLaZjg4ly+/aS70D8jhKrt+5jIDKuUVYYOujCkX57VxaIMD5uIuFHSayiUk9GNQz78PZb+oian2pLeeRLDV1Vzod9WtaXG2nH7ubYQaJ0GGHsBRF0+I8wxw8bt/vU1f54BDWnPMZaCsJoc0KuqGUZC6N5tHqfeMF1x5COKNfM=
   subnet: sesi_rocquencourt_admin
   sudoversion: 1.9.5p2
+  swapfree: 3.09 GiB
+  swapfree_mb: 3164.88671875
+  swapsize: 4.00 GiB
+  swapsize_mb: 4094.99609375
   swh_hostname:
     fqdn: thanos.internal.admin.swh.network
     short: thanos
     internal_fqdn: thanos.internal.admin.swh.network
   system_uptime:
-    days: 32
-    hours: 790
-    seconds: 2846452
-    uptime: 32 days
+    days: 102
+    hours: 2469
+    seconds: 8891816
+    uptime: 102 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -1188,15 +1289,15 @@ values:
     systemd-time-wait-sync.service: disabled
   systemd_version: '247'
   timezone: UTC
-  uptime: 32 days
-  uptime_days: 32
-  uptime_hours: 790
-  uptime_seconds: 2846452
+  uptime: 102 days
+  uptime_days: 102
+  uptime_hours: 2469
+  uptime_seconds: 8891816
   uuid: 91456bd4-1139-44fd-bc66-6e96dd29916e
   vcsrepo_svn_ver: ''
   virtual: kvm
   clientcert: thanos.internal.admin.swh.network
   clientversion: 5.5.22
   clientnoop: false
-timestamp: '2024-04-10T13:07:08.408188970+00:00'
-expiration: '2024-04-10T13:37:08.410198564+00:00'
+timestamp: '2023-05-09T12:07:06.294695051+00:00'
+expiration: '2023-05-09T12:37:06.295780490+00:00'

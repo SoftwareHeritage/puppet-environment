@@ -2,38 +2,50 @@
 name: scheduler0.internal.staging.swh.network
 values:
   agent_specified_environment: staging
-  apt_dist_updates: 9
+  apt_dist_updates: 15
   apt_has_dist_updates: true
   apt_has_updates: true
   apt_package_dist_updates:
-  - postgresql-common
   - postgresql-client-common
-  - libllvm13
-  - libpq-dev
-  - libpq5
-  - postgresql-client-15
-  - postgresql-15
-  - postgresql-client-16
-  - postgresql-client
+  - postgresql-common
+  - barman
+  - python3-barman
+  - python3-swh.core
+  - python3-swh.model
+  - python3-swh.objstorage
+  - python3-swh.storage
+  - python3-swh.scheduler
+  - python3-swh.journal
+  - python3-swh.indexer
+  - python3-swh.indexer.storage
+  - python3-swh.lister
+  - python3-swh.loader.bzr
+  - python3-swh.loader.git
   apt_package_security_dist_updates: []
   apt_package_security_updates: []
   apt_package_updates:
-  - postgresql-common
-  - postgresql-client-common
-  - libpq-dev
-  - libpq5
-  - postgresql-client-16
-  - postgresql-client
-  - postgresql-client-15
-  apt_reboot_required: false
+  - barman
+  - python3-barman
+  - python3-swh.core
+  - python3-swh.model
+  - python3-swh.objstorage
+  - python3-swh.storage
+  - python3-swh.scheduler
+  - python3-swh.journal
+  - python3-swh.indexer
+  - python3-swh.indexer.storage
+  - python3-swh.lister
+  - python3-swh.loader.bzr
+  - python3-swh.loader.git
+  apt_reboot_required: true
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1712752384
-  apt_updates: 7
+  apt_update_last_success: 1683631983
+  apt_updates: 13
   architecture: amd64
   bios_release_date: 04/01/2014
   bios_vendor: SeaBIOS
-  bios_version: rel-1.16.1-0-g3208b098f51a-prebuilt.qemu.org
+  bios_version: rel-1.16.0-0-gd239552ce722-prebuilt.qemu.org
   blockdevice_sr0_model: QEMU DVD-ROM
   blockdevice_sr0_size: 4194304
   blockdevice_sr0_vendor: QEMU
@@ -61,7 +73,7 @@ values:
     bios:
       release_date: 04/01/2014
       vendor: SeaBIOS
-      version: rel-1.16.1-0-g3208b098f51a-prebuilt.qemu.org
+      version: rel-1.16.0-0-gd239552ce722-prebuilt.qemu.org
     chassis:
       type: Other
     manufacturer: QEMU
@@ -69,7 +81,7 @@ values:
       name: Standard PC (i440FX + PIIX, 1996)
       uuid: a918f8c6-beec-4772-a81f-421117193927
   domain: internal.staging.swh.network
-  erl_ssl_path: "/usr/lib/erlang/lib/ssl-9.5.3/ebin"
+  erl_ssl_path: "/usr/lib/erlang/lib/ssl-9.1.2/ebin"
   extlib__puppet_config:
     master:
       localcacert: "/var/lib/puppet/ssl/certs/ca.pem"
@@ -93,7 +105,6 @@ values:
   icinga2_puppet_hostcert: "/var/lib/puppet/ssl/certs/scheduler0.internal.staging.swh.network.pem"
   icinga2_puppet_hostprivkey: "/var/lib/puppet/ssl/private_keys/scheduler0.internal.staging.swh.network.pem"
   icinga2_puppet_localcacert: "/var/lib/puppet/ssl/certs/ca.pem"
-  icinga2_version: 2.14.2
   id: root
   identity:
     gid: 0
@@ -113,11 +124,11 @@ values:
   java_default_home: "/usr/lib/jvm/java-11-openjdk-amd64"
   java_libjvm_path: "/usr/lib/jvm/java-11-openjdk-amd64/lib/server"
   java_major_version: '11'
-  java_patch_level: '22'
-  java_version: 11.0.22
+  java_patch_level: '18'
+  java_version: 11.0.18
   kernel: Linux
   kernelmajversion: '4.19'
-  kernelrelease: 4.19.0-26-amd64
+  kernelrelease: 4.19.0-23-amd64
   kernelversion: 4.19.0
   kmods:
     cpuidle:
@@ -551,6 +562,17 @@ values:
       parameters:
         force_legacy: N
       used_by: []
+    dm_mod:
+      parameters:
+        use_blk_mq: Y
+        reserved_bio_based_ios: '16'
+        reserved_rq_based_ios: '256'
+        swap_bios: '2048'
+        dm_numa_node: "-1"
+        stats_current_allocated_bytes: '0'
+        dm_mq_nr_hw_queues: '1'
+        dm_mq_queue_depth: '2048'
+      used_by: []
     libata:
       parameters:
         atapi_passthru16: '1'
@@ -708,9 +730,9 @@ values:
       - ttm
   letsencrypt_directory: {}
   load_averages:
-    15m: 0.11
-    1m: 0.24
-    5m: 0.16
+    15m: 0.57
+    1m: 0.17
+    5m: 0.5
   location: sesi_rocquencourt_staging
   lsbdistcodename: buster
   lsbdistdescription: Debian GNU/Linux 10 (buster)
@@ -722,22 +744,22 @@ values:
   manufacturer: QEMU
   memory:
     system:
-      available: 6.63 GiB
-      available_bytes: 7118643200
-      capacity: 14.91%
+      available: 5.60 GiB
+      available_bytes: 6012469248
+      capacity: 28.13%
       total: 7.79 GiB
-      total_bytes: 8366002176
-      used: 1.16 GiB
-      used_bytes: 1247358976
-  memoryfree: 6.63 GiB
-  memoryfree_mb: 6788.8671875
+      total_bytes: 8365867008
+      used: 2.19 GiB
+      used_bytes: 2353397760
+  memoryfree: 5.60 GiB
+  memoryfree_mb: 5733.9375
   memorysize: 7.79 GiB
-  memorysize_mb: 7978.44140625
+  memorysize_mb: 7978.3125
   mountpoints:
     "/":
-      available: 24.79 GiB
-      available_bytes: 26621210624
-      capacity: 21.18%
+      available: 18.36 GiB
+      available_bytes: 19716317184
+      capacity: 41.62%
       device: "/dev/vda1"
       filesystem: ext4
       options:
@@ -746,11 +768,11 @@ values:
       - errors=remount-ro
       size: 31.45 GiB
       size_bytes: 33773514752
-      used: 6.66 GiB
-      used_bytes: 7152304128
+      used: 13.09 GiB
+      used_bytes: 14057197568
     "/dev/shm":
       available: 3.89 GiB
-      available_bytes: 4181921792
+      available_bytes: 4181856256
       capacity: 0.03%
       device: tmpfs
       filesystem: tmpfs
@@ -759,12 +781,12 @@ values:
       - nosuid
       - nodev
       size: 3.90 GiB
-      size_bytes: 4182999040
+      size_bytes: 4182933504
       used: 1.03 MiB
       used_bytes: 1077248
     "/run":
-      available: 797.30 MiB
-      available_bytes: 836034560
+      available: 797.25 MiB
+      available_bytes: 835977216
       capacity: 0.07%
       device: tmpfs
       filesystem: tmpfs
@@ -773,12 +795,12 @@ values:
       - nosuid
       - noexec
       - relatime
-      - size=816996k
+      - size=816980k
       - mode=755
-      size: 797.85 MiB
-      size_bytes: 836603904
-      used: 556.00 KiB
-      used_bytes: 569344
+      size: 797.83 MiB
+      size_bytes: 836587520
+      used: 596.00 KiB
+      used_bytes: 610304
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -797,8 +819,8 @@ values:
       used: 0 bytes
       used_bytes: 0
     "/run/user/1003":
-      available: 232.84 MiB
-      available_bytes: 244154368
+      available: 336.03 MiB
+      available_bytes: 352354304
       capacity: 0%
       device: tmpfs
       filesystem: tmpfs
@@ -807,18 +829,18 @@ values:
       - nosuid
       - nodev
       - relatime
-      - size=238432k
-      - nr_inodes=59608
+      - size=344096k
+      - nr_inodes=86024
       - mode=700
       - uid=1003
       - gid=1003
-      size: 232.84 MiB
-      size_bytes: 244154368
+      size: 336.03 MiB
+      size_bytes: 352354304
       used: 0 bytes
       used_bytes: 0
     "/run/user/118":
-      available: 232.84 MiB
-      available_bytes: 244154368
+      available: 336.03 MiB
+      available_bytes: 352354304
       capacity: 0%
       device: tmpfs
       filesystem: tmpfs
@@ -827,13 +849,13 @@ values:
       - nosuid
       - nodev
       - relatime
-      - size=238432k
-      - nr_inodes=59608
+      - size=344096k
+      - nr_inodes=86024
       - mode=700
       - uid=118
       - gid=123
-      size: 232.84 MiB
-      size_bytes: 244154368
+      size: 336.03 MiB
+      size_bytes: 352354304
       used: 0 bytes
       used_bytes: 0
     "/sys/fs/cgroup":
@@ -975,8 +997,7 @@ values:
   rabbitmq_nodename: rabbit@scheduler0
   rabbitmq_plugins_dirs:
   - "/usr/lib/rabbitmq/plugins"
-  - "/usr/lib/rabbitmq/lib/rabbitmq_server-3.8.2/plugins"
-  rabbitmq_version: 3.8.2
+  - "/usr/lib/rabbitmq/lib/rabbitmq_server-3.7.8/plugins"
   root_home: "/root"
   ruby:
     platform: x86_64-linux-gnu
@@ -1045,10 +1066,10 @@ values:
     short: scheduler0
     internal_fqdn: scheduler0.internal.staging.swh.network
   system_uptime:
-    days: 66
-    hours: 1588
-    seconds: 5718373
-    uptime: 66 days
+    days: 83
+    hours: 1995
+    seconds: 7185291
+    uptime: 83 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -1063,15 +1084,15 @@ values:
     systemd-timesyncd.service: enabled
   systemd_version: '247'
   timezone: UTC
-  uptime: 66 days
-  uptime_days: 66
-  uptime_hours: 1588
-  uptime_seconds: 5718373
+  uptime: 83 days
+  uptime_days: 83
+  uptime_hours: 1995
+  uptime_seconds: 7185291
   uuid: a918f8c6-beec-4772-a81f-421117193927
-  vcsrepo_svn_ver: ''
+  vcsrepo_svn_ver: 1.10.4
   virtual: kvm
   clientcert: scheduler0.internal.staging.swh.network
   clientversion: 5.5.10
   clientnoop: false
-timestamp: '2024-04-10T12:57:12.489692961+00:00'
-expiration: '2024-04-10T13:27:12.490897165+00:00'
+timestamp: '2023-05-09T12:27:10.169272975+00:00'
+expiration: '2023-05-09T12:57:10.170648757+00:00'
