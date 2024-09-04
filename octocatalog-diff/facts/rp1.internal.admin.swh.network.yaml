@@ -2,26 +2,10 @@
 name: rp1.internal.admin.swh.network
 values:
   agent_specified_environment: production
-  apt_dist_updates: 4
-  apt_has_dist_updates: true
-  apt_has_updates: true
-  apt_package_dist_updates:
-  - icinga2
-  - icinga2-bin
-  - icinga2-common
-  - icinga2-doc
-  apt_package_security_dist_updates: []
-  apt_package_security_updates: []
-  apt_package_updates:
-  - icinga2
-  - icinga2-bin
-  - icinga2-common
-  - icinga2-doc
+  apt_has_dist_updates: false
+  apt_has_updates: false
   apt_reboot_required: true
-  apt_security_dist_updates: 0
-  apt_security_updates: 0
-  apt_update_last_success: 1683633122
-  apt_updates: 4
+  apt_update_last_success: 1725450723
   architecture: amd64
   bios_release_date: 04/01/2014
   bios_vendor: SeaBIOS
@@ -92,6 +76,7 @@ values:
   icinga2_puppet_hostcert: "/var/lib/puppet/ssl/certs/rp1.internal.admin.swh.network.pem"
   icinga2_puppet_hostprivkey: "/var/lib/puppet/ssl/private_keys/rp1.internal.admin.swh.network.pem"
   icinga2_puppet_localcacert: "/var/lib/puppet/ssl/certs/ca.pem"
+  icinga2_version: 2.14.2
   id: root
   identity:
     gid: 0
@@ -236,6 +221,9 @@ values:
     rtc_cmos:
       parameters:
         use_acpi_alarm: N
+      used_by: []
+    tcp_diag:
+      parameters: {}
       used_by: []
     virtio_balloon:
       parameters: {}
@@ -409,6 +397,9 @@ values:
         defy: '768'
       used_by: []
     qnx4:
+      parameters: {}
+      used_by: []
+    udp_diag:
       parameters: {}
       used_by: []
     serio_raw:
@@ -657,6 +648,11 @@ values:
         def_reserved_size: '32768'
         allow_dio: '0'
       used_by: []
+    inet_diag:
+      parameters: {}
+      used_by:
+      - tcp_diag
+      - udp_diag
     psmouse:
       parameters:
         resetafter: '5'
@@ -793,44 +789,44 @@ values:
       - ttm
   letsencrypt_directory: {}
   load_averages:
-    15m: 0.27
-    1m: 0.16
-    5m: 0.26
+    15m: 0.23
+    1m: 0.45
+    5m: 0.27
   lsbdistcodename: bullseye
   lsbdistdescription: Debian GNU/Linux 11 (bullseye)
   lsbdistid: Debian
-  lsbdistrelease: '11.7'
+  lsbdistrelease: '11.11'
   lsbmajdistrelease: '11'
-  lsbminordistrelease: '7'
+  lsbminordistrelease: '11'
   macaddress: 4e:42:20:e0:b6:65
   macaddress_eth0: 4e:42:20:e0:b6:65
   manufacturer: QEMU
   memory:
     swap:
-      available: 1020.00 MiB
-      available_bytes: 1069543424
-      capacity: 0%
+      available: 930.74 MiB
+      available_bytes: 975953920
+      capacity: 8.75%
       total: 1020.00 MiB
       total_bytes: 1069543424
-      used: 0 bytes
-      used_bytes: 0
+      used: 89.25 MiB
+      used_bytes: 93589504
     system:
-      available: 3.20 GiB
-      available_bytes: 3433041920
-      capacity: 16.72%
+      available: 2.96 GiB
+      available_bytes: 3174400000
+      capacity: 23.00%
       total: 3.84 GiB
       total_bytes: 4122423296
-      used: 657.45 MiB
-      used_bytes: 689381376
-  memoryfree: 3.20 GiB
-  memoryfree_mb: 3274.00390625
+      used: 904.11 MiB
+      used_bytes: 948023296
+  memoryfree: 2.96 GiB
+  memoryfree_mb: 3027.34375
   memorysize: 3.84 GiB
   memorysize_mb: 3931.44921875
   mountpoints:
     "/":
-      available: 12.43 GiB
-      available_bytes: 13344571392
-      capacity: 19.79%
+      available: 11.66 GiB
+      available_bytes: 12517232640
+      capacity: 24.76%
       device: "/dev/mapper/base--template--vg-root"
       filesystem: ext4
       options:
@@ -839,12 +835,12 @@ values:
       - errors=remount-ro
       size: 16.35 GiB
       size_bytes: 17555079168
-      used: 3.07 GiB
-      used_bytes: 3292794880
+      used: 3.84 GiB
+      used_bytes: 4120133632
     "/boot":
-      available: 134.92 MiB
-      available_bytes: 141477888
-      capacity: 39.00%
+      available: 97.16 MiB
+      available_bytes: 101880832
+      capacity: 56.07%
       device: "/dev/vda1"
       filesystem: ext2
       options:
@@ -852,8 +848,8 @@ values:
       - relatime
       size: 233.32 MiB
       size_bytes: 244658176
-      used: 86.25 MiB
-      used_bytes: 90440704
+      used: 124.01 MiB
+      used_bytes: 130037760
     "/dev":
       available: 1.90 GiB
       available_bytes: 2041409536
@@ -934,8 +930,8 @@ values:
       used: 0 bytes
       used_bytes: 0
     "/run":
-      available: 392.61 MiB
-      available_bytes: 411684864
+      available: 392.59 MiB
+      available_bytes: 411656192
       capacity: 0.14%
       device: tmpfs
       filesystem: tmpfs
@@ -949,8 +945,8 @@ values:
       - mode=755
       size: 393.15 MiB
       size_bytes: 412246016
-      used: 548.00 KiB
-      used_bytes: 561152
+      used: 576.00 KiB
+      used_bytes: 589824
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -979,6 +975,26 @@ values:
       - relatime
       size: 0 bytes
       size_bytes: 0
+      used: 0 bytes
+      used_bytes: 0
+    "/run/user/1003":
+      available: 91.24 MiB
+      available_bytes: 95674368
+      capacity: 0%
+      device: tmpfs
+      filesystem: tmpfs
+      options:
+      - rw
+      - nosuid
+      - nodev
+      - relatime
+      - size=93432k
+      - nr_inodes=23358
+      - mode=700
+      - uid=1003
+      - gid=1003
+      size: 91.24 MiB
+      size_bytes: 95674368
       used: 0 bytes
       used_bytes: 0
   mounts:
@@ -1051,7 +1067,7 @@ values:
     scope6: link
   operatingsystem: Debian
   operatingsystemmajrelease: '11'
-  operatingsystemrelease: '11.7'
+  operatingsystemrelease: '11.11'
   os:
     architecture: amd64
     distro:
@@ -1059,16 +1075,16 @@ values:
       description: Debian GNU/Linux 11 (bullseye)
       id: Debian
       release:
-        full: '11.7'
+        full: '11.11'
         major: '11'
-        minor: '7'
+        minor: '11'
     family: Debian
     hardware: x86_64
     name: Debian
     release:
-      full: '11.7'
+      full: '11.11'
       major: '11'
-      minor: '7'
+      minor: '11'
     selinux:
       enabled: false
   osfamily: Debian
@@ -1185,8 +1201,8 @@ values:
   sshrsakey: AAAAB3NzaC1yc2EAAAADAQABAAABAQDgiPW8vE3z/TWZfFo7d3GlWLkcwiU2fgqmefL+nboV/aw0wai3YaIhP2TV3qDIdWcYXBb45uDz6q8WQSQTEuAvuzVYUfjc+bbzwBck2GYQUXOZ4qHtDhGKS9MSZt4MAMtZ7n+wD2BZ+nzysjFCH7ARPkHHxnmG/VdgMno4DdbimW3nHr3qvNrvwWAB/+YxYBYYgSvvU1CrBoNRM8FFK6m0gR5d/82hLiJI5qmajt2QUic2mQc9xXPPpStSOrYvPi8WDHkPfOQoRnRH/cNqIz9L1jxaY046GDGpwr4coYerKq7YT6EwzrIoEesIp2TBG5hoU46rp8MxGIEfxsIkZhK5
   subnet: sesi_rocquencourt_admin
   sudoversion: 1.9.5p2
-  swapfree: 1020.00 MiB
-  swapfree_mb: 1019.99609375
+  swapfree: 930.74 MiB
+  swapfree_mb: 930.7421875
   swapsize: 1020.00 MiB
   swapsize_mb: 1019.99609375
   swh_hostname:
@@ -1194,10 +1210,10 @@ values:
     short: rp1
     internal_fqdn: rp1.internal.admin.swh.network
   system_uptime:
-    days: 102
-    hours: 2470
-    seconds: 8892994
-    uptime: 102 days
+    days: 586
+    hours: 14086
+    seconds: 50710594
+    uptime: 586 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -1211,15 +1227,15 @@ values:
     systemd-time-wait-sync.service: disabled
   systemd_version: '247'
   timezone: UTC
-  uptime: 102 days
-  uptime_days: 102
-  uptime_hours: 2470
-  uptime_seconds: 8892994
+  uptime: 586 days
+  uptime_days: 586
+  uptime_hours: 14086
+  uptime_seconds: 50710594
   uuid: 59e95e85-0139-4187-8938-808a19e8933f
   vcsrepo_svn_ver: ''
   virtual: kvm
   clientcert: rp1.internal.admin.swh.network
   clientversion: 5.5.22
   clientnoop: false
-timestamp: '2023-05-09T12:26:06.259968394+00:00'
-expiration: '2023-05-09T12:56:06.261037955+00:00'
+timestamp: '2024-09-04T12:26:06.625286877+00:00'
+expiration: '2024-09-04T12:56:06.626714349+00:00'

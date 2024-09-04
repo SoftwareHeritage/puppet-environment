@@ -2,10 +2,24 @@
 name: esnode7.internal.softwareheritage.org
 values:
   agent_specified_environment: production
-  apt_has_dist_updates: false
-  apt_has_updates: false
+  apt_dist_updates: 3
+  apt_has_dist_updates: true
+  apt_has_updates: true
+  apt_package_dist_updates:
+  - icinga2
+  - icinga2-bin
+  - icinga2-common
+  apt_package_security_dist_updates: []
+  apt_package_security_updates: []
+  apt_package_updates:
+  - icinga2
+  - icinga2-bin
+  - icinga2-common
   apt_reboot_required: true
-  apt_update_last_success: 1683632107
+  apt_security_dist_updates: 0
+  apt_security_updates: 0
+  apt_update_last_success: 1725453063
+  apt_updates: 3
   architecture: amd64
   bios_release_date: '08/11/2022'
   bios_vendor: HPE
@@ -90,6 +104,7 @@ values:
   icinga2_puppet_hostcert: "/var/lib/puppet/ssl/certs/esnode7.internal.softwareheritage.org.pem"
   icinga2_puppet_hostprivkey: "/var/lib/puppet/ssl/private_keys/esnode7.internal.softwareheritage.org.pem"
   icinga2_puppet_localcacert: "/var/lib/puppet/ssl/certs/ca.pem"
+  icinga2_version: 2.13.7
   id: root
   identity:
     gid: 0
@@ -573,6 +588,9 @@ values:
       parameters:
         use_acpi_alarm: N
       used_by: []
+    tcp_diag:
+      parameters: {}
+      used_by: []
     jfs:
       parameters: {}
       used_by: []
@@ -842,6 +860,9 @@ values:
     mgag200:
       parameters:
         modeset: "-1"
+      used_by: []
+    udp_diag:
+      parameters: {}
       used_by: []
     fb:
       parameters:
@@ -1223,6 +1244,11 @@ values:
         def_reserved_size: '32768'
         allow_dio: '0'
       used_by: []
+    inet_diag:
+      parameters: {}
+      used_by:
+      - tcp_diag
+      - udp_diag
     acpi_ipmi:
       parameters: {}
       used_by: []
@@ -1376,15 +1402,15 @@ values:
       - 8021q
   letsencrypt_directory: {}
   load_averages:
-    15m: 0.08
-    1m: 0.12
-    5m: 0.08
+    15m: 0.5
+    1m: 0.32
+    5m: 0.44
   lsbdistcodename: bullseye
   lsbdistdescription: Debian GNU/Linux 11 (bullseye)
   lsbdistid: Debian
-  lsbdistrelease: '11.7'
+  lsbdistrelease: '11.11'
   lsbmajdistrelease: '11'
-  lsbminordistrelease: '7'
+  lsbminordistrelease: '11'
   macaddress: e2:12:55:04:50:b5
   macaddress_bond0: e2:12:55:04:50:b5
   macaddress_ens2f0np0: 88:e9:a4:67:81:c0
@@ -1393,30 +1419,30 @@ values:
   manufacturer: HPE
   memory:
     swap:
-      available: 976.00 MiB
-      available_bytes: 1023406080
-      capacity: 0%
+      available: 965.00 MiB
+      available_bytes: 1011871744
+      capacity: 1.13%
       total: 976.00 MiB
       total_bytes: 1023406080
-      used: 0 bytes
-      used_bytes: 0
+      used: 11.00 MiB
+      used_bytes: 11534336
     system:
-      available: 22.17 GiB
-      available_bytes: 23802036224
-      capacity: 64.60%
+      available: 23.49 GiB
+      available_bytes: 25225474048
+      capacity: 62.48%
       total: 62.62 GiB
       total_bytes: 67232747520
-      used: 40.45 GiB
-      used_bytes: 43430711296
-  memoryfree: 22.17 GiB
-  memoryfree_mb: 22699.390625
+      used: 39.12 GiB
+      used_bytes: 42007273472
+  memoryfree: 23.49 GiB
+  memoryfree_mb: 24056.88671875
   memorysize: 62.62 GiB
   memorysize_mb: 64118.14453125
   mountpoints:
     "/":
-      available: 13.29 GiB
-      available_bytes: 14274301952
-      capacity: 18.01%
+      available: 12.83 GiB
+      available_bytes: 13777690624
+      capacity: 20.86%
       device: "/dev/mapper/esnode7--vg-root"
       filesystem: ext4
       options:
@@ -1425,12 +1451,12 @@ values:
       - errors=remount-ro
       size: 17.11 GiB
       size_bytes: 18368774144
-      used: 2.92 GiB
-      used_bytes: 3135447040
+      used: 3.38 GiB
+      used_bytes: 3632058368
     "/boot":
-      available: 358.96 MiB
-      available_bytes: 376397824
-      capacity: 19.51%
+      available: 321.29 MiB
+      available_bytes: 336902144
+      capacity: 27.95%
       device: "/dev/nvme0n1p2"
       filesystem: ext2
       options:
@@ -1438,12 +1464,12 @@ values:
       - relatime
       size: 470.35 MiB
       size_bytes: 493201408
-      used: 86.99 MiB
-      used_bytes: 91218944
+      used: 124.66 MiB
+      used_bytes: 130714624
     "/boot/efi":
-      available: 505.20 MiB
-      available_bytes: 529735680
-      capacity: 1.13%
+      available: 505.18 MiB
+      available_bytes: 529719296
+      capacity: 1.14%
       device: "/dev/nvme0n1p1"
       filesystem: vfat
       options:
@@ -1458,8 +1484,8 @@ values:
       - errors=remount-ro
       size: 510.98 MiB
       size_bytes: 535805952
-      used: 5.79 MiB
-      used_bytes: 6070272
+      used: 5.80 MiB
+      used_bytes: 6086656
     "/dev":
       available: 31.26 GiB
       available_bytes: 33562869760
@@ -1541,7 +1567,7 @@ values:
       used_bytes: 0
     "/home":
       available: 62.35 GiB
-      available_bytes: 66951397376
+      available_bytes: 66951372800
       capacity: 0.01%
       device: "/dev/mapper/esnode7--vg-home"
       filesystem: ext4
@@ -1550,8 +1576,8 @@ values:
       - relatime
       size: 65.74 GiB
       size_bytes: 70591479808
-      used: 7.05 MiB
-      used_bytes: 7397376
+      used: 7.08 MiB
+      used_bytes: 7421952
     "/run":
       available: 6.26 GiB
       available_bytes: 6722007040
@@ -1621,9 +1647,9 @@ values:
       used: 0 bytes
       used_bytes: 0
     "/srv/elasticsearch/nodes":
-      available: 9.39 TiB
-      available_bytes: 10319320449024
-      capacity: 30.64%
+      available: 1.35 TiB
+      available_bytes: 1488266461184
+      capacity: 90.00%
       device: elasticsearch/data
       filesystem: zfs
       options:
@@ -1632,13 +1658,13 @@ values:
       - xattr
       - noacl
       size: 13.53 TiB
-      size_bytes: 14878642667520
-      used: 4.15 TiB
-      used_bytes: 4559322218496
+      size_bytes: 14878265704448
+      used: 12.18 TiB
+      used_bytes: 13389999243264
     "/tmp":
-      available: 929.02 MiB
-      available_bytes: 974151680
-      capacity: 8.07%
+      available: 943.49 MiB
+      available_bytes: 989319168
+      capacity: 6.64%
       device: "/dev/mapper/esnode7--vg-tmp"
       filesystem: ext4
       options:
@@ -1646,21 +1672,21 @@ values:
       - relatime
       size: 1.06 GiB
       size_bytes: 1136009216
-      used: 81.56 MiB
-      used_bytes: 85524480
+      used: 67.10 MiB
+      used_bytes: 70356992
     "/var":
-      available: 4.89 GiB
-      available_bytes: 5250629632
-      capacity: 13.45%
+      available: 2.66 GiB
+      available_bytes: 2854772736
+      capacity: 71.80%
       device: "/dev/mapper/esnode7--vg-var"
       filesystem: ext4
       options:
       - rw
       - relatime
-      size: 5.97 GiB
-      size_bytes: 6414352384
-      used: 778.41 MiB
-      used_bytes: 816226304
+      size: 9.91 GiB
+      size_bytes: 10639630336
+      used: 6.77 GiB
+      used_bytes: 7269425152
   mounts:
   - "/"
   - "/tmp"
@@ -1748,7 +1774,7 @@ values:
     scope6: link
   operatingsystem: Debian
   operatingsystemmajrelease: '11'
-  operatingsystemrelease: '11.7'
+  operatingsystemrelease: '11.11'
   os:
     architecture: amd64
     distro:
@@ -1756,16 +1782,16 @@ values:
       description: Debian GNU/Linux 11 (bullseye)
       id: Debian
       release:
-        full: '11.7'
+        full: '11.11'
         major: '11'
-        minor: '7'
+        minor: '11'
     family: Debian
     hardware: x86_64
     name: Debian
     release:
-      full: '11.7'
+      full: '11.11'
       major: '11'
-      minor: '7'
+      minor: '11'
     selinux:
       enabled: false
   osfamily: Debian
@@ -1797,8 +1823,8 @@ values:
     "/dev/mapper/esnode7--vg-var":
       filesystem: ext4
       mount: "/var"
-      size: 6.16 GiB
-      size_bytes: 6614417408
+      size: 10.16 GiB
+      size_bytes: 10909384704
       uuid: 94b46ac7-e0ce-4606-87eb-c0e81d6878bb
     "/dev/nvme0n1p1":
       filesystem: vfat
@@ -1975,8 +2001,8 @@ values:
   sshrsakey: AAAAB3NzaC1yc2EAAAADAQABAAABgQC9KTBf2wm1YCN3WVh/MpnXqBYdvJbVvmLaIV169dRA2va4pMHHn2t6Zm+FvI2cpbevk0wqgUlg8jv5uJ32s8OGsGl+2pOp0xdffq7dIJM8o+m3wi/aI7Vu3BTP4/GlIzbskYyxyin4AEclvTlum7/F1FEizZYiM0G/hF66FLfDFHjXjF+ZuwQQO+ammH5b3vZN3rTKhxxnOvrawCsveB+7o5NLMuQ2oehnfNlbhhMkbrSgGdrqurCHKUnlDFeHDm3jLyK46e8Up3rgLnFyQkju8EKVnqboXGCAuy08qPjd5TxNOHMuTNnb8e5UGw4IQEQdmIny1N+TDK7Aanw1Qoov2JUqc00gCtF5pR9/PU9FmuZtsoAZUbPctFWbcWipzEtahoup3O9y+EBcfRrWbxTlC+uFdEqumTDmkxvwoX9PsWtoxAuOJAVw0Zj5Z013nGrFx4aMuPKtY3b5nE9eqDq7vQf1Qu5D48iQ28Y+WFRpUXTSeQPzcJIogEhmej64xRU=
   subnet: sesi_rocquencourt
   sudoversion: 1.9.5p2
-  swapfree: 976.00 MiB
-  swapfree_mb: 975.99609375
+  swapfree: 965.00 MiB
+  swapfree_mb: 964.99609375
   swapsize: 976.00 MiB
   swapsize_mb: 975.99609375
   swh_hostname:
@@ -1984,10 +2010,10 @@ values:
     short: esnode7
     internal_fqdn: esnode7.internal.softwareheritage.org
   system_uptime:
-    days: 20
-    hours: 481
-    seconds: 1732651
-    uptime: 20 days
+    days: 504
+    hours: 12097
+    seconds: 43552051
+    uptime: 504 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -2001,15 +2027,15 @@ values:
     systemd-time-wait-sync.service: disabled
   systemd_version: '247'
   timezone: UTC
-  uptime: 20 days
-  uptime_days: 20
-  uptime_hours: 481
-  uptime_seconds: 1732651
+  uptime: 504 days
+  uptime_days: 504
+  uptime_hours: 12097
+  uptime_seconds: 43552051
   uuid: 34383350-3137-5a43-4a32-35303147314c
   vcsrepo_svn_ver: ''
   virtual: physical
   clientcert: esnode7.internal.softwareheritage.org
   clientversion: 5.5.22
   clientnoop: false
-timestamp: '2023-05-09T12:21:05.896231354+00:00'
-expiration: '2023-05-09T12:51:05.898021641+00:00'
+timestamp: '2024-09-04T12:51:05.806931406+00:00'
+expiration: '2024-09-04T13:21:05.808533384+00:00'

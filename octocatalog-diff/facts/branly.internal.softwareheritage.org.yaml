@@ -2,28 +2,10 @@
 name: branly.internal.softwareheritage.org
 values:
   agent_specified_environment: production
-  apt_dist_updates: 6
-  apt_has_dist_updates: true
-  apt_has_updates: true
-  apt_package_dist_updates:
-  - proxmox-ve
-  - proxmox-kernel-helper
-  - icinga2
-  - icinga2-bin
-  - icinga2-common
-  - icinga2-doc
-  apt_package_security_dist_updates: []
-  apt_package_security_updates: []
-  apt_package_updates:
-  - icinga2
-  - icinga2-bin
-  - icinga2-common
-  - icinga2-doc
+  apt_has_dist_updates: false
+  apt_has_updates: false
   apt_reboot_required: true
-  apt_security_dist_updates: 0
-  apt_security_updates: 0
-  apt_update_last_success: 1683633902
-  apt_updates: 4
+  apt_update_last_success: 1725451502
   architecture: amd64
   bios_release_date: 05/06/2020
   bios_vendor: Dell Inc.
@@ -127,6 +109,7 @@ values:
   icinga2_puppet_hostcert: "/var/lib/puppet/ssl/certs/branly.internal.softwareheritage.org.pem"
   icinga2_puppet_hostprivkey: "/var/lib/puppet/ssl/private_keys/branly.internal.softwareheritage.org.pem"
   icinga2_puppet_localcacert: "/var/lib/puppet/ssl/certs/ca.pem"
+  icinga2_version: 2.14.2
   id: root
   identity:
     gid: 0
@@ -134,7 +117,7 @@ values:
     privileged: true
     uid: 0
     user: root
-  interfaces: bond0,eno1,eno2,eno33,eno34,lo,tap100i0,tap100i1,tap103i0,tap103i1,tap107i0,tap109i0,tap109i1,tap109i2,tap109i3,tap111i0,tap113i0,tap115i0,tap118i0,tap123i0,tap127i0,tap136i0,tap139i0,tap140i0,tap144i0,tap153i0,tap158i0,tap173i0,tap209i0,tap209i1,tap210i0,tap210i1,tap211i0,tap211i1,tap212i0,tap212i1,tap301i0,vlan1300,vlan210,vlan440,vlan442,vlan443,vmbr0,vmbr1,vmbr1300,vmbr442,vmbr443
+  interfaces: bond0,eno1,eno2,eno33,eno34,lo,tap101i0,tap104i0,tap104i1,tap105i0,tap106i0,tap108i0,tap117i0,tap124i0,tap142i0,tap143i0,tap144i0,tap152i0,tap153i0,tap177i0,vlan1300,vlan210,vlan440,vlan442,vlan443,vmbr0,vmbr1,vmbr1300,vmbr442,vmbr443
   ipaddress: 192.168.100.108
   ipaddress6: fe80::24cd:98ff:fe09:dded
   ipaddress6_bond0: fe80::6a05:caff:feac:d824
@@ -150,8 +133,8 @@ values:
   is_virtual: false
   kernel: Linux
   kernelmajversion: '5.15'
-  kernelrelease: 5.15.83-1-pve
-  kernelversion: 5.15.83
+  kernelrelease: 5.15.143-1-pve
+  kernelversion: 5.15.143
   kmods:
     thermal:
       parameters:
@@ -238,8 +221,7 @@ values:
         cache_time: '1000'
       used_by: []
     raid1:
-      parameters:
-        max_queued_requests: '1024'
+      parameters: {}
       used_by: []
     vt:
       parameters:
@@ -377,8 +359,11 @@ values:
         zfs_multihost_history: '0'
         zfs_metaslab_switch_threshold: '2'
         metaslab_fragmentation_factor_enabled: '1'
+        zil_min_commit_timeout: '5000'
         zfs_admin_snapshot: '0'
         zfs_delete_blocks: '20480'
+        zfs_scan_report_txgs: '0'
+        zfs_default_ibs: '17'
         zfs_arc_meta_prune: '10000'
         zfs_free_min_time_ms: '1000'
         zfs_removal_suspend_progress: '0'
@@ -473,6 +458,7 @@ values:
         dbuf_metadata_cache_max_bytes: '18446744073709551615'
         zfs_scan_ignore_errors: '0'
         zfs_vdev_removal_max_active: '2'
+        zfs_default_bs: '9'
         zfs_vdev_max_auto_ashift: '14'
         zfs_condense_indirect_commit_entry_delay_ms: '0'
         zfs_metaslab_segment_weight_enabled: '1'
@@ -503,7 +489,7 @@ values:
         zfs_arc_dnode_limit: '0'
         zfs_scan_legacy: '0'
         zfs_dbgmsg_enable: '1'
-        zfs_scan_vdev_limit: '4194304'
+        zfs_scan_vdev_limit: '16777216'
         zfs_btree_verify_intensity: '0'
         zfs_vdev_raidz_impl: 'cycle [fastest] original scalar sse2 ssse3 avx2 '
         l2arc_mfuonly: '0'
@@ -566,7 +552,7 @@ values:
         zfs_recv_queue_length: '16777216'
         zfs_vdev_async_write_active_max_dirty_percent: '60'
         zfs_disable_ivset_guid_check: '0'
-        zfs_rebuild_vdev_limit: '33554432'
+        zfs_rebuild_vdev_limit: '67108864'
         zfs_arc_lotsfree_percent: '10'
         zfs_immediate_write_sz: '32768'
         zil_replay_disable: '0'
@@ -710,6 +696,9 @@ values:
         use_acpi_alarm: N
       used_by: []
     input_leds:
+      parameters: {}
+      used_by: []
+    tcp_diag:
       parameters: {}
       used_by: []
     ceph:
@@ -900,6 +889,9 @@ values:
         run_edge_events_on_boot: '1'
         ignore_wake: "(null)"
       used_by: []
+    sha1_ssse3:
+      parameters: {}
+      used_by: []
     i2c_algo_bit:
       parameters:
         bit_test: '0'
@@ -960,6 +952,7 @@ values:
       used_by: []
     intel_idle:
       parameters:
+        preferred_cstates: '0'
         max_cstate: '9'
         states_off: '0'
         no_acpi: N
@@ -1000,8 +993,7 @@ values:
         experimental_zcopytx: '0'
       used_by: []
     raid10:
-      parameters:
-        max_queued_requests: '1024'
+      parameters: {}
       used_by: []
     netfs:
       parameters:
@@ -1230,7 +1222,7 @@ values:
       - zfs
     loop:
       parameters:
-        max_loop: '0'
+        max_loop: '8'
         max_part: '0'
       used_by: []
     cec:
@@ -1352,10 +1344,11 @@ values:
         nx_huge_pages_recovery_ratio: '60'
         tsc_tolerance_ppm: '250'
         min_timer_period_us: '200'
-        tdp_mmu: Y
+        tdp_mmu: N
         vector_hashing: Y
         mmio_caching: Y
         halt_poll_ns_grow: '0'
+        mitigate_smt_rsb: N
         pi_inject_timer: '0'
         nx_huge_pages: N
         lapic_timer_advance_ns: "-1"
@@ -1503,6 +1496,10 @@ values:
         def_reserved_size: '32768'
         allow_dio: '0'
       used_by: []
+    inet_diag:
+      parameters: {}
+      used_by:
+      - tcp_diag
     acpi_ipmi:
       parameters: {}
       used_by: []
@@ -1515,6 +1512,9 @@ values:
       parameters:
         unmask_kbd_data: N
         debug: N
+      used_by: []
+    sha256_ssse3:
+      parameters: {}
       used_by: []
     amd64_edac:
       parameters:
@@ -1655,13 +1655,13 @@ values:
     dm_bufio:
       parameters:
         allocated_vmalloc_bytes: '0'
-        current_allocated_bytes: '262144'
+        current_allocated_bytes: '712704'
         allocated_kmem_cache_bytes: '0'
-        max_cache_size_bytes: '10812493824'
+        max_cache_size_bytes: '10812231680'
         max_age_seconds: '300'
         retain_bytes: '262144'
-        peak_allocated_bytes: '13000704'
-        allocated_get_free_pages_bytes: '262144'
+        peak_allocated_bytes: '35078144'
+        allocated_get_free_pages_bytes: '712704'
       used_by:
       - dm_persistent_data
     workqueue:
@@ -1702,53 +1702,36 @@ values:
       - 8021q
   letsencrypt_directory: {}
   load_averages:
-    15m: 12.75
-    1m: 11.83
-    5m: 12.06
+    15m: 7.46
+    1m: 10.46
+    5m: 7.71
   location: sesi_rocquencourt
   lsbdistcodename: bullseye
   lsbdistdescription: Debian GNU/Linux 11 (bullseye)
   lsbdistid: Debian
-  lsbdistrelease: '11.7'
+  lsbdistrelease: '11.11'
   lsbmajdistrelease: '11'
-  lsbminordistrelease: '7'
+  lsbminordistrelease: '11'
   macaddress: 26:cd:98:09:dd:ed
   macaddress_bond0: 68:05:ca:ac:d8:24
   macaddress_eno1: f4:02:70:d7:8d:cc
   macaddress_eno2: f4:02:70:d7:8d:cd
   macaddress_eno33: 68:05:ca:ac:d8:24
   macaddress_eno34: 68:05:ca:ac:d8:25
-  macaddress_tap100i0: 12:95:1a:44:4a:df
-  macaddress_tap100i1: 3a:00:20:61:30:b6
-  macaddress_tap103i0: 86:ea:76:ca:af:ef
-  macaddress_tap103i1: 56:72:c3:62:cd:96
-  macaddress_tap107i0: e6:99:1e:c2:12:f2
-  macaddress_tap109i0: be:b1:cf:68:75:50
-  macaddress_tap109i1: 6e:e7:93:fa:5b:b5
-  macaddress_tap109i2: 62:c5:6d:30:a4:34
-  macaddress_tap109i3: fa:6a:e4:5b:b4:52
-  macaddress_tap111i0: 0a:5d:88:45:6e:9b
-  macaddress_tap113i0: 6e:30:28:90:71:8c
-  macaddress_tap115i0: 0e:90:2f:a1:73:a7
-  macaddress_tap118i0: 7a:be:6b:7e:0a:4c
-  macaddress_tap123i0: 3e:84:19:1f:46:ef
-  macaddress_tap127i0: 76:3a:18:46:cd:a3
-  macaddress_tap136i0: a6:7e:68:95:2f:b2
-  macaddress_tap139i0: 62:73:da:cf:f2:d4
-  macaddress_tap140i0: 42:27:79:9d:9d:b9
+  macaddress_tap101i0: 52:4a:d5:a7:6d:85
+  macaddress_tap104i0: a6:f0:69:2f:ed:83
+  macaddress_tap104i1: b6:78:c5:71:7e:dc
+  macaddress_tap105i0: 42:05:1d:ba:08:27
+  macaddress_tap106i0: b2:c8:30:57:7f:2f
+  macaddress_tap108i0: 2e:d9:d5:ac:eb:77
+  macaddress_tap117i0: 02:c8:10:29:d8:86
+  macaddress_tap124i0: 42:b6:94:1f:b3:be
+  macaddress_tap142i0: 76:3e:01:db:f0:1b
+  macaddress_tap143i0: 3e:f3:bf:e4:a7:76
   macaddress_tap144i0: 3e:ac:f6:89:fa:f5
+  macaddress_tap152i0: de:34:d2:3b:b7:7f
   macaddress_tap153i0: ae:56:96:92:83:95
-  macaddress_tap158i0: 06:b4:39:6a:5c:1e
-  macaddress_tap173i0: 7e:0c:42:2c:8e:f3
-  macaddress_tap209i0: a6:80:43:83:bb:21
-  macaddress_tap209i1: 92:62:dc:dc:a3:72
-  macaddress_tap210i0: 42:19:0c:1d:1e:d8
-  macaddress_tap210i1: 1e:d2:ee:8c:0a:c8
-  macaddress_tap211i0: be:9e:3d:0c:7c:f4
-  macaddress_tap211i1: 5e:9e:da:6c:a2:7b
-  macaddress_tap212i0: 76:47:6c:47:e7:5f
-  macaddress_tap212i1: ee:a9:d2:77:2a:28
-  macaddress_tap301i0: ee:cd:a3:02:e7:1a
+  macaddress_tap177i0: b6:97:c8:57:b3:5f
   macaddress_vlan1300: 68:05:ca:ac:d8:24
   macaddress_vlan210: 68:05:ca:ac:d8:24
   macaddress_vlan440: 68:05:ca:ac:d8:24
@@ -1762,22 +1745,22 @@ values:
   manufacturer: Dell Inc.
   memory:
     system:
-      available: 196.17 GiB
-      available_bytes: 210635763712
-      capacity: 61.04%
-      total: 503.50 GiB
-      total_bytes: 540624818176
-      used: 307.33 GiB
-      used_bytes: 329989054464
-  memoryfree: 196.17 GiB
-  memoryfree_mb: 200877.91796875
-  memorysize: 503.50 GiB
-  memorysize_mb: 515580.00390625
+      available: 283.41 GiB
+      available_bytes: 304313540608
+      capacity: 43.71%
+      total: 503.48 GiB
+      total_bytes: 540611735552
+      used: 220.07 GiB
+      used_bytes: 236298194944
+  memoryfree: 283.41 GiB
+  memoryfree_mb: 290216.0078125
+  memorysize: 503.48 GiB
+  memorysize_mb: 515567.52734375
   mountpoints:
     "/":
-      available: 28.38 GiB
-      available_bytes: 30469459968
-      capacity: 23.43%
+      available: 28.30 GiB
+      available_bytes: 30382002176
+      capacity: 23.65%
       device: "/dev/mapper/boot-root"
       filesystem: ext4
       options:
@@ -1787,8 +1770,8 @@ values:
       - stripe=256
       size: 39.08 GiB
       size_bytes: 41956900864
-      used: 8.68 GiB
-      used_bytes: 9323180032
+      used: 8.76 GiB
+      used_bytes: 9410637824
     "/boot/efi":
       available: 1018.18 MiB
       available_bytes: 1067638784
@@ -1809,8 +1792,8 @@ values:
       used: 3.80 MiB
       used_bytes: 3989504
     "/dev":
-      available: 251.72 GiB
-      available_bytes: 270283051008
+      available: 251.71 GiB
+      available_bytes: 270275395584
       capacity: 0%
       device: udev
       filesystem: devtmpfs
@@ -1818,12 +1801,12 @@ values:
       - rw
       - nosuid
       - relatime
-      - size=263948292k
-      - nr_inodes=65987073
+      - size=263940816k
+      - nr_inodes=65985204
       - mode=755
       - inode64
-      size: 251.72 GiB
-      size_bytes: 270283051008
+      size: 251.71 GiB
+      size_bytes: 270275395584
       used: 0 bytes
       used_bytes: 0
     "/dev/hugepages":
@@ -1875,9 +1858,9 @@ values:
       used: 0 bytes
       used_bytes: 0
     "/dev/shm":
-      available: 251.69 GiB
-      available_bytes: 270249689088
-      capacity: 0.02%
+      available: 251.68 GiB
+      available_bytes: 270236758016
+      capacity: 0.03%
       device: tmpfs
       filesystem: tmpfs
       options:
@@ -1885,14 +1868,14 @@ values:
       - nosuid
       - nodev
       - inode64
-      size: 251.75 GiB
-      size_bytes: 270312407040
-      used: 59.81 MiB
-      used_bytes: 62717952
+      size: 251.74 GiB
+      size_bytes: 270305865728
+      used: 65.91 MiB
+      used_bytes: 69107712
     "/etc/pve":
-      available: 127.69 MiB
-      available_bytes: 133890048
-      capacity: 0.24%
+      available: 127.71 MiB
+      available_bytes: 133910528
+      capacity: 0.23%
       device: "/dev/fuse"
       filesystem: fuse
       options:
@@ -1906,13 +1889,13 @@ values:
       - allow_other
       size: 128.00 MiB
       size_bytes: 134217728
-      used: 320.00 KiB
-      used_bytes: 327680
+      used: 300.00 KiB
+      used_bytes: 307200
     "/mnt/pve/proxmox-cephfs":
-      available: 3.35 TiB
-      available_bytes: 3681625833472
-      capacity: 0.17%
-      device: 192.168.100.108,192.168.100.32,192.168.100.33,192.168.100.34:/
+      available: 1.07 TiB
+      available_bytes: 1171343278080
+      capacity: 0.62%
+      device: 192.168.100.108,192.168.100.33,192.168.100.34:/
       filesystem: ceph
       options:
       - rw
@@ -1921,13 +1904,13 @@ values:
       - secret=<hidden>
       - fsid=82307cfd-401a-4b58-8d29-7cbcd98f26fd
       - acl
-      size: 3.35 TiB
-      size_bytes: 3687845986304
-      used: 5.79 GiB
-      used_bytes: 6220152832
+      size: 1.07 TiB
+      size_bytes: 1178628784128
+      used: 6.79 GiB
+      used_bytes: 7285506048
     "/run":
-      available: 50.35 GiB
-      available_bytes: 54058475520
+      available: 50.34 GiB
+      available_bytes: 54057267200
       capacity: 0.01%
       device: tmpfs
       filesystem: tmpfs
@@ -1937,13 +1920,13 @@ values:
       - nodev
       - noexec
       - relatime
-      - size=52795396k
+      - size=52794116k
       - mode=755
       - inode64
       size: 50.35 GiB
-      size_bytes: 54062485504
-      used: 3.82 MiB
-      used_bytes: 4009984
+      size_bytes: 54061174784
+      used: 3.73 MiB
+      used_bytes: 3907584
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -1975,9 +1958,49 @@ values:
       size_bytes: 0
       used: 0 bytes
       used_bytes: 0
+    "/run/user/0":
+      available: 50.35 GiB
+      available_bytes: 54061170688
+      capacity: 0%
+      device: tmpfs
+      filesystem: tmpfs
+      options:
+      - rw
+      - nosuid
+      - nodev
+      - relatime
+      - size=52794112k
+      - nr_inodes=13198528
+      - mode=700
+      - inode64
+      size: 50.35 GiB
+      size_bytes: 54061170688
+      used: 0 bytes
+      used_bytes: 0
+    "/run/user/1003":
+      available: 50.35 GiB
+      available_bytes: 54061170688
+      capacity: 0%
+      device: tmpfs
+      filesystem: tmpfs
+      options:
+      - rw
+      - nosuid
+      - nodev
+      - relatime
+      - size=52794112k
+      - nr_inodes=13198528
+      - mode=700
+      - uid=1003
+      - gid=1003
+      - inode64
+      size: 50.35 GiB
+      size_bytes: 54061170688
+      used: 0 bytes
+      used_bytes: 0
     "/var/lib/ceph/osd/ceph-12":
-      available: 251.75 GiB
-      available_bytes: 270312378368
+      available: 251.74 GiB
+      available_bytes: 270305837056
       capacity: 0.00%
       device: tmpfs
       filesystem: tmpfs
@@ -1985,13 +2008,13 @@ values:
       - rw
       - relatime
       - inode64
-      size: 251.75 GiB
-      size_bytes: 270312407040
+      size: 251.74 GiB
+      size_bytes: 270305865728
       used: 28.00 KiB
       used_bytes: 28672
     "/var/lib/ceph/osd/ceph-13":
-      available: 251.75 GiB
-      available_bytes: 270312378368
+      available: 251.74 GiB
+      available_bytes: 270305837056
       capacity: 0.00%
       device: tmpfs
       filesystem: tmpfs
@@ -1999,13 +2022,13 @@ values:
       - rw
       - relatime
       - inode64
-      size: 251.75 GiB
-      size_bytes: 270312407040
+      size: 251.74 GiB
+      size_bytes: 270305865728
       used: 28.00 KiB
       used_bytes: 28672
     "/var/lib/ceph/osd/ceph-14":
-      available: 251.75 GiB
-      available_bytes: 270312378368
+      available: 251.74 GiB
+      available_bytes: 270305837056
       capacity: 0.00%
       device: tmpfs
       filesystem: tmpfs
@@ -2013,8 +2036,8 @@ values:
       - rw
       - relatime
       - inode64
-      size: 251.75 GiB
-      size_bytes: 270312407040
+      size: 251.74 GiB
+      size_bytes: 270305865728
       used: 28.00 KiB
       used_bytes: 28672
     "/var/lib/lxcfs":
@@ -2061,37 +2084,20 @@ values:
   mtu_eno33: 9000
   mtu_eno34: 9000
   mtu_lo: 65536
-  mtu_tap100i0: 9000
-  mtu_tap100i1: 9000
-  mtu_tap103i0: 9000
-  mtu_tap103i1: 9000
-  mtu_tap107i0: 9000
-  mtu_tap109i0: 9000
-  mtu_tap109i1: 9000
-  mtu_tap109i2: 9000
-  mtu_tap109i3: 9000
-  mtu_tap111i0: 9000
-  mtu_tap113i0: 9000
-  mtu_tap115i0: 9000
-  mtu_tap118i0: 9000
-  mtu_tap123i0: 9000
-  mtu_tap127i0: 9000
-  mtu_tap136i0: 9000
-  mtu_tap139i0: 9000
-  mtu_tap140i0: 9000
+  mtu_tap101i0: 9000
+  mtu_tap104i0: 9000
+  mtu_tap104i1: 9000
+  mtu_tap105i0: 9000
+  mtu_tap106i0: 9000
+  mtu_tap108i0: 9000
+  mtu_tap117i0: 9000
+  mtu_tap124i0: 9000
+  mtu_tap142i0: 9000
+  mtu_tap143i0: 9000
   mtu_tap144i0: 9000
+  mtu_tap152i0: 9000
   mtu_tap153i0: 9000
-  mtu_tap158i0: 9000
-  mtu_tap173i0: 9000
-  mtu_tap209i0: 9000
-  mtu_tap209i1: 9000
-  mtu_tap210i0: 9000
-  mtu_tap210i1: 9000
-  mtu_tap211i0: 9000
-  mtu_tap211i1: 9000
-  mtu_tap212i0: 9000
-  mtu_tap212i1: 9000
-  mtu_tap301i0: 9000
+  mtu_tap177i0: 9000
   mtu_vlan1300: 9000
   mtu_vlan210: 9000
   mtu_vlan440: 9000
@@ -2170,98 +2176,47 @@ values:
         network: 127.0.0.0
         network6: "::1"
         scope6: host
-      tap100i0:
-        mac: 12:95:1a:44:4a:df
+      tap101i0:
+        mac: 52:4a:d5:a7:6d:85
         mtu: 9000
-      tap100i1:
-        mac: 3a:00:20:61:30:b6
+      tap104i0:
+        mac: a6:f0:69:2f:ed:83
         mtu: 9000
-      tap103i0:
-        mac: 86:ea:76:ca:af:ef
+      tap104i1:
+        mac: b6:78:c5:71:7e:dc
         mtu: 9000
-      tap103i1:
-        mac: 56:72:c3:62:cd:96
+      tap105i0:
+        mac: 42:05:1d:ba:08:27
         mtu: 9000
-      tap107i0:
-        mac: e6:99:1e:c2:12:f2
+      tap106i0:
+        mac: b2:c8:30:57:7f:2f
         mtu: 9000
-      tap109i0:
-        mac: be:b1:cf:68:75:50
+      tap108i0:
+        mac: 2e:d9:d5:ac:eb:77
         mtu: 9000
-      tap109i1:
-        mac: 6e:e7:93:fa:5b:b5
+      tap117i0:
+        mac: 02:c8:10:29:d8:86
         mtu: 9000
-      tap109i2:
-        mac: 62:c5:6d:30:a4:34
+      tap124i0:
+        mac: 42:b6:94:1f:b3:be
         mtu: 9000
-      tap109i3:
-        mac: fa:6a:e4:5b:b4:52
+      tap142i0:
+        mac: 76:3e:01:db:f0:1b
         mtu: 9000
-      tap111i0:
-        mac: 0a:5d:88:45:6e:9b
-        mtu: 9000
-      tap113i0:
-        mac: 6e:30:28:90:71:8c
-        mtu: 9000
-      tap115i0:
-        mac: 0e:90:2f:a1:73:a7
-        mtu: 9000
-      tap118i0:
-        mac: 7a:be:6b:7e:0a:4c
-        mtu: 9000
-      tap123i0:
-        mac: 3e:84:19:1f:46:ef
-        mtu: 9000
-      tap127i0:
-        mac: 76:3a:18:46:cd:a3
-        mtu: 9000
-      tap136i0:
-        mac: a6:7e:68:95:2f:b2
-        mtu: 9000
-      tap139i0:
-        mac: 62:73:da:cf:f2:d4
-        mtu: 9000
-      tap140i0:
-        mac: 42:27:79:9d:9d:b9
+      tap143i0:
+        mac: 3e:f3:bf:e4:a7:76
         mtu: 9000
       tap144i0:
         mac: 3e:ac:f6:89:fa:f5
         mtu: 9000
+      tap152i0:
+        mac: de:34:d2:3b:b7:7f
+        mtu: 9000
       tap153i0:
         mac: ae:56:96:92:83:95
         mtu: 9000
-      tap158i0:
-        mac: 06:b4:39:6a:5c:1e
-        mtu: 9000
-      tap173i0:
-        mac: 7e:0c:42:2c:8e:f3
-        mtu: 9000
-      tap209i0:
-        mac: a6:80:43:83:bb:21
-        mtu: 9000
-      tap209i1:
-        mac: 92:62:dc:dc:a3:72
-        mtu: 9000
-      tap210i0:
-        mac: 42:19:0c:1d:1e:d8
-        mtu: 9000
-      tap210i1:
-        mac: 1e:d2:ee:8c:0a:c8
-        mtu: 9000
-      tap211i0:
-        mac: be:9e:3d:0c:7c:f4
-        mtu: 9000
-      tap211i1:
-        mac: 5e:9e:da:6c:a2:7b
-        mtu: 9000
-      tap212i0:
-        mac: 76:47:6c:47:e7:5f
-        mtu: 9000
-      tap212i1:
-        mac: ee:a9:d2:77:2a:28
-        mtu: 9000
-      tap301i0:
-        mac: ee:cd:a3:02:e7:1a
+      tap177i0:
+        mac: b6:97:c8:57:b3:5f
         mtu: 9000
       vlan1300:
         mac: 68:05:ca:ac:d8:24
@@ -2352,7 +2307,7 @@ values:
     scope6: link
   operatingsystem: Debian
   operatingsystemmajrelease: '11'
-  operatingsystemrelease: '11.7'
+  operatingsystemrelease: '11.11'
   os:
     architecture: amd64
     distro:
@@ -2360,16 +2315,16 @@ values:
       description: Debian GNU/Linux 11 (bullseye)
       id: Debian
       release:
-        full: '11.7'
+        full: '11.11'
         major: '11'
-        minor: '7'
+        minor: '11'
     family: Debian
     hardware: x86_64
     name: Debian
     release:
-      full: '11.7'
+      full: '11.11'
       major: '11'
-      minor: '7'
+      minor: '11'
     selinux:
       enabled: false
   osfamily: Debian
@@ -2411,33 +2366,24 @@ values:
     "/dev/mapper/scratch-data_tmeta":
       size: 92.00 MiB
       size_bytes: 96468992
-    "/dev/mapper/scratch-vm--158--disk--0":
-      size: 256.00 GiB
-      size_bytes: 274877906944
-    "/dev/mapper/scratch-vm--209--disk--0":
-      filesystem: swap
-      label: swap
-      size: 100.00 GiB
-      size_bytes: 107374182400
-      uuid: d638b432-dd84-4e51-8829-fe2c7f73f32e
-    "/dev/mapper/scratch-vm--210--disk--0":
-      filesystem: swap
-      label: swap
-      size: 100.00 GiB
-      size_bytes: 107374182400
-      uuid: 89027d1d-c2ec-4513-8a65-90bc32f17cfe
-    "/dev/mapper/scratch-vm--211--disk--0":
-      filesystem: swap
-      label: swap
-      size: 100.00 GiB
-      size_bytes: 107374182400
-      uuid: 1d97aff4-b6af-4e1c-ab58-ef305f6f50b7
-    "/dev/mapper/scratch-vm--212--disk--0":
-      filesystem: swap
-      label: swap
-      size: 100.00 GiB
-      size_bytes: 107374182400
-      uuid: c99aece9-c347-4f01-b2c5-749374a08586
+    "/dev/mapper/scratch-vm--117--disk--0":
+      size: 30.00 GiB
+      size_bytes: 32212254720
+    "/dev/mapper/scratch-vm--142--disk--0":
+      size: 20.00 GiB
+      size_bytes: 21474836480
+    "/dev/mapper/scratch-vm--143--disk--0":
+      size: 20.00 GiB
+      size_bytes: 21474836480
+    "/dev/mapper/scratch-vm--152--disk--0":
+      size: 200.00 GiB
+      size_bytes: 214748364800
+    "/dev/mapper/scratch-vm--153--disk--0":
+      size: 20.00 GiB
+      size_bytes: 21474836480
+    "/dev/mapper/scratch-vm--177--disk--0":
+      size: 40.00 GiB
+      size_bytes: 42949672960
     "/dev/sda1":
       filesystem: vfat
       partuuid: 8ee9400b-62d9-c848-9ef0-2a6b622ee091
@@ -2646,10 +2592,10 @@ values:
     short: branly
     internal_fqdn: branly.internal.softwareheritage.org
   system_uptime:
-    days: 102
-    hours: 2470
-    seconds: 8892905
-    uptime: 102 days
+    days: 179
+    hours: 4318
+    seconds: 15545667
+    uptime: 179 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -2663,15 +2609,15 @@ values:
     systemd-time-wait-sync.service: disabled
   systemd_version: '247'
   timezone: UTC
-  uptime: 102 days
-  uptime_days: 102
-  uptime_hours: 2470
-  uptime_seconds: 8892905
+  uptime: 179 days
+  uptime_days: 179
+  uptime_hours: 4318
+  uptime_seconds: 15545667
   uuid: 4c4c4544-0047-4a10-8048-b7c04f4e3333
   vcsrepo_svn_ver: ''
   virtual: physical
   clientcert: branly.internal.softwareheritage.org
   clientversion: 5.5.22
   clientnoop: false
-timestamp: '2023-05-09T12:23:05.124855240+00:00'
-expiration: '2023-05-09T12:53:05.126934457+00:00'
+timestamp: '2024-09-04T12:53:04.618989535+00:00'
+expiration: '2024-09-04T13:23:04.621086255+00:00'

@@ -2,23 +2,33 @@
 name: uffizi.internal.softwareheritage.org
 values:
   agent_specified_environment: production
-  apt_dist_updates: 2
+  apt_dist_updates: 5
   apt_has_dist_updates: true
-  apt_has_updates: false
+  apt_has_updates: true
   apt_package_dist_updates:
   - proxmox-ve
   - proxmox-kernel-helper
+  - icinga2
+  - icinga2-bin
+  - icinga2-common
   apt_package_security_dist_updates: []
+  apt_package_security_updates: []
+  apt_package_updates:
+  - icinga2
+  - icinga2-bin
+  - icinga2-common
   apt_reboot_required: true
   apt_security_dist_updates: 0
-  apt_update_last_success: 1683635103
+  apt_security_updates: 0
+  apt_update_last_success: 1725452704
+  apt_updates: 3
   architecture: amd64
   bios_release_date: 05/23/2018
   bios_vendor: Dell Inc.
   bios_version: 1.8.0
-  blockdevice_sda_model: PERC H730P Adp
-  blockdevice_sda_size: 599550590976
-  blockdevice_sda_vendor: DELL
+  blockdevice_sda_model: EG001200JWJNQ
+  blockdevice_sda_size: 1200243695616
+  blockdevice_sda_vendor: HPE
   blockdevice_sdb_model: EG001200JWJNQ
   blockdevice_sdb_size: 1200243695616
   blockdevice_sdb_vendor: HPE
@@ -37,9 +47,9 @@ values:
   blockdevice_sdg_model: EG001200JWJNQ
   blockdevice_sdg_size: 1200243695616
   blockdevice_sdg_vendor: HPE
-  blockdevice_sdh_model: EG001200JWJNQ
-  blockdevice_sdh_size: 1200243695616
-  blockdevice_sdh_vendor: HPE
+  blockdevice_sdh_model: PERC H730P Adp
+  blockdevice_sdh_size: 599550590976
+  blockdevice_sdh_vendor: DELL
   blockdevice_sr0_model: DVD-ROM DS-8DBSH
   blockdevice_sr0_size: 1073741312
   blockdevice_sr0_vendor: PLDS
@@ -56,10 +66,10 @@ values:
   deployment: production
   disks:
     sda:
-      model: PERC H730P Adp
-      size: 558.38 GiB
-      size_bytes: 599550590976
-      vendor: DELL
+      model: EG001200JWJNQ
+      size: 1.09 TiB
+      size_bytes: 1200243695616
+      vendor: HPE
     sdb:
       model: EG001200JWJNQ
       size: 1.09 TiB
@@ -91,10 +101,10 @@ values:
       size_bytes: 1200243695616
       vendor: HPE
     sdh:
-      model: EG001200JWJNQ
-      size: 1.09 TiB
-      size_bytes: 1200243695616
-      vendor: HPE
+      model: PERC H730P Adp
+      size: 558.38 GiB
+      size_bytes: 599550590976
+      vendor: DELL
     sr0:
       model: DVD-ROM DS-8DBSH
       size: 1.00 GiB
@@ -140,6 +150,7 @@ values:
   icinga2_puppet_hostcert: "/var/lib/puppet/ssl/certs/uffizi.internal.softwareheritage.org.pem"
   icinga2_puppet_hostprivkey: "/var/lib/puppet/ssl/private_keys/uffizi.internal.softwareheritage.org.pem"
   icinga2_puppet_localcacert: "/var/lib/puppet/ssl/certs/ca.pem"
+  icinga2_version: 2.13.7
   id: root
   identity:
     gid: 0
@@ -147,7 +158,7 @@ values:
     privileged: true
     uid: 0
     user: root
-  interfaces: bond0,eno1,eno2,eno3,eno4,enp97s0f0,enp97s0f1,enp97s0f2,enp97s0f3,lo,vlan1300,vlan440,vlan442,vlan443,vmbr0,vmbr1300,vmbr442,vmbr443
+  interfaces: bond0,eno1,eno2,eno3,eno4,enp97s0f0,enp97s0f1,enp97s0f2,enp97s0f3,lo,tap146i0,tap147i0,tap154i0,vlan1300,vlan440,vlan442,vlan443,vmbr0,vmbr1300,vmbr442,vmbr443
   ipaddress: 192.168.100.101
   ipaddress6: fe80::f4e8:53ff:fe1a:1b47
   ipaddress6_bond0: fe80::faf2:1eff:fe0c:3c78
@@ -166,12 +177,12 @@ values:
   java_default_home: "/usr/lib/jvm/java-11-openjdk-amd64"
   java_libjvm_path: "/usr/lib/jvm/java-11-openjdk-amd64/lib/server"
   java_major_version: '11'
-  java_patch_level: '18'
-  java_version: 11.0.18
+  java_patch_level: '24'
+  java_version: 11.0.24
   kernel: Linux
   kernelmajversion: '5.15'
-  kernelrelease: 5.15.85-1-pve
-  kernelversion: 5.15.85
+  kernelrelease: 5.15.116-1-pve
+  kernelversion: 5.15.116
   kmods:
     thermal:
       parameters:
@@ -248,8 +259,7 @@ values:
         cache_time: '1000'
       used_by: []
     raid1:
-      parameters:
-        max_queued_requests: '1024'
+      parameters: {}
       used_by: []
     vt:
       parameters:
@@ -384,8 +394,10 @@ values:
         zfs_multihost_history: '0'
         zfs_metaslab_switch_threshold: '2'
         metaslab_fragmentation_factor_enabled: '1'
+        zil_min_commit_timeout: '5000'
         zfs_admin_snapshot: '0'
         zfs_delete_blocks: '20480'
+        zfs_default_ibs: '17'
         zfs_arc_meta_prune: '10000'
         zfs_free_min_time_ms: '1000'
         zfs_removal_suspend_progress: '0'
@@ -480,6 +492,7 @@ values:
         dbuf_metadata_cache_max_bytes: '18446744073709551615'
         zfs_scan_ignore_errors: '0'
         zfs_vdev_removal_max_active: '2'
+        zfs_default_bs: '9'
         zfs_vdev_max_auto_ashift: '14'
         zfs_condense_indirect_commit_entry_delay_ms: '0'
         zfs_metaslab_segment_weight_enabled: '1'
@@ -714,7 +727,7 @@ values:
       used_by: []
     rtc_cmos:
       parameters:
-        use_acpi_alarm: N
+        use_acpi_alarm: Y
       used_by: []
     input_leds:
       parameters: {}
@@ -756,7 +769,7 @@ values:
       parameters:
         icp_gcm_avx_chunk_size: '32736'
         icp_aes_impl: 'cycle [fastest] generic x86_64 aesni '
-        icp_gcm_impl: 'cycle [fastest] avx generic pclmulqdq '
+        icp_gcm_impl: 'cycle [fastest] generic pclmulqdq '
       used_by:
       - zfs
     sysimgblt:
@@ -981,6 +994,7 @@ values:
       used_by: []
     intel_idle:
       parameters:
+        preferred_cstates: '0'
         max_cstate: '9'
         states_off: '0'
         no_acpi: N
@@ -1029,8 +1043,7 @@ values:
         optimize_stpg: '0'
       used_by: []
     raid10:
-      parameters:
-        max_queued_requests: '1024'
+      parameters: {}
       used_by: []
     netfs:
       parameters:
@@ -1290,7 +1303,7 @@ values:
       - zfs
     loop:
       parameters:
-        max_loop: '0'
+        max_loop: '8'
         max_part: '0'
       used_by: []
     cec:
@@ -1412,6 +1425,7 @@ values:
         vector_hashing: Y
         mmio_caching: Y
         halt_poll_ns_grow: '0'
+        mitigate_smt_rsb: N
         pi_inject_timer: '0'
         nx_huge_pages: Y
         lapic_timer_advance_ns: "-1"
@@ -1730,13 +1744,13 @@ values:
     dm_bufio:
       parameters:
         allocated_vmalloc_bytes: '0'
-        current_allocated_bytes: '8192'
+        current_allocated_bytes: '520192'
         allocated_kmem_cache_bytes: '0'
-        max_cache_size_bytes: '10819952640'
+        max_cache_size_bytes: '10819690496'
         max_age_seconds: '300'
         retain_bytes: '262144'
-        peak_allocated_bytes: '8192'
-        allocated_get_free_pages_bytes: '8192'
+        peak_allocated_bytes: '40251392'
+        allocated_get_free_pages_bytes: '520192'
       used_by:
       - dm_persistent_data
     workqueue:
@@ -1774,16 +1788,16 @@ values:
       - 8021q
   letsencrypt_directory: {}
   load_averages:
-    15m: 0.18
-    1m: 0.12
-    5m: 0.14
+    15m: 2.85
+    1m: 2.62
+    5m: 2.55
   location: sesi_rocquencourt
   lsbdistcodename: bullseye
   lsbdistdescription: Debian GNU/Linux 11 (bullseye)
   lsbdistid: Debian
-  lsbdistrelease: '11.7'
+  lsbdistrelease: '11.11'
   lsbmajdistrelease: '11'
-  lsbminordistrelease: '7'
+  lsbminordistrelease: '11'
   macaddress: f6:e8:53:1a:1b:47
   macaddress_bond0: f8:f2:1e:0c:3c:78
   macaddress_eno1: ec:f4:bb:dd:42:20
@@ -1794,6 +1808,9 @@ values:
   macaddress_enp97s0f1: f8:f2:1e:0c:3c:7a
   macaddress_enp97s0f2: f8:f2:1e:0c:3c:7c
   macaddress_enp97s0f3: f8:f2:1e:0c:3c:7e
+  macaddress_tap146i0: 86:10:50:5f:96:ec
+  macaddress_tap147i0: 5a:6a:bd:19:24:74
+  macaddress_tap154i0: a6:81:27:9d:c1:19
   macaddress_vlan1300: f8:f2:1e:0c:3c:78
   macaddress_vlan440: f8:f2:1e:0c:3c:78
   macaddress_vlan442: f8:f2:1e:0c:3c:78
@@ -1806,29 +1823,29 @@ values:
   memory:
     swap:
       available: 4.66 GiB
-      available_bytes: 4999606272
-      capacity: 0%
+      available_bytes: 4998545408
+      capacity: 0.02%
       total: 4.66 GiB
       total_bytes: 4999606272
-      used: 0 bytes
-      used_bytes: 0
+      used: 1.01 MiB
+      used_bytes: 1060864
     system:
-      available: 499.36 GiB
-      available_bytes: 536188784640
-      capacity: 0.89%
-      total: 503.84 GiB
-      total_bytes: 540997640192
-      used: 4.48 GiB
-      used_bytes: 4808855552
-  memoryfree: 499.36 GiB
-  memoryfree_mb: 511349.47265625
-  memorysize: 503.84 GiB
-  memorysize_mb: 515935.5546875
+      available: 257.99 GiB
+      available_bytes: 277016006656
+      capacity: 48.79%
+      total: 503.83 GiB
+      total_bytes: 540984561664
+      used: 245.84 GiB
+      used_bytes: 263968555008
+  memoryfree: 257.99 GiB
+  memoryfree_mb: 264183.05078125
+  memorysize: 503.83 GiB
+  memorysize_mb: 515923.08203125
   mountpoints:
     "/":
-      available: 55.18 GiB
-      available_bytes: 59244851200
-      capacity: 26.56%
+      available: 53.89 GiB
+      available_bytes: 57866924032
+      capacity: 28.27%
       device: "/dev/mapper/vg--louvre-uffizi--root"
       filesystem: ext4
       options:
@@ -1838,11 +1855,11 @@ values:
       - stripe=256
       size: 78.57 GiB
       size_bytes: 84358758400
-      used: 19.95 GiB
-      used_bytes: 21424996352
+      used: 21.24 GiB
+      used_bytes: 22802923520
     "/dev":
-      available: 251.89 GiB
-      available_bytes: 270466564096
+      available: 251.88 GiB
+      available_bytes: 270457823232
       capacity: 0%
       device: udev
       filesystem: devtmpfs
@@ -1850,12 +1867,12 @@ values:
       - rw
       - nosuid
       - relatime
-      - size=264127504k
-      - nr_inodes=66031876
+      - size=264118968k
+      - nr_inodes=66029742
       - mode=755
       - inode64
-      size: 251.89 GiB
-      size_bytes: 270466564096
+      size: 251.88 GiB
+      size_bytes: 270457823232
       used: 0 bytes
       used_bytes: 0
     "/dev/hugepages":
@@ -1907,8 +1924,8 @@ values:
       used: 0 bytes
       used_bytes: 0
     "/dev/shm":
-      available: 251.86 GiB
-      available_bytes: 270436102144
+      available: 251.85 GiB
+      available_bytes: 270426365952
       capacity: 0.02%
       device: tmpfs
       filesystem: tmpfs
@@ -1918,13 +1935,13 @@ values:
       - nodev
       - inode64
       size: 251.92 GiB
-      size_bytes: 270498820096
-      used: 59.81 MiB
-      used_bytes: 62717952
+      size_bytes: 270492278784
+      used: 62.86 MiB
+      used_bytes: 65912832
     "/etc/pve":
-      available: 127.69 MiB
-      available_bytes: 133890048
-      capacity: 0.24%
+      available: 127.71 MiB
+      available_bytes: 133910528
+      capacity: 0.23%
       device: "/dev/fuse"
       filesystem: fuse
       options:
@@ -1938,13 +1955,13 @@ values:
       - allow_other
       size: 128.00 MiB
       size_bytes: 134217728
-      used: 320.00 KiB
-      used_bytes: 327680
+      used: 300.00 KiB
+      used_bytes: 307200
     "/mnt/pve/proxmox-cephfs":
-      available: 3.35 TiB
-      available_bytes: 3681680359424
-      capacity: 0.17%
-      device: 192.168.100.108,192.168.100.32,192.168.100.33,192.168.100.34:/
+      available: 1.07 TiB
+      available_bytes: 1171859177472
+      capacity: 0.62%
+      device: 192.168.100.108,192.168.100.33,192.168.100.34:/
       filesystem: ceph
       options:
       - rw
@@ -1952,13 +1969,13 @@ values:
       - name=admin
       - secret=<hidden>
       - acl
-      size: 3.35 TiB
-      size_bytes: 3687900512256
-      used: 5.79 GiB
-      used_bytes: 6220152832
+      size: 1.07 TiB
+      size_bytes: 1179140489216
+      used: 6.78 GiB
+      used_bytes: 7281311744
     "/run":
       available: 50.38 GiB
-      available_bytes: 54095466496
+      available_bytes: 54093815808
       capacity: 0.01%
       device: tmpfs
       filesystem: tmpfs
@@ -1968,13 +1985,13 @@ values:
       - nodev
       - noexec
       - relatime
-      - size=52831804k
+      - size=52830524k
       - mode=755
       - inode64
       size: 50.38 GiB
-      size_bytes: 54099767296
-      used: 4.10 MiB
-      used_bytes: 4300800
+      size_bytes: 54098456576
+      used: 4.43 MiB
+      used_bytes: 4640768
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -2006,6 +2023,76 @@ values:
       size_bytes: 0
       used: 0 bytes
       used_bytes: 0
+    "/run/user/1003":
+      available: 50.38 GiB
+      available_bytes: 54098448384
+      capacity: 0.00%
+      device: tmpfs
+      filesystem: tmpfs
+      options:
+      - rw
+      - nosuid
+      - nodev
+      - relatime
+      - size=52830520k
+      - nr_inodes=13207630
+      - mode=700
+      - uid=1003
+      - gid=1003
+      - inode64
+      size: 50.38 GiB
+      size_bytes: 54098452480
+      used: 4.00 KiB
+      used_bytes: 4096
+    "/run/user/1025":
+      available: 50.38 GiB
+      available_bytes: 54098448384
+      capacity: 0.00%
+      device: tmpfs
+      filesystem: tmpfs
+      options:
+      - rw
+      - nosuid
+      - nodev
+      - relatime
+      - size=52830520k
+      - nr_inodes=13207630
+      - mode=700
+      - uid=1025
+      - gid=1025
+      - inode64
+      size: 50.38 GiB
+      size_bytes: 54098452480
+      used: 4.00 KiB
+      used_bytes: 4096
+    "/srv/storage/cassandra-temp":
+      available: 291.36 GiB
+      available_bytes: 312842125312
+      capacity: 0.00%
+      device: cassandra-temp/cassandra-temp
+      filesystem: zfs
+      options:
+      - rw
+      - xattr
+      - noacl
+      size: 291.36 GiB
+      size_bytes: 312842256384
+      used: 128.00 KiB
+      used_bytes: 131072
+    "/srv/storage/code-commons":
+      available: 291.36 GiB
+      available_bytes: 312842125312
+      capacity: 72.96%
+      device: cassandra-temp/code-commons
+      filesystem: zfs
+      options:
+      - rw
+      - xattr
+      - noacl
+      size: 1.05 TiB
+      size_bytes: 1156937416704
+      used: 786.13 GiB
+      used_bytes: 844095291392
     "/var/lib/lxcfs":
       available: 0 bytes
       available_bytes: 0
@@ -2043,17 +2130,22 @@ values:
   mounts:
   - "/"
   - "/var/lib/vz"
+  - "/srv/storage/cassandra-temp"
   - "/mnt/pve/proxmox-cephfs"
+  - "/srv/storage/code-commons"
   mtu_bond0: 9000
   mtu_eno1: 1500
   mtu_eno2: 1500
   mtu_eno3: 1500
   mtu_eno4: 1500
   mtu_enp97s0f0: 9000
-  mtu_enp97s0f1: 1500
+  mtu_enp97s0f1: 9000
   mtu_enp97s0f2: 1500
-  mtu_enp97s0f3: 9000
+  mtu_enp97s0f3: 1500
   mtu_lo: 65536
+  mtu_tap146i0: 9000
+  mtu_tap147i0: 9000
+  mtu_tap154i0: 9000
   mtu_vlan1300: 9000
   mtu_vlan440: 9000
   mtu_vlan442: 9000
@@ -2143,13 +2235,13 @@ values:
         mtu: 9000
       enp97s0f1:
         mac: f8:f2:1e:0c:3c:7a
-        mtu: 1500
+        mtu: 9000
       enp97s0f2:
         mac: f8:f2:1e:0c:3c:7c
         mtu: 1500
       enp97s0f3:
         mac: f8:f2:1e:0c:3c:7e
-        mtu: 9000
+        mtu: 1500
       lo:
         bindings:
         - address: 127.0.0.1
@@ -2167,6 +2259,15 @@ values:
         network: 127.0.0.0
         network6: "::1"
         scope6: host
+      tap146i0:
+        mac: 86:10:50:5f:96:ec
+        mtu: 9000
+      tap147i0:
+        mac: 5a:6a:bd:19:24:74
+        mtu: 9000
+      tap154i0:
+        mac: a6:81:27:9d:c1:19
+        mtu: 9000
       vlan1300:
         mac: f8:f2:1e:0c:3c:78
         mtu: 9000
@@ -2242,7 +2343,7 @@ values:
     scope6: link
   operatingsystem: Debian
   operatingsystemmajrelease: '11'
-  operatingsystemrelease: '11.7'
+  operatingsystemrelease: '11.11'
   os:
     architecture: amd64
     distro:
@@ -2250,21 +2351,42 @@ values:
       description: Debian GNU/Linux 11 (bullseye)
       id: Debian
       release:
-        full: '11.7'
+        full: '11.11'
         major: '11'
-        minor: '7'
+        minor: '11'
     family: Debian
     hardware: x86_64
     name: Debian
     release:
-      full: '11.7'
+      full: '11.11'
       major: '11'
-      minor: '7'
+      minor: '11'
     selinux:
       enabled: false
   osfamily: Debian
   package_provider: apt
   partitions:
+    "/dev/mapper/scratch-data":
+      size: 1.36 TiB
+      size_bytes: 1497064538112
+    "/dev/mapper/scratch-data-tpool":
+      size: 1.36 TiB
+      size_bytes: 1497064538112
+    "/dev/mapper/scratch-data_tdata":
+      size: 1.36 TiB
+      size_bytes: 1497064538112
+    "/dev/mapper/scratch-data_tmeta":
+      size: 176.00 MiB
+      size_bytes: 184549376
+    "/dev/mapper/scratch-vm--146--disk--0":
+      size: 100.00 GiB
+      size_bytes: 107374182400
+    "/dev/mapper/scratch-vm--147--disk--0":
+      size: 100.00 GiB
+      size_bytes: 107374182400
+    "/dev/mapper/scratch-vm--154--disk--0":
+      size: 100.00 GiB
+      size_bytes: 107374182400
     "/dev/mapper/vg--louvre-louvre--root":
       filesystem: ext4
       size: 38.63 GiB
@@ -2299,7 +2421,58 @@ values:
       size: 200.00 GiB
       size_bytes: 214748364800
       uuid: 2f487c09-2e74-462f-84c5-d723ef0025eb
-    "/dev/sda1":
+    "/dev/sdb1":
+      filesystem: zfs_member
+      label: cassandra-temp
+      size: 1.09 TiB
+      size_bytes: 1200233644032
+      uuid: '1084050191338001434'
+    "/dev/sdb9":
+      size: 8.00 MiB
+      size_bytes: 8388608
+    "/dev/sdc1":
+      filesystem: zfs_member
+      label: cassandra-temp
+      partlabel: zfs-ea5f47f2ab971770
+      partuuid: c5a8f383-6934-8b42-96fc-425464346d81
+      size: 1.09 TiB
+      size_bytes: 1200233644032
+      uuid: '1084050191338001434'
+    "/dev/sdc9":
+      partuuid: cfc6ba3a-cbdf-a242-a66f-c498c00f1999
+      size: 8.00 MiB
+      size_bytes: 8388608
+    "/dev/sdd1":
+      filesystem: zfs_member
+      label: cassandra-temp
+      partlabel: zfs-4790e1f7f5068847
+      partuuid: 45cfb9f2-767f-1a47-b547-60ed93d57f70
+      size: 1.09 TiB
+      size_bytes: 1200233644032
+      uuid: '1084050191338001434'
+    "/dev/sdd9":
+      partuuid: c1e42c31-9b53-414d-b40b-a7d84e90adb8
+      size: 8.00 MiB
+      size_bytes: 8388608
+    "/dev/sde1":
+      filesystem: zfs_member
+      label: cassandra-temp
+      partlabel: zfs-1d0cda386b180c06
+      partuuid: 5ef8995c-d92e-9844-aac0-1c557fb7f633
+      size: 1.09 TiB
+      size_bytes: 1200233644032
+      uuid: '1084050191338001434'
+    "/dev/sde9":
+      partuuid: c7c5a1b3-d1c5-ae4d-8d02-aa41988d2fd4
+      size: 8.00 MiB
+      size_bytes: 8388608
+    "/dev/sdg1":
+      size: 1.09 TiB
+      size_bytes: 1200233644032
+    "/dev/sdg9":
+      size: 8.00 MiB
+      size_bytes: 8388608
+    "/dev/sdh1":
       filesystem: LVM2_member
       partuuid: 558a0a90-01
       size: 558.37 GiB
@@ -2539,7 +2712,7 @@ values:
   subnet: sesi_rocquencourt
   sudoversion: 1.9.5p2
   swapfree: 4.66 GiB
-  swapfree_mb: 4767.99609375
+  swapfree_mb: 4766.984375
   swapsize: 4.66 GiB
   swapsize_mb: 4767.99609375
   swh_hostname:
@@ -2547,10 +2720,10 @@ values:
     short: uffizi
     internal_fqdn: uffizi.internal.softwareheritage.org
   system_uptime:
-    days: 67
-    hours: 1608
-    seconds: 5791427
-    uptime: 67 days
+    days: 331
+    hours: 7948
+    seconds: 28616282
+    uptime: 331 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -2564,15 +2737,15 @@ values:
     systemd-time-wait-sync.service: disabled
   systemd_version: '247'
   timezone: UTC
-  uptime: 67 days
-  uptime_days: 67
-  uptime_hours: 1608
-  uptime_seconds: 5791427
+  uptime: 331 days
+  uptime_days: 331
+  uptime_hours: 7948
+  uptime_seconds: 28616282
   uuid: 4c4c4544-0054-5110-8052-b5c04f373632
   vcsrepo_svn_ver: 1.14.1
   virtual: physical
   clientcert: uffizi.internal.softwareheritage.org
   clientversion: 5.5.22
   clientnoop: false
-timestamp: '2023-05-09T12:28:10.736580660+00:00'
-expiration: '2023-05-09T12:58:10.740278811+00:00'
+timestamp: '2024-09-04T12:28:11.336454166+00:00'
+expiration: '2024-09-04T12:58:11.340533033+00:00'

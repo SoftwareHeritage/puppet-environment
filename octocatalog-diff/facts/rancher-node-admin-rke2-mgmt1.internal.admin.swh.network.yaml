@@ -5,7 +5,7 @@ values:
   apt_has_dist_updates: false
   apt_has_updates: false
   apt_reboot_required: false
-  apt_update_last_success: 1712754303
+  apt_update_last_success: 1725451502
   architecture: amd64
   bios_release_date: 04/01/2014
   bios_vendor: SeaBIOS
@@ -72,7 +72,7 @@ values:
       vardir: "/var/lib/puppet"
       server: pergamon.internal.softwareheritage.org
   facterversion: 3.14.12
-  filesystems: ext2,ext3,ext4,iso9660
+  filesystems: btrfs,ext2,ext3,ext4,hfs,hfsplus,iso9660,jfs,minix,msdos,qnx4,ufs,vfat,xfs
   fips_enabled: false
   fqdn: rancher-node-admin-rke2-mgmt1.internal.admin.swh.network
   gid: root
@@ -90,13 +90,11 @@ values:
     privileged: true
     uid: 0
     user: root
-  interfaces: cali66496baaa46,calib1dc5be656c,calib9fccd28db7,calif2ee8459118,eth0,lo,vxlan.calico
+  interfaces: cali3ffdec784f2,calib1dc5be656c,eth0,lo,vxlan.calico
   ipaddress: 192.168.50.140
   ipaddress6: fe80::745b:c2ff:fe49:149b
-  ipaddress6_cali66496baaa46: fe80::ecee:eeff:feee:eeee
+  ipaddress6_cali3ffdec784f2: fe80::ecee:eeff:feee:eeee
   ipaddress6_calib1dc5be656c: fe80::ecee:eeff:feee:eeee
-  ipaddress6_calib9fccd28db7: fe80::ecee:eeff:feee:eeee
-  ipaddress6_calif2ee8459118: fe80::ecee:eeff:feee:eeee
   ipaddress6_eth0: fe80::745b:c2ff:fe49:149b
   ipaddress6_lo: "::1"
   ipaddress6_vxlan.calico: fe80::64b5:16ff:fe31:ca75
@@ -107,9 +105,12 @@ values:
   is_virtual: true
   kernel: Linux
   kernelmajversion: '5.10'
-  kernelrelease: 5.10.0-28-amd64
+  kernelrelease: 5.10.0-32-amd64
   kernelversion: 5.10.0
   kmods:
+    msdos:
+      parameters: {}
+      used_by: []
     thermal:
       parameters:
         act: '0'
@@ -127,6 +128,10 @@ values:
         notests: N
         panic_on_fail: N
       used_by: []
+    xor:
+      parameters: {}
+      used_by:
+      - btrfs
     spurious:
       parameters:
         noirqdebug: N
@@ -187,6 +192,9 @@ values:
       parameters: {}
       used_by:
       - libchacha20poly1305
+    minix:
+      parameters: {}
+      used_by: []
     tcp_cubic:
       parameters:
         hystart_detect: '3'
@@ -225,6 +233,9 @@ values:
       used_by:
       - wireguard
       - vxlan
+    hfsplus:
+      parameters: {}
+      used_by: []
     shpchp:
       parameters:
         shpchp_poll_time: '0'
@@ -236,7 +247,7 @@ values:
         zfs_arc_p_min_shift: '0'
         zvol_request_sync: '0'
         vdev_validate_skip: '0'
-        zfs_wrlog_data_max: '3354791116'
+        zfs_wrlog_data_max: '3354782104'
         zfs_object_mutex_size: '64'
         spa_slop_shift: '5'
         zfs_max_async_dedup_frees: '100000'
@@ -278,7 +289,7 @@ values:
         zfs_vdev_sync_write_min_active: '10'
         spa_load_verify_data: '1'
         zfs_async_block_max_blocks: '18446744073709551615'
-        zfs_dirty_data_max_max: '4193488896'
+        zfs_dirty_data_max_max: '4193477632'
         dbuf_cache_shift: '5'
         zfs_send_corrupt_data: '0'
         dbuf_cache_lowater_pct: '10'
@@ -476,7 +487,7 @@ values:
         zfs_vdev_async_read_max_active: '3'
         l2arc_feed_secs: '1'
         zfs_commit_timeout_pct: '5'
-        zfs_arc_max: '4193492992'
+        zfs_arc_max: '4193477632'
         spa_load_verify_shift: '4'
         zfs_unflushed_log_block_min: '1000'
         zfs_vdev_nia_credit: '5'
@@ -521,7 +532,7 @@ values:
         zfs_arc_dnode_reduce_percent: '10'
         zfs_unflushed_log_block_pct: '400'
         zfs_vdev_ms_count_limit: '131072'
-        zfs_dirty_data_max: '1677395558'
+        zfs_dirty_data_max: '1677391052'
         zfs_rebuild_scrub_enabled: '1'
         zfs_vnops_read_chunk_size: '1048576'
         l2arc_rebuild_blocks_min_l2size: '1073741824'
@@ -572,6 +583,9 @@ values:
         use_acpi_alarm: N
       used_by: []
     virtio_balloon:
+      parameters: {}
+      used_by: []
+    jfs:
       parameters: {}
       used_by: []
     nf_nat:
@@ -629,6 +643,8 @@ values:
     cdrom:
       parameters: {}
       used_by:
+      - hfsplus
+      - hfs
       - isofs
       - sr_mod
     ehci_pci:
@@ -758,6 +774,13 @@ values:
     xt_addrtype:
       parameters: {}
       used_by: []
+    blake2b_generic:
+      parameters: {}
+      used_by: []
+    raid6_pq:
+      parameters: {}
+      used_by:
+      - btrfs
     dynamic_debug:
       parameters:
         verbose: '0'
@@ -785,7 +808,9 @@ values:
       used_by:
       - nf_conntrack
       - nf_nat
+      - btrfs
       - nf_tables
+      - xfs
     xt_nat:
       parameters: {}
       used_by: []
@@ -808,6 +833,9 @@ values:
         defx: '1024'
         modeset: "-1"
         defy: '768'
+      used_by: []
+    qnx4:
+      parameters: {}
       used_by: []
     xfrm_algo:
       parameters: {}
@@ -935,6 +963,12 @@ values:
         tcp_slot_table_entries: '2'
         auth_max_cred_cachesize: '18446744073709551615'
       used_by: []
+    btrfs:
+      parameters: {}
+      used_by: []
+    ufs:
+      parameters: {}
+      used_by: []
     hid_generic:
       parameters: {}
       used_by: []
@@ -1051,6 +1085,9 @@ values:
       used_by:
       - wireguard
       - vxlan
+    xfs:
+      parameters: {}
+      used_by: []
     drm_ttm_helper:
       parameters: {}
       used_by:
@@ -1083,6 +1120,9 @@ values:
       used_by:
       - wireguard
     ipt_rpfilter:
+      parameters: {}
+      used_by: []
+    hfs:
       parameters: {}
       used_by: []
     block:
@@ -1273,6 +1313,9 @@ values:
         log_ecn_error: Y
         udp_port: '8472'
       used_by: []
+    vfat:
+      parameters: {}
+      used_by: []
     virtio_blk:
       parameters:
         queue_depth: '256'
@@ -1304,6 +1347,11 @@ values:
       parameters:
         xa_test: '0'
       used_by: []
+    fat:
+      parameters: {}
+      used_by:
+      - msdos
+      - vfat
     jbd2:
       parameters: {}
       used_by:
@@ -1323,41 +1371,39 @@ values:
       - ttm
   letsencrypt_directory: {}
   load_averages:
-    15m: 0.64
-    1m: 0.47
-    5m: 0.62
+    15m: 0.52
+    1m: 0.2
+    5m: 0.34
   lsbdistcodename: bullseye
   lsbdistdescription: Debian GNU/Linux 11 (bullseye)
   lsbdistid: Debian
-  lsbdistrelease: '11.9'
+  lsbdistrelease: '11.11'
   lsbmajdistrelease: '11'
-  lsbminordistrelease: '9'
+  lsbminordistrelease: '11'
   macaddress: 76:5b:c2:49:14:9b
-  macaddress_cali66496baaa46: ee:ee:ee:ee:ee:ee
+  macaddress_cali3ffdec784f2: ee:ee:ee:ee:ee:ee
   macaddress_calib1dc5be656c: ee:ee:ee:ee:ee:ee
-  macaddress_calib9fccd28db7: ee:ee:ee:ee:ee:ee
-  macaddress_calif2ee8459118: ee:ee:ee:ee:ee:ee
   macaddress_eth0: 76:5b:c2:49:14:9b
   macaddress_vxlan.calico: 66:b5:16:31:ca:75
   manufacturer: QEMU
   memory:
     system:
-      available: 9.71 GiB
-      available_bytes: 10428579840
-      capacity: 37.83%
+      available: 10.21 GiB
+      available_bytes: 10960658432
+      capacity: 34.66%
       total: 15.62 GiB
-      total_bytes: 16773955584
-      used: 5.91 GiB
-      used_bytes: 6345375744
-  memoryfree: 9.71 GiB
-  memoryfree_mb: 9945.46875
+      total_bytes: 16773910528
+      used: 5.41 GiB
+      used_bytes: 5813252096
+  memoryfree: 10.21 GiB
+  memoryfree_mb: 10452.8984375
   memorysize: 15.62 GiB
-  memorysize_mb: 15996.890625
+  memorysize_mb: 15996.84765625
   mountpoints:
     "/":
-      available: 11.72 GiB
-      available_bytes: 12583718912
-      capacity: 23.57%
+      available: 10.86 GiB
+      available_bytes: 11655516160
+      capacity: 29.21%
       device: "/dev/mapper/base--template--vg-root"
       filesystem: ext4
       options:
@@ -1366,12 +1412,12 @@ values:
       - errors=remount-ro
       size: 16.18 GiB
       size_bytes: 17373634560
-      used: 3.61 GiB
-      used_bytes: 3881431040
+      used: 4.48 GiB
+      used_bytes: 4809633792
     "/boot":
-      available: 359.04 MiB
-      available_bytes: 376479744
-      capacity: 19.32%
+      available: 358.96 MiB
+      available_bytes: 376398848
+      capacity: 19.34%
       device: "/dev/vda1"
       filesystem: ext2
       options:
@@ -1379,11 +1425,11 @@ values:
       - relatime
       size: 469.35 MiB
       size_bytes: 492152832
-      used: 85.96 MiB
-      used_bytes: 90140672
+      used: 86.04 MiB
+      used_bytes: 90221568
     "/data":
-      available: 15.64 GiB
-      available_bytes: 16795566080
+      available: 9.18 GiB
+      available_bytes: 9859629056
       capacity: 0.00%
       device: data
       filesystem: zfs
@@ -1391,13 +1437,13 @@ values:
       - rw
       - xattr
       - noacl
-      size: 15.64 GiB
-      size_bytes: 16795697152
+      size: 9.18 GiB
+      size_bytes: 9859760128
       used: 128.00 KiB
       used_bytes: 131072
     "/dev":
       available: 7.79 GiB
-      available_bytes: 8367259648
+      available_bytes: 8367255552
       capacity: 0%
       device: udev
       filesystem: devtmpfs
@@ -1405,11 +1451,11 @@ values:
       - rw
       - nosuid
       - relatime
-      - size=8171152k
-      - nr_inodes=2042788
+      - size=8171148k
+      - nr_inodes=2042787
       - mode=755
       size: 7.79 GiB
-      size_bytes: 8367259648
+      size_bytes: 8367255552
       used: 0 bytes
       used_bytes: 0
     "/dev/hugepages":
@@ -1462,7 +1508,7 @@ values:
       used_bytes: 0
     "/dev/shm":
       available: 7.81 GiB
-      available_bytes: 8386977792
+      available_bytes: 8386953216
       capacity: 0%
       device: tmpfs
       filesystem: tmpfs
@@ -1471,13 +1517,13 @@ values:
       - nosuid
       - nodev
       size: 7.81 GiB
-      size_bytes: 8386977792
+      size_bytes: 8386953216
       used: 0 bytes
       used_bytes: 0
     "/run":
       available: 1.56 GiB
-      available_bytes: 1674514432
-      capacity: 0.17%
+      available_bytes: 1674305536
+      capacity: 0.18%
       device: tmpfs
       filesystem: tmpfs
       options:
@@ -1486,13 +1532,13 @@ values:
       - nodev
       - noexec
       - relatime
-      - size=1638084k
+      - size=1638080k
       - mode=755
       size: 1.56 GiB
-      size_bytes: 1677398016
-      used: 2.75 MiB
-      used_bytes: 2883584
-    "/run/k3s/containerd/io.containerd.grpc.v1.cri/sandboxes/17123fe65dd86c233a977651990614ba2fd589695d9cb732a782f00f364b79f1/shm":
+      size_bytes: 1677393920
+      used: 2.95 MiB
+      used_bytes: 3088384
+    "/run/k3s/containerd/io.containerd.grpc.v1.cri/sandboxes/0ddd2aaea7d51b0b71f4e1ab908b09ed04697bc4448f98c564ffb86720c1cf21/shm":
       available: 64.00 MiB
       available_bytes: 67108864
       capacity: 0%
@@ -1509,7 +1555,7 @@ values:
       size_bytes: 67108864
       used: 0 bytes
       used_bytes: 0
-    "/run/k3s/containerd/io.containerd.grpc.v1.cri/sandboxes/29d5a1c2f015c3a3c46bd4ff941bd2992dceceacbe6b589afe557681c1ca31e0/shm":
+    "/run/k3s/containerd/io.containerd.grpc.v1.cri/sandboxes/100884c00401124f32a1547563dd23da7f0c87f94fd8a219f2d1452e3162e969/shm":
       available: 64.00 MiB
       available_bytes: 67108864
       capacity: 0%
@@ -1526,7 +1572,7 @@ values:
       size_bytes: 67108864
       used: 0 bytes
       used_bytes: 0
-    "/run/k3s/containerd/io.containerd.grpc.v1.cri/sandboxes/360121960bc911f07bbb2a3bc7e882b07f9fa9ab4473ba55b7f6ff4edefecb3d/shm":
+    "/run/k3s/containerd/io.containerd.grpc.v1.cri/sandboxes/14baff0f77369da7dcd3b3b0d414093424ba805921c84038896bee7e9b086a9b/shm":
       available: 64.00 MiB
       available_bytes: 67108864
       capacity: 0%
@@ -1543,7 +1589,7 @@ values:
       size_bytes: 67108864
       used: 0 bytes
       used_bytes: 0
-    "/run/k3s/containerd/io.containerd.grpc.v1.cri/sandboxes/404d73c4f25d2d40fcf7ace9514921d84b5ae3d30b9475861e7027d7825ff14b/shm":
+    "/run/k3s/containerd/io.containerd.grpc.v1.cri/sandboxes/2c4008be05068541b5c6350277da0f0af8e10893e20ce4a8362a06caabb2a142/shm":
       available: 64.00 MiB
       available_bytes: 67108864
       capacity: 0%
@@ -1560,7 +1606,7 @@ values:
       size_bytes: 67108864
       used: 0 bytes
       used_bytes: 0
-    "/run/k3s/containerd/io.containerd.grpc.v1.cri/sandboxes/4bbfcf9989c11d7f768d265f6d5b02f5df87187e2cb51caf44313723f6201d4a/shm":
+    "/run/k3s/containerd/io.containerd.grpc.v1.cri/sandboxes/456e4c00869382de54d01edaf67781af3126e65867823317cf83d0d1435b30a7/shm":
       available: 64.00 MiB
       available_bytes: 67108864
       capacity: 0%
@@ -1577,7 +1623,7 @@ values:
       size_bytes: 67108864
       used: 0 bytes
       used_bytes: 0
-    "/run/k3s/containerd/io.containerd.grpc.v1.cri/sandboxes/4da31b6ded9fe22a55a894cf03e6417bc9ab34fb38d68bd2df61e8ae610afa5e/shm":
+    "/run/k3s/containerd/io.containerd.grpc.v1.cri/sandboxes/7b195e37980361dcd5c4771ea79baed94fba2c76d619b195887cc9ab476fe851/shm":
       available: 64.00 MiB
       available_bytes: 67108864
       capacity: 0%
@@ -1594,7 +1640,7 @@ values:
       size_bytes: 67108864
       used: 0 bytes
       used_bytes: 0
-    "/run/k3s/containerd/io.containerd.grpc.v1.cri/sandboxes/51d55fdad540900a93b83cb6e25c9b81242ac781c14432994ad66fd92acec354/shm":
+    "/run/k3s/containerd/io.containerd.grpc.v1.cri/sandboxes/9481d9fc4b5ed58f9d303891ca2d439b3c2a2a88793c4f4666194339ad2ecac9/shm":
       available: 64.00 MiB
       available_bytes: 67108864
       capacity: 0%
@@ -1611,7 +1657,7 @@ values:
       size_bytes: 67108864
       used: 0 bytes
       used_bytes: 0
-    "/run/k3s/containerd/io.containerd.grpc.v1.cri/sandboxes/73e327fe72edd16e9b0f5e2041cbe61ebcebc8ff2a93d5942aa54dc62b7c0a99/shm":
+    "/run/k3s/containerd/io.containerd.grpc.v1.cri/sandboxes/9790126a4a0712c9ccda3d27b62b7398933354f143bddfc87fe8ff464af62bd1/shm":
       available: 64.00 MiB
       available_bytes: 67108864
       capacity: 0%
@@ -1628,7 +1674,7 @@ values:
       size_bytes: 67108864
       used: 0 bytes
       used_bytes: 0
-    "/run/k3s/containerd/io.containerd.grpc.v1.cri/sandboxes/9d244df7937489698e88d4eead99ffed93fa2ce80328dcc7d397b74aa68a19d5/shm":
+    "/run/k3s/containerd/io.containerd.grpc.v1.cri/sandboxes/a03737cd7789781bbaf70730d089eb75d4b54df45cc52419501838cc2e093bbb/shm":
       available: 64.00 MiB
       available_bytes: 67108864
       capacity: 0%
@@ -1645,7 +1691,7 @@ values:
       size_bytes: 67108864
       used: 0 bytes
       used_bytes: 0
-    "/run/k3s/containerd/io.containerd.grpc.v1.cri/sandboxes/a0ed13cefd34aaf449a0ddc7ec3c6a7bba4962a394690fa3aae9ea784df98d9b/shm":
+    "/run/k3s/containerd/io.containerd.grpc.v1.cri/sandboxes/b94fd9c395c3b11462b0e3f910a22792aa17503e31b9fb2babd2081820f961ea/shm":
       available: 64.00 MiB
       available_bytes: 67108864
       capacity: 0%
@@ -1662,7 +1708,7 @@ values:
       size_bytes: 67108864
       used: 0 bytes
       used_bytes: 0
-    "/run/k3s/containerd/io.containerd.grpc.v1.cri/sandboxes/a432bbbd3a6636e85881f369ec69f367c2e15da2d973bf73f72d78265c88325a/shm":
+    "/run/k3s/containerd/io.containerd.grpc.v1.cri/sandboxes/bc5cfd5bd6828b61f13f137fe15e7ec27c7e190b0eea1d5150a7673ffa54df9b/shm":
       available: 64.00 MiB
       available_bytes: 67108864
       capacity: 0%
@@ -1679,7 +1725,7 @@ values:
       size_bytes: 67108864
       used: 0 bytes
       used_bytes: 0
-    "/run/k3s/containerd/io.containerd.grpc.v1.cri/sandboxes/b136fdcc657edd58e8c62a9e9c22b6d7c7b281517c3c1d7c5ae1f7afdc8cfecd/shm":
+    "/run/k3s/containerd/io.containerd.grpc.v1.cri/sandboxes/becaddec005dd03d12de2584d0c56507b27afe892b5b5ea2967d4e63c4ca8c64/shm":
       available: 64.00 MiB
       available_bytes: 67108864
       capacity: 0%
@@ -1696,7 +1742,7 @@ values:
       size_bytes: 67108864
       used: 0 bytes
       used_bytes: 0
-    "/run/k3s/containerd/io.containerd.grpc.v1.cri/sandboxes/c78ae04a83106b4e00f8cb8fc62704a050274f46ae826156ce564008dd067f26/shm":
+    "/run/k3s/containerd/io.containerd.grpc.v1.cri/sandboxes/c53c5480aeda0f4af0c66fc31dfccb15d497973a9b1d5564321cd021f1e277cf/shm":
       available: 64.00 MiB
       available_bytes: 67108864
       capacity: 0%
@@ -1713,7 +1759,7 @@ values:
       size_bytes: 67108864
       used: 0 bytes
       used_bytes: 0
-    "/run/k3s/containerd/io.containerd.grpc.v1.cri/sandboxes/c791840b0c55191719bfda610f994c851213b2b4c9bc853ea5c0fb0c15de3c3d/shm":
+    "/run/k3s/containerd/io.containerd.grpc.v1.cri/sandboxes/f0fcd09e882839a73539340f268d4dbb4de87779b68ebad422c35cc91e5c7856/shm":
       available: 64.00 MiB
       available_bytes: 67108864
       capacity: 0%
@@ -1730,426 +1776,473 @@ values:
       size_bytes: 67108864
       used: 0 bytes
       used_bytes: 0
-    "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/13fad8383b186f2e70e40546af50dac2b668d29a69605f2b7f81ea2e66d26f80/rootfs":
-      available: 15.64 GiB
-      available_bytes: 16795566080
-      capacity: 0.05%
-      device: data/rancher/5943
+    "/run/k3s/containerd/io.containerd.grpc.v1.cri/sandboxes/f5e6d3c3aedd189998e1372cfaf3f8b447cf0c281b02af39cae4362cff968aaa/shm":
+      available: 64.00 MiB
+      available_bytes: 67108864
+      capacity: 0%
+      device: shm
+      filesystem: tmpfs
+      options:
+      - rw
+      - nosuid
+      - nodev
+      - noexec
+      - relatime
+      - size=65536k
+      size: 64.00 MiB
+      size_bytes: 67108864
+      used: 0 bytes
+      used_bytes: 0
+    "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/012f539ef0675c134fc8fc1d1143fd54063289da1a931ec6c691e936675d6f70/rootfs":
+      available: 9.18 GiB
+      available_bytes: 9859629056
+      capacity: 1.75%
+      device: data/rancher/6258
       filesystem: zfs
       options:
       - rw
       - relatime
       - xattr
       - noacl
-      size: 15.65 GiB
-      size_bytes: 16804741120
-      used: 8.75 MiB
-      used_bytes: 9175040
-    "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/17123fe65dd86c233a977651990614ba2fd589695d9cb732a782f00f364b79f1/rootfs":
-      available: 15.64 GiB
-      available_bytes: 16795566080
+      size: 9.35 GiB
+      size_bytes: 10034741248
+      used: 167.00 MiB
+      used_bytes: 175112192
+    "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/0ddd2aaea7d51b0b71f4e1ab908b09ed04697bc4448f98c564ffb86720c1cf21/rootfs":
+      available: 9.18 GiB
+      available_bytes: 9859629056
       capacity: 0.00%
-      device: data/rancher/5931
+      device: data/rancher/6280
       filesystem: zfs
       options:
       - rw
       - relatime
       - xattr
       - noacl
-      size: 15.64 GiB
-      size_bytes: 16795959296
+      size: 9.18 GiB
+      size_bytes: 9860022272
       used: 384.00 KiB
       used_bytes: 393216
-    "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/1f030df07e8dc2d8022c5f8e4a75085ab0f2ede3c2714294c53f0ab1c309c7cd/rootfs":
-      available: 15.64 GiB
-      available_bytes: 16795566080
-      capacity: 0.41%
-      device: data/rancher/5949
-      filesystem: zfs
-      options:
-      - rw
-      - relatime
-      - xattr
-      - noacl
-      size: 15.71 GiB
-      size_bytes: 16865034240
-      used: 66.25 MiB
-      used_bytes: 69468160
-    "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/29d5a1c2f015c3a3c46bd4ff941bd2992dceceacbe6b589afe557681c1ca31e0/rootfs":
-      available: 15.64 GiB
-      available_bytes: 16795566080
+    "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/100884c00401124f32a1547563dd23da7f0c87f94fd8a219f2d1452e3162e969/rootfs":
+      available: 9.18 GiB
+      available_bytes: 9859629056
       capacity: 0.00%
-      device: data/rancher/5932
+      device: data/rancher/6247
       filesystem: zfs
       options:
       - rw
       - relatime
       - xattr
       - noacl
-      size: 15.64 GiB
-      size_bytes: 16795959296
+      size: 9.18 GiB
+      size_bytes: 9860022272
       used: 384.00 KiB
       used_bytes: 393216
-    "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/2d3f5ac0d1bb1b8a6ba7e16d3da05cf841bf5f8a8af398742c6d695b1e508872/rootfs":
-      available: 15.64 GiB
-      available_bytes: 16795566080
+    "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/11b73c8cd55694cbd72a50fdcb3a8526e5960f28c58a7dae6d8739ed3d730d94/rootfs":
+      available: 9.18 GiB
+      available_bytes: 9859629056
+      capacity: 0.17%
+      device: data/rancher/6254
+      filesystem: zfs
+      options:
+      - rw
+      - relatime
+      - xattr
+      - noacl
+      size: 9.20 GiB
+      size_bytes: 9876799488
+      used: 16.38 MiB
+      used_bytes: 17170432
+    "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/13a2f151e2d293d5311d9aa6a70f691724fb341548fff6986872de0ea1866fe4/rootfs":
+      available: 9.18 GiB
+      available_bytes: 9859629056
+      capacity: 5.79%
+      device: data/rancher/6281
+      filesystem: zfs
+      options:
+      - rw
+      - relatime
+      - xattr
+      - noacl
+      size: 9.75 GiB
+      size_bytes: 10465968128
+      used: 578.25 MiB
+      used_bytes: 606339072
+    "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/14baff0f77369da7dcd3b3b0d414093424ba805921c84038896bee7e9b086a9b/rootfs":
+      available: 9.18 GiB
+      available_bytes: 9859629056
+      capacity: 0.00%
+      device: data/rancher/6275
+      filesystem: zfs
+      options:
+      - rw
+      - relatime
+      - xattr
+      - noacl
+      size: 9.18 GiB
+      size_bytes: 9860022272
+      used: 384.00 KiB
+      used_bytes: 393216
+    "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/2c4008be05068541b5c6350277da0f0af8e10893e20ce4a8362a06caabb2a142/rootfs":
+      available: 9.18 GiB
+      available_bytes: 9859629056
+      capacity: 0.00%
+      device: data/rancher/6262
+      filesystem: zfs
+      options:
+      - rw
+      - relatime
+      - xattr
+      - noacl
+      size: 9.18 GiB
+      size_bytes: 9860022272
+      used: 384.00 KiB
+      used_bytes: 393216
+    "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/31435bc534e64f3d133a92ac6d0842ea09c14449a30498ab11f7b64ff47f270a/rootfs":
+      available: 9.18 GiB
+      available_bytes: 9859629056
+      capacity: 1.75%
+      device: data/rancher/6256
+      filesystem: zfs
+      options:
+      - rw
+      - relatime
+      - xattr
+      - noacl
+      size: 9.35 GiB
+      size_bytes: 10034741248
+      used: 167.00 MiB
+      used_bytes: 175112192
+    "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/3ac63a0b3abde9e5d65987897db6847012a1cd373170a059d49415817657777e/rootfs":
+      available: 9.18 GiB
+      available_bytes: 9859629056
       capacity: 0.07%
-      device: data/rancher/5933
+      device: data/rancher/6270
       filesystem: zfs
       options:
       - rw
       - relatime
       - xattr
       - noacl
-      size: 15.65 GiB
-      size_bytes: 16806969344
+      size: 9.19 GiB
+      size_bytes: 9866313728
+      used: 6.38 MiB
+      used_bytes: 6684672
+    "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/456e4c00869382de54d01edaf67781af3126e65867823317cf83d0d1435b30a7/rootfs":
+      available: 9.18 GiB
+      available_bytes: 9859629056
+      capacity: 0.00%
+      device: data/rancher/6248
+      filesystem: zfs
+      options:
+      - rw
+      - relatime
+      - xattr
+      - noacl
+      size: 9.18 GiB
+      size_bytes: 9860022272
+      used: 384.00 KiB
+      used_bytes: 393216
+    "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/53b6329bafb2c62c9cc74c94fc8e1123c7c2036ab0cce9315ed8d026a4aae9b5/rootfs":
+      available: 9.18 GiB
+      available_bytes: 9859629056
+      capacity: 0.22%
+      device: data/rancher/6279
+      filesystem: zfs
+      options:
+      - rw
+      - relatime
+      - xattr
+      - noacl
+      size: 9.20 GiB
+      size_bytes: 9881387008
+      used: 20.75 MiB
+      used_bytes: 21757952
+    "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/59c99102e5985491f73f88167427873d6414c8701d4cb63ce858a89a9bcaa2dc/rootfs":
+      available: 9.18 GiB
+      available_bytes: 9859629056
+      capacity: 0.12%
+      device: data/rancher/6271
+      filesystem: zfs
+      options:
+      - rw
+      - relatime
+      - xattr
+      - noacl
+      size: 9.19 GiB
+      size_bytes: 9871032320
       used: 10.88 MiB
       used_bytes: 11403264
-    "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/360121960bc911f07bbb2a3bc7e882b07f9fa9ab4473ba55b7f6ff4edefecb3d/rootfs":
-      available: 15.64 GiB
-      available_bytes: 16795566080
-      capacity: 0.00%
-      device: data/rancher/5944
+    "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/6bf4a0b47d25bd656988a5cb11edc82f5ce9210ee798513b84f5d813da3e4096/rootfs":
+      available: 9.18 GiB
+      available_bytes: 9859629056
+      capacity: 1.75%
+      device: data/rancher/6278
       filesystem: zfs
       options:
       - rw
       - relatime
       - xattr
       - noacl
-      size: 15.64 GiB
-      size_bytes: 16795959296
+      size: 9.35 GiB
+      size_bytes: 10034741248
+      used: 167.00 MiB
+      used_bytes: 175112192
+    "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/771a6589efbc336916bc7369bdd0345cb27db52ec98f3c14296ef9ba8431a605/rootfs":
+      available: 9.18 GiB
+      available_bytes: 9859629056
+      capacity: 0.07%
+      device: data/rancher/6268
+      filesystem: zfs
+      options:
+      - rw
+      - relatime
+      - xattr
+      - noacl
+      size: 9.19 GiB
+      size_bytes: 9866313728
+      used: 6.38 MiB
+      used_bytes: 6684672
+    "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/7b195e37980361dcd5c4771ea79baed94fba2c76d619b195887cc9ab476fe851/rootfs":
+      available: 9.18 GiB
+      available_bytes: 9859629056
+      capacity: 0.00%
+      device: data/rancher/6250
+      filesystem: zfs
+      options:
+      - rw
+      - relatime
+      - xattr
+      - noacl
+      size: 9.18 GiB
+      size_bytes: 9860022272
       used: 384.00 KiB
       used_bytes: 393216
-    "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/3650e5175b5ed0f0e7e6024387554c584ad2482f7cb5dd8c9bd8e1710aacf325/rootfs":
-      available: 15.64 GiB
-      available_bytes: 16795566080
-      capacity: 0.41%
-      device: data/rancher/5925
-      filesystem: zfs
-      options:
-      - rw
-      - relatime
-      - xattr
-      - noacl
-      size: 15.71 GiB
-      size_bytes: 16864641024
-      used: 65.88 MiB
-      used_bytes: 69074944
-    "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/404d73c4f25d2d40fcf7ace9514921d84b5ae3d30b9475861e7027d7825ff14b/rootfs":
-      available: 15.64 GiB
-      available_bytes: 16795566080
+    "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/9481d9fc4b5ed58f9d303891ca2d439b3c2a2a88793c4f4666194339ad2ecac9/rootfs":
+      available: 9.18 GiB
+      available_bytes: 9859629056
       capacity: 0.00%
-      device: data/rancher/5946
+      device: data/rancher/6257
       filesystem: zfs
       options:
       - rw
       - relatime
       - xattr
       - noacl
-      size: 15.64 GiB
-      size_bytes: 16795959296
+      size: 9.18 GiB
+      size_bytes: 9860022272
       used: 384.00 KiB
       used_bytes: 393216
-    "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/44e6848752e7f28d53ba5dfedcf5de4b60472784ac8e72876355e44ca43dea79/rootfs":
-      available: 15.64 GiB
-      available_bytes: 16795566080
-      capacity: 4.33%
-      device: data/rancher/5955
+    "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/9790126a4a0712c9ccda3d27b62b7398933354f143bddfc87fe8ff464af62bd1/rootfs":
+      available: 9.18 GiB
+      available_bytes: 9859629056
+      capacity: 0.00%
+      device: data/rancher/6265
       filesystem: zfs
       options:
       - rw
       - relatime
       - xattr
       - noacl
-      size: 16.35 GiB
-      size_bytes: 17554866176
-      used: 724.13 MiB
-      used_bytes: 759300096
-    "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/4938948efc6197ba41a734c1c7ca4105bdd55d7af1dc3bdb7c4d3dc0d9983784/rootfs":
-      available: 15.64 GiB
-      available_bytes: 16795566080
-      capacity: 0.13%
-      device: data/rancher/5956
+      size: 9.18 GiB
+      size_bytes: 9860022272
+      used: 384.00 KiB
+      used_bytes: 393216
+    "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/9dc5f021d7754fb8f9e2cb008ccea61af1ca69d041edeb5c36f92aec8c3e8f53/rootfs":
+      available: 9.18 GiB
+      available_bytes: 9859629056
+      capacity: 1.20%
+      device: data/rancher/6274
       filesystem: zfs
       options:
       - rw
       - relatime
       - xattr
       - noacl
-      size: 15.66 GiB
-      size_bytes: 16817848320
+      size: 9.29 GiB
+      size_bytes: 9979166720
+      used: 114.00 MiB
+      used_bytes: 119537664
+    "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/a03737cd7789781bbaf70730d089eb75d4b54df45cc52419501838cc2e093bbb/rootfs":
+      available: 9.18 GiB
+      available_bytes: 9859629056
+      capacity: 0.00%
+      device: data/rancher/6249
+      filesystem: zfs
+      options:
+      - rw
+      - relatime
+      - xattr
+      - noacl
+      size: 9.18 GiB
+      size_bytes: 9860022272
+      used: 384.00 KiB
+      used_bytes: 393216
+    "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/b94fd9c395c3b11462b0e3f910a22792aa17503e31b9fb2babd2081820f961ea/rootfs":
+      available: 9.18 GiB
+      available_bytes: 9859629056
+      capacity: 0.00%
+      device: data/rancher/6251
+      filesystem: zfs
+      options:
+      - rw
+      - relatime
+      - xattr
+      - noacl
+      size: 9.18 GiB
+      size_bytes: 9860022272
+      used: 384.00 KiB
+      used_bytes: 393216
+    "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/bc5cfd5bd6828b61f13f137fe15e7ec27c7e190b0eea1d5150a7673ffa54df9b/rootfs":
+      available: 9.18 GiB
+      available_bytes: 9859629056
+      capacity: 0.00%
+      device: data/rancher/6260
+      filesystem: zfs
+      options:
+      - rw
+      - relatime
+      - xattr
+      - noacl
+      size: 9.18 GiB
+      size_bytes: 9860022272
+      used: 384.00 KiB
+      used_bytes: 393216
+    "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/becaddec005dd03d12de2584d0c56507b27afe892b5b5ea2967d4e63c4ca8c64/rootfs":
+      available: 9.18 GiB
+      available_bytes: 9859629056
+      capacity: 0.00%
+      device: data/rancher/6263
+      filesystem: zfs
+      options:
+      - rw
+      - relatime
+      - xattr
+      - noacl
+      size: 9.18 GiB
+      size_bytes: 9860022272
+      used: 384.00 KiB
+      used_bytes: 393216
+    "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/c53c5480aeda0f4af0c66fc31dfccb15d497973a9b1d5564321cd021f1e277cf/rootfs":
+      available: 9.18 GiB
+      available_bytes: 9859629056
+      capacity: 0.00%
+      device: data/rancher/6259
+      filesystem: zfs
+      options:
+      - rw
+      - relatime
+      - xattr
+      - noacl
+      size: 9.18 GiB
+      size_bytes: 9860022272
+      used: 384.00 KiB
+      used_bytes: 393216
+    "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/ce448fd963f6f51f1cef1c1ff2a23926a8545c16bb5286bc36f41a93d9d6d47c/rootfs":
+      available: 9.18 GiB
+      available_bytes: 9859629056
+      capacity: 0.07%
+      device: data/rancher/6266
+      filesystem: zfs
+      options:
+      - rw
+      - relatime
+      - xattr
+      - noacl
+      size: 9.19 GiB
+      size_bytes: 9866313728
+      used: 6.38 MiB
+      used_bytes: 6684672
+    "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/ce86da3c4b2305ba4df6a70f1d7c9c6cfefd85169447f25513c46c7e5c179d0e/rootfs":
+      available: 9.18 GiB
+      available_bytes: 9859629056
+      capacity: 1.75%
+      device: data/rancher/6253
+      filesystem: zfs
+      options:
+      - rw
+      - relatime
+      - xattr
+      - noacl
+      size: 9.35 GiB
+      size_bytes: 10034741248
+      used: 167.00 MiB
+      used_bytes: 175112192
+    "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/cf73ca80a8db7366d7ba121729fde0f01cf8c0677f38f86d6a9003091f520515/rootfs":
+      available: 9.18 GiB
+      available_bytes: 9859629056
+      capacity: 0.07%
+      device: data/rancher/6269
+      filesystem: zfs
+      options:
+      - rw
+      - relatime
+      - xattr
+      - noacl
+      size: 9.19 GiB
+      size_bytes: 9866313728
+      used: 6.38 MiB
+      used_bytes: 6684672
+    "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/d520e734ac5f38812cea31613ab425031d15b1c639476c4072b70aedbe0a1697/rootfs":
+      available: 9.18 GiB
+      available_bytes: 9859629056
+      capacity: 0.73%
+      device: data/rancher/6277
+      filesystem: zfs
+      options:
+      - rw
+      - relatime
+      - xattr
+      - noacl
+      size: 9.25 GiB
+      size_bytes: 9932111872
+      used: 69.13 MiB
+      used_bytes: 72482816
+    "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/db9c5ff90a7f772f7834f48ce9906c776ad719602ef43db81e596ada2e8837cc/rootfs":
+      available: 9.18 GiB
+      available_bytes: 9859629056
+      capacity: 0.23%
+      device: data/rancher/6276
+      filesystem: zfs
+      options:
+      - rw
+      - relatime
+      - xattr
+      - noacl
+      size: 9.20 GiB
+      size_bytes: 9881911296
       used: 21.25 MiB
       used_bytes: 22282240
-    "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/4bbfcf9989c11d7f768d265f6d5b02f5df87187e2cb51caf44313723f6201d4a/rootfs":
-      available: 15.64 GiB
-      available_bytes: 16795566080
+    "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/f0fcd09e882839a73539340f268d4dbb4de87779b68ebad422c35cc91e5c7856/rootfs":
+      available: 9.18 GiB
+      available_bytes: 9859629056
       capacity: 0.00%
-      device: data/rancher/5950
+      device: data/rancher/6264
       filesystem: zfs
       options:
       - rw
       - relatime
       - xattr
       - noacl
-      size: 15.64 GiB
-      size_bytes: 16795959296
+      size: 9.18 GiB
+      size_bytes: 9860022272
       used: 384.00 KiB
       used_bytes: 393216
-    "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/4da31b6ded9fe22a55a894cf03e6417bc9ab34fb38d68bd2df61e8ae610afa5e/rootfs":
-      available: 15.64 GiB
-      available_bytes: 16795566080
+    "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/f5e6d3c3aedd189998e1372cfaf3f8b447cf0c281b02af39cae4362cff968aaa/rootfs":
+      available: 9.18 GiB
+      available_bytes: 9859629056
       capacity: 0.00%
-      device: data/rancher/5920
+      device: data/rancher/6261
       filesystem: zfs
       options:
       - rw
       - relatime
       - xattr
       - noacl
-      size: 15.64 GiB
-      size_bytes: 16795959296
+      size: 9.18 GiB
+      size_bytes: 9860022272
       used: 384.00 KiB
       used_bytes: 393216
-    "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/4f47b285cf30a958c4d9282054c76782ad13b8680fa3a71fab4798d1d9156fb9/rootfs":
-      available: 15.64 GiB
-      available_bytes: 16795566080
-      capacity: 1.33%
-      device: data/rancher/5923
-      filesystem: zfs
-      options:
-      - rw
-      - relatime
-      - xattr
-      - noacl
-      size: 15.85 GiB
-      size_bytes: 17021534208
-      used: 215.50 MiB
-      used_bytes: 225968128
-    "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/51d55fdad540900a93b83cb6e25c9b81242ac781c14432994ad66fd92acec354/rootfs":
-      available: 15.64 GiB
-      available_bytes: 16795566080
-      capacity: 0.00%
-      device: data/rancher/5919
-      filesystem: zfs
-      options:
-      - rw
-      - relatime
-      - xattr
-      - noacl
-      size: 15.64 GiB
-      size_bytes: 16795959296
-      used: 384.00 KiB
-      used_bytes: 393216
-    "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/63efe8ba1322d394fafbc0dd3e020e1a2cebff29057c56d8d540b1ed57038a0e/rootfs":
-      available: 15.64 GiB
-      available_bytes: 16795566080
-      capacity: 0.17%
-      device: data/rancher/5951
-      filesystem: zfs
-      options:
-      - rw
-      - relatime
-      - xattr
-      - noacl
-      size: 15.67 GiB
-      size_bytes: 16824139776
-      used: 27.25 MiB
-      used_bytes: 28573696
-    "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/73e327fe72edd16e9b0f5e2041cbe61ebcebc8ff2a93d5942aa54dc62b7c0a99/rootfs":
-      available: 15.64 GiB
-      available_bytes: 16795566080
-      capacity: 0.00%
-      device: data/rancher/5954
-      filesystem: zfs
-      options:
-      - rw
-      - relatime
-      - xattr
-      - noacl
-      size: 15.64 GiB
-      size_bytes: 16795959296
-      used: 384.00 KiB
-      used_bytes: 393216
-    "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/77c982a4fdbadfbf5395f93ce347ec5754619496a7df756b573f6ae876e10623/rootfs":
-      available: 15.64 GiB
-      available_bytes: 16795566080
-      capacity: 1.33%
-      device: data/rancher/5947
-      filesystem: zfs
-      options:
-      - rw
-      - relatime
-      - xattr
-      - noacl
-      size: 15.85 GiB
-      size_bytes: 17021534208
-      used: 215.50 MiB
-      used_bytes: 225968128
-    "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/9d244df7937489698e88d4eead99ffed93fa2ce80328dcc7d397b74aa68a19d5/rootfs":
-      available: 15.64 GiB
-      available_bytes: 16795566080
-      capacity: 0.00%
-      device: data/rancher/5953
-      filesystem: zfs
-      options:
-      - rw
-      - relatime
-      - xattr
-      - noacl
-      size: 15.64 GiB
-      size_bytes: 16795959296
-      used: 384.00 KiB
-      used_bytes: 393216
-    "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/a0ed13cefd34aaf449a0ddc7ec3c6a7bba4962a394690fa3aae9ea784df98d9b/rootfs":
-      available: 15.64 GiB
-      available_bytes: 16795566080
-      capacity: 0.00%
-      device: data/rancher/5917
-      filesystem: zfs
-      options:
-      - rw
-      - relatime
-      - xattr
-      - noacl
-      size: 15.64 GiB
-      size_bytes: 16795959296
-      used: 384.00 KiB
-      used_bytes: 393216
-    "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/a432bbbd3a6636e85881f369ec69f367c2e15da2d973bf73f72d78265c88325a/rootfs":
-      available: 15.64 GiB
-      available_bytes: 16795566080
-      capacity: 0.00%
-      device: data/rancher/5935
-      filesystem: zfs
-      options:
-      - rw
-      - relatime
-      - xattr
-      - noacl
-      size: 15.64 GiB
-      size_bytes: 16795959296
-      used: 384.00 KiB
-      used_bytes: 393216
-    "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/a74c684d0a9a1861fc09c26501b58559b833c9c0379225678ff12e477b7aefb7/rootfs":
-      available: 15.64 GiB
-      available_bytes: 16795566080
-      capacity: 1.33%
-      device: data/rancher/5945
-      filesystem: zfs
-      options:
-      - rw
-      - relatime
-      - xattr
-      - noacl
-      size: 15.85 GiB
-      size_bytes: 17021534208
-      used: 215.50 MiB
-      used_bytes: 225968128
-    "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/b136fdcc657edd58e8c62a9e9c22b6d7c7b281517c3c1d7c5ae1f7afdc8cfecd/rootfs":
-      available: 15.64 GiB
-      available_bytes: 16795566080
-      capacity: 0.00%
-      device: data/rancher/5948
-      filesystem: zfs
-      options:
-      - rw
-      - relatime
-      - xattr
-      - noacl
-      size: 15.64 GiB
-      size_bytes: 16795959296
-      used: 384.00 KiB
-      used_bytes: 393216
-    "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/c628beb2b162de4cb0d5d51e66a39edc4fc932294c62d514e9a4833e18b3f0c5/rootfs":
-      available: 15.64 GiB
-      available_bytes: 16795566080
-      capacity: 0.40%
-      device: data/rancher/5930
-      filesystem: zfs
-      options:
-      - rw
-      - relatime
-      - xattr
-      - noacl
-      size: 15.71 GiB
-      size_bytes: 16863592448
-      used: 64.88 MiB
-      used_bytes: 68026368
-    "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/c78ae04a83106b4e00f8cb8fc62704a050274f46ae826156ce564008dd067f26/rootfs":
-      available: 15.64 GiB
-      available_bytes: 16795566080
-      capacity: 0.00%
-      device: data/rancher/5918
-      filesystem: zfs
-      options:
-      - rw
-      - relatime
-      - xattr
-      - noacl
-      size: 15.64 GiB
-      size_bytes: 16795959296
-      used: 384.00 KiB
-      used_bytes: 393216
-    "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/c791840b0c55191719bfda610f994c851213b2b4c9bc853ea5c0fb0c15de3c3d/rootfs":
-      available: 15.64 GiB
-      available_bytes: 16795566080
-      capacity: 0.00%
-      device: data/rancher/5942
-      filesystem: zfs
-      options:
-      - rw
-      - relatime
-      - xattr
-      - noacl
-      size: 15.64 GiB
-      size_bytes: 16795959296
-      used: 384.00 KiB
-      used_bytes: 393216
-    "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/ccc21939289fd52d679045c11188c686ce322ee5a7644720fefacf3b9d7a9f78/rootfs":
-      available: 15.64 GiB
-      available_bytes: 16795566080
-      capacity: 0.55%
-      device: data/rancher/5938
-      filesystem: zfs
-      options:
-      - rw
-      - relatime
-      - xattr
-      - noacl
-      size: 15.73 GiB
-      size_bytes: 16889020416
-      used: 89.13 MiB
-      used_bytes: 93454336
-    "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/d82d8ef73e8a1febb7c4c38c52b0945595527c3d88b64a494f1ff440444bf353/rootfs":
-      available: 15.64 GiB
-      available_bytes: 16795566080
-      capacity: 1.33%
-      device: data/rancher/5929
-      filesystem: zfs
-      options:
-      - rw
-      - relatime
-      - xattr
-      - noacl
-      size: 15.85 GiB
-      size_bytes: 17021534208
-      used: 215.50 MiB
-      used_bytes: 225968128
-    "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/db8a083c4fd22888dbdf43bdf7da2bce66a2984df8b5f91c6a317342f7f1285b/rootfs":
-      available: 15.64 GiB
-      available_bytes: 16795566080
-      capacity: 0.13%
-      device: data/rancher/5952
-      filesystem: zfs
-      options:
-      - rw
-      - relatime
-      - xattr
-      - noacl
-      size: 15.66 GiB
-      size_bytes: 16816668672
-      used: 20.13 MiB
-      used_bytes: 21102592
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -2167,7 +2260,7 @@ values:
       size_bytes: 5242880
       used: 0 bytes
       used_bytes: 0
-    "/run/netns/cni-1282af98-e478-141f-08d7-380b38f941ef":
+    "/run/netns/cni-5fcbda9c-9429-2fc8-f9af-851bc8e315ea":
       available: 0 bytes
       available_bytes: 0
       capacity: 100%
@@ -2179,31 +2272,7 @@ values:
       size_bytes: 0
       used: 0 bytes
       used_bytes: 0
-    "/run/netns/cni-abb9cf6d-1af5-d3c4-d813-2a5fb678f7d8":
-      available: 0 bytes
-      available_bytes: 0
-      capacity: 100%
-      device: nsfs
-      filesystem: nsfs
-      options:
-      - rw
-      size: 0 bytes
-      size_bytes: 0
-      used: 0 bytes
-      used_bytes: 0
-    "/run/netns/cni-c3f6f71c-a15e-ccb4-5521-48eb799df708":
-      available: 0 bytes
-      available_bytes: 0
-      capacity: 100%
-      device: nsfs
-      filesystem: nsfs
-      options:
-      - rw
-      size: 0 bytes
-      size_bytes: 0
-      used: 0 bytes
-      used_bytes: 0
-    "/run/netns/cni-f5306010-459e-acff-9d41-74ce1a05870e":
+    "/run/netns/cni-c725cd2a-e82d-2d9f-9f17-738a66738bc3":
       available: 0 bytes
       available_bytes: 0
       capacity: 100%
@@ -2229,8 +2298,8 @@ values:
       used: 0 bytes
       used_bytes: 0
     "/srv/kubernetes/volumes":
-      available: 15.64 GiB
-      available_bytes: 16795566080
+      available: 9.18 GiB
+      available_bytes: 9859629056
       capacity: 0.00%
       device: data/volumes
       filesystem: zfs
@@ -2239,13 +2308,13 @@ values:
       - noatime
       - xattr
       - noacl
-      size: 15.64 GiB
-      size_bytes: 16795697152
+      size: 9.18 GiB
+      size_bytes: 9859760128
       used: 128.00 KiB
       used_bytes: 131072
     "/var/lib/docker":
-      available: 15.64 GiB
-      available_bytes: 16795566080
+      available: 9.18 GiB
+      available_bytes: 9859629056
       capacity: 0.00%
       device: data/docker
       filesystem: zfs
@@ -2254,14 +2323,14 @@ values:
       - noatime
       - xattr
       - noacl
-      size: 15.64 GiB
-      size_bytes: 16795697152
+      size: 9.18 GiB
+      size_bytes: 9859760128
       used: 128.00 KiB
       used_bytes: 131072
     "/var/lib/kubelet":
-      available: 15.64 GiB
-      available_bytes: 16795566080
-      capacity: 0.03%
+      available: 9.18 GiB
+      available_bytes: 9859629056
+      capacity: 0.04%
       device: data/kubelet
       filesystem: zfs
       options:
@@ -2269,198 +2338,183 @@ values:
       - noatime
       - xattr
       - noacl
-      size: 15.65 GiB
-      size_bytes: 16800022528
-      used: 4.25 MiB
-      used_bytes: 4456448
-    "/var/lib/kubelet/pods/05dd6564-d5bf-42a8-aa1b-ada672493644/volumes/kubernetes.io~projected/kube-api-access-8xsr7":
+      size: 9.19 GiB
+      size_bytes: 9863299072
+      used: 3.50 MiB
+      used_bytes: 3670016
+    "/var/lib/kubelet/pods/00b87ea4-37a1-4085-9640-f15b7d50c435/volumes/kubernetes.io~projected/kube-api-access-r789r":
       available: 15.62 GiB
-      available_bytes: 16773943296
+      available_bytes: 16773898240
       capacity: 0.00%
       device: tmpfs
       filesystem: tmpfs
       options:
       - rw
       - relatime
-      - size=16380816k
+      - size=16380772k
       size: 15.62 GiB
-      size_bytes: 16773955584
+      size_bytes: 16773910528
       used: 12.00 KiB
       used_bytes: 12288
-    "/var/lib/kubelet/pods/05dd6564-d5bf-42a8-aa1b-ada672493644/volumes/kubernetes.io~secret/cattle-credentials":
+    "/var/lib/kubelet/pods/59efe8a8-fadb-44c1-bd2c-06ed5b09e1be/volumes/kubernetes.io~projected/kube-api-access-n47f7":
       available: 15.62 GiB
-      available_bytes: 16773943296
+      available_bytes: 16773898240
       capacity: 0.00%
       device: tmpfs
       filesystem: tmpfs
       options:
       - rw
       - relatime
-      - size=16380816k
+      - size=16380772k
       size: 15.62 GiB
-      size_bytes: 16773955584
+      size_bytes: 16773910528
       used: 12.00 KiB
       used_bytes: 12288
-    "/var/lib/kubelet/pods/2cb063ce-79d2-4dd9-bd11-fd327e040ea7/volume-subpaths/tigera-ca-bundle/calico-typha/1":
-      available: 15.64 GiB
-      available_bytes: 16795566080
-      capacity: 0.03%
-      device: data/kubelet
-      filesystem: zfs
-      options:
-      - rw
-      - noatime
-      - xattr
-      - noacl
-      size: 15.65 GiB
-      size_bytes: 16800022528
-      used: 4.25 MiB
-      used_bytes: 4456448
-    "/var/lib/kubelet/pods/2cb063ce-79d2-4dd9-bd11-fd327e040ea7/volumes/kubernetes.io~projected/kube-api-access-ql78q":
+    "/var/lib/kubelet/pods/798e5dc8-2e39-4655-bf70-48a262edbc34/volumes/kubernetes.io~projected/kube-api-access-rkmhq":
       available: 15.62 GiB
-      available_bytes: 16773943296
+      available_bytes: 16773898240
       capacity: 0.00%
       device: tmpfs
       filesystem: tmpfs
       options:
       - rw
       - relatime
-      - size=16380816k
+      - size=16380772k
       size: 15.62 GiB
-      size_bytes: 16773955584
+      size_bytes: 16773910528
       used: 12.00 KiB
       used_bytes: 12288
-    "/var/lib/kubelet/pods/2cb063ce-79d2-4dd9-bd11-fd327e040ea7/volumes/kubernetes.io~secret/typha-certs":
+    "/var/lib/kubelet/pods/7db3d0d9-37ee-4a85-aacb-5d76601cce3b/volumes/kubernetes.io~projected/kube-api-access-v458c":
       available: 15.62 GiB
-      available_bytes: 16773947392
+      available_bytes: 16773898240
       capacity: 0.00%
       device: tmpfs
       filesystem: tmpfs
       options:
       - rw
       - relatime
-      - size=16380816k
+      - size=16380772k
       size: 15.62 GiB
-      size_bytes: 16773955584
-      used: 8.00 KiB
-      used_bytes: 8192
-    "/var/lib/kubelet/pods/50cabc5d-25bc-47fc-9d09-c8427d458242/volumes/kubernetes.io~projected/kube-api-access-gpptw":
-      available: 15.62 GiB
-      available_bytes: 16773943296
-      capacity: 0.00%
-      device: tmpfs
-      filesystem: tmpfs
-      options:
-      - rw
-      - relatime
-      - size=16380816k
-      size: 15.62 GiB
-      size_bytes: 16773955584
+      size_bytes: 16773910528
       used: 12.00 KiB
       used_bytes: 12288
-    "/var/lib/kubelet/pods/5f9aea9e-58c6-43e0-930b-f3fbaa3ecad1/volumes/kubernetes.io~projected/kube-api-access-rz8p6":
+    "/var/lib/kubelet/pods/80c9bde9-b8bf-4591-ba7e-5fbda291f4c2/volumes/kubernetes.io~projected/kube-api-access-8tg2w":
       available: 15.62 GiB
-      available_bytes: 16773943296
+      available_bytes: 16773898240
       capacity: 0.00%
       device: tmpfs
       filesystem: tmpfs
       options:
       - rw
       - relatime
-      - size=16380816k
+      - size=16380772k
       size: 15.62 GiB
-      size_bytes: 16773955584
+      size_bytes: 16773910528
       used: 12.00 KiB
       used_bytes: 12288
-    "/var/lib/kubelet/pods/8c4e2494-64fd-492d-aa98-3d8efb2c9507/volume-subpaths/tigera-ca-bundle/calico-node/1":
-      available: 15.64 GiB
-      available_bytes: 16795566080
-      capacity: 0.03%
-      device: data/kubelet
-      filesystem: zfs
-      options:
-      - rw
-      - noatime
-      - xattr
-      - noacl
-      size: 15.65 GiB
-      size_bytes: 16800022528
-      used: 4.25 MiB
-      used_bytes: 4456448
-    "/var/lib/kubelet/pods/8c4e2494-64fd-492d-aa98-3d8efb2c9507/volumes/kubernetes.io~projected/kube-api-access-vq24m":
+    "/var/lib/kubelet/pods/9b685ed8-b7b4-4255-a7df-b210694ae1c5/volumes/kubernetes.io~projected/kube-api-access-6drjl":
       available: 15.62 GiB
-      available_bytes: 16773943296
+      available_bytes: 16773898240
       capacity: 0.00%
       device: tmpfs
       filesystem: tmpfs
       options:
       - rw
       - relatime
-      - size=16380816k
+      - size=16380772k
       size: 15.62 GiB
-      size_bytes: 16773955584
+      size_bytes: 16773910528
       used: 12.00 KiB
       used_bytes: 12288
-    "/var/lib/kubelet/pods/8c4e2494-64fd-492d-aa98-3d8efb2c9507/volumes/kubernetes.io~secret/node-certs":
+    "/var/lib/kubelet/pods/9b685ed8-b7b4-4255-a7df-b210694ae1c5/volumes/kubernetes.io~secret/cattle-credentials":
       available: 15.62 GiB
-      available_bytes: 16773947392
+      available_bytes: 16773898240
       capacity: 0.00%
       device: tmpfs
       filesystem: tmpfs
       options:
       - rw
       - relatime
-      - size=16380816k
+      - size=16380772k
       size: 15.62 GiB
-      size_bytes: 16773955584
-      used: 8.00 KiB
-      used_bytes: 8192
-    "/var/lib/kubelet/pods/9c0a6d6b-5891-426b-86eb-20c00015abda/volumes/kubernetes.io~projected/kube-api-access-szk25":
-      available: 127.99 MiB
-      available_bytes: 134205440
-      capacity: 0.01%
-      device: tmpfs
-      filesystem: tmpfs
-      options:
-      - rw
-      - relatime
-      - size=131072k
-      size: 128.00 MiB
-      size_bytes: 134217728
+      size_bytes: 16773910528
       used: 12.00 KiB
       used_bytes: 12288
     "/var/lib/kubelet/pods/c499fe38-8aa1-477c-ba04-40d29c8b6208/volumes/kubernetes.io~projected/kube-api-access-mjvwt":
       available: 15.62 GiB
-      available_bytes: 16773943296
+      available_bytes: 16773898240
       capacity: 0.00%
       device: tmpfs
       filesystem: tmpfs
       options:
       - rw
       - relatime
-      - size=16380816k
+      - size=16380772k
       size: 15.62 GiB
-      size_bytes: 16773955584
+      size_bytes: 16773910528
       used: 12.00 KiB
       used_bytes: 12288
     "/var/lib/kubelet/pods/c499fe38-8aa1-477c-ba04-40d29c8b6208/volumes/kubernetes.io~secret/tls-config":
       available: 15.62 GiB
-      available_bytes: 16773943296
+      available_bytes: 16773898240
       capacity: 0.00%
       device: tmpfs
       filesystem: tmpfs
       options:
       - rw
       - relatime
-      - size=16380816k
+      - size=16380772k
       size: 15.62 GiB
-      size_bytes: 16773955584
+      size_bytes: 16773910528
       used: 12.00 KiB
       used_bytes: 12288
+    "/var/lib/kubelet/pods/d38ff6d8-2d39-49db-9ead-47f244ad80ef/volume-subpaths/tigera-ca-bundle/calico-node/1":
+      available: 9.18 GiB
+      available_bytes: 9859629056
+      capacity: 0.04%
+      device: data/kubelet
+      filesystem: zfs
+      options:
+      - rw
+      - noatime
+      - xattr
+      - noacl
+      size: 9.19 GiB
+      size_bytes: 9863299072
+      used: 3.50 MiB
+      used_bytes: 3670016
+    "/var/lib/kubelet/pods/d38ff6d8-2d39-49db-9ead-47f244ad80ef/volumes/kubernetes.io~projected/kube-api-access-dv8z5":
+      available: 15.62 GiB
+      available_bytes: 16773898240
+      capacity: 0.00%
+      device: tmpfs
+      filesystem: tmpfs
+      options:
+      - rw
+      - relatime
+      - size=16380772k
+      size: 15.62 GiB
+      size_bytes: 16773910528
+      used: 12.00 KiB
+      used_bytes: 12288
+    "/var/lib/kubelet/pods/d38ff6d8-2d39-49db-9ead-47f244ad80ef/volumes/kubernetes.io~secret/node-certs":
+      available: 15.62 GiB
+      available_bytes: 16773902336
+      capacity: 0.00%
+      device: tmpfs
+      filesystem: tmpfs
+      options:
+      - rw
+      - relatime
+      - size=16380772k
+      size: 15.62 GiB
+      size_bytes: 16773910528
+      used: 8.00 KiB
+      used_bytes: 8192
     "/var/lib/rancher":
-      available: 15.64 GiB
-      available_bytes: 16795566080
-      capacity: 8.58%
+      available: 9.18 GiB
+      available_bytes: 9859629056
+      capacity: 31.77%
       device: data/rancher
       filesystem: zfs
       options:
@@ -2468,60 +2522,58 @@ values:
       - noatime
       - xattr
       - noacl
-      size: 17.11 GiB
-      size_bytes: 18372231168
-      used: 1.47 GiB
-      used_bytes: 1576665088
+      size: 13.46 GiB
+      size_bytes: 14449901568
+      used: 4.28 GiB
+      used_bytes: 4590272512
   mounts:
   - "/"
   - "/boot"
-  - "/var/lib/kubelet"
+  - "/var/lib/docker"
   - "/var/lib/rancher"
   - "/data"
   - "/srv/kubernetes/volumes"
-  - "/var/lib/docker"
-  - "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/c78ae04a83106b4e00f8cb8fc62704a050274f46ae826156ce564008dd067f26/rootfs"
-  - "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/a0ed13cefd34aaf449a0ddc7ec3c6a7bba4962a394690fa3aae9ea784df98d9b/rootfs"
-  - "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/51d55fdad540900a93b83cb6e25c9b81242ac781c14432994ad66fd92acec354/rootfs"
-  - "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/4da31b6ded9fe22a55a894cf03e6417bc9ab34fb38d68bd2df61e8ae610afa5e/rootfs"
-  - "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/4f47b285cf30a958c4d9282054c76782ad13b8680fa3a71fab4798d1d9156fb9/rootfs"
-  - "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/3650e5175b5ed0f0e7e6024387554c584ad2482f7cb5dd8c9bd8e1710aacf325/rootfs"
-  - "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/d82d8ef73e8a1febb7c4c38c52b0945595527c3d88b64a494f1ff440444bf353/rootfs"
-  - "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/c628beb2b162de4cb0d5d51e66a39edc4fc932294c62d514e9a4833e18b3f0c5/rootfs"
-  - "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/17123fe65dd86c233a977651990614ba2fd589695d9cb732a782f00f364b79f1/rootfs"
-  - "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/29d5a1c2f015c3a3c46bd4ff941bd2992dceceacbe6b589afe557681c1ca31e0/rootfs"
-  - "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/2d3f5ac0d1bb1b8a6ba7e16d3da05cf841bf5f8a8af398742c6d695b1e508872/rootfs"
-  - "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/a432bbbd3a6636e85881f369ec69f367c2e15da2d973bf73f72d78265c88325a/rootfs"
-  - "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/ccc21939289fd52d679045c11188c686ce322ee5a7644720fefacf3b9d7a9f78/rootfs"
-  - "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/c791840b0c55191719bfda610f994c851213b2b4c9bc853ea5c0fb0c15de3c3d/rootfs"
-  - "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/13fad8383b186f2e70e40546af50dac2b668d29a69605f2b7f81ea2e66d26f80/rootfs"
-  - "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/360121960bc911f07bbb2a3bc7e882b07f9fa9ab4473ba55b7f6ff4edefecb3d/rootfs"
-  - "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/a74c684d0a9a1861fc09c26501b58559b833c9c0379225678ff12e477b7aefb7/rootfs"
-  - "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/404d73c4f25d2d40fcf7ace9514921d84b5ae3d30b9475861e7027d7825ff14b/rootfs"
-  - "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/77c982a4fdbadfbf5395f93ce347ec5754619496a7df756b573f6ae876e10623/rootfs"
-  - "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/b136fdcc657edd58e8c62a9e9c22b6d7c7b281517c3c1d7c5ae1f7afdc8cfecd/rootfs"
-  - "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/1f030df07e8dc2d8022c5f8e4a75085ab0f2ede3c2714294c53f0ab1c309c7cd/rootfs"
-  - "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/4bbfcf9989c11d7f768d265f6d5b02f5df87187e2cb51caf44313723f6201d4a/rootfs"
-  - "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/63efe8ba1322d394fafbc0dd3e020e1a2cebff29057c56d8d540b1ed57038a0e/rootfs"
-  - "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/db8a083c4fd22888dbdf43bdf7da2bce66a2984df8b5f91c6a317342f7f1285b/rootfs"
-  - "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/9d244df7937489698e88d4eead99ffed93fa2ce80328dcc7d397b74aa68a19d5/rootfs"
-  - "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/73e327fe72edd16e9b0f5e2041cbe61ebcebc8ff2a93d5942aa54dc62b7c0a99/rootfs"
-  - "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/44e6848752e7f28d53ba5dfedcf5de4b60472784ac8e72876355e44ca43dea79/rootfs"
-  - "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/4938948efc6197ba41a734c1c7ca4105bdd55d7af1dc3bdb7c4d3dc0d9983784/rootfs"
-  mtu_cali66496baaa46: 1450
+  - "/var/lib/kubelet"
+  - "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/100884c00401124f32a1547563dd23da7f0c87f94fd8a219f2d1452e3162e969/rootfs"
+  - "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/456e4c00869382de54d01edaf67781af3126e65867823317cf83d0d1435b30a7/rootfs"
+  - "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/a03737cd7789781bbaf70730d089eb75d4b54df45cc52419501838cc2e093bbb/rootfs"
+  - "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/7b195e37980361dcd5c4771ea79baed94fba2c76d619b195887cc9ab476fe851/rootfs"
+  - "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/b94fd9c395c3b11462b0e3f910a22792aa17503e31b9fb2babd2081820f961ea/rootfs"
+  - "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/ce86da3c4b2305ba4df6a70f1d7c9c6cfefd85169447f25513c46c7e5c179d0e/rootfs"
+  - "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/11b73c8cd55694cbd72a50fdcb3a8526e5960f28c58a7dae6d8739ed3d730d94/rootfs"
+  - "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/31435bc534e64f3d133a92ac6d0842ea09c14449a30498ab11f7b64ff47f270a/rootfs"
+  - "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/9481d9fc4b5ed58f9d303891ca2d439b3c2a2a88793c4f4666194339ad2ecac9/rootfs"
+  - "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/012f539ef0675c134fc8fc1d1143fd54063289da1a931ec6c691e936675d6f70/rootfs"
+  - "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/c53c5480aeda0f4af0c66fc31dfccb15d497973a9b1d5564321cd021f1e277cf/rootfs"
+  - "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/bc5cfd5bd6828b61f13f137fe15e7ec27c7e190b0eea1d5150a7673ffa54df9b/rootfs"
+  - "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/f5e6d3c3aedd189998e1372cfaf3f8b447cf0c281b02af39cae4362cff968aaa/rootfs"
+  - "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/2c4008be05068541b5c6350277da0f0af8e10893e20ce4a8362a06caabb2a142/rootfs"
+  - "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/becaddec005dd03d12de2584d0c56507b27afe892b5b5ea2967d4e63c4ca8c64/rootfs"
+  - "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/f0fcd09e882839a73539340f268d4dbb4de87779b68ebad422c35cc91e5c7856/rootfs"
+  - "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/9790126a4a0712c9ccda3d27b62b7398933354f143bddfc87fe8ff464af62bd1/rootfs"
+  - "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/ce448fd963f6f51f1cef1c1ff2a23926a8545c16bb5286bc36f41a93d9d6d47c/rootfs"
+  - "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/771a6589efbc336916bc7369bdd0345cb27db52ec98f3c14296ef9ba8431a605/rootfs"
+  - "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/3ac63a0b3abde9e5d65987897db6847012a1cd373170a059d49415817657777e/rootfs"
+  - "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/cf73ca80a8db7366d7ba121729fde0f01cf8c0677f38f86d6a9003091f520515/rootfs"
+  - "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/59c99102e5985491f73f88167427873d6414c8701d4cb63ce858a89a9bcaa2dc/rootfs"
+  - "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/9dc5f021d7754fb8f9e2cb008ccea61af1ca69d041edeb5c36f92aec8c3e8f53/rootfs"
+  - "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/14baff0f77369da7dcd3b3b0d414093424ba805921c84038896bee7e9b086a9b/rootfs"
+  - "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/db9c5ff90a7f772f7834f48ce9906c776ad719602ef43db81e596ada2e8837cc/rootfs"
+  - "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/d520e734ac5f38812cea31613ab425031d15b1c639476c4072b70aedbe0a1697/rootfs"
+  - "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/6bf4a0b47d25bd656988a5cb11edc82f5ce9210ee798513b84f5d813da3e4096/rootfs"
+  - "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/53b6329bafb2c62c9cc74c94fc8e1123c7c2036ab0cce9315ed8d026a4aae9b5/rootfs"
+  - "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/0ddd2aaea7d51b0b71f4e1ab908b09ed04697bc4448f98c564ffb86720c1cf21/rootfs"
+  - "/run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/13a2f151e2d293d5311d9aa6a70f691724fb341548fff6986872de0ea1866fe4/rootfs"
+  mtu_cali3ffdec784f2: 1450
   mtu_calib1dc5be656c: 1450
-  mtu_calib9fccd28db7: 1450
-  mtu_calif2ee8459118: 1450
   mtu_eth0: 1500
   mtu_lo: 65536
   mtu_vxlan.calico: 1450
   mysql_server_id: 3259629906
   netmask: 255.255.255.0
   netmask6: 'ffff:ffff:ffff:ffff::'
-  netmask6_cali66496baaa46: 'ffff:ffff:ffff:ffff::'
+  netmask6_cali3ffdec784f2: 'ffff:ffff:ffff:ffff::'
   netmask6_calib1dc5be656c: 'ffff:ffff:ffff:ffff::'
-  netmask6_calib9fccd28db7: 'ffff:ffff:ffff:ffff::'
-  netmask6_calif2ee8459118: 'ffff:ffff:ffff:ffff::'
   netmask6_eth0: 'ffff:ffff:ffff:ffff::'
   netmask6_lo: ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff
   netmask6_vxlan.calico: 'ffff:ffff:ffff:ffff::'
@@ -2530,10 +2582,8 @@ values:
   netmask_vxlan.calico: 255.255.255.255
   network: 192.168.50.0
   network6: 'fe80::'
-  network6_cali66496baaa46: 'fe80::'
+  network6_cali3ffdec784f2: 'fe80::'
   network6_calib1dc5be656c: 'fe80::'
-  network6_calib9fccd28db7: 'fe80::'
-  network6_calif2ee8459118: 'fe80::'
   network6_eth0: 'fe80::'
   network6_lo: "::1"
   network6_vxlan.calico: 'fe80::'
@@ -2545,7 +2595,7 @@ values:
     fqdn: rancher-node-admin-rke2-mgmt1.internal.admin.swh.network
     hostname: rancher-node-admin-rke2-mgmt1
     interfaces:
-      cali66496baaa46:
+      cali3ffdec784f2:
         bindings6:
         - address: fe80::ecee:eeff:feee:eeee
           netmask: 'ffff:ffff:ffff:ffff::'
@@ -2557,28 +2607,6 @@ values:
         network6: 'fe80::'
         scope6: link
       calib1dc5be656c:
-        bindings6:
-        - address: fe80::ecee:eeff:feee:eeee
-          netmask: 'ffff:ffff:ffff:ffff::'
-          network: 'fe80::'
-        ip6: fe80::ecee:eeff:feee:eeee
-        mac: ee:ee:ee:ee:ee:ee
-        mtu: 1450
-        netmask6: 'ffff:ffff:ffff:ffff::'
-        network6: 'fe80::'
-        scope6: link
-      calib9fccd28db7:
-        bindings6:
-        - address: fe80::ecee:eeff:feee:eeee
-          netmask: 'ffff:ffff:ffff:ffff::'
-          network: 'fe80::'
-        ip6: fe80::ecee:eeff:feee:eeee
-        mac: ee:ee:ee:ee:ee:ee
-        mtu: 1450
-        netmask6: 'ffff:ffff:ffff:ffff::'
-        network6: 'fe80::'
-        scope6: link
-      calif2ee8459118:
         bindings6:
         - address: fe80::ecee:eeff:feee:eeee
           netmask: 'ffff:ffff:ffff:ffff::'
@@ -2654,7 +2682,7 @@ values:
     scope6: link
   operatingsystem: Debian
   operatingsystemmajrelease: '11'
-  operatingsystemrelease: '11.9'
+  operatingsystemrelease: '11.11'
   os:
     architecture: amd64
     distro:
@@ -2662,16 +2690,16 @@ values:
       description: Debian GNU/Linux 11 (bullseye)
       id: Debian
       release:
-        full: '11.9'
+        full: '11.11'
         major: '11'
-        minor: '9'
+        minor: '11'
     family: Debian
     hardware: x86_64
     name: Debian
     release:
-      full: '11.9'
+      full: '11.11'
       major: '11'
-      minor: '9'
+      minor: '11'
     selinux:
       enabled: false
   osfamily: Debian
@@ -2747,10 +2775,8 @@ values:
   rubysitedir: "/usr/local/lib/site_ruby/2.7.0"
   rubyversion: 2.7.4
   scope6: link
-  scope6_cali66496baaa46: link
+  scope6_cali3ffdec784f2: link
   scope6_calib1dc5be656c: link
-  scope6_calib9fccd28db7: link
-  scope6_calif2ee8459118: link
   scope6_eth0: link
   scope6_lo: host
   scope6_vxlan.calico: link
@@ -2809,10 +2835,10 @@ values:
     short: rancher-node-admin-rke2-mgmt1
     internal_fqdn: rancher-node-admin-rke2-mgmt1.internal.admin.swh.network
   system_uptime:
-    days: 32
-    hours: 790
-    seconds: 2847065
-    uptime: 32 days
+    days: 6
+    hours: 164
+    seconds: 593588
+    uptime: 6 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -2826,15 +2852,15 @@ values:
     systemd-time-wait-sync.service: disabled
   systemd_version: '247'
   timezone: UTC
-  uptime: 32 days
-  uptime_days: 32
-  uptime_hours: 790
-  uptime_seconds: 2847065
+  uptime: 6 days
+  uptime_days: 6
+  uptime_hours: 164
+  uptime_seconds: 593588
   uuid: cc6bde8c-5028-41bc-b454-f1a6ea6aeb5f
   vcsrepo_svn_ver: ''
   virtual: kvm
   clientcert: rancher-node-admin-rke2-mgmt1.internal.admin.swh.network
   clientversion: 5.5.22
   clientnoop: false
-timestamp: '2024-04-10T13:06:08.037620994+00:00'
-expiration: '2024-04-10T13:36:08.040602440+00:00'
+timestamp: '2024-09-04T12:36:07.259330881+00:00'
+expiration: '2024-09-04T13:06:07.262159366+00:00'
