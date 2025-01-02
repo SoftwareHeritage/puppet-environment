@@ -20,28 +20,28 @@ R10K_ARGS=
 
 while (("$#")); do
     case "$1" in
-        -f | --from)
-            FROM=$2
-            shift
-            ;;
-        -t | --to)
-            TO=$2
-            shift
-            ;;
-        --no-clean-tmp)
-            CLEAN_TMPDIR=false
-            ;;
-        --octocatalog-diff-args)
-            OCTOCATALOG_DIFF_ARGS=$2
-            shift
-            ;;
-        --r10k-args)
-            R10K_ARGS=$2
-            shift
-            ;;
-        *)
-            HOSTS+=($1)
-            ;;
+    -f | --from)
+        FROM=$2
+        shift
+        ;;
+    -t | --to)
+        TO=$2
+        shift
+        ;;
+    --no-clean-tmp)
+        CLEAN_TMPDIR=false
+        ;;
+    --octocatalog-diff-args)
+        OCTOCATALOG_DIFF_ARGS=$2
+        shift
+        ;;
+    --r10k-args)
+        R10K_ARGS=$2
+        shift
+        ;;
+    *)
+        HOSTS+=($1)
+        ;;
     esac
     shift
 done
@@ -98,17 +98,6 @@ function template {
 
 git clone -b ${FROM} ${PUPPET_ENV}/swh-site ${TMPDIR}/swh-site
 git -C ${TMPDIR}/swh-site checkout ${TO}
-
-PUPPET_VERSION="$(puppet -V)"
-PUPPET_MAJORVERSION=${PUPPET_VERSION/.*/}
-
-if [ $PUPPET_MAJORVERSION -ge 7 ]; then
-    git -C ${TMPDIR}/swh-site checkout mr/puppet-7-compat
-    for branch in ${FROM} ${TO}; do
-        git -C ${TMPDIR}/swh-site checkout $branch
-        git -C ${TMPDIR}/swh-site cherry-pick mr/puppet-7-compat
-    done
-fi
 
 # R10k config
 template $OCD_BASE/r10k.yaml $TMPDIR/r10k.yaml
