@@ -1,72 +1,70 @@
-# Copyright (C) 2018-2021  The Software Heritage developers
+# Copyright (C) 2018-2025  The Software Heritage developers
 # See the AUTHORS file at the top-level directory of this distribution
 # License: GNU General Public License version 3, or any later version
 # See top-level LICENSE file for more information
 
+import copy
 import os
 import subprocess
 import time
-import copy
+
+from gitlab.exceptions import GitlabGetError
+
+GITLAB_REPO_NAMESPACE = "swh/infra/puppet/3rdparty"
+GITLAB_REPO_ATTRIBUTES = {
+    "visibility": "public",
+    "initialize_with_readme": False,
+    "auto_devops_enabled": False,
+    "packages_enabled": False,
+    "analytics_access_level": "disabled",
+    "builds_access_level": "disabled",
+    "container_registry_access_level": "disabled",
+    "environments_access_level": "disabled",
+    "feature_flags_access_level": "disabled",
+    "infrastructure_access_level": "disabled",
+    "issues_access_level": "disabled",
+    "model_experiments_access_level": "disabled",
+    "model_registry_access_level": "disabled",
+    "monitor_access_level": "disabled",
+    "pages_access_level": "disabled",
+    "requirements_access_level": "disabled",
+    "security_and_compliance_access_level": "disabled",
+    "snippets_access_level": "disabled",
+    "wiki_access_level": "disabled",
+}
 
 
-PHABRICATOR_EDITORS = "PHID-PROJ-w6dmg2vssgiimpjpduga"  # System administrators
-PHABRICATOR_TAGS = [
-    "PHID-PROJ-ailxer42p4nlkaikyhlo",  # Language-puppet
-    "PHID-PROJ-ximqdentnggqkdbc2ycg",  # Sync to GitHub
-    "PHID-PROJ-w6dmg2vssgiimpjpduga",  # System administrators
-]
-PHABRICATOR_DATA = [
-    {"type": "space", "value": "PHID-SPCE-yrejny25ty3jfio326zt"},
-    {"type": "vcs", "value": "git"},
-    {"type": "status", "value": "active"},
-    {"type": "view", "value": "public"},
-    {"type": "edit", "value": PHABRICATOR_EDITORS},
-    {"type": "policy.push", "value": PHABRICATOR_EDITORS},
-    {"type": "projects.set", "value": PHABRICATOR_TAGS},
-]
+def create_gitlab_repo(gl, module_name, release_metadata=None, upstream_forge_url=None):
+    try:
+        repo = gl.projects.get(f"{GITLAB_REPO_NAMESPACE}/{module_name}")
+        return repo
+    except GitlabGetError:
+        pass
 
-PHABRICATOR_REPO_URL = "https://forge.softwareheritage.org/source/"
+    gitlab_data = copy.deepcopy(GITLAB_REPO_ATTRIBUTES)
 
-
-def create_phab_repo(
-    phabricator, module_name, release_metadata=None, upstream_forge_url=None
-):
-    """Create a repository on Software Heritage forge with proper metadata."""
-    description = None
     if release_metadata:
         upstream_repo = release_metadata["source"]
-        original_description = release_metadata["summary"]
         upstream_forge_url = upstream_forge_url or ""
-        description = """\
-    {description}
-    {upstream_forge_url}
-    {upstream_repo}
-        """.format(
-            description=original_description,
-            upstream_forge_url=upstream_forge_url,
-            upstream_repo=upstream_repo,
-        )
+        gitlab_data["description"] = f"Mirror of {upstream_repo} ({upstream_forge_url})"
 
-    phabricator_data = copy.deepcopy(PHABRICATOR_DATA)
-    phabricator_name = module_name
-    phabricator_data.append({"type": "name", "value": phabricator_name})
-    phabricator_data.append({"type": "shortName", "value": phabricator_name})
-    if description:
-        phabricator_data.append({"type": "description", "value": description.strip()})
+    gitlab_data["path"] = module_name
 
-    return phabricator.diffusion.repository.edit(transactions=phabricator_data)
+    group_id = gl.groups.get(GITLAB_REPO_NAMESPACE).id
+
+    gitlab_data["namespace_id"] = group_id
+    return gl.projects.create(gitlab_data)
 
 
-def wait_phab_repo(phabricator, repo_id):
-    """Wait for the repository with the given id to be ready."""
+def wait_gitlab_repo(gl, repo):
+    """Wait for the given repository to be ready."""
     backoff = 0.5
     while True:
-        ret = phabricator.diffusion.repository.search(constraints={"ids": [repo_id]})
-        repo = ret.data[0]
-        if not repo["fields"]["isImporting"]:
+        repo = gl.projects.get(repo.id)
+        if repo.import_status in ("finished", "none"):
             break
         print(
-            f"Repository {repo_id} still importing, sleeping for {backoff} seconds..."
+            f"Repository {repo.path} still importing, sleeping for {backoff} seconds..."
         )
         time.sleep(backoff)
         backoff = min(backoff * 2, 15.0)
@@ -74,14 +72,14 @@ def wait_phab_repo(phabricator, repo_id):
 
 def clone_and_push_repo(
     module_name,
-    phabricator_repo,
+    swh_repo,
     upstream_repo,
     default_branch="master",
     skip_clone=False,
 ):
     """Clone SWH repository, add the upstream remote and push to SWH."""
     if not skip_clone:
-        subprocess.check_call(["git", "clone", phabricator_repo, module_name])
+        subprocess.check_call(["git", "clone", swh_repo, module_name])
     os.chdir(module_name)
     try:
         subprocess.check_call(["git", "remote", "add", "upstream", upstream_repo])

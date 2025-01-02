@@ -131,16 +131,15 @@ following tasks:
 
 * Getting metadata from the Puppet forge for the module (description, upstream git URL)
 * Cloning the repository
-* Creating a mirror repository on the Software Heritage forge, with the proper
-  permissions and metadata (notably the Sync to GitHub flag)
+* Creating a mirror repository on the Software Heritage forge
 * Pushing the clone to the forge
 * Updating the `.mrconfig` and `.gitignore` files to know the new repository
 
 To be able to use the script, you need to :
 
-* Be a member of the System Administrators Phabricator group
-* Have the Arcanist API key setup
-* A pair of python dependencies : `python3-phabricator` and `python3-requests` (pull
+* Be a member of the System Administrators GitLab group
+* Set up an API token for python-gitlab: https://python-gitlab.readthedocs.io/en/stable/cli-usage.html#cli-configuration
+* A pair of python dependencies : `python3-gitlab` and `python3-requests` (pull
   them from testing if needed).
 
 Example usage to pull the `elastic/elasticsearch` module

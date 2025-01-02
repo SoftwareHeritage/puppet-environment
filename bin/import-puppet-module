@@ -1,76 +1,80 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 
-# Copyright (C) 2018-2022  The Software Heritage developers
+# Copyright (C) 2018-2025  The Software Heritage developers
 # See the AUTHORS file at the top-level directory of this distribution
 # License: GNU General Public License version 3, or any later version
 # See top-level LICENSE file for more information
 
 # Import a Puppet module from the Puppet Forge to the Software Heritage
-# Phabricator instance
+# GitLab instance
 
-import click
 import copy
 import os
 import tempfile
 
-from phabricator import Phabricator
+import click
+import gitlab
 import requests
 
-from common import (
-    PHABRICATOR_REPO_URL,
-    create_phab_repo,
-    wait_phab_repo,
-    clone_and_push_repo,
-)
+from common import clone_and_push_repo, create_gitlab_repo, wait_gitlab_repo
 
+PUPPETFORGE_API = "https://forgeapi.puppetlabs.com/v3/"
+PUPPETFORGE_URL = "https://forge.puppet.com/"
 
-PUPPETFORGE_API = 'https://forgeapi.puppetlabs.com/v3/'
-PUPPETFORGE_URL = 'https://forge.puppet.com/'
-
-MRCONFIG_MARKER = '## END SWH REPOS ##'
+MRCONFIG_MARKER = "## END SWH REPOS ##"
 MRCONFIG_TEMPLATE = """\
 [{module_name}]
-checkout = git clone {phabricator_repo} {module_name} \\
+checkout = git clone {swh_repo} {module_name} \\
 \t && cd {module_name} \\
 \t && git remote add upstream {upstream_repo} \\
 \t && git fetch upstream
 """
 
+GITIGNORE_ENTRIES = """\
+/octocatalog-diff/ssl/
+/.vagrant
+/packer/packer_cache
+/packer/builds
+__pycache__
+"""
+
 
 def get_puppetforge_module_info(module_name):
     """Get module information from the Puppet forge"""
-    r = requests.get(PUPPETFORGE_API + 'modules/' + module_name)
+    r = requests.get(PUPPETFORGE_API + "modules/" + module_name)
     if not r.ok:
-        raise ValueError('Error when fetching %s from the Puppet forge: %s' %
-                         (module_name, ', '.join(r.json()['errors'])))
+        raise ValueError(
+            "Error when fetching %s from the Puppet forge: %s"
+            % (module_name, ", ".join(r.json()["errors"]))
+        )
     return r.json()
 
 
 def read_mrconfig():
     """Parse the .mrconfig file"""
     mrconfig = []
-    with open('.mrconfig') as f:
-        for block in f.read().strip().split('\n\n'):
+    with open(".mrconfig") as f:
+        for block in f.read().strip().split("\n\n"):
             mrconfig.append(block.strip())
     swh_repos_index = mrconfig.index(MRCONFIG_MARKER)
     swh_repos = {}
     for i, block in enumerate(mrconfig[:swh_repos_index]):
-        if not block.startswith('[') or ']' not in block:
+        if not block.startswith("[") or "]" not in block:
             raise ValueError(
-                'Could not parse .mrconfig: missing [] in block %d' %
-                (i + swh_repos_index + 1)
+                "Could not parse .mrconfig: missing [] in block %d"
+                % (i + swh_repos_index + 1)
             )
-        module_name = block[1:block.index(']')]
+        module_name = block[1 : block.index("]")]
         swh_repos[module_name] = block
 
     extra_repos = {}
-    for i, block in enumerate(mrconfig[swh_repos_index + 1:]):
-        if not block.startswith('[') or ']' not in block:
+    for i, block in enumerate(mrconfig[swh_repos_index + 1 :]):
+        if not block.startswith("[") or "]" not in block:
             raise ValueError(
-                'Could not parse .mrconfig: missing [] in block %d' %
-                (i + swh_repos_index + 1)
+                "Could not parse .mrconfig: missing [] in block %d"
+                % (i + swh_repos_index + 1)
             )
-        module_name = block[1:block.index(']')]
+        module_name = block[1 : block.index("]")]
         extra_repos[module_name] = block
 
     return swh_repos, extra_repos
@@ -85,19 +89,19 @@ def write_mrconfig(swh_repos, extra_repos):
     for repo, block in sorted(extra_repos.items()):
         out.append(block.strip())
 
-    with tempfile.NamedTemporaryFile(mode='w+', dir='.', delete=False) as f:
-        f.write('\n\n'.join(out))
-        f.write('\n')
-    os.rename(f.name, '.mrconfig')
+    with tempfile.NamedTemporaryFile(mode="w+", dir=".", delete=False) as f:
+        f.write("\n\n".join(out))
+        f.write("\n")
+    os.rename(f.name, ".mrconfig")
 
 
-def update_mrconfig(module_name, phabricator_repo, upstream_repo):
+def update_mrconfig(module_name, swh_repo, upstream_repo):
     """Add the new module to .mrconfig"""
     swh_repos, extra_repos = read_mrconfig()
 
     extra_repos[module_name] = MRCONFIG_TEMPLATE.format(
         module_name=module_name,
-        phabricator_repo=phabricator_repo,
+        swh_repo=swh_repo,
         upstream_repo=upstream_repo,
     )
 
@@ -109,52 +113,66 @@ def update_mrconfig(module_name, phabricator_repo, upstream_repo):
 
 
 def update_gitignore(modules):
-    with tempfile.NamedTemporaryFile(mode='w+', dir='.', delete=False) as f:
+    with tempfile.NamedTemporaryFile(mode="w+", dir=".", delete=False) as f:
+        print(GITIGNORE_ENTRIES, file=f)
         for module in sorted(modules):
-            if module == 'DEFAULT':
+            if module == "DEFAULT":
                 continue
-            print('/%s/' % module, file=f)
+            print(f"/{module}/", file=f)
 
-    os.rename(f.name, '.gitignore')
+    os.rename(f.name, ".gitignore")
 
 
 @click.command()
-@click.option("--default-branch", default="master",
-              help="Repository's default branch name: e.g. main)")
-@click.option("-i", "--repo-id", type=click.INT,
-              help="When a repository already exists, skip creation and use it.")
-@click.option("--clone/--no-clone", "clone", type=click.BOOL,
-              help="By default clone a repository locally, we can inhibit that step.")
+@click.option(
+    "--gitlab",
+    "-g",
+    "gitlab_instance",
+    help="Which GitLab instance to use, as configured in the python-gitlab config",
+    default=None,
+)
+@click.option(
+    "--default-branch",
+    default="master",
+    help="Repository's default branch name: e.g. main)",
+)
+@click.option(
+    "--clone/--no-clone",
+    "clone",
+    type=click.BOOL,
+    help="By default clone a repository locally, we can inhibit that step.",
+)
 @click.argument("module_name")
-def main(module_name, repo_id, default_branch, clone):
+def main(gitlab_instance, module_name, default_branch, clone):
     """Import necessary puppet module within the swh forge
 
     MODULE_NAME "Pupppetlabs' module name, e.g. elastic-elasticsearch, puppetlabs-zfs_core
 
     """
     puppetforge_info = get_puppetforge_module_info(module_name)
-    release_meta = puppetforge_info['current_release']['metadata']
-    upstream_repo = release_meta['source']
-    phabricator_repo = PHABRICATOR_REPO_URL + 'puppet-%s.git' % module_name
-    phabricator = Phabricator()
-    phabricator.connect()
-    phabricator.update_interfaces()
+    release_meta = puppetforge_info["current_release"]["metadata"]
+    upstream_repo = release_meta["source"]
 
-    if not repo_id:
-        upstream_forge_url = PUPPETFORGE_URL + module_name.replace('-', '/')
-        puppet_module_name = f"puppet-{module_name}"
-        repo = create_phab_repo(
-            phabricator, puppet_module_name, release_meta, upstream_forge_url
-        )
-        repo_id = repo['object']['id']
+    gl = gitlab.Gitlab.from_config(gitlab_instance)
+    gl.auth()
 
-    wait_phab_repo(phabricator, repo_id)
+    upstream_forge_url = PUPPETFORGE_URL + module_name.replace("-", "/")
+    repo = create_gitlab_repo(gl, module_name, release_meta, upstream_forge_url)
+    repo_id = repo.id
+
+    gitlab_repo = repo.http_url_to_repo
+
+    wait_gitlab_repo(gl, repo)
     clone_and_push_repo(
-        module_name, phabricator_repo, upstream_repo,
-        default_branch=default_branch, skip_clone=not clone)
-    repos = update_mrconfig(module_name, phabricator_repo, upstream_repo)
+        module_name,
+        gitlab_repo,
+        upstream_repo,
+        default_branch=default_branch,
+        skip_clone=not clone,
+    )
+    repos = update_mrconfig(module_name, gitlab_repo, upstream_repo)
     update_gitignore(repos)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
