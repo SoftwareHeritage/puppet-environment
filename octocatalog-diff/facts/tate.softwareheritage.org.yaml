@@ -3,17 +3,29 @@ name: tate.softwareheritage.org
 values:
   agent_specified_environment: production
   apache_version: 2.4.62
-  apt_dist_updates: 3
+  apt_dist_updates: 5
   apt_has_dist_updates: true
-  apt_has_updates: false
+  apt_has_updates: true
   apt_package_dist_updates:
   - guile-2.2-libs
   - w3m
   - libgc1
-  apt_package_security_dist_updates: []
+  - mediawiki
+  - mediawiki-classes
+  apt_package_security_dist_updates:
+  - mediawiki
+  - mediawiki-classes
+  apt_package_security_updates:
+  - mediawiki
+  - mediawiki-classes
+  apt_package_updates:
+  - mediawiki
+  - mediawiki-classes
   apt_reboot_required: true
-  apt_security_dist_updates: 0
-  apt_update_last_success: 1725452882
+  apt_security_dist_updates: 2
+  apt_security_updates: 2
+  apt_update_last_success: 1736774883
+  apt_updates: 2
   architecture: amd64
   augeas:
     version: 1.12.0
@@ -86,7 +98,7 @@ values:
   icinga2_puppet_hostcert: "/var/lib/puppet/ssl/certs/tate.softwareheritage.org.pem"
   icinga2_puppet_hostprivkey: "/var/lib/puppet/ssl/private_keys/tate.softwareheritage.org.pem"
   icinga2_puppet_localcacert: "/var/lib/puppet/ssl/certs/ca.pem"
-  icinga2_version: 2.14.2
+  icinga2_version: 2.14.3
   id: root
   identity:
     gid: 0
@@ -215,6 +227,12 @@ values:
         shpchp_poll_mode: N
         shpchp_debug: N
       used_by: []
+    nfnetlink:
+      parameters: {}
+      used_by:
+      - nft_compat
+      - nf_tables
+      - ip_set
     srcutree:
       parameters:
         exp_holdoff: '25000'
@@ -237,6 +255,9 @@ values:
       parameters:
         use_acpi_alarm: N
       used_by: []
+    tcp_diag:
+      parameters: {}
+      used_by: []
     virtio_balloon:
       parameters: {}
       used_by: []
@@ -255,6 +276,12 @@ values:
       used_by:
       - drm_vram_helper
       - bochs_drm
+    af_packet_diag:
+      parameters: {}
+      used_by: []
+    nft_compat:
+      parameters: {}
+      used_by: []
     device_hmem:
       parameters:
         disable: N
@@ -372,6 +399,9 @@ values:
       parameters: {}
       used_by:
       - bochs_drm
+    raw_diag:
+      parameters: {}
+      used_by: []
     ata_generic:
       parameters: {}
       used_by: []
@@ -386,6 +416,7 @@ values:
       parameters: {}
       used_by:
       - btrfs
+      - nf_tables
       - xfs
     keyboard:
       parameters:
@@ -408,6 +439,9 @@ values:
         defy: '768'
       used_by: []
     qnx4:
+      parameters: {}
+      used_by: []
+    udp_diag:
       parameters: {}
       used_by: []
     serio_raw:
@@ -481,6 +515,10 @@ values:
     joydev:
       parameters: {}
       used_by: []
+    nf_reject_ipv4:
+      parameters: {}
+      used_by:
+      - ipt_REJECT
     syscall:
       parameters:
         x32: N
@@ -489,6 +527,9 @@ values:
       parameters:
         default_governor: schedutil
         'off': '0'
+      used_by: []
+    xt_set:
+      parameters: {}
       used_by: []
     ehci_hcd:
       parameters:
@@ -539,10 +580,21 @@ values:
         max_user_bgreq: '3906'
         max_user_congthresh: '3906'
       used_by: []
+    unix_diag:
+      parameters: {}
+      used_by: []
+    netlink_diag:
+      parameters: {}
+      used_by: []
     acpiphp:
       parameters:
         disable: N
       used_by: []
+    nf_tables:
+      parameters: {}
+      used_by:
+      - nft_compat
+      - nft_counter
     configfs:
       parameters: {}
       used_by: []
@@ -564,7 +616,13 @@ values:
     x_tables:
       parameters: {}
       used_by:
+      - nft_compat
+      - xt_set
+      - ipt_REJECT
       - ip_tables
+    ip_set_hash_net:
+      parameters: {}
+      used_by: []
     rcutree:
       parameters:
         gp_preinit_delay: '0'
@@ -589,6 +647,9 @@ values:
         qlowmark: '100'
         qovld: '20000'
       used_by: []
+    ipt_REJECT:
+      parameters: {}
+      used_by: []
     xfs:
       parameters: {}
       used_by: []
@@ -596,6 +657,15 @@ values:
       parameters: {}
       used_by:
       - drm_vram_helper
+    ip_set:
+      parameters:
+        max_sets: '0'
+      used_by:
+      - xt_set
+      - ip_set_hash_net
+    nft_counter:
+      parameters: {}
+      used_by: []
     button:
       parameters:
         lid_init_state: ignore open [method] disabled
@@ -657,6 +727,12 @@ values:
         def_reserved_size: '32768'
         allow_dio: '0'
       used_by: []
+    inet_diag:
+      parameters: {}
+      used_by:
+      - tcp_diag
+      - raw_diag
+      - udp_diag
     psmouse:
       parameters:
         resetafter: '5'
@@ -797,9 +873,9 @@ values:
       - ttm
   letsencrypt_directory: {}
   load_averages:
-    15m: 0.14
-    1m: 0.08
-    5m: 0.1
+    15m: 0.19
+    1m: 0.22
+    5m: 0.24
   location: sesi_rocquencourt
   lsbdistcodename: bullseye
   lsbdistdescription: Debian GNU/Linux 11 (bullseye)
@@ -813,30 +889,30 @@ values:
   manufacturer: QEMU
   memory:
     swap:
-      available: 2.94 GiB
-      available_bytes: 3152629760
-      capacity: 26.58%
+      available: 3.76 GiB
+      available_bytes: 4040523776
+      capacity: 5.90%
       total: 4.00 GiB
       total_bytes: 4293914624
-      used: 1.06 GiB
-      used_bytes: 1141284864
+      used: 241.65 MiB
+      used_bytes: 253390848
     system:
-      available: 4.96 GiB
-      available_bytes: 5327306752
-      capacity: 57.54%
+      available: 4.87 GiB
+      available_bytes: 5232271360
+      capacity: 58.30%
       total: 11.68 GiB
       total_bytes: 12546125824
-      used: 6.72 GiB
-      used_bytes: 7218819072
-  memoryfree: 4.96 GiB
-  memoryfree_mb: 5080.515625
+      used: 6.81 GiB
+      used_bytes: 7313854464
+  memoryfree: 4.87 GiB
+  memoryfree_mb: 4989.8828125
   memorysize: 11.68 GiB
   memorysize_mb: 11964.91796875
   mountpoints:
     "/":
-      available: 25.15 GiB
-      available_bytes: 27007721472
-      capacity: 82.20%
+      available: 19.67 GiB
+      available_bytes: 21123883008
+      capacity: 86.08%
       device: "/dev/vda1"
       filesystem: ext4
       options:
@@ -845,8 +921,8 @@ values:
       - errors=remount-ro
       size: 147.43 GiB
       size_bytes: 158298935296
-      used: 116.16 GiB
-      used_bytes: 124727529472
+      used: 121.64 GiB
+      used_bytes: 130611367936
     "/dev":
       available: 5.83 GiB
       available_bytes: 6254768128
@@ -928,8 +1004,8 @@ values:
       used_bytes: 0
     "/run":
       available: 1.17 GiB
-      available_bytes: 1254055936
-      capacity: 0.04%
+      available_bytes: 1254047744
+      capacity: 0.05%
       device: tmpfs
       filesystem: tmpfs
       options:
@@ -942,8 +1018,8 @@ values:
       - mode=755
       size: 1.17 GiB
       size_bytes: 1254612992
-      used: 544.00 KiB
-      used_bytes: 557056
+      used: 552.00 KiB
+      used_bytes: 565248
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -1000,8 +1076,8 @@ values:
   mtu_eth1: 1500
   mtu_lo: 65536
   mysql_server_id: 2018953476
-  mysql_version: 10.5.23
-  mysqld_version: "/usr/sbin/mysqld  Ver 10.5.23-MariaDB-0+deb11u1 for debian-linux-gnu
+  mysql_version: 10.5.26
+  mysqld_version: "/usr/sbin/mysqld  Ver 10.5.26-MariaDB-0+deb11u2 for debian-linux-gnu
     on x86_64 (Debian 11)"
   netmask: 255.255.255.192
   netmask6: 'ffff:ffff:ffff:ffff::'
@@ -1127,7 +1203,7 @@ values:
       size_bytes: 4293918720
       uuid: 422de49f-0ae7-490d-83c9-e4f19086f84f
   path: "/usr/bin:/bin:/usr/sbin:/sbin"
-  phpversion: 8.3.11
+  phpversion: 8.3.15
   physicalprocessorcount: 1
   processor0: Common KVM processor
   processor1: Common KVM processor
@@ -1217,8 +1293,8 @@ values:
   sshrsakey: AAAAB3NzaC1yc2EAAAADAQABAAABAQDIEv052pq1mvCDxaP+IBjYSEiAAjUwX+rLl1Tc4ZJ8ck7+/JuR9uSiBspeF4E8M6YE0JFczGqpJdMeU5uf/rUqeMLp53g7Q9BWdIzHBOGLSW80NZ9SYLoPZdhiLd+W3nHu6tze79txvwSqbVpw91NRiaQT8MmI3f7gcRYKClmtODO9Sz8hIUIwGtty7/SJEpZC8httIbsY6jjGM/IUbh6FWsfN3G7jxoq8OvwErSZ+zkfJ6IpPdkTrPRCbGNaO8DDQOBdhGu1z1DXkXeaa6jD7t2SiTpJ1B6BgjwuefimczGNohUisLdtUFarAByb7iklpeMvbiS9N/TsxV88D8qMD
   subnet: sesi_rocquencourt
   sudoversion: 1.9.5p2
-  swapfree: 2.94 GiB
-  swapfree_mb: 3006.58203125
+  swapfree: 3.76 GiB
+  swapfree_mb: 3853.34375
   swapsize: 4.00 GiB
   swapsize_mb: 4094.99609375
   swh_hostname:
@@ -1226,10 +1302,10 @@ values:
     short: tate
     internal_fqdn: tate.internal.softwareheritage.org
   system_uptime:
-    days: 100
-    hours: 2400
-    seconds: 8642071
-    uptime: 100 days
+    days: 231
+    hours: 5545
+    seconds: 19964068
+    uptime: 231 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -1244,15 +1320,15 @@ values:
     systemd-timesyncd.service: enabled
   systemd_version: '247'
   timezone: UTC
-  uptime: 100 days
-  uptime_days: 100
-  uptime_hours: 2400
-  uptime_seconds: 8642071
+  uptime: 231 days
+  uptime_days: 231
+  uptime_hours: 5545
+  uptime_seconds: 19964068
   uuid: 1cfacaaf-2718-4794-9cc5-88dfde58fb43
   vcsrepo_svn_ver: ''
   virtual: kvm
   clientcert: tate.softwareheritage.org
   clientversion: 5.5.22
   clientnoop: false
-timestamp: '2024-09-04T13:24:05.521950759+00:00'
-expiration: '2024-09-04T13:54:05.523025760+00:00'
+timestamp: '2025-01-13T14:24:06.388273713+00:00'
+expiration: '2025-01-13T14:54:06.389575992+00:00'

@@ -3,7 +3,7 @@ name: giverny.softwareheritage.org
 values:
   agent_specified_environment: production
   apache_version: 2.4.62
-  apt_dist_updates: 28
+  apt_dist_updates: 32
   apt_has_dist_updates: true
   apt_has_updates: true
   apt_package_dist_updates:
@@ -21,18 +21,22 @@ values:
   - libpq5
   - libdbd-pg-perl
   - libllvm13
-  - postgresql-client-16
-  - postgresql-16
+  - libllvm16
+  - postgresql-client-17
+  - postgresql-17
   - postgresql
   - postgresql-plpython3-11
   - postgresql-client-11
   - postgresql-11
   - postgresql-client-15
   - postgresql-15
+  - postgresql-client-16
+  - postgresql-16
   - postgresql-client
   - postgresql-contrib
-  - postgresql-doc-16
+  - postgresql-doc-17
   - postgresql-doc
+  - postgresql-doc-16
   - python3-psycopg2
   - yarn
   apt_package_security_dist_updates: []
@@ -51,21 +55,17 @@ values:
   - libpq-dev
   - libpq5
   - libdbd-pg-perl
-  - postgresql
-  - postgresql-client-16
-  - postgresql-client
   - postgresql-client-11
   - postgresql-client-15
-  - postgresql-contrib
+  - postgresql-client-16
   - postgresql-doc-16
-  - postgresql-doc
   - python3-psycopg2
   - yarn
   apt_reboot_required: true
   apt_security_dist_updates: 0
   apt_security_updates: 0
-  apt_update_last_success: 1725454504
-  apt_updates: 23
+  apt_update_last_success: 1736776504
+  apt_updates: 19
   architecture: amd64
   bios_release_date: 05/08/2017
   bios_vendor: Dell Inc.
@@ -98,8 +98,8 @@ values:
   chassistype: Tower
   deployment: production
   dhcp_servers:
-    enp0s25: 128.93.77.232
-    system: 128.93.77.232
+    enp0s25: 128.93.77.231
+    system: 128.93.77.231
   disks:
     nvme0n1:
       model: Samsung SSD 960 PRO 2TB
@@ -177,7 +177,7 @@ values:
           Experimental: 'false'
           GitCommit: 615dfdf
           GoVersion: go1.21.6
-          KernelVersion: 5.10.0-31-amd64
+          KernelVersion: 5.10.0-32-amd64
           MinAPIVersion: '1.24'
           Os: linux
       - Name: containerd
@@ -199,7 +199,7 @@ values:
       GoVersion: go1.21.6
       Os: linux
       Arch: amd64
-      KernelVersion: 5.10.0-31-amd64
+      KernelVersion: 5.10.0-32-amd64
       BuildTime: '2024-01-18T17:10:14.000000000+00:00'
   docker_worker_join_token: ''
   domain: softwareheritage.org
@@ -228,7 +228,7 @@ values:
   icinga2_puppet_hostcert: "/var/lib/puppet/ssl/certs/giverny.softwareheritage.org.pem"
   icinga2_puppet_hostprivkey: "/var/lib/puppet/ssl/private_keys/giverny.softwareheritage.org.pem"
   icinga2_puppet_localcacert: "/var/lib/puppet/ssl/certs/ca.pem"
-  icinga2_version: 2.14.2
+  icinga2_version: 2.14.3
   id: root
   identity:
     gid: 0
@@ -239,9 +239,10 @@ values:
   interfaces: docker0,enp0s25,lo,tun0,virbr0,virbr1
   ipaddress: 128.93.65.5
   ipaddress6: fe80::4a4d:7eff:fefb:87ac
+  ipaddress6_docker0: fe80::42:30ff:fed4:ab8f
   ipaddress6_enp0s25: fe80::4a4d:7eff:fefb:87ac
   ipaddress6_lo: "::1"
-  ipaddress6_tun0: fe80::57f0:e9c9:1b42:9537
+  ipaddress6_tun0: fe80::2280:f9a7:8f51:7605
   ipaddress_docker0: 172.17.0.1
   ipaddress_enp0s25: 128.93.65.5
   ipaddress_lo: 127.0.0.1
@@ -253,11 +254,11 @@ values:
   java_default_home: "/usr/lib/jvm/java-11-openjdk-amd64"
   java_libjvm_path: "/usr/lib/jvm/java-11-openjdk-amd64/lib/server"
   java_major_version: '11'
-  java_patch_level: '24'
-  java_version: 11.0.24
+  java_patch_level: '25'
+  java_version: 11.0.25
   kernel: Linux
   kernelmajversion: '5.10'
-  kernelrelease: 5.10.0-31-amd64
+  kernelrelease: 5.10.0-32-amd64
   kernelversion: 5.10.0
   kmods:
     parport_pc:
@@ -349,6 +350,7 @@ values:
       used_by:
       - xt_conntrack
       - nf_nat
+      - xt_nat
       - nf_conntrack_netlink
       - xt_MASQUERADE
     crct10dif_common:
@@ -687,7 +689,7 @@ values:
         zfs_vdev_async_read_max_active: '3'
         l2arc_feed_secs: '1'
         zfs_commit_timeout_pct: '5'
-        zfs_arc_max: '42227832832'
+        zfs_arc_max: '42227823616'
         spa_load_verify_shift: '4'
         zfs_unflushed_log_block_min: '1000'
         zfs_vdev_nia_credit: '5'
@@ -796,6 +798,9 @@ values:
       parameters:
         use_acpi_alarm: Y
       used_by: []
+    tcp_diag:
+      parameters: {}
+      used_by: []
     jfs:
       parameters: {}
       used_by: []
@@ -816,6 +821,7 @@ values:
     nf_nat:
       parameters: {}
       used_by:
+      - xt_nat
       - nft_chain_nat
       - xt_MASQUERADE
     drm_kms_helper:
@@ -1017,6 +1023,9 @@ values:
       parameters: {}
       used_by:
       - snd_usb_audio
+    veth:
+      parameters: {}
+      used_by: []
     pciehp:
       parameters:
         pciehp_poll_time: '0'
@@ -1161,6 +1170,9 @@ values:
       - parport_pc
       - lp
       - ppdev
+    xt_nat:
+      parameters: {}
+      used_by: []
     keyboard:
       parameters:
         brl_timeout: '300'
@@ -1305,6 +1317,9 @@ values:
     rfkill:
       parameters:
         default_state: '1'
+      used_by: []
+    joydev:
+      parameters: {}
       used_by: []
     nf_reject_ipv4:
       parameters: {}
@@ -1488,6 +1503,7 @@ values:
       - xt_tcpudp
       - xt_addrtype
       - xt_CHECKSUM
+      - xt_nat
       - ipt_REJECT
       - ip_tables
       - xt_MASQUERADE
@@ -1733,6 +1749,10 @@ values:
         def_reserved_size: '32768'
         allow_dio: '0'
       used_by: []
+    inet_diag:
+      parameters: {}
+      used_by:
+      - tcp_diag
     kvm_intel:
       parameters:
         enlightened_vmcs: N
@@ -1943,9 +1963,9 @@ values:
       - nouveau
   letsencrypt_directory: {}
   load_averages:
-    15m: 0.1
-    1m: 0.2
-    5m: 0.13
+    15m: 0.03
+    1m: 0.18
+    5m: 0.08
   location: inria_paris
   lsbdistcodename: bullseye
   lsbdistdescription: Debian GNU/Linux 11 (bullseye)
@@ -1954,37 +1974,37 @@ values:
   lsbmajdistrelease: '11'
   lsbminordistrelease: '11'
   macaddress: 48:4d:7e:fb:87:ac
-  macaddress_docker0: 02:42:a9:c0:65:fd
+  macaddress_docker0: 02:42:30:d4:ab:8f
   macaddress_enp0s25: 48:4d:7e:fb:87:ac
   macaddress_virbr0: 52:54:00:a1:ac:02
   macaddress_virbr1: 52:54:00:f7:d6:54
   manufacturer: Dell Inc.
   memory:
     swap:
-      available: 29.80 GiB
-      available_bytes: 31998341120
-      capacity: 0%
+      available: 29.78 GiB
+      available_bytes: 31977369600
+      capacity: 0.07%
       total: 29.80 GiB
       total_bytes: 31998341120
-      used: 0 bytes
-      used_bytes: 0
+      used: 20.00 MiB
+      used_bytes: 20971520
     system:
-      available: 149.91 GiB
-      available_bytes: 160961552384
-      capacity: 4.71%
+      available: 140.03 GiB
+      available_bytes: 150352470016
+      capacity: 10.99%
       total: 157.31 GiB
       total_bytes: 168911294464
-      used: 7.40 GiB
-      used_bytes: 7949742080
-  memoryfree: 149.91 GiB
-  memoryfree_mb: 153504.8984375
+      used: 17.28 GiB
+      used_bytes: 18558824448
+  memoryfree: 140.03 GiB
+  memoryfree_mb: 143387.2890625
   memorysize: 157.31 GiB
   memorysize_mb: 161086.36328125
   mountpoints:
     "/":
-      available: 25.59 GiB
-      available_bytes: 27475546112
-      capacity: 25.81%
+      available: 25.54 GiB
+      available_bytes: 27426611200
+      capacity: 25.94%
       device: "/dev/mapper/giverny--vg-root"
       filesystem: ext4
       options:
@@ -1993,11 +2013,11 @@ values:
       - errors=remount-ro
       size: 36.37 GiB
       size_bytes: 39050428416
-      used: 8.90 GiB
-      used_bytes: 9558261760
+      used: 8.95 GiB
+      used_bytes: 9607196672
     "/boot":
-      available: 330.32 MiB
-      available_bytes: 346364928
+      available: 330.31 MiB
+      available_bytes: 346352640
       capacity: 25.93%
       device: "/dev/nvme3n1p2"
       filesystem: ext2
@@ -2006,8 +2026,8 @@ values:
       - relatime
       size: 470.35 MiB
       size_bytes: 493201408
-      used: 115.63 MiB
-      used_bytes: 121251840
+      used: 115.65 MiB
+      used_bytes: 121264128
     "/boot/efi":
       available: 500.21 MiB
       available_bytes: 524505088
@@ -2108,9 +2128,9 @@ values:
       used: 0 bytes
       used_bytes: 0
     "/home":
-      available: 65.51 GiB
-      available_bytes: 70337232896
-      capacity: 5.12%
+      available: 63.76 GiB
+      available_bytes: 68461109248
+      capacity: 7.65%
       device: "/dev/mapper/giverny--vg-home"
       filesystem: ext4
       options:
@@ -2118,11 +2138,11 @@ values:
       - relatime
       size: 72.78 GiB
       size_bytes: 78149087232
-      used: 3.53 GiB
-      used_bytes: 3795181568
+      used: 5.28 GiB
+      used_bytes: 5671305216
     "/run":
       available: 15.73 GiB
-      available_bytes: 16887939072
+      available_bytes: 16887918592
       capacity: 0.02%
       device: tmpfs
       filesystem: tmpfs
@@ -2136,8 +2156,8 @@ values:
       - mode=755
       size: 15.73 GiB
       size_bytes: 16891129856
-      used: 3.04 MiB
-      used_bytes: 3190784
+      used: 3.06 MiB
+      used_bytes: 3211264
     "/run/lock":
       available: 5.00 MiB
       available_bytes: 5242880
@@ -2168,7 +2188,7 @@ values:
       size_bytes: 0
       used: 0 bytes
       used_bytes: 0
-    "/run/user/1001":
+    "/run/user/1025":
       available: 15.73 GiB
       available_bytes: 16891068416
       capacity: 0.00%
@@ -2182,13 +2202,13 @@ values:
       - size=16495240k
       - nr_inodes=4123810
       - mode=700
-      - uid=1001
-      - gid=1001
+      - uid=1025
+      - gid=1025
       size: 15.73 GiB
       size_bytes: 16891125760
       used: 56.00 KiB
       used_bytes: 57344
-    "/run/user/1001/gvfs":
+    "/run/user/1025/gvfs":
       available: 0 bytes
       available_bytes: 0
       capacity: 100%
@@ -2199,8 +2219,8 @@ values:
       - nosuid
       - nodev
       - relatime
-      - user_id=1001
-      - group_id=1001
+      - user_id=1025
+      - group_id=1025
       size: 0 bytes
       size_bytes: 0
       used: 0 bytes
@@ -2281,7 +2301,7 @@ values:
       used_bytes: 0
     "/srv/slow-storage":
       available: 3.51 TiB
-      available_bytes: 3861174943744
+      available_bytes: 3861174419456
       capacity: 0.00%
       device: slow-storage
       filesystem: zfs
@@ -2290,12 +2310,12 @@ values:
       - xattr
       - noacl
       size: 3.51 TiB
-      size_bytes: 3861175074816
+      size_bytes: 3861174550528
       used: 128.00 KiB
       used_bytes: 131072
     "/srv/storage":
-      available: 4.34 TiB
-      available_bytes: 4777206874112
+      available: 4.38 TiB
+      available_bytes: 4820853587968
       capacity: 0.00%
       device: storage
       filesystem: zfs
@@ -2304,13 +2324,13 @@ values:
       - noatime
       - xattr
       - noacl
-      size: 4.34 TiB
-      size_bytes: 4777207005184
+      size: 4.38 TiB
+      size_bytes: 4820853719040
       used: 128.00 KiB
       used_bytes: 131072
     "/srv/storage/anlambert":
-      available: 4.34 TiB
-      available_bytes: 4777206874112
+      available: 4.38 TiB
+      available_bytes: 4820853587968
       capacity: 0.00%
       device: storage/anlambert
       filesystem: zfs
@@ -2319,13 +2339,13 @@ values:
       - noatime
       - xattr
       - noacl
-      size: 4.34 TiB
-      size_bytes: 4777207005184
+      size: 4.38 TiB
+      size_bytes: 4820853719040
       used: 128.00 KiB
       used_bytes: 131072
     "/srv/storage/ddouard":
-      available: 4.34 TiB
-      available_bytes: 4777206874112
+      available: 4.38 TiB
+      available_bytes: 4820853587968
       capacity: 0.00%
       device: storage/ddouard
       filesystem: zfs
@@ -2334,13 +2354,13 @@ values:
       - noatime
       - xattr
       - noacl
-      size: 4.34 TiB
-      size_bytes: 4777207005184
+      size: 4.38 TiB
+      size_bytes: 4820853719040
       used: 128.00 KiB
       used_bytes: 131072
     "/srv/storage/jayesh":
-      available: 4.34 TiB
-      available_bytes: 4777206874112
+      available: 4.38 TiB
+      available_bytes: 4820853587968
       capacity: 0.00%
       device: storage/jayesh
       filesystem: zfs
@@ -2349,13 +2369,13 @@ values:
       - noatime
       - xattr
       - noacl
-      size: 4.34 TiB
-      size_bytes: 4777207005184
+      size: 4.38 TiB
+      size_bytes: 4820853719040
       used: 128.00 KiB
       used_bytes: 131072
     "/srv/storage/lunar":
-      available: 4.34 TiB
-      available_bytes: 4777206874112
+      available: 4.38 TiB
+      available_bytes: 4820853587968
       capacity: 0.00%
       device: storage/lunar
       filesystem: zfs
@@ -2364,13 +2384,13 @@ values:
       - noatime
       - xattr
       - noacl
-      size: 4.34 TiB
-      size_bytes: 4777207005184
+      size: 4.38 TiB
+      size_bytes: 4820853719040
       used: 128.00 KiB
       used_bytes: 131072
     "/srv/storage/morane":
-      available: 4.34 TiB
-      available_bytes: 4777206874112
+      available: 4.38 TiB
+      available_bytes: 4820853587968
       capacity: 0.00%
       device: storage/morane
       filesystem: zfs
@@ -2379,13 +2399,13 @@ values:
       - noatime
       - xattr
       - noacl
-      size: 4.34 TiB
-      size_bytes: 4777207005184
+      size: 4.38 TiB
+      size_bytes: 4820853719040
       used: 128.00 KiB
       used_bytes: 131072
     "/srv/storage/olasd":
-      available: 4.34 TiB
-      available_bytes: 4777206874112
+      available: 4.38 TiB
+      available_bytes: 4820853587968
       capacity: 0.05%
       device: storage/olasd
       filesystem: zfs
@@ -2394,14 +2414,14 @@ values:
       - noatime
       - xattr
       - noacl
-      size: 4.35 TiB
-      size_bytes: 4779606540288
+      size: 4.39 TiB
+      size_bytes: 4823253254144
       used: 2.23 GiB
       used_bytes: 2399666176
     "/srv/storage/rdicosmo":
-      available: 4.34 TiB
-      available_bytes: 4777206874112
-      capacity: 18.12%
+      available: 4.38 TiB
+      available_bytes: 4820853587968
+      capacity: 17.99%
       device: storage/rdicosmo
       filesystem: zfs
       options:
@@ -2409,13 +2429,13 @@ values:
       - noatime
       - xattr
       - noacl
-      size: 5.31 TiB
-      size_bytes: 5834721853440
+      size: 5.35 TiB
+      size_bytes: 5878368567296
       used: 984.89 GiB
       used_bytes: 1057514979328
     "/srv/storage/vlorentz":
-      available: 4.34 TiB
-      available_bytes: 4777206874112
+      available: 4.38 TiB
+      available_bytes: 4820853587968
       capacity: 0.00%
       device: storage/vlorentz
       filesystem: zfs
@@ -2424,13 +2444,13 @@ values:
       - noatime
       - xattr
       - noacl
-      size: 4.34 TiB
-      size_bytes: 4777207005184
+      size: 4.38 TiB
+      size_bytes: 4820853719040
       used: 128.00 KiB
       used_bytes: 131072
     "/srv/storage/vsellier":
-      available: 4.34 TiB
-      available_bytes: 4777206874112
+      available: 4.38 TiB
+      available_bytes: 4820853587968
       capacity: 0.01%
       device: storage/vsellier
       filesystem: zfs
@@ -2439,13 +2459,13 @@ values:
       - noatime
       - xattr
       - noacl
-      size: 4.35 TiB
-      size_bytes: 4777557491712
+      size: 4.38 TiB
+      size_bytes: 4821204205568
       used: 334.38 MiB
       used_bytes: 350617600
     "/srv/storage/zack":
-      available: 4.34 TiB
-      available_bytes: 4777206874112
+      available: 4.38 TiB
+      available_bytes: 4820853587968
       capacity: 0.00%
       device: storage/zack
       filesystem: zfs
@@ -2454,14 +2474,14 @@ values:
       - noatime
       - xattr
       - noacl
-      size: 4.34 TiB
-      size_bytes: 4777207005184
+      size: 4.38 TiB
+      size_bytes: 4820853719040
       used: 128.00 KiB
       used_bytes: 131072
     "/tmp":
-      available: 4.25 GiB
-      available_bytes: 4567568384
-      capacity: 0.00%
+      available: 3.65 GiB
+      available_bytes: 3921354752
+      capacity: 14.15%
       device: "/dev/mapper/giverny--vg-tmp"
       filesystem: ext4
       options:
@@ -2469,12 +2489,12 @@ values:
       - relatime
       size: 4.50 GiB
       size_bytes: 4834492416
-      used: 164.00 KiB
-      used_bytes: 167936
+      used: 616.44 MiB
+      used_bytes: 646381568
     "/var":
-      available: 31.75 GiB
-      available_bytes: 34096467968
-      capacity: 7.93%
+      available: 28.32 GiB
+      available_bytes: 30413729792
+      capacity: 17.88%
       device: "/dev/mapper/giverny--vg-var"
       filesystem: ext4
       options:
@@ -2482,12 +2502,12 @@ values:
       - relatime
       size: 36.37 GiB
       size_bytes: 39050428416
-      used: 2.74 GiB
-      used_bytes: 2937339904
+      used: 6.17 GiB
+      used_bytes: 6620078080
     "/var/lib/docker":
-      available: 4.34 TiB
-      available_bytes: 4777206874112
-      capacity: 1.20%
+      available: 4.38 TiB
+      available_bytes: 4820853587968
+      capacity: 0.22%
       device: storage/docker
       filesystem: zfs
       options:
@@ -2495,14 +2515,14 @@ values:
       - noatime
       - xattr
       - noacl
-      size: 4.40 TiB
-      size_bytes: 4835324592128
-      used: 54.13 GiB
-      used_bytes: 58117718016
+      size: 4.39 TiB
+      size_bytes: 4831540019200
+      used: 9.95 GiB
+      used_bytes: 10686431232
     "/var/lib/libvirt":
-      available: 4.34 TiB
-      available_bytes: 4777206874112
-      capacity: 0.94%
+      available: 4.38 TiB
+      available_bytes: 4820853587968
+      capacity: 0.93%
       device: storage/libvirt
       filesystem: zfs
       options:
@@ -2510,31 +2530,31 @@ values:
       - noatime
       - xattr
       - noacl
-      size: 4.39 TiB
-      size_bytes: 4822555688960
+      size: 4.43 TiB
+      size_bytes: 4866202402816
       used: 42.23 GiB
       used_bytes: 45348814848
   mounts:
   - "/"
+  - "/tmp"
   - "/boot"
   - "/boot/efi"
   - "/home"
-  - "/tmp"
   - "/var"
+  - "/var/lib/libvirt"
   - "/srv/storage"
   - "/var/lib/docker"
-  - "/var/lib/libvirt"
-  - "/srv/storage/lunar"
+  - "/srv/storage/jayesh"
   - "/srv/storage/anlambert"
   - "/srv/storage/rdicosmo"
-  - "/srv/storage/morane"
-  - "/srv/storage/jayesh"
-  - "/srv/storage/ddouard"
-  - "/srv/storage/zack"
   - "/srv/storage/vsellier"
+  - "/srv/storage/morane"
   - "/srv/storage/vlorentz"
-  - "/srv/slow-storage"
+  - "/srv/storage/zack"
   - "/srv/storage/olasd"
+  - "/srv/storage/ddouard"
+  - "/srv/storage/lunar"
+  - "/srv/slow-storage"
   mtu_docker0: 1500
   mtu_enp0s25: 1500
   mtu_lo: 65536
@@ -2543,6 +2563,7 @@ values:
   mysql_server_id: 2130450503
   netmask: 255.255.252.0
   netmask6: 'ffff:ffff:ffff:ffff::'
+  netmask6_docker0: 'ffff:ffff:ffff:ffff::'
   netmask6_enp0s25: 'ffff:ffff:ffff:ffff::'
   netmask6_lo: ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff
   netmask6_tun0: 'ffff:ffff:ffff:ffff::'
@@ -2554,6 +2575,7 @@ values:
   netmask_virbr1: 255.255.255.0
   network: 128.93.64.0
   network6: 'fe80::'
+  network6_docker0: 'fe80::'
   network6_enp0s25: 'fe80::'
   network6_lo: "::1"
   network6_tun0: 'fe80::'
@@ -2564,7 +2586,7 @@ values:
   network_virbr0: 192.168.122.0
   network_virbr1: 192.168.39.0
   networking:
-    dhcp: 128.93.77.232
+    dhcp: 128.93.77.231
     domain: softwareheritage.org
     fqdn: giverny.softwareheritage.org
     hostname: giverny
@@ -2574,11 +2596,19 @@ values:
         - address: 172.17.0.1
           netmask: 255.255.0.0
           network: 172.17.0.0
+        bindings6:
+        - address: fe80::42:30ff:fed4:ab8f
+          netmask: 'ffff:ffff:ffff:ffff::'
+          network: 'fe80::'
         ip: 172.17.0.1
-        mac: 02:42:a9:c0:65:fd
+        ip6: fe80::42:30ff:fed4:ab8f
+        mac: 02:42:30:d4:ab:8f
         mtu: 1500
         netmask: 255.255.0.0
+        netmask6: 'ffff:ffff:ffff:ffff::'
         network: 172.17.0.0
+        network6: 'fe80::'
+        scope6: link
       enp0s25:
         bindings:
         - address: 128.93.65.5
@@ -2588,7 +2618,7 @@ values:
         - address: fe80::4a4d:7eff:fefb:87ac
           netmask: 'ffff:ffff:ffff:ffff::'
           network: 'fe80::'
-        dhcp: 128.93.77.232
+        dhcp: 128.93.77.231
         ip: 128.93.65.5
         ip6: fe80::4a4d:7eff:fefb:87ac
         mac: 48:4d:7e:fb:87:ac
@@ -2621,11 +2651,11 @@ values:
           netmask: 255.255.255.0
           network: 192.168.101.0
         bindings6:
-        - address: fe80::57f0:e9c9:1b42:9537
+        - address: fe80::2280:f9a7:8f51:7605
           netmask: 'ffff:ffff:ffff:ffff::'
           network: 'fe80::'
         ip: 192.168.101.118
-        ip6: fe80::57f0:e9c9:1b42:9537
+        ip6: fe80::2280:f9a7:8f51:7605
         netmask: 255.255.255.0
         netmask6: 'ffff:ffff:ffff:ffff::'
         network: 192.168.101.0
@@ -2887,6 +2917,7 @@ values:
   rubysitedir: "/usr/local/lib/site_ruby/2.7.0"
   rubyversion: 2.7.4
   scope6: link
+  scope6_docker0: link
   scope6_enp0s25: link
   scope6_lo: host
   scope6_tun0: link
@@ -2931,8 +2962,8 @@ values:
   sshrsakey: AAAAB3NzaC1yc2EAAAADAQABAAABgQDeW1E90Fy/A8d09uhhGHwQQkP98qQq0QZCjOj9QKQ0iZMMicDshMD3xELb5KYvWDvZSc++/R1cYcko4V8vuGnwEGnkIdoxMqkAusIbXpPmBI+AJylh8pNYlwjDPe3IMYT27Wo22u2WrqzUvdiDmgk6y3pkSEp3s/UHcFugUxKJo7JDsztczpNu3/S8+YJH4jEJcM2T7tvmunN5X46IbzJ7pPBlHHnSr5Xs5XwzltqAYF4wRIRN7DnG+ocaWLBigXUED1tFXl0sBs8lmyzBRcqP98l3XeZtua6lkWsDaQvjhNB2UZ8vgiEs83QT+97UFKheHlDEaa5OpocT/SutFZQjLW8j2i0ibvPkGfFobyNoOFzCpMrJGSZtHzLbV9khwICOr00O7PZwbTB0drHaVgLsB6M9Xw67fu4MoKmnE0fBOEJ+uJwwWAki6uPDRZ1GtC+0hD/kTlGpKGLKNI+67kqBTcs4m6XqcxKn/7KHwm0STJRFxhUXJFZxmMPD3pkCufM=
   subnet: inria_paris
   sudoversion: 1.9.5p2
-  swapfree: 29.80 GiB
-  swapfree_mb: 30515.99609375
+  swapfree: 29.78 GiB
+  swapfree_mb: 30495.99609375
   swapsize: 29.80 GiB
   swapsize_mb: 30515.99609375
   swh_hostname:
@@ -2940,10 +2971,10 @@ values:
     short: giverny
     internal_fqdn: giverny.internal.softwareheritage.org
   system_uptime:
-    days: 47
-    hours: 1132
-    seconds: 4077365
-    uptime: 47 days
+    days: 130
+    hours: 3122
+    seconds: 11239701
+    uptime: 130 days
   systemd: true
   systemd_internal_services:
     systemd-boot-check-no-failures.service: disabled
@@ -2957,16 +2988,16 @@ values:
     systemd-resolved.service: disabled
     systemd-time-wait-sync.service: disabled
   systemd_version: '247'
-  timezone: CEST
-  uptime: 47 days
-  uptime_days: 47
-  uptime_hours: 1132
-  uptime_seconds: 4077365
+  timezone: CET
+  uptime: 130 days
+  uptime_days: 130
+  uptime_hours: 3122
+  uptime_seconds: 11239701
   uuid: 4c4c4544-0058-5110-8033-b9c04f4e4b32
   vcsrepo_svn_ver: ''
   virtual: physical
   clientcert: giverny.softwareheritage.org
   clientversion: 5.5.22
   clientnoop: false
-timestamp: '2024-09-04T15:15:10.976582294+02:00'
-expiration: '2024-09-04T15:45:10.982130825+02:00'
+timestamp: '2025-01-13T15:45:11.481594392+01:00'
+expiration: '2025-01-13T16:15:11.487319154+01:00'
