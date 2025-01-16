@@ -47,6 +47,7 @@ values:
   interfaces: br-eea91f7c91d0,docker0,eth0,lo,veth51c1006
   ipaddress6_lo: "::1"
   ipaddress6_eth0: fe80::184b:96ff:fe85:164
+  ipaddress6_docker0: fe80::42:7ff:fe39:ea4b
   ipaddress6_br-eea91f7c91d0: fe80::42:4bff:feb2:333d
   ipaddress6_veth51c1006: fe80::18fc:2dff:fef2:6f65
   ipaddress_lo: 127.0.0.1
@@ -115,10 +116,21 @@ values:
         - address: 172.17.0.1
           netmask: 255.255.0.0
           network: 172.17.0.0
+        bindings6:
+        - address: fe80::42:7ff:fe39:ea4b
+          netmask: 'ffff:ffff:ffff:ffff::'
+          network: 'fe80::'
+          scope6: link
+          flags:
+          - permanent
         mtu: 1500
         ip: 172.17.0.1
         netmask: 255.255.0.0
         network: 172.17.0.0
+        ip6: fe80::42:7ff:fe39:ea4b
+        netmask6: 'ffff:ffff:ffff:ffff::'
+        network6: 'fe80::'
+        scope6: link
       br-eea91f7c91d0:
         mac: 02:42:4b:b2:33:3d
         bindings:
@@ -191,9 +203,9 @@ values:
   physicalprocessorcount: 1
   path: "/usr/bin:/bin:/usr/sbin:/sbin"
   load_averages:
-    1m: 0.08
-    5m: 0.03
-    15m: 0.01
+    1m: 0.25
+    5m: 0.17
+    15m: 0.06
   mtu_lo: 65536
   mtu_eth0: 1500
   mtu_docker0: 1500
@@ -201,6 +213,7 @@ values:
   mtu_veth51c1006: 1500
   netmask6_lo: ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff
   netmask6_eth0: 'ffff:ffff:ffff:ffff::'
+  netmask6_docker0: 'ffff:ffff:ffff:ffff::'
   netmask6_br-eea91f7c91d0: 'ffff:ffff:ffff:ffff::'
   netmask6_veth51c1006: 'ffff:ffff:ffff:ffff::'
   netmask_lo: 255.0.0.0
@@ -209,6 +222,7 @@ values:
   netmask_br-eea91f7c91d0: 255.255.0.0
   network6_lo: "::1"
   network6_eth0: 'fe80::'
+  network6_docker0: 'fe80::'
   network6_br-eea91f7c91d0: 'fe80::'
   network6_veth51c1006: 'fe80::'
   network_lo: 127.0.0.0
@@ -225,19 +239,19 @@ values:
       used: 0 bytes
       used_bytes: 0
     system:
-      available: 3.09 GiB
-      available_bytes: 3320995840
-      capacity: 19.10%
+      available: 2.90 GiB
+      available_bytes: 3116847104
+      capacity: 24.07%
       total: 3.82 GiB
       total_bytes: 4104855552
-      used: 747.55 MiB
-      used_bytes: 783859712
+      used: 942.24 MiB
+      used_bytes: 988008448
   swapfree: 976.00 MiB
   swapfree_mb: 975.99609375
   swapsize: 976.00 MiB
   swapsize_mb: 975.99609375
-  memoryfree: 3.09 GiB
-  memoryfree_mb: 3167.1484375
+  memoryfree: 2.90 GiB
+  memoryfree_mb: 2972.45703125
   memorysize: 3.82 GiB
   memorysize_mb: 3914.6953125
   osfamily: Debian
@@ -329,12 +343,12 @@ values:
       - mode=755
       - inode64
       size_bytes: 410488832
-      available_bytes: 409743360
-      used_bytes: 745472
+      available_bytes: 409751552
+      used_bytes: 737280
       capacity: 0.18%
       size: 391.47 MiB
-      available: 390.76 MiB
-      used: 728.00 KiB
+      available: 390.77 MiB
+      used: 720.00 KiB
     "/":
       device: "/dev/mapper/base--template--vg-root"
       filesystem: ext4
@@ -343,12 +357,12 @@ values:
       - relatime
       - errors=remount-ro
       size_bytes: 17373634560
-      available_bytes: 10352934912
-      used_bytes: 6112215040
-      capacity: 37.12%
+      available_bytes: 10223357952
+      used_bytes: 6241792000
+      capacity: 37.91%
       size: 16.18 GiB
-      available: 9.64 GiB
-      used: 5.69 GiB
+      available: 9.52 GiB
+      used: 5.81 GiB
     "/dev/shm":
       device: tmpfs
       filesystem: tmpfs
@@ -470,12 +484,12 @@ values:
       - rw
       - relatime
       size_bytes: 492152832
-      available_bytes: 377896960
-      used_bytes: 88723456
-      capacity: 19.01%
+      available_bytes: 371165184
+      used_bytes: 95455232
+      capacity: 20.46%
       size: 469.35 MiB
-      available: 360.39 MiB
-      used: 84.61 MiB
+      available: 353.97 MiB
+      used: 91.03 MiB
     "/var/lib/docker":
       device: data/docker
       filesystem: zfs
@@ -484,13 +498,13 @@ values:
       - noatime
       - xattr
       - noacl
-      size_bytes: 29890707456
-      available_bytes: 29824122880
-      used_bytes: 66584576
+      size_bytes: 29890314240
+      available_bytes: 29823598592
+      used_bytes: 66715648
       capacity: 0.22%
       size: 27.84 GiB
       available: 27.78 GiB
-      used: 63.50 MiB
+      used: 63.63 MiB
     "/data":
       device: data
       filesystem: zfs
@@ -498,8 +512,8 @@ values:
       - rw
       - xattr
       - noacl
-      size_bytes: 29824253952
-      available_bytes: 29824122880
+      size_bytes: 29823729664
+      available_bytes: 29823598592
       used_bytes: 131072
       capacity: 0.00%
       size: 27.78 GiB
@@ -535,27 +549,6 @@ values:
       size: 0 bytes
       available: 0 bytes
       used: 0 bytes
-    "/run/user/1033":
-      device: tmpfs
-      filesystem: tmpfs
-      options:
-      - rw
-      - nosuid
-      - nodev
-      - relatime
-      - size=400864k
-      - nr_inodes=100216
-      - mode=700
-      - uid=1033
-      - gid=1033
-      - inode64
-      size_bytes: 410484736
-      available_bytes: 410484736
-      used_bytes: 0
-      capacity: 0%
-      size: 391.47 MiB
-      available: 391.47 MiB
-      used: 0 bytes
     "/var/lib/docker/zfs/graph/4e1ab58bae81e97b72b3ca0c47c3c8a458fd43d12876b5b24eea47b8972d92aa":
       device: data/docker/4e1ab58bae81e97b72b3ca0c47c3c8a458fd43d12876b5b24eea47b8972d92aa
       filesystem: zfs
@@ -564,8 +557,8 @@ values:
       - relatime
       - xattr
       - noacl
-      size_bytes: 29966204928
-      available_bytes: 29824122880
+      size_bytes: 29965680640
+      available_bytes: 29823598592
       used_bytes: 142082048
       capacity: 0.47%
       size: 27.91 GiB
@@ -587,6 +580,7 @@ values:
     system: ''
   scope6_lo: host
   scope6_eth0: link
+  scope6_docker0: link
   scope6_br-eea91f7c91d0: link
   scope6_veth51c1006: link
   dmi:
@@ -625,14 +619,14 @@ values:
     SSHFP 4 1 9ff1e070654038df8d450f5a82bc07d817626c7a
     SSHFP 4 2 99e886ac9c7c7a865530fb994eb0000be7175d946ea5bb8a6804cf94199aae09
   system_uptime:
-    hours: 0
-    seconds: 1336
-    days: 0
-    uptime: 0:22 hours
-  uptime_hours: 0
-  uptime_seconds: 1336
-  uptime_days: 0
-  uptime: 0:22 hours
+    hours: 76
+    seconds: 274935
+    days: 3
+    uptime: 3 days
+  uptime_hours: 76
+  uptime_seconds: 274935
+  uptime_days: 3
+  uptime: 3 days
   disks:
     vdb:
       size_bytes: 32212254720
@@ -718,10 +712,28 @@ values:
   cloudinit_enabled: 'true'
   puppetversion: 7.23.0
   agent_specified_environment: staging
-  apt_reboot_required: false
-  apt_update_last_success: 1736777306
-  apt_has_updates: false
-  apt_has_dist_updates: false
+  apt_reboot_required: true
+  apt_update_last_success: 1737049622
+  apt_has_updates: true
+  apt_has_dist_updates: true
+  apt_package_updates:
+  - containerd.io
+  - docker-ce-cli
+  - docker-ce
+  - docker-ce-rootless-extras
+  - docker-compose-plugin
+  apt_package_dist_updates:
+  - containerd.io
+  - docker-ce-cli
+  - docker-ce
+  - docker-ce-rootless-extras
+  - docker-compose-plugin
+  apt_package_security_updates: []
+  apt_package_security_dist_updates: []
+  apt_updates: 5
+  apt_dist_updates: 5
+  apt_security_updates: 0
+  apt_security_dist_updates: 0
   cassandracmsheapnewsize: 256
   cassandracmsmaxheapsize: 1024
   cassandraheapnewsize: 256
@@ -2095,5 +2107,5 @@ values:
   clientcert: runner0.internal.staging.swh.network
   clientversion: 7.23.0
   clientnoop: false
-timestamp: '2025-01-13T14:25:10.136198980+00:00'
-expiration: '2025-01-13T14:55:10.137650556+00:00'
+timestamp: '2025-01-16T18:25:09.407888241+00:00'
+expiration: '2025-01-16T18:55:09.409299333+00:00'
