@@ -1,20 +1,36 @@
 #!/bin/bash
 
-set -e
+set -ex
+
+get_default_branch_name() {
+    remote=$1
+    git for-each-ref "refs/remotes/$remote/*" | while read -r _id _type name; do
+        branchname="${name#"refs/remotes/$remote/"}"
+        case $branchname in
+        main | master)
+            echo "$branchname"
+            return
+            ;;
+        esac
+    done
+}
 
 if [ -d .git/refs/remotes/upstream ]; then
-    git fetch upstream --tags
+    git fetch upstream --tags --prune
 
     oldbranch=$(git rev-parse --abbrev-ref HEAD)
 
-    if [ "$oldbranch" != "master" ]; then
-        git checkout master
+    swh_branch="$(get_default_branch_name origin)"
+    upstream_branch="$(get_default_branch_name upstream)"
+
+    if [ "$oldbranch" != "$swh_branch" ]; then
+        git checkout "$swh_branch"
     fi
 
-    git merge upstream/main || git merge upstream/master
-    git push origin master:master --tags
+    git merge "upstream/$upstream_branch"
+    git push origin "$swh_branch:$swh_branch" --tags
 
-    if [ "$oldbranch" != "master" ]; then
-        git checkout $oldbranch
+    if [ "$oldbranch" != "$swh_branch" ]; then
+        git checkout "$oldbranch"
     fi
 fi
