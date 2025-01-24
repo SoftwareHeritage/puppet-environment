@@ -153,12 +153,14 @@ def main(gitlab_instance, module_name, default_branch, clone):
     release_meta = puppetforge_info["current_release"]["metadata"]
     upstream_repo = release_meta["source"]
 
+    if upstream_repo.startswith("git://github.com/"):
+        upstream_repo = f"https://github.com/{upstream_repo[17:]}"
+
     gl = gitlab.Gitlab.from_config(gitlab_instance)
     gl.auth()
 
     upstream_forge_url = PUPPETFORGE_URL + module_name.replace("-", "/")
     repo = create_gitlab_repo(gl, module_name, release_meta, upstream_forge_url)
-    repo_id = repo.id
 
     gitlab_repo = repo.http_url_to_repo
 
