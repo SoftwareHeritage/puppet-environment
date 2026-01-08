@@ -11,47 +11,8 @@ puppet_options = "--fileserverconfig=/etc/puppet/fileserver.conf --verbose" # --
 puppet_env_path = ENV["SWH_PUPPET_ENVIRONMENT_HOME"]
 install_facts_script_path = "vagrant/puppet_agent/install_facts.sh"
 
-annex_url = "https://annex.softwareheritage.org/public/isos/libvirt/debian"
-
-####################
-# oldstable (buster)
-####################
-
-debian_oldstable_version = "10.10"
-debian_oldstable_timestamp = "20210820-1622"
-
-# Images/local configuration (libvirt)
-debian10_box = "debian10-#{debian_oldstable_timestamp}"
-debian_oldstable_qcow2 = "swh-debian-#{debian_oldstable_version}-amd64-#{debian_oldstable_timestamp}.qcow2"
-local_debian10_box_url = "file://#{puppet_env_path}/packer/builds/#{debian_oldstable_qcow2}"
-
-# Images/remote configuration
-debian10_box_url = "#{annex_url}/#{debian_oldstable_qcow2}"
-
-###################
-# stable (bullseye)
-###################
-
-debian_stable_version = "11.4"
-
-debian_stable_timestamp = "20220727-1040"
-debian11_box = "debian11-#{debian_stable_version}"
-debian_stable_qcow2 = "swh-debian-#{debian_stable_version}-amd64-#{debian_stable_timestamp}.qcow2"
-debian11_box_url = "#{annex_url}/#{debian_stable_qcow2}"
-
-# With zfs preinstalled
-debian_stable_zfs_timestamp = "20220727-1050"
-debian11_zfs_box = "debian11-zfs-#{debian_stable_zfs_timestamp}"
-debian_stable_zfs_qcow2 = "swh-debian-zfs-#{debian_stable_version}-amd64-#{debian_stable_zfs_timestamp}.qcow2"
-debian11_zfs_box_url = "#{annex_url}/#{debian_stable_zfs_qcow2}"
-
-unless Vagrant.has_plugin?("libvirt")
-  $stderr.puts <<-MSG
-  vagrant-libvirt plugin is required for this.
-  To install: `$ sudo apt install vagrant-libvirt
-MSG
-  exit 1
-end
+debian12_box = "cloud-image/debian-12"
+debian12_zfs_box = "cloud-image/debian-12"
 
 TYPE_AGENT = "agent"
 TYPE_MASTER = "master"
@@ -104,8 +65,6 @@ vms = {
     :cpus        => 2,
     :environment => ENV_STAGING,
     :extra_disk  => 'vdb',
-    :box         => debian11_zfs_box,
-    :box_url     => debian11_zfs_box_url,
   },
   "staging-rp0" => {
     :hostname    => "rp0.internal.staging.swh.network",
@@ -114,8 +73,6 @@ vms = {
     :memory      => 512,
     :cpus        => 2,
     :environment => ENV_STAGING,
-    :box         => debian11_box,
-    :box_url     => debian11_box_url,
   },
   "staging-db1" => {
     :hostname    => "db1.internal.staging.swh.network",
@@ -124,8 +81,6 @@ vms = {
     :memory      => 512,
     :cpus        => 2,
     :environment => ENV_STAGING,
-    :box         => debian11_box,
-    :box_url     => debian11_box_url,
   },
   "staging-storage1" => {
     :hostname    => "storage1.internal.staging.swh.network",
@@ -174,8 +129,6 @@ vms = {
     :memory      => 4096,
     :cpus        => 2,
     :environment => ENV_STAGING,
-    :box         => debian11_zfs_box,
-    :box_url     => debian11_zfs_box_url,
     :extra_disk  => 'vdb',
   },
   "staging-rancher-node-intern0" => {
@@ -185,8 +138,6 @@ vms = {
     :memory      => 3096,
     :cpus        => 2,
     :environment => ENV_STAGING,
-    :box         => debian11_zfs_box,
-    :box_url     => debian11_zfs_box_url,
     :extra_disk  => 'vdb',
   },
   "staging-scrubber0" => {
@@ -212,8 +163,6 @@ vms = {
     :memory      => 1024,
     :cpus        => 2,
     :environment => ENV_STAGING,
-    :box         => debian11_box,
-    :box_url     => debian11_box_url,
   },
   "staging-search0" => {
     :hostname    => "search-search0.internal.staging.swh.network",
@@ -246,8 +195,6 @@ vms = {
     :memory      => 3092,
     :cpus        => 2,
     :environment => ENV_STAGING,
-    :box         => debian11_box,
-    :box_url     => debian11_box_url,
   },
   "staging-cassandra2" => {
     :hostname    => "cassandra2.internal.staging.swh.network",
@@ -256,8 +203,6 @@ vms = {
     :memory      => 3092,
     :cpus        => 2,
     :environment => ENV_STAGING,
-    :box         => debian11_box,
-    :box_url     => debian11_box_url,
   },
   "staging-cassandra3" => {
     :hostname    => "cassandra3.internal.staging.swh.network",
@@ -266,8 +211,6 @@ vms = {
     :memory      => 3092,
     :cpus        => 2,
     :environment => ENV_STAGING,
-    :box         => debian11_box,
-    :box_url     => debian11_box_url,
   },
 
   ################
@@ -280,8 +223,6 @@ vms = {
     :memory      => 512,
     :cpus        => 2,
     :environment => ENV_ADMIN,
-    :box         => debian11_box,
-    :box_url     => debian11_box_url,
   },
   "dali" => {
     :hostname    => "dali.internal.admin.swh.network",
@@ -290,8 +231,6 @@ vms = {
     :memory      => 4096,
     :cpus        => 2,
     :environment => ENV_ADMIN,
-    :box         => debian11_box,
-    :box_url     => debian11_box_url,
   },
   "admin-bardo" => {
     :hostname    => "bardo.internal.admin.swh.network",
@@ -300,8 +239,6 @@ vms = {
     :memory      => 4096,
     :cpus        => 2,
     :environment => ENV_ADMIN,
-    :box         => debian11_box,
-    :box_url     => debian11_box_url,
   },
   "admin-rp1" => {
     :hostname    => "rp1.internal.admin.swh.network",
@@ -310,8 +247,6 @@ vms = {
     :memory      => 1024,
     :cpus        => 2,
     :environment => ENV_ADMIN,
-    :box         => debian11_box,
-    :box_url     => debian11_box_url,
   },
   "admin-grafana0" => {
     :hostname    => "grafana0.internal.admin.swh.network",
@@ -320,8 +255,6 @@ vms = {
     :memory      => 4096,
     :cpus        => 2,
     :environment => ENV_ADMIN,
-    :box         => debian11_box,
-    :box_url     => debian11_box_url,
   },
   "admin-backup01" => {
     :hostname    => "backup01.euwest.azure.internal.softwareheritage.org",
@@ -330,8 +263,6 @@ vms = {
     :memory      => 512,
     :cpus        => 2,
     :environment => ENV_ADMIN,
-    :box         => debian11_box,
-    :box_url     => debian11_box_url,
   },
   "admin-money" => {
     :hostname    => "money.internal.admin.swh.network",
@@ -340,8 +271,6 @@ vms = {
     :memory      => 512,
     :cpus        => 1,
     :environment => ENV_ADMIN,
-    :box         => debian11_box,
-    :box_url     => debian11_box_url,
   },
 
   ################
@@ -365,8 +294,6 @@ vms = {
     :memory      => 512,
     :cpus        => 2,
     :environment => ENV_PRODUCTION,
-    :box         => debian11_box,
-    :box_url     => debian11_box_url,
   },
   "saam" => {
     :hostname    => "saam.internal.softwareheritage.org",
@@ -391,8 +318,6 @@ vms = {
     :memory      => 4096,
     :cpus        => 4,
     :environment => ENV_PRODUCTION,
-    :box         => debian11_box,
-    :box_url     => debian11_box_url,
   },
   "thanos" => {
     :hostname    => "thanos.internal.admin.swh.network",
@@ -401,8 +326,6 @@ vms = {
     :memory      => 4096,
     :cpus        => 4,
     :environment => ENV_PRODUCTION,
-    :box         => debian11_box,
-    :box_url     => debian11_box_url,
   },
   "kelvingrove" => {
     :hostname    => "kelvingrove.internal.softwareheritage.org",
@@ -411,8 +334,6 @@ vms = {
     :memory      => 2048,
     :cpus        => 2,
     :environment => ENV_PRODUCTION,
-    :box         => debian11_box,
-    :box_url     => debian11_box_url,
   },
   "getty" => {
     :hostname    => "getty.internal.softwareheritage.org",
@@ -453,8 +374,6 @@ vms = {
     :memory      => 1024,
     :cpus        => 2,
     :environment => ENV_PRODUCTION,
-    :box         => debian11_box,
-    :box_url     => debian11_box_url,
   },
   "esnode2" => {
     :hostname    => "esnode2.internal.softwareheritage.org",
@@ -463,8 +382,6 @@ vms = {
     :memory      => 1024,
     :cpus        => 2,
     :environment => ENV_PRODUCTION,
-    :box         => debian11_box,
-    :box_url     => debian11_box_url,
   },
   "esnode3" => {
     :hostname    => "esnode3.internal.softwareheritage.org",
@@ -473,8 +390,6 @@ vms = {
     :memory      => 1024,
     :cpus        => 2,
     :environment => ENV_PRODUCTION,
-    :box         => debian11_box,
-    :box_url     => debian11_box_url,
   },
   "prod-kibana0" => {
     :hostname    => "kibana0.internal.softwareheritage.org",
@@ -483,8 +398,6 @@ vms = {
     :memory      => 1024,
     :cpus        => 2,
     :environment => ENV_PRODUCTION,
-    :box         => debian11_box,
-    :box_url     => debian11_box_url,
   },
   "logstash" => {
     :hostname    => "logstash0.internal.softwareheritage.org",
@@ -493,8 +406,6 @@ vms = {
     :memory      => 2048,
     :cpus        => 2,
     :environment => ENV_PRODUCTION,
-    :box         => debian11_box,
-    :box_url     => debian11_box_url,
   },
   "prod-cassandra01" => {
     :hostname    => "cassandra01.internal.softwareheritage.org",
@@ -503,8 +414,6 @@ vms = {
     :memory      => 4096,
     :cpus        => 2,
     :environment => ENV_PRODUCTION,
-    :box         => debian11_box,
-    :box_url     => debian11_box_url,
   },
   "prod-cassandra02" => {
     :hostname    => "cassandra02.internal.softwareheritage.org",
@@ -513,8 +422,6 @@ vms = {
     :memory      => 4096,
     :cpus        => 2,
     :environment => ENV_PRODUCTION,
-    :box         => debian11_box,
-    :box_url     => debian11_box_url,
   },
   "prod-cassandra03" => {
     :hostname    => "cassandra03.internal.softwareheritage.org",
@@ -523,8 +430,6 @@ vms = {
     :memory      => 4096,
     :cpus        => 2,
     :environment => ENV_PRODUCTION,
-    :box         => debian11_box,
-    :box_url     => debian11_box_url,
   },
   "prod-granet" => {
     :hostname    => "granet.internal.softwareheritage.org",
@@ -549,8 +454,6 @@ vms = {
     :memory      => 2048,
     :cpus        => 2,
     :environment => ENV_PRODUCTION,
-    :box         => debian11_box,
-    :box_url     => debian11_box_url,
   },
   "prod-moma" => {
     :hostname    => "moma.softwareheritage.org",
@@ -575,8 +478,6 @@ vms = {
     :memory      => 4096,
     :cpus        => 2,
     :environment => ENV_PRODUCTION,
-    :box         => debian11_box,
-    :box_url     => debian11_box_url,
   },
   "prod-search-esnode5" => {
     :hostname    => "search-esnode5.internal.softwareheritage.org",
@@ -585,8 +486,6 @@ vms = {
     :memory      => 4096,
     :cpus        => 2,
     :environment => ENV_PRODUCTION,
-    :box         => debian11_box,
-    :box_url     => debian11_box_url,
   },
   "prod-search-esnode6" => {
     :hostname    => "search-esnode6.internal.softwareheritage.org",
@@ -595,8 +494,6 @@ vms = {
     :memory      => 4096,
     :cpus        => 2,
     :environment => ENV_PRODUCTION,
-    :box         => debian11_box,
-    :box_url     => debian11_box_url,
   },
   "prod-counters1" => {
     :hostname    => "counters1.internal.softwareheritage.org",
@@ -613,8 +510,6 @@ vms = {
     :memory      => 2048,
     :cpus        => 2,
     :environment => ENV_PRODUCTION,
-    :box         => debian11_box,
-    :box_url     => debian11_box_url,
   },
   "prod-kafka2" => {
     :hostname    => "kafka2.internal.softwareheritage.org",
@@ -623,8 +518,6 @@ vms = {
     :memory      => 2048,
     :cpus        => 2,
     :environment => ENV_PRODUCTION,
-    :box         => debian11_box,
-    :box_url     => debian11_box_url,
   },
   "prod-kafka3" => {
     :hostname    => "kafka3.internal.softwareheritage.org",
@@ -633,8 +526,6 @@ vms = {
     :memory      => 2048,
     :cpus        => 2,
     :environment => ENV_PRODUCTION,
-    :box         => debian11_box,
-    :box_url     => debian11_box_url,
   },
   "prod-kafka4" => {
     :hostname    => "kafka4.internal.softwareheritage.org",
@@ -643,8 +534,6 @@ vms = {
     :memory      => 2048,
     :cpus        => 2,
     :environment => ENV_PRODUCTION,
-    :box         => debian11_box,
-    :box_url     => debian11_box_url,
   },
   "uffizi" => {
     :hostname    => "uffizi.internal.softwareheritage.org",
@@ -653,8 +542,6 @@ vms = {
     :memory      => 1024,
     :cpus        => 2,
     :environment => ENV_PRODUCTION,
-    :box         => debian11_box,
-    :box_url     => debian11_box_url,
   },
   "branly" => {
     :hostname    => "branly.internal.softwareheritage.org",
@@ -663,8 +550,6 @@ vms = {
     :memory      => 1024,
     :cpus        => 2,
     :environment => ENV_PRODUCTION,
-    :box         => debian11_box,
-    :box_url     => debian11_box_url,
   },
   "belvedere" => {
     :hostname    => "belvedere.internal.softwareheritage.org",
@@ -673,8 +558,6 @@ vms = {
     :memory      => 2048,
     :cpus        => 2,
     :environment => ENV_PRODUCTION,
-    :box         => debian11_box,
-    :box_url     => debian11_box_url,
   },
   "somerset" => {
     :hostname    => "somerset.internal.softwareheritage.org",
@@ -683,8 +566,6 @@ vms = {
     :memory      => 2048,
     :cpus        => 2,
     :environment => ENV_PRODUCTION,
-    :box         => debian11_box,
-    :box_url     => debian11_box_url,
   },
   "jenkins-debian1" => {
     :hostname    => "jenkins-debian1.internal.softwareheritage.org",
@@ -693,8 +574,6 @@ vms = {
     :memory      => 2048,
     :cpus        => 2,
     :environment => ENV_PRODUCTION,
-    :box         => debian11_box,
-    :box_url     => debian11_box_url,
   },
   "thyssen" => {
     :hostname    => "thyssen.internal.softwareheritage.org",
@@ -703,8 +582,6 @@ vms = {
     :memory      => 2048,
     :cpus        => 2,
     :environment => ENV_PRODUCTION,
-    :box         => debian11_box,
-    :box_url     => debian11_box_url,
   },
   "tate" => {
     :hostname    => "tate.softwareheritage.org",
@@ -732,8 +609,6 @@ vms = {
     :memory      => 512,
     :cpus        => 2,
     :environment => ENV_STAGING,
-    :box         => debian11_box,
-    :box_url     => debian11_box_url,
   },
 }
 
@@ -746,8 +621,7 @@ Vagrant.configure("2") do |global_config|
 
       # config.ssh.insert_key = false
       config.vm.guest = :debian
-      config.vm.box                     = vm_props[:box] ? vm_props[:box] : debian10_box
-      config.vm.box_url                 = vm_props[:box_url] ? vm_props[:box_url] : debian10_box_url
+      config.vm.box                     = vm_props[:box] ? vm_props[:box] : debian12_box
       config.vm.box_check_update        = false
       config.vm.hostname                = vm_props[:hostname]
       config.vm.network   :private_network, ip: vm_props[:ip], netmask: "255.255.0.0"
@@ -772,6 +646,9 @@ Vagrant.configure("2") do |global_config|
           provider.storage :file, :size => '20G', :device => vm_props[:extra_disk], :type => 'raw'
         end
       end
+
+      config.vm.provision :shell, :path => "vagrant/provision.sh"
+
       # installs fact for `puppet agent --test` cli to work within the vm
       config.vm.provision :shell do |s|
         s.path = install_facts_script_path
