@@ -716,7 +716,11 @@ Vagrant.configure("2") do |global_config|
         end
       end
 
+      config.vm.provision :file,
+        :source => "vagrant/provision_at_reboot.sh",
+        :destination => "/tmp/vagrant_provision_at_reboot.sh"
       config.vm.provision :shell, :path => "vagrant/provision.sh"
+      config.vm.provision :reload
 
       # installs fact for `puppet agent --test` cli to work within the vm
       config.vm.provision :shell do |s|

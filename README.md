@@ -221,6 +221,13 @@ Vagrant tools must be installed.
 apt install nfs-kernel-server libvirt-daemon-system qemu-kvm vagrant vagrant-libvirt
 ```
 
+You will also have to install the
+[vagrant-reload](https://github.com/aidanns/vagrant-reload) Vagrant plugin:
+```bash
+vagrant plugin install vagrant-reload
+```
+
+
 Note: `nfs-kernel-server` is needed to export and share the local /tmp/puppet
   to the vm
 
