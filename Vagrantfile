@@ -505,7 +505,7 @@ vms = {
     :environment => ENV_PRODUCTION,
   },
   "prod-moma" => {
-    :enabled     => true,
+    :enabled     => false,
     :hostname    => "moma.softwareheritage.org",
     :ip          => "10.168.100.31",
     :type        => TYPE_AGENT,
@@ -696,11 +696,20 @@ Vagrant.configure("2") do |global_config|
       config.vm.network   :private_network, ip: vm_props[:ip], netmask: "255.255.0.0"
 
       # Using nfs v4 to avoid using the default nfs v3 on udp not supported by the debian 11 kernel
-      config.vm.synced_folder tmpdir, _mount_point_puppet, type: 'nfs', nfs_version:4
+      config.vm.synced_folder tmpdir, _mount_point_puppet,
+        type: 'nfs',
+        nfs_version:4,
+        linux__nfs_options:['rw', 'no_subtree_check', 'no_root_squash']  # needed for chown-ing
       # Hack to speed up the puppet provisioner rsync
       # It will synchronize between the same source and destination
-      config.vm.synced_folder tmpdir, '/vagrant', type: 'nfs', nfs_version:4
-      config.vm.synced_folder tmpdir, '/vagrant-puppet', type: 'nfs', nfs_version:4
+      config.vm.synced_folder tmpdir, '/vagrant',
+        type: 'nfs',
+        nfs_version:4,
+        linux__nfs_options:['rw', 'no_subtree_check', 'no_root_squash']
+      config.vm.synced_folder tmpdir, '/vagrant-puppet',
+        type: 'nfs',
+        nfs_version:4,
+        linux__nfs_options:['rw', 'no_subtree_check', 'no_root_squash']
 
       # ssl certificates share
       config.vm.synced_folder "vagrant/le_certs", "/var/lib/puppet/letsencrypt_exports", type: 'nfs', nfs_version:4
@@ -732,8 +741,11 @@ Vagrant.configure("2") do |global_config|
       end
 
       if vm_props[:type] == TYPE_MASTER
-        config.vm.provision "file", source: "vagrant/puppet_master/", destination: "/tmp/"
-        config.vm.provision :shell, :path => "vagrant/puppet_master/prepare_puppet_master.sh"
+        config.vm.provision "file",
+          source: "vagrant/puppet_server/",
+          destination: "/tmp/vagrant_provisioning/"
+        config.vm.provision :shell,
+          :path => "vagrant/puppet_server/prepare_puppet_server.sh"
       end
 
       config.vm.provision "puppet" do |puppet|
