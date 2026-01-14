@@ -7,7 +7,7 @@ PUPPET_CERT_DIR=/var/lib/puppet/ssl
 
 if [ ! -d ${PUPPET_CERT_DIR} ]; then
   apt-get update
-  apt-get install -y postgresql 
+  apt-get install -y postgresql unbound
 
   echo "puppet/code" > /etc/.gitignore
   apt install -y etckeeper
@@ -17,6 +17,13 @@ if [ ! -d ${PUPPET_CERT_DIR} ]; then
   find . -name "[0-9][0-9]*" -type f -exec mv {} {}.disabled \;
   popd
 
+fi
+
+# Configure an unbound forwarder: Puppet might leave pergamon in an unstable
+# state in Vagrant otherwise, and overwrites this file if unwanted
+if ! [ -f /etc/unbound/unbound.conf.d/forwarders.conf ]; then
+    cp $CERT_DIR/forwarders.conf /etc/unbound/unbound.conf.d/forwarders.conf
+    sudo systemctl restart unbound.service
 fi
 
 mkdir -p ${PUPPET_CERT_DIR}/
