@@ -20,7 +20,10 @@ install_apt_deps () {
     apt-get update
     apt-get -y dist-upgrade
 
-    apt-get install -y puppet-agent gnupg
+    apt-get install -y \
+        puppet-agent puppet-terminus-puppetdb \
+        man wget curl telnet net-tools dnsutils traceroute mtr-tiny \
+        gnupg
 }
 
 install_apt_deps
