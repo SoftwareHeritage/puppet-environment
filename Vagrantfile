@@ -50,7 +50,7 @@ vms = {
   # STAGING
   ################
   "staging-webapp" => {
-    :enabled     => false,
+    :enabled     => true,
     :hostname    => "webapp.internal.staging.swh.network",
     :ip          => "10.168.130.30",
     :type        => TYPE_AGENT,
@@ -69,7 +69,7 @@ vms = {
     :extra_disk  => 'vdb',
   },
   "staging-rp0" => {
-    :enabled     => false,
+    :enabled     => true,
     :hostname    => "rp0.internal.staging.swh.network",
     :ip          => "10.168.130.20",
     :type        => TYPE_AGENT,
@@ -96,7 +96,7 @@ vms = {
     :environment => ENV_STAGING,
   },
   "staging-objstorage0" => {
-    :enabled     => false,
+    :enabled     => true,
     :hostname    => "objstorage0.internal.staging.swh.network",
     :ip          => "10.168.130.110",
     :type        => TYPE_AGENT,
@@ -246,7 +246,7 @@ vms = {
     :environment => ENV_ADMIN,
   },
   "dali" => {
-    :enabled     => false,
+    :enabled     => true,
     :hostname    => "dali.internal.admin.swh.network",
     :ip          => "10.168.50.50",
     :type        => TYPE_AGENT,
@@ -451,7 +451,7 @@ vms = {
     :environment => ENV_PRODUCTION,
   },
   "prod-cassandra01" => {
-    :enabled     => false,
+    :enabled     => true,
     :hostname    => "cassandra01.internal.softwareheritage.org",
     :ip          => "10.168.100.181",
     :type        => TYPE_AGENT,
@@ -460,7 +460,7 @@ vms = {
     :environment => ENV_PRODUCTION,
   },
   "prod-cassandra02" => {
-    :enabled     => false,
+    :enabled     => true,
     :hostname    => "cassandra02.internal.softwareheritage.org",
     :ip          => "10.168.100.182",
     :type        => TYPE_AGENT,
@@ -469,7 +469,7 @@ vms = {
     :environment => ENV_PRODUCTION,
   },
   "prod-cassandra03" => {
-    :enabled     => false,
+    :enabled     => true,
     :hostname    => "cassandra03.internal.softwareheritage.org",
     :ip          => "10.168.100.183",
     :type        => TYPE_AGENT,
@@ -559,40 +559,44 @@ vms = {
     :environment => ENV_PRODUCTION,
   },
   "prod-kafka1" => {
-    :enabled     => false,
+    :enabled     => true,
     :hostname    => "kafka1.internal.softwareheritage.org",
     :ip          => "10.168.100.201",
     :type        => TYPE_AGENT,
     :memory      => 2048,
     :cpus        => 2,
     :environment => ENV_PRODUCTION,
+    :extra_disk  => 'vdb',
   },
   "prod-kafka2" => {
-    :enabled     => false,
+    :enabled     => true,
     :hostname    => "kafka2.internal.softwareheritage.org",
     :ip          => "10.168.100.202",
     :type        => TYPE_AGENT,
     :memory      => 2048,
     :cpus        => 2,
     :environment => ENV_PRODUCTION,
+    :extra_disk  => 'vdb',
   },
   "prod-kafka3" => {
-    :enabled     => false,
+    :enabled     => true,
     :hostname    => "kafka3.internal.softwareheritage.org",
     :ip          => "10.168.100.203",
     :type        => TYPE_AGENT,
     :memory      => 2048,
     :cpus        => 2,
     :environment => ENV_PRODUCTION,
+    :extra_disk  => 'vdb',
   },
   "prod-kafka4" => {
-    :enabled     => false,
+    :enabled     => true,
     :hostname    => "kafka4.internal.softwareheritage.org",
     :ip          => "10.168.100.204",
     :type        => TYPE_AGENT,
     :memory      => 2048,
     :cpus        => 2,
     :environment => ENV_PRODUCTION,
+    :extra_disk  => 'vdb',
   },
   "uffizi" => {
     :enabled     => false,
