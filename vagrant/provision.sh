@@ -31,6 +31,10 @@ bootstrap_puppet_agent () {
     # Icinga expects a SSL certificate to be already set up. Initialize this
     # ahead of first puppet run.
 
+    if [ "$(hostname)" = "pergamon" ]; then
+        return
+    fi
+
     if puppet ssl show >/dev/null 2>/dev/null; then
         return
     fi
