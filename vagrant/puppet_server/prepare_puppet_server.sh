@@ -29,6 +29,13 @@ if ! [ -f $PROV_MARKER ]; then
     puppetserver ca setup \
         --subject-alt-names pergamon.internal.softwareheritage.org,puppet,puppet.internal.softwareheritage.org
 
+    # Apply the pergamon_bootstrap.pp manifest -- applying it from Vagrant
+    # would result in a failure as some operations (eg. mail) fail here, and
+    # prevent Vagrant from applying main.pp after
+    puppet apply \
+        --codedir=/etc/puppet/code/ \
+        /etc/puppet/code/environments/production/manifests/pergamon_bootstrap.pp
+
     # Mark as provisionned
     touch $PROV_MARKER
 fi
