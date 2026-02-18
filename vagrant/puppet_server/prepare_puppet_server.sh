@@ -34,7 +34,7 @@ if ! [ -f $PROV_MARKER ]; then
     # prevent Vagrant from applying main.pp after
     puppet apply \
         --codedir=/etc/puppet/code/ \
-        /etc/puppet/code/environments/production/manifests/pergamon_bootstrap.pp
+        /etc/puppet/code/environments/production/bootstrap_manifests/pergamon_bootstrap.pp
 
     # Mark as provisionned
     touch $PROV_MARKER
