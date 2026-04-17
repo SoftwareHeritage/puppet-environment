@@ -394,3 +394,60 @@ vagrant destroy <vm name>
 ```
 
 [1]: [packer/README.md][packer/README.md]
+
+
+
+Provisioning an independant machine with Puppet
+-----------------------------------------------
+
+The following sequence of commands provisions a fresh Debian machine with
+Puppet, without the need for a Pupper server or any kind of connection of this
+machine to the rest of our network. This is useful eg. to make a scratchable
+test environment in a commercial cloud.
+
+You may need to adapt (sometimes drastically) the `data/` files for this to
+work, depending on the roles you are trying to deploy.
+
+```bash
+# Define the Puppet subnet you want to use
+# BEWARE, the machine must actually bear an IP address from the IP subnet
+# declared in the corresponding Puppet data file.
+export SUBNET=azure_restore_test
+
+# Make sure you have a locale
+sudo $EDITOR /etc/locale.gen && sudo locale-gen
+
+# Base dependencies
+sudo apt update && sudo apt upgrade && sudo apt install puppet rsync
+
+# Upload the Puppet environments. Do this after running bin/prepare-vagrant-conf.
+rsync -av /var/tmp/puppet/environments $VM:/tmp/puppet  # << FROM HOST
+sudo mv /tmp/puppet /etc/puppet/code
+# expected: /etc/puppet/code/environments/{staging,production}
+
+sudo mkdir -p /etc/facter/facts.d
+echo "subnet=$SUBNET" | sudo tee /etc/facter/facts.d/subnet.txt
+
+# If it is not already the case, set hostname to a machine configured in the
+# Puppet manifest
+sudo hostnamectl set-hostname example.internal.staging.swh.network
+
+# Rsync mock ssl certs to the host
+# You can use vagrant/le_certs for this purpose
+rsync -av path/to/certs/$HOSTNAME $VM:/var/lib/puppet/letsencrypt_exports # << FROM HOST
+
+# Make the certs available through Puppet
+cat << EOF | sudo tee /etc/puppet/fileserver.conf >/dev/null
+[le_certs]
+  path /var/lib/puppet/letsencrypt_exports
+  allow *
+EOF
+
+# Actually run Puppet
+export FACTER_deployment='staging' FACTER_subnet="$SUBNET" FACTER_environment='staging'
+puppet_envs="/etc/puppet/code/environments"
+puppet_opts="--fileserverconfig=/etc/puppet/fileserver.conf --hiera_config=$puppet_envs/staging/hiera.yaml --detailed-exitcodes --environmentpath $puppet_envs --environment staging"
+
+sudo -E puppet apply $puppet_opts -e 'include profile::elastic::apt_config'  # somehow needed?
+sudo -E puppet apply $puppet_opts "$puppet_envs/staging/manifests/site.pp"
+```
