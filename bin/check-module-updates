@@ -11,8 +11,13 @@ pf.modules.each do |mod|
   filtered_yaml = mod.to_yaml.gsub(/!ruby\/object:.*$/, '').gsub(/[&*]\d+/, '')
   # horrible hack to be able to access the private attributes here, notably the remote
   mod = YAML.load(filtered_yaml)
-  directory = mod['remote'].split('/').last.gsub(/^puppet-/, '').gsub(/.git$/, '')
+  parts = mod['remote'].split('/').last.gsub(/.git$/, '').split('-')
+  if parts.count > 2 and parts[0] == 'puppet'
+    parts.delete_at(0)
+  end
+  directory = '-'.join(parts)
   name = mod['name']
+  STDERR.puts "#{name} (#{directory})"
   if [:control_branch, "master"].include? mod['desired_ref']
     STDERR.puts "#{name} (#{directory}) up to date"
     next
