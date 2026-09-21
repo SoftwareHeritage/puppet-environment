@@ -116,12 +116,14 @@ if [ ! -d $TMPDIR/environments/${FROM_PUPPET_ENV} ]; then
     unknown_branch=true
 else
     git clone $PUPPET_ENV/private/swh-private-data-censored $TMPDIR/environments/${FROM_PUPPET_ENV}/data/private
+    cp $TMPDIR/environments/${FROM_PUPPET_ENV}/hiera-ocd.yaml $TMPDIR/environments/${FROM_PUPPET_ENV}/hiera.yaml
 fi
 if [ ! -d $TMPDIR/environments/${TO_PUPPET_ENV} ]; then
     echo "Unknown --to branch $TO"
     unknown_branch=true
 else
     git clone $PUPPET_ENV/private/swh-private-data-censored $TMPDIR/environments/${TO_PUPPET_ENV}/data/private
+    cp $TMPDIR/environments/${TO_PUPPET_ENV}/hiera-ocd.yaml $TMPDIR/environments/${TO_PUPPET_ENV}/hiera.yaml
 fi
 
 if [ "${unknown_branch}" = "true" ]; then
